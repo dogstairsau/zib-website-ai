@@ -1,0 +1,19 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "Zib dev server (Node)",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["--env-file=.env.local", "dev-server.mjs"],
+      "port": 3000,
+      "autoPort": true
+    },
+    {
+      "name": "Zib dev server (Vercel)",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["vercel", "dev"],
+      "port": 3000,
+      "autoPort": true
+    }
+  ]
+}
