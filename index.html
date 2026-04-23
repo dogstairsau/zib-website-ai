@@ -660,6 +660,70 @@ h1.hero-h em {
   border-top: 0.5px solid var(--rule);
   padding-top: 18px;
 }
+.case-head { display: flex; flex-direction: column; gap: 6px; }
+.case-industry { font-size: 10.5px; color: var(--muted-2); letter-spacing: 0.14em; text-transform: uppercase; font-family: var(--mono); }
+
+/* ─── AFTER 12 MONTHS ──────────────────────────────────────────────── */
+.after { padding: clamp(96px, 12vw, 160px) 0; }
+.after-head { text-align: center; max-width: 820px; margin: 0 auto clamp(56px, 7vw, 88px); }
+.after-head .eyebrow { justify-content: center; margin-bottom: 20px; }
+.after-title {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(40px, 5.5vw, 72px);
+  line-height: 1; letter-spacing: -0.04em;
+  color: var(--ink);
+}
+.after-title em { font-style: italic; font-weight: 400; color: var(--accent); }
+.after-grid {
+  display: grid; grid-template-columns: repeat(2, 1fr);
+  border-top: 0.5px solid var(--rule);
+  border-bottom: 0.5px solid var(--rule);
+}
+.after-item {
+  padding: clamp(40px, 4.5vw, 64px) clamp(24px, 3vw, 44px);
+  position: relative;
+}
+.after-item:nth-child(even) { border-left: 0.5px solid var(--rule); }
+.after-item:nth-child(n+3) { border-top: 0.5px solid var(--rule); }
+.after-num {
+  color: var(--accent); font-family: var(--mono);
+  font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase;
+  margin-bottom: clamp(20px, 2.5vw, 32px); display: block;
+}
+.after-item h3 {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(22px, 2.2vw, 30px);
+  line-height: 1.15; letter-spacing: -0.025em;
+  color: var(--ink); margin-bottom: 14px;
+}
+.after-item p {
+  font-size: 15px; color: var(--muted);
+  line-height: 1.6; max-width: 42ch;
+}
+@media (max-width: 880px) {
+  .after-grid { grid-template-columns: 1fr; }
+  .after-item:nth-child(even) { border-left: 0; }
+  .after-item + .after-item { border-top: 0.5px solid var(--rule); }
+}
+
+/* ─── CTA META (accountability + engagement signal) ───────────────── */
+.cta-meta {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(28px, 3.5vw, 56px);
+  max-width: 820px;
+  margin: 0 auto clamp(40px, 5vw, 64px);
+  padding: clamp(28px, 3.5vw, 40px) 0 0;
+  border-top: 0.5px solid rgba(255,255,255,0.14);
+  text-align: left;
+}
+.cta-meta-item { color: rgba(255,255,255,0.82); font-size: 14.5px; line-height: 1.55; }
+.cta-meta-item .lbl {
+  font-family: var(--mono); font-size: 10.5px;
+  letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--accent); margin-bottom: 10px; display: block;
+}
+@media (max-width: 640px) { .cta-meta { grid-template-columns: 1fr; } }
 
 /* ─── SEARCH DEMAND (KEYWORD RAILS) ──────────────────────────────── */
 .search-head {
@@ -1728,24 +1792,36 @@ footer {
 
     <div class="case-grid reveal-stagger">
       <article class="case-card">
-        <div class="case-client mono">Amazing Graze</div>
+        <div class="case-head">
+          <div class="case-client mono">Amazing Graze</div>
+          <div class="case-industry">Gourmet food · DTC eCommerce</div>
+        </div>
         <div class="case-num"><span data-count="600">0</span><span class="pct">%</span></div>
-        <div class="case-desc">Increase in online revenue</div>
+        <div class="case-desc">Increase in online revenue. Paid social and organic search rebuilt around purchase intent. Compounding monthly by the second quarter.</div>
       </article>
       <article class="case-card">
-        <div class="case-client mono">Assured Roofing</div>
+        <div class="case-head">
+          <div class="case-client mono">Assured Roofing</div>
+          <div class="case-industry">Residential trades · Local services</div>
+        </div>
         <div class="case-num"><span data-count="300">0</span><span class="pct">%</span></div>
-        <div class="case-desc">Increase in social leads</div>
+        <div class="case-desc">Lift in qualified social leads. Paid and organic positioning rebuilt around high-intent suburbs and storm-season demand.</div>
       </article>
       <article class="case-card">
-        <div class="case-client mono">Liberty Financial</div>
+        <div class="case-head">
+          <div class="case-client mono">Liberty Financial</div>
+          <div class="case-industry">Consumer finance · National</div>
+        </div>
         <div class="case-num"><span data-count="100">0</span><span class="pct">%</span></div>
-        <div class="case-desc">Of keywords in top 3 results</div>
+        <div class="case-desc">Of target keywords ranking top 3 on Google. Earned search taking competitor share on generic broker terms that used to cost six figures in Ads.</div>
       </article>
       <article class="case-card">
-        <div class="case-client mono">Port Melb. Containers</div>
+        <div class="case-head">
+          <div class="case-client mono">Port Melb. Containers</div>
+          <div class="case-industry">Container logistics · B2B</div>
+        </div>
         <div class="case-num"><span data-count="220">0</span><span class="pct">%</span></div>
-        <div class="case-desc">Increase in Google Ads leads</div>
+        <div class="case-desc">Increase in qualified Google Ads leads. Funnel rebuilt around container-specific intent, stripping out tyre-kickers before they cost a click.</div>
       </article>
     </div>
   </div>
@@ -1955,6 +2031,38 @@ footer {
   </div>
 </section>
 
+<!-- ───────────────────────── AFTER 12 MONTHS ──────────────── -->
+<section class="after" id="after">
+  <div class="container">
+    <div class="after-head reveal">
+      <div class="eyebrow mono"><span>What changes</span></div>
+      <h2 class="after-title">Twelve months in. <em>Here's what shifts.</em></h2>
+    </div>
+    <div class="after-grid reveal-stagger">
+      <div class="after-item">
+        <div class="after-num">01 · Reporting</div>
+        <h3>Your dashboard shows revenue, not vanity.</h3>
+        <p>Weekly numbers tie creative, spend and SEO back to dollars in the door. No more impressions you can't bank, no more bounce rates pretending to be pipeline.</p>
+      </div>
+      <div class="after-item">
+        <div class="after-num">02 · Account team</div>
+        <h3>One senior operator. Same person, every call.</h3>
+        <p>A Digital Manager who owns your number, briefed and reviewed by the partner with their name on the P&amp;L. No juniors on rotation, no account handovers.</p>
+      </div>
+      <div class="after-item">
+        <div class="after-num">03 · Pipeline</div>
+        <h3>Lead cost and volume stabilise.</h3>
+        <p>Typically by month four, you're forecasting next quarter's revenue off what's actually converting. Growth stops feeling like guesswork.</p>
+      </div>
+      <div class="after-item">
+        <div class="after-num">04 · Your time</div>
+        <h3>Your team serves clients, not chases them.</h3>
+        <p>Sales ops stop being the bottleneck. The commercial team runs on qualified inbound, not cold outreach, and you stop briefing your agency on basics they should already own.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ───────────────────────── CTA (BLACK) ──────────────────── -->
 <section class="cta-section" id="cta">
   <div class="container">
@@ -1963,6 +2071,16 @@ footer {
     <p class="cta-sub reveal">
       Not a sales pitch. Not a capability deck. A 30-minute call about your business, your numbers, and whether the hybrid agent model is the right fit.
     </p>
+    <div class="cta-meta reveal">
+      <div class="cta-meta-item">
+        <span class="lbl">Accountability</span>
+        90-day cancellation. Weekly reporting. If results stall, we pivot, or step back.
+      </div>
+      <div class="cta-meta-item">
+        <span class="lbl">What to expect</span>
+        4–6 hours a week on your side. $5K–$15K monthly media spend. First commercial signal in 6–8 weeks.
+      </div>
+    </div>
     <div class="cta-buttons reveal">
       <a href="mailto:hello@zibdigital.com.au" class="btn btn-light magnet">
         Book a conversation <span class="arr">→</span>
