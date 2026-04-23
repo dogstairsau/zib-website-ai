@@ -313,7 +313,9 @@ export default async function handler(req: Request): Promise<Response> {
           send("status", { phase: "image", message: "Generating sample social ad creative…" });
           const brief = await briefPromise;
           const image = await generateImage(site, brief).catch((e) => {
-            console.warn("[image]", e.message);
+            const msg = e?.message || String(e);
+            console.warn("[image]", msg);
+            send("image-error", { message: msg });
             return null;
           });
           if (image) send("image", image);
