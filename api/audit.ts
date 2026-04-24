@@ -1,8 +1,8 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { fetchSiteContent, formatForPrompt, normaliseUrl, isValidEmail, type SiteContent } from "../lib/site";
-import { runPsi } from "../lib/psi";
 import { captureLead } from "../lib/hubspot";
 import { AUDIT_SYSTEM_PROMPT, auditUserPrompt } from "../lib/prompts/audit";
+import { fetchSupporting, crawlSite, buildAudit } from "../lib/seoChecks";
 
 export const config = { runtime: "edge" };
 
@@ -20,39 +20,6 @@ type Brief = {
   subhead?: string;
   art_direction?: string;
 };
-
-// ──────────────────────────────────────────────────────────────────
-// Social link extraction (runs off the raw HTML fetched by lib/site)
-// ──────────────────────────────────────────────────────────────────
-async function extractSocialLinks(url: string): Promise<Record<string, string>> {
-  try {
-    const res = await fetch(url, {
-      headers: { "User-Agent": "ZibAudit/1.0", Accept: "text/html" },
-      redirect: "follow",
-      signal: AbortSignal.timeout(8_000),
-    });
-    if (!res.ok) return {};
-    const html = await res.text();
-    const patterns: Record<string, RegExp> = {
-      instagram: /https?:\/\/(?:www\.)?instagram\.com\/([a-zA-Z0-9._-]+)/gi,
-      facebook: /https?:\/\/(?:www\.)?facebook\.com\/([a-zA-Z0-9.-]+)/gi,
-      linkedin: /https?:\/\/(?:www\.)?linkedin\.com\/(?:company|in|school)\/([a-zA-Z0-9.-]+)/gi,
-      tiktok: /https?:\/\/(?:www\.)?tiktok\.com\/@([a-zA-Z0-9._]+)/gi,
-      twitter: /https?:\/\/(?:www\.)?(?:twitter|x)\.com\/([a-zA-Z0-9_]+)/gi,
-      youtube: /https?:\/\/(?:www\.)?youtube\.com\/(?:c\/|channel\/|@|user\/)([a-zA-Z0-9._-]+)/gi,
-    };
-    const noise = /\/(sharer|share|intent|dialog|popup|plugins|tr)\b/i;
-    const found: Record<string, string> = {};
-    for (const [platform, pattern] of Object.entries(patterns)) {
-      const matches = [...html.matchAll(pattern)].map((m) => m[0]).filter((u) => !noise.test(u));
-      const unique = [...new Set(matches)];
-      if (unique.length) found[platform] = unique[0];
-    }
-    return found;
-  } catch {
-    return {};
-  }
-}
 
 // ──────────────────────────────────────────────────────────────────
 // Image brief — Claude drafts headline + art direction for the ad
@@ -99,72 +66,6 @@ Return only the JSON object.`,
   } catch {
     console.warn("[brief] failed to parse JSON");
     return null;
-  }
-}
-
-// ──────────────────────────────────────────────────────────────────
-// Social strategist read — streams as a second block
-// ──────────────────────────────────────────────────────────────────
-async function generateSocialRead(
-  site: SiteContent,
-  socialLinks: Record<string, string>,
-  anthropic: Anthropic,
-  onChunk: (text: string) => void,
-): Promise<void> {
-  const linkSummary = Object.keys(socialLinks).length
-    ? Object.entries(socialLinks).map(([p, u]) => `${p}: ${u}`).join("\n")
-    : "No social profiles linked from the site.";
-
-  const stream = anthropic.messages.stream({
-    model: "claude-sonnet-4-6",
-    max_tokens: 1200,
-    system: `You are a senior social media strategist at Zib Digital. A prospect just dropped their URL into the audit. You have their website content and the public social profile links their site links to. Deliver a tight commercial read on their social presence.
-
-Voice rules, non-negotiable:
-- Confident, commercial. No agency jargon. Banned: "thrilled", "leverage" (verb), "synergies", "unlock", "elevate", "engagement", "awareness", "presence".
-- Commercial language: revenue, leads, conversion, CPA, attention, trust, pipeline.
-- Australian English (optimisation, behaviour, colour).
-- Direct. "Black and white, no grey areas."
-- NEVER use em-dashes. Use commas, periods, colons, or parentheses. Absolute rule.
-
-You cannot see their actual posts or ad accounts. Work from: which platforms they link to, which they don't, and what their website positioning implies about where commercial attention should be focused. Be upfront that this is a strategic read, not a metric analysis. That honesty IS the pitch for a full paid-social audit in phase 2.
-
-Output structure (markdown, render exactly these headings):
-
-## Social footprint
-One short paragraph. What's linked from their site? What's missing? What does the gap say about where they are spending attention vs where their buyers are?
-
-## Three commercial opportunities
-Numbered list. Three items. Each one **bold title** followed by 1 or 2 sentences on the commercial cost of leaving it as-is. Be specific to their category.
-
-## What a full audit would surface
-One or two sentences. What we would pull from their ad accounts if they plugged them in: creative performance, CPA by audience, spend leakage, unused formats.
-
-Hard constraints: 300 words max. Reference their actual category from the site content.`,
-    messages: [
-      {
-        role: "user",
-        content: `Prospect URL: ${site.url}
-Site title: ${site.title}
-Site description: ${site.description}
-H2s: ${site.h2s.slice(0, 8).join(" | ")}
-Body excerpt:
-"""
-${site.bodyText.slice(0, 2500)}
-"""
-
-Social profiles discovered:
-${linkSummary}
-
-Run the social read.`,
-      },
-    ],
-  });
-
-  for await (const event of stream) {
-    if (event.type === "content_block_delta" && event.delta.type === "text_delta") {
-      onChunk(event.delta.text);
-    }
   }
 }
 
@@ -254,21 +155,44 @@ export default async function handler(req: Request): Promise<Response> {
         send("status", { phase: "fetch", message: "Reading the site…" });
         const site = await fetchSiteContent(url);
 
-        send("status", { phase: "parallel", message: "Lighthouse + strategist read in parallel…" });
         const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
-        // Kick off PSI, social link scrape, and (unless mode=seo) image brief in parallel
-        const psiPromise = runPsi(url).catch((e) => {
-          console.warn("[psi]", e.message);
-          return null;
+        // Kick off supporting fetches + (unless mode=seo) image brief in parallel.
+        send("status", { phase: "discover", message: "Discovering pages · robots.txt + sitemap…" });
+        const supportingPromise = fetchSupporting(url).catch((e) => {
+          console.warn("[supporting]", e.message);
+          return {
+            robotsStatus: 0, robotsText: "",
+            sitemapDiscovered: false, sitemapStatus: 0, sitemapUrl: `${new URL(url).origin}/sitemap.xml`,
+            mainStatus: 200, redirected: false, redirectHops: 0,
+            finalUrl: url,
+          };
         });
-        const socialLinksPromise = extractSocialLinks(url);
         const briefPromise = mode === "seo"
           ? Promise.resolve(null)
           : generateImageBrief(site, anthropic).catch((e) => {
               console.warn("[brief]", e.message);
               return null;
             });
+
+        // Deterministic checks — runs in parallel with the strategist read below.
+        const checksPromise = (async () => {
+          try {
+            const support = await supportingPromise;
+            send("status", { phase: "crawl", message: "Crawling up to 10 pages…" });
+            const pages = await crawlSite(site.url, site.rawHtml, support, 10).catch((e) => {
+              console.warn("[crawl]", e?.message);
+              return [{ url: site.url, status: 200, html: site.rawHtml }];
+            });
+            send("crawl-progress", { done: pages.length, total: Math.max(pages.length, 10) });
+            send("status", { phase: "score", message: "Scoring 7 categories · 25 checks…" });
+            const audit = buildAudit({ url: site.url, pages, support });
+            console.log("[checks]", { overall: audit.overallScore, passed: audit.passed, issues: audit.issues, pagesCrawled: audit.pagesCrawled });
+            send("checks", audit);
+          } catch (e: any) {
+            console.warn("[checks] ERROR", e?.message, e?.stack);
+          }
+        })();
 
         send("status", { phase: "think", message: "Senior strategist read…" });
 
@@ -293,24 +217,9 @@ export default async function handler(req: Request): Promise<Response> {
           }
         }
 
-        const psi = await psiPromise;
-        if (psi) send("psi", psi);
-
         if (mode !== "seo") {
-          // Social read as a second streamed block
-          const socialLinks = await socialLinksPromise;
-          send("status", { phase: "social", message: "Social strategist read…" });
-          try {
-            await generateSocialRead(site, socialLinks, anthropic, (text) => {
-              send("social-chunk", { text });
-            });
-            send("social-done", { socialLinks });
-          } catch (e: any) {
-            console.warn("[social]", e?.message);
-          }
-
           // Image generation last (slowest, happens after text is fully rendered)
-          send("status", { phase: "image", message: "Generating sample social ad creative…" });
+          send("status", { phase: "image", message: "Generating sample creative…" });
           const brief = await briefPromise;
           const image = await generateImage(site, brief).catch((e) => {
             const msg = e?.message || String(e);
@@ -320,6 +229,9 @@ export default async function handler(req: Request): Promise<Response> {
           });
           if (image) send("image", image);
         }
+
+        // Make sure the deterministic checks SSE event was flushed before closing
+        await checksPromise;
 
         // Capture lead AFTER analysis completes (failures don't block UX)
         captureLead({

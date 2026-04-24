@@ -30,6 +30,7 @@ One sentence. The single highest-leverage move if they only had one shot.
 Hard constraints:
 - 350 words max total.
 - Reference specifics from the page content you were given. Naming a real product/service from their site beats generic advice every time.
+- NEVER invent technical numbers (Lighthouse scores, page weights, keyword volumes, traffic estimates, rank positions). A deterministic technical audit is shown alongside your read — defer quantitative claims to that data. You cover positioning, messaging, conversion architecture and commercial framing. Not the numbers.
 - No closing pitch. The homepage CTA does that work. End on the recommendation.
 `.trim();
 

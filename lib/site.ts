@@ -26,6 +26,7 @@ export type SiteContent = {
   h1: string;
   h2s: string[];
   bodyText: string;
+  rawHtml: string;
 };
 
 export async function fetchSiteContent(rawUrl: string): Promise<SiteContent> {
@@ -72,7 +73,7 @@ export async function fetchSiteContent(rawUrl: string): Promise<SiteContent> {
       .trim()
   ).slice(0, 6000);
 
-  return { url, title, description, h1, h2s, bodyText };
+  return { url, title, description, h1, h2s, bodyText, rawHtml: html };
 }
 
 export function formatForPrompt(s: SiteContent): string {

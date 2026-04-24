@@ -850,10 +850,31 @@ h1.hero-h em {
   background: #fff;
   border: 0.5px solid var(--ink);
   border-radius: 999px;
-  padding: 8px 8px 8px 24px;
+  padding: 8px 8px 8px 8px;
   gap: 4px;
   transition: box-shadow 240ms var(--ease);
 }
+.url-prefix {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 56px;
+  padding: 0 0 0 22px;
+  position: relative;
+  min-width: 0;
+}
+.url-prefix::before {
+  content: "https://";
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--muted-2);
+  padding-right: 10px;
+  border-right: 1px solid var(--rule-2);
+  margin-right: 8px;
+  white-space: nowrap;
+}
+.url-prefix input { padding-left: 0; }
 .audit-form:focus-within { box-shadow: 0 0 0 4px var(--accent-tint); }
 .audit-form input {
   height: 56px;
@@ -916,6 +937,110 @@ h1.hero-h em {
   flex-shrink: 0;
 }
 @keyframes spin { to { transform: rotate(360deg); } }
+
+/* ─── LIVE STAGE TRACKER · visible during the crawl+score phase ───── */
+.audit-stages {
+  display: none;
+  margin-top: 28px;
+  padding: 24px clamp(20px, 2.4vw, 28px);
+  background: var(--paper);
+  border: 0.5px solid var(--rule);
+  border-radius: 16px;
+  max-width: 560px;
+}
+.audit-stages.is-shown { display: block; }
+.audit-stages .hdr {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 14px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+}
+.audit-stages .hdr .elapsed { color: var(--ink); }
+.audit-stages .hdr .elapsed::before {
+  content: "";
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  margin-right: 8px;
+  transform: translateY(-1px);
+  animation: stage-pulse 1.2s ease-in-out infinite;
+}
+@keyframes stage-pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+.stage-list {
+  list-style: none;
+  display: grid;
+  gap: 9px;
+}
+.stage-item {
+  display: grid;
+  grid-template-columns: 18px 1fr auto;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--display);
+  font-size: 14px;
+  color: var(--muted-2);
+  letter-spacing: -0.005em;
+  transition: color 260ms var(--ease);
+}
+.stage-item .ring {
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  border: 1.5px solid var(--rule-2);
+  display: inline-grid;
+  place-items: center;
+  box-sizing: border-box;
+  transition: border-color 260ms var(--ease), background 260ms var(--ease);
+}
+.stage-item .ring::before {
+  content: "";
+  width: 5px; height: 5px;
+  border-radius: 50%;
+  background: var(--muted-2);
+  opacity: 0;
+  transform: scale(0.5);
+  transition: opacity 220ms var(--ease), transform 220ms var(--ease);
+}
+.stage-item .tick {
+  width: 18px;
+  height: 18px;
+  display: none;
+  color: var(--score-good);
+}
+.stage-item .label { color: inherit; }
+.stage-item .detail {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.08em;
+  color: var(--muted-2);
+  text-transform: uppercase;
+  min-width: 64px;
+  text-align: right;
+}
+
+.stage-item.is-active {
+  color: var(--ink);
+}
+.stage-item.is-active .ring { border-color: var(--accent); }
+.stage-item.is-active .ring::before { opacity: 1; background: var(--accent); transform: scale(1); animation: stage-inner 0.9s ease-in-out infinite; }
+@keyframes stage-inner { 0%,100% { transform: scale(0.6); opacity: 0.6; } 50% { transform: scale(1.2); opacity: 1; } }
+.stage-item.is-done { color: var(--ink); }
+.stage-item.is-done .ring { display: none; }
+.stage-item.is-done .tick { display: inline-block; }
+.stage-item.is-done .detail { color: var(--score-good); }
+
+@media (max-width: 520px) {
+  .stage-item { grid-template-columns: 18px 1fr; }
+  .stage-item .detail { grid-column: 1 / -1; padding-left: 28px; margin-top: -4px; }
+}
 
 .audit-result { display: none; margin-top: 56px; }
 .audit-result.is-shown { display: block; }
@@ -1089,9 +1214,13 @@ h1.hero-h em {
 
 /* ─── STRATEGIST READ ·streamed Claude output ───────────────────── */
 .strategist {
-  margin-bottom: 48px;
-  padding-bottom: 40px;
-  border-bottom: 0.5px solid var(--rule);
+  margin-top: clamp(24px, 2.8vw, 36px);
+  margin-bottom: clamp(40px, 4vw, 56px);
+  padding: clamp(28px, 3vw, 40px);
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-radius: 20px;
+  box-shadow: 0 40px 120px -60px rgba(0,0,0,0.12);
 }
 .strategist:empty { display: none; }
 .strategist h3 {
@@ -1174,19 +1303,6 @@ h1.hero-h em {
   animation: typing 1s steps(2) infinite;
 }
 @keyframes typing { 50% { opacity: 0; } }
-
-/* ─── SOCIAL STRATEGIST READ ─────────────────────────────────────── */
-.social-read {
-  margin-top: clamp(40px, 4vw, 56px);
-  padding-top: clamp(32px, 3.5vw, 44px);
-  border-top: 0.5px solid var(--rule);
-}
-.social-read-head {
-  margin-bottom: clamp(20px, 2vw, 28px);
-}
-.social-read-head .lbl {
-  color: var(--accent);
-}
 
 /* ─── SAMPLE AD IMAGE · OpenAI output ─────────────────────────────── */
 .sample-ad {
@@ -1560,6 +1676,264 @@ footer {
   .word, .reveal, .reveal-stagger > * { opacity: 1 !important; transform: none !important; filter: none !important; }
   .marquee-track { animation: none !important; }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   SEO WALL · deterministic audit data (Outrank-style)
+   Fires on the `checks` SSE event before the AI commentary renders.
+   ═══════════════════════════════════════════════════════════════ */
+.seo-wall {
+  display: none;
+  margin-top: 28px;
+  padding: clamp(24px, 3vw, 40px);
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-radius: 20px;
+  box-shadow: 0 40px 120px -60px rgba(0,0,0,0.15);
+}
+.seo-wall.is-shown { display: block; }
+
+.wall-hero {
+  display: grid;
+  grid-template-columns: 1fr minmax(260px, 340px);
+  gap: clamp(24px, 4vw, 64px);
+  padding-bottom: clamp(28px, 3vw, 40px);
+  border-bottom: 1px solid var(--rule);
+  align-items: start;
+}
+@media (max-width: 820px) { .wall-hero { grid-template-columns: 1fr; } }
+
+.wall-eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+.wall-title {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(28px, 3.2vw, 40px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 10px;
+}
+.wall-title em { color: var(--accent); font-style: italic; font-weight: 400; }
+.wall-sub {
+  color: var(--muted);
+  font-size: 15.5px;
+  line-height: 1.5;
+  margin-bottom: 24px;
+  max-width: 52ch;
+}
+.wall-sub .domain { color: var(--ink); font-weight: 500; }
+
+.wall-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+}
+@media (max-width: 560px) { .wall-stats { grid-template-columns: repeat(2, 1fr); } }
+.wall-stat {
+  padding: 18px 18px 16px;
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  background: #FAFAF8;
+  transition: border-color 240ms var(--ease);
+}
+.wall-stat .lbl {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+.wall-stat .v {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(22px, 2.2vw, 30px);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.wall-stat.is-score { background: #F0F8F2; border-color: #CBEAD2; }
+.wall-stat.is-score .v { color: var(--score-good); }
+.wall-stat.is-score.mid { background: #FFF8EC; border-color: #FFE3A8; }
+.wall-stat.is-score.mid .v { color: var(--score-mid); }
+.wall-stat.is-score.bad { background: #FEF2F2; border-color: #FCC; }
+.wall-stat.is-score.bad .v { color: var(--score-bad); }
+.wall-stat.is-passed { background: #F0F8F2; border-color: #CBEAD2; }
+.wall-stat.is-passed .v { color: var(--score-good); }
+.wall-stat.is-issues { background: #FFF8EC; border-color: #FFE3A8; }
+.wall-stat.is-issues .v { color: var(--score-mid); }
+
+/* Radar */
+.wall-radar {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1/1;
+}
+.wall-radar svg { width: 100%; height: 100%; overflow: visible; }
+.radar-grid path { fill: none; stroke: var(--rule); stroke-width: 0.5; }
+.radar-poly {
+  fill: rgba(255,98,0,0.12);
+  stroke: var(--accent);
+  stroke-width: 2;
+  stroke-linejoin: round;
+  stroke-dasharray: 1200;
+  stroke-dashoffset: 1200;
+  fill-opacity: 0;
+  animation: radar-draw 1100ms var(--ease-out) forwards;
+}
+@keyframes radar-draw {
+  0% { stroke-dashoffset: 1200; fill-opacity: 0; }
+  60% { fill-opacity: 0; }
+  100% { stroke-dashoffset: 0; fill-opacity: 1; }
+}
+.radar-dot {
+  fill: var(--accent);
+  opacity: 0;
+  animation: radar-dot-in 260ms var(--ease-out) forwards;
+  animation-delay: 900ms;
+}
+@keyframes radar-dot-in { to { opacity: 1; } }
+.radar-label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  fill: var(--muted);
+  font-weight: 600;
+}
+
+/* Categories grid */
+.cat-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin-top: clamp(24px, 3vw, 36px);
+}
+@media (max-width: 1100px) { .cat-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .cat-grid { grid-template-columns: 1fr; } }
+.cat-card {
+  padding: 22px;
+  background: #FAFAF8;
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+  transition: border-color 240ms var(--ease), transform 240ms var(--ease);
+  opacity: 0;
+  transform: translateY(8px);
+}
+.cat-card.is-in {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 420ms var(--ease), transform 420ms var(--ease), border-color 240ms var(--ease);
+}
+.cat-card:hover { border-color: var(--rule-2); transform: translateY(-2px); }
+
+/* Staggered reveal of individual checks inside each card */
+.check-item { opacity: 0; transform: translateX(-4px); }
+.cat-card.is-in .check-item {
+  opacity: 1;
+  transform: translateX(0);
+  transition: opacity 300ms var(--ease), transform 300ms var(--ease);
+}
+.cat-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 4px;
+}
+.cat-title {
+  display: flex; align-items: center; gap: 10px;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.cat-title svg { width: 18px; height: 18px; color: var(--accent); opacity: 0.8; }
+.cat-score {
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: 15px;
+  font-variant-numeric: tabular-nums;
+  color: var(--score-good);
+}
+.cat-score.mid { color: var(--score-mid); }
+.cat-score.bad { color: var(--score-bad); }
+.cat-bar {
+  height: 4px;
+  background: var(--rule);
+  border-radius: 2px;
+  overflow: hidden;
+  margin: 10px 0 16px;
+}
+.cat-bar-fill {
+  height: 100%;
+  background: var(--score-good);
+  border-radius: 2px;
+  width: 0%;
+  transition: width 600ms var(--ease-out);
+}
+.cat-bar-fill.mid { background: var(--score-mid); }
+.cat-bar-fill.bad { background: var(--score-bad); }
+
+.check-list { list-style: none; display: grid; gap: 10px; }
+.check-item {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  gap: 10px;
+  font-size: 13px;
+  line-height: 1.4;
+}
+.check-item .icon {
+  width: 18px; height: 18px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1px;
+  flex-shrink: 0;
+}
+.check-item .icon.pass { background: #E7F5EC; color: var(--score-good); }
+.check-item .icon.warn { background: #FFF3D9; color: var(--score-mid); }
+.check-item .icon.fail { background: #FEE7E7; color: var(--score-bad); }
+.check-item .icon svg { width: 12px; height: 12px; }
+.check-item .body .t { color: var(--ink); font-weight: 500; margin-bottom: 2px; }
+.check-item .body .v { color: var(--muted); font-size: 12px; font-family: var(--mono); letter-spacing: 0.01em; }
+
+.wall-footnote {
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--rule);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+}
+.wall-footnote .methodology {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.wall-footnote .pulse {
+  width: 6px; height: 6px;
+  background: var(--score-good);
+  border-radius: 50%;
+  display: inline-block;
+}
 </style>
 </head>
 <body>
@@ -1594,7 +1968,7 @@ footer {
         Drop your URL. <em>Get a real audit in 30 seconds.</em>
       </h1>
       <p class="audit-hero-sub">
-        <strong>A senior strategist read on your positioning, SEO, and social footprint. Plus a sample creative generated for your brand.</strong>
+        <strong>A 10-page crawl across 8 categories, a senior strategist read on your positioning, and a sample creative for your brand.</strong>
         No email follow-up. No new tab. Everything streams live on this page.
       </p>
     </div>
@@ -1602,7 +1976,9 @@ footer {
     <div class="reveal">
       <form class="audit-form" id="auditForm" autocomplete="off">
         <label for="auditUrl" class="sr-only">Website URL</label>
-        <input type="url" id="auditUrl" name="url" placeholder="yourwebsite.com.au" required inputmode="url" spellcheck="false" />
+        <span class="url-prefix">
+          <input type="text" id="auditUrl" name="url" placeholder="yourwebsite.com.au" required inputmode="url" spellcheck="false" autocapitalize="off" autocorrect="off" />
+        </span>
         <span class="audit-divider" aria-hidden="true"></span>
         <label for="auditEmail" class="sr-only">Work email</label>
         <input type="email" id="auditEmail" name="email" placeholder="work email" required inputmode="email" spellcheck="false" autocomplete="email" />
@@ -1612,45 +1988,85 @@ footer {
         <button type="submit" id="auditBtn">Run audit <span class="arr">→</span></button>
       </form>
       <div class="audit-meta mono">
-        <div><span class="check">✓</span> Positioning · commercial read</div>
-        <div><span class="check">✓</span> SEO · technical + content</div>
-        <div><span class="check">✓</span> Social · public footprint</div>
+        <div><span class="check">✓</span> 10-page technical crawl</div>
+        <div><span class="check">✓</span> AEO + GEO readiness</div>
+        <div><span class="check">✓</span> Senior strategist read</div>
         <div><span class="check">✓</span> Sample creative · generated live</div>
       </div>
 
       <div class="audit-status mono" id="auditStatus" role="status" aria-live="polite"></div>
+
+      <div class="audit-stages" id="auditStages" aria-live="polite">
+        <div class="hdr">
+          <span class="ttl">Running audit</span>
+          <span class="elapsed" id="stageElapsed">0s</span>
+        </div>
+        <ul class="stage-list" id="stageList">
+          <li class="stage-item" data-stage="fetch"><span class="ring"></span><svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 7"/></svg><span class="label">Reading the homepage</span><span class="detail"></span></li>
+          <li class="stage-item" data-stage="discover"><span class="ring"></span><svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 7"/></svg><span class="label">Discovering pages · robots.txt + sitemap</span><span class="detail"></span></li>
+          <li class="stage-item" data-stage="crawl"><span class="ring"></span><svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 7"/></svg><span class="label">Crawling up to 10 pages</span><span class="detail"></span></li>
+          <li class="stage-item" data-stage="score"><span class="ring"></span><svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 7"/></svg><span class="label">Scoring 7 categories · 25 checks</span><span class="detail"></span></li>
+          <li class="stage-item" data-stage="think"><span class="ring"></span><svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 7"/></svg><span class="label">Senior strategist read</span><span class="detail"></span></li>
+        </ul>
+      </div>
 
       <div class="audit-result" id="auditResult" aria-live="polite">
         <div class="result-head">
           <div class="url"><small class="mono">Audited</small><span id="resUrl"></span></div>
           <div class="strategy mono">Senior strategist read</div>
         </div>
-        <div class="strategist" id="resStrategist"></div>
 
-        <div class="social-read" id="resSocial" hidden>
-          <div class="social-read-head">
-            <div class="lbl mono">Social strategist read</div>
+        <!-- ─── SEO WALL · deterministic checks (fires on `checks` event) ─── -->
+        <div class="seo-wall" id="resSeoWall" aria-live="polite">
+          <div class="wall-hero">
+            <div>
+              <div class="wall-eyebrow">Full SEO + AEO coverage</div>
+              <div class="wall-title">Technical audit. <em>Real crawl data.</em></div>
+              <div class="wall-sub">Deterministic checks run across technical, content, and AI-search readiness for <span class="domain" id="wallDomain"></span>. No AI guessing on the numbers.</div>
+              <div class="wall-stats">
+                <div class="wall-stat is-score" id="statScoreBox">
+                  <div class="lbl">Overall score</div>
+                  <div class="v" id="statScore">—</div>
+                </div>
+                <div class="wall-stat is-passed">
+                  <div class="lbl">Passed</div>
+                  <div class="v" id="statPassed">—</div>
+                </div>
+                <div class="wall-stat is-issues">
+                  <div class="lbl">Issues</div>
+                  <div class="v" id="statIssues">—</div>
+                </div>
+                <div class="wall-stat">
+                  <div class="lbl">Pages crawled</div>
+                  <div class="v" id="statPages">—</div>
+                </div>
+              </div>
+            </div>
+            <div class="wall-radar" id="resRadar" aria-label="Performance distribution across categories"></div>
           </div>
-          <div class="strategist" id="resSocialText"></div>
+
+          <div class="cat-grid" id="catGrid"></div>
+
+          <div class="wall-footnote">
+            <span class="methodology"><span class="pulse" aria-hidden="true"></span> Live 10-page crawl · deterministic HTML checks</span>
+            <span>Zib hybrid audit · v1</span>
+          </div>
         </div>
+
+        <div class="strategist" id="resStrategist"></div>
 
         <div class="sample-ad" id="resSampleAd">
           <div class="sample-ad-img is-loading" id="resAdImg"></div>
           <div class="sample-ad-meta">
-            <div class="lbl">Sample creative · generated for you</div>
+            <div class="lbl">Phase 2 · sample creative generated for you</div>
             <h4 id="resAdHeading">Here's the kind of social ad we'd run for your brand.</h4>
             <p>One-shot creative generated by our hybrid agent off the back of your homepage. In a real engagement, this is the first of a hundred. Variants tested daily, scaled by what converts.</p>
             <div class="credit">Generated · Zib hybrid agent</div>
           </div>
         </div>
 
-        <div class="scores-wrap" id="resScoresWrap" hidden>
-          <div class="lbl-row">Performance footprint · Mobile Lighthouse</div>
-          <div class="scores" id="resScores"></div>
-        </div>
-
         <div class="audit-punchline" id="resPunchline">
-          <p>This took 30 seconds. <em>Imagine what we could do in twelve months.</em></p>
+          <p>This was done in 30 seconds. <em>Imagine what we can do in 12 months.</em></p>
         </div>
 
         <div class="audit-after">
@@ -1959,7 +2375,7 @@ footer {
     tick(); setInterval(tick, 1000);
   }
 
-  /* ─── AUDIT ·streams from /api/audit (Claude + Lighthouse) */
+  /* ─── AUDIT ·streams from /api/audit (Claude + deterministic crawl checks) */
   const form        = document.getElementById('auditForm');
   const urlInput    = document.getElementById('auditUrl');
   const emailInput  = document.getElementById('auditEmail');
@@ -1968,14 +2384,22 @@ footer {
   const statusEl    = document.getElementById('auditStatus');
   const resultEl    = document.getElementById('auditResult');
   const resUrl      = document.getElementById('resUrl');
-  const resScores   = document.getElementById('resScores');
-  const resScoresWrap = document.getElementById('resScoresWrap');
+  const resSeoWall    = document.getElementById('resSeoWall');
+  const wallDomainEl  = document.getElementById('wallDomain');
+  const statScoreEl   = document.getElementById('statScore');
+  const statScoreBox  = document.getElementById('statScoreBox');
+  const statPassedEl  = document.getElementById('statPassed');
+  const statIssuesEl  = document.getElementById('statIssues');
+  const statPagesEl   = document.getElementById('statPages');
+  const catGridEl     = document.getElementById('catGrid');
+  const resRadar      = document.getElementById('resRadar');
   const resStrategist = document.getElementById('resStrategist');
-  const resSocial     = document.getElementById('resSocial');
-  const resSocialText = document.getElementById('resSocialText');
   const resSampleAd = document.getElementById('resSampleAd');
   const resAdImg    = document.getElementById('resAdImg');
   const resPunchline = document.getElementById('resPunchline');
+  const stagesEl    = document.getElementById('auditStages');
+  const stageListEl = document.getElementById('stageList');
+  const stageElapsedEl = document.getElementById('stageElapsed');
 
   const tok = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
   const scoreColor = (s) => s >= 90 ? tok('--score-good') : s >= 50 ? tok('--score-mid') : tok('--score-bad');
@@ -1989,6 +2413,75 @@ footer {
       : msg;
   };
   const clearStatus = () => { statusEl.className = 'audit-status mono'; statusEl.textContent = ''; };
+
+  /* ─── Stage tracker · real backend phases, elapsed timer, tick-off UX ── */
+  const STAGE_ORDER = ['fetch', 'discover', 'crawl', 'score', 'think'];
+  let stageStart = 0;
+  let stageTick = null;
+  const stageState = {};
+
+  const stageEl = (id) => stageListEl?.querySelector(`.stage-item[data-stage="${id}"]`);
+  const stageSetDetail = (id, txt) => {
+    const el = stageEl(id); if (!el) return;
+    el.querySelector('.detail').textContent = txt || '';
+  };
+  const stageActivate = (id) => {
+    const el = stageEl(id); if (!el) return;
+    el.classList.remove('is-done');
+    el.classList.add('is-active');
+    stageState[id] = 'active';
+  };
+  const stageComplete = (id, detail) => {
+    const el = stageEl(id); if (!el) return;
+    el.classList.remove('is-active');
+    el.classList.add('is-done');
+    if (detail) stageSetDetail(id, detail);
+    else {
+      const t = ((Date.now() - stageStart) / 1000).toFixed(1) + 's';
+      stageSetDetail(id, t);
+    }
+    stageState[id] = 'done';
+  };
+  const stageAdvance = (target) => {
+    // Mark everything before `target` as done if still pending/active; then activate target
+    for (const id of STAGE_ORDER) {
+      if (id === target) break;
+      if (stageState[id] !== 'done') stageComplete(id);
+    }
+    stageActivate(target);
+  };
+  const stagesShow = () => {
+    stagesEl.classList.add('is-shown');
+    stageStart = Date.now();
+    stageElapsedEl.textContent = '0.0s';
+    if (stageTick) clearInterval(stageTick);
+    stageTick = setInterval(() => {
+      stageElapsedEl.textContent = ((Date.now() - stageStart) / 1000).toFixed(1) + 's';
+    }, 100);
+  };
+  const stagesFinish = () => {
+    for (const id of STAGE_ORDER) if (stageState[id] !== 'done') stageComplete(id);
+    if (stageTick) { clearInterval(stageTick); stageTick = null; }
+  };
+  const stagesReset = () => {
+    if (stageTick) { clearInterval(stageTick); stageTick = null; }
+    stagesEl.classList.remove('is-shown');
+    stageListEl.querySelectorAll('.stage-item').forEach(el => {
+      el.classList.remove('is-active', 'is-done');
+      el.querySelector('.detail').textContent = '';
+    });
+    for (const k of Object.keys(stageState)) delete stageState[k];
+  };
+  // Map server `status.phase` → stage id
+  const phaseToStage = {
+    fetch: 'fetch',
+    discover: 'discover',
+    crawl: 'crawl',
+    score: 'score',
+    parallel: 'discover',
+    think: 'think',
+    strategist: 'think',
+  };
 
   // Tiny streaming-safe markdown → HTML for ##, **, *, -, 1.
   const mdToHtml = (md) => {
@@ -2023,22 +2516,139 @@ footer {
     return out.join('');
   };
 
-  const renderScores = (scores) => {
-    const labels = [
-      ['performance',   'Performance'],
-      ['accessibility', 'Accessibility'],
-      ['bestPractices', 'Best practices'],
-      ['seo',           'SEO']
-    ];
-    resScores.innerHTML = labels.map(([key, label]) => {
-      const pct = scores[key] || 0;
-      const color = scoreColor(pct);
-      return `
-        <div class="score">
-          <div class="score-ring" style="--pct:${pct};--color:${color}"><span class="v">${pct}</span></div>
-          <div class="lbl mono">${label}</div>
-        </div>`;
+  /* ─── SEO WALL renderers ─── */
+  const scoreClass = (s) => s >= 90 ? '' : s >= 50 ? 'mid' : 'bad';
+  const iconPass = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 7"/></svg>`;
+  const iconWarn = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="7" x2="12" y2="13"/><circle cx="12" cy="17" r="1.3" fill="currentColor"/></svg>`;
+  const iconFail = `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><line x1="6" y1="6" x2="18" y2="18"/><line x1="6" y1="18" x2="18" y2="6"/></svg>`;
+  const statusIcon = (s) => s === 'pass' ? iconPass : s === 'warn' ? iconWarn : iconFail;
+  const catIcons = {
+    foundation: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2 4 6v6c0 5 3.4 9.2 8 10 4.6-.8 8-5 8-10V6z"/></svg>`,
+    crawl:      `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg>`,
+    content:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>`,
+    meta:       `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="4" y1="6" x2="20" y2="6"/><line x1="4" y1="12" x2="14" y2="12"/><line x1="4" y1="18" x2="18" y2="18"/></svg>`,
+    performance:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polyline points="13 2 3 14 12 14 11 22 21 10 12 10"/></svg>`,
+    media:      `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><polygon points="6 4 20 12 6 20 6 4"/></svg>`,
+    architecture:`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M10 13a5 5 0 0 0 7 0l3-3a5 5 0 0 0-7-7l-1 1"/><path d="M14 11a5 5 0 0 0-7 0l-3 3a5 5 0 0 0 7 7l1-1"/></svg>`,
+    geo:        `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="m12 2 2.5 6h6l-5 4 2 7-5.5-4L6 19l2-7-5-4h6z"/></svg>`,
+  };
+
+  const renderRadar = (categories) => {
+    const W = 320, H = 320, CX = W/2, CY = H/2, R = 92;
+    const n = categories.length;
+    const angle = (i) => (-Math.PI/2) + (i * 2 * Math.PI / n);
+    // 4 grid rings
+    const rings = [0.25, 0.5, 0.75, 1].map(f => {
+      const pts = Array.from({length: n}, (_, i) => {
+        const a = angle(i);
+        return `${CX + Math.cos(a) * R * f},${CY + Math.sin(a) * R * f}`;
+      }).join(' ');
+      return `<polygon points="${pts}" class="radar-grid-poly"/>`;
     }).join('');
+    // data polygon
+    const dataPts = categories.map((c, i) => {
+      const a = angle(i);
+      const f = Math.max(0.05, c.score / 100);
+      return { x: CX + Math.cos(a) * R * f, y: CY + Math.sin(a) * R * f };
+    });
+    const poly = dataPts.map(p => `${p.x},${p.y}`).join(' ');
+    const dots = dataPts.map(p => `<circle cx="${p.x}" cy="${p.y}" r="3" class="radar-dot"/>`).join('');
+    // labels — short aliases keep long category names from clipping at the viewBox edges
+    const radarLabel = {
+      foundation: 'FOUND', crawl: 'CRAWL', content: 'CONTENT', meta: 'META',
+      media: 'MEDIA', architecture: 'LINKS', geo: 'GEO',
+    };
+    const labels = categories.map((c, i) => {
+      const a = angle(i);
+      const lr = R + 26;
+      const x = CX + Math.cos(a) * lr;
+      const y = CY + Math.sin(a) * lr;
+      const anchor = Math.abs(Math.cos(a)) < 0.2 ? 'middle' : Math.cos(a) > 0 ? 'start' : 'end';
+      const label = radarLabel[c.id] || c.label.split(/[\s&/]/)[0];
+      return `<text x="${x}" y="${y}" text-anchor="${anchor}" dominant-baseline="middle" class="radar-label">${label}</text>`;
+    }).join('');
+    resRadar.innerHTML = `
+      <svg viewBox="0 0 ${W} ${H}" aria-hidden="false">
+        <g class="radar-grid">${rings}</g>
+        <polygon points="${poly}" class="radar-poly"/>
+        ${dots}
+        ${labels}
+      </svg>`;
+    // Adjust ring strokes
+    resRadar.querySelectorAll('.radar-grid-poly').forEach((p, i) => {
+      p.setAttribute('fill', 'none');
+      p.setAttribute('stroke', '#E8E5DD');
+      p.setAttribute('stroke-width', '0.5');
+    });
+  };
+
+  // Animated count-up that runs in-place on a text node
+  const countUp = (el, target, { duration = 1200, suffix = '' } = {}) => {
+    const start = performance.now();
+    const ease = (t) => 1 - Math.pow(1 - t, 3);
+    const step = (now) => {
+      const p = Math.min((now - start) / duration, 1);
+      el.textContent = Math.round(target * ease(p)) + suffix;
+      if (p < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+
+  const renderSeoWall = (audit) => {
+    // Top stats — count up so the numbers feel earned
+    const raw = urlInput.value.trim().replace(/^https?:\/\//i, '');
+    try { wallDomainEl.textContent = new URL('https://' + raw).hostname; } catch { wallDomainEl.textContent = raw; }
+    statScoreEl.textContent = '0%';
+    statPassedEl.textContent = '0';
+    statIssuesEl.textContent = '0';
+    statPagesEl.textContent = '0';
+    statScoreBox.className = 'wall-stat is-score ' + scoreClass(audit.overallScore);
+
+    // Categories — rendered hidden, revealed one-by-one below
+    catGridEl.innerHTML = audit.categories.map(cat => {
+      const cls = scoreClass(cat.score);
+      const items = cat.checks.map(ch => `
+        <li class="check-item">
+          <span class="icon ${ch.status}" aria-hidden="true">${statusIcon(ch.status)}</span>
+          <span class="body">
+            <span class="t">${ch.title}</span>
+            <span class="v">${ch.value}</span>
+          </span>
+        </li>
+      `).join('');
+      return `
+        <div class="cat-card" data-cat="${cat.id}">
+          <div class="cat-head">
+            <div class="cat-title">${catIcons[cat.id] || ''}${cat.label}</div>
+            <div class="cat-score ${cls}">${cat.score}%</div>
+          </div>
+          <div class="cat-bar"><div class="cat-bar-fill ${cls}" style="width:0%"></div></div>
+          <ul class="check-list">${items}</ul>
+        </div>
+      `;
+    }).join('');
+
+    resSeoWall.classList.add('is-shown');
+    renderRadar(audit.categories);
+
+    // Count-up the headline stats — ~1.2s
+    countUp(statScoreEl, audit.overallScore, { suffix: '%' });
+    countUp(statPassedEl, audit.passed);
+    countUp(statIssuesEl, audit.issues);
+    countUp(statPagesEl, audit.pagesCrawled);
+
+    // Stagger each category card — 120ms apart × 8 cards ≈ 1s visual reveal
+    const cards = [...catGridEl.querySelectorAll('.cat-card')];
+    cards.forEach((card, idx) => {
+      setTimeout(() => {
+        card.classList.add('is-in');
+        card.querySelector('.cat-bar-fill').style.width = card.querySelector('.cat-score').textContent;
+        // Stagger checks inside the card
+        card.querySelectorAll('.check-item').forEach((li, cIdx) => {
+          li.style.transitionDelay = (cIdx * 60) + 'ms';
+        });
+      }, 400 + idx * 140);
+    });
   };
 
 
@@ -2053,24 +2663,29 @@ footer {
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
 
-      const url = urlInput.value.trim();
+      // URL input is now bare domain (https:// is in the prefix label). Strip any pasted protocol, then prepend.
+      let raw = urlInput.value.trim().replace(/^https?:\/\//i, '');
+      const url = raw ? 'https://' + raw : '';
       const email = emailInput.value.trim();
       const phone = phoneInput.value.trim();
-      if (!url) { setStatus("Enter a website URL.", 'error'); urlInput.focus(); return; }
+      if (!url || !raw.includes('.')) { setStatus("Enter a valid website URL.", 'error'); urlInput.focus(); return; }
       if (!emailRe.test(email)) { setStatus('Enter a valid work email.', 'error'); emailInput.focus(); return; }
       if (phone.replace(/\D/g, '').length < 6) { setStatus('Enter a valid phone number.', 'error'); phoneInput.focus(); return; }
 
       btn.disabled = true;
       resultEl.classList.remove('is-shown');
       resStrategist.innerHTML = '';
-      if (resSocial) { resSocial.hidden = true; resSocialText.innerHTML = ''; }
-      resScores.innerHTML = '';
-      resScoresWrap.hidden = true;
+      resSeoWall.classList.remove('is-shown');
+      catGridEl.innerHTML = '';
+      resRadar.innerHTML = '';
       resSampleAd.classList.add('is-shown');
       resAdImg.classList.add('is-loading');
       resAdImg.innerHTML = '';
       resPunchline.classList.remove('is-shown');
-      setStatus('Reading the site…', 'loading');
+      stagesReset();
+      stagesShow();
+      stageActivate('fetch');
+      clearStatus();
 
       try {
         const res = await fetch('/api/audit', {
@@ -2084,16 +2699,27 @@ footer {
           throw new Error(j.error || `Request failed (${res.status})`);
         }
 
-        // Show panel + scroll as soon as the stream begins
+        // Show result shell + scroll so stages are visible
         resultEl.classList.add('is-shown');
         resUrl.textContent = url;
-        resultEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        stagesEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
 
         const reader = res.body.getReader();
         const decoder = new TextDecoder();
         let buf = '';
         let strategistText = '';
-        let socialText = '';
+        let pendingChecks = null;
+        // Minimum perceived work — don't reveal the wall before this many ms have elapsed
+        // since submit, so it never feels "instant / made up" on fast sites.
+        const MIN_REVEAL_MS = 9000;
+        const revealWallWhenReady = async (audit) => {
+          const elapsed = Date.now() - stageStart;
+          const wait = Math.max(0, MIN_REVEAL_MS - elapsed);
+          if (wait > 0) await new Promise(r => setTimeout(r, wait));
+          stageComplete('score');
+          stageActivate('think');
+          renderSeoWall(audit);
+        };
 
         while (true) {
           const { done, value } = await reader.read();
@@ -2108,24 +2734,21 @@ footer {
             const { event, data } = parsed;
 
             if (event === 'status') {
-              setStatus(data.message, 'loading');
+              const stage = phaseToStage[data.phase];
+              if (stage) stageAdvance(stage);
+            } else if (event === 'crawl-progress') {
+              stageActivate('crawl');
+              stageSetDetail('crawl', `${data.done}/${data.total}`);
+            } else if (event === 'checks') {
+              // Deterministic audit — the wow payload. Gate reveal on MIN_REVEAL_MS.
+              stageComplete('crawl', `${data.pagesCrawled} pages`);
+              stageActivate('score');
+              pendingChecks = data;
+              revealWallWhenReady(data);
             } else if (event === 'chunk') {
               strategistText += data.text;
               resStrategist.innerHTML = mdToHtml(strategistText) + '<span class="typing"></span>';
-            } else if (event === 'psi') {
-              resUrl.textContent = data.url || url;
-              renderScores(data.scores);
-              resScoresWrap.hidden = false;
-            } else if (event === 'social-chunk') {
-              socialText += data.text;
-              if (resSocial) {
-                resSocial.hidden = false;
-                resSocialText.innerHTML = mdToHtml(socialText) + '<span class="typing"></span>';
-              }
-            } else if (event === 'social-done') {
-              if (resSocial && socialText) {
-                resSocialText.innerHTML = mdToHtml(socialText);
-              }
+              stageAdvance('think');
             } else if (event === 'image') {
               resAdImg.classList.remove('is-loading');
               resAdImg.innerHTML = `<img src="${data.url}" alt="Sample ad creative generated for your brand" loading="lazy" />`;
@@ -2137,6 +2760,8 @@ footer {
                 resAdImg.classList.remove('is-loading');
               }
               resPunchline.classList.add('is-shown');
+              stagesFinish();
+              setTimeout(() => stagesEl.classList.remove('is-shown'), 1600);
               clearStatus();
             } else if (event === 'error') {
               throw new Error(data.message || 'Audit failed');
@@ -2146,6 +2771,7 @@ footer {
       } catch (err) {
         setStatus('Audit failed: ' + (err.message || 'try again'), 'error');
         resStrategist.innerHTML = '';
+        stagesReset();
       } finally {
         btn.disabled = false;
       }

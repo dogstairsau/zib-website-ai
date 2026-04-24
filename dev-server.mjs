@@ -12,6 +12,7 @@ import { readFile } from "node:fs/promises";
 import { join, extname } from "node:path";
 import { fileURLToPath } from "node:url";
 import Anthropic from "@anthropic-ai/sdk";
+import { fetchSupporting, crawlSite, buildAudit } from "./lib/seoChecks.mjs";
 
 const ROOT = fileURLToPath(new URL(".", import.meta.url));
 const PORT = Number(process.env.PORT) || 3000;
@@ -250,6 +251,7 @@ async function fetchSiteContent(rawUrl) {
     url: finalUrl,
     title,
     description,
+    rawHtml: html,
     h1, h1Count: h1All.length,
     h2s, h3s,
     bodyText: bodyText.slice(0, 5500),
@@ -273,86 +275,7 @@ async function fetchSiteContent(rawUrl) {
       wordCount,
       brandColors,
     },
-    socialLinks: extractSocialLinks(html),
   };
-}
-
-// ──────────────────────────────────────────────────────────────────
-// Social link extraction + Social strategist read
-// ──────────────────────────────────────────────────────────────────
-function extractSocialLinks(html) {
-  const patterns = {
-    instagram: /https?:\/\/(?:www\.)?instagram\.com\/([a-zA-Z0-9._-]+)/gi,
-    facebook:  /https?:\/\/(?:www\.)?facebook\.com\/([a-zA-Z0-9.-]+)/gi,
-    linkedin:  /https?:\/\/(?:www\.)?linkedin\.com\/(?:company|in|school)\/([a-zA-Z0-9.-]+)/gi,
-    tiktok:    /https?:\/\/(?:www\.)?tiktok\.com\/@([a-zA-Z0-9._]+)/gi,
-    twitter:   /https?:\/\/(?:www\.)?(?:twitter|x)\.com\/([a-zA-Z0-9_]+)/gi,
-    youtube:   /https?:\/\/(?:www\.)?youtube\.com\/(?:c\/|channel\/|@|user\/)([a-zA-Z0-9._-]+)/gi,
-  };
-  const noise = /\/(sharer|share|intent|dialog|popup|plugins|tr)\b/i;
-  const found = {};
-  for (const [platform, pattern] of Object.entries(patterns)) {
-    const matches = [...html.matchAll(pattern)].map(m => m[0]).filter(u => !noise.test(u));
-    const unique = [...new Set(matches)];
-    if (unique.length) found[platform] = unique[0];
-  }
-  return found;
-}
-
-async function generateSocialRead(site, socialLinks, anthropic, onChunk) {
-  const linkSummary = Object.keys(socialLinks).length
-    ? Object.entries(socialLinks).map(([p, u]) => `${p}: ${u}`).join("\n")
-    : "No social profiles linked from the site.";
-
-  const stream = anthropic.messages.stream({
-    model: "claude-sonnet-4-5",
-    max_tokens: 1500,
-    system: `You are a senior social media strategist at Zib Digital. A prospect just dropped their URL into the audit. You have their website content and the public social profile links their site links to. Deliver a tight commercial read on their social presence.
-
-Voice rules, non-negotiable:
-- Confident, commercial. No agency jargon. Banned words: "thrilled", "leverage" (verb), "synergies", "unlock", "elevate", "engagement", "awareness", "presence".
-- Commercial language: revenue, leads, conversion, CPA, attention, trust, pipeline.
-- Australian English (optimisation, behaviour, colour).
-- Direct. "Black and white, no grey areas."
-- NEVER use em-dashes (—). Use commas, periods, colons, or parentheses. Absolute rule.
-
-You cannot see their actual posts or ad accounts (Instagram/Facebook/LinkedIn block scraping). Work from: which platforms they link to, which they don't, and what their website positioning implies about where commercial attention should be focused. Be upfront that this is a strategic read, not a metric analysis. That honesty IS the pitch for a full paid-social audit in phase 2.
-
-Output structure (markdown, render exactly these headings):
-
-## Social footprint
-One short paragraph. What's linked from their site? What's missing? What does the gap say about where they are spending attention vs where their buyers are?
-
-## Three commercial opportunities
-Numbered list. Three items. Each one **bold title** followed by 1 or 2 sentences on the commercial cost of leaving it as-is. Be specific to their category.
-
-## What a full audit would surface
-One or two sentences. What we would pull from their ad accounts if they plugged them in: creative performance, CPA by audience, spend leakage, unused formats. This is the phase-2 pitch.
-
-Hard constraints: 300 words max. Reference their actual category from the site content.`,
-    messages: [{
-      role: "user",
-      content: `Prospect URL: ${site.url}
-Site title: ${site.title}
-Site description: ${site.description}
-H2s: ${site.h2s.slice(0, 8).join(" | ")}
-Body excerpt:
-"""
-${site.bodyText.slice(0, 2500)}
-"""
-
-Social profiles discovered:
-${linkSummary}
-
-Run the social read.`,
-    }],
-  });
-
-  for await (const event of stream) {
-    if (event.type === "content_block_delta" && event.delta.type === "text_delta") {
-      onChunk(event.delta.text);
-    }
-  }
 }
 
 // ──────────────────────────────────────────────────────────────────
@@ -481,44 +404,6 @@ const formatSeoForPrompt = (s) => {
     `Word count on page: ${seo.wordCount}`,
   ].join("\n");
 };
-
-// ──────────────────────────────────────────────────────────────────
-// PageSpeed Insights
-// ──────────────────────────────────────────────────────────────────
-async function runPsi(url) {
-  const params = new URLSearchParams({ url, strategy: "mobile" });
-  ["performance", "accessibility", "best-practices", "seo"].forEach((c) => params.append("category", c));
-  if (process.env.PSI_API_KEY) params.set("key", process.env.PSI_API_KEY);
-  const res = await fetch(`https://www.googleapis.com/pagespeedonline/v5/runPagespeed?${params}`, {
-    signal: AbortSignal.timeout(45_000),
-  });
-  if (!res.ok) {
-    const j = await res.json().catch(() => ({}));
-    throw new Error(j.error?.message || `PSI failed (${res.status})`);
-  }
-  const data = await res.json();
-  const lh = data.lighthouseResult;
-  if (!lh) throw new Error("PSI returned no Lighthouse result");
-  const score = (k) => Math.round(((lh.categories?.[k]?.score) || 0) * 100);
-  const opportunities = Object.values(lh.audits || {})
-    .filter((a) => a?.details?.type === "opportunity" && a.score !== null && a.score < 0.9)
-    .sort((a, b) => a.score - b.score).slice(0, 4)
-    .map((a) => ({
-      title: a.title,
-      description: (a.description || "").replace(/\[([^\]]+)\]\([^)]+\)/g, "$1"),
-      savingsMs: a.details?.overallSavingsMs,
-    }));
-  return {
-    url: lh.finalDisplayedUrl || lh.finalUrl || url,
-    scores: {
-      performance: score("performance"),
-      accessibility: score("accessibility"),
-      bestPractices: score("best-practices"),
-      seo: score("seo"),
-    },
-    opportunities,
-  };
-}
 
 // ──────────────────────────────────────────────────────────────────
 // Image generation — OpenAI gpt-image-1-mini (b64 → data URL)
@@ -696,15 +581,36 @@ async function handleAudit(req, res) {
     send("status", { phase: "fetch", message: "Reading the site…" });
     const site = await fetchSiteContent(url);
 
-    send("status", { phase: "parallel", message: "Lighthouse + image generation in parallel…" });
-
     const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
-    // Kick off PSI + (optional) ad brief in parallel
-    const psiPromise = runPsi(url).catch((e) => { console.warn("[psi]", e.message); return null; });
+    // Kick off supporting crawl fetches + (optional) ad brief in parallel.
+    send("status", { phase: "discover", message: "Discovering pages · robots.txt + sitemap…" });
+    const supportingPromise = fetchSupporting(site.url).catch((e) => {
+      console.warn("[supporting]", e.message);
+      return { robotsStatus: 0, robotsText: "", sitemapDiscovered: false, sitemapStatus: 0, sitemapUrl: `${new URL(site.url).origin}/sitemap.xml`, mainStatus: 200, redirected: false, redirectHops: 0, finalUrl: site.url };
+    });
     const briefPromise = mode === "seo"
       ? Promise.resolve(null)
       : generateImageBrief(site, anthropic).catch((e) => { console.warn("[brief]", e.message); return null; });
+
+    // Deterministic checks — runs in parallel with the strategist read below.
+    const checksPromise = (async () => {
+      try {
+        const support = await supportingPromise;
+        send("status", { phase: "crawl", message: "Crawling up to 10 pages…" });
+        const pages = await crawlSite(site.url, site.rawHtml, support, 10).catch((e) => {
+          console.warn("[crawl]", e?.message);
+          return [{ url: site.url, status: 200, html: site.rawHtml }];
+        });
+        send("crawl-progress", { done: pages.length, total: Math.max(pages.length, 10) });
+        send("status", { phase: "score", message: "Scoring 7 categories · 25 checks…" });
+        const audit = buildAudit({ url: site.url, pages, support });
+        console.log("[checks]", { overall: audit.overallScore, passed: audit.passed, issues: audit.issues, pagesCrawled: audit.pagesCrawled });
+        send("checks", audit);
+      } catch (e) {
+        console.warn("[checks]", e?.message);
+      }
+    })();
 
     send("status", { phase: "think", message: "Senior strategist read…" });
     const stream = anthropic.messages.stream({
@@ -723,27 +629,15 @@ async function handleAudit(req, res) {
       }
     }
 
-    // Strategist read done — settle PSI, then build & generate the image
-    const psi = await psiPromise;
-    if (psi) send("psi", psi);
-
     if (mode !== "seo") {
-      // Social read streams as a second strategist block
-      send("status", { phase: "social", message: "Social strategist read…" });
-      try {
-        await generateSocialRead(site, site.socialLinks || {}, anthropic, (text) => {
-          send("social-chunk", { text });
-        });
-        send("social-done", { socialLinks: site.socialLinks || {} });
-      } catch (e) {
-        console.warn("[social]", e.message);
-      }
-
-      send("status", { phase: "image", message: "Generating sample social ad creative…" });
+      send("status", { phase: "image", message: "Generating sample creative…" });
       const brief = await briefPromise;
       const image = await generateImage(site, brief).catch((e) => { console.warn("[image]", e.message); return null; });
       if (image) send("image", image);
     }
+
+    // Make sure deterministic checks SSE event was flushed before closing
+    await checksPromise;
 
     captureLead({ email, phone, website: url, source: "Homepage audit (dev)" }).catch(() => {});
     send("done", { url: site.url });
@@ -841,7 +735,7 @@ server.listen(PORT, () => {
   console.log(`\n  Zib dev server  →  http://localhost:${PORT}`);
   console.log(`  Anthropic key   →  ${process.env.ANTHROPIC_API_KEY ? "loaded" : "MISSING (set ANTHROPIC_API_KEY)"}`);
   console.log(`  Image gen       →  ${process.env.OPENAI_API_KEY ? `OpenAI ${process.env.OPENAI_IMAGE_MODEL || "gpt-image-1-mini"}` : "DISABLED"}`);
-  console.log(`  PSI key         →  ${process.env.PSI_API_KEY ? "loaded" : "unset (rate-limited)"}`);
+  console.log(`  PSI key         →  scrapped (Lighthouse disabled for now)`);
   console.log(`  Twilio SMS      →  ${process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN && process.env.TWILIO_FROM_NUMBER ? "loaded" : "unset (SMS disabled)"}`);
   console.log(`  Slack webhook   →  ${process.env.SLACK_WEBHOOK_URL ? "loaded" : "unset"}\n`);
 });

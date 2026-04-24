@@ -1614,6 +1614,7 @@ footer {
   .marquee-track { animation: none !important; }
 }
 </style>
+<link rel="stylesheet" href="/assets/audit-widget.css">
 </head>
 <body>
 
@@ -1922,37 +1923,74 @@ footer {
 
       <div class="audit-status mono" id="auditStatus" role="status" aria-live="polite"></div>
 
+      <div class="audit-stages" id="auditStages" aria-live="polite">
+        <div class="hdr">
+          <span class="ttl">Running audit</span>
+          <span class="elapsed" id="stageElapsed">0s</span>
+        </div>
+        <ul class="stage-list" id="stageList">
+          <li class="stage-item" data-stage="fetch"><span class="ring"></span><svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 7"/></svg><span class="label">Reading the homepage</span><span class="detail"></span></li>
+          <li class="stage-item" data-stage="discover"><span class="ring"></span><svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 7"/></svg><span class="label">Discovering pages · robots.txt + sitemap</span><span class="detail"></span></li>
+          <li class="stage-item" data-stage="crawl"><span class="ring"></span><svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 7"/></svg><span class="label">Crawling up to 10 pages</span><span class="detail"></span></li>
+          <li class="stage-item" data-stage="score"><span class="ring"></span><svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 7"/></svg><span class="label">Scoring 7 categories · 25 checks</span><span class="detail"></span></li>
+          <li class="stage-item" data-stage="think"><span class="ring"></span><svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 7"/></svg><span class="label">Senior strategist read</span><span class="detail"></span></li>
+        </ul>
+      </div>
+
       <div class="audit-result" id="auditResult" aria-live="polite">
         <div class="result-head">
           <div class="url"><small class="mono">Audited</small><span id="resUrl"></span></div>
           <div class="strategy mono">Senior strategist read</div>
         </div>
-        <div class="strategist" id="resStrategist"></div>
 
-        <div class="social-read" id="resSocial" hidden>
-          <div class="social-read-head">
-            <div class="lbl mono">Social strategist read</div>
+        <div class="seo-wall" id="resSeoWall" aria-live="polite">
+          <div class="wall-hero">
+            <div>
+              <div class="wall-eyebrow">Full SEO + AEO coverage</div>
+              <div class="wall-title">Technical audit. <em>Real crawl data.</em></div>
+              <div class="wall-sub">Deterministic checks run across technical, content, and AI-search readiness for <span class="domain" id="wallDomain"></span>. No AI guessing on the numbers.</div>
+              <div class="wall-stats">
+                <div class="wall-stat is-score" id="statScoreBox">
+                  <div class="lbl">Overall score</div>
+                  <div class="v" id="statScore">—</div>
+                </div>
+                <div class="wall-stat is-passed">
+                  <div class="lbl">Passed</div>
+                  <div class="v" id="statPassed">—</div>
+                </div>
+                <div class="wall-stat is-issues">
+                  <div class="lbl">Issues</div>
+                  <div class="v" id="statIssues">—</div>
+                </div>
+                <div class="wall-stat">
+                  <div class="lbl">Pages crawled</div>
+                  <div class="v" id="statPages">—</div>
+                </div>
+              </div>
+            </div>
+            <div class="wall-radar" id="resRadar" aria-label="Category score distribution"></div>
           </div>
-          <div class="strategist" id="resSocialText"></div>
+          <div class="cat-grid" id="catGrid"></div>
+          <div class="wall-footnote">
+            <span class="methodology"><span class="pulse" aria-hidden="true"></span> Live 10-page crawl · deterministic HTML checks</span>
+            <span>Zib hybrid audit · v1</span>
+          </div>
         </div>
+
+        <div class="strategist" id="resStrategist"></div>
 
         <div class="sample-ad" id="resSampleAd">
           <div class="sample-ad-img is-loading" id="resAdImg"></div>
           <div class="sample-ad-meta">
-            <div class="lbl">Sample creative · generated for you</div>
+            <div class="lbl">Phase 2 · sample creative generated for you</div>
             <h4 id="resAdHeading">Here's the kind of social ad we'd run for your brand.</h4>
             <p>One-shot creative generated by our hybrid agent off the back of your homepage. In a real engagement, this is the first of a hundred. Variants tested daily, scaled by what converts.</p>
             <div class="credit">Generated · Zib hybrid agent</div>
           </div>
         </div>
 
-        <div class="scores-wrap" id="resScoresWrap" hidden>
-          <div class="lbl-row">Performance footprint · Mobile Lighthouse</div>
-          <div class="scores" id="resScores"></div>
-        </div>
-
         <div class="audit-punchline" id="resPunchline">
-          <p>This took 30 seconds. <em>Imagine what we could do in twelve months.</em></p>
+          <p>This was done in 30 seconds. <em>Imagine what we can do in 12 months.</em></p>
         </div>
 
         <div class="audit-after">
@@ -2327,200 +2365,10 @@ footer {
     tick(); setInterval(tick, 1000);
   }
 
-  /* ─── AUDIT ·streams from /api/audit (Claude + Lighthouse) */
-  const form        = document.getElementById('auditForm');
-  const urlInput    = document.getElementById('auditUrl');
-  const emailInput  = document.getElementById('auditEmail');
-  const phoneInput  = document.getElementById('auditPhone');
-  const btn         = document.getElementById('auditBtn');
-  const statusEl    = document.getElementById('auditStatus');
-  const resultEl    = document.getElementById('auditResult');
-  const resUrl      = document.getElementById('resUrl');
-  const resScores   = document.getElementById('resScores');
-  const resScoresWrap = document.getElementById('resScoresWrap');
-  const resStrategist = document.getElementById('resStrategist');
-  const resSocial     = document.getElementById('resSocial');
-  const resSocialText = document.getElementById('resSocialText');
-  const resSampleAd = document.getElementById('resSampleAd');
-  const resAdImg    = document.getElementById('resAdImg');
-  const resPunchline = document.getElementById('resPunchline');
-
-  const tok = (n) => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
-  const scoreColor = (s) => s >= 90 ? tok('--score-good') : s >= 50 ? tok('--score-mid') : tok('--score-bad');
-  const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-  const escapeHtml = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
-
-  const setStatus = (msg, mode) => {
-    statusEl.className = 'audit-status mono' + (mode ? ' is-' + mode : '');
-    statusEl.innerHTML = mode === 'loading'
-      ? `<span class="spinner" aria-hidden="true"></span><span>${msg}</span>`
-      : msg;
-  };
-  const clearStatus = () => { statusEl.className = 'audit-status mono'; statusEl.textContent = ''; };
-
-  // Tiny streaming-safe markdown → HTML for ##, **, *, -, 1.
-  const mdToHtml = (md) => {
-    let s = escapeHtml(md);
-    s = s.replace(/\*\*([^*\n]+)\*\*/g, '<strong>$1</strong>');
-    s = s.replace(/(?<!\*)\*([^*\n]+)\*(?!\*)/g, '<em>$1</em>');
-    const lines = s.split('\n');
-    const out = [];
-    let inUl = false, inOl = false;
-    const closeLists = () => {
-      if (inUl) { out.push('</ul>'); inUl = false; }
-      if (inOl) { out.push('</ol>'); inOl = false; }
-    };
-    for (const line of lines) {
-      if (/^##\s+/.test(line)) {
-        closeLists();
-        out.push(`<h3>${line.replace(/^##\s+/, '')}</h3>`);
-      } else if (/^-\s+/.test(line)) {
-        if (!inUl) { closeLists(); out.push('<ul>'); inUl = true; }
-        out.push(`<li>${line.replace(/^-\s+/, '')}</li>`);
-      } else if (/^\d+\.\s+/.test(line)) {
-        if (!inOl) { closeLists(); out.push('<ol>'); inOl = true; }
-        out.push(`<li>${line.replace(/^\d+\.\s+/, '')}</li>`);
-      } else if (line.trim() === '') {
-        closeLists();
-      } else {
-        closeLists();
-        out.push(`<p>${line}</p>`);
-      }
-    }
-    closeLists();
-    return out.join('');
-  };
-
-  const renderScores = (scores) => {
-    const labels = [
-      ['performance',   'Performance'],
-      ['accessibility', 'Accessibility'],
-      ['bestPractices', 'Best practices'],
-      ['seo',           'SEO']
-    ];
-    resScores.innerHTML = labels.map(([key, label]) => {
-      const pct = scores[key] || 0;
-      const color = scoreColor(pct);
-      return `
-        <div class="score">
-          <div class="score-ring" style="--pct:${pct};--color:${color}"><span class="v">${pct}</span></div>
-          <div class="lbl mono">${label}</div>
-        </div>`;
-    }).join('');
-  };
-
-
-  const parseSseBlock = (block) => {
-    const ev = block.match(/^event: (.+)$/m)?.[1];
-    const data = block.match(/^data: (.+)$/m)?.[1];
-    if (!ev || !data) return null;
-    try { return { event: ev, data: JSON.parse(data) }; } catch { return null; }
-  };
-
-  if (form) {
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const url = urlInput.value.trim();
-      const email = emailInput.value.trim();
-      const phone = phoneInput.value.trim();
-      if (!url) { setStatus("Enter a website URL.", 'error'); urlInput.focus(); return; }
-      if (!emailRe.test(email)) { setStatus('Enter a valid work email.', 'error'); emailInput.focus(); return; }
-      if (phone.replace(/\D/g, '').length < 6) { setStatus('Enter a valid phone number.', 'error'); phoneInput.focus(); return; }
-
-      btn.disabled = true;
-      resultEl.classList.remove('is-shown');
-      resStrategist.innerHTML = '';
-      if (resSocial) { resSocial.hidden = true; resSocialText.innerHTML = ''; }
-      resScores.innerHTML = '';
-      resScoresWrap.hidden = true;
-      resSampleAd.classList.add('is-shown');
-      resAdImg.classList.add('is-loading');
-      resAdImg.innerHTML = '';
-      resPunchline.classList.remove('is-shown');
-      setStatus('Reading the site…', 'loading');
-
-      try {
-        const res = await fetch('/api/audit', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ url, email, phone })
-        });
-
-        if (!res.ok || !res.body) {
-          const j = await res.json().catch(() => ({}));
-          throw new Error(j.error || `Request failed (${res.status})`);
-        }
-
-        // Show panel + scroll as soon as the stream begins
-        resultEl.classList.add('is-shown');
-        resUrl.textContent = url;
-        resultEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
-
-        const reader = res.body.getReader();
-        const decoder = new TextDecoder();
-        let buf = '';
-        let strategistText = '';
-        let socialText = '';
-
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-          buf += decoder.decode(value, { stream: true });
-          const blocks = buf.split('\n\n');
-          buf = blocks.pop() || '';
-
-          for (const raw of blocks) {
-            const parsed = parseSseBlock(raw);
-            if (!parsed) continue;
-            const { event, data } = parsed;
-
-            if (event === 'status') {
-              setStatus(data.message, 'loading');
-            } else if (event === 'chunk') {
-              strategistText += data.text;
-              resStrategist.innerHTML = mdToHtml(strategistText) + '<span class="typing"></span>';
-            } else if (event === 'psi') {
-              resUrl.textContent = data.url || url;
-              renderScores(data.scores);
-              resScoresWrap.hidden = false;
-            } else if (event === 'social-chunk') {
-              socialText += data.text;
-              if (resSocial) {
-                resSocial.hidden = false;
-                resSocialText.innerHTML = mdToHtml(socialText) + '<span class="typing"></span>';
-              }
-            } else if (event === 'social-done') {
-              if (resSocial && socialText) {
-                resSocialText.innerHTML = mdToHtml(socialText);
-              }
-            } else if (event === 'image') {
-              resAdImg.classList.remove('is-loading');
-              resAdImg.innerHTML = `<img src="${data.url}" alt="Sample ad creative generated for your brand" loading="lazy" />`;
-              resSampleAd.classList.add('is-shown');
-            } else if (event === 'done') {
-              resStrategist.innerHTML = mdToHtml(strategistText);
-              if (resAdImg.classList.contains('is-loading')) {
-                resSampleAd.classList.remove('is-shown');
-                resAdImg.classList.remove('is-loading');
-              }
-              resPunchline.classList.add('is-shown');
-              clearStatus();
-            } else if (event === 'error') {
-              throw new Error(data.message || 'Audit failed');
-            }
-          }
-        }
-      } catch (err) {
-        setStatus('Audit failed: ' + (err.message || 'try again'), 'error');
-        resStrategist.innerHTML = '';
-      } finally {
-        btn.disabled = false;
-      }
-    });
-  }
+  /* Audit widget submit handler + renderers now live in /assets/audit-widget.js */
 
 })();
 </script>
+<script src="/assets/audit-widget.js"></script>
 </body>
 </html>
