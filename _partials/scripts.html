@@ -25,6 +25,28 @@
       });
     }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
     document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => io.observe(el));
+
+    // Count-up for [data-count] numbers
+    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const cIO = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (!e.isIntersecting) return;
+        const el = e.target;
+        const target = parseInt(el.dataset.count, 10) || 0;
+        cIO.unobserve(el);
+        if (reduce) { el.textContent = target.toLocaleString(); return; }
+        const duration = 1600;
+        const start = performance.now();
+        const tick = (t) => {
+          const p = Math.min(1, (t - start) / duration);
+          const eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = Math.round(target * eased).toLocaleString();
+          if (p < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      });
+    }, { threshold: 0.4 });
+    document.querySelectorAll('[data-count]').forEach(el => cIO.observe(el));
   }
 
   // Melbourne clock
