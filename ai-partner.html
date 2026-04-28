@@ -1,0 +1,937 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<title>AI Partner · Build one agent. Then build ten. · Zib Digital</title>
+<meta name="description" content="We build a marketing agent in your business — content, lead-qual, reporting, review, competitor watch. You own it. We check in. Setup + monthly. Senior strategist on tap." />
+<!-- @include _partials/head.html -->
+<style>
+/* Page-specific overrides + sections — base styles live in /assets/base.css */
+:root { --section-y: clamp(96px, 14vh, 180px); }
+
+/* ─── FOOTER (dark variant — matches ai-services aesthetic) ─── */
+footer {
+  background: var(--ink);
+  color: #fff;
+  padding: clamp(72px, 8vw, 96px) 0 32px;
+}
+footer .brand img { filter: brightness(0) invert(1); }
+.foot-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: 48px;
+  margin-bottom: 56px;
+}
+@media (max-width: 880px) { .foot-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 480px) { .foot-grid { grid-template-columns: 1fr; } }
+.foot-tag {
+  color: rgba(255,255,255,0.55);
+  margin-top: 20px;
+  max-width: 38ch;
+  font-size: 14px;
+  line-height: 1.55;
+}
+footer h4 {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  margin-bottom: 18px;
+  font-weight: 500;
+}
+footer ul { list-style: none; }
+footer li { margin-bottom: 10px; font-size: 14px; }
+footer a { color: rgba(255,255,255,0.85); transition: color 200ms var(--ease); }
+footer a:hover { color: var(--accent); }
+.foot-bar {
+  border-top: 0.5px solid rgba(255,255,255,0.12);
+  padding-top: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  color: rgba(255,255,255,0.5);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  flex-wrap: wrap;
+}
+
+/* ─── HERO ─── */
+.hero {
+  padding-top: clamp(48px, 6vw, 88px);
+  padding-bottom: clamp(64px, 8vw, 120px);
+  border-bottom: 0.5px solid var(--rule);
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: "";
+  position: absolute;
+  top: -200px; right: -200px;
+  width: 600px; height: 600px;
+  background: radial-gradient(circle at center, var(--accent-tint), transparent 60%);
+  opacity: 0.5;
+  z-index: 0;
+  pointer-events: none;
+}
+.hero .container { position: relative; z-index: 1; }
+.hero-grid {
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: clamp(40px, 6vw, 88px);
+  align-items: center;
+}
+@media (max-width: 980px) { .hero-grid { grid-template-columns: 1fr; gap: 56px; } }
+
+.hero .eyebrow {
+  color: var(--accent);
+  margin-bottom: clamp(28px, 3vw, 40px);
+  display: inline-flex; align-items: center; gap: 10px;
+}
+.hero .eyebrow::before { content: ""; width: 24px; height: 0.5px; background: var(--accent); }
+.hero .eyebrow .dot { width: 6px; height: 6px; background: var(--accent); border-radius: 50%; display: inline-block; margin: 0 4px; }
+
+.hero-h {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(40px, 5.6vw, 88px);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  margin-bottom: clamp(24px, 3vw, 36px);
+  text-wrap: balance;
+}
+.hero-sub {
+  font-size: clamp(17px, 1.4vw, 21px);
+  line-height: 1.5;
+  color: var(--muted);
+  max-width: 56ch;
+  margin-bottom: clamp(32px, 4vw, 48px);
+}
+.hero-sub strong { color: var(--ink); font-weight: 500; }
+.hero-ctas { display: flex; flex-wrap: wrap; gap: 14px; margin-bottom: clamp(28px, 3vw, 40px); }
+
+.hero-meta {
+  display: flex; flex-wrap: wrap; gap: 20px 28px;
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--muted);
+}
+.hero-meta span { display: inline-flex; align-items: center; gap: 8px; }
+.hero-meta .dot { width: 5px; height: 5px; background: var(--accent); border-radius: 50%; }
+
+/* ─── AGENT UI MOCK ─── */
+.agent-ui {
+  background: var(--ink);
+  border-radius: 16px;
+  padding: 0;
+  font-family: var(--mono);
+  color: #fff;
+  box-shadow: 0 30px 80px -20px rgba(0,0,0,0.35), 0 8px 24px -8px rgba(0,0,0,0.2);
+  overflow: hidden;
+  position: relative;
+}
+.agent-ui-bar {
+  display: flex; align-items: center; gap: 8px;
+  padding: 14px 18px;
+  background: rgba(255,255,255,0.04);
+  border-bottom: 0.5px solid rgba(255,255,255,0.08);
+}
+.agent-ui-bar .lights { display: flex; gap: 6px; }
+.agent-ui-bar .lights span { width: 11px; height: 11px; border-radius: 50%; background: rgba(255,255,255,0.18); }
+.agent-ui-bar .lights span:first-child { background: #FF5F56; }
+.agent-ui-bar .lights span:nth-child(2) { background: #FFBD2E; }
+.agent-ui-bar .lights span:nth-child(3) { background: #27C93F; }
+.agent-ui-bar .path { flex: 1; text-align: center; font-size: 11px; color: rgba(255,255,255,0.5); letter-spacing: 0.08em; }
+.agent-ui-body { padding: clamp(20px, 2.5vw, 28px); }
+.agent-ui-row {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 0;
+  border-bottom: 0.5px solid rgba(255,255,255,0.06);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+}
+.agent-ui-row:last-child { border-bottom: 0; }
+.agent-ui-row .label { color: rgba(255,255,255,0.5); text-transform: uppercase; font-size: 10px; letter-spacing: 0.16em; }
+.agent-ui-row .val { color: #fff; }
+.agent-ui-row .val .live { color: var(--score-good); }
+.agent-ui-row .val .accent { color: var(--accent); }
+.agent-ui-row .val .pulse {
+  display: inline-block; width: 6px; height: 6px; border-radius: 50%;
+  background: var(--score-good); margin-right: 6px;
+  animation: livepulse 1.6s ease-in-out infinite;
+}
+@keyframes livepulse { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
+
+.agent-ui-stream {
+  margin-top: 18px;
+  padding: 16px;
+  background: rgba(255,255,255,0.03);
+  border-radius: 8px;
+  font-size: 12px;
+  line-height: 1.7;
+  color: rgba(255,255,255,0.85);
+  border: 0.5px solid rgba(255,255,255,0.06);
+}
+.agent-ui-stream .ts { color: rgba(255,255,255,0.4); margin-right: 10px; }
+.agent-ui-stream .tag { color: var(--accent); font-weight: 500; }
+.agent-ui-stream .ok { color: var(--score-good); }
+.agent-ui-stream .typing::after {
+  content: "▋"; display: inline-block; margin-left: 2px;
+  color: var(--accent); animation: blink 1s steps(2, end) infinite;
+}
+@keyframes blink { 50% { opacity: 0; } }
+
+/* ─── LOGOS ─── */
+.logos {
+  border-top: 0.5px solid var(--rule);
+  border-bottom: 0.5px solid var(--rule);
+  padding: clamp(28px, 3.5vw, 48px) 0;
+  background: var(--bg);
+}
+.logos-eyebrow { color: var(--muted); margin-bottom: clamp(20px, 2.5vw, 32px); text-align: center; display: block; }
+.logos-eyebrow strong { color: var(--ink); font-weight: 500; }
+.logo-row {
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  gap: clamp(16px, 2.5vw, 40px) clamp(16px, 2vw, 32px);
+  align-items: center;
+}
+.logo-cell { display: grid; place-items: center; height: 56px; padding: 4px; }
+.logo-cell img {
+  max-height: 100%; max-width: 100%; width: auto; height: auto;
+  object-fit: contain;
+  transition: transform 320ms var(--ease);
+}
+.logo-cell:hover img { transform: translateY(-1px); }
+@media (max-width: 1024px) { .logo-row { grid-template-columns: repeat(4, 1fr); } }
+@media (max-width: 560px) { .logo-row { grid-template-columns: repeat(3, 1fr); gap: 20px 16px; } }
+
+/* ─── SECTION SHELL ─── */
+.section { padding-top: var(--section-y); padding-bottom: var(--section-y); }
+.section-head { max-width: 760px; margin-bottom: clamp(56px, 7vw, 96px); }
+.section-eyebrow { color: var(--accent); margin-bottom: 24px; display: inline-flex; align-items: center; gap: 10px; }
+.section-eyebrow::before { content: ""; width: 24px; height: 0.5px; background: var(--accent); }
+.section-h {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(36px, 4.4vw, 64px);
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+  text-wrap: balance;
+  margin-bottom: 24px;
+}
+.section-sub { color: var(--muted); font-size: clamp(16px, 1.2vw, 19px); max-width: 60ch; }
+.section-sub strong { color: var(--ink); font-weight: 500; }
+
+/* ─── HOW IT WORKS ─── */
+.how { background: var(--paper); border-top: 0.5px solid var(--rule); border-bottom: 0.5px solid var(--rule); }
+.how-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: clamp(24px, 3vw, 48px);
+  position: relative;
+}
+.how-grid::before {
+  content: ""; position: absolute;
+  left: 0; right: 0; top: 36px;
+  height: 0.5px; background: var(--rule-2);
+  z-index: 0;
+}
+@media (max-width: 880px) { .how-grid { grid-template-columns: 1fr; } .how-grid::before { display: none; } }
+.how-step { position: relative; z-index: 1; background: var(--paper); padding-right: clamp(8px, 1vw, 16px); }
+.how-num {
+  display: inline-flex; align-items: center; justify-content: center;
+  width: 72px; height: 72px;
+  font-family: var(--display); font-size: 36px; font-weight: 500;
+  color: var(--ink); background: var(--bg);
+  border: 0.5px solid var(--rule-2); border-radius: 50%;
+  margin-bottom: 28px; letter-spacing: -0.02em;
+}
+.how-step h3 {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(22px, 2vw, 28px); line-height: 1.15;
+  margin-bottom: 12px; letter-spacing: -0.02em;
+}
+.how-step h3 em { color: var(--accent); }
+.how-step p { color: var(--muted); font-size: 16px; line-height: 1.55; }
+
+/* ─── AGENT LIBRARY ─── */
+.library-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  border-top: 0.5px solid var(--rule);
+  border-left: 0.5px solid var(--rule);
+}
+.library-grid > .agent-card {
+  border-right: 0.5px solid var(--rule);
+  border-bottom: 0.5px solid var(--rule);
+  padding: clamp(28px, 3vw, 40px);
+  transition: background 240ms var(--ease);
+  cursor: default;
+  position: relative;
+}
+.library-grid > .agent-card:hover { background: var(--paper); }
+.library-grid > .agent-card .icon {
+  width: 44px; height: 44px;
+  display: inline-flex; align-items: center; justify-content: center;
+  border: 0.5px solid var(--ink); border-radius: 10px;
+  margin-bottom: 28px;
+  font-family: var(--mono); font-size: 16px; font-weight: 500;
+}
+.library-grid > .agent-card h3 {
+  font-family: var(--display); font-weight: 500;
+  font-size: 22px; line-height: 1.2; margin-bottom: 10px; letter-spacing: -0.02em;
+}
+.library-grid > .agent-card p { color: var(--muted); font-size: 15px; line-height: 1.55; margin-bottom: 24px; }
+.library-grid > .agent-card .tag {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--muted-2);
+}
+.library-grid > .agent-card .tag .dash { color: var(--accent); margin-right: 6px; }
+@media (max-width: 880px) { .library-grid { grid-template-columns: 1fr; } }
+
+/* ─── PRODUCT CLOSE-UPS ─── */
+.closeup {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 6vw, 96px);
+  align-items: center;
+  padding: clamp(56px, 7vw, 96px) 0;
+  border-top: 0.5px solid var(--rule);
+}
+.closeup.flip { direction: rtl; }
+.closeup.flip > * { direction: ltr; }
+.closeup-mono { color: var(--accent); margin-bottom: 20px; }
+.closeup h3 {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(28px, 3vw, 44px); line-height: 1.05; letter-spacing: -0.025em;
+  margin-bottom: 20px; text-wrap: balance;
+}
+.closeup h3 em { color: var(--accent); }
+.closeup p { color: var(--muted); font-size: 17px; line-height: 1.55; margin-bottom: 16px; }
+.closeup .visual {
+  background: var(--ink); border-radius: 14px; padding: 28px;
+  font-family: var(--mono); color: #fff; font-size: 13px; line-height: 1.7;
+  box-shadow: 0 30px 80px -20px rgba(0,0,0,0.3);
+  position: relative; overflow: hidden;
+}
+.closeup .visual.paper {
+  background: var(--paper); color: var(--ink);
+  border: 0.5px solid var(--rule-2);
+  box-shadow: 0 24px 60px -20px rgba(0,0,0,0.12);
+}
+.closeup .visual .vlabel {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(255,255,255,0.45); margin-bottom: 14px;
+}
+.closeup .visual.paper .vlabel { color: var(--muted); }
+.closeup .visual .row { display: flex; justify-content: space-between; padding: 8px 0; border-bottom: 0.5px dashed rgba(255,255,255,0.1); }
+.closeup .visual.paper .row { border-bottom: 0.5px dashed var(--rule); }
+.closeup .visual .row:last-child { border-bottom: 0; }
+.closeup .visual .row .v { color: var(--accent); }
+.closeup .visual.paper .row .v { color: var(--accent); }
+@media (max-width: 880px) {
+  .closeup, .closeup.flip { grid-template-columns: 1fr; direction: ltr; }
+}
+
+/* ─── MOAT / OWN IT ─── */
+.own { background: var(--paper); border-top: 0.5px solid var(--rule); border-bottom: 0.5px solid var(--rule); }
+.own-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: clamp(24px, 3vw, 48px);
+}
+@media (max-width: 880px) { .own-grid { grid-template-columns: 1fr; } }
+.own-pillar .lbl { color: var(--accent); margin-bottom: 16px; }
+.own-pillar h4 { font-family: var(--display); font-weight: 500; font-size: 22px; letter-spacing: -0.02em; margin-bottom: 8px; }
+.own-pillar p { color: var(--muted); font-size: 16px; line-height: 1.55; }
+
+/* ─── IS THIS FOR YOU ─── */
+.fit-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(24px, 3vw, 48px); }
+@media (max-width: 880px) { .fit-grid { grid-template-columns: 1fr; } }
+.fit-card { background: var(--bg); border: 0.5px solid var(--rule-2); border-radius: 14px; padding: clamp(28px, 3vw, 40px); }
+.fit-card.no { background: var(--dim); }
+.fit-card h3 {
+  font-family: var(--display); font-weight: 500; font-size: 22px; letter-spacing: -0.02em;
+  margin-bottom: 24px; display: inline-flex; align-items: center; gap: 12px;
+}
+.fit-card h3 .mark {
+  width: 28px; height: 28px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: var(--mono); font-size: 14px; font-weight: 600;
+}
+.fit-card.yes h3 .mark { background: var(--accent); color: #fff; }
+.fit-card.no h3 .mark { background: var(--ink); color: #fff; opacity: 0.7; }
+.fit-card ul { list-style: none; }
+.fit-card li {
+  display: flex; gap: 14px; padding: 14px 0;
+  border-bottom: 0.5px solid var(--rule);
+  font-size: 16px; line-height: 1.5; color: var(--ink);
+}
+.fit-card li:last-child { border-bottom: 0; }
+.fit-card li::before { flex-shrink: 0; font-family: var(--mono); font-weight: 500; width: 20px; }
+.fit-card.yes li::before { content: "—"; color: var(--accent); }
+.fit-card.no li::before { content: "×"; color: var(--muted-2); }
+.fit-card.no li { color: var(--muted); }
+.fit-foot { margin-top: 32px; text-align: center; font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; color: var(--muted); }
+.fit-foot a { color: var(--ink); border-bottom: 0.5px solid var(--ink); }
+
+/* ─── COMPARE ─── */
+.compare {
+  border-top: 0.5px solid var(--rule);
+  border-bottom: 0.5px solid var(--rule);
+  background: var(--paper);
+}
+.compare-table {
+  width: 100%; border-collapse: separate; border-spacing: 0;
+  background: var(--bg); border: 0.5px solid var(--rule-2);
+  border-radius: 14px; overflow: hidden;
+}
+.compare-table th, .compare-table td {
+  padding: 18px 24px; text-align: left; font-size: 15px;
+  border-bottom: 0.5px solid var(--rule); vertical-align: top;
+}
+.compare-table th { font-family: var(--display); font-weight: 500; font-size: 17px; background: var(--paper); }
+.compare-table thead th { background: var(--paper); padding: 24px; vertical-align: bottom; }
+.compare-table thead th:nth-child(2) { border-right: 0.5px solid var(--rule); }
+.compare-table thead th:first-child { color: var(--muted); font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; font-weight: 500; }
+.compare-table thead .col-tag { display: block; font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+.compare-table tbody tr:last-child td { border-bottom: 0; }
+.compare-table td:first-child { color: var(--muted); width: 32%; }
+.compare-table td:nth-child(2) { border-right: 0.5px solid var(--rule); }
+.compare-table .check { color: var(--accent); font-weight: 500; }
+.compare-table .x { color: var(--muted-2); }
+@media (max-width: 780px) {
+  .compare-table th, .compare-table td { padding: 14px 16px; font-size: 14px; }
+  .compare-table thead th { padding: 18px 16px; }
+}
+
+/* ─── PRICING (dark Resend-style) ─── */
+.pricing {
+  background: var(--ink); color: #fff;
+  padding-top: clamp(96px, 12vh, 160px);
+  padding-bottom: clamp(96px, 12vh, 160px);
+  position: relative; overflow: hidden;
+}
+.pricing::before {
+  content: ""; position: absolute;
+  top: -100px; left: 50%; transform: translateX(-50%);
+  width: 700px; height: 500px;
+  background: radial-gradient(circle, rgba(255,98,0,0.18), transparent 60%);
+  pointer-events: none;
+}
+.pricing .container { position: relative; z-index: 1; }
+.pricing .section-eyebrow { color: var(--accent); }
+.pricing .section-h { color: #fff; }
+.pricing .section-sub { color: rgba(255,255,255,0.6); }
+.pricing .section-sub strong { color: #fff; }
+.tier-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: 20px; margin-top: clamp(40px, 5vw, 64px);
+}
+@media (max-width: 880px) { .tier-grid { grid-template-columns: 1fr; } }
+.tier {
+  background: rgba(255,255,255,0.03);
+  border: 0.5px solid rgba(255,255,255,0.1);
+  border-radius: 16px;
+  padding: clamp(28px, 3vw, 36px);
+  display: flex; flex-direction: column; position: relative;
+}
+.tier.featured { background: rgba(255,98,0,0.06); border-color: rgba(255,98,0,0.5); }
+.tier .badge {
+  position: absolute; top: -12px; right: 24px;
+  background: var(--accent); color: #fff;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 6px 12px; border-radius: 999px; font-weight: 500;
+}
+.tier h3 { font-family: var(--display); font-weight: 500; font-size: 22px; letter-spacing: -0.02em; margin-bottom: 8px; }
+.tier .desc { color: rgba(255,255,255,0.55); font-size: 14px; line-height: 1.5; margin-bottom: 28px; min-height: 42px; }
+.tier .price { font-family: var(--display); font-weight: 500; font-size: 44px; line-height: 1; letter-spacing: -0.03em; margin-bottom: 6px; }
+.tier .price .cur { font-size: 22px; vertical-align: super; margin-right: 4px; opacity: 0.7; }
+.tier .price .per { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; color: rgba(255,255,255,0.5); margin-left: 6px; text-transform: uppercase; font-weight: 400; }
+.tier .setup {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: rgba(255,255,255,0.5);
+  padding-bottom: 24px; border-bottom: 0.5px solid rgba(255,255,255,0.1); margin-bottom: 24px;
+}
+.tier ul { list-style: none; flex: 1; margin-bottom: 28px; }
+.tier li { padding: 10px 0; font-size: 14px; line-height: 1.5; display: flex; gap: 12px; color: rgba(255,255,255,0.85); }
+.tier li::before { content: "—"; color: var(--accent); font-family: var(--mono); font-weight: 500; flex-shrink: 0; width: 16px; }
+.tier .tier-cta {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  padding: 14px 22px; border-radius: 999px;
+  font-family: var(--display); font-size: 14px; font-weight: 500;
+  background: rgba(255,255,255,0.08); color: #fff;
+  border: 0.5px solid rgba(255,255,255,0.15);
+  transition: background 200ms var(--ease), transform 200ms var(--ease);
+}
+.tier .tier-cta:hover { background: rgba(255,255,255,0.14); transform: translateY(-1px); }
+.tier.featured .tier-cta { background: var(--accent); border-color: var(--accent); }
+.tier.featured .tier-cta:hover { background: #FF7A22; }
+.pricing .footnote { margin-top: 32px; text-align: center; font-family: var(--mono); font-size: 11px; letter-spacing: 0.08em; color: rgba(255,255,255,0.45); }
+
+/* ─── FAQ ─── */
+.faq-list { max-width: 880px; margin: 0 auto; }
+.faq-item { border-bottom: 0.5px solid var(--rule); padding: 28px 0; }
+.faq-item summary {
+  list-style: none; cursor: pointer;
+  display: flex; align-items: flex-start; justify-content: space-between; gap: 24px;
+  font-family: var(--display); font-weight: 500;
+  font-size: 19px; line-height: 1.35; letter-spacing: -0.015em;
+  color: var(--ink); transition: color 200ms var(--ease);
+}
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary:hover { color: var(--accent); }
+.faq-item summary .plus { flex-shrink: 0; width: 24px; height: 24px; position: relative; transition: transform 200ms var(--ease); }
+.faq-item summary .plus::before, .faq-item summary .plus::after { content: ""; position: absolute; background: var(--ink); left: 50%; top: 50%; }
+.faq-item summary .plus::before { width: 14px; height: 1px; transform: translate(-50%, -50%); }
+.faq-item summary .plus::after { width: 1px; height: 14px; transform: translate(-50%, -50%); transition: transform 200ms var(--ease); }
+.faq-item[open] summary .plus::after { transform: translate(-50%, -50%) rotate(90deg); opacity: 0; }
+.faq-item p { margin-top: 16px; color: var(--muted); font-size: 16px; line-height: 1.6; max-width: 70ch; }
+
+/* ─── FINAL CTA ─── */
+.final-cta {
+  text-align: center;
+  padding-top: clamp(96px, 12vh, 160px);
+  padding-bottom: clamp(96px, 12vh, 160px);
+  border-top: 0.5px solid var(--rule);
+}
+.final-cta .section-eyebrow { justify-content: center; }
+.final-cta .section-eyebrow::before { display: none; }
+.final-cta h2 {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(40px, 5vw, 80px); line-height: 1.02; letter-spacing: -0.035em;
+  text-wrap: balance; margin: 0 auto 24px; max-width: 22ch;
+}
+.final-cta h2 em { color: var(--accent); }
+.final-cta p { color: var(--muted); font-size: 18px; max-width: 56ch; margin: 0 auto 40px; }
+.final-cta .cta-buttons { display: inline-flex; flex-wrap: wrap; gap: 14px; justify-content: center; }
+</style>
+</head>
+<body>
+
+<!-- @include _partials/nav.html -->
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <div class="mono eyebrow reveal">AI Partner<span class="dot"></span>Do it with me</div>
+        <h1 class="hero-h reveal">
+          Build one agent. <em>Then build ten.</em>
+        </h1>
+        <p class="hero-sub reveal">
+          <strong>We build a marketing agent inside your business.</strong> Connected to your tools, trained on your data, and owned by you. We meet monthly to refine the playbook and add the next one.
+        </p>
+        <div class="hero-ctas reveal">
+          <a class="btn btn-primary" href="#pricing">See pricing <span class="arr">→</span></a>
+          <a class="btn btn-outline" href="#how">How it works</a>
+        </div>
+        <div class="hero-meta reveal">
+          <span><span class="dot"></span>2 weeks to launch</span>
+          <span><span class="dot"></span>Senior strategist on tap</span>
+          <span><span class="dot"></span>Your stack, your data</span>
+        </div>
+      </div>
+
+      <div class="agent-ui reveal" aria-hidden="true">
+        <div class="agent-ui-bar">
+          <div class="lights"><span></span><span></span><span></span></div>
+          <div class="path">agents.zib / content-agent</div>
+        </div>
+        <div class="agent-ui-body">
+          <div class="agent-ui-row"><span class="label">Agent</span><span class="val">Content Agent · v2.4</span></div>
+          <div class="agent-ui-row"><span class="label">Status</span><span class="val"><span class="pulse"></span><span class="live">Running</span></span></div>
+          <div class="agent-ui-row"><span class="label">Last run</span><span class="val">2 min ago</span></div>
+          <div class="agent-ui-row"><span class="label">This month</span><span class="val"><span class="accent">42</span> drafts · <span class="accent">18</span> published</span></div>
+          <div class="agent-ui-row"><span class="label">Owner</span><span class="val">your-team@your-co</span></div>
+          <div class="agent-ui-stream">
+            <div><span class="ts">10:42:01</span><span class="tag">[brief]</span> Fetching topic from CMS queue…</div>
+            <div><span class="ts">10:42:03</span><span class="tag">[research]</span> 7 sources analysed</div>
+            <div><span class="ts">10:42:18</span><span class="tag">[draft]</span> 1,420 words · brand voice ✓</div>
+            <div><span class="ts">10:42:22</span><span class="tag">[seo]</span> Schema added · meta written</div>
+            <div><span class="ts">10:42:24</span><span class="tag">[publish]</span> <span class="ok">Pushed to staging</span></div>
+            <div><span class="ts">10:42:25</span><span class="typing">Awaiting your review</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOGOS -->
+<section class="logos">
+  <div class="container">
+    <div class="mono logos-eyebrow reveal"><strong>Trusted by 300+ operators</strong> · since 2009</div>
+    <div class="logo-row reveal-stagger">
+      <div class="logo-cell"><img src="/assets/logo-puma.jpg" alt="Puma" /></div>
+      <div class="logo-cell"><img src="/assets/logo-harcourts.jpg" alt="Harcourts" /></div>
+      <div class="logo-cell"><img src="/assets/logo-liberty.jpg" alt="Liberty Financial" /></div>
+      <div class="logo-cell"><img src="/assets/logo-thirstycamel.jpg" alt="Thirsty Camel" /></div>
+      <div class="logo-cell"><img src="/assets/logo-haileybury.jpg" alt="Haileybury" /></div>
+      <div class="logo-cell"><img src="/assets/logo-netballaustralia.jpg" alt="Netball Australia" /></div>
+      <div class="logo-cell"><img src="/assets/logo-stirlingsports.jpg" alt="Stirling Sports" /></div>
+      <div class="logo-cell"><img src="/assets/logo-morphyrichards.jpg" alt="Morphy Richards" /></div>
+      <div class="logo-cell"><img src="/assets/logo-prahranhotel.jpg" alt="Prahran Hotel" /></div>
+      <div class="logo-cell"><img src="/assets/logo-muk.jpg" alt="Muk Haircare" /></div>
+      <div class="logo-cell"><img src="/assets/logo-mgroup.jpg" alt="M Group Trades &amp; Labour" /></div>
+      <div class="logo-cell"><img src="/assets/logo-magic.jpg" alt="Magic" /></div>
+      <div class="logo-cell"><img src="/assets/logo-lonsdalelinks.jpg" alt="Lonsdale Links" /></div>
+      <div class="logo-cell"><img src="/assets/logo-standrews.jpg" alt="St Andrews Beach Brewery" /></div>
+      <div class="logo-cell"><img src="/assets/logo-link.jpg" alt="Link" /></div>
+      <div class="logo-cell"><img src="/assets/logo-twelveboardstore.jpg" alt="Twelve Board Store" /></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section how" id="how">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="mono section-eyebrow">How it works</div>
+      <h2 class="section-h">Three steps. <em>Then it's yours.</em></h2>
+      <p class="section-sub">No black boxes. No 12-month lock-ins. <strong>You see exactly how the agent is built, where it lives, and what it does</strong> — because in three months we want you running it without us.</p>
+    </div>
+    <div class="how-grid reveal-stagger">
+      <div class="how-step">
+        <div class="how-num">01</div>
+        <h3>Scope <em>the right first agent</em></h3>
+        <p>30-minute commercial conversation. We map your stack, your data, and the one job most worth automating first. You walk away with a one-page brief — go or no-go.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-num">02</div>
+        <h3>Build <em>inside your stack</em></h3>
+        <p>Two weeks. We architect the agent, connect it to your tools, train it on your data, and ship it to your environment. Your team shadows the build — by week two they understand it.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-num">03</div>
+        <h3>Hand it over <em>and stay on tap</em></h3>
+        <p>Monthly senior-strategist check-ins. We refine the playbook, add capability, and tell you when it's time to build the next agent. You own everything — code, data, workflow.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AGENT LIBRARY -->
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="mono section-eyebrow">The agent library</div>
+      <h2 class="section-h">Five agents. <em>Pick where to start.</em></h2>
+      <p class="section-sub">Each agent is a discrete, ownable unit of marketing labour. Most clients start with one and grow from there. <strong>We'll tell you which one to build first based on where the leverage is.</strong></p>
+    </div>
+    <div class="library-grid">
+      <article class="agent-card">
+        <div class="icon">01</div>
+        <h3>SEO agent</h3>
+        <p>Researches keywords, writes ranking content in your brand voice, optimises on-page, ships schema and internal links. Plugged into your CMS, watched by a senior strategist.</p>
+        <div class="tag"><span class="dash">—</span>Most popular first agent</div>
+      </article>
+      <article class="agent-card">
+        <div class="icon">02</div>
+        <h3>Google Ads agent</h3>
+        <p>Manages bids, query-level optimisation, ad copy variants and negative keyword work across Search and Performance Max. Reports in CPA and ROAS, not impressions.</p>
+        <div class="tag"><span class="dash">—</span>Performance-led</div>
+      </article>
+      <article class="agent-card">
+        <div class="icon">03</div>
+        <h3>Social Ads agent</h3>
+        <p>Generates creative variants nightly across Meta, TikTok and LinkedIn. Tests audiences, paces budgets to CAC, surfaces the winning hook week after week.</p>
+        <div class="tag"><span class="dash">—</span>Creative + media</div>
+      </article>
+      <article class="agent-card">
+        <div class="icon">04</div>
+        <h3>Lead-qualification agent</h3>
+        <p>Scores every inbound lead, drafts the first reply in your tone, routes to the right person. Lives in HubSpot, Pipedrive or a Sheet.</p>
+        <div class="tag"><span class="dash">—</span>Highest ROI for B2B</div>
+      </article>
+      <article class="agent-card">
+        <div class="icon">05</div>
+        <h3>Reporting agent</h3>
+        <p>Pulls GA4, GSC, Ads, Shopify each week. Writes one paragraph per channel in plain English. Flags what changed and what to do.</p>
+        <div class="tag"><span class="dash">—</span>Replaces dashboard fatigue</div>
+      </article>
+      <article class="agent-card">
+        <div class="icon">06</div>
+        <h3>Review &amp; reputation agent</h3>
+        <p>Monitors Google, Trustpilot, ProductReview. Drafts on-brand responses for your approval. Surfaces patterns worth acting on.</p>
+        <div class="tag"><span class="dash">—</span>Local + multi-location</div>
+      </article>
+      <article class="agent-card">
+        <div class="icon">07</div>
+        <h3>Competitor-watch agent</h3>
+        <p>Tracks rivals' rankings, ad creative, pricing and positioning. Weekly diff in your inbox — what changed, what it means.</p>
+        <div class="tag"><span class="dash">—</span>Strategic intel layer</div>
+      </article>
+      <article class="agent-card">
+        <div class="icon">08</div>
+        <h3>Content agent</h3>
+        <p>Long-form posts, landing pages, email and social copy in your brand voice. Brief in, draft out — straight to your CMS for review.</p>
+        <div class="tag"><span class="dash">—</span>Pairs with SEO agent</div>
+      </article>
+      <article class="agent-card">
+        <div class="icon">+</div>
+        <h3>Custom agent</h3>
+        <p>If your business has a job worth automating that's not on this list, we'll scope it. Most are smaller than people think.</p>
+        <div class="tag"><span class="dash">—</span>Bespoke build</div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCT CLOSE-UPS -->
+<section class="section" style="padding-top: 0;">
+  <div class="container">
+    <div class="closeup">
+      <div class="reveal">
+        <div class="mono closeup-mono">Inside the agent</div>
+        <h3>Drafts arrive ready for review. <em>Not for rewrites.</em></h3>
+        <p>Every output goes through a brand-voice pass, an SEO pass, and an editorial pass before it touches your inbox. By month three, your team is approving — not rewriting.</p>
+        <p>Built on your style guide, your tone of voice, your past content. Not a generic GPT prompt.</p>
+      </div>
+      <div class="visual reveal" aria-hidden="true">
+        <div class="vlabel">Content agent · this week</div>
+        <div class="row"><span>Drafts written</span><span class="v">12</span></div>
+        <div class="row"><span>Brand voice score</span><span class="v">94 / 100</span></div>
+        <div class="row"><span>Avg. words / piece</span><span class="v">1,380</span></div>
+        <div class="row"><span>Approved without edits</span><span class="v">9</span></div>
+        <div class="row"><span>Sent to editor</span><span class="v">3</span></div>
+      </div>
+    </div>
+    <div class="closeup flip">
+      <div class="reveal">
+        <div class="mono closeup-mono">Weekly brief</div>
+        <h3>One paragraph per channel. <em>No more dashboards.</em></h3>
+        <p>Monday morning, your reporting agent has read GA4, GSC, Google Ads, Meta and Shopify. It writes the brief in plain English — what moved, what didn't, what to do this week.</p>
+        <p>Same format every week. Skim it in 90 seconds. Forward it to your board.</p>
+      </div>
+      <div class="visual paper reveal" aria-hidden="true">
+        <div class="vlabel">Weekly brief · Mon 27 Apr</div>
+        <div class="row"><span>Organic sessions</span><span class="v">+12.4%</span></div>
+        <div class="row"><span>Google Ads CPA</span><span class="v">-$8.20</span></div>
+        <div class="row"><span>Meta ROAS</span><span class="v">3.8×</span></div>
+        <div class="row"><span>Shopify CVR</span><span class="v">2.7%</span></div>
+        <div class="row"><span>Action this week</span><span class="v">Pause 3 ads · scale 1</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY YOU OWN IT -->
+<section class="section own">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="mono section-eyebrow">Why you own it</div>
+      <h2 class="section-h">Your agent. <em>Your data.</em> Your workflow.</h2>
+      <p class="section-sub">If AI agents become the unit of marketing labour — and we think they will — the businesses that <strong>own their agents</strong> compound an advantage every quarter. Renting the capability forever doesn't build the moat.</p>
+    </div>
+    <div class="own-grid reveal-stagger">
+      <div class="own-pillar">
+        <div class="mono lbl">01 · Portable</div>
+        <h4>Lives in your stack</h4>
+        <p>Built in your tools, your environment, your accounts. If we ever part ways, the agent stays. No data migration. No black box.</p>
+      </div>
+      <div class="own-pillar">
+        <div class="mono lbl">02 · Auditable</div>
+        <h4>Every step visible</h4>
+        <p>You see what the agent does, why it does it, and what it costs to run. Transparent prompts, transparent logs, transparent bills.</p>
+      </div>
+      <div class="own-pillar">
+        <div class="mono lbl">03 · Engineered</div>
+        <h4>Zib-built, not off-the-shelf</h4>
+        <p>Our agents run on Zib's own framework — built over years of commercial work, not a generic prompt-wrapper. You get the depth of our R&amp;D inside your stack, refined every month as the space moves.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IS THIS FOR YOU -->
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="mono section-eyebrow">Before you book</div>
+      <h2 class="section-h">Honest about <em>who this works for.</em></h2>
+      <p class="section-sub">AI Partner is high-trust, mid-touch. Not every business is ready for it — and that's fine. <strong>Read both columns honestly before booking.</strong></p>
+    </div>
+    <div class="fit-grid reveal-stagger">
+      <div class="fit-card yes">
+        <h3><span class="mark">✓</span>This is for you</h3>
+        <ul>
+          <li>You run a real business with real data, real tools, and a workflow worth automating.</li>
+          <li>You want to own the capability in three years, not keep renting it.</li>
+          <li>You can spare 60 minutes a month with a senior operator.</li>
+          <li>You report in commercial outcomes — leads, sales, ROAS, CAC.</li>
+          <li>You believe AI is a ten-year shift, not a six-month trend.</li>
+        </ul>
+      </div>
+      <div class="fit-card no">
+        <h3><span class="mark">×</span>This isn't for you</h3>
+        <ul>
+          <li>You want it run for you, never thinking about it. See Managed AI instead.</li>
+          <li>You're pre-product-market-fit, with no data to point an agent at.</li>
+          <li>You want results next week. Agents take two weeks to build, longer to compound.</li>
+          <li>You can't share access to your stack. Agents live inside your tools.</li>
+          <li>You're shopping on price. The cheapest agent is the one you don't use.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="fit-foot reveal">
+      Not sure? <a href="mailto:hello@zibdigital.com.au?subject=AI%20Partner%20-%20fit%20call">Book a 15-min fit call</a> · we'll tell you straight up · or <a href="/ai-services.html#managed">read about Managed AI</a>.
+    </div>
+  </div>
+</section>
+
+<!-- COMPARE -->
+<section class="section compare">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="mono section-eyebrow">Compare the two paths</div>
+      <h2 class="section-h">Managed AI <em>vs</em> AI Partner</h2>
+      <p class="section-sub">Same playbook, two delivery models. <strong>Pick the one that matches how involved you want to be.</strong></p>
+    </div>
+    <div class="reveal" style="overflow-x: auto;">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>What you get</th>
+            <th><span class="col-tag">Do it for me</span>Managed AI</th>
+            <th><span class="col-tag">Do it with me · this page</span>AI Partner</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Who runs the agents</td><td>Zib senior strategist team</td><td>You own them, we coach</td></tr>
+          <tr><td>Where the agents live</td><td>In our environment</td><td>In <strong>your</strong> stack</td></tr>
+          <tr><td>Time required from you</td><td>4–6 hrs / week</td><td>60 min / month</td></tr>
+          <tr><td>Ongoing cost</td><td>Retainer — scales with scope</td><td>Setup fee + flat monthly</td></tr>
+          <tr><td>What happens if we part ways</td><td>Agents stay with Zib</td><td><span class="check">You keep everything</span></td></tr>
+          <tr><td>Best for</td><td>Operators who want it run for them</td><td>Operators who want to own the capability</td></tr>
+          <tr><td>Time to first commercial signal</td><td>~4 weeks</td><td>~2 weeks to launch · 4–6 to compound</td></tr>
+          <tr><td>Cancellation</td><td>90-day notice</td><td>Monthly · no lock-in</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="reveal" style="text-align:center; margin-top: 32px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase;">
+      <a href="/ai-services.html#managed" style="color: var(--ink); border-bottom: 0.5px solid var(--rule-2);">Read about Managed AI →</a>
+    </p>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="mono section-eyebrow">Pricing</div>
+      <h2 class="section-h">Transparent. <em>No retainer maze.</em></h2>
+      <p class="section-sub">One-off setup to build the agent. Flat monthly for support and capability. <strong>No media spend markup, no surprise line items.</strong></p>
+    </div>
+    <div class="tier-grid reveal-stagger">
+      <div class="tier">
+        <h3>Starter</h3>
+        <p class="desc">One agent, scoped and built. Ideal for testing the model with the highest-leverage job.</p>
+        <div class="price"><span class="cur">$</span>1,500<span class="per">/ month</span></div>
+        <div class="setup">+ $4,500 setup · TBD confirm</div>
+        <ul>
+          <li>1 agent, fully built</li>
+          <li>Lives in your stack</li>
+          <li>Monthly 60-min strategist check-in</li>
+          <li>Email support during business hours</li>
+          <li>Quarterly capability review</li>
+        </ul>
+        <a class="tier-cta" href="mailto:hello@zibdigital.com.au?subject=AI%20Partner%20Starter">Start here <span>→</span></a>
+      </div>
+      <div class="tier featured">
+        <span class="badge">Most picked</span>
+        <h3>Operator</h3>
+        <p class="desc">Two agents working in tandem. Most clients end up here within six months.</p>
+        <div class="price"><span class="cur">$</span>3,000<span class="per">/ month</span></div>
+        <div class="setup">+ $7,500 setup · TBD confirm</div>
+        <ul>
+          <li>2 agents, fully built</li>
+          <li>Senior strategist on Slack</li>
+          <li>Monthly 60-min commercial review</li>
+          <li>Quarterly half-day workshop</li>
+          <li>Priority response · same-day</li>
+          <li>Add agents at $1,500/mo each</li>
+        </ul>
+        <a class="tier-cta" href="mailto:hello@zibdigital.com.au?subject=AI%20Partner%20Operator">Pick Operator <span>→</span></a>
+      </div>
+      <div class="tier">
+        <h3>Scale</h3>
+        <p class="desc">The full agent library, embedded in your team. For operators going all-in on the AI stack.</p>
+        <div class="price">Custom<span class="per"></span></div>
+        <div class="setup">Bespoke scope · TBD confirm</div>
+        <ul>
+          <li>Full agent library (5+)</li>
+          <li>Weekly senior strategist sync</li>
+          <li>Dedicated AI engineer</li>
+          <li>Custom agents on request</li>
+          <li>Quarterly executive briefing</li>
+          <li>SLA-backed support</li>
+        </ul>
+        <a class="tier-cta" href="mailto:hello@zibdigital.com.au?subject=AI%20Partner%20Scale">Talk to us <span>→</span></a>
+      </div>
+    </div>
+    <p class="footnote">All prices AUD ex GST · No lock-in beyond initial 3 months · Cancel anytime</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal" style="text-align: center; margin-left: auto; margin-right: auto;">
+      <div class="mono section-eyebrow" style="display: inline-flex;">FAQ</div>
+      <h2 class="section-h">Common questions, <em>straight answers.</em></h2>
+    </div>
+    <div class="faq-list">
+      <details class="faq-item reveal">
+        <summary>Who actually owns the agent and the data? <span class="plus" aria-hidden="true"></span></summary>
+        <p>You do. We build the agent inside your accounts (your OpenAI/Anthropic, your CMS, your CRM, your Sheets). All prompts, code and logs live in your environment. If we part ways, the agent keeps running — there's nothing for us to take back.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary>How long does it take to build the first agent? <span class="plus" aria-hidden="true"></span></summary>
+        <p>Two weeks from kickoff to live. Our agents are built on Zib's own framework — we're not architecting from scratch each time, we're configuring proven infrastructure to your stack and your data.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary>What tools and stacks do you build into? <span class="plus" aria-hidden="true"></span></summary>
+        <p>We're tech-agnostic. CMS: WordPress, Webflow, Shopify, Sanity, Contentful, Ghost. CRM: HubSpot, Pipedrive, Salesforce, Zoho. Models: Anthropic Claude, OpenAI, Google Gemini. Orchestration: n8n, Zapier, Make, custom Node. If your stack isn't here, ask — we've probably built into it.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary>How much does it really cost to run an agent? <span class="plus" aria-hidden="true"></span></summary>
+        <p>API usage is yours — we don't mark it up. A Content agent producing 20 long-form posts a month typically runs $40–$120 in model costs. Reporting and Lead-qual agents are usually under $50/mo. We size the budget honestly during scoping.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary>What if I outgrow the partnership? <span class="plus" aria-hidden="true"></span></summary>
+        <p>That's the goal. By month nine to twelve, most clients are running their agents day-to-day with us as a sounding board. We're happy to step back to a quarterly check-in or hand over fully — the agent is yours either way.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary>Is my data safe? <span class="plus" aria-hidden="true"></span></summary>
+        <p>Agents live in your environment, behind your auth. We sign NDAs as standard, scope data access tightly, and use enterprise-tier model providers with no-training data agreements. We can also build into self-hosted models if you're regulated.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary>Can I add or remove agents over time? <span class="plus" aria-hidden="true"></span></summary>
+        <p>Yes. Most clients start with one agent, add a second within four months, and a third by month nine. Operator and Scale tiers include agents at a flat per-agent rate. Decommissioning an agent is simple — we hand you a wind-down doc and remove the integration.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary>What's the difference between this and Managed AI? <span class="plus" aria-hidden="true"></span></summary>
+        <p>Managed AI = we run agents in our environment, you focus on the business. AI Partner = we build agents in your environment, you own them. Managed is faster to launch and lower-touch. Partner is slower upfront but builds an asset on your balance sheet. <a href="/ai-services.html#managed" style="color: var(--accent); border-bottom: 0.5px solid var(--accent);">More on Managed AI →</a></p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <div class="container">
+    <div class="mono section-eyebrow reveal">Ready when you are</div>
+    <h2 class="reveal">Book a scoping call. <em>We'll tell you which agent to build first.</em></h2>
+    <p class="reveal">Thirty minutes with a senior strategist. We read your business, flag the one place an agent moves the needle first, and tell you honestly whether AI Partner is the right fit. No deck. No pitch.</p>
+    <div class="cta-buttons reveal">
+      <a class="btn btn-primary" href="mailto:hello@zibdigital.com.au?subject=AI%20Partner%20-%20scoping%20call">Book a scoping call <span class="arr">→</span></a>
+      <a class="btn btn-outline" href="/audit.html">Run the free audit first</a>
+    </div>
+  </div>
+</section>
+
+<!-- @include _partials/footer.html -->
+<!-- @include _partials/scripts.html -->
+</body>
+</html>

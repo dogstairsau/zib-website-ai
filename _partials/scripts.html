@@ -1,0 +1,41 @@
+<script>
+(() => {
+  // Header scroll shadow
+  const header = document.getElementById('header');
+  if (header) {
+    const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 8);
+    document.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+
+  // Mark current nav item
+  const here = location.pathname.replace(/index\.html$/, '/');
+  document.querySelectorAll('.nav a:not(.cta)').forEach(a => {
+    try {
+      const linkPath = new URL(a.href, location.origin).pathname.replace(/index\.html$/, '/');
+      if (linkPath === here) a.setAttribute('aria-current', 'page');
+    } catch {}
+  });
+
+  // Reveal on scroll
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    document.querySelectorAll('.reveal, .reveal-stagger').forEach(el => io.observe(el));
+  }
+
+  // Melbourne clock
+  const clockEl = document.getElementById('clock');
+  if (clockEl) {
+    const fmt = new Intl.DateTimeFormat('en-AU', {
+      timeZone: 'Australia/Melbourne',
+      hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false
+    });
+    const tick = () => { clockEl.textContent = `MELBOURNE · ${fmt.format(new Date())}`; };
+    tick(); setInterval(tick, 1000);
+  }
+})();
+</script>

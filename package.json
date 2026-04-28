@@ -4,7 +4,9 @@
   "private": true,
   "description": "Zib Digital homepage + AI audit endpoint",
   "scripts": {
-    "dev": "vercel dev",
+    "build": "node build.mjs",
+    "dev": "node --env-file=.env.local dev-server.mjs",
+    "dev:vercel": "vercel dev",
     "deploy": "vercel deploy --prod"
   },
   "dependencies": {

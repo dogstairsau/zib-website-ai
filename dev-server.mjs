@@ -13,6 +13,7 @@ import { join, extname } from "node:path";
 import { fileURLToPath } from "node:url";
 import Anthropic from "@anthropic-ai/sdk";
 import { fetchSupporting, crawlSite, buildAudit } from "./lib/seoChecks.mjs";
+import { expand } from "./build.mjs";
 
 const ROOT = fileURLToPath(new URL(".", import.meta.url));
 const PORT = Number(process.env.PORT) || 3000;
@@ -713,11 +714,26 @@ async function serveStatic(req, res) {
   const urlPath = req.url.split("?")[0];
   let filePath = urlPath === "/" ? "/index.html" : urlPath;
   if (filePath.includes("..")) { res.writeHead(403).end(); return; }
+  // Vercel's cleanUrls: serve /foo as /foo.html if no extension and the .html exists
+  if (!extname(filePath)) {
+    try { await readFile(join(ROOT, filePath + ".html")); filePath += ".html"; } catch {}
+  }
   try {
+    const ext = extname(filePath);
+    if (ext === ".html") {
+      const raw = await readFile(join(ROOT, filePath), "utf8");
+      const expanded = await expand(raw);
+      res.writeHead(200, { "Content-Type": MIME[".html"] }).end(expanded);
+      return;
+    }
     const data = await readFile(join(ROOT, filePath));
-    const mime = MIME[extname(filePath)] || "application/octet-stream";
+    const mime = MIME[ext] || "application/octet-stream";
     res.writeHead(200, { "Content-Type": mime }).end(data);
-  } catch {
+  } catch (err) {
+    if (err.message?.startsWith("Missing partial")) {
+      res.writeHead(500, { "Content-Type": "text/plain" }).end(`Build error: ${err.message}`);
+      return;
+    }
     res.writeHead(404, { "Content-Type": "text/plain" }).end("Not found");
   }
 }

@@ -1,0 +1,884 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<title>AI services · Zib Digital</title>
+<meta name="description" content="Two ways to work with Zib on AI. We run the agents for you — or we build an agent in your business and check in while you learn. Human relationship. Tech-agnostic. Since 2009." />
+<!-- @include _partials/head.html -->
+<style>
+h1, h2, h3, .hero-h, .fork-h, .path-title, .moat-h, .cta-title { text-wrap: balance; }
+
+/* ─── HEADER ─── */
+.site-header {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 50;
+  background: rgba(255,255,255,0.78);
+  backdrop-filter: saturate(160%) blur(16px);
+  -webkit-backdrop-filter: saturate(160%) blur(16px);
+  border-bottom: 0.5px solid transparent;
+  transition: border-color 320ms var(--ease), background 320ms var(--ease);
+}
+
+.site-header.scrolled { border-bottom-color: var(--rule); background: rgba(255,255,255,0.92); }
+
+.site-header .row { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+
+.brand { display: inline-flex; align-items: baseline; }
+
+.brand img { height: 28px; width: auto; }
+
+.nav { display: flex; gap: clamp(14px, 2vw, 28px); align-items: center; font-family: var(--display); font-size: 14px; }
+
+.nav a { color: var(--ink); opacity: 0.72; transition: opacity 200ms var(--ease); }
+
+.nav a:hover { opacity: 1; }
+
+.nav a.cta {
+  background: var(--ink);
+  color: #fff;
+  opacity: 1;
+  padding: 10px 20px;
+  border-radius: 999px;
+  font-weight: 500;
+  transition: transform 200ms var(--ease);
+}
+
+.nav a.cta:hover { transform: translateY(-1px); }
+
+@media (max-width: 780px) {
+  .nav a:not(.cta) { display: none; }
+}
+
+.header-spacer { height: 68px; }
+
+/* ─── HERO ─── */
+.hero {
+  padding-top: clamp(48px, 8vw, 96px);
+  padding-bottom: clamp(64px, 8vw, 112px);
+  border-bottom: 0.5px solid var(--rule);
+}
+
+.hero .eyebrow {
+  color: var(--accent);
+  margin-bottom: clamp(32px, 4vw, 48px);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.hero .eyebrow::before { content: ""; width: 24px; height: 0.5px; background: var(--accent); }
+
+.hero-h {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(44px, 7vw, 128px);
+  line-height: 0.98;
+  letter-spacing: -0.045em;
+  max-width: 18ch;
+}
+
+.hero-h em { color: var(--accent); font-style: italic; font-weight: 400; }
+
+.hero-sub {
+  margin-top: clamp(28px, 3.5vw, 44px);
+  font-family: var(--display);
+  font-size: clamp(18px, 1.8vw, 24px);
+  line-height: 1.45;
+  color: var(--muted);
+  max-width: 56ch;
+}
+
+.hero-sub strong { color: var(--ink); font-weight: 500; }
+
+.hero-meta {
+  margin-top: clamp(32px, 4vw, 48px);
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(18px, 3vw, 40px);
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.hero-meta .dot { display: inline-block; width: 4px; height: 4px; background: var(--accent); border-radius: 50%; margin-right: 10px; vertical-align: middle; transform: translateY(-1px); }
+
+/* ─── FORK · the choose-your-adventure block ─── */
+.fork {
+  padding-top: clamp(88px, 10vw, 140px);
+  padding-bottom: clamp(88px, 10vw, 140px);
+}
+
+.fork-head {
+  margin-bottom: clamp(48px, 6vw, 80px);
+  max-width: 60ch;
+}
+
+.fork-eyebrow { color: var(--accent); margin-bottom: 18px; }
+
+.fork-h {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(36px, 5vw, 72px);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+}
+
+.fork-h em { color: var(--accent); font-style: italic; font-weight: 400; }
+
+.fork-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(20px, 2.5vw, 32px);
+}
+
+@media (max-width: 860px) { .fork-grid { grid-template-columns: 1fr; } }
+
+.path-card {
+  position: relative;
+  padding: clamp(32px, 3.5vw, 56px);
+  border-radius: 24px;
+  border: 1px solid var(--rule);
+  display: flex;
+  flex-direction: column;
+  min-height: clamp(480px, 56vw, 640px);
+  overflow: hidden;
+  transition: transform 320ms var(--ease), box-shadow 320ms var(--ease), border-color 320ms var(--ease);
+  isolation: isolate;
+}
+
+.path-card:hover { transform: translateY(-4px); }
+
+/* DFM — classic Zib: black, orange, confident */
+.path-card.dfm {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+
+.path-card.dfm:hover { box-shadow: 0 60px 140px -40px rgba(0,0,0,0.4); }
+
+.path-card.dfm::before {
+  content: "";
+  position: absolute;
+  top: 0; right: 0;
+  width: 40%;
+  height: 100%;
+  background: radial-gradient(ellipse at top right, rgba(255,98,0,0.22), transparent 60%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.path-card.dfm > * { position: relative; z-index: 1; }
+
+/* DWM — SaaS layer: soft, light, productised */
+.path-card.dwm {
+  background: linear-gradient(180deg, #FAFAF8 0%, #F3F0E8 100%);
+  color: var(--ink);
+}
+
+.path-card.dwm:hover { box-shadow: 0 60px 140px -40px rgba(0,0,0,0.14); border-color: var(--rule-2); }
+
+.path-card.dwm::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image:
+    radial-gradient(circle at 20% 10%, rgba(255,98,0,0.06), transparent 40%),
+    radial-gradient(circle at 80% 80%, rgba(11,171,110,0.05), transparent 40%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.path-card.dwm > * { position: relative; z-index: 1; }
+
+.path-eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.path-card.dfm .path-eyebrow { color: var(--accent); }
+
+.path-card.dwm .path-eyebrow { color: var(--accent); }
+
+.path-eyebrow::before {
+  content: "";
+  display: inline-block;
+  width: 22px;
+  height: 0.5px;
+  background: currentColor;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+.path-title {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(28px, 3.4vw, 44px);
+  line-height: 1.02;
+  letter-spacing: -0.028em;
+  margin-bottom: clamp(20px, 2.4vw, 28px);
+  max-width: 18ch;
+}
+
+.path-title em { font-style: italic; font-weight: 400; }
+
+.path-card.dfm .path-title em { color: var(--accent); }
+
+.path-card.dwm .path-title em { color: var(--accent); }
+
+.path-sub {
+  font-family: var(--display);
+  font-size: clamp(15px, 1.4vw, 17.5px);
+  line-height: 1.5;
+  margin-bottom: clamp(28px, 3vw, 40px);
+  max-width: 36ch;
+}
+
+.path-card.dfm .path-sub { color: rgba(255,255,255,0.75); }
+
+.path-card.dwm .path-sub { color: var(--muted); }
+
+.path-bullets {
+  list-style: none;
+  margin-bottom: clamp(32px, 4vw, 48px);
+  display: grid;
+  gap: 14px;
+}
+
+.path-bullets li {
+  font-family: var(--display);
+  font-size: 14.5px;
+  line-height: 1.45;
+  padding-left: 28px;
+  position: relative;
+}
+
+.path-bullets li::before {
+  content: "";
+  position: absolute;
+  left: 0; top: 0.6em;
+  width: 16px; height: 1.5px;
+  background: var(--accent);
+}
+
+.path-card.dfm .path-bullets li { color: rgba(255,255,255,0.9); }
+
+.path-card.dwm .path-bullets li { color: var(--ink-3); }
+
+.path-cta-row { margin-top: auto; display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; }
+
+.path-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 26px;
+  border-radius: 999px;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 15px;
+  transition: transform 220ms var(--ease), background 220ms var(--ease);
+}
+
+.path-cta .arr { transition: transform 260ms var(--ease); }
+
+.path-cta:hover { transform: translateY(-1px); }
+
+.path-cta:hover .arr { transform: translateX(4px); }
+
+.path-card.dfm .path-cta { background: var(--accent); color: #fff; }
+
+.path-card.dfm .path-cta:hover { background: #ff7a24; }
+
+.path-card.dwm .path-cta { background: var(--ink); color: #fff; }
+
+.path-card.dwm .path-cta:hover { background: var(--ink-2); }
+
+.path-note {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.55;
+}
+
+/* ─── PATHS EXPANDED · deeper read on each before they click through ─── */
+.paths-deep {
+  padding-top: clamp(72px, 9vw, 120px);
+  padding-bottom: clamp(72px, 9vw, 120px);
+  border-top: 0.5px solid var(--rule);
+}
+
+.path-row {
+  display: grid;
+  grid-template-columns: minmax(220px, 280px) 1fr;
+  gap: clamp(32px, 5vw, 88px);
+  padding: clamp(44px, 5vw, 72px) 0;
+  border-bottom: 0.5px solid var(--rule);
+  align-items: start;
+}
+
+.path-row:last-of-type { border-bottom: 0; }
+
+@media (max-width: 900px) { .path-row { grid-template-columns: 1fr; gap: 24px; } }
+
+.path-row-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+  position: sticky;
+  top: 100px;
+}
+
+.path-row-label .num {
+  display: block;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(56px, 7vw, 96px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+  margin-top: 8px;
+}
+
+.path-row-body h3 {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(26px, 3vw, 38px);
+  line-height: 1.08;
+  letter-spacing: -0.028em;
+  margin-bottom: 20px;
+  max-width: 22ch;
+}
+
+.path-row-body h3 em { font-style: italic; color: var(--accent); font-weight: 400; }
+
+.path-row-body p {
+  font-family: var(--display);
+  font-size: clamp(16px, 1.5vw, 18.5px);
+  line-height: 1.55;
+  color: var(--ink-3);
+  max-width: 54ch;
+  margin-bottom: 20px;
+}
+
+.path-row-body .capabilities {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+  margin-top: 28px;
+}
+
+.path-row-body .cap {
+  padding: 18px 20px;
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  background: var(--paper);
+  font-family: var(--display);
+  font-size: 14px;
+  line-height: 1.4;
+  color: var(--ink-3);
+  transition: border-color 220ms var(--ease), transform 220ms var(--ease);
+}
+
+.path-row-body .cap:hover { border-color: var(--rule-2); transform: translateY(-2px); }
+
+.path-row-body .cap strong {
+  display: block;
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: 4px;
+  font-size: 14.5px;
+}
+
+.path-row-body .deep-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 32px;
+  color: var(--accent);
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 15.5px;
+  border-bottom: 1px solid transparent;
+  padding-bottom: 2px;
+  transition: border-color 220ms var(--ease);
+}
+
+.path-row-body .deep-cta:hover { border-color: var(--accent); }
+
+.path-row-body .deep-cta .arr { transition: transform 260ms var(--ease); }
+
+.path-row-body .deep-cta:hover .arr { transform: translateX(4px); }
+
+/* ─── PROOF · small inline row ─── */
+.proof-bar {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  margin-top: 36px;
+  border-top: 0.5px solid var(--rule);
+  padding-top: 28px;
+}
+
+@media (max-width: 760px) { .proof-bar { grid-template-columns: repeat(2, 1fr); row-gap: 24px; } }
+
+.proof-bar .cell { padding-right: 20px; }
+
+.proof-bar .n {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(32px, 4vw, 52px);
+  line-height: 1;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 8px;
+}
+
+.proof-bar .n .pct { color: var(--accent); }
+
+.proof-bar .l { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+
+/* ─── MOAT · dark section ─── */
+.moat {
+  background: var(--ink);
+  color: #fff;
+  padding-top: clamp(112px, 14vw, 180px);
+  padding-bottom: clamp(112px, 14vw, 180px);
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.moat::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  opacity: 0.04;
+  mix-blend-mode: overlay;
+  z-index: 0;
+}
+
+.moat > * { position: relative; z-index: 1; }
+
+.moat-eyebrow { color: var(--accent); margin-bottom: 28px; display: inline-flex; align-items: center; gap: 10px; }
+
+.moat-eyebrow::before { content: ""; width: 24px; height: 0.5px; background: var(--accent); }
+
+.moat-h {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(40px, 6vw, 96px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  max-width: 18ch;
+  color: #fff;
+}
+
+.moat-h em { color: var(--accent); font-style: italic; font-weight: 400; }
+
+.moat-sub {
+  margin-top: clamp(28px, 3vw, 40px);
+  font-family: var(--display);
+  font-size: clamp(17px, 1.6vw, 22px);
+  line-height: 1.5;
+  color: rgba(255,255,255,0.72);
+  max-width: 56ch;
+}
+
+.moat-sub strong { color: #fff; font-weight: 500; }
+
+.moat-pillars {
+  margin-top: clamp(56px, 7vw, 88px);
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border-top: 0.5px solid rgba(255,255,255,0.22);
+  padding-top: 36px;
+}
+
+@media (max-width: 880px) { .moat-pillars { grid-template-columns: repeat(2, 1fr); row-gap: 32px; } }
+
+.pillar { padding-right: 20px; border-left: 0.5px solid rgba(255,255,255,0.22); padding-left: 28px; }
+
+.pillar:first-child { border-left: 0; padding-left: 0; }
+
+@media (max-width: 880px) { .pillar:nth-child(3) { border-left: 0; padding-left: 0; } }
+
+.pillar .lbl { color: var(--accent); margin-bottom: 14px; }
+
+.pillar h4 {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(18px, 1.6vw, 22px);
+  letter-spacing: -0.015em;
+  margin-bottom: 10px;
+  color: #fff;
+  max-width: 14ch;
+}
+
+.pillar p {
+  font-family: var(--display);
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: rgba(255,255,255,0.7);
+  max-width: 28ch;
+}
+
+/* ─── CTA ─── */
+.cta-section {
+  padding-top: clamp(96px, 12vw, 160px);
+  padding-bottom: clamp(96px, 12vw, 160px);
+  text-align: center;
+  background: var(--paper);
+  border-top: 0.5px solid var(--rule);
+}
+
+.cta-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: var(--accent);
+  margin-bottom: 32px;
+}
+
+.cta-eyebrow::before, .cta-eyebrow::after {
+  content: ""; width: 28px; height: 0.5px; background: var(--accent);
+}
+
+.cta-title {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(44px, 7vw, 120px);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+  max-width: 20ch;
+  margin: 0 auto;
+}
+
+.cta-title em { color: var(--accent); font-style: italic; font-weight: 400; }
+
+.cta-sub {
+  font-family: var(--display);
+  font-size: clamp(17px, 1.6vw, 22px);
+  line-height: 1.45;
+  margin-top: 28px;
+  color: var(--muted);
+  max-width: 52ch;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.cta-buttons { margin-top: 44px; display: inline-flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 28px;
+  border-radius: 999px;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 15.5px;
+  transition: transform 220ms var(--ease), background 220ms var(--ease);
+}
+
+.btn .arr { transition: transform 260ms var(--ease); }
+
+.btn:hover .arr { transform: translateX(4px); }
+
+.btn-primary { background: var(--ink); color: #fff; }
+
+.btn-primary:hover { background: var(--ink-2); transform: translateY(-1px); }
+
+.btn-outline { border: 1px solid var(--ink); color: var(--ink); }
+
+.btn-outline:hover { background: var(--ink); color: #fff; }
+
+/* ─── FOOTER ─── */
+footer {
+  background: var(--bg);
+  padding-top: clamp(72px, 8vw, 120px);
+  padding-bottom: clamp(44px, 5vw, 64px);
+  border-top: 0.5px solid var(--rule);
+}
+
+.foot-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: clamp(24px, 3vw, 48px); margin-bottom: clamp(56px, 6vw, 88px); }
+
+@media (max-width: 880px) { .foot-grid { grid-template-columns: repeat(2, 1fr); row-gap: 44px; } }
+
+footer .brand { margin-bottom: 20px; }
+
+.foot-tag { font-family: var(--display); font-size: 14px; line-height: 1.5; color: var(--muted); max-width: 32ch; }
+
+footer h4 { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink); margin-bottom: 20px; font-weight: 600; }
+
+footer ul { list-style: none; display: grid; gap: 10px; }
+
+footer ul li { font-family: var(--display); font-size: 14.5px; color: var(--muted); }
+
+footer ul li a { transition: color 200ms var(--ease); }
+
+footer ul li a:hover { color: var(--accent); }
+
+.foot-bar {
+  padding-top: 28px;
+  border-top: 0.5px solid var(--rule);
+  display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap;
+  color: var(--muted-2);
+}
+
+.foot-clock { display: inline-flex; align-items: center; gap: 10px; color: var(--ink-3); }
+
+.foot-clock .pulse { width: 6px; height: 6px; background: var(--score-good); border-radius: 50%; display: inline-block; animation: fpulse 2s ease-in-out infinite; }
+
+@keyframes fpulse { 0%,100% { opacity: 1; } 50% { opacity: 0.4; } }
+</style>
+</head>
+<body>
+
+<!-- @include _partials/nav.html -->
+
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="mono eyebrow reveal">AI services</div>
+    <h1 class="hero-h reveal">
+      Tools change. <em>The people who know why they change don't.</em>
+    </h1>
+    <p class="hero-sub reveal">
+      <strong>Two ways to work with Zib on AI.</strong>
+      We run the agents for you, or we build an agent in your business and check in while you learn. Either way, you get the same sixteen-year-old playbook, now augmented.
+    </p>
+    <div class="hero-meta reveal">
+      <span><span class="dot" aria-hidden="true"></span>Since 2009</span>
+      <span><span class="dot" aria-hidden="true"></span>Four offices</span>
+      <span><span class="dot" aria-hidden="true"></span>Three hundred clients</span>
+      <span><span class="dot" aria-hidden="true"></span>Tech-agnostic</span>
+    </div>
+  </div>
+</section>
+
+<!-- FORK -->
+<section class="fork">
+  <div class="container">
+    <div class="fork-head reveal">
+      <div class="mono fork-eyebrow">Choose your path</div>
+      <h2 class="fork-h">Pick how you want to <em>work with us.</em></h2>
+    </div>
+
+    <div class="fork-grid reveal-stagger">
+      <!-- DFM -->
+      <article class="path-card dfm">
+        <div class="path-eyebrow">Do it for me</div>
+        <h3 class="path-title">We run the agents. <em>You get the leads and the revenue.</em></h3>
+        <p class="path-sub">
+          Our senior strategists design and run AI agents across search, social, ecomm and content. Weekly reporting, monthly commercial reviews. You stay focused on the business.
+        </p>
+        <ul class="path-bullets">
+          <li>Managed service: agents configured, deployed and monitored by Zib</li>
+          <li>Covers B2B lead gen and ecomm revenue — Google, Meta, TikTok, content, SEO</li>
+          <li>Reports in commercial language: leads, sales, CAC, ROAS. Not impressions.</li>
+        </ul>
+        <div class="path-cta-row">
+          <a class="path-cta" href="#managed">Explore managed AI <span class="arr">→</span></a>
+          <span class="path-note">Retainer · from ~4 weeks to launch</span>
+        </div>
+      </article>
+
+      <!-- DWM -->
+      <article class="path-card dwm">
+        <div class="path-eyebrow">Do it with me</div>
+        <h3 class="path-title">We build a marketing agent in your business. <em>We check in. You learn.</em></h3>
+        <p class="path-sub">
+          We design the agent, connect it to your tools, and train it on your data. It lives inside your business. We meet monthly, refine the playbook, and teach you to own it.
+        </p>
+        <ul class="path-bullets">
+          <li>Your agent, your data, your workflow — not a black box on our servers</li>
+          <li>Monthly senior-strategist check-ins — what's working, what to fix, what to add next</li>
+          <li>You build the capability. We stay the expert on tap. Future-proof by design.</li>
+        </ul>
+        <div class="path-cta-row">
+          <a class="path-cta" href="#partner">Explore AI partner <span class="arr">→</span></a>
+          <span class="path-note">Setup + monthly · for operators who want to own it</span>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- PATHS EXPANDED -->
+<section class="paths-deep">
+  <div class="container">
+
+    <!-- DFM expanded -->
+    <div class="path-row reveal" id="managed">
+      <div>
+        <div class="path-row-label">
+          Managed AI
+          <span class="num">01</span>
+        </div>
+      </div>
+      <div class="path-row-body">
+        <h3>The agency model, <em>rebuilt around agents.</em></h3>
+        <p>
+          The traditional agency model breaks on three things: speed, cost of creative iteration, and attribution across channels. Agents fix all three. We build them. You get the compound advantage.
+        </p>
+        <p>
+          Search agents bid and optimise across Google and Bing. Social agents generate creative variants and test them nightly. Ecomm agents tune product content and feed quality. All of it watched by a senior strategist with sixteen years of commercial pattern-matching.
+        </p>
+        <div class="capabilities">
+          <div class="cap"><strong>Paid search agents</strong>Google + Bing, bid strategy, creative rotation, query-level optimisation.</div>
+          <div class="cap"><strong>Paid social agents</strong>Meta, TikTok, LinkedIn. Variant testing, audience iteration, CAC-led pacing.</div>
+          <div class="cap"><strong>Ecomm + SEO agents</strong>Shopify feed, category content, schema, internal linking, conversion copy.</div>
+          <div class="cap"><strong>Creative generation</strong>Ad variants from one brief. Hundreds tested monthly, not five.</div>
+          <div class="cap"><strong>Reporting + attribution</strong>Weekly commercial report. One dashboard. Leads, revenue, CAC, LTV.</div>
+        </div>
+
+        <div class="proof-bar">
+          <div class="cell">
+            <div class="n">600<span class="pct">%</span></div>
+            <div class="l">Amazing Graze · online revenue</div>
+          </div>
+          <div class="cell">
+            <div class="n">300<span class="pct">%</span></div>
+            <div class="l">Assured Roofing · social leads</div>
+          </div>
+          <div class="cell">
+            <div class="n">100<span class="pct">%</span></div>
+            <div class="l">Liberty · keywords top 3</div>
+          </div>
+          <div class="cell">
+            <div class="n">220<span class="pct">%</span></div>
+            <div class="l">Port Melb. Containers · Google Ads leads</div>
+          </div>
+        </div>
+
+        <a class="deep-cta" href="mailto:hello@zibdigital.com.au?subject=Managed%20AI%20-%20let's%20talk">Talk to a strategist about managed AI <span class="arr">→</span></a>
+      </div>
+    </div>
+
+    <!-- DWM expanded -->
+    <div class="path-row reveal" id="partner">
+      <div>
+        <div class="path-row-label">
+          AI partner
+          <span class="num">02</span>
+        </div>
+      </div>
+      <div class="path-row-body">
+        <h3>Build one agent. <em>Then build ten.</em></h3>
+        <p>
+          Operators are realising something uncomfortable: if AI agents become the unit of marketing labour, the businesses that own their agents win. An agency you rent doesn't make you capable. Owning the agent does.
+        </p>
+        <p>
+          We come in as your senior AI partner. We scope the first agent, build it in your stack, connect it to your data, and teach your team how it works. Then monthly, we check in, add capability, and keep you ahead of the curve.
+        </p>
+        <div class="capabilities">
+          <div class="cap"><strong>Content agent</strong>Writes SEO posts in your voice, publishes to your CMS, follows your brief.</div>
+          <div class="cap"><strong>Lead-qualification agent</strong>Scores inbound, drafts the first reply, routes to the right person.</div>
+          <div class="cap"><strong>Review + reputation agent</strong>Monitors Google, drafts responses, flags patterns to act on.</div>
+          <div class="cap"><strong>Reporting agent</strong>Weekly brief from GA4, GSC, Ads, Shopify — one paragraph per channel.</div>
+          <div class="cap"><strong>Competitor-watch agent</strong>Monitors positioning, rankings, ad creative across key rivals.</div>
+        </div>
+
+        <div class="proof-bar">
+          <div class="cell">
+            <div class="n">1</div>
+            <div class="l">Senior strategist per account</div>
+          </div>
+          <div class="cell">
+            <div class="n">60<span class="pct">min</span></div>
+            <div class="l">Monthly commercial check-in</div>
+          </div>
+          <div class="cell">
+            <div class="n">∞</div>
+            <div class="l">Playbook updates as the space evolves</div>
+          </div>
+          <div class="cell">
+            <div class="n">0</div>
+            <div class="l">Black boxes · your agent, your data</div>
+          </div>
+        </div>
+
+        <a class="deep-cta" href="mailto:hello@zibdigital.com.au?subject=AI%20partner%20-%20let's%20talk">Talk to a strategist about the AI partner model <span class="arr">→</span></a>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- MOAT -->
+<section class="moat">
+  <div class="container">
+    <div class="mono moat-eyebrow reveal">The moat</div>
+    <h2 class="moat-h reveal">
+      Tools change every six months. <em>The people who know why they change don't.</em>
+    </h2>
+    <p class="moat-sub reveal">
+      <strong>Sixteen years. Four offices. Three hundred clients.</strong>
+      That's not something you can prompt. The agencies built around one framework, one tool, or one channel break every time the market pivots. We've been tech-agnostic from day one — and we're the ones deciding which AI stack to bet on next.
+    </p>
+
+    <div class="moat-pillars reveal-stagger">
+      <div class="pillar">
+        <div class="mono lbl">01 · Human</div>
+        <h4>Senior accountability</h4>
+        <p>A real strategist owns your account. Not a dashboard. Not a ticket queue.</p>
+      </div>
+      <div class="pillar">
+        <div class="mono lbl">02 · Commercial</div>
+        <h4>Revenue-first language</h4>
+        <p>We report in leads, sales, ROAS, CAC, LTV. Not likes, impressions or reach.</p>
+      </div>
+      <div class="pillar">
+        <div class="mono lbl">03 · Agnostic</div>
+        <h4>Tech-stack neutral</h4>
+        <p>Google, Meta, TikTok, Shopify, HubSpot, Klaviyo, Claude, OpenAI. Whatever wins this quarter.</p>
+      </div>
+      <div class="pillar">
+        <div class="mono lbl">04 · Proven</div>
+        <h4>Outcomes on the record</h4>
+        <p>Case studies with real numbers. References you can call. No black boxes.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <div class="mono cta-eyebrow reveal">Talk to a senior strategist</div>
+    <h2 class="cta-title reveal">
+      Not sure which path? <em>Let's work it out together.</em>
+    </h2>
+    <p class="cta-sub reveal">
+      Thirty minutes with one of us. We read your business, flag the one place AI would move the needle first, and tell you honestly which path fits. No deck, no pitch.
+    </p>
+    <div class="cta-buttons reveal">
+      <a class="btn btn-primary" href="mailto:hello@zibdigital.com.au">
+        Book a conversation <span class="arr">→</span>
+      </a>
+      <a class="btn btn-outline" href="/audit.html">
+        Run the free audit first
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- @include _partials/footer.html -->
+<!-- @include _partials/scripts.html -->
+</body>
+</html>
