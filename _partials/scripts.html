@@ -49,6 +49,91 @@
     document.querySelectorAll('[data-count]').forEach(el => cIO.observe(el));
   }
 
+  // Marquee tone band — duplicate items for seamless loop
+  const marqueeTrack = document.getElementById('marqueeTrack');
+  if (marqueeTrack) {
+    const marqueeItems = [
+      "Commercial outcomes",
+      "Human first",
+      "AI enhanced",
+      "Proof over promises",
+      "No bullshit reports",
+      "Revenue, not activity"
+    ];
+    const html = marqueeItems
+      .map(t => `<span class="marquee-item">${t}<span class="sep">✦</span></span>`)
+      .join('');
+    marqueeTrack.innerHTML = html + html;
+  }
+
+  // Keyword rails — render two scrolling rails of ranked keywords
+  const kwRailsEl = document.getElementById('kwRails');
+  if (kwRailsEl) {
+    const keywords = [
+      { p: 1, v: 1900, t: "online marketing agency" },
+      { p: 1, v: 1000, t: "seo australia" },
+      { p: 1, v: 600,  t: "adwords agency melbourne" },
+      { p: 1, v: 600,  t: "online marketing company" },
+      { p: 1, v: 400,  t: "ecommerce seo melbourne" },
+      { p: 1, v: 400,  t: "seo service sydney" },
+      { p: 1, v: 350,  t: "ecommerce seo agency melbourne" },
+      { p: 1, v: 350,  t: "melbourne seo expert" },
+      { p: 1, v: 300,  t: "digital agency marketing" },
+      { p: 1, v: 300,  t: "digital marketing agency for small business" },
+      { p: 1, v: 300,  t: "digital marketing strategy agency" },
+      { p: 1, v: 300,  t: "search engine optimisation company sydney" },
+      { p: 1, v: 300,  t: "seo optimisation company" },
+      { p: 1, v: 300,  t: "website optimisation brisbane" },
+      { p: 1, v: 250,  t: "australia digital marketing" },
+      { p: 1, v: 250,  t: "online advertising agency" },
+      { p: 1, v: 250,  t: "shopify seo company melbourne" },
+      { p: 1, v: 200,  t: "digital seo company" },
+      { p: 1, v: 200,  t: "google ad agency" },
+      { p: 1, v: 200,  t: "leading digital marketing agency" },
+      { p: 1, v: 200,  t: "online marketing canberra" },
+      { p: 1, v: 200,  t: "online seo company" },
+      { p: 1, v: 200,  t: "social media management companies" },
+      { p: 1, v: 200,  t: "sydney seo experts" },
+      { p: 1, v: 150,  t: "instagram marketing agency melbourne" },
+      { p: 1, v: 150,  t: "search engine optimisation services sydney" },
+      { p: 1, v: 100,  t: "search engine optimization australia" },
+      { p: 1, v: 90,   t: "best seo in australia" },
+      { p: 1, v: 80,   t: "internet advertising agency" },
+      { p: 1, v: 50,   t: "sydney search engine optimization specialists" },
+      { p: 1, v: 50,   t: "top seo companies australia" },
+      { p: 1, v: 40,   t: "sydney google search engine optimisation company" },
+      { p: 1, v: 30,   t: "sydney search engine optimisation experts" },
+      { p: 2, v: 770,  t: "seo geelong" },
+      { p: 2, v: 250,  t: "seo company geelong" },
+      { p: 2, v: 200,  t: "geelong seo" },
+      { p: 2, v: 200,  t: "digital marketing agency for small businesses" },
+      { p: 2, v: 150,  t: "social media marketing companies for small business" },
+      { p: 2, v: 80,   t: "content marketing agencies melbourne" },
+      { p: 2, v: 50,   t: "seo agency geelong" },
+      { p: 2, v: 10,   t: "seo expert geelong" },
+      { p: 3, v: 200,  t: "seo packages canberra" },
+      { p: 3, v: 150,  t: "instagram marketing company" },
+      { p: 3, v: 100,  t: "seo advertising companies" },
+      { p: 3, v: 90,   t: "adwords management agency melbourne" },
+      { p: 3, v: 70,   t: "corporate seo company" },
+      { p: 3, v: 40,   t: "search engine optimization sydney expert" },
+      { p: 3, v: 30,   t: "freelance seo gold coast" },
+      { p: 3, v: 30,   t: "google search engine optimisation company sydney" },
+      { p: 3, v: 20,   t: "search engine optimisation sydney expert" }
+    ];
+    const kwChip = (k) => {
+      const vol = k.v >= 1000 ? (k.v / 1000).toFixed(1).replace(/\.0$/, '') + 'K' : k.v;
+      return `<span class="kw-chip"><span class="pos">#${k.p}</span><span class="term">${k.t}</span><span class="vol">${vol}/mo</span></span>`;
+    };
+    const kwRail = (items, reverse) => {
+      const html = items.map(kwChip).join('');
+      return `<div class="kw-rail${reverse ? ' reverse' : ''}"><div class="kw-track">${html}${html}</div></div>`;
+    };
+    const r1 = keywords.filter(k => k.p === 1);
+    const r2 = keywords.filter(k => k.p !== 1);
+    kwRailsEl.innerHTML = kwRail(r1, false) + kwRail(r2, true);
+  }
+
   // Melbourne clock
   const clockEl = document.getElementById('clock');
   if (clockEl) {
