@@ -343,7 +343,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
       Want this read on <em>your business?</em>
     </h2>
     <p class="cta-sub reveal">
-      Drop your URL. A senior strategist will give you the same kind of read in 30 seconds — and an honest call on which of the levers above would actually move your number first.
+      Drop your URL. A senior strategist will give you the same kind of read in thirty seconds, plus an honest call on which of the levers above would actually move your number first.
     </p>
     <div class="cta-buttons reveal">
       <a class="btn btn-primary" href="/audit.html">Run the free audit <span class="arr">→</span></a>
@@ -360,15 +360,27 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
 <script>
 // ─── BLOG INDEX ─────────────────────────────────────────────
 (() => {
-  // TODO: replace seed data with real posts (or wire to a data file)
-  const posts = [
+  // Posts shown on the index. Set published: true when a real
+  // /blog-<slug>.html file exists; unpublished entries stay here
+  // as a writing queue and are filtered out of the rendered grid.
+  const allPosts = [
+    {
+      slug: "ai-agents-marketing-real-talk",
+      title: "AI agents in marketing: real talk after twelve months of shipping",
+      cat: "strategy",
+      catLabel: "Strategy",
+      date: "21 Jul 2025",
+      author: "Chelsea Teelow",
+      published: true
+    },
     {
       slug: "google-ads-2025-roas-plateau",
       title: "Google Ads in 2025: why your ROAS plateaued (and what to do about it)",
       cat: "paid",
       catLabel: "Paid advertising",
       date: "6 Aug 2025",
-      author: "Marian Gaston"
+      author: "Marian Gaston",
+      published: false
     },
     {
       slug: "seo-melbourne-suburb-pages",
@@ -376,15 +388,8 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
       cat: "seo",
       catLabel: "SEO",
       date: "29 Jul 2025",
-      author: "Chelsea Teelow"
-    },
-    {
-      slug: "ai-agents-marketing-real-talk",
-      title: "AI agents in marketing: real talk after twelve months of shipping",
-      cat: "strategy",
-      catLabel: "Strategy",
-      date: "21 Jul 2025",
-      author: "Chelsea Teelow"
+      author: "Chelsea Teelow",
+      published: false
     },
     {
       slug: "meta-creative-iteration",
@@ -392,7 +397,8 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
       cat: "social",
       catLabel: "Social media",
       date: "14 Jul 2025",
-      author: "Marian Gaston"
+      author: "Marian Gaston",
+      published: false
     },
     {
       slug: "shopify-conversion-low-hanging",
@@ -400,7 +406,8 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
       cat: "websites",
       catLabel: "Websites",
       date: "7 Jul 2025",
-      author: "Chelsea Teelow"
+      author: "Chelsea Teelow",
+      published: false
     },
     {
       slug: "digital-marketing-cfo-language",
@@ -408,7 +415,8 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
       cat: "digital",
       catLabel: "Digital marketing",
       date: "30 Jun 2025",
-      author: "Chelsea Teelow"
+      author: "Chelsea Teelow",
+      published: false
     },
     {
       slug: "branded-search-cannibalisation",
@@ -416,7 +424,8 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
       cat: "paid",
       catLabel: "Paid advertising",
       date: "23 Jun 2025",
-      author: "Marian Gaston"
+      author: "Marian Gaston",
+      published: false
     },
     {
       slug: "linkedin-organic-b2b",
@@ -424,7 +433,8 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
       cat: "social",
       catLabel: "Social media",
       date: "16 Jun 2025",
-      author: "Chelsea Teelow"
+      author: "Chelsea Teelow",
+      published: false
     },
     {
       slug: "core-web-vitals-real-impact",
@@ -432,9 +442,12 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
       cat: "seo",
       catLabel: "SEO",
       date: "9 Jun 2025",
-      author: "Marian Gaston"
+      author: "Marian Gaston",
+      published: false
     }
   ];
+
+  const posts = allPosts.filter(p => p.published);
 
   const PAGE_SIZE = 6;
   const grid = document.getElementById('postGrid');

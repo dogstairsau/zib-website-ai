@@ -1,0 +1,724 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<title>AI agents in marketing: real talk after twelve months of shipping · Zib Digital</title>
+<meta name="description" content="A senior strategist's honest read on AI agents in live client accounts. What earned its keep, what burnt money, and what we tell every operator asking 'should we be doing this'." />
+<meta property="og:title" content="AI agents in marketing: real talk after twelve months of shipping" />
+<meta property="og:description" content="A senior strategist's honest read on AI agents in live client accounts. What earned its keep, what burnt money, and what we tell every operator asking 'should we be doing this'." />
+<meta property="og:type" content="article" />
+<!-- @include _partials/head.html -->
+<style>
+h1, h2, h3, .post-title, .related-h, .cta-title { text-wrap: balance; }
+
+/* ─── BREADCRUMB ──────────────────────────────────────────── */
+.crumb {
+  padding-top: clamp(28px, 3.4vw, 44px);
+  padding-bottom: clamp(20px, 2.4vw, 28px);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.crumb a { color: var(--muted); transition: color 200ms var(--ease); }
+.crumb a:hover { color: var(--accent); }
+.crumb .arr { margin: 0 8px; opacity: 0.5; }
+
+/* ─── ARTICLE HEADER ──────────────────────────────────────── */
+.post-head {
+  padding-top: clamp(20px, 2.4vw, 32px);
+  padding-bottom: clamp(48px, 6vw, 80px);
+}
+
+.post-cats {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: clamp(28px, 3.2vw, 40px);
+}
+
+.post-cat-chip {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--accent);
+  padding: 8px 14px;
+  border: 1px solid var(--accent-tint);
+  border-radius: 999px;
+  background: var(--accent-tint);
+}
+
+.post-title {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(38px, 6vw, 96px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  max-width: 22ch;
+}
+
+.post-title em { color: var(--accent); font-style: italic; font-weight: 400; }
+
+.post-deck {
+  margin-top: clamp(24px, 3vw, 36px);
+  font-family: var(--display);
+  font-size: clamp(18px, 1.7vw, 22px);
+  line-height: 1.5;
+  color: var(--muted);
+  max-width: 60ch;
+}
+
+.post-meta-row {
+  margin-top: clamp(36px, 4.4vw, 56px);
+  padding-top: clamp(20px, 2vw, 24px);
+  border-top: 0.5px solid var(--rule);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: clamp(16px, 2vw, 28px);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.author-pill { display: inline-flex; align-items: center; gap: 10px; }
+.author-avatar {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 1px solid var(--rule-2);
+  display: grid;
+  place-items: center;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0;
+  text-transform: none;
+  color: var(--ink);
+}
+
+.meta-dot { width: 4px; height: 4px; background: var(--rule-2); border-radius: 50%; }
+
+/* ─── HERO IMAGE ──────────────────────────────────────────── */
+.post-hero {
+  margin-bottom: clamp(64px, 7vw, 112px);
+}
+
+.post-hero-frame {
+  aspect-ratio: 21 / 9;
+  border-radius: 18px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #0BAB6E 0%, #58D9A8 100%);
+  position: relative;
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+}
+
+.post-hero-frame::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  opacity: 0.06;
+  mix-blend-mode: overlay;
+}
+
+.post-hero-mark {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(40px, 6vw, 96px);
+  letter-spacing: -0.04em;
+  color: rgba(255,255,255,0.92);
+  padding: 32px;
+  text-align: center;
+  line-height: 1;
+  text-wrap: balance;
+}
+
+.post-hero img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: cover;
+}
+
+/* ─── BODY ────────────────────────────────────────────────── */
+.post-body-wrap {
+  padding-bottom: clamp(80px, 10vw, 144px);
+}
+
+.post-body {
+  max-width: 72ch;
+  margin: 0 auto;
+  font-family: var(--display);
+  font-size: clamp(17px, 1.4vw, 19px);
+  line-height: 1.7;
+  color: var(--ink-2);
+}
+
+.post-body > * + * { margin-top: 1.4em; }
+
+.post-body h2 {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(26px, 3.2vw, 36px);
+  line-height: 1.15;
+  letter-spacing: -0.025em;
+  margin-top: 2em;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+
+.post-body h3 {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(20px, 2.2vw, 24px);
+  line-height: 1.25;
+  letter-spacing: -0.018em;
+  margin-top: 1.8em;
+  color: var(--ink);
+}
+
+.post-body p strong { font-weight: 600; color: var(--ink); }
+.post-body p em { font-style: italic; }
+.post-body a { color: var(--accent); text-decoration: underline; text-underline-offset: 3px; transition: opacity 200ms var(--ease); }
+.post-body a:hover { opacity: 0.7; }
+
+.post-body ul, .post-body ol {
+  padding-left: 1.4em;
+}
+
+.post-body li + li { margin-top: 0.6em; }
+
+.post-body blockquote {
+  margin: 2em 0;
+  padding: 0 0 0 28px;
+  border-left: 2px solid var(--accent);
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(20px, 2.4vw, 28px);
+  line-height: 1.35;
+  color: var(--ink);
+  letter-spacing: -0.012em;
+}
+
+.post-body blockquote cite {
+  display: block;
+  margin-top: 12px;
+  font-size: 12px;
+  font-style: normal;
+  font-family: var(--mono);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.post-body figure {
+  margin: 2.4em 0;
+}
+
+.post-body figure img {
+  width: 100%;
+  height: auto;
+  border-radius: 14px;
+  display: block;
+}
+
+.post-body figcaption {
+  margin-top: 12px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  text-align: center;
+}
+
+.post-body hr {
+  border: 0;
+  border-top: 0.5px solid var(--rule);
+  margin: 2.4em 0;
+}
+
+.post-body code {
+  font-family: var(--mono);
+  font-size: 0.92em;
+  padding: 2px 6px;
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+}
+
+/* ─── AUTHOR + SHARE ──────────────────────────────────────── */
+.post-foot {
+  max-width: 72ch;
+  margin: 0 auto;
+  padding-top: clamp(48px, 5vw, 64px);
+  border-top: 0.5px solid var(--rule);
+  display: grid;
+  gap: clamp(28px, 3vw, 40px);
+}
+
+.author-block {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 20px;
+  align-items: center;
+}
+
+.author-block .author-avatar { width: 64px; height: 64px; font-size: 20px; }
+
+.author-block .name { font-family: var(--display); font-weight: 500; font-size: 17px; letter-spacing: -0.012em; }
+.author-block .role { color: var(--muted); font-size: 14px; line-height: 1.45; margin-top: 4px; }
+
+.share-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.share-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+  margin-right: 8px;
+}
+
+.share-btn {
+  width: 40px; height: 40px;
+  display: grid;
+  place-items: center;
+  border: 1px solid var(--rule-2);
+  border-radius: 50%;
+  color: var(--ink);
+  transition: all 200ms var(--ease);
+  background: #fff;
+  cursor: pointer;
+}
+
+.share-btn:hover { border-color: var(--ink); background: var(--ink); color: #fff; }
+
+.share-btn svg { width: 16px; height: 16px; fill: currentColor; }
+
+/* ─── RELATED ─────────────────────────────────────────────── */
+.related {
+  padding-top: clamp(80px, 10vw, 144px);
+  padding-bottom: clamp(64px, 8vw, 112px);
+  border-top: 0.5px solid var(--rule);
+  background: var(--paper);
+}
+
+.related-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 24px;
+  margin-bottom: clamp(36px, 4vw, 56px);
+  flex-wrap: wrap;
+}
+
+.related-eyebrow { color: var(--accent); margin-bottom: 12px; }
+.related-eyebrow::before { content: ""; display: inline-block; width: 22px; height: 0.5px; background: currentColor; margin-right: 10px; vertical-align: middle; }
+
+.related-h {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(28px, 3.6vw, 44px);
+  line-height: 1.05;
+  letter-spacing: -0.028em;
+}
+
+.related-h em { color: var(--accent); font-style: italic; font-weight: 400; }
+
+.related-link {
+  font-family: var(--display);
+  font-size: 14.5px;
+  font-weight: 500;
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border-bottom: 1.5px solid var(--ink);
+  padding-bottom: 4px;
+  transition: color 220ms var(--ease), border-color 220ms var(--ease);
+}
+
+.related-link:hover { color: var(--accent); border-color: var(--accent); }
+
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(24px, 2.6vw, 32px);
+}
+
+@media (max-width: 880px) { .related-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .related-grid { grid-template-columns: 1fr; } }
+
+.related-card {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  transition: transform 320ms var(--ease);
+}
+
+.related-card:hover { transform: translateY(-3px); }
+
+.related-thumb {
+  aspect-ratio: 16 / 10;
+  border-radius: 12px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #1A1A1A 0%, #3a3a3a 100%);
+  position: relative;
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+  color: rgba(255,255,255,0.92);
+  font-family: var(--display);
+  font-style: italic;
+  font-size: clamp(20px, 2.4vw, 28px);
+  letter-spacing: -0.025em;
+  text-align: center;
+  padding: 16px;
+  text-wrap: balance;
+}
+
+.related-thumb[data-cat="paid"]     { background: linear-gradient(135deg, #FF6200 0%, #FFB07A 100%); }
+.related-thumb[data-cat="seo"]      { background: linear-gradient(135deg, #1A1A1A 0%, #3a3a3a 100%); }
+.related-thumb[data-cat="strategy"] { background: linear-gradient(135deg, #0BAB6E 0%, #58D9A8 100%); }
+.related-thumb[data-cat="social"]   { background: linear-gradient(135deg, #2D2A4A 0%, #6B5DD3 100%); }
+.related-thumb[data-cat="websites"] { background: linear-gradient(135deg, #F5F2EB 0%, #D4D0C4 100%); color: var(--ink); }
+
+.related-cat {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.related-title {
+  font-family: var(--display);
+  font-size: clamp(17px, 1.5vw, 19px);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+  line-height: 1.25;
+  color: var(--ink);
+}
+
+.related-card:hover .related-title { color: var(--accent); }
+
+/* ─── CTA ─────────────────────────────────────────────────── */
+.cta-section {
+  padding-top: clamp(80px, 10vw, 144px);
+  padding-bottom: clamp(80px, 10vw, 144px);
+  background: var(--ink);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-eyebrow { color: var(--accent); margin-bottom: 18px; display: inline-flex; align-items: center; gap: 10px; }
+.cta-eyebrow::before { content: ""; width: 22px; height: 0.5px; background: currentColor; }
+
+.cta-title {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(36px, 5.6vw, 84px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  max-width: 18ch;
+  margin-bottom: clamp(28px, 3vw, 40px);
+}
+
+.cta-title em { color: var(--accent); font-style: italic; font-weight: 400; }
+
+.cta-sub {
+  max-width: 56ch;
+  font-size: clamp(16px, 1.4vw, 19px);
+  line-height: 1.55;
+  color: rgba(255,255,255,0.75);
+  margin-bottom: clamp(36px, 4vw, 56px);
+}
+
+.cta-buttons { display: flex; gap: 14px; flex-wrap: wrap; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 26px;
+  border-radius: 999px;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 15px;
+  transition: transform 220ms var(--ease), background 220ms var(--ease), color 220ms var(--ease);
+}
+
+.btn .arr { transition: transform 260ms var(--ease); }
+.btn:hover { transform: translateY(-1px); }
+.btn:hover .arr { transform: translateX(4px); }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover { background: #ff7a24; }
+.btn-outline { border: 1px solid rgba(255,255,255,0.36); color: #fff; }
+.btn-outline:hover { border-color: #fff; }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- @include _partials/nav.html -->
+
+<main id="main">
+
+<!-- BREADCRUMB -->
+<div class="container">
+  <nav class="crumb" aria-label="Breadcrumb">
+    <a href="/blog.html">← All articles</a>
+  </nav>
+</div>
+
+<!-- POST HEADER -->
+<section class="post-head">
+  <div class="container">
+    <div class="post-cats reveal">
+      <span class="post-cat-chip">Strategy</span>
+    </div>
+    <h1 class="post-title reveal">
+      AI agents in marketing: <em>real talk after twelve months of shipping.</em>
+    </h1>
+    <p class="post-deck reveal">
+      We've been running AI agents inside live client accounts for over a year. This is what actually worked, what wasted money, and what we tell every operator asking us "should we be doing this".
+    </p>
+    <div class="post-meta-row reveal">
+      <div class="author-pill">
+        <span class="author-avatar">CT</span>
+        <span>Chelsea Teelow</span>
+      </div>
+      <span class="meta-dot" aria-hidden="true"></span>
+      <span>21 Jul 2025</span>
+      <span class="meta-dot" aria-hidden="true"></span>
+      <span>6 min read</span>
+    </div>
+  </div>
+</section>
+
+<!-- HERO IMAGE -->
+<div class="container">
+  <div class="post-hero reveal">
+    <!-- Replace this frame with: <img src="..." alt="..." /> when there's a real image -->
+    <div class="post-hero-frame">
+      <div class="post-hero-mark">Junior labour, senior judgement on top.</div>
+    </div>
+  </div>
+</div>
+
+<!-- BODY -->
+<div class="post-body-wrap">
+  <div class="container">
+    <article class="post-body reveal">
+
+      <p>
+        Twelve months ago we ran our first AI agent inside a live client account. Today there are agents in roughly two-thirds of our retainers, doing measurable work on bid management, creative iteration, content drafts, lead scoring and weekly reporting. That's not a pitch. That's an operations report.
+      </p>
+
+      <p>
+        What we've learned over those twelve months is mostly the opposite of what the LinkedIn essays said it would be. The biggest wins came from the boring agents nobody talks about. The biggest wastes were the agents we were certain would print money. And the operators who got the most out of this stuff weren't the ones who moved fastest. They were the ones who were honest about which decisions their team could actually own.
+      </p>
+
+      <p>
+        This is what we'd tell you over a coffee, with twelve months of P&amp;L behind it.
+      </p>
+
+      <h2>The agents that pulled their weight</h2>
+
+      <p>
+        Three categories earned their seat at the table. They share one thing in common: high repetition, low judgement.
+      </p>
+
+      <h3>Paid search bid and creative agents</h3>
+
+      <p>
+        Roughly eighty per cent of our agent value sits here. An agent watching a Google Ads account every fifteen minutes, with the right guardrails, will catch wasted budget faster than a senior strategist reviewing the account weekly. We typically see eight to fourteen per cent improvement in CAC inside the first sixty days, with no change in spend. The agent doesn't get bored on a Friday afternoon.
+      </p>
+
+      <h3>Content drafting agents tied to a real brief</h3>
+
+      <p>
+        When a senior strategist owns the brief and the brand voice file, an agent can ship first drafts of SEO articles, category pages, ad variants and email flows at four to six times the pace of a human writer, at comparable quality after one editing pass. Note the conditional: <em>tied to a real brief</em>. An agent without a brief produces fluent nonsense at scale.
+      </p>
+
+      <h3>Reporting agents that read the dashboards so we don't have to</h3>
+
+      <p>
+        The unsung win. A reporting agent that reads GA4, Search Console, Meta Ads Manager, Shopify and the ad accounts, then produces a one-paragraph commercial brief per channel every Monday morning, frees up roughly a day of senior time per account per month. Multiply that across a book of twenty accounts and the maths gets interesting.
+      </p>
+
+      <h2>The agents we thought would win, and didn't</h2>
+
+      <p>
+        This is where we paid the tuition. Three things we backed that didn't earn their keep:
+      </p>
+
+      <ul>
+        <li><strong>Lead-qualification agents wired into inbound forms.</strong> They handled the easy seventy per cent of cases (which the existing form fields handled fine anyway) and got the difficult thirty per cent wrong in ways the client noticed.</li>
+        <li><strong>"Strategy" agents that read the data and recommended the next move.</strong> They generated plausible-sounding briefs that occasionally contradicted what the data actually said. The senior strategist still has to do that work. The agent helps her gather inputs, not form the view.</li>
+        <li><strong>Always-on social listening agents.</strong> More noise than signal. The signal was already on the Search Console dashboard. We were just paying twice for it.</li>
+      </ul>
+
+      <p>
+        The pattern is what you'd expect, but boring once you see it: agents are excellent at compressing the work, less good at owning the judgement.
+      </p>
+
+      <blockquote>
+        Operators who got the most from agents weren't the ones who moved fastest. They were the ones who were honest about which decisions their team could actually own.
+      </blockquote>
+
+      <h2>What we tell every operator who asks if they should "be doing AI"</h2>
+
+      <p>
+        Three things, in order. We've had this conversation roughly forty times in the last six months, and the answer keeps narrowing to these:
+      </p>
+
+      <ol>
+        <li><strong>Pick the most repetitive, lowest-judgement piece of work in your marketing stack.</strong> Almost always: bid management, creative variants, or weekly reporting. Start there. Skip the strategy agent. Skip the customer-service bot. Both will burn you in the first ninety days.</li>
+        <li><strong>Buy or contract a senior human who's run agents in production.</strong> The cost of getting this wrong is mostly opportunity cost (six months of a campaign you should have been running properly) and brand cost (a customer interaction that didn't sound like you). A senior pair of eyes makes both go away.</li>
+        <li><strong>Decide upfront whether you want to own the agent or rent it.</strong> Both work. Renting is faster to launch and easier to start. Owning is more expensive on day one and pays back when the playbook is yours, not the agency's. We've published the <a href="/ai-services.html">two paths in detail</a>: rent if you want to test the value, own if you've decided this is core capability.</li>
+      </ol>
+
+      <hr>
+
+      <p>
+        The honest read: the line between an agency that uses AI well and one that doesn't is going to harden in the next twelve months. The clients who are getting agents right are the ones treating them as junior labour with a senior on top, not as a magic shortcut around hiring or expertise. The agents pay for themselves. The senior judgement on top is what stops them from costing you ten times what they saved.
+      </p>
+
+      <p>
+        If you want our read on what an agent setup would look like in your business, drop your URL into the <a href="/audit.html">free audit</a> and we'll send the read back inside thirty seconds.
+      </p>
+
+    </article>
+
+    <!-- AUTHOR + SHARE -->
+    <div class="post-foot">
+      <div class="author-block">
+        <span class="author-avatar">CT</span>
+        <div>
+          <div class="name">Chelsea Teelow</div>
+          <div class="role">Senior strategist at Zib Digital. Sixteen years across SEO, paid media and the awkward middle bit where commercial outcomes actually live.</div>
+        </div>
+      </div>
+      <div class="share-row" aria-label="Share this article">
+        <span class="share-label">Share</span>
+        <a class="share-btn" id="shareLinkedIn" href="#" target="_blank" rel="noopener" aria-label="Share on LinkedIn">
+          <svg viewBox="0 0 24 24"><path d="M19 0H5C2.2 0 0 2.2 0 5v14c0 2.8 2.2 5 5 5h14c2.8 0 5-2.2 5-5V5c0-2.8-2.2-5-5-5zM8 19H5V8h3v11zM6.5 6.7C5.5 6.7 4.8 6 4.8 5s.7-1.7 1.7-1.7S8.2 4 8.2 5s-.8 1.7-1.7 1.7zM20 19h-3v-5.6c0-1.4-.5-2.3-1.7-2.3-.9 0-1.5.6-1.7 1.2-.1.2-.1.5-.1.8V19h-3V8h3v1.3c.4-.6 1.1-1.5 2.7-1.5 2 0 3.5 1.3 3.5 4.1V19z"/></svg>
+        </a>
+        <a class="share-btn" id="shareTwitter" href="#" target="_blank" rel="noopener" aria-label="Share on X (Twitter)">
+          <svg viewBox="0 0 24 24"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </a>
+        <button class="share-btn" id="shareCopy" aria-label="Copy link">
+          <svg viewBox="0 0 24 24"><path d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z"/></svg>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- RELATED · pointing at relevant services until more posts ship -->
+<section class="related">
+  <div class="container">
+    <div class="related-head reveal">
+      <div>
+        <div class="mono related-eyebrow">Keep reading</div>
+        <h2 class="related-h">More on <em>how we run agents.</em></h2>
+      </div>
+      <a class="related-link" href="/blog.html">All articles <span aria-hidden="true">→</span></a>
+    </div>
+
+    <div class="related-grid reveal-stagger">
+      <a class="related-card" href="/ai-services.html">
+        <div class="related-thumb" data-cat="strategy" aria-hidden="true">Two ways to work with us on AI.</div>
+        <div class="related-cat">AI services</div>
+        <h3 class="related-title">Managed AI vs AI Partner: pick the model that fits.</h3>
+      </a>
+      <a class="related-card" href="/ai-partner.html">
+        <div class="related-thumb" data-cat="paid" aria-hidden="true">Own the agent. Own the playbook.</div>
+        <div class="related-cat">AI Partner</div>
+        <h3 class="related-title">When you should own the agent (and when to rent it).</h3>
+      </a>
+      <a class="related-card" href="/audit.html">
+        <div class="related-thumb" data-cat="websites" aria-hidden="true">Drop your URL. Get the read.</div>
+        <div class="related-cat">Free audit</div>
+        <h3 class="related-title">A senior strategist's read on your site, in 30 seconds.</h3>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <div class="mono cta-eyebrow reveal">Ready to make more money?</div>
+    <h2 class="cta-title reveal">
+      Stop reading. <em>Start auditing.</em>
+    </h2>
+    <p class="cta-sub reveal">
+      Drop your URL. A senior strategist gives you the same kind of read as the article above, applied to your business, in thirty seconds. Honest, commercial, no upsell.
+    </p>
+    <div class="cta-buttons reveal">
+      <a class="btn btn-primary" href="/audit.html">Run the free audit <span class="arr">→</span></a>
+      <a class="btn btn-outline" href="mailto:hello@zibdigital.com.au?subject=Talk%20to%20a%20strategist">Talk to a strategist</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- @include _partials/footer.html -->
+<!-- @include _partials/scripts.html -->
+
+<script>
+// Share buttons — encode current URL + title
+(() => {
+  const url = encodeURIComponent(location.href);
+  const title = encodeURIComponent(document.title);
+  const li = document.getElementById('shareLinkedIn');
+  const tw = document.getElementById('shareTwitter');
+  const cp = document.getElementById('shareCopy');
+  if (li) li.href = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+  if (tw) tw.href = `https://twitter.com/intent/tweet?url=${url}&text=${title}`;
+  if (cp) cp.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(location.href);
+      const original = cp.getAttribute('aria-label');
+      cp.setAttribute('aria-label', 'Link copied');
+      cp.style.borderColor = 'var(--accent)';
+      cp.style.background = 'var(--accent)';
+      cp.style.color = '#fff';
+      setTimeout(() => {
+        cp.setAttribute('aria-label', original);
+        cp.style.borderColor = '';
+        cp.style.background = '';
+        cp.style.color = '';
+      }, 1600);
+    } catch {}
+  });
+})();
+</script>
+
+</body>
+</html>
