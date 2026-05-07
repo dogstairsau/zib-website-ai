@@ -1,0 +1,500 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<title>Field notes · Zib Digital</title>
+<meta name="description" content="Field notes from senior strategists at Zib Digital. Commercial reads on SEO, paid media, AI agents, and the parts of digital that actually move the number." />
+<!-- @include _partials/head.html -->
+<style>
+h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
+
+/* ─── HEAD ────────────────────────────────────────────────── */
+.blog-head {
+  padding-top: clamp(56px, 8vw, 112px);
+  padding-bottom: clamp(48px, 6vw, 80px);
+  border-bottom: 0.5px solid var(--rule);
+}
+
+.blog-eyebrow { color: var(--accent); margin-bottom: clamp(20px, 2.4vw, 28px); display: inline-flex; align-items: center; gap: 10px; }
+.blog-eyebrow::before { content: ""; width: 22px; height: 0.5px; background: currentColor; }
+
+.blog-h {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(48px, 8vw, 144px);
+  line-height: 0.96;
+  letter-spacing: -0.045em;
+  max-width: 14ch;
+}
+
+.blog-h em { color: var(--accent); font-style: italic; font-weight: 400; }
+
+.blog-sub {
+  margin-top: clamp(24px, 3vw, 36px);
+  font-family: var(--display);
+  font-size: clamp(17px, 1.5vw, 20px);
+  line-height: 1.55;
+  color: var(--muted);
+  max-width: 56ch;
+}
+
+.blog-sub strong { color: var(--ink); font-weight: 500; }
+
+/* ─── FILTER TABS ─────────────────────────────────────────── */
+.blog-filters {
+  padding-top: clamp(28px, 3vw, 40px);
+  padding-bottom: clamp(28px, 3vw, 40px);
+  position: sticky;
+  top: 68px;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: saturate(160%) blur(12px);
+  -webkit-backdrop-filter: saturate(160%) blur(12px);
+  z-index: 5;
+  border-bottom: 0.5px solid var(--rule);
+}
+
+.filter-row {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.filter-chip {
+  font-family: var(--display);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 9px 18px;
+  border: 1px solid var(--rule-2);
+  border-radius: 999px;
+  color: var(--ink);
+  background: #fff;
+  transition: all 220ms var(--ease);
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.filter-chip:hover { border-color: var(--ink); }
+
+.filter-chip[aria-pressed="true"] {
+  background: var(--ink);
+  color: #fff;
+  border-color: var(--ink);
+}
+
+.filter-count {
+  margin-left: auto;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+@media (max-width: 720px) { .filter-count { width: 100%; margin-top: 8px; margin-left: 0; } }
+
+/* ─── GRID ────────────────────────────────────────────────── */
+.blog-grid-wrap {
+  padding-top: clamp(56px, 7vw, 96px);
+  padding-bottom: clamp(80px, 10vw, 144px);
+}
+
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(28px, 3.4vw, 48px) clamp(20px, 2.4vw, 32px);
+}
+
+@media (max-width: 1080px) { .blog-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px)  { .blog-grid { grid-template-columns: 1fr; } }
+
+.post-card {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(16px, 1.8vw, 22px);
+  transition: transform 320ms var(--ease);
+}
+
+.post-card:hover { transform: translateY(-4px); }
+
+.post-thumb {
+  position: relative;
+  aspect-ratio: 16 / 10;
+  border-radius: 14px;
+  overflow: hidden;
+  background: var(--paper);
+  display: grid;
+  place-items: center;
+  isolation: isolate;
+}
+
+/* placeholder gradients per category — colourful but restrained */
+.post-thumb[data-cat="seo"]            { background: linear-gradient(135deg, #1A1A1A 0%, #3a3a3a 100%); }
+.post-thumb[data-cat="paid"]           { background: linear-gradient(135deg, #FF6200 0%, #FFB07A 100%); }
+.post-thumb[data-cat="social"]         { background: linear-gradient(135deg, #2D2A4A 0%, #6B5DD3 100%); }
+.post-thumb[data-cat="strategy"]       { background: linear-gradient(135deg, #0BAB6E 0%, #58D9A8 100%); }
+.post-thumb[data-cat="websites"]       { background: linear-gradient(135deg, #F5F2EB 0%, #D4D0C4 100%); }
+.post-thumb[data-cat="digital"]        { background: linear-gradient(135deg, #003049 0%, #2A6F97 100%); }
+
+.post-thumb::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  z-index: 1;
+}
+
+.post-thumb-mark {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(36px, 5vw, 64px);
+  letter-spacing: -0.04em;
+  color: rgba(255,255,255,0.92);
+  font-style: italic;
+  z-index: 2;
+  padding: 24px;
+  text-align: center;
+  line-height: 1;
+  text-wrap: balance;
+}
+
+.post-thumb[data-cat="websites"] .post-thumb-mark { color: var(--ink); }
+
+.post-cat {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--accent);
+}
+
+.post-title {
+  font-family: var(--display);
+  font-size: clamp(20px, 1.8vw, 24px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+.post-card:hover .post-title { color: var(--accent); }
+
+.post-meta {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+  font-weight: 500;
+  margin-top: auto;
+}
+
+/* ─── LOAD MORE ───────────────────────────────────────────── */
+.load-more-row {
+  margin-top: clamp(56px, 6vw, 80px);
+  display: flex;
+  justify-content: center;
+}
+
+.load-more {
+  font-family: var(--display);
+  font-size: 14.5px;
+  font-weight: 500;
+  padding: 14px 28px;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  background: #fff;
+  color: var(--ink);
+  cursor: pointer;
+  transition: all 220ms var(--ease);
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.load-more:hover { background: var(--ink); color: #fff; }
+.load-more:hover .arr { transform: translateY(2px); }
+.load-more .arr { transition: transform 240ms var(--ease); }
+.load-more[hidden] { display: none; }
+
+.empty-state {
+  grid-column: 1 / -1;
+  padding: clamp(48px, 6vw, 80px) 0;
+  text-align: center;
+  color: var(--muted);
+  font-family: var(--display);
+  font-size: 17px;
+}
+
+/* ─── FOOT CTA ────────────────────────────────────────────── */
+.cta-section {
+  padding-top: clamp(80px, 10vw, 144px);
+  padding-bottom: clamp(80px, 10vw, 144px);
+  background: var(--ink);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-eyebrow { color: var(--accent); margin-bottom: 18px; display: inline-flex; align-items: center; gap: 10px; }
+.cta-eyebrow::before { content: ""; width: 22px; height: 0.5px; background: currentColor; }
+
+.cta-title {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(36px, 5.6vw, 84px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  max-width: 18ch;
+  margin-bottom: clamp(28px, 3vw, 40px);
+}
+
+.cta-title em { color: var(--accent); font-style: italic; font-weight: 400; }
+
+.cta-sub {
+  max-width: 56ch;
+  font-size: clamp(16px, 1.4vw, 19px);
+  line-height: 1.55;
+  color: rgba(255,255,255,0.75);
+  margin-bottom: clamp(36px, 4vw, 56px);
+}
+
+.cta-buttons { display: flex; gap: 14px; flex-wrap: wrap; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 26px;
+  border-radius: 999px;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 15px;
+  transition: transform 220ms var(--ease), background 220ms var(--ease), color 220ms var(--ease);
+}
+
+.btn .arr { transition: transform 260ms var(--ease); }
+.btn:hover { transform: translateY(-1px); }
+.btn:hover .arr { transform: translateX(4px); }
+.btn-primary { background: var(--accent); color: #fff; }
+.btn-primary:hover { background: #ff7a24; }
+.btn-outline { border: 1px solid rgba(255,255,255,0.36); color: #fff; }
+.btn-outline:hover { border-color: #fff; }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- @include _partials/nav.html -->
+
+<main id="main">
+
+<!-- HEAD -->
+<section class="blog-head">
+  <div class="container">
+    <div class="mono blog-eyebrow reveal">Field notes</div>
+    <h1 class="blog-h reveal">
+      Notes from <em>the floor.</em>
+    </h1>
+    <p class="blog-sub reveal">
+      <strong>Commercial reads from senior strategists.</strong>
+      Things we've actually shipped, mistakes we've made twice, and the parts of digital that genuinely move the number. No SEO-bait. No agency essays.
+    </p>
+  </div>
+</section>
+
+<!-- FILTERS -->
+<section class="blog-filters" aria-label="Filter articles by category">
+  <div class="container">
+    <div class="filter-row" id="filterRow">
+      <button class="filter-chip" data-filter="all" aria-pressed="true">All articles</button>
+      <button class="filter-chip" data-filter="digital" aria-pressed="false">Digital marketing</button>
+      <button class="filter-chip" data-filter="paid" aria-pressed="false">Paid advertising</button>
+      <button class="filter-chip" data-filter="seo" aria-pressed="false">SEO</button>
+      <button class="filter-chip" data-filter="social" aria-pressed="false">Social media</button>
+      <button class="filter-chip" data-filter="strategy" aria-pressed="false">Strategy</button>
+      <button class="filter-chip" data-filter="websites" aria-pressed="false">Websites</button>
+      <span class="filter-count" id="filterCount"></span>
+    </div>
+  </div>
+</section>
+
+<!-- GRID -->
+<section class="blog-grid-wrap">
+  <div class="container">
+    <div class="blog-grid reveal-stagger" id="postGrid"></div>
+    <div class="load-more-row">
+      <button class="load-more" id="loadMore" hidden>
+        Load more articles <span class="arr" aria-hidden="true">↓</span>
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section">
+  <div class="container">
+    <div class="mono cta-eyebrow reveal">Stop reading. Start auditing.</div>
+    <h2 class="cta-title reveal">
+      Want this read on <em>your business?</em>
+    </h2>
+    <p class="cta-sub reveal">
+      Drop your URL. A senior strategist will give you the same kind of read in 30 seconds — and an honest call on which of the levers above would actually move your number first.
+    </p>
+    <div class="cta-buttons reveal">
+      <a class="btn btn-primary" href="/audit.html">Run the free audit <span class="arr">→</span></a>
+      <a class="btn btn-outline" href="mailto:hello@zibdigital.com.au?subject=Discovery%20call">Book a discovery call</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- @include _partials/footer.html -->
+<!-- @include _partials/scripts.html -->
+
+<script>
+// ─── BLOG INDEX ─────────────────────────────────────────────
+(() => {
+  // TODO: replace seed data with real posts (or wire to a data file)
+  const posts = [
+    {
+      slug: "google-ads-2025-roas-plateau",
+      title: "Google Ads in 2025: why your ROAS plateaued (and what to do about it)",
+      cat: "paid",
+      catLabel: "Paid advertising",
+      date: "6 Aug 2025",
+      author: "Marian Gaston"
+    },
+    {
+      slug: "seo-melbourne-suburb-pages",
+      title: "Suburb pages, done properly: stop publishing 47 doorway clones",
+      cat: "seo",
+      catLabel: "SEO",
+      date: "29 Jul 2025",
+      author: "Chelsea Teelow"
+    },
+    {
+      slug: "ai-agents-marketing-real-talk",
+      title: "AI agents in marketing: real talk after twelve months of shipping",
+      cat: "strategy",
+      catLabel: "Strategy",
+      date: "21 Jul 2025",
+      author: "Chelsea Teelow"
+    },
+    {
+      slug: "meta-creative-iteration",
+      title: "The creative iteration loop: how to ship 60 ad variants without going broke",
+      cat: "social",
+      catLabel: "Social media",
+      date: "14 Jul 2025",
+      author: "Marian Gaston"
+    },
+    {
+      slug: "shopify-conversion-low-hanging",
+      title: "The seven low-hanging conversion fixes most Shopify stores still miss",
+      cat: "websites",
+      catLabel: "Websites",
+      date: "7 Jul 2025",
+      author: "Chelsea Teelow"
+    },
+    {
+      slug: "digital-marketing-cfo-language",
+      title: "How to brief a digital agency in CFO language (and get a CFO answer)",
+      cat: "digital",
+      catLabel: "Digital marketing",
+      date: "30 Jun 2025",
+      author: "Chelsea Teelow"
+    },
+    {
+      slug: "branded-search-cannibalisation",
+      title: "Branded search cannibalisation is costing you more than you think",
+      cat: "paid",
+      catLabel: "Paid advertising",
+      date: "23 Jun 2025",
+      author: "Marian Gaston"
+    },
+    {
+      slug: "linkedin-organic-b2b",
+      title: "LinkedIn organic in 2025: what works for B2B (and what to stop doing)",
+      cat: "social",
+      catLabel: "Social media",
+      date: "16 Jun 2025",
+      author: "Chelsea Teelow"
+    },
+    {
+      slug: "core-web-vitals-real-impact",
+      title: "Core Web Vitals: what actually moves rankings vs what just looks good in a deck",
+      cat: "seo",
+      catLabel: "SEO",
+      date: "9 Jun 2025",
+      author: "Marian Gaston"
+    }
+  ];
+
+  const PAGE_SIZE = 6;
+  const grid = document.getElementById('postGrid');
+  const loadMoreBtn = document.getElementById('loadMore');
+  const filterRow = document.getElementById('filterRow');
+  const filterCount = document.getElementById('filterCount');
+
+  let activeFilter = 'all';
+  let visibleCount = PAGE_SIZE;
+
+  const escape = (s) => String(s).replace(/[&<>"']/g, (c) => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  })[c]);
+
+  const cardHtml = (p) => `
+    <a class="post-card" href="/blog-${escape(p.slug)}.html">
+      <div class="post-thumb" data-cat="${escape(p.cat)}" aria-hidden="true">
+        <div class="post-thumb-mark">${escape(p.title.split(':')[0])}</div>
+      </div>
+      <div class="post-cat">${escape(p.catLabel)}</div>
+      <h2 class="post-title">${escape(p.title)}</h2>
+      <div class="post-meta">${escape(p.date)} · ${escape(p.author)}</div>
+    </a>
+  `.trim();
+
+  const filtered = () => activeFilter === 'all' ? posts : posts.filter(p => p.cat === activeFilter);
+
+  const render = () => {
+    const list = filtered();
+    if (!list.length) {
+      grid.innerHTML = '<div class="empty-state">No articles in that category yet — check back soon.</div>';
+      loadMoreBtn.hidden = true;
+      filterCount.textContent = '0 articles';
+      return;
+    }
+    const slice = list.slice(0, visibleCount);
+    grid.innerHTML = slice.map(cardHtml).join('');
+    loadMoreBtn.hidden = list.length <= visibleCount;
+    filterCount.textContent = `${list.length} article${list.length === 1 ? '' : 's'}`;
+  };
+
+  filterRow.addEventListener('click', (e) => {
+    const btn = e.target.closest('.filter-chip');
+    if (!btn) return;
+    const next = btn.dataset.filter;
+    if (next === activeFilter) return;
+    filterRow.querySelectorAll('.filter-chip').forEach(b => b.setAttribute('aria-pressed', b === btn ? 'true' : 'false'));
+    activeFilter = next;
+    visibleCount = PAGE_SIZE;
+    render();
+  });
+
+  loadMoreBtn.addEventListener('click', () => {
+    visibleCount += PAGE_SIZE;
+    render();
+  });
+
+  render();
+})();
+</script>
+
+</body>
+</html>

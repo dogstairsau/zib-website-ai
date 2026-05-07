@@ -1,0 +1,763 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<title>Digital Marketing Agency Melbourne · Zib Digital</title>
+<meta name="description" content="Melbourne's most accountable digital marketing agency. Commercial outcomes, senior strategy, no monthly retainers padded with juniors. SEO, Google Ads, social, web — since 2009." />
+<!-- @include _partials/head.html -->
+<style>
+h1, h2, h3, .hero-h, .local-h, .services-h, .stats-h, .faq-h, .cta-title { text-wrap: balance; }
+
+/* ─── HERO ─────────────────────────────────────────────────── */
+.mel-hero {
+  padding-top: clamp(56px, 9vw, 112px);
+  padding-bottom: clamp(80px, 10vw, 144px);
+  border-bottom: 0.5px solid var(--rule);
+}
+
+.mel-hero .eyebrow {
+  color: var(--accent);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: clamp(28px, 3.6vw, 44px);
+}
+
+.mel-hero .eyebrow::before { content: ""; width: 24px; height: 0.5px; background: var(--accent); }
+
+.hero-h {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(48px, 8vw, 144px);
+  line-height: 0.96;
+  letter-spacing: -0.045em;
+  max-width: 14ch;
+}
+
+.hero-h em { color: var(--accent); font-style: italic; font-weight: 400; }
+
+.mel-hero-row {
+  margin-top: clamp(36px, 5vw, 64px);
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: clamp(28px, 4vw, 64px);
+  align-items: end;
+}
+
+@media (max-width: 880px) {
+  .mel-hero-row { grid-template-columns: 1fr; align-items: start; }
+}
+
+.hero-sub {
+  font-family: var(--display);
+  font-size: clamp(18px, 1.6vw, 22px);
+  line-height: 1.5;
+  color: var(--muted);
+  max-width: 56ch;
+}
+
+.hero-sub strong { color: var(--ink); font-weight: 500; }
+
+.hero-ctas {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+@media (min-width: 881px) { .hero-ctas { justify-content: flex-end; } }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 26px;
+  border-radius: 999px;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 15px;
+  transition: transform 220ms var(--ease), background 220ms var(--ease), color 220ms var(--ease);
+}
+
+.btn .arr { transition: transform 260ms var(--ease); }
+.btn:hover { transform: translateY(-1px); }
+.btn:hover .arr { transform: translateX(4px); }
+
+.btn-primary { background: var(--ink); color: #fff; }
+.btn-primary:hover { background: var(--accent); }
+
+.btn-outline { border: 1px solid var(--rule-2); color: var(--ink); }
+.btn-outline:hover { border-color: var(--ink); }
+
+.hero-meta {
+  margin-top: clamp(40px, 5vw, 64px);
+  display: flex;
+  flex-wrap: wrap;
+  gap: clamp(20px, 3vw, 40px);
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.hero-meta .dot { display: inline-block; width: 4px; height: 4px; background: var(--accent); border-radius: 50%; margin-right: 10px; vertical-align: middle; transform: translateY(-1px); }
+
+/* ─── PROOF BAR ───────────────────────────────────────────── */
+.mel-proof {
+  padding-top: clamp(72px, 8vw, 120px);
+  padding-bottom: clamp(72px, 8vw, 120px);
+  border-bottom: 0.5px solid var(--rule);
+}
+
+.mel-proof-head {
+  display: grid;
+  grid-template-columns: 1.3fr 1fr;
+  gap: clamp(28px, 5vw, 80px);
+  margin-bottom: clamp(48px, 6vw, 80px);
+}
+
+@media (max-width: 880px) { .mel-proof-head { grid-template-columns: 1fr; } }
+
+.proof-eyebrow { color: var(--accent); margin-bottom: 18px; }
+
+.proof-eyebrow::before {
+  content: "";
+  display: inline-block;
+  width: 22px;
+  height: 0.5px;
+  background: currentColor;
+  margin-right: 10px;
+  vertical-align: middle;
+}
+
+.proof-h {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(36px, 5vw, 76px);
+  line-height: 1;
+  letter-spacing: -0.035em;
+}
+
+.proof-h em { color: var(--accent); font-style: italic; font-weight: 400; }
+
+.proof-sub {
+  color: var(--muted);
+  font-size: clamp(16px, 1.4vw, 18px);
+  line-height: 1.55;
+}
+
+.case-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(16px, 1.6vw, 22px);
+}
+
+@media (max-width: 1080px) { .case-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .case-grid { grid-template-columns: 1fr; } }
+
+.case-card {
+  display: block;
+  padding: clamp(24px, 2.6vw, 32px);
+  border: 1px solid var(--rule);
+  border-radius: 18px;
+  transition: transform 280ms var(--ease), border-color 280ms var(--ease), box-shadow 280ms var(--ease);
+  position: relative;
+  background: #fff;
+}
+
+.case-card:hover { transform: translateY(-4px); border-color: var(--ink); box-shadow: 0 30px 80px -40px rgba(0,0,0,0.18); }
+
+.case-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 12px; }
+.case-client { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); font-weight: 600; }
+.case-tag { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted-2); margin-top: 6px; }
+.case-arr { color: var(--muted-2); transition: transform 280ms var(--ease), color 280ms var(--ease); }
+.case-card:hover .case-arr { color: var(--accent); transform: translate(3px, -3px); }
+
+.case-num {
+  margin-top: clamp(28px, 3.5vw, 44px);
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(56px, 7vw, 96px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  font-variant-numeric: tabular-nums;
+}
+
+.case-num .pct { color: var(--accent); font-weight: 400; }
+
+.case-card hr {
+  border: 0;
+  border-top: 0.5px solid var(--rule);
+  margin: clamp(20px, 2.4vw, 28px) 0 clamp(14px, 1.8vw, 20px);
+}
+
+.case-desc {
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+/* ─── SERVICES ────────────────────────────────────────────── */
+.mel-services {
+  padding-top: clamp(80px, 10vw, 144px);
+  padding-bottom: clamp(80px, 10vw, 144px);
+  background: var(--paper);
+  border-bottom: 0.5px solid var(--rule);
+}
+
+.services-head { max-width: 60ch; margin-bottom: clamp(48px, 6vw, 72px); }
+
+.services-eyebrow { color: var(--accent); margin-bottom: 18px; }
+.services-eyebrow::before { content: ""; display: inline-block; width: 22px; height: 0.5px; background: currentColor; margin-right: 10px; vertical-align: middle; }
+
+.services-h {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(36px, 5vw, 72px);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+}
+
+.services-h em { color: var(--accent); font-style: italic; font-weight: 400; }
+
+.service-list { border-top: 0.5px solid var(--rule); }
+
+.service-row {
+  display: grid;
+  grid-template-columns: 60px 1fr 2fr 30px;
+  gap: clamp(16px, 2.4vw, 32px);
+  padding: clamp(28px, 3.4vw, 44px) 0;
+  border-bottom: 0.5px solid var(--rule);
+  align-items: baseline;
+  transition: padding 280ms var(--ease), background 280ms var(--ease);
+}
+
+.service-row:hover { padding-left: 8px; }
+
+@media (max-width: 720px) { .service-row { grid-template-columns: 40px 1fr 24px; } .service-desc { grid-column: 2 / -1; } }
+
+.service-num { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; color: var(--muted-2); font-weight: 600; }
+.service-name { font-family: var(--display); font-size: clamp(22px, 2.4vw, 30px); font-weight: 500; letter-spacing: -0.02em; }
+.service-desc { font-size: 15.5px; line-height: 1.55; color: var(--muted); }
+.service-arrow { font-family: var(--display); color: var(--muted-2); transition: color 280ms var(--ease), transform 280ms var(--ease); justify-self: end; }
+.service-row:hover .service-arrow { color: var(--accent); transform: translateX(4px); }
+
+/* ─── LOCAL ADVANTAGE ─────────────────────────────────────── */
+.mel-local {
+  padding-top: clamp(80px, 10vw, 144px);
+  padding-bottom: clamp(80px, 10vw, 144px);
+  border-bottom: 0.5px solid var(--rule);
+}
+
+.local-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 6vw, 96px);
+  align-items: start;
+}
+
+@media (max-width: 880px) { .local-grid { grid-template-columns: 1fr; } }
+
+.local-eyebrow { color: var(--accent); margin-bottom: 18px; }
+.local-eyebrow::before { content: ""; display: inline-block; width: 22px; height: 0.5px; background: currentColor; margin-right: 10px; vertical-align: middle; }
+
+.local-h {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(32px, 4.4vw, 60px);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+}
+
+.local-h em { color: var(--accent); font-style: italic; font-weight: 400; }
+
+.local-pillars { display: grid; gap: clamp(28px, 3vw, 40px); }
+
+.pillar { padding-left: 24px; border-left: 1.5px solid var(--accent); }
+
+.pillar h3 { font-family: var(--display); font-size: 19px; font-weight: 500; letter-spacing: -0.015em; margin-bottom: 8px; }
+.pillar p { color: var(--muted); font-size: 15.5px; line-height: 1.55; }
+
+.partner-badges {
+  margin-top: clamp(36px, 4.4vw, 56px);
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.partner-badge {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border: 1px solid var(--rule-2);
+  border-radius: 999px;
+  padding: 10px 18px;
+  font-weight: 600;
+}
+
+/* ─── STATS BAND ──────────────────────────────────────────── */
+.mel-stats {
+  background: var(--ink);
+  color: #fff;
+  padding-top: clamp(80px, 10vw, 144px);
+  padding-bottom: clamp(80px, 10vw, 144px);
+  position: relative;
+  overflow: hidden;
+}
+
+.mel-stats .stats-eyebrow { color: var(--accent); margin-bottom: 18px; }
+.mel-stats .stats-eyebrow::before { content: ""; display: inline-block; width: 22px; height: 0.5px; background: currentColor; margin-right: 10px; vertical-align: middle; }
+
+.stats-h {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(36px, 5vw, 72px);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  max-width: 22ch;
+  margin-bottom: clamp(56px, 7vw, 96px);
+}
+
+.stats-h em { color: var(--accent); font-style: italic; font-weight: 400; }
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(20px, 2.4vw, 32px);
+}
+
+@media (max-width: 1080px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 480px) { .stats-grid { grid-template-columns: 1fr 1fr; } }
+
+.stat-cell { border-top: 1px solid rgba(255,255,255,0.18); padding-top: 24px; }
+.stat-value { font-family: var(--display); font-weight: 500; font-size: clamp(48px, 6vw, 88px); line-height: 1; letter-spacing: -0.04em; font-variant-numeric: tabular-nums; }
+.stat-value .suf { color: var(--accent); font-weight: 400; }
+.stat-label { margin-top: 14px; color: rgba(255,255,255,0.72); font-size: 14px; line-height: 1.45; }
+
+/* ─── FAQ ────────────────────────────────────────────────── */
+.mel-faq {
+  padding-top: clamp(80px, 10vw, 144px);
+  padding-bottom: clamp(80px, 10vw, 144px);
+  border-bottom: 0.5px solid var(--rule);
+}
+
+.faq-head { max-width: 56ch; margin-bottom: clamp(48px, 5vw, 72px); }
+
+.faq-eyebrow { color: var(--accent); margin-bottom: 18px; }
+.faq-eyebrow::before { content: ""; display: inline-block; width: 22px; height: 0.5px; background: currentColor; margin-right: 10px; vertical-align: middle; }
+
+.faq-h {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(34px, 4.4vw, 60px);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+}
+
+.faq-h em { color: var(--accent); font-style: italic; font-weight: 400; }
+
+.faq-list { border-top: 0.5px solid var(--rule); }
+
+.faq-item { border-bottom: 0.5px solid var(--rule); }
+
+.faq-q {
+  width: 100%;
+  text-align: left;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: clamp(24px, 2.6vw, 32px) 0;
+  font-family: var(--display);
+  font-size: clamp(18px, 1.7vw, 22px);
+  font-weight: 500;
+  letter-spacing: -0.012em;
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.faq-q .icon {
+  flex-shrink: 0;
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 1px solid var(--rule-2);
+  display: grid;
+  place-items: center;
+  transition: transform 320ms var(--ease), border-color 320ms var(--ease), background 320ms var(--ease);
+  color: var(--muted);
+}
+
+.faq-item.open .faq-q .icon { transform: rotate(45deg); border-color: var(--accent); background: var(--accent); color: #fff; }
+
+.faq-a {
+  max-height: 0;
+  overflow: hidden;
+  color: var(--muted);
+  line-height: 1.6;
+  transition: max-height 360ms var(--ease), padding 360ms var(--ease);
+  font-size: 16px;
+}
+
+.faq-item.open .faq-a { max-height: 600px; padding-bottom: clamp(24px, 2.6vw, 32px); }
+
+/* ─── CTA ────────────────────────────────────────────────── */
+.cta-section {
+  padding-top: clamp(80px, 10vw, 144px);
+  padding-bottom: clamp(80px, 10vw, 144px);
+  background: var(--ink);
+  color: #fff;
+  position: relative;
+  overflow: hidden;
+}
+
+.cta-eyebrow { color: var(--accent); margin-bottom: 18px; }
+.cta-eyebrow::before { content: ""; display: inline-block; width: 22px; height: 0.5px; background: currentColor; margin-right: 10px; vertical-align: middle; }
+
+.cta-title {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(40px, 6vw, 96px);
+  line-height: 1;
+  letter-spacing: -0.04em;
+  max-width: 18ch;
+  margin-bottom: clamp(28px, 3vw, 40px);
+}
+
+.cta-title em { color: var(--accent); font-style: italic; font-weight: 400; }
+
+.cta-sub {
+  max-width: 56ch;
+  font-size: clamp(16px, 1.4vw, 19px);
+  line-height: 1.55;
+  color: rgba(255,255,255,0.75);
+  margin-bottom: clamp(36px, 4vw, 56px);
+}
+
+.cta-buttons { display: flex; gap: 14px; flex-wrap: wrap; }
+
+.cta-section .btn-primary { background: var(--accent); color: #fff; }
+.cta-section .btn-primary:hover { background: #ff7a24; }
+.cta-section .btn-outline { border-color: rgba(255,255,255,0.36); color: #fff; }
+.cta-section .btn-outline:hover { border-color: #fff; }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- @include _partials/nav.html -->
+
+<main id="main">
+
+<!-- HERO -->
+<section class="mel-hero">
+  <div class="container">
+    <div class="mono eyebrow reveal">Digital marketing · Melbourne</div>
+    <h1 class="hero-h reveal">
+      Melbourne digital, <em>built around your number.</em>
+    </h1>
+
+    <div class="mel-hero-row">
+      <p class="hero-sub reveal">
+        <strong>We're a Melbourne digital marketing agency that sells the commercial outcome.</strong>
+        Senior strategists, AI-augmented execution, and a number on the P&amp;L we put our name next to. Since 2009.
+      </p>
+      <div class="hero-ctas reveal">
+        <a class="btn btn-primary" href="/audit.html">Run a free audit <span class="arr">→</span></a>
+        <a class="btn btn-outline" href="mailto:hello@zibdigital.com.au?subject=Melbourne%20-%20let's%20talk">Talk to a strategist</a>
+      </div>
+    </div>
+
+    <div class="hero-meta reveal">
+      <span><span class="dot" aria-hidden="true"></span>Premier Google Partner</span>
+      <span><span class="dot" aria-hidden="true"></span>Meta Business Partner</span>
+      <span><span class="dot" aria-hidden="true"></span>Senior on every account</span>
+      <span><span class="dot" aria-hidden="true"></span>800+ clients since 2009</span>
+    </div>
+  </div>
+</section>
+
+<!-- PROOF -->
+<section class="mel-proof">
+  <div class="container">
+    <div class="mel-proof-head">
+      <div>
+        <div class="mono proof-eyebrow reveal">Proof, not promises</div>
+        <h2 class="proof-h reveal">Real Melbourne clients. <em>Real numbers.</em></h2>
+      </div>
+      <p class="proof-sub reveal">
+        Every brief is different. The common thread across the 800+ businesses we've worked with: a commercial outcome they can see, and keep.
+      </p>
+    </div>
+
+    <div class="case-grid reveal-stagger">
+      <a class="case-card" href="#audit">
+        <div class="case-head">
+          <div>
+            <div class="case-client">Amazing Graze</div>
+            <div class="case-tag">Gourmet food · DTC ecommerce</div>
+          </div>
+          <span class="case-arr" aria-hidden="true">↗</span>
+        </div>
+        <div class="case-num"><span data-count="600">0</span><span class="pct">%</span></div>
+        <hr>
+        <p class="case-desc">Increase in online revenue. Paid social and organic search rebuilt around purchase intent. Compounding monthly by the second quarter.</p>
+      </a>
+      <a class="case-card" href="#audit">
+        <div class="case-head">
+          <div>
+            <div class="case-client">Assured Roofing</div>
+            <div class="case-tag">Residential trades · Local services</div>
+          </div>
+          <span class="case-arr" aria-hidden="true">↗</span>
+        </div>
+        <div class="case-num"><span data-count="300">0</span><span class="pct">%</span></div>
+        <hr>
+        <p class="case-desc">Lift in qualified social leads. Paid and organic positioning rebuilt around high-intent suburbs and storm-season demand.</p>
+      </a>
+      <a class="case-card" href="#audit">
+        <div class="case-head">
+          <div>
+            <div class="case-client">Liberty Financial</div>
+            <div class="case-tag">Consumer finance · National</div>
+          </div>
+          <span class="case-arr" aria-hidden="true">↗</span>
+        </div>
+        <div class="case-num"><span data-count="100">0</span><span class="pct">%</span></div>
+        <hr>
+        <p class="case-desc">Of target keywords ranking top 3 on Google. Earned search taking competitor share on generic broker terms that used to cost six figures in Ads.</p>
+      </a>
+      <a class="case-card" href="#audit">
+        <div class="case-head">
+          <div>
+            <div class="case-client">Port Melb. Containers</div>
+            <div class="case-tag">Container logistics · B2B</div>
+          </div>
+          <span class="case-arr" aria-hidden="true">↗</span>
+        </div>
+        <div class="case-num"><span data-count="220">0</span><span class="pct">%</span></div>
+        <hr>
+        <p class="case-desc">Increase in qualified Google Ads leads. Funnel rebuilt around container-specific intent, stripping out tyre-kickers before they cost a click.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="mel-services">
+  <div class="container">
+    <div class="services-head reveal">
+      <div class="mono services-eyebrow">What we do for Melbourne</div>
+      <h2 class="services-h">
+        Every channel that matters. <em>Only the ones that move your number.</em>
+      </h2>
+    </div>
+
+    <div class="service-list reveal">
+      <a class="service-row" href="/seo-agency.html">
+        <span class="service-num mono">01</span>
+        <span class="service-name">Search (SEO)</span>
+        <span class="service-desc">Technical audits, content programs, and authority builds run by a senior strategist with sixteen years of pattern-matching, augmented by agents that ship at scale.</span>
+        <span class="service-arrow">→</span>
+      </a>
+      <a class="service-row" href="mailto:hello@zibdigital.com.au?subject=Google%20Ads%20-%20Melbourne">
+        <span class="service-num mono">02</span>
+        <span class="service-name">Google Ads</span>
+        <span class="service-desc">Premier Google Partner. Campaigns optimised daily by our agent stack and reviewed weekly by a real human, not monthly by a junior.</span>
+        <span class="service-arrow">→</span>
+      </a>
+      <a class="service-row" href="mailto:hello@zibdigital.com.au?subject=Paid%20social%20-%20Melbourne">
+        <span class="service-num mono">03</span>
+        <span class="service-name">Paid social &amp; Meta</span>
+        <span class="service-desc">Meta Business Partner. Creative iterations in hours, not weeks. Scale what works, kill what doesn't, and report in CAC and revenue, not impressions.</span>
+        <span class="service-arrow">→</span>
+      </a>
+      <a class="service-row" href="mailto:hello@zibdigital.com.au?subject=Web%20-%20Melbourne">
+        <span class="service-num mono">04</span>
+        <span class="service-name">Web &amp; UX</span>
+        <span class="service-desc">Conversion-first design. Sites that rank, convert, and reflect the business you're actually running, not the one your last brief described.</span>
+        <span class="service-arrow">→</span>
+      </a>
+      <a class="service-row" href="mailto:hello@zibdigital.com.au?subject=Strategy%20-%20Melbourne">
+        <span class="service-num mono">05</span>
+        <span class="service-name">Strategy &amp; insights</span>
+        <span class="service-desc">The commercial conversation first. Channels second. We pick what actually moves the business, then we go and build it.</span>
+        <span class="service-arrow">→</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- LOCAL ADVANTAGE -->
+<section class="mel-local">
+  <div class="container">
+    <div class="local-grid">
+      <div class="reveal">
+        <div class="mono local-eyebrow">The Melbourne advantage</div>
+        <h2 class="local-h">
+          Local team, <em>commercial mindset.</em>
+        </h2>
+        <p style="margin-top: 24px; color: var(--muted); font-size: clamp(16px, 1.4vw, 18px); line-height: 1.55; max-width: 48ch;">
+          Our Melbourne team isn't a satellite of someone else's HQ. We've been here since 2009 — running campaigns for Brunswick cafés, Mornington Peninsula service brands, CBD legal firms and national retailers headquartered in Cremorne and Cremorne South. Same playbook scales up; the local read sharpens it.
+        </p>
+        <div class="partner-badges">
+          <span class="partner-badge">Premier Google Partner</span>
+          <span class="partner-badge">Meta Business Partner</span>
+          <span class="partner-badge">TikTok Marketing Partner</span>
+          <span class="partner-badge">Shopify Plus Partner</span>
+        </div>
+      </div>
+
+      <div class="local-pillars reveal-stagger">
+        <div class="pillar">
+          <h3>One senior strategist, all yours.</h3>
+          <p>A real human owns your account. Not a dashboard. Not a ticket queue. They know your number, your market, and your margin.</p>
+        </div>
+        <div class="pillar">
+          <h3>AI-augmented execution.</h3>
+          <p>Agents handle the repetition: bid management, creative iteration, content scaling, reporting. Senior judgement decides where to point them.</p>
+        </div>
+        <div class="pillar">
+          <h3>Reported in commercial language.</h3>
+          <p>Leads, sales, ROAS, CAC, LTV. Not engagement. Not reach. We file weekly briefs you can forward to a CFO without translating.</p>
+        </div>
+        <div class="pillar">
+          <h3>No grey-area retainers.</h3>
+          <p>You pay for outcomes, not for the privilege of being in our system. Cancel any time, on a month's notice, no clawback.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="mel-stats">
+  <div class="container">
+    <div class="mono stats-eyebrow reveal">Sixteen years on the record</div>
+    <h2 class="stats-h reveal">
+      The compound interest of <em>doing this since 2009.</em>
+    </h2>
+
+    <div class="stats-grid reveal-stagger">
+      <div class="stat-cell">
+        <div class="stat-value"><span data-count="4151">0</span></div>
+        <div class="stat-label">Senior strategist hours billed in 2025</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-value"><span data-count="800">0</span><span class="suf">+</span></div>
+        <div class="stat-label">Australian brands worked with since 2009</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-value"><span data-count="97">0</span><span class="suf">%</span></div>
+        <div class="stat-label">Year-on-year retention across managed accounts</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-value"><span data-count="8">0</span><span class="suf">:1</span></div>
+        <div class="stat-label">Average ROAS across paid retainers, 2025</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="mel-faq">
+  <div class="container">
+    <div class="faq-head reveal">
+      <div class="mono faq-eyebrow">Common questions</div>
+      <h2 class="faq-h">
+        Things Melbourne operators <em>actually ask us.</em>
+      </h2>
+    </div>
+
+    <div class="faq-list" id="faqList">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span>What's the smallest budget you'll work with?</span>
+          <span class="icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a">
+          <p>Honest answer: we start to add real commercial value at around $5–8k a month in media plus retainer combined. Below that, you're better off running it yourself with our free audit as a roadmap. We'll tell you that on the discovery call rather than wasting your time.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span>How fast does SEO actually move the needle?</span>
+          <span class="icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a">
+          <p>Technical wins land in 4–6 weeks. Content compounds over 90–180 days. Authority and category-level rankings are 6–12 months. Anyone telling you different is selling tactics, not outcomes — and probably charging by the hour.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span>Do you do contracts and lock-ins?</span>
+          <span class="icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a">
+          <p>Month-to-month with 30 days notice. We earn the next month, every month. The retention number on this page (97%) is a result of that, not a marketing claim — the math doesn't work any other way.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span>Who actually runs my account?</span>
+          <span class="icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a">
+          <p>A senior digital manager who owns your number, briefed and reviewed by a partner with their name on the P&amp;L. No juniors on rotation, no offshore teams you've never met. The human you talk to in week one is the human you talk to in year three.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span>Are you using AI in client work?</span>
+          <span class="icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a">
+          <p>Yes — agents do the repetitive work (bid management, creative variants, content drafts, reporting briefs). A senior human still does the judgement: what to test, what to kill, what your number tells us next. We've written about how this works on our <a href="/ai-services.html" style="color: var(--accent); text-decoration: underline;">AI services page</a>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="audit">
+  <div class="container">
+    <div class="mono cta-eyebrow reveal">Talk to a senior strategist</div>
+    <h2 class="cta-title reveal">
+      Drop the URL. <em>We'll tell you the truth.</em>
+    </h2>
+    <p class="cta-sub reveal">
+      Thirty minutes with one of our senior strategists. We read your business, flag the one place we'd move first, and give you the unvarnished version. No deck. No upsell. If we're not the fit, we'll tell you that too.
+    </p>
+    <div class="cta-buttons reveal">
+      <a class="btn btn-primary" href="/audit.html">Run the free audit <span class="arr">→</span></a>
+      <a class="btn btn-outline" href="mailto:hello@zibdigital.com.au?subject=Melbourne%20-%20discovery%20call">Book a discovery call</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- @include _partials/footer.html -->
+<!-- @include _partials/scripts.html -->
+
+<script>
+// FAQ accordion
+(() => {
+  const list = document.getElementById('faqList');
+  if (!list) return;
+  list.addEventListener('click', (e) => {
+    const btn = e.target.closest('.faq-q');
+    if (!btn) return;
+    const item = btn.parentElement;
+    const open = item.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+})();
+</script>
+
+</body>
+</html>

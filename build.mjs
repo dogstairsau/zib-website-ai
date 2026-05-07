@@ -76,6 +76,8 @@ async function build() {
   let count = 0;
   for (const entry of entries) {
     if (!entry.isFile() || !entry.name.endsWith(".html")) continue;
+    // Skip templates / drafts — files prefixed with `_` are not published
+    if (entry.name.startsWith("_")) continue;
     const html = await readFile(join(ROOT, entry.name), "utf8");
     const expanded = await expand(html);
     await writeFile(join(OUT, entry.name), expanded, "utf8");
