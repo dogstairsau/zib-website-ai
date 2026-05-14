@@ -2155,6 +2155,15 @@ footer {
   display: inline-block;
 }
 
+/* ─── Audit-only footer · 3 columns instead of 4 ──────────────────────── */
+.audit-footer .foot-grid { grid-template-columns: 2fr 1fr 1fr; }
+@media (max-width: 880px) {
+  .audit-footer .foot-grid { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 560px) {
+  .audit-footer .foot-grid { grid-template-columns: 1fr; }
+}
+
 /* ─── Blog offer & sample article ────────────────────────────────────── */
 .blog-offer {
   display: flex;
@@ -2230,7 +2239,7 @@ footer {
 <a href="#hero" class="skip-link">Skip to content</a>
 
 <!-- ───────────────────────── HEADER ───────────────────────── -->
-<!-- @include _partials/nav.html -->
+<!-- @include _partials/audit-nav.html -->
 
 <!-- ───────────────────────── HERO · merged audit ────────────── -->
 <section class="hero" id="hero">
@@ -2430,7 +2439,7 @@ footer {
 </section>
 
 <!-- ───────────────────────── FOOTER ───────────────────────── -->
-<!-- @include _partials/footer.html -->
+<!-- @include _partials/audit-footer.html -->
 
 <script>
 (() => {
