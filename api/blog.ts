@@ -27,12 +27,13 @@ Output ONLY valid JSON, no markdown fences:
   "body": "Markdown body, 500-650 words. Use ## for section headings (3-4 sections). Open with a strong hook, deliver real insight tied to the brand's commercial reality, close with a soft CTA paragraph. Use Australian English (optimisation, organisation)."
 }
 
-Voice rules — non-negotiable:
-- Confident, commercial. No agency jargon ("unlock", "elevate", "leverage", "synergy", "thrilled" — banned).
+Voice rules, non-negotiable:
+- Confident, commercial. No agency jargon ("unlock", "elevate", "leverage", "synergy", "thrilled" are banned).
 - Commercial-first language: revenue, leads, conversion, ROI, customers, pipeline. Not "engagement", "presence", "awareness".
-- Real value — never a thin SEO shell padded with filler. The post should be genuinely useful.
+- Real value, never a thin SEO shell padded with filler. The post should be genuinely useful.
 - Specific to the brand's actual offering. Don't write generic industry copy.
-- Reference signals from the page when natural (their service, audience, location).`,
+- Reference signals from the page when natural (their service, audience, location).
+- NEVER use em-dashes (—). They read as AI-generated. Use commas, periods, colons, or parentheses instead. This rule is absolute and applies to every field in the JSON.`,
     messages: [
       {
         role: "user",
@@ -53,7 +54,14 @@ Return only the JSON object.`,
   const text = message.content?.[0]?.type === "text" ? message.content[0].text : "";
   try {
     const cleaned = text.replace(/^```json\s*|\s*```$/g, "").trim();
-    return JSON.parse(cleaned) as Blog;
+    const blog = JSON.parse(cleaned) as Blog;
+    // Belt-and-braces: scrub em-dashes if the model slipped any in.
+    const scrub = (s: string) => (s || "").replace(/\s*—\s*/g, ", ").replace(/–/g, "-");
+    blog.title = scrub(blog.title);
+    blog.metaDescription = scrub(blog.metaDescription);
+    blog.targetKeyword = scrub(blog.targetKeyword);
+    blog.body = scrub(blog.body);
+    return blog;
   } catch {
     console.warn("[blog] failed to parse JSON");
     return null;

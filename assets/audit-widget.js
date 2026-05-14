@@ -415,13 +415,23 @@
         : msg;
     };
 
+    const BLOG_BTN_DEFAULT_HTML = blogBtn.innerHTML;
+
     blogBtn.addEventListener('click', async () => {
       const raw = urlInput.value.trim().replace(/^https?:\/\//i, '');
       const url = raw ? 'https://' + raw : '';
       if (!url) { setBlogStatus('Run the audit first.', false); return; }
 
+      // Visible loading state: spinner in the button + reveal result block
+      // with a placeholder so the user can see something is happening.
+      blogBtn.innerHTML = '<span class="spinner" aria-hidden="true"></span><span>Generating your blog…</span>';
       blogOffer.classList.add('is-loading');
       blogBtn.disabled = true;
+      if (blogTitleEl) blogTitleEl.textContent = 'Drafting your sample article…';
+      if (blogDescEl)  blogDescEl.textContent  = '';
+      if (blogKwEl)    blogKwEl.textContent    = '';
+      if (blogBodyEl)  blogBodyEl.innerHTML    = '';
+      blogResult.hidden = false;
       setBlogStatus('Reading the site…', true);
 
       try {
@@ -456,7 +466,6 @@
               if (blogDescEl)  blogDescEl.textContent  = data.metaDescription || '';
               if (blogKwEl)    blogKwEl.textContent    = data.targetKeyword ? `Target: ${data.targetKeyword}` : '';
               if (blogBodyEl)  blogBodyEl.innerHTML    = mdToHtml(data.body || '');
-              blogResult.hidden = false;
               blogOffer.classList.add('is-hidden');
               setBlogStatus('', false);
             } else if (event === 'error') {
@@ -466,9 +475,12 @@
         }
       } catch (err) {
         setBlogStatus('Blog failed: ' + (err.message || 'try again'), false);
+        if (blogTitleEl) blogTitleEl.textContent = '';
+        blogResult.hidden = true;
       } finally {
         blogOffer.classList.remove('is-loading');
         blogBtn.disabled = false;
+        blogBtn.innerHTML = BLOG_BTN_DEFAULT_HTML;
       }
     });
   }
