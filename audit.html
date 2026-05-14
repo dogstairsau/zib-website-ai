@@ -223,6 +223,17 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
   h1.hero-h, .hero-h { font-size: clamp(30px, 9vw, 44px) !important; letter-spacing: -0.025em; }
 }
 
+/* Proof grid cards · big stat number could overflow narrow cells (1fr defaults to min-content) */
+.case-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+@media (max-width: 880px) { .case-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 560px) {
+  .case-grid { grid-template-columns: 1fr; }
+  .case-card { padding: 24px; }
+  .case-num { font-size: clamp(44px, 14vw, 72px) !important; }
+}
+.case-card { min-width: 0; overflow: hidden; }
+.case-client { word-break: break-word; overflow-wrap: anywhere; }
+
 /* ─── HERO ───────────────────────────────────────────────────────── */
 .hero {
   padding-top: clamp(80px, 12vh, 160px);
