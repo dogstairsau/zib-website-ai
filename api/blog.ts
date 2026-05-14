@@ -1,5 +1,6 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { fetchSiteContent, normaliseUrl, type SiteContent } from "../lib/site";
+import { checkRateLimit, rateLimitResponse } from "../lib/rateLimit";
 
 export const config = { runtime: "edge" };
 
@@ -83,6 +84,10 @@ export default async function handler(req: Request): Promise<Response> {
   if (!process.env.ANTHROPIC_API_KEY) {
     return json({ error: "Server not configured (ANTHROPIC_API_KEY missing)." }, 500);
   }
+
+  // Rate limit: 3 blog generations per 10 minutes per IP (no-op until KV is set up)
+  const rl = await checkRateLimit(req, "blog", 3, 600);
+  if (!rl.allowed) return rateLimitResponse(rl.retryAfter);
 
   const stream = new ReadableStream({
     async start(controller) {
