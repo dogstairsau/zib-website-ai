@@ -197,10 +197,26 @@ section.tight { padding-top: clamp(60px, 8vh, 96px); padding-bottom: clamp(60px,
 }
 
 /* ─── No-horizontal-scroll safety net (long audit text + form on small screens) ─── */
-html { overflow-x: hidden; }
+html, body {
+  overflow-x: clip;
+  max-width: 100vw;
+  position: relative;
+}
 .audit-form, .audit-form > * { min-width: 0; }
 .url-prefix { width: 100%; box-sizing: border-box; }
-.audit-result, .strategist, .blog-body, .seo-wall { overflow-wrap: anywhere; word-break: break-word; }
+.audit-result, .audit-stages, .strategist, .blog-result, .blog-body, .seo-wall, .result-head, .sample-ad {
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+}
+.audit-stages { box-sizing: border-box; }
+/* Stage items stack on tablet too — long labels + detail won't fit on one row at 480-720px */
+@media (max-width: 720px) {
+  .stage-item { grid-template-columns: 18px 1fr; }
+  .stage-item .detail { grid-column: 1 / -1; padding-left: 28px; margin-top: -4px; }
+}
+.wall-hero, .wall-radar, .cat-grid { max-width: 100%; }
+.wall-radar svg { overflow: hidden; }
 
 /* ─── HERO ───────────────────────────────────────────────────────── */
 .hero {
