@@ -197,11 +197,21 @@ section.tight { padding-top: clamp(60px, 8vh, 96px); padding-bottom: clamp(60px,
 }
 
 /* ─── No-horizontal-scroll safety net · works on older Safari too ─── */
-html { overflow-x: hidden; width: 100%; overscroll-behavior-x: none; }
-body { overflow-x: hidden; width: 100%; max-width: 100%; position: relative; overscroll-behavior-x: none; }
+html {
+  overflow-x: hidden;
+  width: 100%;
+  overscroll-behavior-x: none;
+  touch-action: pan-y;
+}
+body {
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
+  position: relative;
+  overscroll-behavior-x: none;
+  touch-action: pan-y;
+}
 * { max-width: 100%; }
-/* Diagnostic: any element widening the viewport gets a red border */
-.__overflow-debug { outline: 3px solid red !important; outline-offset: -3px !important; }
 img, svg, video, iframe { max-width: 100%; height: auto; }
 /* Audit form: every cell can shrink and the wrapper fills its grid cell */
 .audit-form { width: 100%; box-sizing: border-box; }
@@ -2484,58 +2494,6 @@ footer {
 
 <!-- ───────────────────────── FOOTER ───────────────────────── -->
 <!-- @include _partials/audit-footer.html -->
-
-<!-- TEMPORARY: diagnostic to find horizontal overflow culprits.
-     Highlights any element wider than the viewport with a red outline
-     and logs them to the console. Remove once mobile overflow is solved. -->
-<script>
-(() => {
-  const findOverflow = () => {
-    const vw = document.documentElement.clientWidth;
-    const docSw = document.documentElement.scrollWidth;
-    const bodySw = document.body.scrollWidth;
-    const culprits = [];
-    document.querySelectorAll('body *').forEach(el => {
-      // Only flag elements whose INTRINSIC width (scrollWidth) exceeds the viewport.
-      // Ignores transient position-based offsets from the user scrolling.
-      if (el.scrollWidth > vw + 1) {
-        el.classList.add('__overflow-debug');
-        const tag = el.tagName.toLowerCase() +
-          (el.id ? '#' + el.id : '') +
-          (el.className ? '.' + String(el.className).split(' ').filter(c => c && c !== '__overflow-debug').join('.') : '');
-        culprits.push({ tag, scrollWidth: el.scrollWidth, offsetWidth: el.offsetWidth });
-      }
-    });
-    // Sort widest first
-    culprits.sort((a, b) => b.scrollWidth - a.scrollWidth);
-    console.warn('[overflow-debug] viewport:', vw, 'doc.scrollWidth:', docSw, 'body.scrollWidth:', bodySw, '· offenders:', culprits);
-
-    let overlay = document.getElementById('__overflow-overlay');
-    if (!overlay) {
-      overlay = document.createElement('div');
-      overlay.id = '__overflow-overlay';
-      overlay.style.cssText = 'position:fixed;bottom:0;left:0;right:0;max-height:60vh;overflow:auto;background:rgba(0,0,0,0.95);color:#fff;font:11px ui-monospace,monospace;padding:14px;z-index:99999;line-height:1.5;';
-      document.body.appendChild(overlay);
-    }
-    overlay.innerHTML =
-      `<strong style="color:#FF6200">Overflow debug</strong><br>` +
-      `viewport: ${vw}px · documentElement.scrollWidth: ${docSw}px · body.scrollWidth: ${bodySw}px<br>` +
-      `${culprits.length} elements with scrollWidth > viewport<br><br>` +
-      (culprits.length === 0 ? '<em style="color:#0BAB6E">No intrinsic overflow detected (could be bounce only).</em>' :
-        culprits.slice(0, 15).map(c =>
-          `<span style="color:#FF6200">+${c.scrollWidth - vw}px</span> ${c.tag}<br>` +
-          `&nbsp;&nbsp;scrollWidth=${c.scrollWidth}, offsetWidth=${c.offsetWidth}`
-        ).join('<br><br>'));
-  };
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', () => setTimeout(findOverflow, 300));
-  } else {
-    setTimeout(findOverflow, 300);
-  }
-  window.addEventListener('resize', () => setTimeout(findOverflow, 200));
-  document.addEventListener('audit:done', () => setTimeout(findOverflow, 500));
-})();
-</script>
 
 <script>
 (() => {
