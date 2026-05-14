@@ -8,5 +8,19 @@
     "api/audit.ts": {
       "maxDuration": 60
     }
-  }
+  },
+  "redirects": [
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "(www\\.)?ziboutreach\\.com\\.au" }],
+      "destination": "/audit",
+      "permanent": false
+    },
+    {
+      "source": "/:path((?!audit$|audit\\.html$|api/|assets/|robots\\.txt$|favicon\\.ico$).+)",
+      "has": [{ "type": "host", "value": "(www\\.)?ziboutreach\\.com\\.au" }],
+      "destination": "https://zibdigital.com.au/:path",
+      "permanent": false
+    }
+  ]
 }
