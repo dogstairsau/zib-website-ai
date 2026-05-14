@@ -410,6 +410,74 @@ h1, h2, h3, .hero-h, .offer-title, .cases-title, .cta-title { text-wrap: balance
 }
 .case-quote-author { display: block; font-style: normal; color: var(--muted); font-size: 14px; margin-top: 8px; }
 
+/* ─── Blog offer & sample article (mirrors /seo-agency) ─────────────── */
+.blog-offer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin: 40px 0;
+  padding: clamp(24px, 3vw, 32px);
+  border: 0.5px solid var(--rule);
+  background: #fff;
+  border-radius: 8px;
+}
+.blog-offer .lbl { color: var(--accent); margin-bottom: 10px; }
+.blog-offer p {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(16px, 1.5vw, 19px);
+  letter-spacing: -0.01em;
+  max-width: 44ch;
+  line-height: 1.4;
+}
+.blog-offer.is-loading .btn { opacity: 0.5; pointer-events: none; }
+.blog-offer.is-hidden { display: none; }
+.blog-result {
+  margin: 40px 0;
+  padding: clamp(28px, 4vw, 48px);
+  border: 0.5px solid var(--rule);
+  background: #fff;
+  border-radius: 8px;
+}
+.blog-head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  gap: 16px; flex-wrap: wrap;
+  padding-bottom: 20px; margin-bottom: 28px;
+  border-bottom: 0.5px solid var(--rule);
+}
+.blog-head .lbl { color: var(--accent); }
+.blog-head .kw { color: var(--muted); }
+.blog-title {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(28px, 3.6vw, 44px); line-height: 1.02;
+  letter-spacing: -0.035em; color: var(--ink);
+  margin-bottom: 16px; text-wrap: balance;
+}
+.blog-desc {
+  font-family: var(--display);
+  font-size: clamp(16px, 1.5vw, 19px); line-height: 1.45;
+  color: var(--muted); max-width: 64ch;
+  margin-bottom: 32px; font-style: italic;
+}
+.blog-body h2 {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(20px, 2vw, 26px); letter-spacing: -0.025em;
+  line-height: 1.15; margin: 32px 0 12px;
+  color: var(--ink); text-wrap: balance;
+}
+.blog-body p {
+  font-family: var(--display);
+  font-size: clamp(15px, 1.4vw, 17px); line-height: 1.6;
+  color: var(--ink-3); margin-bottom: 18px;
+  max-width: 64ch; text-wrap: pretty;
+}
+.blog-body strong { font-weight: 500; color: var(--ink); }
+.blog-body em { font-style: italic; color: var(--accent); }
+.blog-status { margin-top: 16px; color: var(--muted); display: none; }
+.blog-status.is-loading { display: inline-flex; gap: 10px; align-items: center; }
+
 /* ─── CTA · close with the partner's contact ─────────────────────────── */
 .cta {
   padding-top: clamp(80px, 9vw, 120px);
@@ -565,28 +633,25 @@ footer {
       </div>
     </div>
 
-    <!-- ─── AUDIT WIDGET · pre-fills with the prospect's domain ────── -->
+    <!-- ─── AUDIT WIDGET · mirrors /audit.html · pre-fills with the prospect's domain ── -->
     <form class="audit-form" id="auditForm" autocomplete="off">
       <label for="auditUrl" class="sr-only">Website URL</label>
-      <input type="url" id="auditUrl" name="url" value="https://apiam.com.au" placeholder="yourwebsite.com.au" required inputmode="url" spellcheck="false" />
+      <span class="url-prefix">
+        <input type="text" id="auditUrl" name="url" value="apiam.com.au" placeholder="yourwebsite.com.au" required inputmode="url" spellcheck="false" autocapitalize="off" autocorrect="off" />
+      </span>
       <span class="audit-divider" aria-hidden="true"></span>
       <label for="auditEmail" class="sr-only">Work email</label>
       <input type="email" id="auditEmail" name="email" placeholder="work email" required inputmode="email" spellcheck="false" autocomplete="email" />
       <span class="audit-divider" aria-hidden="true"></span>
       <label for="auditPhone" class="sr-only">Phone number</label>
       <input type="tel" id="auditPhone" name="phone" placeholder="phone" required inputmode="tel" autocomplete="tel" />
-      <button type="submit" id="auditBtn">Run my audit <span class="arr">→</span></button>
+      <button type="submit" id="auditBtn">Run audit <span class="arr">→</span></button>
     </form>
     <div class="audit-meta mono">
-      <div><span class="check">✓</span> Positioning · commercial read</div>
-      <div><span class="check">✓</span> Technical SEO · metadata, schema</div>
-      <div><span class="check">✓</span> Quick wins · shippable this week</div>
-      <div><span class="check">✓</span> Bonus · blog + sample creative</div>
-    </div>
-
-    <div class="audit-live mono">
-      <span class="pulse" aria-hidden="true"></span>
-      <span>Runs live on this page · no new tab · no email follow-up · stay put</span>
+      <div><span class="check">✓</span> 10-page technical crawl</div>
+      <div><span class="check">✓</span> AEO + GEO readiness</div>
+      <div><span class="check">✓</span> Senior strategist read</div>
+      <div><span class="check">✓</span> Sample creative · generated live</div>
     </div>
 
     <div class="audit-status mono" id="auditStatus" role="status" aria-live="polite"></div>
@@ -611,6 +676,7 @@ footer {
         <div class="strategy mono">Senior strategist read</div>
       </div>
 
+      <!-- ─── SEO WALL · deterministic checks (fires on `checks` event) ─── -->
       <div class="seo-wall" id="resSeoWall" aria-live="polite">
         <div class="wall-hero">
           <div>
@@ -618,15 +684,29 @@ footer {
             <div class="wall-title">Technical audit. <em>Real crawl data.</em></div>
             <div class="wall-sub">Deterministic checks run across technical, content, and AI-search readiness for <span class="domain" id="wallDomain"></span>. No AI guessing on the numbers.</div>
             <div class="wall-stats">
-              <div class="wall-stat is-score" id="statScoreBox"><div class="lbl">Overall score</div><div class="v" id="statScore">—</div></div>
-              <div class="wall-stat is-passed"><div class="lbl">Passed</div><div class="v" id="statPassed">—</div></div>
-              <div class="wall-stat is-issues"><div class="lbl">Issues</div><div class="v" id="statIssues">—</div></div>
-              <div class="wall-stat"><div class="lbl">Pages crawled</div><div class="v" id="statPages">—</div></div>
+              <div class="wall-stat is-score" id="statScoreBox">
+                <div class="lbl">Overall score</div>
+                <div class="v" id="statScore">—</div>
+              </div>
+              <div class="wall-stat is-passed">
+                <div class="lbl">Passed</div>
+                <div class="v" id="statPassed">—</div>
+              </div>
+              <div class="wall-stat is-issues">
+                <div class="lbl">Issues</div>
+                <div class="v" id="statIssues">—</div>
+              </div>
+              <div class="wall-stat">
+                <div class="lbl">Pages crawled</div>
+                <div class="v" id="statPages">—</div>
+              </div>
             </div>
           </div>
-          <div class="wall-radar" id="resRadar" aria-label="Category score distribution"></div>
+          <div class="wall-radar" id="resRadar" aria-label="Performance distribution across categories"></div>
         </div>
+
         <div class="cat-grid" id="catGrid"></div>
+
         <div class="wall-footnote">
           <span class="methodology"><span class="pulse" aria-hidden="true"></span> Live 10-page crawl · deterministic HTML checks</span>
           <span>Zib hybrid audit · v1</span>
@@ -641,7 +721,7 @@ footer {
           <p>Want a sample blog post written for Apiam Animal Health? Editorial draft, SEO-aware, ~650 words.</p>
         </div>
         <button type="button" class="btn btn-primary" id="blogBtn">
-          Generate my blog <span class="arr">→</span>
+          Want your blog? Press here <span class="arr">→</span>
         </button>
       </div>
 
