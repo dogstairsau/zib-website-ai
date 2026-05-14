@@ -1,0 +1,770 @@
+<!doctype html>
+<!--
+  ─────────────────────────────────────────────────────────────────────────
+  ZIB WATER BOTTLE OUTREACH · per-prospect landing page template
+  ─────────────────────────────────────────────────────────────────────────
+
+  HOW TO USE
+  1. Copy this file to:  p/{partner-slug}/{prospect-slug}.html
+     e.g. /p/matt/acme-trailers.html  →  zibdigital.com.au/p/matt/acme-trailers
+  2. Find-and-replace every {{TOKEN}} below.
+  3. For case studies, swap the three @include lines to match the partner.
+     Library:
+       _partials/case-studies/roof-restoration.html       (paid · trades · QLD)
+       _partials/case-studies/car-subscription.html       (SEO + ads · Melbourne)
+       _partials/case-studies/custom-trailer.html         (Meta · manufacturing)
+       _partials/case-studies/4x4-automotive.html         (paid · automotive · WA)
+       _partials/case-studies/trampoline-seo.html         (SEO · ecommerce)
+       _partials/case-studies/photo-booth.html            (paid · events)
+       _partials/case-studies/commercial-door.html        (SEO + ads · manufacturing)
+       _partials/case-studies/refrigerated-transport.html (SEO · logistics)
+       _partials/case-studies/licensed-club-gbp.html      (GBP · hospitality)
+       _partials/case-studies/licensed-club-seo.html      (SEO · hospitality)
+       _partials/case-studies/plant-hire.html             (paid · B2B services)
+       _partials/case-studies/pool-fencing.html           (paid · trades)
+       _partials/case-studies/golf-club.html              (Meta · hospitality)
+
+  TOKENS YOU NEED TO REPLACE
+    {{PROSPECT_FIRST_NAME}}   "Matthew"
+    {{PROSPECT_BUSINESS}}     "Apiam Animal Health"
+    {{PROSPECT_DOMAIN}}       "apiam.com.au" (no protocol)
+    {{PARTNER_FULL_NAME}}     "Matt Lawrence"
+    {{PARTNER_FIRST_NAME}}    "Matt"
+    {{PARTNER_REGION}}        "Melbourne · Victoria"
+    {{PARTNER_IMAGE}}         "/assets/your-portrait.webp"
+    {{PARTNER_EMAIL}}         "matt@zibdigital.com.au"
+    {{PARTNER_PHONE}}         "0400 000 000"
+    {{PARTNER_CALENDAR_URL}}  "https://calendly.com/zib-matt/30min" (or "#cta" to scroll)
+
+  INTRO VARIANTS
+    Two intro blocks are included below. Pick one, delete the other.
+    Search for: INTRO_VARIANT_WARM and INTRO_VARIANT_FORMAL.
+  ─────────────────────────────────────────────────────────────────────────
+-->
+<html lang="en-AU">
+<head>
+<title>For {{PROSPECT_FIRST_NAME}} · {{PARTNER_FULL_NAME}} · Zib Digital</title>
+<meta name="description" content="A personal note from {{PARTNER_FULL_NAME}} for {{PROSPECT_FIRST_NAME}} at {{PROSPECT_BUSINESS}}. 30-second audit, sample blog, sample ad creative, and recent client outcomes." />
+<meta name="robots" content="noindex, nofollow" />
+<!-- @include _partials/head.html -->
+
+<style>
+input { font: inherit; color: inherit; background: none; border: 0; outline: 0; }
+
+.sr-only {
+  position: absolute;
+  width: 1px; height: 1px;
+  padding: 0; margin: -1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: absolute;
+  top: 8px; left: 8px;
+  background: var(--ink);
+  color: #fff;
+  padding: 12px 18px;
+  border-radius: 999px;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 14px;
+  z-index: 100;
+  transform: translateY(-200%);
+  transition: transform 240ms var(--ease);
+}
+.skip-link:focus { transform: translateY(0); outline: 2px solid var(--accent); outline-offset: 2px; }
+
+h1, h2, h3, .hero-h, .offer-title, .cases-title, .cta-title { text-wrap: balance; }
+
+/* ─── Hero · split layout ────────────────────────────────────────────── */
+.bottle-hero {
+  padding-top: clamp(48px, 6vw, 88px);
+  padding-bottom: clamp(64px, 7vw, 96px);
+  position: relative;
+}
+
+.bottle-hero-eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: clamp(28px, 3vw, 40px);
+}
+.bottle-hero-eyebrow .dot {
+  width: 6px; height: 6px;
+  background: var(--accent);
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.bottle-hero-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: clamp(48px, 6vw, 96px);
+  align-items: center;
+}
+
+.bottle-hero-text { max-width: 720px; }
+
+.bottle-hero-prospect {
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 24px;
+}
+
+.bottle-hero-prospect strong { color: var(--ink); font-weight: 500; }
+
+.hero-h {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(40px, 6vw, 88px);
+  line-height: 1.0;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+}
+
+.hero-h em { font-style: italic; font-weight: 400; color: var(--accent); }
+
+.bottle-hero-intro {
+  font-size: clamp(17px, 1.5vw, 21px);
+  line-height: 1.55;
+  color: var(--muted);
+  max-width: 56ch;
+  margin-top: clamp(28px, 3vw, 36px);
+}
+
+.bottle-hero-intro strong { color: var(--ink); font-weight: 500; }
+
+.bottle-hero-sign {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-top: clamp(28px, 3vw, 40px);
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.bottle-hero-sign .swatch {
+  width: 36px;
+  height: 1px;
+  background: var(--ink);
+  display: inline-block;
+}
+.bottle-hero-sign strong { color: var(--ink); font-weight: 500; letter-spacing: 0.06em; }
+
+/* Partner portrait */
+.partner-portrait { margin: 0; }
+.portrait-frame {
+  background: #000;
+  border-radius: 12px;
+  overflow: hidden;
+  aspect-ratio: 4 / 5;
+  position: relative;
+  box-shadow: 0 32px 64px -32px rgba(0,0,0,0.32);
+}
+.portrait-frame img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center 15%;
+  display: block;
+}
+.partner-portrait-cap {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 16px;
+  margin-top: 16px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  flex-wrap: wrap;
+}
+.partner-portrait-cap strong { color: var(--ink); font-weight: 500; }
+
+@media (max-width: 920px) {
+  .bottle-hero-grid { grid-template-columns: 1fr; gap: 48px; }
+  .partner-portrait { max-width: 360px; }
+}
+
+/* ─── Offer section · audit + blog + image ───────────────────────────── */
+.offer {
+  padding-top: clamp(72px, 8vw, 112px);
+  padding-bottom: clamp(72px, 8vw, 112px);
+  border-top: 0.5px solid var(--rule);
+  background: var(--paper);
+}
+
+.offer-head { max-width: 880px; margin-bottom: clamp(40px, 5vw, 64px); }
+
+.offer-eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+}
+
+.offer-title {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(32px, 4.2vw, 56px);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+.offer-title em { font-style: italic; font-weight: 400; color: var(--accent); }
+
+.offer-sub {
+  font-size: clamp(16px, 1.4vw, 19px);
+  line-height: 1.55;
+  color: var(--muted);
+  max-width: 60ch;
+  margin-top: clamp(20px, 2vw, 28px);
+}
+
+.offer-deliverables {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(16px, 2vw, 24px);
+  margin: clamp(32px, 4vw, 48px) 0 clamp(40px, 5vw, 64px);
+}
+
+.deliverable {
+  background: #fff;
+  border: 0.5px solid var(--rule);
+  border-radius: 14px;
+  padding: clamp(20px, 2.5vw, 28px);
+}
+.deliverable .num {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+.deliverable h3 {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(18px, 1.6vw, 22px);
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.deliverable p {
+  font-size: 14.5px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+
+@media (max-width: 820px) {
+  .offer-deliverables { grid-template-columns: 1fr; }
+}
+
+/* ─── Case studies section ───────────────────────────────────────────── */
+.cases {
+  padding-top: clamp(80px, 9vw, 120px);
+  padding-bottom: clamp(80px, 9vw, 120px);
+}
+
+.cases-head { max-width: 880px; margin-bottom: clamp(48px, 6vw, 72px); }
+
+.cases-eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 16px;
+}
+
+.cases-title {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(32px, 4.2vw, 56px);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+.cases-title em { font-style: italic; font-weight: 400; color: var(--accent); }
+
+.cases-sub {
+  font-size: clamp(16px, 1.4vw, 19px);
+  line-height: 1.55;
+  color: var(--muted);
+  max-width: 60ch;
+  margin-top: clamp(20px, 2vw, 28px);
+}
+
+.cases-grid {
+  display: grid;
+  gap: clamp(16px, 2vw, 24px);
+}
+
+/* Case card · <details> styled as expandable */
+.case-card {
+  background: #fff;
+  border: 0.5px solid var(--rule);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: border-color 240ms var(--ease), box-shadow 240ms var(--ease);
+}
+.case-card[open] {
+  border-color: var(--ink);
+  box-shadow: 0 24px 48px -24px rgba(0,0,0,0.18);
+}
+.case-card-summary {
+  list-style: none;
+  cursor: pointer;
+  padding: clamp(24px, 3vw, 36px);
+  display: grid;
+  gap: 12px;
+  position: relative;
+}
+.case-card-summary::-webkit-details-marker { display: none; }
+.case-card-summary::marker { content: ""; }
+
+.case-card-eyebrow {
+  color: var(--muted);
+  font-size: 11px;
+}
+.case-card-eyebrow span { color: var(--ink); font-weight: 500; }
+.case-card-eyebrow span + span::before { content: " · "; color: var(--muted); margin: 0 4px; }
+
+.case-card-stat {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(32px, 4vw, 48px);
+  line-height: 1.0;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+.case-card-stat em { font-style: italic; font-weight: 400; color: var(--accent); padding: 0 2px; }
+.case-card-stat-tail {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 400;
+  font-size: clamp(15px, 1.5vw, 19px);
+  letter-spacing: 0;
+  color: var(--muted);
+  margin-left: 6px;
+}
+
+.case-card-blurb {
+  font-size: 15.5px;
+  line-height: 1.5;
+  color: var(--muted);
+  max-width: 56ch;
+}
+
+.case-card-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--accent);
+  font-size: 11px;
+  margin-top: 8px;
+  transition: gap 200ms var(--ease);
+}
+.case-card-toggle .arr { transition: transform 200ms var(--ease); display: inline-block; }
+.case-card[open] .case-card-toggle .arr { transform: rotate(180deg); }
+.case-card[open] .case-card-toggle::before { content: "Collapse"; }
+.case-card[open] .case-card-toggle .label-default { display: none; }
+
+/* Use a span inside so we can swap label on open */
+.case-card-toggle .label-default { display: inline; }
+
+.case-card-body {
+  padding: 0 clamp(24px, 3vw, 36px) clamp(28px, 3vw, 40px);
+  border-top: 0.5px solid var(--rule);
+  margin-top: 8px;
+  padding-top: clamp(24px, 3vw, 32px);
+}
+.case-card-body h4 {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(20px, 2vw, 26px);
+  letter-spacing: -0.02em;
+  margin-bottom: clamp(20px, 2.5vw, 28px);
+}
+
+.case-section { margin-bottom: clamp(20px, 2.5vw, 28px); }
+.case-section:last-child { margin-bottom: 0; }
+.case-section h5 {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 500;
+  margin-bottom: 10px;
+}
+.case-section p {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--ink-3);
+}
+.case-section ul {
+  list-style: none;
+  padding: 0;
+  display: grid;
+  gap: 10px;
+}
+.case-section ul li {
+  font-size: 15.5px;
+  line-height: 1.55;
+  color: var(--ink-3);
+  padding-left: 22px;
+  position: relative;
+}
+.case-section ul li::before {
+  content: "✓";
+  position: absolute;
+  left: 0; top: 1px;
+  color: var(--accent);
+  font-weight: 500;
+}
+.case-section ul li strong { color: var(--ink); font-weight: 500; }
+
+.case-quote {
+  font-style: italic;
+  border-left: 2px solid var(--accent);
+  padding: 4px 0 4px 16px;
+  color: var(--ink-3);
+}
+.case-quote-author { display: block; font-style: normal; color: var(--muted); font-size: 14px; margin-top: 8px; }
+
+/* ─── CTA · close with the partner's contact ─────────────────────────── */
+.cta {
+  padding-top: clamp(80px, 9vw, 120px);
+  padding-bottom: clamp(80px, 9vw, 120px);
+  background: var(--ink);
+  color: #fff;
+}
+.cta .container { max-width: 900px; text-align: center; }
+.cta-eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 20px;
+}
+.cta-title {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(36px, 5vw, 64px);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: #fff;
+  text-wrap: balance;
+}
+.cta-title em { font-style: italic; font-weight: 400; color: var(--accent); }
+.cta-sub {
+  font-size: clamp(16px, 1.5vw, 20px);
+  line-height: 1.55;
+  color: rgba(255,255,255,0.7);
+  max-width: 56ch;
+  margin: 24px auto 0;
+}
+.cta-actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: clamp(32px, 4vw, 48px);
+}
+.cta-actions .btn-primary { background: var(--accent); color: #fff; }
+.cta-actions .btn-primary:hover { background: #fff; color: var(--ink); }
+.cta-actions .btn-outline { color: #fff; border-color: rgba(255,255,255,0.4); }
+.cta-actions .btn-outline:hover { background: #fff; color: var(--ink); border-color: #fff; }
+
+.cta-direct {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-top: clamp(32px, 4vw, 48px);
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.55);
+}
+.cta-direct strong { color: #fff; font-weight: 500; letter-spacing: 0.05em; }
+.cta-direct a { color: #fff; }
+
+/* Dark footer overrides on the CTA page footer */
+footer {
+  background: var(--ink);
+  color: rgba(255,255,255,0.7);
+  border-top-color: rgba(255,255,255,0.08);
+}
+.foot-grid h4 { color: rgba(255,255,255,0.5); }
+.foot-grid li, .foot-grid a { color: rgba(255,255,255,0.7); }
+.foot-grid a:hover { color: var(--accent); }
+.foot-tag { color: #fff; }
+
+</style>
+
+<link rel="stylesheet" href="/assets/audit-widget.css">
+</head>
+<body>
+
+<a href="#offer" class="skip-link">Skip to the offer</a>
+
+<!-- ─────────────────────── HEADER ─────────────────────── -->
+<!-- @include _partials/nav.html -->
+
+<!-- ─────────────────────── HERO ─────────────────────── -->
+<section class="bottle-hero" id="hero">
+  <div class="container">
+    <div class="bottle-hero-eyebrow">
+      <span class="dot" aria-hidden="true"></span>
+      <span>Personal · from {{PARTNER_FIRST_NAME}} to {{PROSPECT_FIRST_NAME}}</span>
+    </div>
+
+    <div class="bottle-hero-grid">
+      <div class="bottle-hero-text">
+        <div class="bottle-hero-prospect">For <strong>{{PROSPECT_FIRST_NAME}}</strong> at <strong>{{PROSPECT_BUSINESS}}</strong></div>
+
+        <h1 class="hero-h">Hi {{PROSPECT_FIRST_NAME}}. <em>Hope you like the bottle.</em></h1>
+
+        <!-- INTRO_VARIANT_WARM · personal/conversational · keep one, delete the other -->
+        <p class="bottle-hero-intro">
+          <strong>I sent this because I think there's a real opportunity for {{PROSPECT_BUSINESS}}.</strong>
+          Below is a 30-second audit you can run on your own site right now. It'll spit back a senior strategist read, a sample blog post written for your brand, and a sample social ad we'd actually run for you. No follow-up email. No new tab. Just a look at how we work.
+        </p>
+
+        <!-- INTRO_VARIANT_FORMAL · professional · uncomment to use, delete WARM above
+        <p class="bottle-hero-intro">
+          <strong>Thanks for taking a look.</strong>
+          Below is Zib Digital's 30-second audit, available for {{PROSPECT_BUSINESS}} to run on your own site. The output includes a senior strategist read, a sample blog draft written for your brand, and a sample social creative — produced live as a working preview of how we operate.
+        </p>
+        -->
+
+        <div class="bottle-hero-sign">
+          <span class="swatch" aria-hidden="true"></span>
+          <span><strong>{{PARTNER_FIRST_NAME}}</strong> · Zib Digital partner</span>
+        </div>
+      </div>
+
+      <figure class="partner-portrait">
+        <div class="portrait-frame">
+          <img src="{{PARTNER_IMAGE}}" alt="{{PARTNER_FULL_NAME}}, Zib Digital partner for {{PARTNER_REGION}}" loading="eager" />
+        </div>
+        <figcaption class="partner-portrait-cap">
+          <strong>{{PARTNER_FULL_NAME}}</strong>
+          <span>{{PARTNER_REGION}}</span>
+        </figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+
+<!-- ─────────────────────── OFFER · audit + blog + image ─────────────────────── -->
+<section class="offer" id="offer">
+  <div class="container">
+    <div class="offer-head">
+      <div class="offer-eyebrow">30 seconds · live on this page · for {{PROSPECT_BUSINESS}}</div>
+      <h2 class="offer-title">A free SEO audit. A sample blog. A sample ad. <em>Generated for you.</em></h2>
+      <p class="offer-sub">Drop in your URL and watch a senior-strategist-level audit run live. Once it finishes, you can pull a sample blog post written for {{PROSPECT_BUSINESS}}, plus a sample social ad created off your homepage. Three deliverables, one form, thirty seconds.</p>
+    </div>
+
+    <div class="offer-deliverables">
+      <div class="deliverable">
+        <div class="num">01 · Audit</div>
+        <h3>Senior-strategist SEO read</h3>
+        <p>Live crawl, technical + content scoring across 25 checks, and a commercial read on positioning, quick wins and what we'd ship this week.</p>
+      </div>
+      <div class="deliverable">
+        <div class="num">02 · Blog</div>
+        <h3>Sample article for {{PROSPECT_BUSINESS}}</h3>
+        <p>Editorial draft (~650 words), SEO-aware, written in your voice and targeting a keyword we'd actually pursue.</p>
+      </div>
+      <div class="deliverable">
+        <div class="num">03 · Image</div>
+        <h3>Sample social ad creative</h3>
+        <p>A one-shot social ad image generated off your homepage. In a real engagement, this is the first of a hundred — variants tested daily, scaled by what converts.</p>
+      </div>
+    </div>
+
+    <!-- ─── AUDIT WIDGET · pre-fills with the prospect's domain ────── -->
+    <form class="audit-form" id="auditForm" autocomplete="off">
+      <label for="auditUrl" class="sr-only">Website URL</label>
+      <input type="url" id="auditUrl" name="url" value="https://{{PROSPECT_DOMAIN}}" placeholder="yourwebsite.com.au" required inputmode="url" spellcheck="false" />
+      <span class="audit-divider" aria-hidden="true"></span>
+      <label for="auditEmail" class="sr-only">Work email</label>
+      <input type="email" id="auditEmail" name="email" placeholder="work email" required inputmode="email" spellcheck="false" autocomplete="email" />
+      <span class="audit-divider" aria-hidden="true"></span>
+      <label for="auditPhone" class="sr-only">Phone number</label>
+      <input type="tel" id="auditPhone" name="phone" placeholder="phone" required inputmode="tel" autocomplete="tel" />
+      <button type="submit" id="auditBtn">Run my audit <span class="arr">→</span></button>
+    </form>
+    <div class="audit-meta mono">
+      <div><span class="check">✓</span> Positioning · commercial read</div>
+      <div><span class="check">✓</span> Technical SEO · metadata, schema</div>
+      <div><span class="check">✓</span> Quick wins · shippable this week</div>
+      <div><span class="check">✓</span> Bonus · blog + sample creative</div>
+    </div>
+
+    <div class="audit-live mono">
+      <span class="pulse" aria-hidden="true"></span>
+      <span>Runs live on this page · no new tab · no email follow-up · stay put</span>
+    </div>
+
+    <div class="audit-status mono" id="auditStatus" role="status" aria-live="polite"></div>
+
+    <div class="audit-stages" id="auditStages" aria-live="polite">
+      <div class="hdr">
+        <span class="ttl">Running audit</span>
+        <span class="elapsed" id="stageElapsed">0s</span>
+      </div>
+      <ul class="stage-list" id="stageList">
+        <li class="stage-item" data-stage="fetch"><span class="ring"></span><svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 7"/></svg><span class="label">Reading the homepage</span><span class="detail"></span></li>
+        <li class="stage-item" data-stage="discover"><span class="ring"></span><svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 7"/></svg><span class="label">Discovering pages · robots.txt + sitemap</span><span class="detail"></span></li>
+        <li class="stage-item" data-stage="crawl"><span class="ring"></span><svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 7"/></svg><span class="label">Crawling up to 10 pages</span><span class="detail"></span></li>
+        <li class="stage-item" data-stage="score"><span class="ring"></span><svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 7"/></svg><span class="label">Scoring 7 categories · 25 checks</span><span class="detail"></span></li>
+        <li class="stage-item" data-stage="think"><span class="ring"></span><svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 7"/></svg><span class="label">Senior strategist read</span><span class="detail"></span></li>
+      </ul>
+    </div>
+
+    <div class="audit-result" id="auditResult" aria-live="polite">
+      <div class="result-head">
+        <div class="url"><small class="mono">Audited</small><span id="resUrl"></span></div>
+        <div class="strategy mono">Senior strategist read</div>
+      </div>
+
+      <div class="seo-wall" id="resSeoWall" aria-live="polite">
+        <div class="wall-hero">
+          <div>
+            <div class="wall-eyebrow">Full SEO + AEO coverage</div>
+            <div class="wall-title">Technical audit. <em>Real crawl data.</em></div>
+            <div class="wall-sub">Deterministic checks run across technical, content, and AI-search readiness for <span class="domain" id="wallDomain"></span>. No AI guessing on the numbers.</div>
+            <div class="wall-stats">
+              <div class="wall-stat is-score" id="statScoreBox"><div class="lbl">Overall score</div><div class="v" id="statScore">—</div></div>
+              <div class="wall-stat is-passed"><div class="lbl">Passed</div><div class="v" id="statPassed">—</div></div>
+              <div class="wall-stat is-issues"><div class="lbl">Issues</div><div class="v" id="statIssues">—</div></div>
+              <div class="wall-stat"><div class="lbl">Pages crawled</div><div class="v" id="statPages">—</div></div>
+            </div>
+          </div>
+          <div class="wall-radar" id="resRadar" aria-label="Category score distribution"></div>
+        </div>
+        <div class="cat-grid" id="catGrid"></div>
+        <div class="wall-footnote">
+          <span class="methodology"><span class="pulse" aria-hidden="true"></span> Live 10-page crawl · deterministic HTML checks</span>
+          <span>Zib hybrid audit · v1</span>
+        </div>
+      </div>
+
+      <div class="strategist" id="resStrategist"></div>
+
+      <div class="blog-offer" id="blogOffer" hidden>
+        <div>
+          <div class="lbl mono">Bonus · sample article</div>
+          <p>Want a sample blog post written for {{PROSPECT_BUSINESS}}? Editorial draft, SEO-aware, ~650 words.</p>
+        </div>
+        <button type="button" class="btn btn-primary" id="blogBtn">
+          Generate my blog <span class="arr">→</span>
+        </button>
+      </div>
+
+      <div class="blog-result" id="blogResult" hidden>
+        <div class="blog-head">
+          <div class="lbl mono">Sample article · generated for you</div>
+          <div class="kw mono" id="blogKeyword"></div>
+        </div>
+        <h3 class="blog-title" id="blogTitle"></h3>
+        <p class="blog-desc" id="blogDesc"></p>
+        <div class="blog-body" id="blogBody"></div>
+        <div class="blog-status mono" id="blogStatus"></div>
+      </div>
+
+      <div class="sample-ad" id="resSampleAd">
+        <div class="sample-ad-img is-loading" id="resAdImg"></div>
+        <div class="sample-ad-meta">
+          <div class="lbl">Phase 2 · sample creative generated for you</div>
+          <h4 id="resAdHeading">Here's the kind of social ad we'd run for {{PROSPECT_BUSINESS}}.</h4>
+          <p>One-shot creative generated by our hybrid agent off the back of your homepage. In a real engagement, this is the first of a hundred. Variants tested daily, scaled by what converts.</p>
+          <div class="credit">Generated · Zib hybrid agent</div>
+        </div>
+      </div>
+
+      <div class="audit-punchline" id="resPunchline">
+        <p>This was done in 30 seconds. <em>Imagine what we can do in 12 months.</em></p>
+      </div>
+
+      <div class="audit-after">
+        <p>Want me to walk you through how to fix these, {{PROSPECT_FIRST_NAME}}?</p>
+        <a class="btn btn-light" href="#cta">Book a chat with {{PARTNER_FIRST_NAME}} <span class="arr">→</span></a>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ─────────────────────── CASE STUDIES ─────────────────────── -->
+<section class="cases" id="cases">
+  <div class="container">
+    <div class="cases-head">
+      <div class="cases-eyebrow">What we've actually done · recent client outcomes</div>
+      <h2 class="cases-title">Not slides. <em>Real numbers from real clients.</em></h2>
+      <p class="cases-sub">Three case studies, picked for {{PROSPECT_BUSINESS}}. Tap any one to read the full challenge, strategy, results and takeaway. No vanity metrics — every number is commercial.</p>
+    </div>
+
+    <div class="cases-grid">
+      <!-- ─── CASE STUDIES · swap to the three most relevant for this prospect ─── -->
+      <!-- @include _partials/case-studies/roof-restoration.html -->
+      <!-- @include _partials/case-studies/car-subscription.html -->
+      <!-- @include _partials/case-studies/custom-trailer.html -->
+    </div>
+  </div>
+</section>
+
+
+<!-- ─────────────────────── CTA ─────────────────────── -->
+<section class="cta" id="cta">
+  <div class="container">
+    <div class="cta-eyebrow">Next step · 20 minutes, no obligation</div>
+    <h2 class="cta-title">{{PROSPECT_FIRST_NAME}}, let's actually <em>talk about {{PROSPECT_BUSINESS}}.</em></h2>
+    <p class="cta-sub">If anything in the audit was useful — or if any of those case studies sound like what you want for your business — I'd love a quick chat. I'll walk you through what we'd actually do, what it costs, and what realistic outcomes look like over the first 90 days.</p>
+
+    <div class="cta-actions">
+      <a class="btn btn-primary" href="{{PARTNER_CALENDAR_URL}}">Book 20 minutes with {{PARTNER_FIRST_NAME}} <span class="arr">→</span></a>
+      <a class="btn btn-outline" href="mailto:{{PARTNER_EMAIL}}?subject=From%20the%20Zib%20bottle%20%C2%B7%20{{PROSPECT_BUSINESS}}">Email instead</a>
+    </div>
+
+    <div class="cta-direct">
+      <strong>{{PARTNER_FULL_NAME}}</strong>
+      <span>{{PARTNER_REGION}}</span>
+      <a href="tel:{{PARTNER_PHONE}}">{{PARTNER_PHONE}}</a>
+      <a href="mailto:{{PARTNER_EMAIL}}">{{PARTNER_EMAIL}}</a>
+    </div>
+  </div>
+</section>
+
+
+<!-- @include _partials/footer.html -->
+
+<!-- @include _partials/scripts.html -->
+<script src="/assets/audit-widget.js"></script>
+
+</body>
+</html>

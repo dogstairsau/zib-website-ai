@@ -63,6 +63,31 @@ async function copyDir(src, dest) {
   }
 }
 
+// Directories that should never be traversed for HTML processing.
+const SKIP_DIRS = new Set(["dist", "node_modules", "assets", "api", "lib", ".git", ".claude", ".vercel"]);
+
+async function processHtmlTree(srcDir, destDir, counter) {
+  const entries = await readdir(srcDir, { withFileTypes: true });
+  for (const entry of entries) {
+    // Skip hidden + underscore-prefixed (partials/drafts/templates)
+    if (entry.name.startsWith(".") || entry.name.startsWith("_")) continue;
+    if (entry.isDirectory()) {
+      if (SKIP_DIRS.has(entry.name)) continue;
+      const subDest = join(destDir, entry.name);
+      await mkdir(subDest, { recursive: true });
+      await processHtmlTree(join(srcDir, entry.name), subDest, counter);
+      continue;
+    }
+    if (!entry.isFile() || !entry.name.endsWith(".html")) continue;
+    const html = await readFile(join(srcDir, entry.name), "utf8");
+    const expanded = await expand(html);
+    await writeFile(join(destDir, entry.name), expanded, "utf8");
+    counter.count++;
+    const rel = join(destDir, entry.name).slice(OUT.length + 1);
+    console.log(`  ✓ ${rel}`);
+  }
+}
+
 async function build() {
   const start = Date.now();
   await rm(OUT, { recursive: true, force: true });
@@ -71,22 +96,12 @@ async function build() {
   // Copy static asset folders
   await copyDir(join(ROOT, "assets"), join(OUT, "assets"));
 
-  // Process every .html file in the root
-  const entries = await readdir(ROOT, { withFileTypes: true });
-  let count = 0;
-  for (const entry of entries) {
-    if (!entry.isFile() || !entry.name.endsWith(".html")) continue;
-    // Skip templates / drafts — files prefixed with `_` are not published
-    if (entry.name.startsWith("_")) continue;
-    const html = await readFile(join(ROOT, entry.name), "utf8");
-    const expanded = await expand(html);
-    await writeFile(join(OUT, entry.name), expanded, "utf8");
-    count++;
-    console.log(`  ✓ ${entry.name}`);
-  }
+  // Process every .html file, recursing into non-skipped subdirectories
+  const counter = { count: 0 };
+  await processHtmlTree(ROOT, OUT, counter);
 
   const ms = Date.now() - start;
-  console.log(`\n  Built ${count} pages in ${ms}ms → /dist`);
+  console.log(`\n  Built ${counter.count} pages in ${ms}ms → /dist`);
 }
 
 // Allow this module to be imported (used by dev-server) AND run directly
