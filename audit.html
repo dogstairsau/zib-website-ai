@@ -2492,35 +2492,41 @@ footer {
 (() => {
   const findOverflow = () => {
     const vw = document.documentElement.clientWidth;
+    const docSw = document.documentElement.scrollWidth;
+    const bodySw = document.body.scrollWidth;
     const culprits = [];
     document.querySelectorAll('body *').forEach(el => {
-      const r = el.getBoundingClientRect();
-      if (r.right > vw + 1 || r.left < -1 || el.scrollWidth > vw + 1) {
+      // Only flag elements whose INTRINSIC width (scrollWidth) exceeds the viewport.
+      // Ignores transient position-based offsets from the user scrolling.
+      if (el.scrollWidth > vw + 1) {
         el.classList.add('__overflow-debug');
-        culprits.push({
-          el,
-          tag: el.tagName + (el.id ? '#' + el.id : '') + (el.className ? '.' + String(el.className).split(' ').filter(c => c && c !== '__overflow-debug').join('.') : ''),
-          right: Math.round(r.right),
-          left: Math.round(r.left),
-          width: Math.round(r.width),
-          scrollWidth: el.scrollWidth,
-        });
+        const tag = el.tagName.toLowerCase() +
+          (el.id ? '#' + el.id : '') +
+          (el.className ? '.' + String(el.className).split(' ').filter(c => c && c !== '__overflow-debug').join('.') : '');
+        culprits.push({ tag, scrollWidth: el.scrollWidth, offsetWidth: el.offsetWidth });
       }
     });
-    // Log to console and write into a fixed overlay so phone users can see it
-    console.warn('[overflow-debug] viewport width:', vw, '· offenders:', culprits);
+    // Sort widest first
+    culprits.sort((a, b) => b.scrollWidth - a.scrollWidth);
+    console.warn('[overflow-debug] viewport:', vw, 'doc.scrollWidth:', docSw, 'body.scrollWidth:', bodySw, '· offenders:', culprits);
+
     let overlay = document.getElementById('__overflow-overlay');
     if (!overlay) {
       overlay = document.createElement('div');
       overlay.id = '__overflow-overlay';
-      overlay.style.cssText = 'position:fixed;bottom:0;left:0;right:0;max-height:50vh;overflow:auto;background:rgba(0,0,0,0.92);color:#fff;font:11px ui-monospace,monospace;padding:12px;z-index:99999;line-height:1.4;';
+      overlay.style.cssText = 'position:fixed;bottom:0;left:0;right:0;max-height:60vh;overflow:auto;background:rgba(0,0,0,0.95);color:#fff;font:11px ui-monospace,monospace;padding:14px;z-index:99999;line-height:1.5;';
       document.body.appendChild(overlay);
     }
-    overlay.innerHTML = `<strong style="color:#FF6200">Overflow debug</strong> · viewport ${vw}px · ${culprits.length} offenders<br><br>` +
-      culprits.slice(0, 20).map(c => `${c.tag}<br>&nbsp;&nbsp;rect.right=${c.right}, scrollWidth=${c.scrollWidth}`).join('<br><br>') +
-      (culprits.length === 0 ? '<em>No overflow detected.</em>' : '');
+    overlay.innerHTML =
+      `<strong style="color:#FF6200">Overflow debug</strong><br>` +
+      `viewport: ${vw}px · documentElement.scrollWidth: ${docSw}px · body.scrollWidth: ${bodySw}px<br>` +
+      `${culprits.length} elements with scrollWidth > viewport<br><br>` +
+      (culprits.length === 0 ? '<em style="color:#0BAB6E">No intrinsic overflow detected (could be bounce only).</em>' :
+        culprits.slice(0, 15).map(c =>
+          `<span style="color:#FF6200">+${c.scrollWidth - vw}px</span> ${c.tag}<br>` +
+          `&nbsp;&nbsp;scrollWidth=${c.scrollWidth}, offsetWidth=${c.offsetWidth}`
+        ).join('<br><br>'));
   };
-  // Run once on load, once after audit completes, and on resize
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => setTimeout(findOverflow, 300));
   } else {
