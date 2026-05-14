@@ -667,6 +667,30 @@ h1, h2, h3, .hero-h, .offer-title, .cases-title, .cta-title { text-wrap: balance
 .cta-direct strong { color: #fff; font-weight: 500; letter-spacing: 0.05em; }
 .cta-direct a { color: #fff; }
 
+/* HubSpot Meetings embed */
+.cta-meeting {
+  margin-top: clamp(40px, 5vw, 64px);
+  background: #fff;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 32px 64px -32px rgba(0,0,0,0.4);
+}
+.cta-meeting .meetings-iframe-container { min-height: 720px; }
+.cta-meeting .meetings-iframe-container iframe { width: 100%; min-height: 720px; border: 0; display: block; }
+.cta-meeting-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 16px;
+  text-align: left;
+}
+@media (max-width: 720px) {
+  .cta-meeting .meetings-iframe-container,
+  .cta-meeting .meetings-iframe-container iframe { min-height: 880px; }
+}
+
 /* Dark footer overrides on the CTA page footer */
 footer {
   background: var(--ink);
@@ -915,9 +939,9 @@ footer {
     <h2 class="cta-title">{{PROSPECT_FIRST_NAME}}, let's <em>talk about {{PROSPECT_BUSINESS}}.</em></h2>
     <p class="cta-sub">If anything in the audit was useful — or if any of those case studies sound like what you want for your business — I'd love a quick chat. I'll walk you through what we'd do, what it costs, and what realistic outcomes look like over the first 90 days.</p>
 
-    <div class="cta-actions">
-      <a class="btn btn-primary" href="{{PARTNER_CALENDAR_URL}}">Book 20 minutes with {{PARTNER_FIRST_NAME}} <span class="arr">→</span></a>
-      <a class="btn btn-outline" href="mailto:{{PARTNER_EMAIL}}?subject=From%20the%20Zib%20bottle%20%C2%B7%20{{PROSPECT_BUSINESS}}">Email instead</a>
+    <!-- HubSpot Meetings embed · book a time inline -->
+    <div class="cta-meeting">
+      <div class="meetings-iframe-container" data-src="https://meetings.hubspot.com/mglasser?embed=true"></div>
     </div>
 
     <div class="cta-direct">
@@ -934,6 +958,9 @@ footer {
 
 <!-- @include _partials/scripts.html -->
 <script src="/assets/audit-widget.js"></script>
+
+<!-- HubSpot Meetings embed loader -->
+<script type="text/javascript" src="https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js"></script>
 
 </body>
 </html>
