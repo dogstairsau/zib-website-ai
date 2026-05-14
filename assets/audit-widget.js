@@ -387,4 +387,89 @@
       btn.disabled = false;
     }
   });
+
+  /* ─── Blog offer · "Want your blog? Press here" ──────────────────────
+     Reveals after the audit completes (when #blogOffer exists on the
+     page), POSTs the same URL to /api/blog, streams the result into the
+     #blogResult block. No-op if the blog elements aren't on the page.
+  */
+  const blogOffer    = document.getElementById('blogOffer');
+  const blogBtn      = document.getElementById('blogBtn');
+  const blogResult   = document.getElementById('blogResult');
+  const blogTitleEl  = document.getElementById('blogTitle');
+  const blogDescEl   = document.getElementById('blogDesc');
+  const blogBodyEl   = document.getElementById('blogBody');
+  const blogKwEl     = document.getElementById('blogKeyword');
+  const blogStatusEl = document.getElementById('blogStatus');
+
+  if (blogOffer && blogBtn) {
+    document.addEventListener('audit:done', () => {
+      blogOffer.hidden = false;
+    });
+
+    const setBlogStatus = (msg, loading) => {
+      if (!blogStatusEl) return;
+      blogStatusEl.className = 'blog-status mono' + (loading ? ' is-loading' : '');
+      blogStatusEl.innerHTML = loading
+        ? `<span class="spinner" aria-hidden="true"></span><span>${msg}</span>`
+        : msg;
+    };
+
+    blogBtn.addEventListener('click', async () => {
+      const raw = urlInput.value.trim().replace(/^https?:\/\//i, '');
+      const url = raw ? 'https://' + raw : '';
+      if (!url) { setBlogStatus('Run the audit first.', false); return; }
+
+      blogOffer.classList.add('is-loading');
+      blogBtn.disabled = true;
+      setBlogStatus('Reading the site…', true);
+
+      try {
+        const res = await fetch('/api/blog', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url }),
+        });
+        if (!res.ok || !res.body) {
+          const j = await res.json().catch(() => ({}));
+          throw new Error(j.error || `Request failed (${res.status})`);
+        }
+
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        let buf = '';
+
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          buf += decoder.decode(value, { stream: true });
+          const parts = buf.split('\n\n');
+          buf = parts.pop() || '';
+          for (const part of parts) {
+            const evt = parseSseBlock(part);
+            if (!evt) continue;
+            const { event, data } = evt;
+            if (event === 'status') {
+              setBlogStatus(data.message || '…', true);
+            } else if (event === 'blog') {
+              if (blogTitleEl) blogTitleEl.textContent = data.title || '';
+              if (blogDescEl)  blogDescEl.textContent  = data.metaDescription || '';
+              if (blogKwEl)    blogKwEl.textContent    = data.targetKeyword ? `Target: ${data.targetKeyword}` : '';
+              if (blogBodyEl)  blogBodyEl.innerHTML    = mdToHtml(data.body || '');
+              blogResult.hidden = false;
+              blogOffer.classList.add('is-hidden');
+              setBlogStatus('', false);
+            } else if (event === 'error') {
+              throw new Error(data.message || 'Blog generation failed.');
+            }
+          }
+        }
+      } catch (err) {
+        setBlogStatus('Blog failed: ' + (err.message || 'try again'), false);
+      } finally {
+        blogOffer.classList.remove('is-loading');
+        blogBtn.disabled = false;
+      }
+    });
+  }
 })();
