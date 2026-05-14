@@ -196,12 +196,22 @@ section.tight { padding-top: clamp(60px, 8vh, 96px); padding-bottom: clamp(60px,
   background: var(--accent);
 }
 
+/* ─── No-horizontal-scroll safety net (long audit text + form on small screens) ─── */
+html { overflow-x: hidden; }
+.audit-form, .audit-form > * { min-width: 0; }
+.url-prefix { width: 100%; box-sizing: border-box; }
+.audit-result, .strategist, .blog-body, .seo-wall { overflow-wrap: anywhere; word-break: break-word; }
+
 /* ─── HERO ───────────────────────────────────────────────────────── */
 .hero {
   padding-top: clamp(80px, 12vh, 160px);
   padding-bottom: clamp(80px, 12vh, 140px);
   position: relative;
 }
+
+/* Tighten the gap between the audit result and the proof grid */
+.hero { padding-bottom: clamp(40px, 5vh, 64px); }
+#proof { padding-top: clamp(48px, 6vw, 80px); }
 
 .hero-marker {
   position: absolute;
