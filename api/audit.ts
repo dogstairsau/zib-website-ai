@@ -3,6 +3,8 @@ import { fetchSiteContent, formatForPrompt, normaliseUrl, isValidEmail, type Sit
 import { captureLead } from "../lib/hubspot";
 import { AUDIT_SYSTEM_PROMPT, auditUserPrompt } from "../lib/prompts/audit";
 import { fetchSupporting, crawlSite, buildAudit } from "../lib/seoChecks";
+import { checkRateLimit, rateLimitResponse } from "../lib/rateLimit";
+import { sendLeadEmail } from "../lib/email";
 
 export const config = { runtime: "edge" };
 
@@ -142,6 +144,10 @@ export default async function handler(req: Request): Promise<Response> {
     return json({ error: "Server not configured (ANTHROPIC_API_KEY missing)." }, 500);
   }
 
+  // Rate limit: 3 audits per 10 minutes per IP (no-op until Vercel KV is set up)
+  const rl = await checkRateLimit(req, "audit", 3, 600);
+  if (!rl.allowed) return rateLimitResponse(rl.retryAfter);
+
   const stream = new ReadableStream({
     async start(controller) {
       const enc = new TextEncoder();
@@ -175,6 +181,10 @@ export default async function handler(req: Request): Promise<Response> {
               return null;
             });
 
+        // Snapshots captured during streaming so we can email them at the end.
+        let strategistText = "";
+        let auditSnapshot: { overallScore?: number; passed?: number; issues?: number; pagesCrawled?: number } = {};
+
         // Deterministic checks — runs in parallel with the strategist read below.
         const checksPromise = (async () => {
           try {
@@ -188,6 +198,12 @@ export default async function handler(req: Request): Promise<Response> {
             send("status", { phase: "score", message: "Scoring 7 categories · 25 checks…" });
             const audit = buildAudit({ url: site.url, pages, support });
             console.log("[checks]", { overall: audit.overallScore, passed: audit.passed, issues: audit.issues, pagesCrawled: audit.pagesCrawled });
+            auditSnapshot = {
+              overallScore: audit.overallScore,
+              passed: audit.passed,
+              issues: audit.issues,
+              pagesCrawled: audit.pagesCrawled,
+            };
             send("checks", audit);
           } catch (e: any) {
             console.warn("[checks] ERROR", e?.message, e?.stack);
@@ -213,6 +229,7 @@ export default async function handler(req: Request): Promise<Response> {
             event.type === "content_block_delta" &&
             event.delta.type === "text_delta"
           ) {
+            strategistText += event.delta.text;
             send("chunk", { text: event.delta.text });
           }
         }
@@ -233,14 +250,26 @@ export default async function handler(req: Request): Promise<Response> {
         // Make sure the deterministic checks SSE event was flushed before closing
         await checksPromise;
 
+        const source = mode === "seo" ? "SEO page audit" : "Homepage audit";
+
         // Capture lead AFTER analysis completes (failures don't block UX)
         captureLead({
           email,
           firstname: body.firstname?.trim() || "",
           company: body.company?.trim() || "",
           website: url,
-          source: mode === "seo" ? "SEO page audit" : "Homepage audit",
+          source,
         }).catch((e) => console.warn("[lead]", e.message));
+
+        // Notify Michael via email with the full audit (fire-and-forget)
+        sendLeadEmail({
+          url,
+          email,
+          phone: (body.phone || "").trim() || undefined,
+          source,
+          strategistText,
+          audit: auditSnapshot,
+        }).catch((e) => console.warn("[email]", e.message));
 
         send("done", { url: site.url });
       } catch (err: any) {
