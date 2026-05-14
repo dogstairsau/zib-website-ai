@@ -196,27 +196,32 @@ section.tight { padding-top: clamp(60px, 8vh, 96px); padding-bottom: clamp(60px,
   background: var(--accent);
 }
 
-/* ─── No-horizontal-scroll safety net (long audit text + form on small screens) ─── */
-html, body {
-  overflow-x: clip;
-  max-width: 100vw;
-  position: relative;
-}
-.audit-form, .audit-form > * { min-width: 0; }
-.url-prefix { width: 100%; box-sizing: border-box; }
-.audit-result, .audit-stages, .strategist, .blog-result, .blog-body, .seo-wall, .result-head, .sample-ad {
-  max-width: 100%;
+/* ─── No-horizontal-scroll safety net · works on older Safari too ─── */
+html { overflow-x: hidden; width: 100%; }
+body { overflow-x: hidden; width: 100%; max-width: 100%; position: relative; }
+* { max-width: 100%; }
+img, svg, video, iframe { max-width: 100%; height: auto; }
+/* Audit form: every cell can shrink and the wrapper fills its grid cell */
+.audit-form { width: 100%; box-sizing: border-box; }
+.audit-form, .audit-form > *, .audit-form input { min-width: 0; }
+.url-prefix { width: 100%; box-sizing: border-box; overflow: hidden; }
+.audit-form input { width: 100%; min-width: 0; box-sizing: border-box; }
+/* Long Claude / blog text wraps even if it's a single unbreakable string */
+.audit-result, .audit-stages, .strategist, .blog-result, .blog-body, .seo-wall, .result-head, .sample-ad, .stage-item, .stage-item .label {
   overflow-wrap: anywhere;
   word-break: break-word;
+  box-sizing: border-box;
 }
-.audit-stages { box-sizing: border-box; }
-/* Stage items stack on tablet too — long labels + detail won't fit on one row at 480-720px */
+/* Stages stack earlier so the long label + detail layout doesn't push width */
 @media (max-width: 720px) {
   .stage-item { grid-template-columns: 18px 1fr; }
   .stage-item .detail { grid-column: 1 / -1; padding-left: 28px; margin-top: -4px; }
 }
-.wall-hero, .wall-radar, .cat-grid { max-width: 100%; }
 .wall-radar svg { overflow: hidden; }
+/* Hero headline can shrink on tiny screens so 40px+ characters don't poke past viewport */
+@media (max-width: 480px) {
+  h1.hero-h, .hero-h { font-size: clamp(30px, 9vw, 44px) !important; letter-spacing: -0.025em; }
+}
 
 /* ─── HERO ───────────────────────────────────────────────────────── */
 .hero {
