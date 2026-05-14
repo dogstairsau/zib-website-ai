@@ -2154,6 +2154,75 @@ footer {
   border-radius: 50%;
   display: inline-block;
 }
+
+/* ─── Blog offer & sample article ────────────────────────────────────── */
+.blog-offer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin: 40px 0;
+  padding: clamp(24px, 3vw, 32px);
+  border: 0.5px solid var(--rule);
+  background: var(--paper);
+  border-radius: 8px;
+}
+.blog-offer .lbl { color: var(--accent); margin-bottom: 10px; }
+.blog-offer p {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(16px, 1.5vw, 19px);
+  letter-spacing: -0.01em;
+  max-width: 44ch;
+  line-height: 1.4;
+}
+.blog-offer.is-loading .btn { opacity: 0.5; pointer-events: none; }
+.blog-offer.is-hidden { display: none; }
+
+.blog-result {
+  margin: 40px 0;
+  padding: clamp(28px, 4vw, 48px);
+  border: 0.5px solid var(--rule);
+  background: #fff;
+  border-radius: 8px;
+}
+.blog-head {
+  display: flex; justify-content: space-between; align-items: baseline;
+  gap: 16px; flex-wrap: wrap;
+  padding-bottom: 20px; margin-bottom: 28px;
+  border-bottom: 0.5px solid var(--rule);
+}
+.blog-head .lbl { color: var(--accent); }
+.blog-head .kw { color: var(--muted); }
+.blog-title {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(28px, 3.6vw, 44px); line-height: 1.02;
+  letter-spacing: -0.035em; color: var(--ink);
+  margin-bottom: 16px; text-wrap: balance;
+}
+.blog-desc {
+  font-family: var(--display);
+  font-size: clamp(16px, 1.5vw, 19px); line-height: 1.45;
+  color: var(--muted); max-width: 64ch;
+  margin-bottom: 32px; font-style: italic;
+}
+.blog-body h2 {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(20px, 2vw, 26px); letter-spacing: -0.025em;
+  line-height: 1.15; margin: 32px 0 12px;
+  color: var(--ink); text-wrap: balance;
+}
+.blog-body p {
+  font-family: var(--display);
+  font-size: clamp(15px, 1.4vw, 17px); line-height: 1.6;
+  color: var(--ink-3); margin-bottom: 18px;
+  max-width: 64ch; text-wrap: pretty;
+}
+.blog-body strong { font-weight: 500; color: var(--ink); }
+.blog-body em { font-style: italic; color: var(--accent); }
+.blog-status { margin-top: 16px; color: var(--muted); display: none; }
+.blog-status.is-loading { display: inline-flex; gap: 10px; align-items: center; }
 </style>
 </head>
 <body>
@@ -2260,6 +2329,27 @@ footer {
 
         <div class="strategist" id="resStrategist"></div>
 
+        <div class="blog-offer" id="blogOffer" hidden>
+          <div>
+            <div class="lbl mono">Bonus · sample article</div>
+            <p>Want a sample blog post written for your brand? Editorial draft, SEO-aware, ~650 words.</p>
+          </div>
+          <button type="button" class="btn btn-primary" id="blogBtn">
+            Want your blog? Press here <span class="arr">→</span>
+          </button>
+        </div>
+
+        <div class="blog-result" id="blogResult" hidden>
+          <div class="blog-head">
+            <div class="lbl mono">Sample article · generated for you</div>
+            <div class="kw mono" id="blogKeyword"></div>
+          </div>
+          <h3 class="blog-title" id="blogTitle"></h3>
+          <p class="blog-desc" id="blogDesc"></p>
+          <div class="blog-body" id="blogBody"></div>
+          <div class="blog-status mono" id="blogStatus"></div>
+        </div>
+
         <div class="sample-ad" id="resSampleAd">
           <div class="sample-ad-img is-loading" id="resAdImg"></div>
           <div class="sample-ad-meta">
@@ -2292,30 +2382,30 @@ footer {
         <h2 class="proof-title">What we do with it. <em>Real numbers.</em></h2>
       </div>
       <p class="proof-sub">
-        An audit tells you where you stand. The work after is where the numbers move. Four active Zib clients, measured against their baseline.
+        An audit tells you where you stand. The work after is where the numbers move. Four Zib clients, measured against their baseline.
       </p>
     </div>
 
     <div class="case-grid reveal-stagger">
       <article class="case-card">
-        <div class="case-client mono">Amazing Graze</div>
-        <div class="case-num"><span data-count="600">0</span><span class="pct">%</span></div>
-        <div class="case-desc">Increase in online revenue</div>
+        <div class="case-client mono">Roof Restoration · Brisbane</div>
+        <div class="case-num"><span data-count="90">0</span><span class="pct">%</span></div>
+        <div class="case-desc">Forecast revenue growth ($2.8M → $5.3M)</div>
       </article>
       <article class="case-card">
-        <div class="case-client mono">Assured Roofing</div>
-        <div class="case-num"><span data-count="300">0</span><span class="pct">%</span></div>
-        <div class="case-desc">Increase in social leads</div>
+        <div class="case-client mono">Car Subscription · Melbourne</div>
+        <div class="case-num"><span data-count="108">0</span><span class="pct">%</span></div>
+        <div class="case-desc">Google Ads leads doubled (53 → 110 / month)</div>
       </article>
       <article class="case-card">
-        <div class="case-client mono">Liberty Financial</div>
-        <div class="case-num"><span data-count="100">0</span><span class="pct">%</span></div>
-        <div class="case-desc">Of keywords in top 3 results</div>
+        <div class="case-client mono">Trampoline Ecommerce · National</div>
+        <div class="case-num"><span data-count="144">0</span><span class="pct">%</span></div>
+        <div class="case-desc">Organic clicks · $638K in SEO revenue</div>
       </article>
       <article class="case-card">
-        <div class="case-client mono">Port Melb. Containers</div>
-        <div class="case-num"><span data-count="220">0</span><span class="pct">%</span></div>
-        <div class="case-desc">Increase in Google Ads leads</div>
+        <div class="case-client mono">Indoor Plant Hire · National</div>
+        <div class="case-num"><span data-count="219">0</span><span class="pct">%</span></div>
+        <div class="case-desc">Total conversions across Google Ads + Meta</div>
       </article>
     </div>
   </div>
@@ -2919,6 +3009,8 @@ footer {
               stagesFinish();
               setTimeout(() => stagesEl.classList.remove('is-shown'), 1600);
               clearStatus();
+              const blogOffer = document.getElementById('blogOffer');
+              if (blogOffer) blogOffer.hidden = false;
             } else if (event === 'error') {
               throw new Error(data.message || 'Audit failed');
             }
@@ -2930,6 +3022,82 @@ footer {
         stagesReset();
       } finally {
         btn.disabled = false;
+      }
+    });
+  }
+
+  /* ─── Blog offer · streams a sample article from /api/blog ─────────── */
+  const blogOffer  = document.getElementById('blogOffer');
+  const blogBtn    = document.getElementById('blogBtn');
+  const blogResult = document.getElementById('blogResult');
+  if (blogOffer && blogBtn) {
+    const blogTitleEl  = document.getElementById('blogTitle');
+    const blogDescEl   = document.getElementById('blogDesc');
+    const blogBodyEl   = document.getElementById('blogBody');
+    const blogKwEl     = document.getElementById('blogKeyword');
+    const blogStatusEl = document.getElementById('blogStatus');
+
+    const setBlogStatus = (msg, loading) => {
+      if (!blogStatusEl) return;
+      blogStatusEl.className = 'blog-status mono' + (loading ? ' is-loading' : '');
+      blogStatusEl.innerHTML = loading
+        ? `<span class="spinner" aria-hidden="true"></span><span>${msg}</span>`
+        : msg;
+    };
+
+    blogBtn.addEventListener('click', async () => {
+      const rawUrl = urlInput.value.trim().replace(/^https?:\/\//i, '');
+      const url = rawUrl ? 'https://' + rawUrl : '';
+      if (!url) { setBlogStatus('Run the audit first.', false); return; }
+
+      blogOffer.classList.add('is-loading');
+      blogBtn.disabled = true;
+      setBlogStatus('Reading the site…', true);
+
+      try {
+        const res = await fetch('/api/blog', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ url }),
+        });
+        if (!res.ok || !res.body) {
+          const j = await res.json().catch(() => ({}));
+          throw new Error(j.error || `Request failed (${res.status})`);
+        }
+
+        const reader = res.body.getReader();
+        const decoder = new TextDecoder();
+        let buf = '';
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          buf += decoder.decode(value, { stream: true });
+          const parts = buf.split('\n\n');
+          buf = parts.pop() || '';
+          for (const part of parts) {
+            const parsed = parseSseBlock(part);
+            if (!parsed) continue;
+            const { event, data } = parsed;
+            if (event === 'status') {
+              setBlogStatus(data.message || '…', true);
+            } else if (event === 'blog') {
+              if (blogTitleEl) blogTitleEl.textContent = data.title || '';
+              if (blogDescEl)  blogDescEl.textContent  = data.metaDescription || '';
+              if (blogKwEl)    blogKwEl.textContent    = data.targetKeyword ? `Target: ${data.targetKeyword}` : '';
+              if (blogBodyEl)  blogBodyEl.innerHTML    = mdToHtml(data.body || '');
+              blogResult.hidden = false;
+              blogOffer.classList.add('is-hidden');
+              setBlogStatus('', false);
+            } else if (event === 'error') {
+              throw new Error(data.message || 'Blog generation failed.');
+            }
+          }
+        }
+      } catch (err) {
+        setBlogStatus('Blog failed: ' + (err.message || 'try again'), false);
+      } finally {
+        blogOffer.classList.remove('is-loading');
+        blogBtn.disabled = false;
       }
     });
   }
