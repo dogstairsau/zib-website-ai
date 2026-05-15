@@ -2350,6 +2350,138 @@ footer {
 
 /* magnetic hover wrapper for primary CTAs */
 .magnet { transition: transform 320ms var(--ease-spring); will-change: transform; }
+
+/* ─── CONTACT FORM SECTION ───────────────────────────────────────────── */
+.contact-section {
+  padding-top: clamp(80px, 10vw, 144px);
+  padding-bottom: clamp(80px, 10vw, 144px);
+  background: #fff;
+  border-top: 0.5px solid var(--rule);
+}
+.contact-section .container { max-width: 1100px; }
+
+.contact-title {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(48px, 7vw, 96px);
+  line-height: 0.98;
+  letter-spacing: -0.04em;
+  color: var(--ink);
+  text-align: center;
+  text-wrap: balance;
+}
+
+.contact-sub {
+  font-size: clamp(16px, 1.5vw, 19px);
+  line-height: 1.55;
+  color: var(--ink-3);
+  max-width: 64ch;
+  margin: clamp(24px, 3vw, 32px) auto clamp(48px, 5vw, 72px);
+  text-align: center;
+}
+.contact-sub a { color: var(--accent); border-bottom: 1px solid var(--accent); }
+.contact-sub a:hover { color: var(--ink); border-bottom-color: var(--ink); }
+
+.contact-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(28px, 3vw, 40px) clamp(32px, 4vw, 56px);
+}
+
+.contact-field {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.contact-field label {
+  font-family: var(--display);
+  font-size: 14px;
+  color: var(--muted);
+  margin-bottom: 8px;
+  letter-spacing: -0.005em;
+}
+.contact-field input {
+  height: 44px;
+  font-family: var(--display);
+  font-size: clamp(16px, 1.4vw, 18px);
+  color: var(--ink);
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--rule-2);
+  outline: none;
+  border-radius: 0;
+  padding: 0 0 8px;
+  transition: border-color 200ms var(--ease);
+}
+.contact-field input:focus { border-bottom-color: var(--ink); }
+.contact-field input:focus + label { color: var(--ink); }
+
+.contact-submit {
+  grid-column: 1 / -1;
+  margin-top: clamp(20px, 2vw, 28px);
+  height: 64px;
+  background: var(--accent);
+  color: var(--ink);
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  border: 0;
+  cursor: pointer;
+  border-radius: 0;
+  transition: background 200ms var(--ease), color 200ms var(--ease);
+}
+.contact-submit:hover:not(:disabled) { background: var(--ink); color: #fff; }
+.contact-submit:disabled { opacity: 0.5; cursor: wait; }
+
+.contact-status {
+  grid-column: 1 / -1;
+  text-align: center;
+  font-size: 13px;
+  color: var(--muted);
+  min-height: 20px;
+  margin-top: 16px;
+}
+.contact-status.is-error { color: var(--accent); }
+.contact-status.is-success {
+  color: var(--ink);
+  font-size: clamp(15px, 1.4vw, 17px);
+  font-family: var(--display);
+}
+.contact-status .spinner {
+  width: 12px; height: 12px;
+  border: 1.5px solid var(--rule-2);
+  border-top-color: var(--ink);
+  border-radius: 50%;
+  display: inline-block;
+  margin-right: 8px;
+  vertical-align: -2px;
+  animation: spin 0.8s linear infinite;
+}
+
+@media (max-width: 720px) {
+  .contact-form { grid-template-columns: 1fr; gap: 24px; }
+}
+
+/* Inline contact CTA inside the About section */
+.about-contact-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: clamp(24px, 3vw, 36px);
+  padding: 14px 28px;
+  background: var(--ink);
+  color: #fff;
+  border-radius: 999px;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 15px;
+  transition: background 200ms var(--ease), transform 200ms var(--ease);
+}
+.about-contact-cta:hover { background: var(--accent); transform: translateY(-1px); }
+.about-contact-cta .arr { transition: transform 200ms var(--ease); }
+.about-contact-cta:hover .arr { transform: translateX(4px); }
 </style>
 <link rel="stylesheet" href="/assets/audit-widget.css">
 </head>
@@ -2560,6 +2692,7 @@ footer {
         <p>
           Passionate about building genuine relationships, understanding what makes each client tick, and helping brands grow through smart, effective digital marketing advice. Weekly tracking, in-flight optimisation, every marketing dollar held to account.
         </p>
+        <a href="#contact" class="about-contact-cta">Register your interest <span class="arr">→</span></a>
       </div>
     </div>
 
@@ -2848,21 +2981,49 @@ footer {
   </div>
 </section>
 
-<!-- ───────────────────────── CTA (BLACK) ──────────────────── -->
-<section class="cta-section" id="cta">
+<!-- ───────────────────────── CONTACT FORM (FOOTER CTA) ───────── -->
+<section class="contact-section" id="contact">
   <div class="container">
-    <div class="cta-eyebrow mono reveal"><span>Book directly with Marty</span></div>
-    <h2 class="cta-title reveal">Let's have a <em>commercial</em> conversation.</h2>
-    <p class="cta-sub reveal">
-      Thirty minutes. No deck. No sales team. Straight to the partner who'll run your account. We'll talk about your business, your pipeline, and whether Zib Digital is the right fit.
+    <h2 class="contact-title reveal">Get in touch</h2>
+    <p class="contact-sub reveal">
+      Send us your details and Marty will be in touch to discuss your business goals. Alternatively, if you'd prefer to get the ball rolling right away, give him a call on <a href="tel:+61438090375">0438 090 375</a>.
     </p>
-    <div class="cta-buttons reveal">
-      <!-- TODO · swap href with Marty's Calendly link when you have it -->
-      <a href="mailto:marty.tucker@zibdigital.com.au?subject=Discovery call with Marty" class="btn btn-light magnet">
-        Book 30 minutes with Marty <span class="arr">→</span>
-      </a>
-      <a href="#audit" class="btn btn-outline-light">Or run a free audit first</a>
-    </div>
+
+    <form class="contact-form reveal" id="contactForm" autocomplete="on">
+      <input type="hidden" name="partnerEmail" value="marty.tucker@zibdigital.com.au" />
+      <input type="hidden" name="partnerName" value="Marty Tucker" />
+      <input type="hidden" name="source" value="Marty Tucker partner page" />
+
+      <div class="contact-field">
+        <label for="cf-firstname">First name *</label>
+        <input type="text" id="cf-firstname" name="firstname" required autocomplete="given-name" />
+      </div>
+      <div class="contact-field">
+        <label for="cf-lastname">Last name *</label>
+        <input type="text" id="cf-lastname" name="lastname" required autocomplete="family-name" />
+      </div>
+
+      <div class="contact-field">
+        <label for="cf-email">Email *</label>
+        <input type="email" id="cf-email" name="email" required autocomplete="email" />
+      </div>
+      <div class="contact-field">
+        <label for="cf-phone">Phone number *</label>
+        <input type="tel" id="cf-phone" name="phone" required autocomplete="tel" />
+      </div>
+
+      <div class="contact-field">
+        <label for="cf-jobtitle">Job title</label>
+        <input type="text" id="cf-jobtitle" name="jobTitle" autocomplete="organization-title" />
+      </div>
+      <div class="contact-field">
+        <label for="cf-website">Website *</label>
+        <input type="text" id="cf-website" name="website" required />
+      </div>
+
+      <button type="submit" class="contact-submit" id="contactSubmit">Submit</button>
+      <div class="contact-status mono" id="contactStatus" role="status" aria-live="polite"></div>
+    </form>
   </div>
 </section>
 
@@ -2871,5 +3032,44 @@ footer {
 
 <!-- @include _partials/scripts.html -->
 <script src="/assets/audit-widget.js"></script>
+<!-- Contact form submit handler -->
+<script>
+(() => {
+  const form = document.getElementById('contactForm');
+  if (!form) return;
+  const btn = document.getElementById('contactSubmit');
+  const status = document.getElementById('contactStatus');
+
+  const setStatus = (msg, mode) => {
+    status.className = 'contact-status mono' + (mode ? ' is-' + mode : '');
+    status.innerHTML = mode === 'loading'
+      ? `<span class="spinner" aria-hidden="true"></span>${msg}`
+      : msg;
+  };
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = Object.fromEntries(new FormData(form).entries());
+    btn.disabled = true;
+    setStatus('Sending…', 'loading');
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(json.error || `Request failed (${res.status})`);
+      setStatus('Thanks. Brad will be in touch shortly.', 'success');
+      form.reset();
+    } catch (err) {
+      setStatus(err.message || 'Submission failed. Please call Brad directly.', 'error');
+    } finally {
+      btn.disabled = false;
+    }
+  });
+})();
+</script>
+
 </body>
 </html>
