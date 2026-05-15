@@ -1957,6 +1957,32 @@ h1.hero-h em {
   max-width: 88ch;
 }
 
+/* Direct client quote inside a case feature */
+.case-client-quote {
+  margin: clamp(32px, 4vw, 48px) 0 0;
+  padding: clamp(24px, 3vw, 36px) clamp(28px, 3vw, 40px);
+  background: var(--ink);
+  color: #fff;
+  border-radius: 12px;
+  font-family: var(--display);
+  font-style: italic;
+  font-size: clamp(18px, 1.8vw, 24px);
+  line-height: 1.4;
+  letter-spacing: -0.015em;
+  max-width: 78ch;
+  border-left: 4px solid var(--accent);
+}
+.case-client-quote cite {
+  display: block;
+  margin-top: 16px;
+  font-style: normal;
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
 .case-takeaway .lbl {
   font-family: var(--mono);
   font-size: 11px;
@@ -2681,59 +2707,65 @@ footer {
 
     <!-- Case 2: Refrigerated transport -->
     <article class="case-feature reveal">
-      <div class="case-feature-eyebrow">Case 02 · SEO · 15 months</div>
-      <h3 class="case-feature-name">Online trampoline &amp; outdoor recreation retailer.</h3>
+      <div class="case-feature-eyebrow">Case 02 · Google Ads · 9 months</div>
+      <h3 class="case-feature-name">Boothalicious · photo booth hire, Melbourne &amp; Sydney.</h3>
       <p class="case-feature-lede">
-        Comprehensive SEO program for a competitive ecommerce category. Technical, on-page and content working in concert. <strong>$638K in organic revenue, first-page dominance for the highest-volume terms.</strong>
+        Built an online presence from scratch and turned it into a booking pipeline. Two metro markets, multiple booth types, dedicated campaigns by intent. <strong>806 bookings in 9 months. Now booking PRADA, Burberry and Kérastase.</strong>
       </p>
 
       <div class="case-headline">
         <div>
-          <div class="big"><span>$638K</span></div>
-          <div class="lbl">Revenue directly from organic search</div>
+          <div class="big"><span>806</span></div>
+          <div class="lbl">Completed bookings in 9 months</div>
         </div>
         <div>
-          <div class="big"><span>+144</span><span class="suf">%</span></div>
-          <div class="lbl">Increase in organic clicks</div>
+          <div class="big"><span>544</span></div>
+          <div class="lbl">Direct from Google Ads</div>
         </div>
         <div>
-          <div class="big"><span>+198</span><span class="suf">%</span></div>
-          <div class="lbl">Increase in search impressions</div>
+          <div class="big"><span>$48.02</span></div>
+          <div class="lbl">Cost per booking</div>
         </div>
       </div>
 
       <div class="case-metrics">
         <div class="case-metric-group">
-          <div class="lbl">Search visibility</div>
+          <div class="lbl">Campaign performance</div>
           <ul>
-            <li><strong>77,134</strong> organic sessions</li>
-            <li><strong>65,809</strong> organic clicks (up 144%)</li>
-            <li><strong>3.87M</strong> impressions (up 198%)</li>
-            <li><strong>32</strong> keyword position improvements</li>
-            <li>Average ranking <strong>12.4</strong></li>
+            <li><strong>$26,146</strong> total ad spend</li>
+            <li><strong>7,781</strong> clicks</li>
+            <li><strong>74,165</strong> impressions</li>
+            <li><strong>10.26%</strong> click-through rate</li>
+            <li><strong>$3.36</strong> average CPC</li>
+            <li><strong>7%</strong> conversion rate</li>
           </ul>
         </div>
         <div class="case-metric-group">
-          <div class="lbl">First-page rankings</div>
+          <div class="lbl">Site performance</div>
           <ul>
-            <li><strong>#1</strong> "trampolines" (60,500/mo)</li>
-            <li><strong>#1</strong> "in ground trampoline"</li>
-            <li><strong>#1</strong> "trampoline net"</li>
-            <li><strong>#1</strong> "trampoline springs"</li>
-            <li><strong>#2</strong> "trampoline" (60,500/mo)</li>
+            <li><strong>17,836</strong> sessions (up 718%)</li>
+            <li><strong>12,960</strong> new users</li>
+            <li><strong>56.63%</strong> engagement rate</li>
+            <li><strong>2:30</strong> avg session duration</li>
+            <li>Peaked at <strong>56 bookings</strong> in November</li>
           </ul>
         </div>
         <div class="case-metric-group">
-          <div class="lbl">Local + commercial signals</div>
+          <div class="lbl">What drove it</div>
           <ul>
-            <li><strong>+159%</strong> Google Business Profile impressions</li>
-            <li><strong>1,023</strong> website clicks from GBP</li>
-            <li><strong>199</strong> call clicks from GBP</li>
-            <li>Technical optimisation across redirects, sitemaps, Core Web Vitals</li>
-            <li>Ongoing content + backlink acquisition</li>
+            <li>Two metro markets · Melbourne &amp; Sydney</li>
+            <li>Dedicated campaigns per booth type</li>
+            <li>Generic + location-specific terms</li>
+            <li>Built online presence from scratch</li>
+            <li>Scaled through event season</li>
           </ul>
         </div>
       </div>
+
+      <blockquote class="case-client-quote">
+        "This week we have had PRADA, Burberry, The Ordinary, Garnier and Kérastase all wanting to book branded booths. Oh my."
+        <cite>— Luke, Owner · Boothalicious</cite>
+      </blockquote>
     </article>
 
   </div>
