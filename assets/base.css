@@ -128,6 +128,10 @@ footer {
   gap: clamp(24px, 4vw, 64px);
   padding-bottom: clamp(56px, 7vw, 88px);
 }
+/* 3-column variant used by .audit-footer on the audit page + partner pages */
+.audit-footer .foot-grid { grid-template-columns: 2fr 1fr 1fr; }
+@media (max-width: 880px) { .audit-footer .foot-grid { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 560px) { .audit-footer .foot-grid { grid-template-columns: 1fr; } }
 .foot-grid h4 {
   font-family: var(--display);
   font-weight: 500;
