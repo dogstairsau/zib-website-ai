@@ -1,25 +1,33 @@
+<div class="audit-hero-intro reveal">
+  <div class="eyebrow mono"><span>Instant audit</span></div>
+  <h1 class="hero-h">
+    Drop your URL. <em>Get a real audit in 30 seconds.</em>
+  </h1>
+  <p class="audit-hero-sub">
+    <strong>A 10-page crawl across 8 categories, a senior strategist read on your positioning, and a sample creative for your brand.</strong>
+    No email follow-up. No new tab. Everything streams live on this page.
+  </p>
+</div>
+
 <div class="reveal">
   <form class="audit-form" id="auditForm" autocomplete="off">
     <label for="auditUrl" class="sr-only">Website URL</label>
-    <input type="url" id="auditUrl" name="url" placeholder="yourwebsite.com.au" required inputmode="url" spellcheck="false" />
+    <span class="url-prefix">
+      <input type="text" id="auditUrl" name="url" placeholder="yourwebsite.com.au" required inputmode="url" spellcheck="false" autocapitalize="off" autocorrect="off" />
+    </span>
     <span class="audit-divider" aria-hidden="true"></span>
     <label for="auditEmail" class="sr-only">Work email</label>
     <input type="email" id="auditEmail" name="email" placeholder="work email" required inputmode="email" spellcheck="false" autocomplete="email" />
     <span class="audit-divider" aria-hidden="true"></span>
     <label for="auditPhone" class="sr-only">Phone number</label>
     <input type="tel" id="auditPhone" name="phone" placeholder="phone" required inputmode="tel" autocomplete="tel" />
-    <button type="submit" id="auditBtn">Run SEO audit <span class="arr">→</span></button>
+    <button type="submit" id="auditBtn">Run audit <span class="arr">→</span></button>
   </form>
   <div class="audit-meta mono">
-    <div><span class="check">✓</span> Positioning · commercial read</div>
-    <div><span class="check">✓</span> Technical SEO · metadata, schema</div>
-    <div><span class="check">✓</span> Quick wins · shippable this week</div>
-    <div><span class="check">✓</span> Lighthouse scores · mobile</div>
-  </div>
-
-  <div class="audit-live mono">
-    <span class="pulse" aria-hidden="true"></span>
-    <span>Runs live on this page · no new tab · no email follow-up · stay put</span>
+    <div><span class="check">✓</span> 10-page technical crawl</div>
+    <div><span class="check">✓</span> AEO + GEO readiness</div>
+    <div><span class="check">✓</span> Senior strategist read</div>
+    <div><span class="check">✓</span> Sample creative · generated live</div>
   </div>
 
   <div class="audit-status mono" id="auditStatus" role="status" aria-live="polite"></div>
@@ -57,7 +65,7 @@
             <div class="wall-stat"><div class="lbl">Pages crawled</div><div class="v" id="statPages">—</div></div>
           </div>
         </div>
-        <div class="wall-radar" id="resRadar" aria-label="Category score distribution"></div>
+        <div class="wall-radar" id="resRadar" aria-label="Performance distribution across categories"></div>
       </div>
       <div class="cat-grid" id="catGrid"></div>
       <div class="wall-footnote">

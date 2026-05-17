@@ -1,14 +1,137 @@
 /**
- * Shared audit widget styles — used by audit.html, index.html, seo-agency.html,
- * chelsea-teelow.html, partner.html. Relies on CSS variables each page already
- * defines: --bg, --paper, --ink, --ink-3, --muted, --muted-2, --rule, --rule-2,
- * --accent, --accent-tint, --score-good, --score-mid, --score-bad,
- * --display, --mono, --ease, --ease-out, --ease-spring.
+ * Shared audit widget styles — single source of truth for the audit section
+ * across audit.html, index.html, seo-agency.html, and every partner page.
+ * Relies on CSS variables each page already defines: --bg, --paper, --ink,
+ * --ink-3, --muted, --muted-2, --rule, --rule-2, --accent, --accent-tint,
+ * --score-good, --score-mid, --score-bad, --display, --mono,
+ * --ease, --ease-out, --ease-spring.
  *
- * Scope: result-side UI only (status banner, stage tracker, SEO wall,
- * strategist card, sample-ad, punchline, audit-after). The form / input /
- * hero copy stays in each page's own CSS so per-page brand styling is preserved.
+ * Scope: the entire audit section — hero intro, form, meta checkmarks,
+ * status banner, stage tracker, SEO wall, strategist card, hero rewrite,
+ * sample-ad, punchline, audit-after. Pages should NOT redefine any of
+ * these in their own <style> blocks; this file loads after inline styles
+ * so any drift is overridden, but stale duplicates should be removed.
  */
+
+/* ─── Hero intro · "Drop your URL" headline + subhead ────────────── */
+.audit-hero-intro { margin-bottom: clamp(28px, 3.2vw, 44px); }
+.audit-hero-intro .eyebrow { margin-bottom: clamp(20px, 2.2vw, 32px); }
+.audit-hero-intro .hero-h { margin-bottom: clamp(24px, 2.8vw, 40px); }
+
+.audit-hero-sub {
+  font-family: var(--display);
+  font-size: clamp(17px, 1.35vw, 20px);
+  line-height: 1.55;
+  color: var(--muted);
+  max-width: 62ch;
+}
+.audit-hero-sub strong { color: var(--ink); font-weight: 500; }
+
+/* ─── Form · pill with https:// prefix + 3 inputs + run button ───── */
+.audit-form {
+  width: 100%;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) auto minmax(0, 1fr) auto minmax(0, 0.85fr) auto;
+  align-items: center;
+  background: #fff;
+  border: 0.5px solid var(--ink);
+  border-radius: 999px;
+  padding: 8px;
+  gap: 4px;
+  transition: box-shadow 240ms var(--ease);
+}
+.audit-form, .audit-form > *, .audit-form input { min-width: 0; }
+.audit-form:focus-within { box-shadow: 0 0 0 4px var(--accent-tint); }
+
+.url-prefix {
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 56px;
+  padding: 0 0 0 22px;
+  position: relative;
+  min-width: 0;
+}
+.url-prefix::before {
+  content: "https://";
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--muted-2);
+  padding-right: 10px;
+  border-right: 1px solid var(--rule-2);
+  margin-right: 8px;
+  white-space: nowrap;
+}
+.url-prefix input { padding-left: 0; }
+
+.audit-form input {
+  height: 56px;
+  font-family: var(--display);
+  font-size: clamp(15px, 1.3vw, 18px);
+  letter-spacing: -0.01em;
+  width: 100%;
+  box-sizing: border-box;
+}
+.audit-form input::placeholder { color: var(--muted-2); }
+.audit-form input[type="email"] { padding-left: 12px; }
+
+.audit-divider {
+  width: 1px;
+  height: 24px;
+  background: var(--rule-2);
+  margin: 0 12px;
+}
+
+.audit-form button {
+  height: 56px;
+  padding: 0 28px;
+  background: var(--ink);
+  color: #fff;
+  border-radius: 999px;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 15px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: background 240ms var(--ease), transform 320ms var(--ease-spring);
+  white-space: nowrap;
+}
+.audit-form button:hover:not(:disabled) { background: var(--accent); }
+.audit-form button:disabled { opacity: 0.5; cursor: wait; }
+
+@media (max-width: 720px) {
+  .audit-form {
+    grid-template-columns: 1fr;
+    border-radius: 16px;
+    padding: 8px;
+    gap: 6px;
+  }
+  .audit-form input {
+    height: 48px;
+    padding: 0 12px;
+    background: var(--paper);
+    border-radius: 8px;
+  }
+  .audit-form input[type="email"] { padding-left: 12px; }
+  .audit-form input[type="tel"]   { padding-left: 12px; }
+  .audit-divider { display: none; }
+  .audit-form button { width: 100%; justify-content: center; height: 48px; }
+}
+
+.audit-meta {
+  display: flex;
+  gap: 28px;
+  flex-wrap: wrap;
+  margin-top: 22px;
+  color: var(--muted);
+}
+.audit-meta .check { color: var(--accent); margin-right: 6px; }
 
 /* ─── Status banner ──────────────────────────────────────────────── */
 .audit-status {
