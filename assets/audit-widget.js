@@ -4,6 +4,7 @@
  * auditBtn, auditStatus, auditStages, stageList, stageElapsed, auditResult,
  * resUrl, resSeoWall, wallDomain, statScore, statScoreBox, statPassed, statIssues,
  * statPages, catGrid, resRadar, resStrategist, resSampleAd, resAdImg, resPunchline.
+ * Optional (hero rewrite): resHeroRewrite, heroNowH/S/C, heroNewH/S/C, heroRationale.
  * If #auditForm is absent, the script is a no-op.
  */
 (() => {
@@ -27,6 +28,14 @@
   const catGridEl     = document.getElementById('catGrid');
   const resRadar      = document.getElementById('resRadar');
   const resStrategist = document.getElementById('resStrategist');
+  const resHeroRewrite = document.getElementById('resHeroRewrite');
+  const heroNowH = document.getElementById('heroNowH');
+  const heroNowS = document.getElementById('heroNowS');
+  const heroNowC = document.getElementById('heroNowC');
+  const heroNewH = document.getElementById('heroNewH');
+  const heroNewS = document.getElementById('heroNewS');
+  const heroNewC = document.getElementById('heroNewC');
+  const heroRationale = document.getElementById('heroRationale');
   const resSampleAd = document.getElementById('resSampleAd');
   const resAdImg    = document.getElementById('resAdImg');
   const resPunchline = document.getElementById('resPunchline');
@@ -295,6 +304,7 @@
     resRadar.innerHTML = '';
     if (resSampleAd) resSampleAd.classList.add('is-shown');
     if (resAdImg) { resAdImg.classList.add('is-loading'); resAdImg.innerHTML = ''; }
+    if (resHeroRewrite) { resHeroRewrite.classList.remove('is-shown'); resHeroRewrite.hidden = true; }
     if (resPunchline) resPunchline.classList.remove('is-shown');
     stagesReset();
     stagesShow();
@@ -357,6 +367,18 @@
             strategistText += data.text;
             resStrategist.innerHTML = mdToHtml(strategistText) + '<span class="typing"></span>';
             stageAdvance('think');
+          } else if (event === 'hero') {
+            if (resHeroRewrite && data?.current && data?.rewrite) {
+              heroNowH.textContent = data.current.headline || '';
+              heroNowS.textContent = data.current.subhead || '';
+              heroNowC.textContent = data.current.cta || 'Get in touch';
+              heroNewH.textContent = data.rewrite.headline || '';
+              heroNewS.textContent = data.rewrite.subhead || '';
+              heroNewC.textContent = data.rewrite.cta || 'Get in touch';
+              heroRationale.textContent = data.rationale || '';
+              resHeroRewrite.hidden = false;
+              requestAnimationFrame(() => resHeroRewrite.classList.add('is-shown'));
+            }
           } else if (event === 'image') {
             if (resAdImg) {
               resAdImg.classList.remove('is-loading');

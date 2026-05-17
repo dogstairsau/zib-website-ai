@@ -1,14 +1,137 @@
 /**
- * Shared audit widget styles — used by audit.html, index.html, seo-agency.html,
- * chelsea-teelow.html, partner.html. Relies on CSS variables each page already
- * defines: --bg, --paper, --ink, --ink-3, --muted, --muted-2, --rule, --rule-2,
- * --accent, --accent-tint, --score-good, --score-mid, --score-bad,
- * --display, --mono, --ease, --ease-out, --ease-spring.
+ * Shared audit widget styles — single source of truth for the audit section
+ * across audit.html, index.html, seo-agency.html, and every partner page.
+ * Relies on CSS variables each page already defines: --bg, --paper, --ink,
+ * --ink-3, --muted, --muted-2, --rule, --rule-2, --accent, --accent-tint,
+ * --score-good, --score-mid, --score-bad, --display, --mono,
+ * --ease, --ease-out, --ease-spring.
  *
- * Scope: result-side UI only (status banner, stage tracker, SEO wall,
- * strategist card, sample-ad, punchline, audit-after). The form / input /
- * hero copy stays in each page's own CSS so per-page brand styling is preserved.
+ * Scope: the entire audit section — hero intro, form, meta checkmarks,
+ * status banner, stage tracker, SEO wall, strategist card, hero rewrite,
+ * sample-ad, punchline, audit-after. Pages should NOT redefine any of
+ * these in their own <style> blocks; this file loads after inline styles
+ * so any drift is overridden, but stale duplicates should be removed.
  */
+
+/* ─── Hero intro · "Drop your URL" headline + subhead ────────────── */
+.audit-hero-intro { margin-bottom: clamp(28px, 3.2vw, 44px); }
+.audit-hero-intro .eyebrow { margin-bottom: clamp(20px, 2.2vw, 32px); }
+.audit-hero-intro .hero-h { margin-bottom: clamp(24px, 2.8vw, 40px); }
+
+.audit-hero-sub {
+  font-family: var(--display);
+  font-size: clamp(17px, 1.35vw, 20px);
+  line-height: 1.55;
+  color: var(--muted);
+  max-width: 62ch;
+}
+.audit-hero-sub strong { color: var(--ink); font-weight: 500; }
+
+/* ─── Form · pill with https:// prefix + 3 inputs + run button ───── */
+.audit-form {
+  width: 100%;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) auto minmax(0, 1fr) auto minmax(0, 0.85fr) auto;
+  align-items: center;
+  background: #fff;
+  border: 0.5px solid var(--ink);
+  border-radius: 999px;
+  padding: 8px;
+  gap: 4px;
+  transition: box-shadow 240ms var(--ease);
+}
+.audit-form, .audit-form > *, .audit-form input { min-width: 0; }
+.audit-form:focus-within { box-shadow: 0 0 0 4px var(--accent-tint); }
+
+.url-prefix {
+  width: 100%;
+  box-sizing: border-box;
+  overflow: hidden;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  height: 56px;
+  padding: 0 0 0 22px;
+  position: relative;
+  min-width: 0;
+}
+.url-prefix::before {
+  content: "https://";
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--muted-2);
+  padding-right: 10px;
+  border-right: 1px solid var(--rule-2);
+  margin-right: 8px;
+  white-space: nowrap;
+}
+.url-prefix input { padding-left: 0; }
+
+.audit-form input {
+  height: 56px;
+  font-family: var(--display);
+  font-size: clamp(15px, 1.3vw, 18px);
+  letter-spacing: -0.01em;
+  width: 100%;
+  box-sizing: border-box;
+}
+.audit-form input::placeholder { color: var(--muted-2); }
+.audit-form input[type="email"] { padding-left: 12px; }
+
+.audit-divider {
+  width: 1px;
+  height: 24px;
+  background: var(--rule-2);
+  margin: 0 12px;
+}
+
+.audit-form button {
+  height: 56px;
+  padding: 0 28px;
+  background: var(--ink);
+  color: #fff;
+  border-radius: 999px;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 15px;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  transition: background 240ms var(--ease), transform 320ms var(--ease-spring);
+  white-space: nowrap;
+}
+.audit-form button:hover:not(:disabled) { background: var(--accent); }
+.audit-form button:disabled { opacity: 0.5; cursor: wait; }
+
+@media (max-width: 720px) {
+  .audit-form {
+    grid-template-columns: 1fr;
+    border-radius: 16px;
+    padding: 8px;
+    gap: 6px;
+  }
+  .audit-form input {
+    height: 48px;
+    padding: 0 12px;
+    background: var(--paper);
+    border-radius: 8px;
+  }
+  .audit-form input[type="email"] { padding-left: 12px; }
+  .audit-form input[type="tel"]   { padding-left: 12px; }
+  .audit-divider { display: none; }
+  .audit-form button { width: 100%; justify-content: center; height: 48px; }
+}
+
+.audit-meta {
+  display: flex;
+  gap: 28px;
+  flex-wrap: wrap;
+  margin-top: 22px;
+  color: var(--muted);
+}
+.audit-meta .check { color: var(--accent); margin-right: 6px; }
 
 /* ─── Status banner ──────────────────────────────────────────────── */
 .audit-status {
@@ -490,6 +613,161 @@
   animation: zd-typing 1s steps(2) infinite;
 }
 @keyframes zd-typing { 50% { opacity: 0; } }
+
+/* ─── Hero rewrite · side-by-side "now vs Zib" copy demo ─────────── */
+.hero-rewrite {
+  display: none;
+  margin: clamp(32px, 4vw, 56px) 0;
+  padding: clamp(28px, 3vw, 40px);
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-radius: 20px;
+  box-shadow: 0 40px 120px -60px rgba(0,0,0,0.12);
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 600ms var(--ease), transform 600ms var(--ease);
+}
+.hero-rewrite.is-shown { display: block; opacity: 1; transform: translateY(0); }
+
+.rewrite-head { margin-bottom: clamp(24px, 2.6vw, 36px); }
+.rewrite-head .lbl { color: var(--accent); margin-bottom: 14px; display: inline-block; }
+.rewrite-head h3 {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(24px, 2.6vw, 34px);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  margin: 0 0 10px;
+  max-width: 22ch;
+  text-wrap: balance;
+}
+.rewrite-head h3 em { font-style: italic; color: var(--accent); }
+.rewrite-head p {
+  font-family: var(--display);
+  font-size: clamp(14px, 1.3vw, 16px);
+  line-height: 1.5;
+  color: var(--muted);
+  margin: 0;
+  max-width: 56ch;
+}
+
+.rewrite-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: clamp(16px, 2vw, 28px);
+  align-items: stretch;
+}
+
+.rewrite-col {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: clamp(20px, 2vw, 28px);
+  border-radius: 14px;
+  border: 0.5px solid var(--rule);
+  background: var(--paper);
+  position: relative;
+}
+.rewrite-col.is-rewrite {
+  background: #fff;
+  border: 1px solid var(--ink);
+  box-shadow: 0 24px 60px -36px rgba(255,98,0,0.45), 0 0 0 1px rgba(255,98,0,0.08) inset;
+}
+
+.col-head {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+}
+.is-rewrite .col-head { color: var(--accent); }
+.col-head .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--muted-2, #9a9a9a);
+}
+.is-rewrite .col-head .dot {
+  background: var(--accent);
+  box-shadow: 0 0 0 4px rgba(255,98,0,0.14);
+}
+
+.rewrite-headline {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(22px, 2.4vw, 30px);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--ink-3);
+  text-wrap: balance;
+  min-height: 1.2em;
+}
+.is-current .rewrite-headline { color: var(--muted); }
+.is-rewrite .rewrite-headline { color: var(--ink); }
+
+.rewrite-subhead {
+  font-family: var(--display);
+  font-size: clamp(14px, 1.3vw, 16px);
+  line-height: 1.5;
+  color: var(--muted);
+  text-wrap: pretty;
+  flex: 1;
+  min-height: 1.5em;
+}
+.is-rewrite .rewrite-subhead { color: var(--ink-3); }
+
+.rewrite-cta {
+  align-self: flex-start;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 14px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 0.5px solid var(--rule);
+  color: var(--muted);
+  background: #fff;
+}
+.is-rewrite .rewrite-cta {
+  color: #fff;
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+.rewrite-arrow {
+  display: grid;
+  place-items: center;
+  color: var(--accent);
+  width: 36px;
+}
+.rewrite-arrow svg { width: 28px; height: 28px; }
+
+.rewrite-rationale {
+  margin-top: clamp(20px, 2vw, 28px);
+  padding-top: clamp(16px, 1.6vw, 22px);
+  border-top: 0.5px solid var(--rule);
+  font-family: var(--display);
+  font-size: clamp(14px, 1.3vw, 16px);
+  line-height: 1.55;
+  color: var(--ink-3);
+  max-width: 64ch;
+}
+.rewrite-rationale::before {
+  content: "Why";
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-right: 10px;
+  vertical-align: 2px;
+}
+
+@media (max-width: 720px) {
+  .rewrite-grid { grid-template-columns: 1fr; }
+  .rewrite-arrow { transform: rotate(90deg); margin: 4px auto; }
+}
 
 /* ─── Sample ad image · OpenAI output ────────────────────────────── */
 .sample-ad {
