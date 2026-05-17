@@ -292,14 +292,27 @@ export default async function handler(req: Request): Promise<Response> {
 
         const source = mode === "seo" ? "SEO page audit" : "Homepage audit";
 
-        // Capture lead AFTER analysis completes (failures don't block UX)
-        captureLead({
-          email,
-          firstname: body.firstname?.trim() || "",
-          company: body.company?.trim() || "",
-          website: url,
-          source,
-        }).catch((e) => console.warn("[lead]", e.message));
+        // Capture lead AFTER analysis completes (failures don't block UX).
+        // Also attach the audit context as a HubSpot note on the contact, so
+        // partners (e.g. Brad on his /brad-reece page) see the strategist read
+        // + SEO snapshot when the same contact later books a meeting.
+        captureLead(
+          {
+            email,
+            firstname: body.firstname?.trim() || "",
+            company: body.company?.trim() || "",
+            website: url,
+            source,
+          },
+          {
+            url,
+            strategistText,
+            overallScore: auditSnapshot.overallScore,
+            passed: auditSnapshot.passed,
+            issues: auditSnapshot.issues,
+            pagesCrawled: auditSnapshot.pagesCrawled,
+          },
+        ).catch((e) => console.warn("[lead]", e.message));
 
         // Notify Michael via email with the full audit (fire-and-forget)
         sendLeadEmail({

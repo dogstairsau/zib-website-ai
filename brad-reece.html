@@ -2360,6 +2360,55 @@ footer {
 }
 .contact-section .container { max-width: 1100px; }
 
+/* ─── BOOK A MEETING · HubSpot Meetings embed ─────────────────── */
+.meeting-section {
+  padding-top: clamp(80px, 10vw, 144px);
+  padding-bottom: clamp(56px, 7vw, 96px);
+  background: var(--paper);
+  border-top: 0.5px solid var(--rule);
+}
+.meeting-section .container { max-width: 1100px; }
+.meeting-eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-align: center;
+  margin-bottom: clamp(16px, 1.6vw, 22px);
+}
+.meeting-title {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(40px, 6vw, 80px);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+  text-align: center;
+  text-wrap: balance;
+  max-width: 18ch;
+  margin: 0 auto;
+}
+.meeting-title em { font-style: italic; color: var(--accent); font-weight: 400; }
+.meeting-sub {
+  font-size: clamp(16px, 1.5vw, 19px);
+  line-height: 1.55;
+  color: var(--ink-3);
+  max-width: 64ch;
+  margin: clamp(20px, 2.4vw, 28px) auto clamp(40px, 4.5vw, 64px);
+  text-align: center;
+}
+.meeting-embed {
+  background: #fff;
+  border: 0.5px solid var(--rule);
+  border-radius: 18px;
+  padding: clamp(16px, 2vw, 28px);
+  min-height: 720px;
+  box-shadow: 0 40px 120px -60px rgba(0,0,0,0.12);
+}
+.meeting-embed .meetings-iframe-container { width: 100%; min-height: 680px; }
+.meeting-embed .meetings-iframe-container iframe { width: 100%; min-height: 680px; border: 0; display: block; }
+
 .contact-title {
   font-family: var(--display);
   font-weight: 500;
@@ -2582,7 +2631,7 @@ footer {
         <p>
           A Zib partner backed by the full national specialist team. SEO, Google Ads, paid media, social, web, conversion. Every channel that moves the commercial number, with a partner who's accountable for it.
         </p>
-        <a href="#contact" class="about-contact-cta">Register your interest <span class="arr">→</span></a>
+        <a href="#cta" class="about-contact-cta">Book a meeting with Brad now <span class="arr">→</span></a>
       </div>
     </div>
 
@@ -2879,6 +2928,21 @@ footer {
   </div>
 </section>
 
+<!-- ───────────────────────── BOOK A MEETING · HubSpot Meetings ────── -->
+<section class="meeting-section" id="cta">
+  <div class="container">
+    <div class="meeting-eyebrow reveal">Book directly with Brad</div>
+    <h2 class="meeting-title reveal">Thirty minutes. <em>Straight to the partner.</em></h2>
+    <p class="meeting-sub reveal">
+      No deck, no sales team. Pick a time below. If you've just run the audit above, Brad will have your results in front of him before the call.
+    </p>
+    <div class="meeting-embed reveal">
+      <!-- HubSpot Meetings embed · prefilled with the audit form email when available -->
+      <div class="meetings-iframe-container" data-src="https://meetings.hubspot.com/brad-reece2?embed=true"></div>
+    </div>
+  </div>
+</section>
+
 <!-- ───────────────────────── CONTACT FORM (FOOTER CTA) ───────── -->
 <section class="contact-section" id="contact">
   <div class="container">
@@ -2930,6 +2994,24 @@ footer {
 
 <!-- @include _partials/scripts.html -->
 <script src="/assets/audit-widget.js"></script>
+
+<!-- HubSpot Meetings · prefill the iframe URL with the audit form's email
+     (if the visitor ran the audit first) so HubSpot matches the existing
+     contact and Brad sees their full audit context on the booking. -->
+<script>
+(() => {
+  const container = document.querySelector('.meeting-embed .meetings-iframe-container');
+  if (!container) return;
+  try {
+    const stored = JSON.parse(sessionStorage.getItem('zib_audit_lead') || '{}');
+    if (!stored.email) return;
+    const url = new URL(container.dataset.src);
+    url.searchParams.set('email', stored.email);
+    container.dataset.src = url.toString();
+  } catch {}
+})();
+</script>
+<script type="text/javascript" src="https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js"></script>
 
 <!-- Contact form submit handler -->
 <script>

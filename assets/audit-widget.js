@@ -292,6 +292,14 @@
     const url = raw ? 'https://' + raw : '';
     const email = emailInput.value.trim();
     const phone = phoneInput.value.trim();
+
+    // Stash the lead so downstream widgets (HubSpot Meetings on partner pages)
+    // can prefill themselves and match the contact HubSpot already has.
+    try {
+      sessionStorage.setItem('zib_audit_lead', JSON.stringify({
+        email, website: url, phone, capturedAt: Date.now(),
+      }));
+    } catch {}
     if (!url || !raw.includes('.')) { setStatus("Enter a valid website URL.", 'error'); urlInput.focus(); return; }
     if (!emailRe.test(email)) { setStatus('Enter a valid work email.', 'error'); emailInput.focus(); return; }
     if (phone.replace(/\D/g, '').length < 6) { setStatus('Enter a valid phone number.', 'error'); phoneInput.focus(); return; }
