@@ -82,7 +82,15 @@ h1, h2, h3, .hero-h, .fork-h, .path-title, .moat-h, .cta-title { text-wrap: bala
 .nav { display: flex; gap: clamp(14px, 2vw, 28px); align-items: center; font-family: var(--display); font-size: 14px; }
 .nav a { color: var(--ink); opacity: 0.72; transition: opacity 200ms var(--ease); }
 .nav a:hover, .nav a[aria-current="page"] { opacity: 1; }
-.nav a.cta {
+
+/* Header end region — holds the persistent CTA + the burger toggle.
+   CTA stays visible at every viewport; burger only appears below 880px. */
+.nav-end {
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, 1.4vw, 16px);
+}
+.nav-end .cta, .nav a.cta {
   background: var(--ink);
   color: #fff;
   opacity: 1;
@@ -91,9 +99,62 @@ h1, h2, h3, .hero-h, .fork-h, .path-title, .moat-h, .cta-title { text-wrap: bala
   font-weight: 500;
   transition: transform 200ms var(--ease);
 }
-.nav a.cta:hover { transform: translateY(-1px); }
+.nav-end .cta:hover, .nav a.cta:hover { transform: translateY(-1px); }
+
+/* Burger toggle — 3 animated bars that morph into an × when open */
+.nav-toggle {
+  display: none;
+  width: 40px;
+  height: 40px;
+  padding: 0;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  position: relative;
+}
+.nav-toggle .bar {
+  display: block;
+  width: 22px;
+  height: 1.5px;
+  margin: 5px auto;
+  background: var(--ink);
+  border-radius: 1px;
+  transform-origin: center;
+  transition: transform 280ms var(--ease), opacity 200ms var(--ease);
+}
+.nav-toggle[aria-expanded="true"] .bar:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-toggle[aria-expanded="true"] .bar:nth-child(2) { opacity: 0; }
+.nav-toggle[aria-expanded="true"] .bar:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
 @media (max-width: 880px) {
-  .nav a:not(.cta) { display: none; }
+  /* Burger button visible · drawer becomes the nav */
+  .nav-toggle { display: block; }
+  .site-header { position: relative; }
+  .nav {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0;
+    background: #fff;
+    padding: 4px 0;
+    border-top: 0.5px solid var(--rule);
+    box-shadow: 0 24px 40px -20px rgba(0,0,0,0.18);
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 320ms var(--ease);
+  }
+  .nav.is-open { max-height: 80vh; overflow-y: auto; }
+  .nav a {
+    display: block;
+    padding: 14px clamp(20px, 5vw, 28px);
+    border-bottom: 0.5px solid var(--rule);
+    font-size: 16px;
+    opacity: 1;
+  }
+  .nav a:last-child { border-bottom: 0; }
 }
 .header-spacer { height: 68px; }
 

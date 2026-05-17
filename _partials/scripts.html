@@ -8,6 +8,34 @@
     onScroll();
   }
 
+  // Mobile burger toggle — opens/closes the nav drawer
+  const navToggle = document.getElementById('navToggle');
+  const navList = document.getElementById('navList');
+  if (navToggle && navList) {
+    const closeNav = () => {
+      navToggle.setAttribute('aria-expanded', 'false');
+      navList.classList.remove('is-open');
+    };
+    navToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const open = navToggle.getAttribute('aria-expanded') === 'true';
+      navToggle.setAttribute('aria-expanded', String(!open));
+      navList.classList.toggle('is-open', !open);
+    });
+    // Close after tapping a link (so the next page loads with a fresh state)
+    navList.addEventListener('click', (e) => {
+      if (e.target.tagName === 'A') closeNav();
+    });
+    // Close when tapping anywhere outside the header
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('#header')) closeNav();
+    });
+    // Close on Escape
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeNav();
+    });
+  }
+
   // Mark current nav item
   const here = location.pathname.replace(/index\.html$/, '/');
   document.querySelectorAll('.nav a:not(.cta)').forEach(a => {
