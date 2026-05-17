@@ -1,0 +1,137 @@
+<div class="reveal">
+  <form class="audit-form" id="auditForm" autocomplete="off">
+    <label for="auditUrl" class="sr-only">Website URL</label>
+    <input type="url" id="auditUrl" name="url" placeholder="yourwebsite.com.au" required inputmode="url" spellcheck="false" />
+    <span class="audit-divider" aria-hidden="true"></span>
+    <label for="auditEmail" class="sr-only">Work email</label>
+    <input type="email" id="auditEmail" name="email" placeholder="work email" required inputmode="email" spellcheck="false" autocomplete="email" />
+    <span class="audit-divider" aria-hidden="true"></span>
+    <label for="auditPhone" class="sr-only">Phone number</label>
+    <input type="tel" id="auditPhone" name="phone" placeholder="phone" required inputmode="tel" autocomplete="tel" />
+    <button type="submit" id="auditBtn">Run SEO audit <span class="arr">→</span></button>
+  </form>
+  <div class="audit-meta mono">
+    <div><span class="check">✓</span> Positioning · commercial read</div>
+    <div><span class="check">✓</span> Technical SEO · metadata, schema</div>
+    <div><span class="check">✓</span> Quick wins · shippable this week</div>
+    <div><span class="check">✓</span> Lighthouse scores · mobile</div>
+  </div>
+
+  <div class="audit-live mono">
+    <span class="pulse" aria-hidden="true"></span>
+    <span>Runs live on this page · no new tab · no email follow-up · stay put</span>
+  </div>
+
+  <div class="audit-status mono" id="auditStatus" role="status" aria-live="polite"></div>
+
+  <div class="audit-stages" id="auditStages" aria-live="polite">
+    <div class="hdr">
+      <span class="ttl">Running audit</span>
+      <span class="elapsed" id="stageElapsed">0s</span>
+    </div>
+    <ul class="stage-list" id="stageList">
+      <li class="stage-item" data-stage="fetch"><span class="ring"></span><svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 7"/></svg><span class="label">Reading the homepage</span><span class="detail"></span></li>
+      <li class="stage-item" data-stage="discover"><span class="ring"></span><svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 7"/></svg><span class="label">Discovering pages · robots.txt + sitemap</span><span class="detail"></span></li>
+      <li class="stage-item" data-stage="crawl"><span class="ring"></span><svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 7"/></svg><span class="label">Crawling up to 10 pages</span><span class="detail"></span></li>
+      <li class="stage-item" data-stage="score"><span class="ring"></span><svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 7"/></svg><span class="label">Scoring 7 categories · 25 checks</span><span class="detail"></span></li>
+      <li class="stage-item" data-stage="think"><span class="ring"></span><svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 7"/></svg><span class="label">Senior strategist read</span><span class="detail"></span></li>
+    </ul>
+  </div>
+
+  <div class="audit-result" id="auditResult" aria-live="polite">
+    <div class="result-head">
+      <div class="url"><small class="mono">Audited</small><span id="resUrl"></span></div>
+      <div class="strategy mono">Senior strategist read</div>
+    </div>
+
+    <div class="seo-wall" id="resSeoWall" aria-live="polite">
+      <div class="wall-hero">
+        <div>
+          <div class="wall-eyebrow">Full SEO + AEO coverage</div>
+          <div class="wall-title">Technical audit. <em>Real crawl data.</em></div>
+          <div class="wall-sub">Deterministic checks run across technical, content, and AI-search readiness for <span class="domain" id="wallDomain"></span>. No AI guessing on the numbers.</div>
+          <div class="wall-stats">
+            <div class="wall-stat is-score" id="statScoreBox"><div class="lbl">Overall score</div><div class="v" id="statScore">—</div></div>
+            <div class="wall-stat is-passed"><div class="lbl">Passed</div><div class="v" id="statPassed">—</div></div>
+            <div class="wall-stat is-issues"><div class="lbl">Issues</div><div class="v" id="statIssues">—</div></div>
+            <div class="wall-stat"><div class="lbl">Pages crawled</div><div class="v" id="statPages">—</div></div>
+          </div>
+        </div>
+        <div class="wall-radar" id="resRadar" aria-label="Category score distribution"></div>
+      </div>
+      <div class="cat-grid" id="catGrid"></div>
+      <div class="wall-footnote">
+        <span class="methodology"><span class="pulse" aria-hidden="true"></span> Live 10-page crawl · deterministic HTML checks</span>
+        <span>Zib hybrid audit · v1</span>
+      </div>
+    </div>
+
+    <div class="strategist" id="resStrategist"></div>
+
+    <div class="hero-rewrite" id="resHeroRewrite" hidden aria-live="polite">
+      <div class="rewrite-head">
+        <div class="lbl mono">Phase 2 · We rewrote your hero</div>
+        <h3>Same homepage. <em>Sharper message.</em></h3>
+        <p>This is the copy we'd put above the fold tomorrow. Side by side, no edits, taken straight from what's on your site today.</p>
+      </div>
+      <div class="rewrite-grid">
+        <div class="rewrite-col is-current">
+          <div class="col-head mono"><span class="dot" aria-hidden="true"></span>Now · on your site</div>
+          <div class="rewrite-headline" id="heroNowH"></div>
+          <div class="rewrite-subhead" id="heroNowS"></div>
+          <div class="rewrite-cta" id="heroNowC"></div>
+        </div>
+        <div class="rewrite-arrow" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="20" y2="12"/><polyline points="13 5 20 12 13 19"/></svg>
+        </div>
+        <div class="rewrite-col is-rewrite">
+          <div class="col-head mono"><span class="dot" aria-hidden="true"></span>Rewritten · by Zib</div>
+          <div class="rewrite-headline" id="heroNewH"></div>
+          <div class="rewrite-subhead" id="heroNewS"></div>
+          <div class="rewrite-cta" id="heroNewC"></div>
+        </div>
+      </div>
+      <div class="rewrite-rationale" id="heroRationale"></div>
+    </div>
+
+    <div class="blog-offer" id="blogOffer" hidden>
+      <div>
+        <div class="lbl mono">Bonus · sample article</div>
+        <p>Want a sample blog post written for your brand? Editorial draft, SEO-aware, ~650 words.</p>
+      </div>
+      <button type="button" class="btn btn-primary" id="blogBtn">
+        Want your blog? Press here <span class="arr">→</span>
+      </button>
+    </div>
+
+    <div class="blog-result" id="blogResult" hidden>
+      <div class="blog-head">
+        <div class="lbl mono">Sample article · generated for you</div>
+        <div class="kw mono" id="blogKeyword"></div>
+      </div>
+      <h3 class="blog-title" id="blogTitle"></h3>
+      <p class="blog-desc" id="blogDesc"></p>
+      <div class="blog-body" id="blogBody"></div>
+      <div class="blog-status mono" id="blogStatus"></div>
+    </div>
+
+    <div class="sample-ad" id="resSampleAd">
+      <div class="sample-ad-img is-loading" id="resAdImg"></div>
+      <div class="sample-ad-meta">
+        <div class="lbl">Phase 2 · sample creative generated for you</div>
+        <h4 id="resAdHeading">Here's the kind of social ad we'd run for your brand.</h4>
+        <p>One-shot creative generated by our hybrid agent off the back of your homepage. In a real engagement, this is the first of a hundred. Variants tested daily, scaled by what converts.</p>
+        <div class="credit">Generated · Zib hybrid agent</div>
+      </div>
+    </div>
+
+    <div class="audit-punchline" id="resPunchline">
+      <p>This was done in 30 seconds. <em>Imagine what we can do in 12 months.</em></p>
+    </div>
+
+    <div class="audit-after">
+      <p>Want a senior strategist to walk you through how to fix these?</p>
+      <a class="btn btn-light" href="#cta">Book a conversation <span class="arr">→</span></a>
+    </div>
+  </div>
+</div>
