@@ -219,7 +219,7 @@ img, svg, video, iframe { max-width: 100%; height: auto; }
 .url-prefix { width: 100%; box-sizing: border-box; overflow: hidden; }
 .audit-form input { width: 100%; min-width: 0; box-sizing: border-box; }
 /* Long Claude / blog text wraps even if it's a single unbreakable string */
-.audit-result, .audit-stages, .strategist, .blog-result, .blog-body, .seo-wall, .result-head, .sample-ad, .stage-item, .stage-item .label {
+.audit-result, .audit-stages, .strategist, .blog-result, .blog-body, .seo-wall, .result-head, .sample-ad, .hero-rewrite, .stage-item, .stage-item .label {
   overflow-wrap: anywhere;
   word-break: break-word;
   box-sizing: border-box;
@@ -1486,6 +1486,180 @@ h1.hero-h em {
 
 @keyframes typing { 50% { opacity: 0; } }
 
+/* ─── HERO REWRITE · side-by-side "now vs Zib" copy demo ──────────── */
+.hero-rewrite {
+  display: none;
+  margin: clamp(32px, 4vw, 56px) 0;
+  padding: clamp(28px, 3vw, 40px);
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-radius: 20px;
+  box-shadow: 0 40px 120px -60px rgba(0,0,0,0.12);
+  opacity: 0;
+  transform: translateY(12px);
+  transition: opacity 600ms var(--ease), transform 600ms var(--ease);
+}
+
+.hero-rewrite.is-shown { display: block; opacity: 1; transform: translateY(0); }
+
+.rewrite-head { margin-bottom: clamp(24px, 2.6vw, 36px); }
+
+.rewrite-head .lbl {
+  color: var(--accent);
+  margin-bottom: 14px;
+  display: inline-block;
+}
+
+.rewrite-head h3 {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(24px, 2.6vw, 34px);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  margin: 0 0 10px;
+  max-width: 22ch;
+  text-wrap: balance;
+}
+
+.rewrite-head h3 em { font-style: italic; color: var(--accent); }
+
+.rewrite-head p {
+  font-family: var(--display);
+  font-size: clamp(14px, 1.3vw, 16px);
+  line-height: 1.5;
+  color: var(--muted);
+  margin: 0;
+  max-width: 56ch;
+}
+
+.rewrite-grid {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: clamp(16px, 2vw, 28px);
+  align-items: stretch;
+}
+
+.rewrite-col {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: clamp(20px, 2vw, 28px);
+  border-radius: 14px;
+  border: 0.5px solid var(--rule);
+  background: var(--paper);
+  position: relative;
+}
+
+.rewrite-col.is-rewrite {
+  background: #fff;
+  border: 1px solid var(--ink);
+  box-shadow: 0 24px 60px -36px rgba(255,98,0,0.45), 0 0 0 1px rgba(255,98,0,0.08) inset;
+}
+
+.col-head {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: var(--muted);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+}
+
+.is-rewrite .col-head { color: var(--accent); }
+
+.col-head .dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--muted-2, #9a9a9a);
+}
+
+.is-rewrite .col-head .dot {
+  background: var(--accent);
+  box-shadow: 0 0 0 4px rgba(255,98,0,0.14);
+}
+
+.rewrite-headline {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(22px, 2.4vw, 30px);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--ink-3);
+  text-wrap: balance;
+  min-height: 1.2em;
+}
+
+.is-current .rewrite-headline { color: var(--muted); }
+
+.is-rewrite .rewrite-headline { color: var(--ink); }
+
+.rewrite-subhead {
+  font-family: var(--display);
+  font-size: clamp(14px, 1.3vw, 16px);
+  line-height: 1.5;
+  color: var(--muted);
+  text-wrap: pretty;
+  flex: 1;
+  min-height: 1.5em;
+}
+
+.is-rewrite .rewrite-subhead { color: var(--ink-3); }
+
+.rewrite-cta {
+  align-self: flex-start;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 14px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  border: 0.5px solid var(--rule);
+  color: var(--muted);
+  background: #fff;
+}
+
+.is-rewrite .rewrite-cta {
+  color: #fff;
+  background: var(--ink);
+  border-color: var(--ink);
+}
+
+.rewrite-arrow {
+  display: grid;
+  place-items: center;
+  color: var(--accent);
+  width: 36px;
+}
+
+.rewrite-arrow svg { width: 28px; height: 28px; }
+
+.rewrite-rationale {
+  margin-top: clamp(20px, 2vw, 28px);
+  padding-top: clamp(16px, 1.6vw, 22px);
+  border-top: 0.5px solid var(--rule);
+  font-family: var(--display);
+  font-size: clamp(14px, 1.3vw, 16px);
+  line-height: 1.55;
+  color: var(--ink-3);
+  max-width: 64ch;
+}
+
+.rewrite-rationale::before {
+  content: "Why";
+  display: inline-block;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-right: 10px;
+  vertical-align: 2px;
+}
+
+@media (max-width: 720px) {
+  .rewrite-grid { grid-template-columns: 1fr; }
+  .rewrite-arrow { transform: rotate(90deg); margin: 4px auto; }
+}
+
 /* ─── SAMPLE AD IMAGE · OpenAI output ─────────────────────────────── */
 .sample-ad {
   display: none;
@@ -2392,6 +2566,32 @@ footer {
 
         <div class="strategist" id="resStrategist"></div>
 
+        <div class="hero-rewrite" id="resHeroRewrite" hidden aria-live="polite">
+          <div class="rewrite-head">
+            <div class="lbl mono">Phase 2 · We rewrote your hero</div>
+            <h3>Same homepage. <em>Sharper message.</em></h3>
+            <p>This is the copy we'd put above the fold tomorrow. Side by side, no edits, taken straight from what's on your site today.</p>
+          </div>
+          <div class="rewrite-grid">
+            <div class="rewrite-col is-current">
+              <div class="col-head mono"><span class="dot" aria-hidden="true"></span>Now · on your site</div>
+              <div class="rewrite-headline" id="heroNowH"></div>
+              <div class="rewrite-subhead" id="heroNowS"></div>
+              <div class="rewrite-cta" id="heroNowC"></div>
+            </div>
+            <div class="rewrite-arrow" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="20" y2="12"/><polyline points="13 5 20 12 13 19"/></svg>
+            </div>
+            <div class="rewrite-col is-rewrite">
+              <div class="col-head mono"><span class="dot" aria-hidden="true"></span>Rewritten · by Zib</div>
+              <div class="rewrite-headline" id="heroNewH"></div>
+              <div class="rewrite-subhead" id="heroNewS"></div>
+              <div class="rewrite-cta" id="heroNewC"></div>
+            </div>
+          </div>
+          <div class="rewrite-rationale" id="heroRationale"></div>
+        </div>
+
         <div class="blog-offer" id="blogOffer" hidden>
           <div>
             <div class="lbl mono">Bonus · sample article</div>
@@ -2703,6 +2903,14 @@ footer {
   const catGridEl     = document.getElementById('catGrid');
   const resRadar      = document.getElementById('resRadar');
   const resStrategist = document.getElementById('resStrategist');
+  const resHeroRewrite = document.getElementById('resHeroRewrite');
+  const heroNowH = document.getElementById('heroNowH');
+  const heroNowS = document.getElementById('heroNowS');
+  const heroNowC = document.getElementById('heroNowC');
+  const heroNewH = document.getElementById('heroNewH');
+  const heroNewS = document.getElementById('heroNewS');
+  const heroNewC = document.getElementById('heroNewC');
+  const heroRationale = document.getElementById('heroRationale');
   const resSampleAd = document.getElementById('resSampleAd');
   const resAdImg    = document.getElementById('resAdImg');
   const resPunchline = document.getElementById('resPunchline');
@@ -2990,6 +3198,8 @@ footer {
       resSampleAd.classList.add('is-shown');
       resAdImg.classList.add('is-loading');
       resAdImg.innerHTML = '';
+      resHeroRewrite.classList.remove('is-shown');
+      resHeroRewrite.hidden = true;
       resPunchline.classList.remove('is-shown');
       stagesReset();
       stagesShow();
@@ -3058,6 +3268,19 @@ footer {
               strategistText += data.text;
               resStrategist.innerHTML = mdToHtml(strategistText) + '<span class="typing"></span>';
               stageAdvance('think');
+            } else if (event === 'hero') {
+              const safe = (s) => String(s || '').replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]));
+              if (data?.current && data?.rewrite) {
+                heroNowH.textContent = data.current.headline || '';
+                heroNowS.textContent = data.current.subhead || '';
+                heroNowC.textContent = data.current.cta || 'Get in touch';
+                heroNewH.textContent = data.rewrite.headline || '';
+                heroNewS.textContent = data.rewrite.subhead || '';
+                heroNewC.textContent = data.rewrite.cta || 'Get in touch';
+                heroRationale.innerHTML = safe(data.rationale || '');
+                resHeroRewrite.hidden = false;
+                requestAnimationFrame(() => resHeroRewrite.classList.add('is-shown'));
+              }
             } else if (event === 'image') {
               resAdImg.classList.remove('is-loading');
               resAdImg.innerHTML = `<img src="${data.url}" alt="Sample ad creative generated for your brand" loading="lazy" />`;

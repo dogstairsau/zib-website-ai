@@ -1,7 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { fetchSiteContent, formatForPrompt, normaliseUrl, isValidEmail, type SiteContent } from "../lib/site";
 import { captureLead } from "../lib/hubspot";
-import { AUDIT_SYSTEM_PROMPT, auditUserPrompt } from "../lib/prompts/audit";
+import { AUDIT_SYSTEM_PROMPT, auditUserPrompt, HERO_REWRITE_SYSTEM_PROMPT, heroRewriteUserPrompt } from "../lib/prompts/audit";
 import { fetchSupporting, crawlSite, buildAudit } from "../lib/seoChecks";
 import { checkRateLimit, rateLimitResponse } from "../lib/rateLimit";
 import { sendLeadEmail } from "../lib/email";
@@ -22,6 +22,35 @@ type Brief = {
   subhead?: string;
   art_direction?: string;
 };
+
+type HeroRewrite = {
+  current: { headline: string; subhead: string; cta: string };
+  rewrite: { headline: string; subhead: string; cta: string };
+  rationale: string;
+};
+
+// ──────────────────────────────────────────────────────────────────
+// Hero rewrite — side-by-side "this is what your homepage should say"
+// ──────────────────────────────────────────────────────────────────
+async function generateHeroRewrite(site: SiteContent, anthropic: Anthropic): Promise<HeroRewrite | null> {
+  const message = await anthropic.messages.create({
+    model: "claude-sonnet-4-6",
+    max_tokens: 700,
+    system: HERO_REWRITE_SYSTEM_PROMPT,
+    messages: [{ role: "user", content: heroRewriteUserPrompt(site) }],
+  });
+
+  const text = message.content?.[0]?.type === "text" ? message.content[0].text : "";
+  try {
+    const cleaned = text.replace(/^```json\s*|\s*```$/g, "").trim();
+    const parsed = JSON.parse(cleaned) as HeroRewrite;
+    if (!parsed?.current?.headline || !parsed?.rewrite?.headline) return null;
+    return parsed;
+  } catch {
+    console.warn("[hero] failed to parse JSON");
+    return null;
+  }
+}
 
 // ──────────────────────────────────────────────────────────────────
 // Image brief — Claude drafts headline + art direction for the ad
@@ -181,6 +210,12 @@ export default async function handler(req: Request): Promise<Response> {
               return null;
             });
 
+        // Hero rewrite — runs in parallel with the strategist stream.
+        const heroRewritePromise = generateHeroRewrite(site, anthropic).catch((e) => {
+          console.warn("[hero]", e.message);
+          return null;
+        });
+
         // Snapshots captured during streaming so we can email them at the end.
         let strategistText = "";
         let auditSnapshot: { overallScore?: number; passed?: number; issues?: number; pagesCrawled?: number } = {};
@@ -233,6 +268,11 @@ export default async function handler(req: Request): Promise<Response> {
             send("chunk", { text: event.delta.text });
           }
         }
+
+        // Hero rewrite — flush as soon as it's ready (usually before image gen)
+        send("status", { phase: "rewrite", message: "Rewriting your hero…" });
+        const heroRewrite = await heroRewritePromise;
+        if (heroRewrite) send("hero", heroRewrite);
 
         if (mode !== "seo") {
           // Image generation last (slowest, happens after text is fully rendered)
