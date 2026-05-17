@@ -18,6 +18,15 @@
 .audit-hero-intro .eyebrow { margin-bottom: clamp(20px, 2.2vw, 32px); }
 .audit-hero-intro .hero-h { margin-bottom: clamp(24px, 2.8vw, 40px); }
 
+/* Partner pages already have their own H1 above the audit, so the
+   audit headline gets a smaller scale to read as a secondary heading. */
+.partner-hero .audit-hero-intro .hero-h {
+  font-size: clamp(28px, 3.6vw, 56px);
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  max-width: 20ch;
+}
+
 .audit-hero-sub {
   font-family: var(--display);
   font-size: clamp(17px, 1.35vw, 20px);
