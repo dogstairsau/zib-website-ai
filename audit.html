@@ -3,6 +3,7 @@
 <head>
 <title>Free commercial audit · Zib Digital</title>
 <meta name="description" content="Drop your URL. Get a real commercial audit in 30 seconds. Senior strategist read on positioning, SEO, and social footprint. Plus a sample creative generated for your brand." />
+<meta name="zib:source-tag" content="Main /audit page" />
 <!-- @include _partials/head.html -->
 <style>
 input { font: inherit; color: inherit; background: none; border: 0; outline: 0; }
@@ -3047,11 +3048,14 @@ footer {
       stageActivate('fetch');
       clearStatus();
 
+      // Page-specific source tag — set via <meta name="zib:source-tag"> in head
+      const sourceTag = document.querySelector('meta[name="zib:source-tag"]')?.content || '';
+
       try {
         const res = await fetch('/api/audit', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ url, email, phone })
+          body: JSON.stringify({ url, email, phone, sourceTag })
         });
 
         if (!res.ok || !res.body) {
