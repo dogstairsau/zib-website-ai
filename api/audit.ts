@@ -15,7 +15,6 @@ type Body = {
   company?: string;
   phone?: string;
   mode?: string;
-  sourceTag?: string;
 };
 
 type Brief = {
@@ -291,12 +290,7 @@ export default async function handler(req: Request): Promise<Response> {
         // Make sure the deterministic checks SSE event was flushed before closing
         await checksPromise;
 
-        // sourceTag is set per-page via <meta name="zib:source-tag"> so the
-        // notification email tells us which page the audit came from
-        // (e.g. "Brad Reece partner page" vs the generic "Homepage audit").
-        const sourceTag = (body.sourceTag || "").trim();
-        const fallback = mode === "seo" ? "SEO page audit" : "Homepage audit";
-        const source = sourceTag ? `Audit · ${sourceTag}` : fallback;
+        const source = mode === "seo" ? "SEO page audit" : "Homepage audit";
 
         // Capture lead AFTER analysis completes (failures don't block UX).
         // Also attach the audit context as a HubSpot note on the contact, so

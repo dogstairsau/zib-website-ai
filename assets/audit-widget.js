@@ -319,14 +319,11 @@
     stageActivate('fetch');
     clearStatus();
 
-    // Page-specific source tag — set via <meta name="zib:source-tag"> in head
-    const sourceTag = document.querySelector('meta[name="zib:source-tag"]')?.content || '';
-
     try {
       const res = await fetch('/api/audit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url, email, phone, sourceTag })
+        body: JSON.stringify({ url, email, phone })
       });
 
       if (!res.ok || !res.body) {
