@@ -1818,6 +1818,10 @@ h1.hero-h em {
   transition: transform 600ms var(--ease-out);
 }
 
+/* The presenting shot has Brad's head near the top of the frame —
+   shift the crop origin up so it isn't clipped by the default centre crop. */
+.partner-gallery img[src*="presenting"] { object-position: center 30%; }
+
 .partner-gallery figure:hover img { transform: scale(1.04); }
 
 .partner-gallery figcaption {
