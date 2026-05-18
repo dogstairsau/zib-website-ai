@@ -1,0 +1,62 @@
+/**
+ * Shared "Book a meeting" section styles — for partner pages that embed a
+ * HubSpot Meetings iframe. Relies on the CSS variables every page already
+ * defines (--ink, --paper, --accent, --rule, --display, --mono).
+ *
+ * Pair with /assets/meeting-prefill.js (which adds ?email=... to the iframe
+ * URL when the visitor has just run an audit) and HubSpot's
+ * MeetingsEmbedCode.js. Each partner page declares its own data-src URL
+ * in the HTML — this file is URL-agnostic.
+ */
+
+.meeting-section {
+  padding-top: clamp(80px, 10vw, 144px);
+  padding-bottom: clamp(56px, 7vw, 96px);
+  background: var(--paper);
+  border-top: 0.5px solid var(--rule);
+}
+.meeting-section .container { max-width: 1100px; }
+
+.meeting-eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  text-align: center;
+  margin-bottom: clamp(16px, 1.6vw, 22px);
+}
+
+.meeting-title {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(40px, 6vw, 80px);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+  text-align: center;
+  text-wrap: balance;
+  max-width: 18ch;
+  margin: 0 auto;
+}
+.meeting-title em { font-style: italic; color: var(--accent); font-weight: 400; }
+
+.meeting-sub {
+  font-size: clamp(16px, 1.5vw, 19px);
+  line-height: 1.55;
+  color: var(--ink-3);
+  max-width: 64ch;
+  margin: clamp(20px, 2.4vw, 28px) auto clamp(40px, 4.5vw, 64px);
+  text-align: center;
+}
+
+.meeting-embed {
+  background: #fff;
+  border: 0.5px solid var(--rule);
+  border-radius: 18px;
+  padding: clamp(16px, 2vw, 28px);
+  min-height: 720px;
+  box-shadow: 0 40px 120px -60px rgba(0,0,0,0.12);
+}
+.meeting-embed .meetings-iframe-container { width: 100%; min-height: 680px; }
+.meeting-embed .meetings-iframe-container iframe { width: 100%; min-height: 680px; border: 0; display: block; }
