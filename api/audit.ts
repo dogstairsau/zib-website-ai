@@ -15,6 +15,7 @@ type Body = {
   company?: string;
   phone?: string;
   mode?: string;
+  sourceTag?: string;
 };
 
 type Brief = {
@@ -290,7 +291,11 @@ export default async function handler(req: Request): Promise<Response> {
         // Make sure the deterministic checks SSE event was flushed before closing
         await checksPromise;
 
-        const source = mode === "seo" ? "SEO page audit" : "Homepage audit";
+        // sourceTag is set per-page via <meta name="zib:source-tag"> so the
+        // notification email tells us which page the audit came from.
+        const sourceTag = (body.sourceTag || "").trim();
+        const fallback = mode === "seo" ? "SEO page audit" : "Homepage audit";
+        const source = sourceTag ? `Audit · ${sourceTag}` : fallback;
 
         // Capture lead AFTER analysis completes. Awaited in parallel so the
         // edge runtime doesn't terminate the worker before Resend / HubSpot
