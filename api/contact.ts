@@ -1,5 +1,4 @@
 import { checkRateLimit, rateLimitResponse } from "../lib/rateLimit";
-import { sendLeadEmail } from "../lib/email";
 
 export const config = { runtime: "edge" };
 
@@ -46,27 +45,7 @@ export default async function handler(req: Request): Promise<Response> {
   const rl = await checkRateLimit(req, "contact", 5, 600);
   if (!rl.allowed) return rateLimitResponse(rl.retryAfter);
 
-  // Build the email payload — reuse the lead-email infrastructure but with a custom subject.
-  const summary = [
-    `From: ${firstname} ${lastname} <${email}>`,
-    `Phone: ${phone}`,
-    jobTitle ? `Job title: ${jobTitle}` : null,
-    website ? `Website: ${website}` : null,
-    `Source: ${source}`,
-  ].filter(Boolean).join("\n");
-
   try {
-    await sendLeadEmail({
-      url: website || "(no website provided)",
-      email,
-      phone,
-      source: `${source} → ${partnerName}`,
-      strategistText: `New contact form submission from a partner landing page.\n\n${summary}`,
-      // Force notification to the partner's address by temporarily overriding LEAD_NOTIFY_EMAIL
-      // — sendLeadEmail reads it from env, so we send a second copy directly via Resend below.
-    });
-
-    // Direct send to the partner (since sendLeadEmail uses env-configured recipient)
     await sendDirectToPartner({
       partnerEmail,
       partnerName,
