@@ -104,12 +104,19 @@ async function sendDirectToPartner(p: {
     return;
   }
 
-  const subject = `New enquiry · ${p.firstname} ${p.lastname} · ${p.source}`;
+  // TEMP: while per-partner routing is paused, send the partner copy to the
+  // central LEAD_NOTIFY_EMAIL inbox (you). The partner is still named in the
+  // subject and body so context is clear. To restore per-partner routing
+  // later, swap `to` back to `p.partnerEmail`.
+  const to = process.env.LEAD_NOTIFY_EMAIL || p.partnerEmail;
+
+  const subject = `New enquiry · ${p.firstname} ${p.lastname} · ${p.partnerName} · ${p.source}`;
   const html = `<!doctype html><html><body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;line-height:1.55;color:#0F0F0F;max-width:680px;margin:0 auto;padding:24px;">
   <h1 style="font-size:22px;margin:0 0 4px;">New enquiry from your Zib partner page</h1>
-  <p style="color:#6B6B6B;margin:0 0 24px;">${esc(p.source)}</p>
+  <p style="color:#6B6B6B;margin:0 0 24px;">${esc(p.source)} · for ${esc(p.partnerName)}</p>
   <table style="border-collapse:collapse;width:100%;font-size:14px;">
-    <tr><td style="padding:6px 12px 6px 0;color:#6B6B6B;width:140px;">Name</td><td style="padding:6px 0;">${esc(p.firstname)} ${esc(p.lastname)}</td></tr>
+    <tr><td style="padding:6px 12px 6px 0;color:#6B6B6B;width:140px;">Partner</td><td style="padding:6px 0;">${esc(p.partnerName)}</td></tr>
+    <tr><td style="padding:6px 12px 6px 0;color:#6B6B6B;">Name</td><td style="padding:6px 0;">${esc(p.firstname)} ${esc(p.lastname)}</td></tr>
     <tr><td style="padding:6px 12px 6px 0;color:#6B6B6B;">Email</td><td style="padding:6px 0;"><a href="mailto:${esc(p.email)}">${esc(p.email)}</a></td></tr>
     <tr><td style="padding:6px 12px 6px 0;color:#6B6B6B;">Phone</td><td style="padding:6px 0;"><a href="tel:${esc(p.phone)}">${esc(p.phone)}</a></td></tr>
     ${p.jobTitle ? `<tr><td style="padding:6px 12px 6px 0;color:#6B6B6B;">Job title</td><td style="padding:6px 0;">${esc(p.jobTitle)}</td></tr>` : ""}
@@ -120,7 +127,7 @@ async function sendDirectToPartner(p: {
   const res = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
-    body: JSON.stringify({ from, to: p.partnerEmail, subject, html, reply_to: p.email }),
+    body: JSON.stringify({ from, to, subject, html, reply_to: p.email }),
     signal: AbortSignal.timeout(10_000),
   });
   if (!res.ok) {
