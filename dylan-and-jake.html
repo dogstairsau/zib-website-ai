@@ -2083,19 +2083,21 @@ h1.hero-h em {
   margin: 0 auto clamp(40px, 5vw, 64px);
 }
 .video-frame {
-  max-width: 980px;
+  /* Vertical 9:16 (YouTube Short). Capped width so it doesn't dominate
+     desktop layouts; full width on mobile via clamp. */
+  width: min(420px, 88vw);
   margin: 0 auto;
   background: #000;
   border-radius: 18px;
   overflow: hidden;
-  aspect-ratio: 16 / 9;
+  aspect-ratio: 9 / 16;
   box-shadow: 0 40px 120px -50px rgba(0,0,0,0.35);
 }
-.video-frame video {
+.video-frame iframe {
   width: 100%;
   height: 100%;
+  border: 0;
   display: block;
-  object-fit: cover;
 }
 
 /* ─── HERO · merged audit layout ─────────────────────────────────── */
@@ -2468,24 +2470,14 @@ footer {
     <p class="video-testimonial-sub reveal">
       A client of Dylan and Jake's, in their own words. The kind of result you can't fake in a deck.
     </p>
-    <!--
-      Self-hosted MP4 in /assets/. To wire this up:
-      1. Download the testimonial MP4 from Google Drive
-      2. Upload to /assets/ in the repo as `dylan-jake-testimonial.mp4`
-         (and optionally `dylan-jake-testimonial-poster.jpg` for the still
-         image shown before play). GitHub web UI works: github.com →
-         repo → assets → Add file → Upload files.
-      3. Push. The video below starts rendering automatically.
-    -->
     <div class="video-frame reveal">
-      <video
-        controls
-        preload="metadata"
-        playsinline
-        poster="/assets/dylan-jake-testimonial-poster.jpg"
-        src="/assets/dylan-jake-testimonial.mp4">
-        Your browser doesn't support HTML5 video. <a href="/assets/dylan-jake-testimonial.mp4">Download the testimonial</a> instead.
-      </video>
+      <iframe
+        src="https://www.youtube.com/embed/C62mT5SC7pg?rel=0&modestbranding=1"
+        title="Client testimonial · Dylan and Jake"
+        loading="lazy"
+        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        referrerpolicy="strict-origin-when-cross-origin"
+        allowfullscreen></iframe>
     </div>
   </div>
 </section>
