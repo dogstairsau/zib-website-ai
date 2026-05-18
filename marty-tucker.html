@@ -2352,6 +2352,7 @@ footer {
 .magnet { transition: transform 320ms var(--ease-spring); will-change: transform; }
 </style>
 <link rel="stylesheet" href="/assets/audit-widget.css">
+<link rel="stylesheet" href="/assets/contact-form.css">
 </head>
 <body>
 
@@ -2748,11 +2749,59 @@ footer {
     </p>
     <div class="cta-buttons reveal">
       <!-- TODO · swap href with Marty's Calendly link when you have it -->
-      <a href="mailto:marty.tucker@zibdigital.com.au?subject=Discovery call with Marty" class="btn btn-light magnet">
+      <a href="#contact" class="btn btn-light magnet">
         Book 30 minutes with Marty <span class="arr">→</span>
       </a>
       <a href="#audit" class="btn btn-outline-light">Or run a free audit first</a>
     </div>
+  </div>
+</section>
+
+
+
+<!-- ───────────────────────── CONTACT FORM (FOOTER CTA) ───────── -->
+<section class="contact-section" id="contact">
+  <div class="container">
+    <h2 class="contact-title reveal">Get in touch</h2>
+    <p class="contact-sub reveal">
+      Send us your details and Marty will be in touch to discuss your business goals.
+    </p>
+
+    <form class="contact-form reveal" id="contactForm" autocomplete="on">
+      <input type="hidden" name="partnerEmail" value="marty.tucker@zibdigital.com.au" />
+      <input type="hidden" name="partnerName" value="Marty Tucker" />
+      <input type="hidden" name="source" value="Marty Tucker partner page" />
+
+      <div class="contact-field">
+        <label for="cf-firstname">First name *</label>
+        <input type="text" id="cf-firstname" name="firstname" required autocomplete="given-name" />
+      </div>
+      <div class="contact-field">
+        <label for="cf-lastname">Last name *</label>
+        <input type="text" id="cf-lastname" name="lastname" required autocomplete="family-name" />
+      </div>
+
+      <div class="contact-field">
+        <label for="cf-email">Email *</label>
+        <input type="email" id="cf-email" name="email" required autocomplete="email" />
+      </div>
+      <div class="contact-field">
+        <label for="cf-phone">Phone number *</label>
+        <input type="tel" id="cf-phone" name="phone" required autocomplete="tel" />
+      </div>
+
+      <div class="contact-field">
+        <label for="cf-jobtitle">Job title</label>
+        <input type="text" id="cf-jobtitle" name="jobTitle" autocomplete="organization-title" />
+      </div>
+      <div class="contact-field">
+        <label for="cf-website">Website *</label>
+        <input type="text" id="cf-website" name="website" required />
+      </div>
+
+      <button type="submit" class="contact-submit" id="contactSubmit">Submit</button>
+      <div class="contact-status mono" id="contactStatus" role="status" aria-live="polite"></div>
+    </form>
   </div>
 </section>
 
@@ -2761,5 +2810,6 @@ footer {
 
 <!-- @include _partials/scripts.html -->
 <script src="/assets/audit-widget.js"></script>
+<script src="/assets/contact-form.js"></script>
 </body>
 </html>
