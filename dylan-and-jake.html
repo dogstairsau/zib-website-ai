@@ -8,7 +8,7 @@
 
   Checklist:
     [ ] H1, page title, meta description, schema (name + bio in JSON-LD)
-    [ ] Hero eyebrow + city/state markers (TODO_CITY, TODO_STATE)
+    [ ] Hero eyebrow + city/state markers (Adelaide, South Australia)
     [ ] Hero subhead paragraph (currently Chelsea-flavoured prose)
     [ ] Portrait image at /assets/jake-portrait.* (file does not exist yet)
     [ ] Caption (name + location)
@@ -19,7 +19,7 @@
     [ ] Pillars — suburb list and territory description
     [ ] Stats labels — # businesses served, years experience
     [ ] FAQ — territory and business-type answers
-    [ ] CTA — "Book directly with Jake"
+    [ ] CTA — "Book directly with Jake &amp; Dylan"
     [ ] Remove this banner before shipping
   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 -->
@@ -64,7 +64,7 @@
       "name": "Can Zib work across both local and national SEO?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. Zib's national SEO team covers both local SEO (Google Business Profile, geo-specific landing pages, citations, reviews) and national SEO campaigns for clients across Melbourne, Sydney, Brisbane, TODO_CITY, Perth, Gold Coast and Auckland."
+        "text": "Yes. Zib's national SEO team covers both local SEO (Google Business Profile, geo-specific landing pages, citations, reviews) and national SEO campaigns for clients across Melbourne, Sydney, Brisbane, Adelaide, Perth, Gold Coast and Auckland."
       }
     },
     {
@@ -2059,18 +2059,26 @@ h1.hero-h em {
   padding: clamp(80px, 10vw, 144px) 0 clamp(64px, 8vw, 120px);
   background: var(--paper);
   border-top: 0.5px solid var(--rule);
-  text-align: center;
 }
+.video-testimonial-grid {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: clamp(40px, 5vw, 80px);
+  align-items: center;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+.video-testimonial-text { text-align: left; }
 .video-testimonial .eyebrow { margin-bottom: clamp(16px, 1.6vw, 22px); color: var(--accent); }
 .video-testimonial-title {
   font-family: var(--display);
   font-weight: 500;
-  font-size: clamp(40px, 6vw, 80px);
+  font-size: clamp(40px, 5.6vw, 76px);
   line-height: 0.98;
   letter-spacing: -0.035em;
   color: var(--ink);
-  margin: 0 auto clamp(16px, 1.6vw, 22px);
-  max-width: 22ch;
+  margin: 0 0 clamp(16px, 1.8vw, 24px);
+  max-width: 14ch;
   text-wrap: balance;
 }
 .video-testimonial-title em { font-style: italic; color: var(--accent); font-weight: 400; }
@@ -2079,14 +2087,12 @@ h1.hero-h em {
   font-size: clamp(16px, 1.5vw, 19px);
   line-height: 1.55;
   color: var(--ink-3);
-  max-width: 56ch;
-  margin: 0 auto clamp(40px, 5vw, 64px);
+  max-width: 42ch;
+  margin: 0;
 }
 .video-frame {
-  /* Vertical 9:16 (YouTube Short). Capped width so it doesn't dominate
-     desktop layouts; full width on mobile via clamp. */
-  width: min(420px, 88vw);
-  margin: 0 auto;
+  width: 380px;
+  margin: 0;
   background: #000;
   border-radius: 18px;
   overflow: hidden;
@@ -2099,6 +2105,19 @@ h1.hero-h em {
   border: 0;
   display: block;
 }
+@media (max-width: 880px) {
+  .video-testimonial-grid {
+    grid-template-columns: 1fr;
+    gap: clamp(28px, 4vw, 48px);
+  }
+  .video-testimonial-text { text-align: center; }
+  .video-testimonial-title { margin-left: auto; margin-right: auto; }
+  .video-testimonial-sub  { margin-left: auto; margin-right: auto; }
+  .video-frame { width: min(380px, 88vw); margin: 0 auto; }
+}
+
+/* Pull the gallery crop down so heads aren't clipped on the duo shots */
+.partner-gallery img { object-position: center 25%; }
 
 /* ─── HERO · merged audit layout ─────────────────────────────────── */
 .audit-hero-intro {
@@ -2465,19 +2484,23 @@ footer {
 <!-- ───────────────────────── VIDEO TESTIMONIAL ─────────────── -->
 <section class="video-testimonial" id="testimonial">
   <div class="container">
-    <div class="eyebrow mono reveal"><span>Client testimonial</span></div>
-    <h2 class="video-testimonial-title reveal">Real client. <em>Real result.</em></h2>
-    <p class="video-testimonial-sub reveal">
-      A client of Dylan and Jake's, in their own words. The kind of result you can't fake in a deck.
-    </p>
-    <div class="video-frame reveal">
-      <iframe
-        src="https://www.youtube.com/embed/C62mT5SC7pg?rel=0&modestbranding=1"
-        title="Client testimonial · Dylan and Jake"
-        loading="lazy"
-        allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-        referrerpolicy="strict-origin-when-cross-origin"
-        allowfullscreen></iframe>
+    <div class="video-testimonial-grid">
+      <div class="video-testimonial-text reveal">
+        <div class="eyebrow mono"><span>Client testimonial</span></div>
+        <h2 class="video-testimonial-title">Real client. <em>Real result.</em></h2>
+        <p class="video-testimonial-sub">
+          A client of Jake and Dylan's, in their own words. The kind of result you can't fake in a deck.
+        </p>
+      </div>
+      <div class="video-frame reveal">
+        <iframe
+          src="https://www.youtube.com/embed/C62mT5SC7pg?rel=0&modestbranding=1"
+          title="Client testimonial · Jake and Dylan"
+          loading="lazy"
+          allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen></iframe>
+      </div>
     </div>
   </div>
 </section>
@@ -2494,7 +2517,7 @@ footer {
     </h2>
 
     <p class="model-lede reveal" style="margin-bottom: clamp(48px, 5vw, 72px);">
-      Jake doesn't work at Zib. She <strong>runs</strong> Zib TODO_CITY. A partner with her name on the shopfront, her capital on the line, and her P&amp;L tied directly to whether your campaigns work. The accountability model every other agency pretends to have, structurally.
+      Jake and Dylan don't work at Zib. They <strong>run</strong> Zib together. A partner with her name on the shopfront, her capital on the line, and her P&amp;L tied directly to whether your campaigns work. The accountability model every other agency pretends to have, structurally.
     </p>
 
     <div class="compare-grid">
@@ -2514,7 +2537,7 @@ footer {
         <div class="compare-label mono">The Zib partner</div>
         <div class="compare-title">Skin in the game, name on the door</div>
         <ul class="compare-list">
-          <li>Owns Zib TODO_CITY outright. Their business succeeds when yours does</li>
+          <li>Own their territory outright. Their business succeeds when yours does</li>
           <li>Focused caseload by design. Every client moves their personal number</li>
           <li>Committed long-term. Their livelihood is tied to this territory</li>
           <li>Senior on the pitch, senior on the delivery, same face on the phone</li>
@@ -2529,24 +2552,24 @@ footer {
 <section id="model">
   <div class="container">
     <div class="hybrid-head reveal" style="text-align: left; max-width: 1100px;">
-      <div class="eyebrow mono" style="display:inline-flex;"><span>About Jake</span></div>
-      <h2 class="hybrid-title" style="text-wrap: balance;">TODO_CITY's Zib <em>Partner.</em></h2>
+      <div class="eyebrow mono" style="display:inline-flex;"><span>About Jake &amp; Dylan</span></div>
+      <h2 class="hybrid-title" style="text-wrap: balance;">Adelaide's Zib <em>Partners.</em></h2>
       <div class="partner-bio" style="margin-top: 28px;">
         <p>
           <strong>Twenty years in sales, marketing and media.</strong> Jake's path runs from hospitality through senior sales roles at TODO_PRIOR_EMPLOYERS into agency ownership. Creativity, resilience, and a bias for results that show up on a client's P&amp;L.
         </p>
         <p>
-          <strong>Now Partner at Zib TODO_CITY alongside TODO_BIZ_PARTNER.</strong> Thirty years of collective experience across radio, digital, advertising and media. National brands and local heroes, each one treated like the only account in the book.
+          <strong>Now Partner at Zib Adelaide alongside TODO_BIZ_PARTNER.</strong> Thirty years of collective experience across radio, digital, advertising and media. National brands and local heroes, each one treated like the only account in the book.
         </p>
         <p>
-          Known for going the extra mile: weekly performance tracking, in-flight optimisation, making sure every marketing dollar earns its seat. Strategic mindset, can-do attitude, people-first approach. Based in TODO_CITY, working with TODO_STATE-adjective businesses at a local and national level.
+          Known for going the extra mile: weekly performance tracking, in-flight optimisation, making sure every marketing dollar earns its seat. Strategic mindset, can-do attitude, people-first approach. Based in Adelaide, working with South Australian businesses at a local and national level.
         </p>
       </div>
     </div>
 
     <blockquote class="partner-quote reveal">
       "I treat every campaign like it's my own business. I'll always go the extra step to make sure it delivers."
-      <cite>— Jake TODO_SURNAME, Partner · Zib TODO_CITY</cite>
+      <cite>— Jake TODO_SURNAME, Partner · Zib Adelaide</cite>
     </blockquote>
 
     <div class="partner-gallery reveal">
@@ -2566,25 +2589,25 @@ footer {
         <div class="frame">
           <img src="/assets/dylan-and-jake-229.webp" alt="Dylan and Jake — branding shoot" loading="lazy" />
         </div>
-        <figcaption>TODO_CITY · TODO_LOCAL_TEAM</figcaption>
+        <figcaption>Adelaide · TODO_LOCAL_TEAM</figcaption>
       </figure>
     </div>
 
     <div class="pillars reveal">
       <div class="pillar">
         <span class="pillar-num mono">Focus</span>
-        <h3 class="pillar-title">Commercial digital for <em>TODO_CITY operators.</em></h3>
+        <h3 class="pillar-title">Commercial digital for <em>Adelaide operators.</em></h3>
         <p class="pillar-body">SEO, Google Ads, paid social, web and strategy. Trades, manufacturers, wholesalers, ecommerce, professional services. Every channel that moves the commercial number, and only those. Local presence and national reach, running together.</p>
       </div>
       <div class="pillar">
         <span class="pillar-num mono">Model</span>
         <h3 class="pillar-title">Partner plus <em>senior manager.</em></h3>
-        <p class="pillar-body">Jake owns the relationship, the commercial framing and the accountability. A dedicated senior digital manager runs the day-to-day execution. You get partner-level thinking and senior specialist craft on the same account. No juniors on rotation.</p>
+        <p class="pillar-body">Jake and Dylan own the relationship, the commercial framing and the accountability. A dedicated senior digital manager runs the day-to-day execution. You get partner-level thinking and senior specialist craft on the same account. No juniors on rotation.</p>
       </div>
       <div class="pillar">
         <span class="pillar-num mono">Region</span>
-        <h3 class="pillar-title">TODO_CITY, <em>TODO_STATE.</em></h3>
-        <p class="pillar-body">TODO_SUBURB_LIST. If you trade across metro TODO_STATE_ABBR or run interstate from an TODO_CITY base, the territory is covered.</p>
+        <h3 class="pillar-title">Adelaide, <em>South Australia.</em></h3>
+        <p class="pillar-body">TODO_SUBURB_LIST. If you trade across metro SA or run interstate from an Adelaide base, the territory is covered.</p>
       </div>
     </div>
   </div>
@@ -2794,11 +2817,11 @@ footer {
 <!-- ───────────────────────── STATS (ORANGE) ───────────────── -->
 <section class="stats" id="numbers">
   <div class="container">
-    <h2 class="stats-lead reveal">Partner-owned, TODO_CITY-based, <em>nationally backed.</em></h2>
+    <h2 class="stats-lead reveal">Partner-owned, Adelaide-based, <em>nationally backed.</em></h2>
     <div class="stats-grid reveal">
       <div class="stat">
         <div class="stat-value"><span data-count="100">0</span><span class="suf">+</span></div>
-        <div class="stat-label">TODO_CITY and TODO_STATEn businesses served</div>
+        <div class="stat-label">Adelaide and South Australian businesses served</div>
       </div>
       <div class="stat">
         <div class="stat-value"><span data-count="15">0</span></div>
@@ -2829,20 +2852,20 @@ footer {
         <div class="num">01</div>
         <div>
           <h3>What does "Zib partner" actually mean?</h3>
-          <p>Jake owns Zib TODO_CITY as a partner. She's not a Zib employee. Her P&amp;L is tied to her territory and her clients. The incentive model is structurally different from any other agency in TODO_STATE_ABBR: when your campaigns work, her business grows. When they don't, hers suffers directly. That's why accountability isn't a slogan on this page.</p>
+          <p>Jake owns Zib Adelaide as a partner. She's not a Zib employee. Her P&amp;L is tied to her territory and her clients. The incentive model is structurally different from any other agency in SA: when your campaigns work, her business grows. When they don't, hers suffers directly. That's why accountability isn't a slogan on this page.</p>
         </div>
       </article>
       <article class="faq-item">
         <div class="num">02</div>
         <div>
           <h3>Will I be working with Jake directly, or a junior?</h3>
-          <p>Jake owns the relationship, the strategic direction and the accountability. A dedicated senior digital manager handles the day-to-day execution across channels, briefed and reviewed by Jake. So you get two senior brains on your account: partner-level commercial thinking plus senior specialist craft. No juniors running things behind the scenes, no handoff to a service rep.</p>
+          <p>Jake and Dylan own the relationship, the strategic direction and the accountability. A dedicated senior digital manager handles the day-to-day execution across channels, briefed and reviewed by Jake. So you get two senior brains on your account: partner-level commercial thinking plus senior specialist craft. No juniors running things behind the scenes, no handoff to a service rep.</p>
         </div>
       </article>
       <article class="faq-item">
         <div class="num">03</div>
         <div>
-          <h3>What kinds of TODO_CITY businesses do you work with?</h3>
+          <h3>What kinds of Adelaide businesses do you work with?</h3>
           <p>Trades, manufacturers, wholesalers, professional services, commercial B2B, local retail, ecommerce operators. If the business has a commercial outcome tied to being found on Google (phone calls, form fills, quote requests, online sales), the model applies. The two case studies above show the range: a commercial door manufacturer and a refrigerated transport operator, both running at very different scales.</p>
         </div>
       </article>
@@ -2856,8 +2879,8 @@ footer {
       <article class="faq-item">
         <div class="num">05</div>
         <div>
-          <h3>Do you only cover TODO_CITY?</h3>
-          <p>Jake's territory is TODO_CITY and TODO_STATE. If you're based here but sell nationally or interstate, her team builds the local and national architecture together. If you're outside TODO_STATE_ABBR, the Zib partner for your region handles you directly. Same model, different face.</p>
+          <h3>Do you only cover Adelaide?</h3>
+          <p>Jake's territory is Adelaide and South Australia. If you're based here but sell nationally or interstate, her team builds the local and national architecture together. If you're outside SA, the Zib partner for your region handles you directly. Same model, different face.</p>
         </div>
       </article>
     </div>
@@ -2867,15 +2890,15 @@ footer {
 <!-- ───────────────────────── CTA (BLACK) ──────────────────── -->
 <section class="cta-section" id="cta">
   <div class="container">
-    <div class="cta-eyebrow mono reveal"><span>Book directly with Jake</span></div>
+    <div class="cta-eyebrow mono reveal"><span>Book directly with Jake &amp; Dylan</span></div>
     <h2 class="cta-title reveal">Let's have a <em>commercial</em> conversation.</h2>
     <p class="cta-sub reveal">
-      Thirty minutes. No deck. No sales team. Straight to the partner who'll run your account. We'll talk about your business, your pipeline, and whether Zib TODO_CITY is the right fit.
+      Thirty minutes. No deck. No sales team. Straight to the partner who'll run your account. We'll talk about your business, your pipeline, and whether Zib Adelaide is the right fit.
     </p>
     <div class="cta-buttons reveal">
       <!-- TODO · swap href with Jake's Calendly link when you have it -->
-      <a href="mailto:chelsea.teelow@zibdigital.com.au?subject=TODO_CITY discovery call" class="btn btn-light magnet">
-        Book 30 minutes with Jake <span class="arr">→</span>
+      <a href="mailto:chelsea.teelow@zibdigital.com.au?subject=Adelaide discovery call" class="btn btn-light magnet">
+        Book 30 minutes with Jake &amp; Dylan <span class="arr">→</span>
       </a>
       <a href="#audit" class="btn btn-outline-light">Or run a free audit first</a>
     </div>
