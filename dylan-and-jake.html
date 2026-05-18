@@ -26,8 +26,8 @@
 <!doctype html>
 <html lang="en-AU">
 <head>
-<title>Jake TODO_SURNAME · Zib Digital Partner · TODO_CITY</title>
-<meta name="description" content="Jake TODO_SURNAME is a Zib Digital partner covering TODO_CITY and TODO_STATE. Partner model, not employee model — partners own their territory and their client outcomes. Run a free SEO audit with Jake's team in 30 seconds." />
+<title>Dylan &amp; Jake · Zib Digital Partners · Sales-Driven Growth Specialists</title>
+<meta name="description" content="Dylan and Jake are twin-brother Zib Digital partners. Sales-driven digital marketing since 2018 — local, national, international. Run a free SEO audit with their team in 30 seconds." />
 <!-- @include _partials/head.html -->
 <!-- FAQPage schema — eligible for Google rich results -->
 <script type="application/ld+json">
@@ -2054,6 +2054,50 @@ h1.hero-h em {
   .portrait-frame { max-width: 420px; }
 }
 
+/* ─── VIDEO TESTIMONIAL ──────────────────────────────────────────── */
+.video-testimonial {
+  padding: clamp(80px, 10vw, 144px) 0 clamp(64px, 8vw, 120px);
+  background: var(--paper);
+  border-top: 0.5px solid var(--rule);
+  text-align: center;
+}
+.video-testimonial .eyebrow { margin-bottom: clamp(16px, 1.6vw, 22px); color: var(--accent); }
+.video-testimonial-title {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(40px, 6vw, 80px);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+  margin: 0 auto clamp(16px, 1.6vw, 22px);
+  max-width: 22ch;
+  text-wrap: balance;
+}
+.video-testimonial-title em { font-style: italic; color: var(--accent); font-weight: 400; }
+.video-testimonial-sub {
+  font-family: var(--display);
+  font-size: clamp(16px, 1.5vw, 19px);
+  line-height: 1.55;
+  color: var(--ink-3);
+  max-width: 56ch;
+  margin: 0 auto clamp(40px, 5vw, 64px);
+}
+.video-frame {
+  max-width: 980px;
+  margin: 0 auto;
+  background: #000;
+  border-radius: 18px;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  box-shadow: 0 40px 120px -50px rgba(0,0,0,0.35);
+}
+.video-frame video {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
 /* ─── HERO · merged audit layout ─────────────────────────────────── */
 .audit-hero-intro {
   margin-bottom: clamp(40px, 5vw, 64px);
@@ -2387,32 +2431,62 @@ footer {
 
 <!-- ───────────────────────── HERO · partner + audit ─────────── -->
 <section class="hero partner-hero" id="hero">
-  <div class="hero-marker mono">Partner · TODO_CITY · TODO_STATE</div>
+  <div class="hero-marker mono">Partners · Sales-Driven Growth</div>
   <div class="container">
     <div class="partner-hero-grid reveal">
       <div class="partner-hero-text">
-        <div class="eyebrow mono"><span>Zib Digital Partner · TODO_CITY</span></div>
+        <div class="eyebrow mono"><span>Zib Digital Partners</span></div>
         <h1 class="hero-h" id="heroLine">
-          Jake <em>TODO_SURNAME.</em>
+          Dylan &amp; <em>Jake.</em>
         </h1>
         <p class="audit-hero-sub">
-          <strong>Your Zib partner across TODO_CITY and TODO_STATE.</strong>
-          Commercial SEO, Google Ads and web strategy for local operators. Not a junior on a rotation. Not an employee with a job description. A partner whose P&amp;L is tied to your outcomes.
+          <strong>Your sales-driven growth specialists.</strong>
+          Dylan and his twin brother Jake have been in the digital marketing industry since 2018, building sales-driven strategies with a deep network and a commercial instinct for what actually moves clients' numbers. Local, national and international clients across the digital media space.
         </p>
       </div>
       <figure class="partner-portrait">
         <div class="portrait-frame">
-          <img src="/assets/jake-portrait.png" alt="Jake TODO_SURNAME, Zib Digital partner for TODO_CITY and TODO_STATE" loading="eager" />
+          <img src="https://zibdigital.com.au/wp-content/uploads/2023/08/dyaln-jake-img.png.webp" alt="Dylan and Jake, twin-brother Zib Digital partners" loading="eager" />
         </div>
         <figcaption class="partner-portrait-cap mono">
-          <span>Jake TODO_SURNAME</span>
-          <span>TODO_CITY partner · Zib Digital</span>
+          <span>Dylan &amp; Jake</span>
+          <span>Partners · Zib Digital</span>
         </figcaption>
       </figure>
     </div>
 
     <!-- @include _partials/audit-section.html -->
 
+  </div>
+</section>
+
+<!-- ───────────────────────── VIDEO TESTIMONIAL ─────────────── -->
+<section class="video-testimonial" id="testimonial">
+  <div class="container">
+    <div class="eyebrow mono reveal"><span>Client testimonial</span></div>
+    <h2 class="video-testimonial-title reveal">Real client. <em>Real result.</em></h2>
+    <p class="video-testimonial-sub reveal">
+      A client of Dylan and Jake's, in their own words. The kind of result you can't fake in a deck.
+    </p>
+    <!--
+      Self-hosted MP4 in /assets/. To wire this up:
+      1. Download the testimonial MP4 from Google Drive
+      2. Upload to /assets/ in the repo as `dylan-jake-testimonial.mp4`
+         (and optionally `dylan-jake-testimonial-poster.jpg` for the still
+         image shown before play). GitHub web UI works: github.com →
+         repo → assets → Add file → Upload files.
+      3. Push. The video below starts rendering automatically.
+    -->
+    <div class="video-frame reveal">
+      <video
+        controls
+        preload="metadata"
+        playsinline
+        poster="/assets/dylan-jake-testimonial-poster.jpg"
+        src="/assets/dylan-jake-testimonial.mp4">
+        Your browser doesn't support HTML5 video. <a href="/assets/dylan-jake-testimonial.mp4">Download the testimonial</a> instead.
+      </video>
+    </div>
   </div>
 </section>
 
