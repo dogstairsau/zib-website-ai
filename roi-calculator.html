@@ -2,7 +2,7 @@
 <html lang="en-AU">
 <head>
 <title>ROI Calculator · Zib Digital</title>
-<meta name="description" content="Project monthly leads, revenue and ROI for SEO, Google Ads or paid social — based on your actual margins and campaign goals. 60-second calculator." />
+<meta name="description" content="Is your marketing actually making you money? Run the numbers across SEO, Google Ads and paid social to see your real ROI — and plan FY27 with a commercial marketing partner." />
 <meta name="zib:source-tag" content="ROI Calculator" />
 <!-- @include _partials/head.html -->
 <style>
@@ -376,6 +376,39 @@ input, select, button { font: inherit; color: inherit; background: none; border:
   font-family: var(--display);
 }
 
+/* ─── POSITIONING CLOSER ────────────────────────────────────────── */
+.positioning-closer {
+  margin-top: clamp(28px, 3.4vw, 44px);
+  padding: clamp(24px, 3vw, 40px) clamp(24px, 3vw, 40px) clamp(28px, 3.4vw, 44px);
+  background: var(--ink);
+  color: #fff;
+  border-radius: 18px;
+}
+.positioning-closer .lbl {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: clamp(10px, 1vw, 14px);
+}
+.positioning-closer p {
+  font-family: var(--display);
+  font-size: clamp(18px, 1.8vw, 22px);
+  line-height: 1.4;
+  letter-spacing: -0.015em;
+  color: #fff;
+  margin: 0 0 clamp(20px, 2.4vw, 28px);
+  max-width: 50ch;
+  text-wrap: balance;
+}
+.positioning-closer p em { font-style: italic; color: var(--accent); }
+.positioning-closer .calc-btn-primary {
+  background: var(--accent);
+  color: var(--ink);
+}
+.positioning-closer .calc-btn-primary:hover { background: #fff; color: var(--ink); }
+
 /* ─── BOTTOM ACTIONS ────────────────────────────────────────────── */
 .pane-actions {
   display: flex;
@@ -466,8 +499,8 @@ input, select, button { font: inherit; color: inherit; background: none; border:
   <section class="calc-hero">
     <div class="container">
       <div class="eyebrow">ROI Calculator</div>
-      <h1>Run the numbers. <em>See the upside.</em></h1>
-      <p>Project monthly leads, revenue and ROI across SEO, Google Ads or paid social — based on your real margins and a campaign plan you control.</p>
+      <h1>Is your marketing <em>actually making you money?</em></h1>
+      <p>Run the numbers across SEO, Google Ads and paid social — based on your real margins and a campaign plan you control. Then plan FY27 with a commercial marketing partner who's accountable for hitting them.</p>
     </div>
   </section>
 
@@ -656,6 +689,12 @@ input, select, button { font: inherit; color: inherit; background: none; border:
           <div class="results-grid" id="resultsGrid"></div>
           <div class="inputs-recap" id="inputsRecap"></div>
           <p class="disclaimer">Projections are indicative only. Actual results may differ and no liability is accepted.</p>
+
+          <div class="positioning-closer">
+            <div class="lbl mono">The Zib read</div>
+            <p>This is what your channel mix is worth on paper. The hard part is hitting it. <em>Now plan FY27 with a commercial marketing partner who's accountable for the numbers, not just running activity.</em></p>
+            <a href="#cta" class="calc-btn calc-btn-primary">Book a commercial conversation <span aria-hidden="true">→</span></a>
+          </div>
 
           <div class="channel-tabs" id="channelTabs"></div>
         </div>
