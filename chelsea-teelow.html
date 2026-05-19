@@ -1804,6 +1804,7 @@ h1.hero-h em {
 .partner-gallery figure { margin: 0; }
 
 .partner-gallery .frame {
+  position: relative;
   aspect-ratio: 1 / 1;
   border-radius: 10px;
   overflow: hidden;
@@ -1812,6 +1813,8 @@ h1.hero-h em {
 }
 
 .partner-gallery img {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
@@ -1819,15 +1822,11 @@ h1.hero-h em {
   transition: transform 600ms var(--ease-out);
 }
 
-/* The Chelsea-with-Jacqui shot has more background around the subjects
-   than the Family / Bluey photos — zoom in so the heads sit at a
-   similar visual density across the three frames. */
+/* The Chelsea-with-Jacqui shot is a 3:2 widescreen source; default
+   centre-crop puts too much background above/below the subjects.
+   Shift the crop up so the faces sit higher in the frame. */
 .partner-gallery img[src*="chelsea-with-jacqui"] {
-  transform: scale(1.18);
-  transform-origin: center;
-}
-.partner-gallery figure:hover img[src*="chelsea-with-jacqui"] {
-  transform: scale(1.22);
+  object-position: center 35%;
 }
 
 .partner-gallery figure:hover img { transform: scale(1.04); }
