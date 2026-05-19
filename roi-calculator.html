@@ -127,6 +127,12 @@ input, select, button { font: inherit; color: inherit; background: none; border:
   padding: clamp(28px, 4vw, 56px);
   box-shadow: 0 40px 120px -60px rgba(0,0,0,0.12);
 }
+@media (max-width: 720px) {
+  /* The big drop-shadow bleeds past narrow viewports and shows as a
+     faint stripe to the left of inner elements on some devices. Drop
+     it on mobile — the border keeps definition. */
+  .step-pane { box-shadow: none; }
+}
 
 .pane-eyebrow {
   font-family: var(--mono);
@@ -627,10 +633,13 @@ input, select, button { font: inherit; color: inherit; background: none; border:
 .book-form .field textarea {
   height: auto;
   min-height: 56px;
-  padding: 4px 0 6px;
+  padding: 8px 12px;
   line-height: 1.4;
   resize: vertical;
+  border: 1px solid var(--rule-2);
+  border-radius: 8px;
 }
+.book-form .field textarea:focus { border-color: var(--ink); }
 .book-form .field input:focus,
 .book-form .field select:focus,
 .book-form .field textarea:focus { border-bottom-color: var(--ink); }
