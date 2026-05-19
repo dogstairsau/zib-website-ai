@@ -2353,6 +2353,7 @@ footer {
 .magnet { transition: transform 320ms var(--ease-spring); will-change: transform; }
 </style>
 <link rel="stylesheet" href="/assets/audit-widget.css">
+<link rel="stylesheet" href="/assets/meeting-section.css">
 <link rel="stylesheet" href="/assets/contact-form.css">
 </head>
 <body>
@@ -2775,20 +2776,17 @@ footer {
   </div>
 </section>
 
-<!-- ───────────────────────── CTA (BLACK) ──────────────────── -->
-<section class="cta-section" id="cta">
+<!-- ───────────────────────── BOOK A MEETING · HubSpot Meetings ────── -->
+<section class="meeting-section" id="cta">
   <div class="container">
-    <div class="cta-eyebrow mono reveal"><span>Book directly with Chelsea</span></div>
-    <h2 class="cta-title reveal">Let's have a <em>commercial</em> conversation.</h2>
-    <p class="cta-sub reveal">
-      Thirty minutes. No deck. No sales team. Straight to the partner who'll run your account. We'll talk about your business, your pipeline, and whether Zib Adelaide is the right fit.
+    <div class="meeting-eyebrow reveal">Book directly with Chelsea</div>
+    <h2 class="meeting-title reveal">Thirty minutes. <em>Straight to the partner.</em></h2>
+    <p class="meeting-sub reveal">
+      No deck, no sales team. Pick a time below. If you've just run the audit above, Chelsea will have your results in front of her before the call.
     </p>
-    <div class="cta-buttons reveal">
-      <!-- TODO · swap href with Chelsea's Calendly link when you have it -->
-      <a href="#contact" class="btn btn-light magnet">
-        Book 30 minutes with Chelsea <span class="arr">→</span>
-      </a>
-      <a href="#audit" class="btn btn-outline-light">Or run a free audit first</a>
+    <div class="meeting-embed reveal">
+      <!-- HubSpot Meetings embed · prefilled with the audit form email when available -->
+      <div class="meetings-iframe-container" data-src="https://meetings.hubspot.com/chelsea-teelow?embed=true"></div>
     </div>
   </div>
 </section>
@@ -2846,6 +2844,10 @@ footer {
 
 <!-- @include _partials/scripts.html -->
 <script src="/assets/audit-widget.js"></script>
+
+<!-- HubSpot Meetings · prefill the iframe URL with the audit form's email -->
+<script src="/assets/meeting-prefill.js"></script>
+<script type="text/javascript" src="https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js"></script>
 <script src="/assets/contact-form.js"></script>
 </body>
 </html>
