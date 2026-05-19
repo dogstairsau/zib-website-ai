@@ -1819,6 +1819,17 @@ h1.hero-h em {
   transition: transform 600ms var(--ease-out);
 }
 
+/* The Chelsea-with-Jacqui shot has more background around the subjects
+   than the Family / Bluey photos — zoom in so the heads sit at a
+   similar visual density across the three frames. */
+.partner-gallery img[src*="chelsea-with-jacqui"] {
+  transform: scale(1.18);
+  transform-origin: center;
+}
+.partner-gallery figure:hover img[src*="chelsea-with-jacqui"] {
+  transform: scale(1.22);
+}
+
 .partner-gallery figure:hover img { transform: scale(1.04); }
 
 .partner-gallery figcaption {
