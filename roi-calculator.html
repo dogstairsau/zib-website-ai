@@ -601,11 +601,15 @@ input, select, button { font: inherit; color: inherit; background: none; border:
   box-sizing: border-box;
   transition: border-color 200ms var(--ease);
   border-radius: 0;
+  text-align: left;
 }
+.book-form .field input::placeholder,
+.book-form .field textarea::placeholder { color: var(--muted-2); }
 .book-form .field textarea {
   height: auto;
-  min-height: 80px;
-  padding: 8px 0;
+  min-height: 56px;
+  padding: 4px 0 6px;
+  line-height: 1.4;
   resize: vertical;
 }
 .book-form .field input:focus,
@@ -798,7 +802,7 @@ input, select, button { font: inherit; color: inherit; background: none; border:
 
         <div class="email-gate" id="emailGate">
           <h3>Where should we <em>send your projection?</em></h3>
-          <p>Drop your email and we'll send a copy of these numbers, plus a senior strategist will be in touch within 24 hours to walk you through how to actually hit them.</p>
+          <p>Drop your email and we'll send a copy of these numbers, plus a growth partner will be in touch within 24 hours to walk you through how to actually hit them.</p>
           <form class="email-gate-form" id="emailGateForm" autocomplete="on">
             <div class="field">
               <label class="lbl" style="font-family:var(--mono);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;">First name</label>
@@ -831,7 +835,7 @@ input, select, button { font: inherit; color: inherit; background: none; border:
           <div class="left">
             <button type="button" class="calc-btn calc-btn-ghost" data-back-to="3">← Adjust inputs</button>
           </div>
-          <button type="button" class="calc-btn calc-btn-primary" id="bookCta" hidden data-open-book>Book a strategist call <span aria-hidden="true">→</span></button>
+          <button type="button" class="calc-btn calc-btn-primary" id="bookCta" hidden data-open-book>Book a growth partner call <span aria-hidden="true">→</span></button>
         </div>
       </div>
 
@@ -844,8 +848,8 @@ input, select, button { font: inherit; color: inherit; background: none; border:
     <div class="book-modal-content">
       <button type="button" class="book-modal-close" data-close-book aria-label="Close">×</button>
       <div class="book-modal-eyebrow mono">Book a conversation</div>
-      <h3 id="bookModalTitle">Thirty minutes with a <em>senior strategist.</em></h3>
-      <p>We'll bring your full projection to the call so you spend the time on the conversation, not the catch-up. A senior strategist will be in touch within 24 hours.</p>
+      <h3 id="bookModalTitle">Thirty minutes with a <em>growth partner.</em></h3>
+      <p>We'll bring your full projection to the call so you spend the time on the conversation, not the catch-up. A growth partner will be in touch within 24 hours.</p>
 
       <form class="book-form" id="bookForm" autocomplete="on">
         <div class="book-row">
@@ -895,7 +899,7 @@ input, select, button { font: inherit; color: inherit; background: none; border:
 
       <div class="book-success" id="bookSuccess" hidden>
         <div class="book-modal-eyebrow mono" style="color:var(--accent);">All sent</div>
-        <h3>Thanks — a senior strategist will be in touch within 24 hours.</h3>
+        <h3>Thanks — a growth partner will be in touch within 24 hours.</h3>
         <p>Your projection has been emailed across so they'll have something specific to talk about.</p>
         <button type="button" class="calc-btn calc-btn-ghost" data-close-book>Close</button>
       </div>
