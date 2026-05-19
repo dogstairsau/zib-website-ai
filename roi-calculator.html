@@ -117,7 +117,7 @@ input, select, button { font: inherit; color: inherit; background: none; border:
 }
 
 /* ─── WIZARD ────────────────────────────────────────────────────── */
-.calc-wizard { padding: 0 0 clamp(80px, 10vw, 120px); }
+.calc-wizard { padding: 0 0 clamp(80px, 10vw, 120px); overflow-x: hidden; }
 .calc-wizard .container { max-width: 1100px; }
 .step-pane[hidden] { display: none; }
 .step-pane {
@@ -125,13 +125,8 @@ input, select, button { font: inherit; color: inherit; background: none; border:
   border: 0.5px solid var(--rule);
   border-radius: 20px;
   padding: clamp(28px, 4vw, 56px);
-  box-shadow: 0 40px 120px -60px rgba(0,0,0,0.12);
-}
-@media (max-width: 720px) {
-  /* The big drop-shadow bleeds past narrow viewports and shows as a
-     faint stripe to the left of inner elements on some devices. Drop
-     it on mobile — the border keeps definition. */
-  .step-pane { box-shadow: none; }
+  /* No drop shadow — on narrow viewports it rendered as a visible
+     vertical stripe to the left of inner elements on some devices. */
 }
 
 .pane-eyebrow {
@@ -275,7 +270,9 @@ input, select, button { font: inherit; color: inherit; background: none; border:
 .channel-card:hover {
   border-color: var(--ink);
   background: #fff;
-  transform: translateY(-2px);
+}
+@media (hover: hover) {
+  .channel-card:hover { transform: translateY(-2px); }
 }
 .channel-card .badge {
   font-family: var(--mono);
@@ -474,10 +471,15 @@ input, select, button { font: inherit; color: inherit; background: none; border:
   white-space: nowrap;
 }
 .calc-btn-primary { background: var(--ink); color: #fff; }
-.calc-btn-primary:hover:not(:disabled) { background: var(--accent); transform: translateY(-1px); }
 .calc-btn-ghost { background: transparent; color: var(--ink); border: 0.5px solid var(--rule); }
-.calc-btn-ghost:hover:not(:disabled) { border-color: var(--ink); background: var(--paper); }
 .calc-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+@media (hover: hover) {
+  /* Only apply hover styles on devices with a true hover capability —
+     iOS keeps :hover sticky after taps, which made the translateY(-1px)
+     visible as an offset/overhang on mobile screenshots. */
+  .calc-btn-primary:hover:not(:disabled) { background: var(--accent); transform: translateY(-1px); }
+  .calc-btn-ghost:hover:not(:disabled) { border-color: var(--ink); background: var(--paper); }
+}
 
 /* ─── CHANNEL TABS (after results) ──────────────────────────────── */
 .channel-tabs {
