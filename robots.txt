@@ -11,3 +11,5 @@ Disallow: /api/
 Disallow: /sandra
 Disallow: /sandra.html
 Disallow: /p/
+
+Sitemap: https://www.ziboutreach.com.au/sitemap.xml
