@@ -1,0 +1,13 @@
+# Zib Outreach · ziboutreach.com.au
+
+User-agent: *
+Allow: /
+
+# Server endpoints — not pages
+Disallow: /api/
+
+# Personalised attribution clones / prospect demos (don't index;
+# they'd duplicate the canonical /audit and confuse search results)
+Disallow: /sandra
+Disallow: /sandra.html
+Disallow: /p/
