@@ -96,6 +96,17 @@ async function build() {
   // Copy static asset folders
   await copyDir(join(ROOT, "assets"), join(OUT, "assets"));
 
+  // Copy root-level static files that aren't .html (robots.txt, llms.txt,
+  // sitemap.xml, favicon.ico, etc). Silently skip any that don't exist.
+  for (const name of ["robots.txt", "llms.txt", "sitemap.xml", "favicon.ico"]) {
+    try {
+      await copyFile(join(ROOT, name), join(OUT, name));
+      console.log(`  ✓ ${name} (static)`);
+    } catch (e) {
+      if (e.code !== "ENOENT") throw e;
+    }
+  }
+
   // Process every .html file, recursing into non-skipped subdirectories
   const counter = { count: 0 };
   await processHtmlTree(ROOT, OUT, counter);
