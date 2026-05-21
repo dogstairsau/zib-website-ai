@@ -1,7 +1,14 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { fetchSiteContent, formatForPrompt, normaliseUrl, isValidEmail, type SiteContent } from "../lib/site";
 import { captureLead } from "../lib/hubspot";
-import { AUDIT_SYSTEM_PROMPT, auditUserPrompt, HERO_REWRITE_SYSTEM_PROMPT, heroRewriteUserPrompt } from "../lib/prompts/audit";
+import {
+  AUDIT_SYSTEM_PROMPT,
+  auditUserPrompt,
+  HERO_REWRITE_SYSTEM_PROMPT,
+  heroRewriteUserPrompt,
+  DISCOVERY_QUESTION_SYSTEM_PROMPT,
+  discoveryQuestionUserPrompt,
+} from "../lib/prompts/audit";
 import { fetchSupporting, crawlSite, buildAudit } from "../lib/seoChecks";
 import { checkRateLimit, rateLimitResponse } from "../lib/rateLimit";
 import { sendLeadEmail } from "../lib/email";
@@ -219,7 +226,14 @@ export default async function handler(req: Request): Promise<Response> {
 
         // Snapshots captured during streaming so we can email them at the end.
         let strategistText = "";
-        let auditSnapshot: { overallScore?: number; passed?: number; issues?: number; pagesCrawled?: number } = {};
+        type EmailCategory = { label: string; score: number; checks?: { title: string; status: "pass" | "warn" | "fail"; value: string }[] };
+        let auditSnapshot: {
+          overallScore?: number;
+          passed?: number;
+          issues?: number;
+          pagesCrawled?: number;
+          categories?: EmailCategory[];
+        } = {};
 
         // Deterministic checks — runs in parallel with the strategist read below.
         const checksPromise = (async () => {
@@ -239,6 +253,11 @@ export default async function handler(req: Request): Promise<Response> {
               passed: audit.passed,
               issues: audit.issues,
               pagesCrawled: audit.pagesCrawled,
+              categories: audit.categories.map((c) => ({
+                label: c.label,
+                score: c.score,
+                checks: c.checks.map((ch) => ({ title: ch.title, status: ch.status, value: ch.value })),
+              })),
             };
             send("checks", audit);
           } catch (e: any) {
@@ -291,6 +310,33 @@ export default async function handler(req: Request): Promise<Response> {
         // Make sure the deterministic checks SSE event was flushed before closing
         await checksPromise;
 
+        // Discovery question — INTERNAL ONLY (email footer). Tailored opener
+        // for the Zib partner's call with the prospect. Fast Haiku call so
+        // it adds ~1s rather than blocking on Sonnet again.
+        let discoveryQuestion = "";
+        try {
+          const dqMsg = await anthropic.messages.create({
+            model: "claude-haiku-4-5-20251001",
+            max_tokens: 180,
+            system: DISCOVERY_QUESTION_SYSTEM_PROMPT,
+            messages: [
+              {
+                role: "user",
+                content: discoveryQuestionUserPrompt(url, strategistText, {
+                  overallScore: auditSnapshot.overallScore,
+                  passed: auditSnapshot.passed,
+                  issues: auditSnapshot.issues,
+                  categories: auditSnapshot.categories?.map((c) => ({ label: c.label, score: c.score })),
+                }),
+              },
+            ],
+          });
+          const txt = dqMsg.content[0]?.type === "text" ? dqMsg.content[0].text : "";
+          discoveryQuestion = txt.trim().replace(/^["'`\s]+|["'`\s]+$/g, "");
+        } catch (e: any) {
+          console.warn("[discovery-question]", e?.message);
+        }
+
         // sourceTag is set per-page via <meta name="zib:source-tag"> so the
         // notification email tells us which page the audit came from.
         const sourceTag = (body.sourceTag || "").trim();
@@ -326,6 +372,7 @@ export default async function handler(req: Request): Promise<Response> {
             phone: (body.phone || "").trim() || undefined,
             source,
             strategistText,
+            discoveryQuestion: discoveryQuestion || undefined,
             audit: auditSnapshot,
           }).catch((e) => console.warn("[email]", e.message)),
         ]);
