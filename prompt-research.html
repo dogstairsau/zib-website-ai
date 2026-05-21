@@ -2,7 +2,7 @@
 <html lang="en-AU">
 <head>
 <title>Prompt Research · Zib Digital</title>
-<meta name="description" content="Test tool: enter a seed term, get the prompts real users would type into ChatGPT and Claude about it, with intent classifications." />
+<meta name="description" content="Test tool: enter a seed term, get the prompts real users would type into ChatGPT and Claude about it, with intent classifications and brand visibility." />
 <meta name="robots" content="noindex,nofollow" />
 <meta name="zib:source-tag" content="Prompt research test page" />
 <!-- @include _partials/head.html -->
@@ -43,26 +43,42 @@
 
   .pr-sub {
     margin-top: 16px;
-    max-width: 640px;
+    max-width: 680px;
     color: var(--muted);
     font-size: 16px;
     line-height: 1.5;
   }
 
   .pr-form {
-    display: flex;
+    display: grid;
+    grid-template-columns: 1fr 1fr auto;
     gap: 12px;
-    flex-wrap: wrap;
     margin: 32px 0 16px;
-    max-width: 720px;
+    max-width: 880px;
+  }
+  @media (max-width: 720px) {
+    .pr-form { grid-template-columns: 1fr; }
+  }
+
+  .pr-field {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .pr-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
   }
 
   .pr-input {
-    flex: 1 1 280px;
-    min-width: 0;
-    padding: 16px 20px;
+    width: 100%;
+    padding: 14px 18px;
     font-family: var(--display);
-    font-size: 17px;
+    font-size: 16px;
     background: #fff;
     border: 1px solid var(--rule-2);
     border-radius: 12px;
@@ -76,7 +92,8 @@
   }
 
   .pr-btn {
-    padding: 16px 28px;
+    align-self: end;
+    padding: 14px 28px;
     font-family: var(--display);
     font-size: 15px;
     font-weight: 500;
@@ -86,6 +103,7 @@
     border: 0;
     cursor: pointer;
     transition: transform 200ms var(--ease-out), background 200ms var(--ease-out);
+    white-space: nowrap;
   }
 
   .pr-btn:hover:not(:disabled) { background: var(--accent); }
@@ -112,15 +130,48 @@
   }
   .pr-error.is-visible { display: block; }
 
+  .pr-viewtabs {
+    display: inline-flex;
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-radius: 999px;
+    padding: 4px;
+    margin-top: 32px;
+    gap: 4px;
+  }
+  .pr-viewtab {
+    padding: 8px 18px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    background: transparent;
+    border: 0;
+    border-radius: 999px;
+    cursor: pointer;
+    transition: background 200ms var(--ease-out), color 200ms var(--ease-out);
+  }
+  .pr-viewtab.is-active {
+    background: var(--ink);
+    color: #fff;
+  }
+
   .pr-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 32px;
-    margin-top: 48px;
+    margin-top: 20px;
   }
 
   @media (max-width: 820px) {
     .pr-grid { grid-template-columns: 1fr; gap: 24px; }
+  }
+
+  .pr-view { display: none; }
+  .pr-view.is-active { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
+  @media (max-width: 820px) {
+    .pr-view.is-active { grid-template-columns: 1fr; gap: 24px; }
   }
 
   .pr-col {
@@ -172,7 +223,8 @@
   }
 
   .pr-row {
-    display: flex;
+    display: grid;
+    grid-template-columns: 28px 1fr auto;
     gap: 14px;
     align-items: flex-start;
     padding: 16px 24px;
@@ -183,7 +235,6 @@
   .pr-row:last-child { border-bottom: 0; }
 
   .pr-intent {
-    flex: 0 0 28px;
     width: 28px;
     height: 28px;
     border-radius: 6px;
@@ -201,6 +252,37 @@
   .pr-intent.is-C { background: #2563EB; }
   .pr-intent.is-N { background: #6B7280; }
   .pr-intent.is-T { background: var(--score-good); }
+
+  .pr-vis {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px 4px 8px;
+    border-radius: 999px;
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    font-weight: 500;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+  .pr-vis-dot { width: 8px; height: 8px; border-radius: 50%; flex: 0 0 8px; }
+  .pr-vis.is-yes { background: rgba(11, 171, 110, 0.12); color: var(--score-good); }
+  .pr-vis.is-yes .pr-vis-dot { background: var(--score-good); }
+  .pr-vis.is-maybe { background: rgba(255, 157, 0, 0.14); color: var(--score-mid); }
+  .pr-vis.is-maybe .pr-vis-dot { background: var(--score-mid); }
+  .pr-vis.is-no { background: rgba(224, 58, 58, 0.10); color: var(--score-bad); }
+  .pr-vis.is-no .pr-vis-dot { background: var(--score-bad); }
+
+  .pr-vis-reason {
+    grid-column: 2 / 4;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: var(--muted);
+    margin-top: -4px;
+  }
 
   .pr-empty {
     padding: 32px 24px;
@@ -229,6 +311,76 @@
     50% { opacity: 1; }
   }
 
+  .pr-wheel-wrap {
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-radius: 16px;
+    padding: 16px;
+    overflow: hidden;
+  }
+  .pr-wheel-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 4px 8px 12px;
+  }
+  .pr-wheel-svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+  .pr-wheel-node {
+    cursor: pointer;
+    transition: transform 200ms var(--ease-out);
+  }
+  .pr-wheel-node circle {
+    transition: r 200ms var(--ease-out), stroke-width 200ms var(--ease-out);
+  }
+  .pr-wheel-node:hover circle {
+    stroke: var(--ink);
+    stroke-width: 2;
+  }
+  .pr-wheel-hub {
+    font-family: var(--mono);
+    font-weight: 600;
+    font-size: 13px;
+    letter-spacing: 0.04em;
+    text-anchor: middle;
+    fill: var(--ink);
+  }
+  .pr-wheel-axis-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-anchor: middle;
+    fill: var(--muted);
+    text-transform: uppercase;
+  }
+  .pr-wheel-tooltip {
+    position: absolute;
+    pointer-events: none;
+    background: var(--ink);
+    color: #fff;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.4;
+    max-width: 280px;
+    opacity: 0;
+    transform: translate(-50%, -100%);
+    transition: opacity 150ms var(--ease-out);
+    z-index: 10;
+  }
+  .pr-wheel-tooltip.is-visible { opacity: 1; }
+  .pr-wheel-tooltip-vis {
+    font-family: var(--mono);
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    opacity: 0.7;
+    margin-top: 4px;
+  }
+
   .pr-legend {
     margin-top: 48px;
     display: flex;
@@ -242,18 +394,26 @@
   }
   .pr-legend-item { display: inline-flex; align-items: center; gap: 8px; }
   .pr-legend-tag { width: 22px; height: 22px; border-radius: 5px; color: #fff; display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 11px; }
+  .pr-legend-divider { width: 1px; height: 20px; background: var(--rule); }
 </style>
 </head>
 
 <body>
-  <main class="pr-shell">
+  <main class="pr-shell" style="position: relative;">
     <header class="pr-head">
       <div class="pr-eyebrow">Internal test · Zib Digital</div>
       <h1 class="pr-title">Prompt <em>research.</em></h1>
-      <p class="pr-sub">Enter a search term — we'll mine Google autosuggest for the long-tail questions people ask about it, then run them through Claude and ChatGPT to rewrite each as a natural AI-chatbot prompt with an intent classification.</p>
+      <p class="pr-sub">Enter a search term — we'll mine Google autosuggest for the long-tail questions people ask about it, then run them through Claude and ChatGPT to rewrite each as a natural AI-chatbot prompt with an intent classification. Add an optional target domain to assess whether it would likely show up in the AI's answer.</p>
 
       <form class="pr-form" id="prForm" autocomplete="off">
-        <input class="pr-input" id="prTerm" name="term" type="text" placeholder="e.g. work cover, plumber Brighton, SEO Melbourne" required minlength="2" maxlength="80" />
+        <div class="pr-field">
+          <label class="pr-label" for="prTerm">Seed term</label>
+          <input class="pr-input" id="prTerm" name="term" type="text" placeholder="work cover, plumber Brighton…" required minlength="2" maxlength="80" />
+        </div>
+        <div class="pr-field">
+          <label class="pr-label" for="prDomain">Target domain <span style="text-transform:none;letter-spacing:0;opacity:0.6;">(optional)</span></label>
+          <input class="pr-input" id="prDomain" name="domain" type="text" placeholder="zibdigital.com.au" maxlength="120" />
+        </div>
         <button class="pr-btn" id="prBtn" type="submit">Get prompts</button>
       </form>
 
@@ -261,7 +421,12 @@
       <div class="pr-error" id="prError"></div>
     </header>
 
-    <section class="pr-grid">
+    <div class="pr-viewtabs" role="tablist">
+      <button class="pr-viewtab is-active" data-view="list" type="button">List view</button>
+      <button class="pr-viewtab" data-view="wheel" type="button">Wheel view</button>
+    </div>
+
+    <section class="pr-view is-active" id="prListView">
       <div class="pr-col" data-col="claude">
         <header class="pr-col-head">
           <span class="pr-col-dot is-claude"></span>
@@ -285,25 +450,79 @@
       </div>
     </section>
 
+    <section class="pr-view" id="prWheelView">
+      <div class="pr-wheel-wrap">
+        <header class="pr-wheel-head">
+          <span class="pr-col-dot is-claude"></span>
+          <span class="pr-col-title">Claude</span>
+          <span class="pr-col-sub">Hover a dot</span>
+        </header>
+        <svg class="pr-wheel-svg" id="prClaudeWheel" viewBox="0 0 500 500" role="img" aria-label="Claude prompt wheel"></svg>
+      </div>
+      <div class="pr-wheel-wrap">
+        <header class="pr-wheel-head">
+          <span class="pr-col-dot is-openai"></span>
+          <span class="pr-col-title">ChatGPT</span>
+          <span class="pr-col-sub">Hover a dot</span>
+        </header>
+        <svg class="pr-wheel-svg" id="prOpenaiWheel" viewBox="0 0 500 500" role="img" aria-label="ChatGPT prompt wheel"></svg>
+      </div>
+    </section>
+
     <div class="pr-legend">
-      <span class="pr-legend-item"><span class="pr-legend-tag is-I" style="background:var(--accent)">I</span> Informational</span>
-      <span class="pr-legend-item"><span class="pr-legend-tag is-C" style="background:#2563EB">C</span> Commercial</span>
-      <span class="pr-legend-item"><span class="pr-legend-tag is-N" style="background:#6B7280">N</span> Navigational</span>
-      <span class="pr-legend-item"><span class="pr-legend-tag is-T" style="background:var(--score-good)">T</span> Transactional</span>
+      <span class="pr-legend-item"><span class="pr-legend-tag" style="background:var(--accent)">I</span> Informational</span>
+      <span class="pr-legend-item"><span class="pr-legend-tag" style="background:#2563EB">C</span> Commercial</span>
+      <span class="pr-legend-item"><span class="pr-legend-tag" style="background:#6B7280">N</span> Navigational</span>
+      <span class="pr-legend-item"><span class="pr-legend-tag" style="background:var(--score-good)">T</span> Transactional</span>
+      <span class="pr-legend-divider"></span>
+      <span class="pr-legend-item" id="prVisLegend" style="display:none;">
+        <span class="pr-vis is-yes"><span class="pr-vis-dot"></span>Yes</span>
+        <span class="pr-vis is-maybe"><span class="pr-vis-dot"></span>Maybe</span>
+        <span class="pr-vis is-no"><span class="pr-vis-dot"></span>No</span>
+        <span style="margin-left:6px;">= would domain appear in AI answer</span>
+      </span>
     </div>
+
+    <div class="pr-wheel-tooltip" id="prTooltip"></div>
   </main>
 
   <script>
     const form = document.getElementById("prForm");
     const termInput = document.getElementById("prTerm");
+    const domainInput = document.getElementById("prDomain");
     const btn = document.getElementById("prBtn");
     const meta = document.getElementById("prMeta");
     const errEl = document.getElementById("prError");
     const claudeList = document.getElementById("prClaudeList");
     const openaiList = document.getElementById("prOpenaiList");
+    const claudeWheel = document.getElementById("prClaudeWheel");
+    const openaiWheel = document.getElementById("prOpenaiWheel");
+    const listView = document.getElementById("prListView");
+    const wheelView = document.getElementById("prWheelView");
+    const tooltip = document.getElementById("prTooltip");
+    const visLegend = document.getElementById("prVisLegend");
 
     const INTENT_CLASS = { I: "is-I", C: "is-C", N: "is-N", T: "is-T" };
+    const INTENT_COLOR = { I: "var(--accent)", C: "#2563EB", N: "#6B7280", T: "var(--score-good)" };
+    const VIS_FILL = { yes: "#0BAB6E", maybe: "#FF9D00", no: "#E03A3A" };
+    const INTENT_LABEL = { I: "Informational", C: "Commercial", N: "Navigational", T: "Transactional" };
+    const INTENT_ORDER = ["I", "C", "N", "T"];
 
+    let lastData = null;
+
+    // ─── View toggle ─────────────────────────────────────────────────
+    document.querySelectorAll(".pr-viewtab").forEach((tab) => {
+      tab.addEventListener("click", () => {
+        document.querySelectorAll(".pr-viewtab").forEach((t) => t.classList.remove("is-active"));
+        tab.classList.add("is-active");
+        const view = tab.dataset.view;
+        listView.classList.toggle("is-active", view === "list");
+        wheelView.classList.toggle("is-active", view === "wheel");
+        if (view === "wheel" && lastData) renderWheels(lastData);
+      });
+    });
+
+    // ─── List rendering ──────────────────────────────────────────────
     function renderSkeleton(ul) {
       ul.innerHTML = "";
       for (let i = 0; i < 8; i++) {
@@ -315,7 +534,7 @@
     }
 
     function renderEmpty(ul, msg) {
-      ul.innerHTML = `<li class="pr-empty">${msg}</li>`;
+      ul.innerHTML = `<li class="pr-empty">${escapeHtml(msg)}</li>`;
     }
 
     function renderPrompts(ul, prompts) {
@@ -328,7 +547,14 @@
         const li = document.createElement("li");
         li.className = "pr-row";
         const intentCls = INTENT_CLASS[item.intent] || "is-I";
-        li.innerHTML = `<span class="pr-intent ${intentCls}">${item.intent}</span><span>${escapeHtml(item.prompt)}</span>`;
+        let html = `<span class="pr-intent ${intentCls}">${item.intent}</span><span>${escapeHtml(item.prompt)}</span>`;
+        if (item.visibility) {
+          html += `<span class="pr-vis is-${item.visibility}"><span class="pr-vis-dot"></span>${item.visibility}</span>`;
+          if (item.visibilityReason) {
+            html += `<span class="pr-vis-reason">${escapeHtml(item.visibilityReason)}</span>`;
+          }
+        }
+        li.innerHTML = html;
         ul.appendChild(li);
       }
     }
@@ -346,15 +572,189 @@
       errEl.classList.remove("is-visible");
     }
 
+    // ─── Wheel rendering ─────────────────────────────────────────────
+    function renderWheel(svg, term, prompts) {
+      svg.innerHTML = "";
+      if (!prompts || prompts.length === 0) {
+        const t = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        t.setAttribute("x", "250");
+        t.setAttribute("y", "250");
+        t.setAttribute("text-anchor", "middle");
+        t.setAttribute("fill", "var(--muted)");
+        t.setAttribute("font-family", "var(--mono)");
+        t.setAttribute("font-size", "12");
+        t.textContent = "no data";
+        svg.appendChild(t);
+        return;
+      }
+
+      const cx = 250;
+      const cy = 250;
+      const innerR = 50;
+      const outerR = 210;
+      const labelR = 230;
+
+      // Group prompts by intent
+      const byIntent = { I: [], C: [], N: [], T: [] };
+      for (const p of prompts) {
+        if (byIntent[p.intent]) byIntent[p.intent].push(p);
+      }
+
+      // Quadrants: 4 sectors of 90° each. Top-right=I, bottom-right=C, bottom-left=N, top-left=T
+      // Angles start at -90° (top) and go clockwise
+      const sectorAngles = {
+        I: { start: -Math.PI / 2, end: 0 },
+        C: { start: 0, end: Math.PI / 2 },
+        N: { start: Math.PI / 2, end: Math.PI },
+        T: { start: Math.PI, end: 1.5 * Math.PI },
+      };
+
+      // Draw axis lines
+      const axesGroup = document.createElementNS("http://www.w3.org/2000/svg", "g");
+      [-Math.PI / 2, 0, Math.PI / 2, Math.PI].forEach((angle) => {
+        const x2 = cx + Math.cos(angle) * outerR;
+        const y2 = cy + Math.sin(angle) * outerR;
+        const line = document.createElementNS("http://www.w3.org/2000/svg", "line");
+        line.setAttribute("x1", cx);
+        line.setAttribute("y1", cy);
+        line.setAttribute("x2", x2);
+        line.setAttribute("y2", y2);
+        line.setAttribute("stroke", "#E8E5DD");
+        line.setAttribute("stroke-width", "1");
+        line.setAttribute("stroke-dasharray", "2 4");
+        axesGroup.appendChild(line);
+      });
+      svg.appendChild(axesGroup);
+
+      // Outer ring
+      const ring = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      ring.setAttribute("cx", cx);
+      ring.setAttribute("cy", cy);
+      ring.setAttribute("r", outerR);
+      ring.setAttribute("fill", "none");
+      ring.setAttribute("stroke", "#E8E5DD");
+      ring.setAttribute("stroke-width", "1");
+      ring.setAttribute("stroke-dasharray", "2 4");
+      svg.appendChild(ring);
+
+      // Hub
+      const hubBg = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+      hubBg.setAttribute("cx", cx);
+      hubBg.setAttribute("cy", cy);
+      hubBg.setAttribute("r", innerR);
+      hubBg.setAttribute("fill", "#000");
+      svg.appendChild(hubBg);
+
+      // Hub label (truncate if long)
+      const hubText = document.createElementNS("http://www.w3.org/2000/svg", "text");
+      hubText.setAttribute("x", cx);
+      hubText.setAttribute("y", cy + 4);
+      hubText.setAttribute("class", "pr-wheel-hub");
+      hubText.setAttribute("fill", "#fff");
+      const shortTerm = term.length > 14 ? term.slice(0, 12) + "…" : term;
+      hubText.textContent = shortTerm;
+      svg.appendChild(hubText);
+
+      // Sector labels at top of each quadrant
+      const labelPositions = {
+        I: { angle: -Math.PI / 4, label: "Informational" },
+        C: { angle: Math.PI / 4, label: "Commercial" },
+        N: { angle: (3 * Math.PI) / 4, label: "Navigational" },
+        T: { angle: (5 * Math.PI) / 4, label: "Transactional" },
+      };
+      Object.entries(labelPositions).forEach(([key, { angle, label }]) => {
+        const lx = cx + Math.cos(angle) * labelR;
+        const ly = cy + Math.sin(angle) * labelR + 4;
+        const t = document.createElementNS("http://www.w3.org/2000/svg", "text");
+        t.setAttribute("x", lx);
+        t.setAttribute("y", ly);
+        t.setAttribute("class", "pr-wheel-axis-label");
+        t.setAttribute("fill", INTENT_COLOR[key].replace("var(--accent)", "#FF6200").replace("var(--score-good)", "#0BAB6E"));
+        t.textContent = label;
+        svg.appendChild(t);
+      });
+
+      // Place prompt dots within their sectors
+      INTENT_ORDER.forEach((intent) => {
+        const items = byIntent[intent];
+        if (!items.length) return;
+        const { start, end } = sectorAngles[intent];
+        const span = end - start;
+        // Add some padding within the sector
+        const padding = span * 0.12;
+        const usable = span - padding * 2;
+        items.forEach((item, i) => {
+          const t = items.length === 1 ? 0.5 : i / (items.length - 1);
+          const angle = start + padding + t * usable;
+          // Vary radius slightly per item so they don't all sit on one ring
+          const r = innerR + 40 + ((i % 3) * 30);
+          const x = cx + Math.cos(angle) * r;
+          const y = cy + Math.sin(angle) * r;
+
+          const g = document.createElementNS("http://www.w3.org/2000/svg", "g");
+          g.setAttribute("class", "pr-wheel-node");
+          g.setAttribute("transform", `translate(${x},${y})`);
+
+          const c = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+          c.setAttribute("r", "11");
+          const fill = INTENT_COLOR[intent].replace("var(--accent)", "#FF6200").replace("var(--score-good)", "#0BAB6E");
+          c.setAttribute("fill", fill);
+          c.setAttribute("fill-opacity", "0.92");
+
+          // If visibility data exists, add a small ring indicating visibility
+          if (item.visibility) {
+            const ring = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            ring.setAttribute("r", "15");
+            ring.setAttribute("fill", "none");
+            ring.setAttribute("stroke", VIS_FILL[item.visibility]);
+            ring.setAttribute("stroke-width", "2");
+            g.appendChild(ring);
+          }
+          g.appendChild(c);
+
+          // Tooltip interactions
+          g.addEventListener("mouseenter", (ev) => showTooltip(ev, item));
+          g.addEventListener("mousemove", (ev) => moveTooltip(ev));
+          g.addEventListener("mouseleave", hideTooltip);
+
+          svg.appendChild(g);
+        });
+      });
+    }
+
+    function showTooltip(ev, item) {
+      const visLine = item.visibility
+        ? `<div class="pr-wheel-tooltip-vis">Visibility: ${item.visibility}${item.visibilityReason ? " — " + escapeHtml(item.visibilityReason) : ""}</div>`
+        : "";
+      tooltip.innerHTML = `<div><strong>${INTENT_LABEL[item.intent]}</strong></div><div>${escapeHtml(item.prompt)}</div>${visLine}`;
+      tooltip.classList.add("is-visible");
+      moveTooltip(ev);
+    }
+    function moveTooltip(ev) {
+      tooltip.style.left = ev.pageX + "px";
+      tooltip.style.top = (ev.pageY - 12) + "px";
+    }
+    function hideTooltip() {
+      tooltip.classList.remove("is-visible");
+    }
+
+    function renderWheels(data) {
+      renderWheel(claudeWheel, data.term, data.claude);
+      renderWheel(openaiWheel, data.term, data.openai);
+    }
+
+    // ─── Submit handler ──────────────────────────────────────────────
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
       const term = termInput.value.trim();
+      const domain = domainInput.value.trim();
       if (term.length < 2) return;
 
       clearError();
       btn.disabled = true;
       btn.textContent = "Running…";
-      meta.textContent = "Pulling Google autosuggest, then querying Claude + ChatGPT…";
+      const domainMsg = domain ? ` · assessing ${domain}` : "";
+      meta.textContent = `Pulling Google autosuggest, then querying Claude + ChatGPT${domainMsg}…`;
       renderSkeleton(claudeList);
       renderSkeleton(openaiList);
 
@@ -363,13 +763,15 @@
         const res = await fetch("/api/prompt-research", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ term }),
+          body: JSON.stringify({ term, domain: domain || undefined }),
         });
         const data = await res.json();
         if (!res.ok) throw new Error(data?.error || `Request failed (${res.status})`);
 
+        lastData = data;
         const elapsed = ((performance.now() - started) / 1000).toFixed(1);
-        meta.textContent = `Term: "${data.term}" · ${data.suggestionCount} Google suggestions · ${elapsed}s`;
+        const domainStr = data.domain ? ` · target: ${data.domain}` : "";
+        meta.textContent = `Term: "${data.term}"${domainStr} · ${data.suggestionCount} Google suggestions · ${elapsed}s`;
 
         if (data.claudeError) {
           renderEmpty(claudeList, `Claude error: ${data.claudeError}`);
@@ -380,6 +782,15 @@
           renderEmpty(openaiList, `OpenAI error: ${data.openaiError}`);
         } else {
           renderPrompts(openaiList, data.openai);
+        }
+
+        // Show/hide visibility legend
+        const hasVisibility = data.domain && ((data.claude && data.claude.some((p) => p.visibility)) || (data.openai && data.openai.some((p) => p.visibility)));
+        visLegend.style.display = hasVisibility ? "inline-flex" : "none";
+
+        // If wheel view is active, render it
+        if (wheelView.classList.contains("is-active")) {
+          renderWheels(data);
         }
       } catch (err) {
         showError(err?.message || "Request failed");
