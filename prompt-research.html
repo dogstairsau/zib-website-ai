@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<title>Prompt Research · Zib Digital</title>
+<meta name="description" content="Test tool: enter a seed term, get the prompts real users would type into ChatGPT and Claude about it, with intent classifications." />
+<meta name="robots" content="noindex,nofollow" />
+<meta name="zib:source-tag" content="Prompt research test page" />
+<!-- @include _partials/head.html -->
+<style>
+  body {
+    background: var(--paper);
+    min-height: 100vh;
+  }
+
+  .pr-shell {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: clamp(40px, 6vw, 80px) clamp(20px, 4vw, 56px);
+  }
+
+  .pr-head {
+    margin-bottom: 48px;
+  }
+
+  .pr-eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 16px;
+  }
+
+  .pr-title {
+    font-family: var(--display);
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 500;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+
+  .pr-title em { color: var(--accent); font-style: normal; }
+
+  .pr-sub {
+    margin-top: 16px;
+    max-width: 640px;
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.5;
+  }
+
+  .pr-form {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 32px 0 16px;
+    max-width: 720px;
+  }
+
+  .pr-input {
+    flex: 1 1 280px;
+    min-width: 0;
+    padding: 16px 20px;
+    font-family: var(--display);
+    font-size: 17px;
+    background: #fff;
+    border: 1px solid var(--rule-2);
+    border-radius: 12px;
+    outline: 0;
+    transition: border-color 200ms var(--ease-out), box-shadow 200ms var(--ease-out);
+  }
+
+  .pr-input:focus {
+    border-color: var(--ink);
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.06);
+  }
+
+  .pr-btn {
+    padding: 16px 28px;
+    font-family: var(--display);
+    font-size: 15px;
+    font-weight: 500;
+    background: var(--ink);
+    color: #fff;
+    border-radius: 999px;
+    border: 0;
+    cursor: pointer;
+    transition: transform 200ms var(--ease-out), background 200ms var(--ease-out);
+  }
+
+  .pr-btn:hover:not(:disabled) { background: var(--accent); }
+  .pr-btn:active:not(:disabled) { transform: scale(0.98); }
+  .pr-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+  .pr-meta {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    min-height: 18px;
+  }
+
+  .pr-error {
+    margin-top: 16px;
+    padding: 14px 18px;
+    background: #FFEAEA;
+    color: var(--score-bad);
+    border-radius: 10px;
+    font-size: 14px;
+    display: none;
+  }
+  .pr-error.is-visible { display: block; }
+
+  .pr-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    margin-top: 48px;
+  }
+
+  @media (max-width: 820px) {
+    .pr-grid { grid-template-columns: 1fr; gap: 24px; }
+  }
+
+  .pr-col {
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-radius: 16px;
+    overflow: hidden;
+  }
+
+  .pr-col-head {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 20px 24px;
+    border-bottom: 1px solid var(--rule);
+    background: var(--dim);
+  }
+
+  .pr-col-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex: 0 0 10px;
+  }
+  .pr-col-dot.is-openai { background: #10A37F; }
+  .pr-col-dot.is-claude { background: #D97706; }
+
+  .pr-col-title {
+    font-family: var(--display);
+    font-weight: 500;
+    font-size: 16px;
+    letter-spacing: -0.01em;
+  }
+
+  .pr-col-sub {
+    margin-left: auto;
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+
+  .pr-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .pr-row {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--rule);
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  .pr-row:last-child { border-bottom: 0; }
+
+  .pr-intent {
+    flex: 0 0 28px;
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+    background: var(--accent);
+    color: #fff;
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 1px;
+  }
+  .pr-intent.is-I { background: var(--accent); }
+  .pr-intent.is-C { background: #2563EB; }
+  .pr-intent.is-N { background: #6B7280; }
+  .pr-intent.is-T { background: var(--score-good); }
+
+  .pr-empty {
+    padding: 32px 24px;
+    color: var(--muted);
+    font-size: 14px;
+    text-align: center;
+  }
+
+  .pr-skel-row {
+    display: flex;
+    gap: 14px;
+    padding: 16px 24px;
+    border-bottom: 1px solid var(--rule);
+  }
+  .pr-skel-row:last-child { border-bottom: 0; }
+  .pr-skel-box {
+    background: var(--dim);
+    border-radius: 6px;
+    height: 16px;
+    animation: pr-shimmer 1.2s ease-in-out infinite;
+  }
+  .pr-skel-box.is-tag { width: 28px; height: 28px; flex: 0 0 28px; }
+  .pr-skel-box.is-line { flex: 1; }
+  @keyframes pr-shimmer {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+  }
+
+  .pr-legend {
+    margin-top: 48px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .pr-legend-item { display: inline-flex; align-items: center; gap: 8px; }
+  .pr-legend-tag { width: 22px; height: 22px; border-radius: 5px; color: #fff; display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 11px; }
+</style>
+</head>
+
+<body>
+  <main class="pr-shell">
+    <header class="pr-head">
+      <div class="pr-eyebrow">Internal test · Zib Digital</div>
+      <h1 class="pr-title">Prompt <em>research.</em></h1>
+      <p class="pr-sub">Enter a search term — we'll mine Google autosuggest for the long-tail questions people ask about it, then run them through Claude and ChatGPT to rewrite each as a natural AI-chatbot prompt with an intent classification.</p>
+
+      <form class="pr-form" id="prForm" autocomplete="off">
+        <input class="pr-input" id="prTerm" name="term" type="text" placeholder="e.g. work cover, plumber Brighton, SEO Melbourne" required minlength="2" maxlength="80" />
+        <button class="pr-btn" id="prBtn" type="submit">Get prompts</button>
+      </form>
+
+      <div class="pr-meta" id="prMeta"></div>
+      <div class="pr-error" id="prError"></div>
+    </header>
+
+    <section class="pr-grid">
+      <div class="pr-col" data-col="claude">
+        <header class="pr-col-head">
+          <span class="pr-col-dot is-claude"></span>
+          <span class="pr-col-title">Claude</span>
+          <span class="pr-col-sub" id="prClaudeSub">Haiku 4.5</span>
+        </header>
+        <ul class="pr-list" id="prClaudeList">
+          <li class="pr-empty">Enter a term above to generate prompts.</li>
+        </ul>
+      </div>
+
+      <div class="pr-col" data-col="openai">
+        <header class="pr-col-head">
+          <span class="pr-col-dot is-openai"></span>
+          <span class="pr-col-title">ChatGPT</span>
+          <span class="pr-col-sub" id="prOpenaiSub">GPT-4o mini</span>
+        </header>
+        <ul class="pr-list" id="prOpenaiList">
+          <li class="pr-empty">Enter a term above to generate prompts.</li>
+        </ul>
+      </div>
+    </section>
+
+    <div class="pr-legend">
+      <span class="pr-legend-item"><span class="pr-legend-tag is-I" style="background:var(--accent)">I</span> Informational</span>
+      <span class="pr-legend-item"><span class="pr-legend-tag is-C" style="background:#2563EB">C</span> Commercial</span>
+      <span class="pr-legend-item"><span class="pr-legend-tag is-N" style="background:#6B7280">N</span> Navigational</span>
+      <span class="pr-legend-item"><span class="pr-legend-tag is-T" style="background:var(--score-good)">T</span> Transactional</span>
+    </div>
+  </main>
+
+  <script>
+    const form = document.getElementById("prForm");
+    const termInput = document.getElementById("prTerm");
+    const btn = document.getElementById("prBtn");
+    const meta = document.getElementById("prMeta");
+    const errEl = document.getElementById("prError");
+    const claudeList = document.getElementById("prClaudeList");
+    const openaiList = document.getElementById("prOpenaiList");
+
+    const INTENT_CLASS = { I: "is-I", C: "is-C", N: "is-N", T: "is-T" };
+
+    function renderSkeleton(ul) {
+      ul.innerHTML = "";
+      for (let i = 0; i < 8; i++) {
+        const li = document.createElement("li");
+        li.className = "pr-skel-row";
+        li.innerHTML = `<span class="pr-skel-box is-tag"></span><span class="pr-skel-box is-line"></span>`;
+        ul.appendChild(li);
+      }
+    }
+
+    function renderEmpty(ul, msg) {
+      ul.innerHTML = `<li class="pr-empty">${msg}</li>`;
+    }
+
+    function renderPrompts(ul, prompts) {
+      if (!prompts || prompts.length === 0) {
+        renderEmpty(ul, "No prompts returned.");
+        return;
+      }
+      ul.innerHTML = "";
+      for (const item of prompts) {
+        const li = document.createElement("li");
+        li.className = "pr-row";
+        const intentCls = INTENT_CLASS[item.intent] || "is-I";
+        li.innerHTML = `<span class="pr-intent ${intentCls}">${item.intent}</span><span>${escapeHtml(item.prompt)}</span>`;
+        ul.appendChild(li);
+      }
+    }
+
+    function escapeHtml(s) {
+      return String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    }
+
+    function showError(msg) {
+      errEl.textContent = msg;
+      errEl.classList.add("is-visible");
+    }
+    function clearError() {
+      errEl.textContent = "";
+      errEl.classList.remove("is-visible");
+    }
+
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const term = termInput.value.trim();
+      if (term.length < 2) return;
+
+      clearError();
+      btn.disabled = true;
+      btn.textContent = "Running…";
+      meta.textContent = "Pulling Google autosuggest, then querying Claude + ChatGPT…";
+      renderSkeleton(claudeList);
+      renderSkeleton(openaiList);
+
+      const started = performance.now();
+      try {
+        const res = await fetch("/api/prompt-research", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ term }),
+        });
+        const data = await res.json();
+        if (!res.ok) throw new Error(data?.error || `Request failed (${res.status})`);
+
+        const elapsed = ((performance.now() - started) / 1000).toFixed(1);
+        meta.textContent = `Term: "${data.term}" · ${data.suggestionCount} Google suggestions · ${elapsed}s`;
+
+        if (data.claudeError) {
+          renderEmpty(claudeList, `Claude error: ${data.claudeError}`);
+        } else {
+          renderPrompts(claudeList, data.claude);
+        }
+        if (data.openaiError) {
+          renderEmpty(openaiList, `OpenAI error: ${data.openaiError}`);
+        } else {
+          renderPrompts(openaiList, data.openai);
+        }
+      } catch (err) {
+        showError(err?.message || "Request failed");
+        renderEmpty(claudeList, "—");
+        renderEmpty(openaiList, "—");
+        meta.textContent = "";
+      } finally {
+        btn.disabled = false;
+        btn.textContent = "Get prompts";
+      }
+    });
+  </script>
+</body>
+</html>
