@@ -2,11 +2,17 @@ import Anthropic from "@anthropic-ai/sdk";
 
 export const config = { runtime: "edge" };
 
-type Body = { term?: string };
+type Body = { term?: string; domain?: string };
 type Intent = "I" | "C" | "N" | "T";
-type PromptItem = { prompt: string; intent: Intent };
+type Visibility = "yes" | "maybe" | "no";
+type PromptItem = {
+  prompt: string;
+  intent: Intent;
+  visibility?: Visibility;
+  visibilityReason?: string;
+};
 
-const SYSTEM_PROMPT = `You analyse Google search suggestions and predict how the same users would phrase those questions to an AI chatbot (ChatGPT, Claude, Gemini).
+const BASE_SYSTEM_PROMPT = `You analyse Google search suggestions and predict how the same users would phrase those questions to an AI chatbot (ChatGPT, Claude, Gemini).
 
 Given a seed term and a list of raw Google autosuggest results, pick the 12 most useful and rewrite each as a natural AI-chatbot prompt — full sentences, conversational, the way a real person types into ChatGPT, not the shorthand they type into Google.
 
@@ -18,6 +24,23 @@ For each prompt, classify intent:
 
 Return ONLY valid JSON. No markdown, no preamble. Exact shape:
 {"prompts":[{"prompt":"...","intent":"I"}, ...]}`;
+
+const VISIBILITY_SYSTEM_ADDENDUM = `
+
+ALSO for each prompt, assess whether the target domain would likely appear in a leading AI chatbot's answer. Use your knowledge of the domain's industry, authority, geography, and content focus.
+
+- "yes" = highly likely the AI would name this domain/brand in its answer
+- "maybe" = plausible but depends on phrasing or competition
+- "no" = unlikely the AI would mention this domain
+
+Add two fields per prompt: "visibility" ("yes"|"maybe"|"no") and "visibilityReason" (max 10 words explaining why).
+
+Updated JSON shape:
+{"prompts":[{"prompt":"...","intent":"I","visibility":"maybe","visibilityReason":"..."}, ...]}`;
+
+function buildSystemPrompt(domain: string | null): string {
+  return domain ? BASE_SYSTEM_PROMPT + VISIBILITY_SYSTEM_ADDENDUM : BASE_SYSTEM_PROMPT;
+}
 
 const QUESTION_PREFIXES = ["how", "what", "where", "can", "why", "who", "when", "which", "is", "are", "do", "does", "should"];
 
@@ -51,13 +74,14 @@ async function gatherSuggestions(term: string): Promise<string[]> {
   return [...new Set(all)].slice(0, 80);
 }
 
-function userPrompt(term: string, suggestions: string[]): string {
+function userPrompt(term: string, domain: string | null, suggestions: string[]): string {
+  const domainLine = domain ? `Target domain to assess visibility for: ${domain}\n` : "";
   return `Seed term: "${term}"
 Locale: Australia
-Google autosuggest results:
+${domainLine}Google autosuggest results:
 ${suggestions.join("\n")}
 
-Generate the 12 best AI-chatbot prompts with intent classifications.`;
+Generate the 12 best AI-chatbot prompts with intent classifications${domain ? " and visibility assessments" : ""}.`;
 }
 
 function parsePrompts(text: string): PromptItem[] {
@@ -67,25 +91,32 @@ function parsePrompts(text: string): PromptItem[] {
     const list = Array.isArray(parsed?.prompts) ? parsed.prompts : [];
     return list
       .filter((p) => p && typeof p.prompt === "string" && ["I", "C", "N", "T"].includes(p.intent))
+      .map((p) => ({
+        prompt: p.prompt,
+        intent: p.intent,
+        ...(["yes", "maybe", "no"].includes(p.visibility as string)
+          ? { visibility: p.visibility, visibilityReason: typeof p.visibilityReason === "string" ? p.visibilityReason : "" }
+          : {}),
+      }))
       .slice(0, 15);
   } catch {
     return [];
   }
 }
 
-async function runClaude(term: string, suggestions: string[]): Promise<PromptItem[]> {
+async function runClaude(term: string, domain: string | null, suggestions: string[]): Promise<PromptItem[]> {
   const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
   const msg = await anthropic.messages.create({
     model: "claude-haiku-4-5-20251001",
-    max_tokens: 2000,
-    system: SYSTEM_PROMPT,
-    messages: [{ role: "user", content: userPrompt(term, suggestions) }],
+    max_tokens: 2400,
+    system: buildSystemPrompt(domain),
+    messages: [{ role: "user", content: userPrompt(term, domain, suggestions) }],
   });
   const text = msg.content[0]?.type === "text" ? msg.content[0].text : "";
   return parsePrompts(text);
 }
 
-async function runOpenAI(term: string, suggestions: string[]): Promise<PromptItem[]> {
+async function runOpenAI(term: string, domain: string | null, suggestions: string[]): Promise<PromptItem[]> {
   const res = await fetch("https://api.openai.com/v1/chat/completions", {
     method: "POST",
     headers: {
@@ -97,8 +128,8 @@ async function runOpenAI(term: string, suggestions: string[]): Promise<PromptIte
       temperature: 0.4,
       response_format: { type: "json_object" },
       messages: [
-        { role: "system", content: SYSTEM_PROMPT },
-        { role: "user", content: userPrompt(term, suggestions) },
+        { role: "system", content: buildSystemPrompt(domain) },
+        { role: "user", content: userPrompt(term, domain, suggestions) },
       ],
     }),
     signal: AbortSignal.timeout(25000),
@@ -106,6 +137,13 @@ async function runOpenAI(term: string, suggestions: string[]): Promise<PromptIte
   if (!res.ok) throw new Error(`OpenAI ${res.status}: ${await res.text().catch(() => "")}`);
   const data = (await res.json()) as { choices?: Array<{ message?: { content?: string } }> };
   return parsePrompts(data.choices?.[0]?.message?.content ?? "");
+}
+
+function normaliseDomain(input: string | undefined): string | null {
+  if (!input) return null;
+  const trimmed = input.trim();
+  if (trimmed.length < 3 || trimmed.length > 120) return null;
+  return trimmed.replace(/^https?:\/\//i, "").replace(/^www\./i, "").replace(/\/.*$/, "").toLowerCase();
 }
 
 export default async function handler(req: Request): Promise<Response> {
@@ -134,6 +172,8 @@ export default async function handler(req: Request): Promise<Response> {
     });
   }
 
+  const domain = normaliseDomain(body.domain);
+
   const suggestions = await gatherSuggestions(term);
   if (suggestions.length === 0) {
     return new Response(JSON.stringify({ error: "No Google suggestions found for that term" }), {
@@ -143,13 +183,14 @@ export default async function handler(req: Request): Promise<Response> {
   }
 
   const [claudeResult, openaiResult] = await Promise.allSettled([
-    runClaude(term, suggestions),
-    runOpenAI(term, suggestions),
+    runClaude(term, domain, suggestions),
+    runOpenAI(term, domain, suggestions),
   ]);
 
   return new Response(
     JSON.stringify({
       term,
+      domain,
       suggestionCount: suggestions.length,
       suggestions,
       claude: claudeResult.status === "fulfilled" ? claudeResult.value : [],
