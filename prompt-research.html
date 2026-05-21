@@ -395,6 +395,165 @@
   .pr-legend-item { display: inline-flex; align-items: center; gap: 8px; }
   .pr-legend-tag { width: 22px; height: 22px; border-radius: 5px; color: #fff; display: inline-flex; align-items: center; justify-content: center; font-weight: 600; font-size: 11px; }
   .pr-legend-divider { width: 1px; height: 20px; background: var(--rule); }
+
+  /* ─── Section heads (shared) ─── */
+  .pr-section {
+    margin-top: clamp(72px, 9vw, 120px);
+  }
+  .pr-section-head {
+    max-width: 720px;
+    margin-bottom: clamp(28px, 4vw, 48px);
+  }
+  .pr-section-title {
+    font-family: var(--display);
+    font-size: clamp(28px, 3.6vw, 40px);
+    font-weight: 500;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    margin-top: 12px;
+  }
+  .pr-section-title em { color: var(--accent); font-style: normal; }
+  .pr-section-sub {
+    margin-top: 14px;
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.5;
+    max-width: 640px;
+  }
+
+  /* ─── Playbook cards ─── */
+  .pr-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
+  @media (max-width: 880px) { .pr-cards { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .pr-cards { grid-template-columns: 1fr; } }
+
+  .pr-card {
+    background: #fff;
+    border: 1px solid var(--rule);
+    border-radius: 14px;
+    padding: 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+
+  .pr-card-num {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--accent);
+    text-transform: uppercase;
+  }
+
+  .pr-card-title {
+    font-family: var(--display);
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+
+  .pr-card-body {
+    color: var(--muted);
+    font-size: 14.5px;
+    line-height: 1.55;
+  }
+
+  /* ─── Pitch banner ─── */
+  .pr-pitch {
+    margin-top: clamp(72px, 9vw, 120px);
+    background: var(--ink);
+    color: #fff;
+    border-radius: 20px;
+    padding: clamp(40px, 6vw, 72px) clamp(28px, 5vw, 64px);
+    position: relative;
+    overflow: hidden;
+  }
+  .pr-pitch::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    background: radial-gradient(circle at 100% 0%, rgba(255, 98, 0, 0.35), transparent 60%);
+    pointer-events: none;
+  }
+  .pr-pitch-eyebrow {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 20px;
+    position: relative;
+  }
+  .pr-pitch-quote {
+    font-family: var(--display);
+    font-size: clamp(22px, 3vw, 32px);
+    font-weight: 400;
+    line-height: 1.32;
+    letter-spacing: -0.015em;
+    max-width: 920px;
+    position: relative;
+    margin: 0;
+  }
+  .pr-pitch-quote em { color: var(--accent); font-style: normal; }
+
+  /* ─── FAQ ─── */
+  .pr-faq-list {
+    border-top: 1px solid var(--rule);
+  }
+  .pr-faq-item {
+    border-bottom: 1px solid var(--rule);
+  }
+  .pr-faq-item > summary {
+    list-style: none;
+    cursor: pointer;
+    padding: 22px 0;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 24px;
+    font-family: var(--display);
+    font-size: 18px;
+    font-weight: 500;
+    line-height: 1.35;
+    letter-spacing: -0.01em;
+    transition: color 200ms var(--ease-out);
+  }
+  .pr-faq-item > summary::-webkit-details-marker { display: none; }
+  .pr-faq-item > summary:hover { color: var(--accent); }
+  .pr-faq-toggle {
+    flex: 0 0 24px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1px solid var(--rule-2);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    font-size: 16px;
+    color: var(--ink);
+    transition: transform 200ms var(--ease-out), background 200ms var(--ease-out), color 200ms var(--ease-out);
+    margin-top: 2px;
+  }
+  .pr-faq-item[open] > summary .pr-faq-toggle {
+    transform: rotate(45deg);
+    background: var(--ink);
+    color: #fff;
+    border-color: var(--ink);
+  }
+  .pr-faq-body {
+    padding: 0 0 24px 0;
+    max-width: 820px;
+    color: var(--muted);
+    font-size: 15.5px;
+    line-height: 1.6;
+  }
+  .pr-faq-body p + p { margin-top: 12px; }
+  .pr-faq-body strong { color: var(--ink); font-weight: 500; }
 </style>
 </head>
 
@@ -482,6 +641,119 @@
         <span style="margin-left:6px;">= would domain appear in AI answer</span>
       </span>
     </div>
+
+    <!-- ─────────── Playbook ─────────── -->
+    <section class="pr-section">
+      <div class="pr-section-head">
+        <div class="pr-eyebrow">The playbook</div>
+        <h2 class="pr-section-title">What you do with the <em>"maybe"</em> or <em>"no"</em> results.</h2>
+        <p class="pr-section-sub">Every gap is a concrete fix. For each prompt where your brand isn't likely to show up in the AI's answer, here's how you close it.</p>
+      </div>
+      <div class="pr-cards">
+        <article class="pr-card">
+          <span class="pr-card-num">01 · Content</span>
+          <h3 class="pr-card-title">Authoritative content</h3>
+          <p class="pr-card-body">Write the deep guide on that specific question. AI training data picks up genuine subject-matter authority — surface-level pages don't make the cut.</p>
+        </article>
+        <article class="pr-card">
+          <span class="pr-card-num">02 · Citations</span>
+          <h3 class="pr-card-title">Citations from sites AI trusts</h3>
+          <p class="pr-card-body">Industry publications, Wikipedia, government sites, .edu, news. AI weights these heavily when forming its "who is reputable in this category" map.</p>
+        </article>
+        <article class="pr-card">
+          <span class="pr-card-num">03 · Community</span>
+          <h3 class="pr-card-title">Reddit / Quora / forums</h3>
+          <p class="pr-card-body">Heavy training data source. If competitors are recommended in r/AusFinance threads about your category and your client isn't, that's a fix.</p>
+        </article>
+        <article class="pr-card">
+          <span class="pr-card-num">04 · Schema</span>
+          <h3 class="pr-card-title">Schema markup</h3>
+          <p class="pr-card-body">Organization, Service, FAQ and Product schemas help AI correctly attribute facts to your brand and reduce ambiguity.</p>
+        </article>
+        <article class="pr-card">
+          <span class="pr-card-num">05 · Local</span>
+          <h3 class="pr-card-title">GMB + local citations</h3>
+          <p class="pr-card-body">Critical for anything geo-bound — "plumber Brighton", "lawyer Sandringham". AI defaults to the strongest local signals it can verify.</p>
+        </article>
+        <article class="pr-card">
+          <span class="pr-card-num">06 · Tracking</span>
+          <h3 class="pr-card-title">Re-run monthly</h3>
+          <p class="pr-card-body">AI training data updates on a multi-month cycle. Re-running this tool tracks whether the work is actually moving the visibility needle.</p>
+        </article>
+      </div>
+    </section>
+
+    <!-- ─────────── Pitch ─────────── -->
+    <section class="pr-pitch">
+      <div class="pr-pitch-eyebrow">The pitch</div>
+      <blockquote class="pr-pitch-quote">
+        We can show you, right now, whether ChatGPT recommends your business when a Bayside customer asks about your category. If it doesn't, we have a playbook to fix that in 90 days — and Zib clients are <em>about 18 months ahead</em> of agencies still selling pure Google SEO.
+      </blockquote>
+    </section>
+
+    <!-- ─────────── FAQ ─────────── -->
+    <section class="pr-section">
+      <div class="pr-section-head">
+        <div class="pr-eyebrow">FAQ</div>
+        <h2 class="pr-section-title">Common <em>questions.</em></h2>
+      </div>
+      <div class="pr-faq-list">
+        <details class="pr-faq-item">
+          <summary><span>What does this tool actually do?</span><span class="pr-faq-toggle">+</span></summary>
+          <div class="pr-faq-body">
+            <p>It generates the prompts real users would type into ChatGPT or Claude about your category, classifies the intent behind each (Informational, Commercial, Navigational, Transactional), and — if you add a target domain — predicts whether that brand would show up in the AI's answer.</p>
+            <p>It mines Google autosuggest under the hood, so the prompts are grounded in things people actually search for, not hypothetical questions.</p>
+          </div>
+        </details>
+        <details class="pr-faq-item">
+          <summary><span>What's the difference between SEO and AEO?</span><span class="pr-faq-toggle">+</span></summary>
+          <div class="pr-faq-body">
+            <p><strong>SEO</strong> optimises for blue links on Google. You win when your page ranks #1 and the user clicks through.</p>
+            <p><strong>AEO</strong> (Answer Engine Optimisation) optimises for direct AI answers — ChatGPT, Claude, Gemini, Google's AI Overviews. You win when the AI names your brand in its response, often before the user ever sees a list of links.</p>
+            <p>SEO is now table stakes. AEO is the new battleground, and most agencies haven't moved into it yet.</p>
+          </div>
+        </details>
+        <details class="pr-faq-item">
+          <summary><span>Why does it matter if my brand isn't named in AI answers?</span><span class="pr-faq-toggle">+</span></summary>
+          <div class="pr-faq-body">
+            <p>A growing share of searches end at the AI's answer — the user never scrolls down to the blue links. If you're not named in the answer, you're effectively invisible, even if you rank #1 on Google for the same query.</p>
+            <p>This shift is happening fastest on commercial and informational queries — exactly where buying decisions are formed.</p>
+          </div>
+        </details>
+        <details class="pr-faq-item">
+          <summary><span>How accurate is the visibility prediction?</span><span class="pr-faq-toggle">+</span></summary>
+          <div class="pr-faq-body">
+            <p>The yes / maybe / no rating is each model's own assessment of whether a leading AI would surface your domain. It's a strong directional signal based on what the model knows about your brand, industry, geography and content authority.</p>
+            <p>Treat it as a starting hypothesis. Validate by typing the prompt directly into ChatGPT or Claude and watching what actually shows up. Where the prediction and reality agree, you have a confirmed gap to close.</p>
+          </div>
+        </details>
+        <details class="pr-faq-item">
+          <summary><span>What do I do about a "no" result?</span><span class="pr-faq-toggle">+</span></summary>
+          <div class="pr-faq-body">
+            <p>Work through the six-step playbook above. The fastest wins are usually deep, authoritative content on the specific question, plus citations from sites the AI already trusts (industry publications, .gov, .edu, Wikipedia, major news).</p>
+            <p>For local-intent prompts ("plumber Brighton"), the biggest lever is usually Google Business Profile + local citations.</p>
+          </div>
+        </details>
+        <details class="pr-faq-item">
+          <summary><span>How often should I re-run this?</span><span class="pr-faq-toggle">+</span></summary>
+          <div class="pr-faq-body">
+            <p>Monthly during an active AEO push, quarterly once you're holding ground. AI training data updates on a multi-month cadence, so visibility shifts on roughly the same timeline as your content and citation work compounds.</p>
+          </div>
+        </details>
+        <details class="pr-faq-item">
+          <summary><span>Can I track competitors?</span><span class="pr-faq-toggle">+</span></summary>
+          <div class="pr-faq-body">
+            <p>Yes — enter a competitor's domain instead of (or in addition to) your own. Same seed term, different domain, and you'll see which intent buckets they own versus where they have gaps too.</p>
+          </div>
+        </details>
+        <details class="pr-faq-item">
+          <summary><span>Does this only work for Australian businesses?</span><span class="pr-faq-toggle">+</span></summary>
+          <div class="pr-faq-body">
+            <p>The Google autosuggest layer is locale-bound to Australia, so the long-tail questions reflect what Australians ask. The AI visibility assessment works globally — the model evaluates the domain regardless of geography.</p>
+          </div>
+        </details>
+      </div>
+    </section>
 
     <div class="pr-wheel-tooltip" id="prTooltip"></div>
   </main>
