@@ -421,6 +421,12 @@ h1.hero-h em {
   transform: translateY(-1px);
 }
 
+/* Logos that look bad in colour (white background, etc.) stay locked to greyscale. */
+.logo-cell.is-mono:hover img {
+  filter: grayscale(1) brightness(0.55) contrast(1.45);
+  opacity: 0.85;
+}
+
 .logo-cell.is-more {
   font-family: var(--mono);
   font-size: 11px;
@@ -2527,7 +2533,7 @@ footer {
     <div class="logo-row reveal-stagger">
       <div class="logo-cell"><img src="https://www.mbav.com.au/wp-content/uploads/2023/05/mbav-logo-02.svg" alt="Master Builders Association Victoria" loading="lazy" /></div>
       <div class="logo-cell"><img src="/assets/logo-scaffold.webp" alt="Scaffold" loading="lazy" /></div>
-      <div class="logo-cell"><img src="https://prokopelec.com.au/wp-content/uploads/2023/12/logo-medium3.png" alt="Prokop Electrical" loading="lazy" /></div>
+      <div class="logo-cell is-mono"><img src="https://prokopelec.com.au/wp-content/uploads/2023/12/logo-medium3.png" alt="Prokop Electrical" loading="lazy" /></div>
       <div class="logo-cell"><img src="/assets/logo-smp.webp" alt="SMP" loading="lazy" /></div>
       <div class="logo-cell is-more">+ many more</div>
     </div>
