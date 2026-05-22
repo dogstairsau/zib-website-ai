@@ -403,6 +403,23 @@ h1.hero-h em {
 
 .logo-cell:hover { color: var(--ink); transform: translateY(-1px); }
 
+.logo-cell img {
+  max-height: 100%;
+  max-width: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  filter: grayscale(1);
+  opacity: 0.75;
+  transition: filter 280ms var(--ease), opacity 280ms var(--ease), transform 280ms var(--ease-spring);
+}
+
+.logo-cell:hover img {
+  filter: grayscale(0);
+  opacity: 1;
+  transform: translateY(-1px);
+}
+
 .logo-cell.is-more {
   font-family: var(--mono);
   font-size: 11px;
@@ -2498,6 +2515,20 @@ footer {
         <h3 class="pillar-title">Melbourne, <em>Bayside.</em></h3>
         <p class="pillar-body">Brighton, Sandringham, Hampton, Beaumaris, Cheltenham, Mentone. Bayside trade and service businesses dominating local search. Local presence with the full Zib national team behind it.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- ───────────────────────── LOGO BAR ───────────────────────── -->
+<section class="logos">
+  <div class="container">
+    <div class="head mono reveal">A selection of <strong>Marty's Bayside clients</strong></div>
+    <div class="logo-row reveal-stagger">
+      <div class="logo-cell"><img src="https://www.mbav.com.au/wp-content/uploads/2023/05/mbav-logo-02.svg" alt="Master Builders Association Victoria" loading="lazy" /></div>
+      <div class="logo-cell"><img src="/assets/logo-scaffold.webp" alt="Scaffold" loading="lazy" /></div>
+      <div class="logo-cell"><img src="https://prokopelec.com.au/wp-content/uploads/2023/12/logo-medium3.png" alt="Prokop Electrical" loading="lazy" /></div>
+      <div class="logo-cell"><img src="/assets/logo-smp.webp" alt="SMP" loading="lazy" /></div>
+      <div class="logo-cell is-more">+ many more</div>
     </div>
   </div>
 </section>
