@@ -1379,6 +1379,40 @@ h1.hero-h em {
   .audit-form button { width: 100%; justify-content: center; height: 48px; }
 }
 
+/* ─── ADVISORY · JS-render or other audit caveats ────────────────── */
+.advisory {
+  margin-top: clamp(24px, 2.8vw, 36px);
+  padding: 18px 22px 20px;
+  background: #FFF6E5;
+  border: 1px solid #FFD79A;
+  border-left: 4px solid var(--score-mid, #FF9D00);
+  border-radius: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.advisory[hidden] { display: none; }
+.advisory-label {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #A86200;
+  font-weight: 600;
+}
+.advisory-body {
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--ink, #0F0F0F);
+}
+.advisory-body strong { font-weight: 500; }
+.advisory-signals {
+  margin-top: 6px;
+  font-family: var(--mono, "JetBrains Mono", monospace);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: #6B6B6B;
+}
+
 /* ─── STRATEGIST READ ·streamed Claude output ───────────────────── */
 .strategist {
   margin-top: clamp(24px, 2.8vw, 36px);
@@ -2744,6 +2778,8 @@ footer {
   const statPagesEl   = document.getElementById('statPages');
   const catGridEl     = document.getElementById('catGrid');
   const resRadar      = document.getElementById('resRadar');
+  const resAdvisory     = document.getElementById('resAdvisory');
+  const resAdvisoryBody = document.getElementById('resAdvisoryBody');
   const resStrategist = document.getElementById('resStrategist');
   const resHeroRewrite = document.getElementById('resHeroRewrite');
   const heroNowH = document.getElementById('heroNowH');
@@ -3033,6 +3069,7 @@ footer {
 
       btn.disabled = true;
       resultEl.classList.remove('is-shown');
+      if (resAdvisory) { resAdvisory.hidden = true; resAdvisoryBody.innerHTML = ''; }
       resStrategist.innerHTML = '';
       resSeoWall.classList.remove('is-shown');
       catGridEl.innerHTML = '';
@@ -3109,6 +3146,15 @@ footer {
               stageActivate('score');
               pendingChecks = data;
               revealWallWhenReady(data);
+            } else if (event === 'advisory') {
+              if (resAdvisory && resAdvisoryBody) {
+                const msg = String(data.message || '').replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]));
+                const signals = Array.isArray(data.signals) && data.signals.length
+                  ? `<div class="advisory-signals">Detected: ${data.signals.map(s => String(s).replace(/[<>&]/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;'}[c]))).join(' · ')}</div>`
+                  : '';
+                resAdvisoryBody.innerHTML = msg + signals;
+                resAdvisory.hidden = false;
+              }
             } else if (event === 'chunk') {
               strategistText += data.text;
               resStrategist.innerHTML = mdToHtml(strategistText) + '<span class="typing"></span>';

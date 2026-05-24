@@ -32,6 +32,7 @@ export type LeadEmail = {
   source?: string;
   strategistText?: string;
   discoveryQuestion?: string;
+  jsRendered?: { signals: string[] };
   audit?: {
     overallScore?: number;
     passed?: number;
@@ -84,6 +85,15 @@ function renderHtml(p: LeadEmail, host: string): string {
 <html><body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;line-height:1.55;color:#0F0F0F;max-width:680px;margin:0 auto;padding:24px;">
   <h1 style="font-size:22px;margin:0 0 4px;">New audit submission</h1>
   <p style="color:#6B6B6B;margin:0 0 24px;">${safe(host)}</p>
+
+  ${p.jsRendered ? `
+  <div style="margin:0 0 24px;padding:14px 18px;background:#FFF6E5;border:1px solid #FFD79A;border-left:4px solid #FF9D00;border-radius:8px;">
+    <div style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#A86200;margin-bottom:6px;">Heads up · JS-rendered site</div>
+    <div style="font-size:13.5px;line-height:1.5;color:#1A1A1A;">
+      Our crawler reads static HTML only — the audit below is based on what we could see without running JavaScript. If the prospect pushes back on a finding ("we have that on the page"), they may be right and the content hydrates client-side. Signals detected: <strong>${safe(p.jsRendered.signals.join(", "))}</strong>.
+    </div>
+  </div>
+  ` : ""}
 
   <table style="border-collapse:collapse;width:100%;margin-bottom:24px;font-size:14px;">
     <tr><td style="padding:6px 12px 6px 0;color:#6B6B6B;width:140px;">Email</td><td style="padding:6px 0;"><a href="mailto:${safe(p.email)}">${safe(p.email)}</a></td></tr>

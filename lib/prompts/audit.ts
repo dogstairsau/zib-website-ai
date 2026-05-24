@@ -80,9 +80,28 @@ ${site.bodyText.slice(0, 1800)}
 """
 `.trim();
 
-export const auditUserPrompt = (url: string, content: string) => `
-Prospect URL: ${url}
+export const auditUserPrompt = (
+  url: string,
+  content: string,
+  jsRendered?: { likely: boolean; signals: string[] },
+) => {
+  const advisory = jsRendered?.likely
+    ? `
+IMPORTANT — JS-RENDER ADVISORY:
+This site appears to be JavaScript-rendered (${jsRendered.signals.join(", ")}).
+Our crawler reads static HTML only — it does NOT execute JavaScript. The content above may be a near-empty shell that hydrates client-side in a real browser.
 
+When writing the read:
+- Do NOT assert that elements (H1, copy, products, CTAs) are "absent" or "missing" — they may exist but be invisible to a static crawler.
+- Phrase findings as "in the static HTML we crawled, we couldn't see X" or "X isn't visible without JavaScript executing".
+- Frame the strategic point around what that means commercially (e.g. "if Googlebot or an LLM crawler reads the same shell we did, that's an SEO and AEO risk to investigate") rather than declaring the page empty.
+- Otherwise still provide the full structured read.
+
+`
+    : "";
+  return `
+Prospect URL: ${url}
+${advisory}
 Page content extracted from their site (title, meta, headings, body text):
 
 """
@@ -91,6 +110,7 @@ ${content.slice(0, 8000)}
 
 Run the read.
 `.trim();
+};
 
 // ──────────────────────────────────────────────────────────────────
 // Discovery question — INTERNAL ONLY. Goes into the lead notification
