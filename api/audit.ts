@@ -198,6 +198,17 @@ export default async function handler(req: Request): Promise<Response> {
         send("status", { phase: "fetch", message: "Reading the site…" });
         const site = await fetchSiteContent(url);
 
+        // Surface JS-render advisory early so the UI can show a banner before
+        // the strategist read starts streaming.
+        if (site.jsRendered.likely) {
+          send("advisory", {
+            type: "js-rendered",
+            signals: site.jsRendered.signals,
+            message:
+              "This site appears to be JavaScript-rendered. The audit reads static HTML only — content that hydrates client-side may not have been captured. The strategist read below is based on what we could see; if something important looks missing, it may be there in a real browser.",
+          });
+        }
+
         const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
         // Kick off supporting fetches + (unless mode=seo) image brief in parallel.
@@ -274,7 +285,7 @@ export default async function handler(req: Request): Promise<Response> {
           messages: [
             {
               role: "user",
-              content: auditUserPrompt(url, formatForPrompt(site)),
+              content: auditUserPrompt(url, formatForPrompt(site), site.jsRendered),
             },
           ],
         });
@@ -373,6 +384,9 @@ export default async function handler(req: Request): Promise<Response> {
             source,
             strategistText,
             discoveryQuestion: discoveryQuestion || undefined,
+            jsRendered: site.jsRendered.likely
+              ? { signals: site.jsRendered.signals }
+              : undefined,
             audit: auditSnapshot,
           }).catch((e) => console.warn("[email]", e.message)),
         ]);
