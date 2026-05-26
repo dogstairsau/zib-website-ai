@@ -517,30 +517,4 @@
       }
     });
   }
-
-  /* ─── Yes / No tick-box choice above the punchline ─────────────────── */
-  const choiceWrap = document.getElementById('resChoice');
-  if (choiceWrap) {
-    const choiceBtns = choiceWrap.querySelectorAll('.audit-choice-btn');
-    choiceBtns.forEach((b) => {
-      b.addEventListener('click', () => {
-        if (choiceWrap.dataset.state === 'answered') return;
-        choiceBtns.forEach((other) => {
-          other.classList.toggle('is-selected', other === b);
-          other.setAttribute('aria-pressed', other === b ? 'true' : 'false');
-        });
-        choiceWrap.dataset.state = 'answered';
-        const choice = b.dataset.choice;
-        if (window.gtag) {
-          try { window.gtag('event', 'audit_choice', { choice }); } catch (_) {}
-        }
-        if (choice === 'yes') {
-          const cta = document.getElementById('cta');
-          if (cta) {
-            setTimeout(() => cta.scrollIntoView({ behavior: 'smooth', block: 'start' }), 280);
-          }
-        }
-      });
-    });
-  }
 })();
