@@ -34,8 +34,8 @@
     --read:680px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
-  body{background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;font-size:17px;line-height:1.6;font-feature-settings:"ss01","cv11"}
+  html{scroll-behavior:smooth;overflow-x:hidden}
+  body{background:var(--bg);color:var(--ink);font-family:'Inter',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;font-size:17px;line-height:1.6;font-feature-settings:"ss01","cv11";overflow-x:hidden}
   .wrap{max-width:var(--max);margin:0 auto;padding:0 28px}
   @media(min-width:780px){.wrap{padding:0 56px}}
 
@@ -311,6 +311,37 @@
 
   /* big numbers tabular */
   .megastat .n,.win .big,.plan .big,.tier .big,.rcard .mult,.totals .t .v,.ibox .total .v{font-variant-numeric:tabular-nums}
+
+  /* ====== NARROW MOBILE GUARDS ====== */
+  /* Stops giant tabular numbers + chart bars from pushing the page wider than the viewport. */
+  @media(max-width:600px){
+    .hero{padding:48px 0 60px}
+    h1.hero-h{font-size:30px;letter-spacing:-.035em}
+    .hero-lede{font-size:17px}
+    h2.s-h{font-size:26px;letter-spacing:-.03em}
+    .megastat{gap:20px}
+    .megastat .n{font-size:64px;letter-spacing:-.04em;line-height:1}
+    .megastat .cap{font-size:17px}
+    .win .big{font-size:54px;letter-spacing:-.04em}
+    .win h3{font-size:20px}
+    .plan .big{font-size:40px}
+    .rcard .mult{font-size:54px}
+    .totals .t .v{font-size:28px}
+    .ibox{padding:20px 18px}
+    .ibox .total .v{font-size:28px}
+    .ibox .row .v{font-size:18px}
+    .tier{padding:20px}
+    .tier .big{font-size:32px}
+    .chart{padding:16px 12px}
+    .bars{gap:4px}
+    .bcol{gap:2px}
+    .bcol .gp,.bcol .tc{width:6px;min-width:4px}
+    .cta{padding:28px 20px}
+    .cta .lead{font-size:22px}
+    .ws-quote{padding:20px 22px;font-size:17px}
+    .sec-num{flex-wrap:wrap;margin-bottom:28px}
+    .sec-num::after{display:none}
+  }
 
   /* respect prefers-reduced-motion */
   @media(prefers-reduced-motion: reduce){
