@@ -56,6 +56,23 @@
   body.dark-mode { background: var(--ink); }
   h1, h2, h3, h4, h5, h6 { text-wrap: balance; }
 
+  /* ---------- TOP MASK: hide content scrolling under fixed header ---------- */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 72px;
+    background: linear-gradient(to bottom, var(--bg) 55%, rgba(250, 247, 242, 0) 100%);
+    z-index: 99;
+    pointer-events: none;
+    transition: background 0.3s ease;
+  }
+  body.dark-mode::before {
+    background: linear-gradient(to bottom, var(--ink) 55%, rgba(11, 17, 37, 0) 100%);
+  }
+
   /* ---------- SLIDE LAYOUT ---------- */
   .slide {
     min-height: 100vh;
