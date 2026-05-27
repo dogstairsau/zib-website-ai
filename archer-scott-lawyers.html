@@ -274,9 +274,12 @@
   .cta{margin-top:56px;padding:36px 32px;background:var(--ink);color:#fff;text-align:center}
   .cta .lead{font-size:24px;font-weight:700;margin-bottom:16px;line-height:1.2;letter-spacing:-.03em}
   @media(min-width:780px){.cta .lead{font-size:32px}}
-  .cta a{color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.4);font-weight:600}
+  .cta a{color:#fff;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.4);font-weight:600;word-break:break-word}
   .cta a:hover{border-bottom-color:#fff}
-  .cta .contact{font-size:15px;letter-spacing:.02em;margin-top:8px}
+  .cta .contact{font-size:15px;letter-spacing:.02em;margin-top:8px;display:flex;flex-direction:column;gap:6px;align-items:center}
+  @media(min-width:680px){.cta .contact{flex-direction:row;gap:0;justify-content:center}}
+  .cta .contact .sep{display:none}
+  @media(min-width:680px){.cta .contact .sep{display:inline;margin:0 8px;color:rgba(255,255,255,.5)}}
 
   /* footer */
   footer.foot{padding:40px 0 64px;border-top:1px solid var(--rule)}
@@ -315,12 +318,13 @@
   /* ====== NARROW MOBILE GUARDS ====== */
   /* Stops giant tabular numbers + chart bars from pushing the page wider than the viewport. */
   @media(max-width:600px){
+    .topbar .row{flex-direction:column;align-items:flex-start;height:auto;padding:8px 0;gap:2px;font-size:10px;letter-spacing:.14em}
     .hero{padding:48px 0 60px}
     h1.hero-h{font-size:30px;letter-spacing:-.035em}
     .hero-lede{font-size:17px}
     h2.s-h{font-size:26px;letter-spacing:-.03em}
     .megastat{gap:20px}
-    .megastat .n{font-size:64px;letter-spacing:-.04em;line-height:1}
+    .megastat .n{font-size:60px;letter-spacing:-.04em;line-height:1}
     .megastat .cap{font-size:17px}
     .win .big{font-size:54px;letter-spacing:-.04em}
     .win h3{font-size:20px}
@@ -691,7 +695,7 @@
 
     <div class="cta">
       <div class="lead">Let's talk about what the firm could look like in&nbsp;90&nbsp;days.</div>
-      <div class="contact"><a href="mailto:michael.glasser@zibdigital.com.au">michael.glasser@zibdigital.com.au</a> &nbsp;·&nbsp; <a href="https://zibdigital.com.au">zibdigital.com.au</a></div>
+      <div class="contact"><a href="mailto:michael.glasser@zibdigital.com.au">michael.glasser@zibdigital.com.au</a><span class="sep">·</span><a href="https://zibdigital.com.au">zibdigital.com.au</a></div>
     </div>
   </div>
 </section>
