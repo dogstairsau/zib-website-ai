@@ -1,0 +1,1383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Opportunity Audit — AI Hospitality Solutions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  /* ---------- BRAND FONT: NEUE HAAS DISPLAY ---------- */
+  /* Self-hosted from /assets/fonts/. Only 400 + 500 are licensed in this
+     repo; 300/700/900 fall back to browser weight synthesis. */
+  @font-face { font-family: 'Neue Haas Display'; src: url('/assets/fonts/NeueHaasDisplayRoman.ttf') format('truetype'); font-weight: 400; font-style: normal; font-display: swap; }
+  @font-face { font-family: 'Neue Haas Display'; src: url('/assets/fonts/NeueHaasDisplayRomanItalic.ttf') format('truetype'); font-weight: 400; font-style: italic; font-display: swap; }
+  @font-face { font-family: 'Neue Haas Display'; src: url('/assets/fonts/NeueHaasDisplayMediu.ttf') format('truetype'); font-weight: 500; font-style: normal; font-display: swap; }
+  @font-face { font-family: 'Neue Haas Display'; src: url('/assets/fonts/NeueHaasDisplayMediumItalic.ttf') format('truetype'); font-weight: 500; font-style: italic; font-display: swap; }
+
+  :root {
+    /* AI Hospitality Solutions brand palette */
+    --bg: #FAF7F2;
+    --bg-elevated: #FFFFFF;
+    --ink: #0B1125;
+    --ink-soft: #3A4258;
+    --ink-faint: #8A8FA0;
+    --rule: #DDD8C8;
+    --rule-soft: #EDE9D9;
+    --accent: #B59A68;
+    --accent-soft: #EFE6D0;
+    --accent-dark: #8B7448;
+    --critical: #8C2D1F;
+    --critical-soft: #F0DDD7;
+    --warn: #C77E3A;
+    --warn-soft: #F8ECDB;
+    --good: #4A6B3F;
+    --good-soft: #E4ECDE;
+    --neutral: #8A8FA0;
+    --neutral-soft: #E5E5E5;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; height: 100%; }
+  body {
+    font-family: 'Neue Haas Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    background: var(--bg);
+    color: var(--ink);
+    font-size: 16px;
+    line-height: 1.6;
+    font-weight: 400;
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    scroll-snap-type: y mandatory;
+  }
+  body.dark-mode { background: var(--ink); }
+
+  /* ---------- SLIDE LAYOUT ---------- */
+  .slide {
+    min-height: 100vh;
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 80px 64px;
+    position: relative;
+    overflow: hidden;
+  }
+  .slide-content {
+    max-width: 960px;
+    width: 100%;
+    margin: 0 auto;
+  }
+
+  /* ---------- ENTRANCE ANIMATIONS ---------- */
+  .slide .slide-content > * {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s cubic-bezier(0.215, 0.61, 0.355, 1), transform 0.7s cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+  .slide.is-visible .slide-content > *:nth-child(1) { transition-delay: 0.08s; }
+  .slide.is-visible .slide-content > *:nth-child(2) { transition-delay: 0.18s; }
+  .slide.is-visible .slide-content > *:nth-child(3) { transition-delay: 0.28s; }
+  .slide.is-visible .slide-content > *:nth-child(4) { transition-delay: 0.38s; }
+  .slide.is-visible .slide-content > *:nth-child(5) { transition-delay: 0.48s; }
+  .slide.is-visible .slide-content > *:nth-child(6) { transition-delay: 0.56s; }
+  .slide.is-visible .slide-content > *:nth-child(n+7) { transition-delay: 0.64s; }
+  .slide.is-visible .slide-content > * {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ---------- PERSISTENT BRAND MARK ---------- */
+  .brand-mark {
+    position: fixed;
+    top: 28px;
+    left: 40px;
+    z-index: 100;
+    font-family: 'Neue Haas Display', sans-serif;
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: -0.005em;
+    color: var(--ink);
+    transition: color 0.3s ease;
+  }
+  .brand-mark span { color: var(--ink-faint); font-weight: 400; }
+  body.dark-mode .brand-mark { color: var(--bg); }
+  body.dark-mode .brand-mark span { color: rgba(250, 247, 242, 0.5); }
+
+  /* ---------- PERSISTENT META (top-right) ---------- */
+  .doc-meta-fixed {
+    position: fixed;
+    top: 28px;
+    right: 40px;
+    z-index: 100;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    text-align: right;
+    line-height: 1.7;
+    transition: color 0.3s ease;
+  }
+  body.dark-mode .doc-meta-fixed { color: rgba(250, 247, 242, 0.5); }
+
+  /* ---------- NAV UI ---------- */
+  .nav-ui {
+    position: fixed;
+    bottom: 28px;
+    right: 40px;
+    z-index: 100;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    background: rgba(250, 247, 242, 0.92);
+    border: 1px solid var(--rule);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    transition: background 0.3s ease, border-color 0.3s ease;
+  }
+  body.dark-mode .nav-ui {
+    background: rgba(11, 17, 37, 0.85);
+    border-color: rgba(250, 247, 242, 0.15);
+  }
+  .nav-btn {
+    width: 34px;
+    height: 34px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    font-family: inherit;
+    color: var(--ink);
+    padding: 0;
+  }
+  .nav-btn svg { width: 14px; height: 14px; transition: transform 0.2s ease; }
+  .nav-btn:hover { background: var(--accent); color: var(--bg); }
+  .nav-btn:hover svg { transform: scale(1.1); }
+  .nav-btn:disabled { opacity: 0.25; cursor: not-allowed; }
+  .nav-btn:disabled:hover { background: transparent; color: var(--ink); }
+  body.dark-mode .nav-btn { color: var(--bg); }
+  body.dark-mode .nav-btn:hover { background: var(--accent); color: var(--ink); }
+
+  .nav-counter {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    color: var(--ink-soft);
+    min-width: 56px;
+    text-align: center;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+  .nav-counter .current { color: var(--accent); }
+  body.dark-mode .nav-counter { color: rgba(250, 247, 242, 0.6); }
+
+  /* ---------- SCROLL HINT (cover only) ---------- */
+  .scroll-hint {
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    opacity: 0;
+    animation: fadeInHint 0.8s ease-out 1.2s forwards, bounce 2.4s ease-in-out 2s infinite;
+  }
+  @keyframes fadeInHint {
+    from { opacity: 0; transform: translateX(-50%) translateY(0); }
+    to { opacity: 1; transform: translateX(-50%) translateY(0); }
+  }
+  @keyframes bounce {
+    0%, 100% { transform: translateX(-50%) translateY(0); opacity: 1; }
+    50% { transform: translateX(-50%) translateY(8px); opacity: 0.6; }
+  }
+  .scroll-hint .arrow { font-size: 16px; letter-spacing: 0; }
+
+  /* ---------- COVER SLIDE ---------- */
+  .cover .slide-content { padding-top: 40px; }
+  .doc-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 32px;
+  }
+  h1.doc-title {
+    font-family: 'Neue Haas Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 500;
+    font-size: 88px;
+    line-height: 0.98;
+    letter-spacing: -0.04em;
+    margin-bottom: 40px;
+    color: var(--ink);
+  }
+  h1.doc-title em { font-style: italic; font-weight: 500; color: var(--accent); }
+  .doc-lede {
+    font-family: 'Neue Haas Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 22px;
+    line-height: 1.4;
+    color: var(--ink-soft);
+    max-width: 760px;
+    font-weight: 400;
+    letter-spacing: -0.01em;
+    margin-bottom: 56px;
+  }
+  .doc-meta-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    padding-top: 32px;
+    border-top: 1px solid var(--rule);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+  .doc-meta-row strong { color: var(--ink); font-weight: 500; display: block; margin-top: 6px; }
+
+  /* ---------- SECTION HEADERS ---------- */
+  .section-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .section-eyebrow .num { color: var(--accent); font-weight: 500; }
+
+  h2 {
+    font-family: 'Neue Haas Display', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-weight: 500;
+    font-size: 48px;
+    line-height: 1.05;
+    letter-spacing: -0.03em;
+    margin-bottom: 28px;
+    max-width: 800px;
+    color: var(--ink);
+  }
+  h2 em { font-style: italic; color: var(--accent); font-weight: 500; }
+
+  h3 {
+    font-family: 'Neue Haas Display', sans-serif;
+    font-weight: 500;
+    font-size: 22px;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    margin: 0 0 12px;
+    color: var(--ink);
+  }
+  h4 {
+    font-family: 'Neue Haas Display', sans-serif;
+    font-weight: 500;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink);
+    margin: 32px 0 12px;
+  }
+  p { margin-bottom: 16px; max-width: 760px; font-size: 15.5px; line-height: 1.6; color: var(--ink); }
+  p.lede { font-size: 19px; line-height: 1.45; color: var(--ink-soft); margin-bottom: 32px; font-weight: 400; letter-spacing: -0.005em; max-width: 800px; }
+  strong { font-weight: 600; color: var(--ink); }
+
+  /* ---------- PULL QUOTE ---------- */
+  .pullquote {
+    font-family: 'Neue Haas Display', sans-serif;
+    font-size: 30px;
+    font-weight: 400;
+    line-height: 1.22;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+    border-left: 3px solid var(--accent);
+    padding: 8px 0 8px 32px;
+    margin: 32px 0 0;
+    max-width: 780px;
+  }
+  .pullquote em { font-style: italic; color: var(--accent); font-weight: 400; }
+  .pullquote .attribution {
+    display: block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-top: 16px;
+    font-weight: 500;
+  }
+
+  /* ---------- NAME VISUAL ---------- */
+  .name-visual {
+    margin: 32px 0 0;
+    padding: 40px 32px;
+    background: var(--bg-elevated);
+    border: 1px solid var(--rule);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+  .name-visual .reading { padding: 0 28px; border-right: 1px dashed var(--rule); }
+  .name-visual .reading:last-child { border-right: none; }
+  .name-visual .reading-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 16px;
+    font-weight: 500;
+  }
+  .name-visual .reading-expansion {
+    font-family: 'Neue Haas Display', sans-serif;
+    font-size: 30px;
+    line-height: 1.1;
+    font-weight: 500;
+    margin-bottom: 14px;
+    letter-spacing: -0.025em;
+    color: var(--ink);
+  }
+  .name-visual .reading-expansion .highlight { color: var(--accent); font-style: italic; font-weight: 400; }
+  .name-visual .reading-expansion .highlight-good { color: var(--good); font-style: italic; font-weight: 400; }
+  .name-visual .reading-body { font-size: 13.5px; line-height: 1.55; color: var(--ink-soft); }
+
+  /* ---------- DIAGNOSIS CARDS ---------- */
+  .opps { margin-top: 24px; border-top: 1px solid var(--ink); }
+  .opp {
+    display: grid;
+    grid-template-columns: 70px 1fr;
+    gap: 28px;
+    padding: 28px 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: start;
+  }
+  .opp-num {
+    font-family: 'Neue Haas Display', sans-serif;
+    font-size: 44px;
+    line-height: 1;
+    font-weight: 400;
+    color: var(--accent);
+    font-style: italic;
+  }
+  .opp-body h4 {
+    margin: 0 0 8px;
+    font-size: 18px;
+    letter-spacing: -0.015em;
+    text-transform: none;
+    font-weight: 500;
+    line-height: 1.3;
+    color: var(--ink);
+  }
+  .opp-body p { margin: 0; color: var(--ink-soft); font-size: 14.5px; line-height: 1.55; }
+
+  /* ---------- SCORECARD ---------- */
+  .scorecard { margin-top: 28px; background: var(--bg-elevated); border: 1px solid var(--rule); }
+  .scorecard-header {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    padding: 24px 28px;
+    border-bottom: 1px solid var(--rule);
+    align-items: center;
+  }
+  .scorecard-header .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 500;
+  }
+  .scorecard-header .overall {
+    font-family: 'Neue Haas Display', sans-serif;
+    font-size: 56px;
+    font-weight: 500;
+    color: var(--ink);
+    line-height: 1;
+    letter-spacing: -0.03em;
+  }
+  .scorecard-header .overall .denom { color: var(--ink-faint); font-weight: 400; font-size: 22px; }
+  .scorecard-row {
+    display: grid;
+    grid-template-columns: 1fr auto auto;
+    padding: 14px 28px;
+    border-bottom: 1px solid var(--rule-soft);
+    align-items: center;
+    gap: 20px;
+  }
+  .scorecard-row:last-child { border-bottom: none; }
+  .scorecard-row .cat { font-size: 14px; color: var(--ink); font-weight: 500; }
+  .scorecard-row .val { font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--ink-soft); text-align: right; }
+
+  .status {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    padding: 5px 10px;
+    border-radius: 2px;
+    font-weight: 500;
+    display: inline-block;
+    min-width: 88px;
+    text-align: center;
+  }
+  .status.critical { background: var(--critical-soft); color: var(--critical); }
+  .status.poor { background: var(--warn-soft); color: var(--warn); }
+  .status.good { background: var(--good-soft); color: var(--good); }
+  .status.neutral { background: var(--neutral-soft); color: var(--neutral); }
+
+  /* ---------- DATA TABLES ---------- */
+  .data-table { width: 100%; border-collapse: collapse; margin: 20px 0 12px; font-size: 14px; }
+  .data-table th {
+    text-align: left;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    font-weight: 500;
+    padding: 12px 16px 12px 0;
+    border-bottom: 1px solid var(--ink);
+  }
+  .data-table th:last-child, .data-table td:last-child { padding-right: 0; text-align: right; }
+  .data-table td { padding: 12px 16px 12px 0; border-bottom: 1px solid var(--rule-soft); vertical-align: top; }
+  .data-table td.metric { font-weight: 500; color: var(--ink); }
+  .data-table td.value-strong { font-family: 'JetBrains Mono', monospace; font-weight: 500; color: var(--ink); }
+  .data-table td .note { display: block; font-size: 11px; color: var(--ink-faint); margin-top: 4px; }
+  .data-table .bench { font-size: 12px; color: var(--ink-faint); font-family: 'JetBrains Mono', monospace; }
+
+  /* ---------- INSIGHT CALLOUT ---------- */
+  .insight {
+    margin: 20px 0 0;
+    padding: 18px 22px;
+    border-left: 3px solid var(--ink);
+    background: var(--rule-soft);
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+  .insight .label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 8px;
+    display: block;
+    font-weight: 500;
+  }
+  .insight.critical { border-left-color: var(--critical); background: var(--critical-soft); }
+  .insight.critical .label { color: var(--critical); }
+
+  /* ---------- QUICK WINS ---------- */
+  .wins { margin: 24px 0 0; counter-reset: win; }
+  .win {
+    display: grid;
+    grid-template-columns: 48px 1fr;
+    gap: 24px;
+    padding: 22px 0;
+    border-bottom: 1px solid var(--rule);
+    align-items: start;
+  }
+  .win:first-child { border-top: 1px solid var(--ink); }
+  .win:before {
+    counter-increment: win;
+    content: counter(win, decimal-leading-zero);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 13px;
+    color: var(--accent);
+    padding-top: 4px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+  }
+  .win h4 {
+    margin: 0 0 6px;
+    font-size: 18px;
+    font-weight: 500;
+    text-transform: none;
+    letter-spacing: -0.02em;
+    line-height: 1.3;
+    color: var(--ink);
+  }
+  .win p { margin: 0; color: var(--ink-soft); font-size: 14px; line-height: 1.55; }
+
+  /* ---------- PRIORITIES (compact) ---------- */
+  .priorities { margin-top: 24px; display: grid; grid-template-columns: 1fr 1fr; gap: 0; border-top: 1px solid var(--ink); border-bottom: 1px solid var(--ink); }
+  .priority {
+    padding: 22px 24px;
+    border-right: 1px solid var(--rule);
+    border-bottom: 1px solid var(--rule);
+  }
+  .priority:nth-child(2n) { border-right: none; }
+  .priority:nth-last-child(-n+2) { border-bottom: none; }
+  .priority:last-child:nth-child(odd) { grid-column: span 2; border-right: none; }
+  .priority-label {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .priority h3 { margin: 0 0 8px; font-size: 18px; letter-spacing: -0.015em; }
+  .priority p { color: var(--ink-soft); margin: 0; font-size: 13.5px; line-height: 1.5; }
+
+  /* ---------- PACKAGE COMPARISON ---------- */
+  .packages {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    margin: 24px 0 16px;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+  }
+  .package {
+    padding: 28px 24px;
+    border-right: 1px solid var(--rule);
+    background: var(--bg);
+    position: relative;
+  }
+  .package:last-child { border-right: none; }
+  .package.recommended {
+    background: var(--bg-elevated);
+    padding-top: 56px;
+    box-shadow: inset 0 4px 0 0 var(--accent);
+  }
+  .package .recommended-badge {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    background: var(--accent);
+    color: var(--bg);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 8px 0;
+    text-align: center;
+    font-weight: 500;
+  }
+  .package-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 14px;
+    font-weight: 500;
+  }
+  .package.recommended .package-label { color: var(--accent); }
+  .package-name {
+    font-family: 'Neue Haas Display', sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    letter-spacing: -0.025em;
+    margin-bottom: 18px;
+    color: var(--ink);
+    line-height: 1.2;
+  }
+  .package-pricing { padding: 14px 0; border-top: 1px solid var(--rule); border-bottom: 1px solid var(--rule); margin-bottom: 16px; }
+  .package-pricing .price-row { display: flex; justify-content: space-between; align-items: baseline; font-size: 12.5px; color: var(--ink-soft); margin-bottom: 6px; }
+  .package-pricing .price-row:last-child { margin-bottom: 0; }
+  .package-pricing .price-row strong { font-family: 'JetBrains Mono', monospace; font-weight: 500; color: var(--ink); font-size: 12.5px; }
+  .package-criteria { font-size: 12.5px; line-height: 1.55; color: var(--ink-soft); }
+  .package-criteria-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 6px;
+    display: block;
+    font-weight: 500;
+  }
+  .package-status {
+    margin-top: 14px;
+    padding-top: 12px;
+    border-top: 1px dashed var(--rule);
+    font-size: 12px;
+    color: var(--ink-faint);
+    font-style: italic;
+    line-height: 1.5;
+  }
+  .package.recommended .package-status { color: var(--accent); font-style: normal; font-weight: 500; }
+
+  /* ---------- INVESTMENT SUMMARY ---------- */
+  .investment-summary {
+    margin: 28px 0 0;
+    background: var(--bg-elevated);
+    padding: 28px 36px;
+    border: 1px solid var(--rule);
+  }
+  .investment-summary .inv-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 20px;
+    font-weight: 500;
+  }
+  .inv-row { display: flex; justify-content: space-between; align-items: baseline; padding: 10px 0; border-bottom: 1px solid var(--rule-soft); }
+  .inv-row:last-child { border-bottom: none; }
+  .inv-row .key { font-size: 13.5px; color: var(--ink); font-weight: 400; }
+  .inv-row .val { font-family: 'JetBrains Mono', monospace; font-size: 13.5px; font-weight: 500; color: var(--ink); }
+  .inv-row.total { padding-top: 18px; margin-top: 10px; border-top: 1px solid var(--ink); border-bottom: none; align-items: center; }
+  .inv-row.total .key {
+    font-size: 12px; font-weight: 500;
+    font-family: 'JetBrains Mono', monospace;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--ink);
+  }
+  .inv-row.total .val {
+    font-family: 'Neue Haas Display', sans-serif;
+    font-size: 38px;
+    letter-spacing: -0.03em;
+    color: var(--accent);
+    font-weight: 500;
+  }
+
+  /* ---------- ROI: BREAK-EVEN CARDS ---------- */
+  .break-even {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 0;
+    margin: 24px 0 12px;
+    border-top: 1px solid var(--ink);
+    border-bottom: 1px solid var(--ink);
+  }
+  .break-even-card { padding: 28px 24px; border-right: 1px solid var(--rule); background: var(--bg-elevated); position: relative; }
+  .break-even-card:last-child { border-right: none; }
+  .break-even-card.highlighted { background: var(--accent-soft); }
+  .break-even-card.highlighted .multiple { color: var(--ink); }
+  .break-even-card.highlighted .acv-label { color: var(--accent-dark); }
+  .break-even-card.highlighted .avg-badge {
+    position: absolute;
+    top: -1px;
+    right: 0;
+    background: var(--accent);
+    color: var(--bg);
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    font-weight: 500;
+  }
+  .break-even-card .acv-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin-bottom: 8px;
+    font-weight: 500;
+  }
+  .break-even-card .acv-value {
+    font-family: 'Neue Haas Display', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 20px;
+    letter-spacing: -0.01em;
+  }
+  .break-even-card .multiple {
+    font-family: 'Neue Haas Display', sans-serif;
+    font-size: 64px;
+    font-weight: 500;
+    line-height: 1;
+    color: var(--accent);
+    letter-spacing: -0.05em;
+    margin-bottom: 8px;
+  }
+  .break-even-card .multiple-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    font-weight: 500;
+  }
+  p.footnote {
+    font-size: 11.5px;
+    color: var(--ink-faint);
+    font-style: italic;
+    margin-top: 10px;
+    margin-bottom: 0;
+    max-width: 720px;
+  }
+
+  /* ---------- ROI: INDICATORS TIMELINE ---------- */
+  .indicators-timeline {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap: 0;
+    margin: 24px 0 0;
+    border-top: 2px solid var(--accent);
+    position: relative;
+  }
+  .indicator-stage {
+    padding: 22px 16px 4px 0;
+    margin-right: 14px;
+    position: relative;
+  }
+  .indicator-stage:before {
+    content: '';
+    position: absolute;
+    top: -7px;
+    left: 0;
+    width: 12px;
+    height: 12px;
+    background: var(--accent);
+    border-radius: 50%;
+  }
+  .indicator-stage .stage-when {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 6px;
+    font-weight: 500;
+  }
+  .indicator-stage .stage-name {
+    font-family: 'Neue Haas Display', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--ink);
+    margin-bottom: 8px;
+    letter-spacing: -0.015em;
+  }
+  .indicator-stage p { font-size: 12.5px; line-height: 1.5; color: var(--ink-soft); margin: 0; }
+
+  /* ---------- ENGAGEMENT CLOSE (dark slide) ---------- */
+  .slide.engagement { background: var(--ink); color: var(--bg); }
+  .slide.engagement .section-eyebrow { color: rgba(250, 247, 242, 0.5); }
+  .slide.engagement .section-eyebrow .num { color: var(--accent); }
+  .slide.engagement h2 { color: var(--bg); font-size: 44px; letter-spacing: -0.03em; margin-bottom: 24px; }
+  .slide.engagement h2 em { color: var(--accent); font-weight: 500; }
+  .slide.engagement p { color: rgba(250, 247, 242, 0.85); max-width: 720px; }
+  .stages {
+    margin-top: 32px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+    border-top: 1px solid rgba(250, 247, 242, 0.2);
+  }
+  .stages .stage {
+    padding: 24px 20px 24px 0;
+    border-right: 1px solid rgba(250, 247, 242, 0.2);
+  }
+  .stages .stage:last-child { border-right: none; padding-right: 0; }
+  .stages .stage .when {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 10px;
+    display: block;
+    font-weight: 500;
+  }
+  .stages .stage h5 {
+    font-family: 'Neue Haas Display', sans-serif;
+    font-size: 18px;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: var(--bg);
+    line-height: 1.3;
+    letter-spacing: -0.015em;
+  }
+  .stages .stage p { font-size: 13px; line-height: 1.5; color: rgba(250, 247, 242, 0.75); margin: 0; }
+  .engagement-cta {
+    margin-top: 40px;
+    padding-top: 28px;
+    border-top: 1px solid rgba(250, 247, 242, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .engagement-cta .lead {
+    font-family: 'Neue Haas Display', sans-serif;
+    font-style: italic;
+    font-size: 22px;
+    color: var(--bg);
+    font-weight: 400;
+    letter-spacing: -0.015em;
+  }
+  .engagement-cta .who {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: rgba(250, 247, 242, 0.6);
+    text-align: right;
+    line-height: 1.7;
+  }
+  .engagement-cta .who strong { color: var(--bg); font-weight: 500; }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 900px) {
+    .slide { padding: 80px 28px 60px; }
+    .brand-mark { top: 20px; left: 24px; font-size: 12px; max-width: 40vw; white-space: nowrap; overflow: hidden; }
+    .brand-mark span { display: none; }
+    .doc-meta-fixed { top: 20px; right: 24px; font-size: 9px; max-width: 55vw; }
+    .nav-ui { bottom: 20px; right: 24px; }
+    h1.doc-title { font-size: 44px; letter-spacing: -0.03em; }
+    h2 { font-size: 28px; letter-spacing: -0.025em; }
+    .doc-lede, p.lede { font-size: 17px; }
+    .doc-meta-row { grid-template-columns: 1fr 1fr; gap: 16px; }
+    .name-visual { grid-template-columns: 1fr; padding: 24px 16px; }
+    .name-visual .reading { padding: 20px 8px; border-right: none; border-bottom: 1px dashed var(--rule); }
+    .name-visual .reading:last-child { border-bottom: none; padding-bottom: 0; }
+    .name-visual .reading:first-child { padding-top: 0; }
+    .opp { grid-template-columns: 1fr; gap: 8px; }
+    .opp-num { font-size: 36px; }
+    .scorecard-row { grid-template-columns: 1fr; gap: 8px; padding: 14px 18px; }
+    .scorecard-row .val, .scorecard-row .status { text-align: left; }
+    .priorities { grid-template-columns: 1fr; }
+    .priority { border-right: none; }
+    .priority:last-child:nth-child(odd) { grid-column: span 1; }
+    .packages { grid-template-columns: 1fr; }
+    .package { border-right: none; border-bottom: 1px solid var(--rule); }
+    .package:last-child { border-bottom: none; }
+    .investment-summary { padding: 24px 20px; }
+    .inv-row.total .val { font-size: 28px; }
+    .break-even { grid-template-columns: 1fr; }
+    .break-even-card { border-right: none; border-bottom: 1px solid var(--rule); }
+    .break-even-card:last-child { border-bottom: none; }
+    .break-even-card .multiple { font-size: 48px; }
+    .indicators-timeline { grid-template-columns: 1fr; gap: 0; border-top: none; border-left: 2px solid var(--accent); padding-left: 24px; margin-left: 6px; }
+    .indicator-stage { padding: 16px 0 8px 0; margin-right: 0; }
+    .indicator-stage:before { left: -30px; top: 18px; }
+    .stages { grid-template-columns: 1fr; }
+    .stages .stage { border-right: none; border-bottom: 1px solid rgba(250, 247, 242, 0.2); padding-right: 0; }
+    .stages .stage:last-child { border-bottom: none; }
+    .engagement-cta { flex-direction: column; gap: 18px; align-items: flex-start; }
+    .engagement-cta .who { text-align: left; }
+    .pullquote { font-size: 22px; padding-left: 20px; }
+    .slide.engagement h2 { font-size: 28px; }
+  }
+</style>
+</head>
+<body>
+
+  <!-- PERSISTENT BRAND MARK -->
+  <div class="brand-mark">Zib Digital <span>/ SEO &amp; Performance Marketing</span></div>
+
+  <!-- PERSISTENT META -->
+  <div class="doc-meta-fixed">
+    AI Hospitality Solutions<br>
+    Audit · 27 May 2026
+  </div>
+
+  <!-- NAV UI -->
+  <div class="nav-ui" role="navigation" aria-label="Slide navigation">
+    <button class="nav-btn prev" aria-label="Previous slide">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 15l-6-6-6 6"/></svg>
+    </button>
+    <div class="nav-counter"><span class="current">01</span> <span style="opacity:0.4">/</span> <span class="total">14</span></div>
+    <button class="nav-btn next" aria-label="Next slide">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+  </div>
+
+  <!-- SLIDE 01 — COVER -->
+  <section class="slide cover">
+    <div class="slide-content">
+      <div class="doc-label">— Zib Digital SEO Audit · Hospitality &amp; Staffing</div>
+      <h1 class="doc-title">The brand name is <em>the core issue</em>. The SEO data confirms it.</h1>
+      <p class="doc-lede">AI Hospitality Solutions is a hotel staffing and outsourcing business with a brand name that, in 2026, reads as artificial intelligence before it reads as "Australia Infinity." This audit reviews the resulting impact on search visibility, brand discoverability, and commercial opportunity — and sets out a 90-day path to address it.</p>
+      <div class="doc-meta-row">
+        <div>Prepared for<strong>AI Hospitality Solutions Pty Ltd</strong></div>
+        <div>Domain<strong>aihospitalitysolutions.com.au</strong></div>
+        <div>Data sources<strong>Ahrefs · Zib Crawl · Strategy Read</strong></div>
+        <div>Status<strong>Foundational rebuild required</strong></div>
+      </div>
+    </div>
+    <div class="scroll-hint">
+      <span>Scroll or use arrow keys</span>
+      <span class="arrow">↓</span>
+    </div>
+  </section>
+
+  <!-- SLIDE 02 — HEADLINE FINDING -->
+  <section class="slide">
+    <div class="slide-content">
+      <div class="section-eyebrow"><span class="num">01</span> Headline Finding</div>
+      <h2>Two readings of the brand name. <em>Only one of them is your business.</em></h2>
+      <p class="lede">Any hotel operator typing "AI" into a search bar in 2026 is looking for technology automation — chatbots, dynamic pricing engines, guest-experience platforms. They are not looking for outsourced housekeeping. The brand name forces every first-time visitor to disambiguate before they engage with the content, and a meaningful share will not.</p>
+      <div class="name-visual">
+        <div class="reading">
+          <div class="reading-label">— What the market hears</div>
+          <div class="reading-expansion"><span class="highlight">Artificial Intelligence</span><br>Hospitality Solutions</div>
+          <p class="reading-body">A software vendor selling AI tooling to hotels. Procurement managers, GMs, and operations leads arrive expecting a SaaS demo, see a staffing page, and exit. Tech-focused visitors stay long enough to feel the brand misrepresents itself.</p>
+        </div>
+        <div class="reading">
+          <div class="reading-label">— What you actually are</div>
+          <div class="reading-expansion"><span class="highlight-good">Australia Infinity</span><br>Hospitality Solutions</div>
+          <p class="reading-body">A hotel staffing and outsourcing business — outsourced housekeeping, hybrid staffing models, labour hire across Australia. A legitimate, serviceable offer that no one is finding by accident, because the name doesn't describe it.</p>
+        </div>
+      </div>
+      <div class="pullquote">
+        The SEO data is at or near zero across every metric. This is not a penalty pattern — it is the predictable result of a brand name <em>that doesn't align</em> with the service offering, on a site that hasn't been optimised to compensate.
+        <span class="attribution">Zib Digital Strategy Read — 27 May 2026</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 03 — COMMERCIAL DIAGNOSIS -->
+  <section class="slide">
+    <div class="slide-content">
+      <div class="section-eyebrow"><span class="num">02</span> Commercial Diagnosis</div>
+      <h2>Three commercial opportunities to address.</h2>
+      <p class="lede">Before we look at backlinks and meta tags, here is what the audit data means for the business.</p>
+      <div class="opps">
+        <div class="opp">
+          <div class="opp-num">i.</div>
+          <div class="opp-body">
+            <h4>The brand name is filtering out qualified leads before they engage with your content.</h4>
+            <p>Any hotel operator searching for anything with "AI" in 2026 is researching technology automation, not staffing. Visitors expecting a SaaS product will exit immediately — and the right buyers may also question credibility before they see the services.</p>
+          </div>
+        </div>
+        <div class="opp">
+          <div class="opp-num">ii.</div>
+          <div class="opp-body">
+            <h4>No meta descriptions means Google is writing your search snippets.</h4>
+            <p>Every organic impression currently shows a blank or auto-generated description. That is a direct cost to click-through rate on an already small pool of branded and category search traffic. Ten pages out of ten are missing meta descriptions.</p>
+          </div>
+        </div>
+        <div class="opp">
+          <div class="opp-num">iii.</div>
+          <div class="opp-body">
+            <h4>No social proof on the homepage in a relationship-driven category.</h4>
+            <p>The "Our Clients" section appears as a heading with no content behind it — no logos, no testimonials, no case studies. In hotel staffing, the buyer is making a labour-trust decision, not a software-feature decision.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 04 — SCORECARD -->
+  <section class="slide">
+    <div class="slide-content">
+      <div class="section-eyebrow"><span class="num">03</span> Audit Scorecard</div>
+      <h2>What the crawl and the index actually say.</h2>
+      <p class="lede">The Zib crawl rates the site 70/100 overall — but the score hides a split: the technical foundation is fine, while everything content-led is starting from zero.</p>
+      <div class="scorecard">
+        <div class="scorecard-header">
+          <div><div class="label">— Zib Audit Overall</div></div>
+          <div class="overall">70<span class="denom">/100</span></div>
+        </div>
+        <div class="scorecard-row"><div class="cat">Content SEO</div><div class="val">33 / 100</div><span class="status critical">Critical</span></div>
+        <div class="scorecard-row"><div class="cat">Metadata &amp; Canonical</div><div class="val">50 / 100</div><span class="status poor">Poor</span></div>
+        <div class="scorecard-row"><div class="cat">GEO / AEO</div><div class="val">50 / 100</div><span class="status poor">Poor</span></div>
+        <div class="scorecard-row"><div class="cat">Media &amp; UX</div><div class="val">75 / 100</div><span class="status good">Healthy</span></div>
+        <div class="scorecard-row"><div class="cat">Architecture &amp; Links</div><div class="val">83 / 100</div><span class="status good">Healthy</span></div>
+        <div class="scorecard-row"><div class="cat">Foundation</div><div class="val">100 / 100</div><span class="status good">Strong</span></div>
+        <div class="scorecard-row"><div class="cat">Crawl &amp; Index</div><div class="val">100 / 100</div><span class="status good">Strong</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 05 — DOMAIN AUTHORITY -->
+  <section class="slide">
+    <div class="slide-content">
+      <div class="section-eyebrow"><span class="num">04</span> Domain Authority &amp; Trust</div>
+      <h2>The site is effectively invisible to search engines.</h2>
+      <p>Across every core SEO metric, the numbers are at or near zero. This is not a penalty pattern — it reads as a brand-new or severely under-optimised site that has not yet been meaningfully indexed.</p>
+      <table class="data-table">
+        <thead><tr><th>Metric</th><th>Current</th><th>Benchmark (healthy SMB)</th></tr></thead>
+        <tbody>
+          <tr><td class="metric">Domain Rating (DR)</td><td class="value-strong">0.7 <span class="note">+0.7 vs last year</span></td><td class="bench">20 – 40+</td></tr>
+          <tr><td class="metric">URL Rating (UR)</td><td class="value-strong">4.6 <span class="note">+4.3 vs last year</span></td><td class="bench">10 – 30+</td></tr>
+          <tr><td class="metric">Ahrefs Rank</td><td class="value-strong">58,999,356</td><td class="bench">Lower is better</td></tr>
+        </tbody>
+      </table>
+      <div class="insight"><span class="label">— Read</span>A DR of 0.7 is essentially zero. The site has almost no link equity accumulated, which tells Google it cannot yet be trusted or ranked. The slight uptick shows something is being built, but the foundation is paper-thin.</div>
+    </div>
+  </section>
+
+  <!-- SLIDE 06 — ORGANIC SEARCH -->
+  <section class="slide">
+    <div class="slide-content">
+      <div class="section-eyebrow"><span class="num">05</span> Organic Search Performance</div>
+      <h2>One ranking keyword. <em>It is the founder's name.</em></h2>
+      <table class="data-table">
+        <thead><tr><th>Metric</th><th colspan="2">Value</th></tr></thead>
+        <tbody>
+          <tr><td class="metric">Organic keywords ranking</td><td colspan="2" class="value-strong">1 <span class="note">down from 2 last year</span></td></tr>
+          <tr><td class="metric">Estimated organic traffic</td><td colspan="2" class="value-strong">0</td></tr>
+          <tr><td class="metric">Top 3 positions</td><td colspan="2" class="value-strong">0</td></tr>
+          <tr><td class="metric">Traffic value</td><td colspan="2" class="value-strong">N/A</td></tr>
+          <tr><td class="metric">Paid keywords / traffic</td><td colspan="2" class="value-strong">0 / 0</td></tr>
+        </tbody>
+      </table>
+      <div class="insight critical">
+        <span class="label">— The one ranking keyword</span>
+        "adam taloni" — an informational, branded query (search volume 10/month, position 3) pointing to the /about-2/ page. This is almost certainly the founder. The site ranks for nothing commercially relevant. Zero traffic from any country is confirmed.
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 07 — BACKLINK PROFILE -->
+  <section class="slide">
+    <div class="slide-content">
+      <div class="section-eyebrow"><span class="num">06</span> Backlink Profile</div>
+      <h2>Two legitimate links. Two flagged as spam. <em>Net loss of ten.</em></h2>
+      <table class="data-table">
+        <thead><tr><th>Domain</th><th>DR</th><th>Verdict</th></tr></thead>
+        <tbody>
+          <tr><td class="metric">maximumoccupancy.com.au</td><td class="value-strong">28</td><td><span class="status good">Legit</span></td></tr>
+          <tr><td class="metric">maximumoccupancy.co.nz</td><td class="value-strong">14</td><td><span class="status good">Legit</span></td></tr>
+          <tr><td class="metric">prospeo.io</td><td class="value-strong">69</td><td><span class="status critical">Spam Flag</span></td></tr>
+          <tr><td class="metric">stackwho.com</td><td class="value-strong">1.9</td><td><span class="status critical">Spam Flag</span></td></tr>
+        </tbody>
+      </table>
+      <p>Total backlinks: 6 (down from 16 all-time). Half of the referring domains are spam-flagged data aggregators. Effectively the site has two quality backlinks, both from the Maximum Occupancy hospitality directory. No keyword-rich anchor text exists anywhere on the web pointing to the site, which gives Google no topical relevance signal to work with.</p>
+    </div>
+  </section>
+
+  <!-- SLIDE 08 — AI PRESENCE -->
+  <section class="slide">
+    <div class="slide-content">
+      <div class="section-eyebrow"><span class="num">07</span> AI &amp; Generative Search Presence</div>
+      <h2>Zero citations across every major AI platform.</h2>
+      <table class="data-table">
+        <thead><tr><th>Platform</th><th>Citations</th><th>Pages cited</th></tr></thead>
+        <tbody>
+          <tr><td class="metric">Google AI Overviews</td><td class="value-strong">0</td><td class="value-strong">0</td></tr>
+          <tr><td class="metric">ChatGPT</td><td class="value-strong">0</td><td class="value-strong">0</td></tr>
+          <tr><td class="metric">Gemini</td><td class="value-strong">0</td><td class="value-strong">0</td></tr>
+          <tr><td class="metric">Perplexity</td><td class="value-strong">0</td><td class="value-strong">0</td></tr>
+          <tr><td class="metric">Copilot</td><td class="value-strong">0</td><td class="value-strong">0</td></tr>
+        </tbody>
+      </table>
+      <p>This matters more in 2026 than it did even twelve months ago. AI Overviews now occupy meaningful SERP real estate for B2B hospitality queries, and an increasing share of buyer research happens inside ChatGPT and Perplexity before it ever touches Google. The site is absent from every one of those surfaces.</p>
+    </div>
+  </section>
+
+  <!-- SLIDE 09 — ON-PAGE -->
+  <section class="slide">
+    <div class="slide-content">
+      <div class="section-eyebrow"><span class="num">08</span> On-Page &amp; Content Signals</div>
+      <h2>The fixable list — short, cheap, and overdue.</h2>
+      <table class="data-table">
+        <thead><tr><th>Issue</th><th>Scope</th><th>Severity</th></tr></thead>
+        <tbody>
+          <tr><td class="metric">Meta description coverage</td><td>10 pages missing meta descriptions</td><td><span class="status critical">Critical</span></td></tr>
+          <tr><td class="metric">Duplicate title / description</td><td>8 duplicate title/description issues across crawl</td><td><span class="status poor">High</span></td></tr>
+          <tr><td class="metric">Thin content signals</td><td>2 pages under 250 words</td><td><span class="status poor">High</span></td></tr>
+          <tr><td class="metric">Heading structure (H1)</td><td>1 page with multiple H1s</td><td><span class="status poor">Moderate</span></td></tr>
+          <tr><td class="metric">Title tag length</td><td>1 title outside the ideal 30–60 character range</td><td><span class="status poor">Moderate</span></td></tr>
+        </tbody>
+      </table>
+      <div class="insight">
+        <span class="label">— Read</span>
+        None of these are technically difficult. All of them have been left undone, which suggests the site was launched without an SEO pass and has not been touched since. The cheapest, fastest gains in the audit are still on the table.
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 10 — QUICK WINS -->
+  <section class="slide">
+    <div class="slide-content">
+      <div class="section-eyebrow"><span class="num">09</span> Quick Wins — This Week</div>
+      <h2>Three moves that can ship in days, not months.</h2>
+      <div class="wins">
+        <div class="win">
+          <div>
+            <h4>Write and publish a meta description on every page.</h4>
+            <p>Lead with the service, the sector, and a reason to enquire — e.g. <em>"Outsourced hotel housekeeping and hybrid staffing solutions across Australia. Trusted by [client] and [client]. Talk to our team."</em> Same template, customised per page. Ten pages, two hours of work.</p>
+          </div>
+        </div>
+        <div class="win">
+          <div>
+            <h4>Add two or three real client logos or a single attributed testimonial above the fold.</h4>
+            <p>The "Our Clients" section is currently a heading with nothing behind it. In hotel staffing, the buyer is making a labour-trust decision. Proof has to live where proof is expected — visible on the homepage, with a real name and a real hotel attached.</p>
+          </div>
+        </div>
+        <div class="win">
+          <div>
+            <h4>Rewrite the homepage H1 to lead with the buyer's problem.</h4>
+            <p>Something like <em>"Hotel Housekeeping and Staffing Solutions That Keep Operations Running."</em> The current H1 forces visitors to translate the brand name before they understand the offer. The new H1 does the disambiguation work in one line.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 11 — PRIORITIES -->
+  <section class="slide">
+    <div class="slide-content">
+      <div class="section-eyebrow"><span class="num">10</span> Priority Recommendations</div>
+      <h2>The 90-day build, sequenced.</h2>
+      <div class="priorities">
+        <div class="priority">
+          <span class="priority-label">Priority 01 — Foundational</span>
+          <h3>Build a keyword strategy that targets hotel operators.</h3>
+          <p>Target hospitality staffing terms with commercial intent — "outsourced hotel housekeeping Australia," "hotel labour hire," "hospitality staffing agency Sydney/Melbourne/Brisbane." Run the Ahrefs Site Audit to uncover technical issues suppressing indexation.</p>
+        </div>
+        <div class="priority">
+          <span class="priority-label">Priority 02 — Content &amp; On-Page</span>
+          <h3>Build pillar content and service pages around the real offer.</h3>
+          <p>Service pages for outsourced housekeeping, hybrid staffing, and labour hire — plus case studies from real Australian hotel clients — would build topical authority quickly. Every page needs unique titles, meta descriptions, headers, and internal links.</p>
+        </div>
+        <div class="priority">
+          <span class="priority-label">Priority 03 — Link Building</span>
+          <h3>Target AU hospitality associations, not tech directories.</h3>
+          <p>Target the AHA, AAOA, Tourism Australia, HM Magazine, Hospitality Magazine AU, and state-level hotel operator networks. A mix of PR outreach, guest posting, and verified directory listings. Disavow the spam-flagged links.</p>
+        </div>
+        <div class="priority">
+          <span class="priority-label">Priority 04 — Local &amp; Structured Data</span>
+          <h3>Set up Google Business Profile and structured data.</h3>
+          <p>Add schema markup (Organization, Service, LocalBusiness) to improve eligibility for rich results and AI citations. Google Business Profile properly configured for each service area gives the site a local presence it currently lacks entirely.</p>
+        </div>
+        <div class="priority">
+          <span class="priority-label">Priority 05 — Track &amp; Measure</span>
+          <h3>Set up Search Console, connect to Ahrefs, track 20–30 target terms.</h3>
+          <p>Monthly Site Audits, weekly rank tracking, and a quarterly review of organic traffic by landing page and keyword cluster. Without measurement, none of the above can be defended or refined.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 12 — RECOMMENDED ENGAGEMENT -->
+  <section class="slide">
+    <div class="slide-content">
+      <div class="section-eyebrow"><span class="num">11</span> Recommended Engagement</div>
+      <h2>Package 02. <em>Sized to the work, sequenced to the timeline.</em></h2>
+      <p class="lede">Multi-region service coverage, 5+ service categories, and a foundational build across content, links, and tracking. Package 01 cannot resource this brief at pace. Package 03 is premature until the foundation is in.</p>
+      <div class="packages">
+        <div class="package">
+          <div class="package-label">— Package 01</div>
+          <div class="package-name">Single region<br>Single offer</div>
+          <div class="package-pricing">
+            <div class="price-row"><span>Setup</span><strong>$2,500 + GST</strong></div>
+            <div class="price-row"><span>Monthly</span><strong>$2,000 + GST</strong></div>
+            <div class="price-row"><span>Tenure</span><strong>12 months</strong></div>
+          </div>
+          <div class="package-criteria">
+            <span class="package-criteria-label">— Service criteria</span>
+            Single region / service area<br>
+            Up to 5 service categories
+          </div>
+          <div class="package-status">Too constrained for the multi-metro scope outlined in this audit.</div>
+        </div>
+        <div class="package recommended">
+          <div class="recommended-badge">Recommended</div>
+          <div class="package-label">— Package 02</div>
+          <div class="package-name">Multi-region<br>Multi-service</div>
+          <div class="package-pricing">
+            <div class="price-row"><span>Setup</span><strong>$3,500 + GST</strong></div>
+            <div class="price-row"><span>Monthly</span><strong>$3,000 + GST</strong></div>
+            <div class="price-row"><span>Tenure</span><strong>12 months</strong></div>
+          </div>
+          <div class="package-criteria">
+            <span class="package-criteria-label">— Service criteria</span>
+            Up to 3 regions / service areas<br>
+            5 to 10 service categories
+          </div>
+          <div class="package-status">Sized to the work outlined. 12 months aligns with the foundation-to-traction timeline.</div>
+        </div>
+        <div class="package">
+          <div class="package-label">— Package 03</div>
+          <div class="package-name">National<br>Full portfolio</div>
+          <div class="package-pricing">
+            <div class="price-row"><span>Setup</span><strong>$4,500 + GST</strong></div>
+            <div class="price-row"><span>Monthly</span><strong>$4,000 + GST</strong></div>
+            <div class="price-row"><span>Tenure</span><strong>12 months</strong></div>
+          </div>
+          <div class="package-criteria">
+            <span class="package-criteria-label">— Service criteria</span>
+            More than 3 regions / service areas<br>
+            11 to 15 service categories
+          </div>
+          <div class="package-status">Natural graduation at the end of year one.</div>
+        </div>
+      </div>
+      <div class="investment-summary">
+        <div class="inv-label">— 12-Month Investment · Package 02</div>
+        <div class="inv-row"><div class="key">Setup &amp; onboarding</div><div class="val">$3,500 + GST</div></div>
+        <div class="inv-row"><div class="key">Monthly retainer × 12</div><div class="val">$36,000 + GST</div></div>
+        <div class="inv-row total"><div class="key">Total 12-month investment</div><div class="val">$39,500 + GST</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 13 — ROI -->
+  <section class="slide">
+    <div class="slide-content">
+      <div class="section-eyebrow"><span class="num">12</span> How We Measure ROI</div>
+      <h2>One new client pays back the year. <em>The average pays it back sixteen times over.</em></h2>
+      <p class="lede">Based on AI Hospitality Solutions' current contract portfolio — $120,000 to $1.2 million per year, averaging $650,000 — here is the return on the $39,500 + GST investment if SEO sources one new client in 12 months.</p>
+      <div class="break-even">
+        <div class="break-even-card">
+          <div class="acv-label">— Smallest contract</div>
+          <div class="acv-value">$120,000 ACV</div>
+          <div class="multiple">3.0×</div>
+          <div class="multiple-label">return · year one</div>
+        </div>
+        <div class="break-even-card highlighted">
+          <div class="avg-badge">Portfolio Average</div>
+          <div class="acv-label">— Typical contract</div>
+          <div class="acv-value">$650,000 ACV</div>
+          <div class="multiple">16.5×</div>
+          <div class="multiple-label">return · year one</div>
+        </div>
+        <div class="break-even-card">
+          <div class="acv-label">— Largest contract</div>
+          <div class="acv-value">$1.2M ACV</div>
+          <div class="multiple">30.4×</div>
+          <div class="multiple-label">return · year one</div>
+        </div>
+      </div>
+      <p class="footnote">ACV = Annual Contract Value. Range and average reflect AIHS current contract portfolio as supplied. Calculation assumes one new client closed within the 12-month engagement period; year-two returns compound as foundation work continues to pay.</p>
+      <div class="indicators-timeline">
+        <div class="indicator-stage">
+          <div class="stage-when">Mo 01 — 03</div>
+          <div class="stage-name">Activity</div>
+          <p>Indexed pages, meta coverage, technical health, GSC impressions baseline.</p>
+        </div>
+        <div class="indicator-stage">
+          <div class="stage-when">Mo 03 — 06</div>
+          <div class="stage-name">Visibility</div>
+          <p>Keywords ranking, position movement, impression growth, branded search trend.</p>
+        </div>
+        <div class="indicator-stage">
+          <div class="stage-when">Mo 06 — 09</div>
+          <div class="stage-name">Traffic &amp; Intent</div>
+          <p>Organic sessions, engaged sessions, form starts, time on service pages.</p>
+        </div>
+        <div class="indicator-stage">
+          <div class="stage-when">Mo 09 — 12</div>
+          <div class="stage-name">Commercial</div>
+          <p>Qualified enquiries, opportunities in pipeline, closed-won revenue, CPA.</p>
+        </div>
+      </div>
+      <div class="insight critical">
+        <span class="label">— The multiplier on every SEO dollar</span>
+        None of this ROI math works if the positioning fix does not happen first. Organic traffic to a site that confuses buyers will bounce before it converts. The Week 01 quick wins — new H1, meta descriptions, real client proof — are non-negotiable before the rest of the program can pay back.
+      </div>
+    </div>
+  </section>
+
+  <!-- SLIDE 14 — ENGAGEMENT CLOSE -->
+  <section class="slide engagement">
+    <div class="slide-content">
+      <div class="section-eyebrow"><span class="num">13</span> What We&apos;d Do First</div>
+      <h2>The homepage headline and the meta description, before anything else. <em>Because the right buyer needs to know they&apos;re in the right place — in the first three seconds.</em></h2>
+      <p>SEO is the long game. Positioning is the short one. There is no point pouring backlinks and content into a site that, on arrival, makes its actual buyers second-guess whether they have the right URL. We&apos;d fix that first, then build the keyword strategy and content engine that takes the site from one branded keyword to a real organic pipeline.</p>
+      <div class="stages">
+        <div class="stage">
+          <span class="when">— Week 01</span>
+          <h5>Positioning Sprint</h5>
+          <p>New homepage H1, meta descriptions across all 10 pages, fix duplicate titles, add real client proof. Ship in five days.</p>
+        </div>
+        <div class="stage">
+          <span class="when">— Weeks 02 – 06</span>
+          <h5>Content &amp; Pages</h5>
+          <p>Build three service pillar pages, two case studies with real clients, fix thin content, set up schema and GBP, run a full Site Audit.</p>
+        </div>
+        <div class="stage">
+          <span class="when">— Months 02 – 03</span>
+          <h5>Authority &amp; Reach</h5>
+          <p>Outreach campaign to AHA, hospitality publications, and state operator networks. Disavow the spam links. Begin keyword rank tracking and monthly reporting.</p>
+        </div>
+      </div>
+      <div class="engagement-cta">
+        <div class="lead">"Let&apos;s talk about what the site could look like in 90 days."</div>
+        <div class="who">
+          Prepared by<br>
+          <strong>Michael Glasser</strong><br>
+          Zib Digital
+        </div>
+      </div>
+    </div>
+  </section>
+
+<script>
+(function() {
+  const slides = Array.from(document.querySelectorAll('.slide'));
+  const currentEl = document.querySelector('.nav-counter .current');
+  const totalEl = document.querySelector('.nav-counter .total');
+  const prevBtn = document.querySelector('.nav-btn.prev');
+  const nextBtn = document.querySelector('.nav-btn.next');
+  const pad = n => String(n).padStart(2, '0');
+
+  totalEl.textContent = pad(slides.length);
+
+  // Track current slide via IntersectionObserver
+  let currentIndex = 0;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      const idx = slides.indexOf(entry.target);
+      if (entry.isIntersecting && entry.intersectionRatio >= 0.4) {
+        entry.target.classList.add('is-visible');
+        currentIndex = idx;
+        currentEl.textContent = pad(idx + 1);
+        prevBtn.disabled = idx === 0;
+        nextBtn.disabled = idx === slides.length - 1;
+        // Toggle dark mode for engagement slide
+        if (entry.target.classList.contains('engagement')) {
+          document.body.classList.add('dark-mode');
+        } else {
+          document.body.classList.remove('dark-mode');
+        }
+      }
+    });
+  }, { threshold: [0, 0.4, 0.7] });
+
+  slides.forEach(s => observer.observe(s));
+
+  // Make first slide visible immediately
+  requestAnimationFrame(() => slides[0].classList.add('is-visible'));
+
+  // Navigation
+  function goToSlide(idx) {
+    if (idx < 0 || idx >= slides.length) return;
+    slides[idx].scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  prevBtn.addEventListener('click', () => goToSlide(currentIndex - 1));
+  nextBtn.addEventListener('click', () => goToSlide(currentIndex + 1));
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+    if (e.key === 'ArrowDown' || e.key === 'PageDown' || e.key === ' ') {
+      e.preventDefault();
+      goToSlide(currentIndex + 1);
+    } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
+      e.preventDefault();
+      goToSlide(currentIndex - 1);
+    } else if (e.key === 'Home') {
+      e.preventDefault();
+      goToSlide(0);
+    } else if (e.key === 'End') {
+      e.preventDefault();
+      goToSlide(slides.length - 1);
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
