@@ -783,9 +783,10 @@
     border-top: 1px solid rgba(250, 247, 242, 0.2);
   }
   .stages .stage {
-    padding: 24px 20px 24px 0;
+    padding: 24px 24px 24px 24px;
     border-right: 1px solid rgba(250, 247, 242, 0.2);
   }
+  .stages .stage:first-child { padding-left: 0; }
   .stages .stage:last-child { border-right: none; padding-right: 0; }
   .stages .stage .when {
     font-family: 'JetBrains Mono', monospace;
@@ -869,8 +870,9 @@
     .indicator-stage { padding: 16px 0 8px 0; margin-right: 0; }
     .indicator-stage:before { left: -30px; top: 18px; }
     .stages { grid-template-columns: 1fr; }
-    .stages .stage { border-right: none; border-bottom: 1px solid rgba(250, 247, 242, 0.2); padding-right: 0; }
-    .stages .stage:last-child { border-bottom: none; }
+    .stages .stage { border-right: none; border-bottom: 1px solid rgba(250, 247, 242, 0.2); padding: 20px 0; }
+    .stages .stage:first-child { padding-top: 20px; padding-left: 0; }
+    .stages .stage:last-child { border-bottom: none; padding-bottom: 20px; }
     .engagement-cta { flex-direction: column; gap: 18px; align-items: flex-start; }
     .engagement-cta .who { text-align: left; }
     .pullquote { font-size: 22px; padding-left: 20px; }
