@@ -1,0 +1,757 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<title>Meta Ads Lab · Zib Digital</title>
+<meta name="description" content="Drop your URL. Our AI drafts a month of Meta ads for your brand in 60 seconds. A senior Zib strategist tunes them before they land in your inbox." />
+<meta name="zib:source-tag" content="Meta Ads Lab concept" />
+<!-- @include _partials/head.html -->
+<style>
+/* ─── HERO ──────────────────────────────────────────────────────── */
+.mal-hero {
+  padding-top: clamp(56px, 8vw, 96px);
+  padding-bottom: clamp(72px, 9vw, 120px);
+  background: var(--paper);
+  border-bottom: 0.5px solid var(--rule);
+  position: relative;
+  overflow: hidden;
+}
+.mal-hero::before {
+  content: "";
+  position: absolute;
+  inset: -1px 0 0 0;
+  background:
+    radial-gradient(60% 80% at 88% 0%, rgba(255, 98, 0, 0.10), transparent 60%),
+    radial-gradient(50% 80% at 8% 100%, rgba(255, 98, 0, 0.06), transparent 60%);
+  pointer-events: none;
+}
+.mal-hero .container { position: relative; }
+.mal-hero h1 {
+  font-family: var(--display);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  font-size: clamp(40px, 6.4vw, 92px);
+  line-height: 0.98;
+  max-width: 16ch;
+  margin-top: 14px;
+}
+.mal-hero h1 em { font-style: italic; color: var(--accent); font-weight: 400; }
+.mal-hero .sub {
+  margin-top: clamp(22px, 2.4vw, 30px);
+  max-width: 60ch;
+  color: var(--muted);
+  font-size: clamp(16px, 1.3vw, 19px);
+  line-height: 1.55;
+}
+.mal-hero .sub strong { color: var(--ink); font-weight: 500; }
+
+/* URL form */
+.mal-form {
+  margin-top: clamp(32px, 4vw, 48px);
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 10px;
+  max-width: 680px;
+  padding: 10px;
+  border-radius: 999px;
+  background: #fff;
+  border: 1px solid var(--rule-2);
+  box-shadow: 0 30px 80px -40px rgba(0,0,0,0.18);
+  transition: border-color 200ms var(--ease), transform 200ms var(--ease);
+}
+.mal-form:focus-within { border-color: var(--ink); transform: translateY(-1px); }
+.mal-form input {
+  font-family: var(--display);
+  font-size: clamp(15px, 1.2vw, 17px);
+  padding: 14px 18px;
+  color: var(--ink);
+  background: transparent;
+  border: 0;
+  outline: 0;
+  min-width: 0;
+}
+.mal-form input::placeholder { color: var(--muted-2); }
+.mal-form button {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 15px;
+  padding: 0 26px;
+  height: 48px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: #fff;
+  border: 0;
+  cursor: pointer;
+  transition: transform 200ms var(--ease), background 200ms var(--ease);
+  white-space: nowrap;
+}
+.mal-form button:hover { background: var(--accent); transform: translateY(-1px); }
+.mal-form button .arr { display: inline-block; margin-left: 6px; transition: transform 200ms var(--ease); }
+.mal-form button:hover .arr { transform: translateX(3px); }
+@media (max-width: 560px) {
+  .mal-form { grid-template-columns: 1fr; border-radius: 22px; padding: 8px; }
+  .mal-form button { height: 52px; }
+}
+.mal-trust {
+  margin-top: 22px;
+  display: flex; flex-wrap: wrap; gap: 8px 22px;
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--muted);
+}
+.mal-trust .dot { width: 6px; height: 6px; border-radius: 999px; background: var(--accent); display: inline-block; margin-right: 8px; vertical-align: middle; }
+
+/* ─── STAGES ────────────────────────────────────────────────────── */
+.mal-stages { padding: clamp(96px, 11vw, 160px) 0; border-bottom: 0.5px solid var(--rule); }
+.mal-stages .head { max-width: 60ch; margin-bottom: clamp(48px, 6vw, 72px); }
+.mal-stages h2 {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(34px, 4.2vw, 60px);
+  letter-spacing: -0.025em; line-height: 1.02;
+  margin-top: 14px;
+}
+.mal-stages h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
+.mal-stage-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(14px, 1.6vw, 20px);
+}
+@media (max-width: 1080px) { .mal-stage-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .mal-stage-grid { grid-template-columns: 1fr; } }
+.mal-stage {
+  position: relative;
+  padding: clamp(24px, 2.4vw, 32px);
+  border: 1px solid var(--rule);
+  border-radius: 18px;
+  background: #fff;
+  transition: transform 280ms var(--ease), border-color 280ms var(--ease);
+}
+.mal-stage:hover { transform: translateY(-3px); border-color: var(--ink); }
+.mal-stage .num {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em;
+  color: var(--muted-2); font-weight: 600;
+}
+.mal-stage .tick {
+  position: absolute; top: 22px; right: 22px;
+  width: 22px; height: 22px; border-radius: 999px;
+  background: var(--score-good); color: #fff;
+  display: grid; place-items: center; font-size: 12px; font-weight: 700;
+}
+.mal-stage h3 {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(20px, 1.8vw, 24px); letter-spacing: -0.018em;
+  margin: 14px 0 10px;
+}
+.mal-stage p { color: var(--muted); font-size: 14.5px; line-height: 1.6; }
+.mal-stage .timer {
+  margin-top: 18px;
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em;
+  color: var(--accent);
+}
+
+/* ─── SAMPLE PREVIEW ────────────────────────────────────────────── */
+.mal-sample {
+  padding: clamp(96px, 11vw, 160px) 0;
+  background: var(--paper);
+  border-bottom: 0.5px solid var(--rule);
+}
+.mal-sample .head { display: flex; justify-content: space-between; align-items: end; gap: 40px; flex-wrap: wrap; margin-bottom: clamp(48px, 6vw, 72px); }
+.mal-sample h2 {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(34px, 4.2vw, 60px);
+  letter-spacing: -0.025em; line-height: 1.02;
+  margin-top: 14px;
+  max-width: 16ch;
+}
+.mal-sample h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
+.mal-sample .head .meta {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em;
+  color: var(--muted); text-transform: uppercase;
+  max-width: 30ch;
+  line-height: 1.6;
+}
+
+.mal-ad-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(16px, 1.8vw, 24px);
+}
+@media (max-width: 1080px) { .mal-ad-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .mal-ad-grid { grid-template-columns: 1fr; } }
+.ad-card {
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-radius: 18px;
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  transition: transform 280ms var(--ease), box-shadow 280ms var(--ease);
+}
+.ad-card:hover { transform: translateY(-4px); box-shadow: 0 40px 90px -50px rgba(0,0,0,0.25); }
+
+.ad-shell {
+  padding: 12px 14px 10px;
+  display: flex; align-items: center; gap: 10px;
+  border-bottom: 0.5px solid var(--rule);
+  font-size: 13px;
+}
+.ad-shell .avatar { width: 32px; height: 32px; border-radius: 999px; background: linear-gradient(135deg, var(--accent), #ffb066); flex-shrink: 0; }
+.ad-shell .name { font-weight: 500; color: var(--ink); }
+.ad-shell .sponsored { color: var(--muted); font-size: 11px; }
+.ad-shell .platform {
+  margin-left: auto;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em;
+  color: var(--muted-2); text-transform: uppercase;
+}
+.ad-copy {
+  padding: 10px 14px 12px;
+  font-size: 13.5px; line-height: 1.45; color: var(--ink-2);
+}
+.ad-copy strong { font-weight: 500; }
+.ad-visual {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  background: linear-gradient(140deg, #1a1a1a, #2a2a2a);
+  color: #fff;
+  display: grid; place-items: center;
+  padding: 24px;
+  text-align: center;
+  font-family: var(--display);
+  overflow: hidden;
+}
+.ad-visual.amber  { background: linear-gradient(140deg, #2a1505 0%, #FF6200 100%); }
+.ad-visual.linen  { background: linear-gradient(140deg, #F1ECDF 0%, #D9CDB0 100%); color: var(--ink); }
+.ad-visual.ink    { background: linear-gradient(140deg, #000 0%, #1A1A1A 100%); }
+.ad-visual.bay    { background: linear-gradient(140deg, #1F3A47 0%, #6FA3B5 100%); }
+.ad-visual .v-pre {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+  opacity: 0.7; margin-bottom: 14px;
+}
+.ad-visual .v-h {
+  font-size: clamp(18px, 2vw, 26px);
+  font-weight: 500; letter-spacing: -0.02em; line-height: 1.05;
+  max-width: 14ch;
+}
+.ad-visual .v-h em { font-style: italic; font-weight: 400; }
+.ad-visual .v-sub {
+  margin-top: 10px;
+  font-size: 11px; letter-spacing: 0.06em; opacity: 0.8;
+}
+/* Story aspect (9:16) */
+.ad-visual.story { aspect-ratio: 9 / 16; align-items: end; justify-items: stretch; place-items: end stretch; padding: 0; }
+.ad-visual.story .v-stack {
+  width: 100%;
+  padding: 20px;
+  background: linear-gradient(180deg, transparent, rgba(0,0,0,0.55) 70%);
+  text-align: left;
+}
+.ad-visual.story .v-h { max-width: none; }
+/* Carousel cue */
+.ad-visual.carousel::after {
+  content: "";
+  position: absolute;
+  right: -20px; top: 8px; bottom: 8px;
+  width: 40px;
+  background: rgba(255,255,255,0.06);
+  border-left: 2px dashed rgba(255,255,255,0.15);
+  border-right: 2px dashed rgba(255,255,255,0.10);
+  transform: skewX(-6deg);
+}
+.ad-cta-bar {
+  padding: 10px 14px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-top: 0.5px solid var(--rule);
+  background: #FAFAF8;
+  font-size: 12px;
+}
+.ad-cta-bar .label { color: var(--muted); }
+.ad-cta-bar .cta-btn {
+  font-family: var(--display); font-weight: 500; font-size: 12px;
+  padding: 6px 12px; border-radius: 6px;
+  background: var(--ink); color: #fff;
+}
+.ad-meta-row {
+  display: flex; gap: 8px; flex-wrap: wrap;
+  padding: 12px 14px;
+  border-top: 0.5px solid var(--rule);
+}
+.ad-tag {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--muted);
+  padding: 4px 8px; border-radius: 999px;
+  background: var(--dim);
+}
+.ad-tag.angle { background: var(--accent-tint); color: #B83B00; }
+
+/* ─── STRATEGY BLOCK ────────────────────────────────────────────── */
+.mal-strategy { padding: clamp(96px, 11vw, 160px) 0; border-bottom: 0.5px solid var(--rule); }
+.mal-strategy .head { max-width: 60ch; margin-bottom: clamp(48px, 6vw, 72px); }
+.mal-strategy h2 {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(34px, 4.2vw, 60px);
+  letter-spacing: -0.025em; line-height: 1.02;
+  margin-top: 14px;
+}
+.mal-strategy h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
+.strat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(20px, 2vw, 28px);
+}
+@media (max-width: 880px) { .strat-grid { grid-template-columns: 1fr; } }
+.strat-card {
+  padding: clamp(28px, 3vw, 36px);
+  border: 1px solid var(--rule);
+  border-radius: 18px;
+  background: #fff;
+}
+.strat-card .label {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em;
+  color: var(--accent); font-weight: 600; text-transform: uppercase;
+}
+.strat-card h3 {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(22px, 2vw, 28px);
+  letter-spacing: -0.018em; margin: 14px 0 20px;
+}
+.strat-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 16px; }
+.strat-list li {
+  font-size: 14.5px; line-height: 1.55; color: var(--ink-2);
+  padding-left: 24px; position: relative;
+}
+.strat-list li::before {
+  content: ""; position: absolute; left: 0; top: 8px;
+  width: 12px; height: 1px; background: var(--accent);
+}
+.strat-list li strong { display: block; color: var(--ink); font-weight: 500; margin-bottom: 3px; }
+
+/* ─── PAYWALL CTA ───────────────────────────────────────────────── */
+.mal-paywall {
+  padding: clamp(96px, 11vw, 160px) 0;
+  background: var(--ink);
+  color: #fff;
+  position: relative;
+  isolation: isolate;
+}
+.mal-paywall::after {
+  content: "";
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  opacity: 0.04;
+  mix-blend-mode: overlay;
+  pointer-events: none;
+  z-index: 0;
+}
+.mal-paywall .container { position: relative; z-index: 1; }
+.mal-paywall .eyebrow { color: var(--accent); }
+.mal-paywall h2 {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(36px, 5vw, 72px);
+  letter-spacing: -0.025em; line-height: 1.02;
+  margin-top: 14px; max-width: 18ch;
+}
+.mal-paywall h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
+.pay-grid {
+  margin-top: clamp(56px, 7vw, 88px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 5vw, 80px);
+}
+@media (max-width: 880px) { .pay-grid { grid-template-columns: 1fr; gap: 56px; } }
+.pay-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 22px; }
+.pay-list li {
+  padding-left: 36px; position: relative;
+  font-size: clamp(16px, 1.2vw, 18px); line-height: 1.5;
+  color: rgba(255,255,255,0.86);
+}
+.pay-list li::before {
+  content: ""; position: absolute; left: 0; top: 10px;
+  width: 22px; height: 1px; background: var(--accent);
+}
+.pay-list li strong { color: #fff; display: block; font-weight: 500; margin-bottom: 4px; }
+
+.pay-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 22px;
+  padding: clamp(28px, 3vw, 40px);
+}
+.pay-card .lbl {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.55); text-transform: uppercase;
+}
+.pay-card h3 {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(22px, 2vw, 28px); letter-spacing: -0.018em;
+  margin: 14px 0 22px;
+}
+.pay-form { display: grid; gap: 12px; }
+.pay-form input, .pay-form textarea {
+  font-family: var(--display); font-size: 15px;
+  padding: 14px 16px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 12px;
+  color: #fff; width: 100%;
+  transition: border-color 200ms var(--ease), background 200ms var(--ease);
+}
+.pay-form input::placeholder, .pay-form textarea::placeholder { color: rgba(255,255,255,0.4); }
+.pay-form input:focus, .pay-form textarea:focus { outline: 0; border-color: var(--accent); background: rgba(255,255,255,0.08); }
+.pay-form textarea { resize: vertical; min-height: 84px; }
+.pay-form .submit {
+  margin-top: 6px;
+  padding: 16px 24px;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--display); font-weight: 500; font-size: 16px;
+  border: 0; border-radius: 999px;
+  cursor: pointer;
+  transition: transform 200ms var(--ease), background 200ms var(--ease);
+}
+.pay-form .submit:hover { transform: translateY(-1px); background: #ff7a26; }
+.pay-card .fineprint {
+  margin-top: 16px;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.4); text-transform: uppercase;
+}
+
+/* ─── FAQ ───────────────────────────────────────────────────────── */
+.mal-faq { padding: clamp(96px, 11vw, 160px) 0; border-bottom: 0.5px solid var(--rule); }
+.mal-faq .head { max-width: 60ch; margin-bottom: clamp(48px, 6vw, 72px); }
+.mal-faq h2 {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(34px, 4.2vw, 60px);
+  letter-spacing: -0.025em; line-height: 1.02;
+  margin-top: 14px;
+}
+.faq-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(24px, 3vw, 40px);
+}
+@media (max-width: 880px) { .faq-grid { grid-template-columns: 1fr; } }
+.faq-item { border-top: 1px solid var(--rule); padding: 24px 0; }
+.faq-item h3 {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(18px, 1.5vw, 21px); letter-spacing: -0.015em;
+  margin-bottom: 10px;
+}
+.faq-item p { color: var(--muted); font-size: 15px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+<!-- @include _partials/nav.html -->
+<div class="header-spacer"></div>
+
+<main id="main">
+
+  <!-- ─── HERO ────────────────────────────── -->
+  <section class="mal-hero">
+    <div class="container">
+      <div class="mono eyebrow reveal">Meta Ads Lab · Free preview for Australian brands</div>
+      <h1 class="reveal">
+        Your next month of Meta ads, <em>in 60 seconds.</em>
+      </h1>
+      <p class="sub reveal">
+        <strong>Drop your URL.</strong> Our system reads your brand, your category and your audience the way a strategist would — then drafts 12 Meta ad concepts ready to review. A senior Zib strategist sanity-checks the work before it lands in your inbox.
+      </p>
+
+      <form class="mal-form reveal" onsubmit="event.preventDefault(); document.getElementById('flow').scrollIntoView({behavior:'smooth'});">
+        <input type="url" name="url" placeholder="yourwebsite.com.au" autocomplete="url" required />
+        <button type="submit">Generate my ads <span class="arr">→</span></button>
+      </form>
+
+      <div class="mal-trust reveal">
+        <span><span class="dot"></span>Meta Business Partner</span>
+        <span><span class="dot"></span>30,000+ ads launched</span>
+        <span><span class="dot"></span>Senior strategist on every account</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── HOW IT WORKS ─────────────────────── -->
+  <section id="flow" class="mal-stages">
+    <div class="container">
+      <div class="head reveal">
+        <div class="mono eyebrow">How it works</div>
+        <h2>The AI does the crawl. <em>Our strategists own the call.</em></h2>
+      </div>
+      <div class="mal-stage-grid">
+        <div class="mal-stage reveal">
+          <div class="num">01</div>
+          <div class="tick" aria-hidden="true">✓</div>
+          <h3>Reads your site.</h3>
+          <p>Crawls your pages, extracts your brand DNA — logo, palette, tone, services, hero offers, social proof.</p>
+          <div class="timer">~12s</div>
+        </div>
+        <div class="mal-stage reveal">
+          <div class="num">02</div>
+          <div class="tick" aria-hidden="true">✓</div>
+          <h3>Maps your buyer.</h3>
+          <p>Builds three to five customer segments with pains, jobs-to-be-done, and the exact angles that move them.</p>
+          <div class="timer">~18s</div>
+        </div>
+        <div class="mal-stage reveal">
+          <div class="num">03</div>
+          <div class="tick" aria-hidden="true">✓</div>
+          <h3>Drafts the ads.</h3>
+          <p>Twelve Meta concepts across feed, story, reel and carousel. Three angles × four formats. On-brand creative + copy.</p>
+          <div class="timer">~24s</div>
+        </div>
+        <div class="mal-stage reveal">
+          <div class="num">04</div>
+          <div class="tick" aria-hidden="true">✓</div>
+          <h3>Strategist tunes it.</h3>
+          <p>A senior Zib Meta strategist reviews the brief, kills weak angles, sharpens the strong ones. Then it ships.</p>
+          <div class="timer">Within 24h</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SAMPLE PREVIEW ───────────────────── -->
+  <section class="mal-sample">
+    <div class="container">
+      <div class="head reveal">
+        <div>
+          <div class="mono eyebrow">A real sample · Brighton skincare brand</div>
+          <h2>Here's what <em>landed in their inbox.</em></h2>
+        </div>
+        <p class="meta">
+          Margot Skin · DTC skincare · Bayside Melbourne · launching their second product line. URL submitted Tuesday 11:04am. Strategy + 12 concepts delivered Wednesday 9:30am.
+        </p>
+      </div>
+
+      <div class="mal-ad-grid">
+        <!-- Ad 1 — feed, social proof angle -->
+        <article class="ad-card reveal">
+          <header class="ad-shell">
+            <div class="avatar"></div>
+            <div>
+              <div class="name">Margot Skin</div>
+              <div class="sponsored">Sponsored</div>
+            </div>
+            <span class="platform">Instagram · Feed</span>
+          </header>
+          <div class="ad-copy">
+            <strong>"The first thing that actually fixed my barrier."</strong> 4,200 Australians on the waitlist. Limited drop, Thursday 9am.
+          </div>
+          <div class="ad-visual amber">
+            <div>
+              <div class="v-pre">Hero · 1:1</div>
+              <div class="v-h">Skin that <em>finally</em> behaves.</div>
+              <div class="v-sub">Margot Skin · Brighton</div>
+            </div>
+          </div>
+          <div class="ad-cta-bar">
+            <span class="label">margotskin.com.au</span>
+            <span class="cta-btn">Shop now</span>
+          </div>
+          <div class="ad-meta-row">
+            <span class="ad-tag angle">Social proof</span>
+            <span class="ad-tag">1:1 · Feed</span>
+            <span class="ad-tag">Warm audience</span>
+          </div>
+        </article>
+
+        <!-- Ad 2 — story, problem-aware -->
+        <article class="ad-card reveal">
+          <header class="ad-shell">
+            <div class="avatar"></div>
+            <div>
+              <div class="name">Margot Skin</div>
+              <div class="sponsored">Sponsored</div>
+            </div>
+            <span class="platform">Instagram · Story</span>
+          </header>
+          <div class="ad-visual story bay">
+            <div class="v-stack">
+              <div class="v-pre">Story · 9:16</div>
+              <div class="v-h">Stop spending $400 on serums that don't <em>do</em> anything.</div>
+              <div class="v-sub">Swipe up · 30 day money back</div>
+            </div>
+          </div>
+          <div class="ad-cta-bar">
+            <span class="label">margotskin.com.au</span>
+            <span class="cta-btn">Learn more</span>
+          </div>
+          <div class="ad-meta-row">
+            <span class="ad-tag angle">Problem-aware</span>
+            <span class="ad-tag">9:16 · Story</span>
+            <span class="ad-tag">Cold audience</span>
+          </div>
+        </article>
+
+        <!-- Ad 3 — carousel, education -->
+        <article class="ad-card reveal">
+          <header class="ad-shell">
+            <div class="avatar"></div>
+            <div>
+              <div class="name">Margot Skin</div>
+              <div class="sponsored">Sponsored</div>
+            </div>
+            <span class="platform">Facebook · Carousel</span>
+          </header>
+          <div class="ad-copy">
+            <strong>The 3 ingredients that actually rebuild your barrier</strong> (and the 4 most brands hide behind a fragrance). Swipe →
+          </div>
+          <div class="ad-visual carousel linen">
+            <div>
+              <div class="v-pre" style="color: rgba(0,0,0,0.55)">Carousel · 4 frames</div>
+              <div class="v-h">The 3 ingredients <em>worth paying for.</em></div>
+              <div class="v-sub" style="color: rgba(0,0,0,0.6)">Swipe →</div>
+            </div>
+          </div>
+          <div class="ad-cta-bar">
+            <span class="label">margotskin.com.au</span>
+            <span class="cta-btn">See more</span>
+          </div>
+          <div class="ad-meta-row">
+            <span class="ad-tag angle">Education</span>
+            <span class="ad-tag">4:5 · Carousel</span>
+            <span class="ad-tag">Cold audience</span>
+          </div>
+        </article>
+
+        <!-- Ad 4 — reel, founder voice -->
+        <article class="ad-card reveal">
+          <header class="ad-shell">
+            <div class="avatar"></div>
+            <div>
+              <div class="name">Margot Skin</div>
+              <div class="sponsored">Sponsored</div>
+            </div>
+            <span class="platform">Instagram · Reel</span>
+          </header>
+          <div class="ad-visual story ink">
+            <div class="v-stack">
+              <div class="v-pre">Reel · 9:16</div>
+              <div class="v-h">"I started Margot because <em>nothing</em> worked on my skin."</div>
+              <div class="v-sub">Founder, 22 sec · Sound on</div>
+            </div>
+          </div>
+          <div class="ad-cta-bar">
+            <span class="label">margotskin.com.au</span>
+            <span class="cta-btn">Shop now</span>
+          </div>
+          <div class="ad-meta-row">
+            <span class="ad-tag angle">Founder story</span>
+            <span class="ad-tag">9:16 · Reel</span>
+            <span class="ad-tag">Lookalike 1%</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── STRATEGY DETAIL ──────────────────── -->
+  <section class="mal-strategy">
+    <div class="container">
+      <div class="head reveal">
+        <div class="mono eyebrow">Behind the four ads</div>
+        <h2>You also get the <em>thinking,</em> not just the assets.</h2>
+      </div>
+      <div class="strat-grid">
+        <div class="strat-card reveal">
+          <div class="label">Audiences</div>
+          <h3>Who we're talking to.</h3>
+          <ul class="strat-list">
+            <li><strong>Bayside DTC buyer · 34-49</strong>Spends on skincare, owns 3+ active subscriptions, churns on disappointment.</li>
+            <li><strong>Pre-launch waitlist · warm</strong>Already opted in, hasn't bought. Highest-ROAS audience for first 14 days.</li>
+            <li><strong>1% lookalike of repeat buyers</strong>Most efficient cold-prospect audience. Builds the next quarter's pipeline.</li>
+          </ul>
+        </div>
+        <div class="strat-card reveal">
+          <div class="label">Angles</div>
+          <h3>What we're saying.</h3>
+          <ul class="strat-list">
+            <li><strong>Social proof</strong>Waitlist size, customer quote, results-led. Highest CTR in test data.</li>
+            <li><strong>Problem-aware</strong>Names the frustration before naming the brand. Best for cold.</li>
+            <li><strong>Founder story</strong>Voice + face on screen. Drops CPM, lifts brand recall.</li>
+          </ul>
+        </div>
+        <div class="strat-card reveal">
+          <div class="label">Spend & cadence</div>
+          <h3>How we'd run it.</h3>
+          <ul class="strat-list">
+            <li><strong>Starting test budget</strong>$120/day across 3 ad sets for 7 days. Cut, double, ship winners.</li>
+            <li><strong>Refresh rhythm</strong>4 new creatives every fortnight. Fatigue kills returns by week 3.</li>
+            <li><strong>Reporting</strong>Weekly read on CAC, ROAS, and AOV — not vanity. Plain English.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── PAYWALL CTA ──────────────────────── -->
+  <section class="mal-paywall">
+    <div class="container">
+      <div class="mono eyebrow reveal">Unlock the rest</div>
+      <h2 class="reveal">Get the full 12 ads. Then turn them <em>into live campaigns.</em></h2>
+
+      <div class="pay-grid">
+        <ul class="pay-list reveal">
+          <li><strong>All 12 ad concepts (free)</strong>Feed, story, reel, carousel — fully designed, ready for Meta's ad library upload.</li>
+          <li><strong>Audience map + targeting JSON</strong>Plug-and-play interest stacks, lookalike specs, exclusions.</li>
+          <li><strong>Launch-ready media plan</strong>Test budget split, cadence, kill criteria. Not a slide — a playbook.</li>
+          <li><strong>30 minutes with a senior Meta strategist</strong>Live walk-through. Real human. Has run Meta for Aussie brands since the Like button.</li>
+          <li><strong>No obligation, no SaaS</strong>Take the work. Run it yourself, hand it to your team, or have us launch it.</li>
+        </ul>
+
+        <div class="pay-card reveal">
+          <div class="lbl">Step 2 of 2</div>
+          <h3>Send me the full pack.</h3>
+          <form class="pay-form" onsubmit="event.preventDefault(); alert('Mockup — wire this to the lead form on staging.');">
+            <input type="text" name="name" placeholder="Your name" autocomplete="name" required />
+            <input type="email" name="email" placeholder="Email · we'll send the pack here" autocomplete="email" required />
+            <input type="tel" name="phone" placeholder="Phone · for the strategy call" autocomplete="tel" />
+            <textarea name="notes" placeholder="Anything else? Launch date, current spend, what's not working…"></textarea>
+            <button type="submit" class="submit">Unlock the full pack <span class="arr">→</span></button>
+          </form>
+          <div class="fineprint">No spam. No newsletter. Strategist responds within 24h.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FAQ ──────────────────────────────── -->
+  <section class="mal-faq">
+    <div class="container">
+      <div class="head reveal">
+        <div class="mono eyebrow">Common questions</div>
+        <h2>Things people ask <em>before they drop the URL.</em></h2>
+      </div>
+      <div class="faq-grid">
+        <div class="faq-item reveal">
+          <h3>Is this actually free?</h3>
+          <p>Yes. The 12 concepts and the strategy are free. We make money when brands ask us to run their Meta program — not before.</p>
+        </div>
+        <div class="faq-item reveal">
+          <h3>Who owns the ads?</h3>
+          <p>You do. Take them, run them, hand them to another agency — we don't care. The work's yours.</p>
+        </div>
+        <div class="faq-item reveal">
+          <h3>Are the ads AI slop?</h3>
+          <p>No. AI does the heavy lifting on research, drafting and visuals. A senior strategist kills the misses before anything ships. If we wouldn't run it for a paying client, you won't see it.</p>
+        </div>
+        <div class="faq-item reveal">
+          <h3>How quickly do I get the pack?</h3>
+          <p>Within 24 hours, usually same-day if you submit before lunch (AEST). The strategist call is booked at the time that suits you.</p>
+        </div>
+        <div class="faq-item reveal">
+          <h3>What if my site is thin or new?</h3>
+          <p>Even better. We'll lean harder on category research, competitor positioning and your audience map. The brief gets sharper, not weaker.</p>
+        </div>
+        <div class="faq-item reveal">
+          <h3>Will you try to sell me something?</h3>
+          <p>We'll show you what running this properly would cost. If you want help, great. If not, you've still got the pack.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- @include _partials/footer.html -->
+<!-- @include _partials/scripts.html -->
+</body>
+</html>
