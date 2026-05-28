@@ -508,6 +508,37 @@
   footer.foot a{color:var(--ink-2);transition:color var(--dur-fast) var(--ease)}
   footer.foot a:hover{color:var(--red)}
 
+  /* branded vs non-branded split */
+  .bn-split{display:grid;grid-template-columns:1fr 1fr;gap:22px;margin-top:36px}
+  @media(max-width:880px){.bn-split{grid-template-columns:1fr}}
+  .bn-panel{
+    background:#fff;padding:30px clamp(24px,3vw,34px);
+    display:flex;flex-direction:column;gap:10px;
+    border-top:6px solid var(--ink);
+    transition:transform var(--dur) var(--ease),box-shadow var(--dur) var(--ease);
+  }
+  .bn-panel:hover{transform:translateY(-3px);box-shadow:0 18px 36px -16px rgba(0,0,0,0.22)}
+  .bn-branded{border-top-color:var(--green)}
+  .bn-nonbranded{border-top-color:var(--red)}
+  .bn-tag{font-family:'Archivo Black',sans-serif;font-size:11px;letter-spacing:0.18em;color:var(--green-dark);text-transform:uppercase}
+  .bn-nonbranded .bn-tag{color:var(--red)}
+  .bn-stat{font-family:'Anton',sans-serif;font-size:clamp(78px,11vw,128px);color:var(--green);line-height:.85;letter-spacing:-.03em;margin-top:4px;font-variant-numeric:tabular-nums}
+  .bn-nonbranded .bn-stat{color:var(--red)}
+  .bn-stat .bn-unit{font-size:0.55em;letter-spacing:-.02em;margin-left:2px;color:inherit}
+  .bn-sub{font-family:'Archivo Black',sans-serif;font-size:11px;letter-spacing:0.14em;color:var(--muted);text-transform:uppercase;margin-top:-2px}
+  .bn-bar{height:8px;background:var(--rule);border-radius:4px;overflow:hidden;margin:10px 0 14px}
+  .bn-fill{display:block;height:100%;width:0;background:var(--green);border-radius:4px;transition:width 1.4s var(--ease)}
+  .bn-fill-red{background:var(--red)}
+  .bn-list{list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:2px}
+  .bn-list li{display:flex;justify-content:space-between;align-items:baseline;font-size:14px;padding:8px 0;border-bottom:1px dashed var(--rule);gap:14px}
+  .bn-list li:last-child{border-bottom:none}
+  .bn-q{color:var(--ink-2);font-family:'Work Sans',sans-serif}
+  .bn-v{font-family:'Anton',sans-serif;font-size:18px;color:var(--ink);letter-spacing:-.01em;font-variant-numeric:tabular-nums;flex-shrink:0}
+  .bn-note{margin-top:auto;padding-top:14px;border-top:2px solid var(--ink);font-size:14px;color:var(--ink-2);line-height:1.5;font-style:italic}
+  .bn-branded .bn-note{border-top-color:var(--green)}
+  .bn-nonbranded .bn-note{border-top-color:var(--red)}
+  .bn-note strong{color:var(--ink);font-weight:700;font-style:normal}
+
   /* nav — active section indicator */
   header.site nav a[aria-current="location"]{color:var(--red);position:relative}
   header.site nav a[aria-current="location"]:not(.btn)::after{
@@ -618,10 +649,10 @@
     <span class="eyebrow">Proposal &middot; May 2026 &middot; Zib Digital for Mad Mex</span>
     <h1 class="display gap-top-32" style="margin-top:24px">
       Big. <span class="red">Bold.</span><br>
-      Almost <span class="green">invisible</span><br>
-      on Google.
+      Winning <span class="green">brand search</span>.<br>
+      Missing the rest.
     </h1>
-    <p class="lede big">A 20-year national QSR with 60+ stores, real AI Overview citations and DR&nbsp;41 backlink equity &mdash; and a website that&rsquo;s lost half its organic traffic in twelve months. We&rsquo;d like to fix that.</p>
+    <p class="lede big">A 20-year national QSR with 60+ stores, real AI Overview citations and DR&nbsp;41 backlink equity. The brand is doing its job &mdash; the discovery layer underneath isn&rsquo;t. We&rsquo;d like to fix that.</p>
     <div class="cta-row">
       <a class="btn" href="#opportunity">Read the audit &darr;</a>
       <a class="btn outline" href="#packages">Skip to packages</a>
@@ -698,10 +729,10 @@
   <div class="wrap">
     <span class="eyebrow">The starting point</span>
     <h2 class="display" style="font-size:clamp(46px,6vw,86px);margin-top:18px;max-width:1100px">
-      A loud brand. An invisible site.
+      A loud brand. A quiet site.
     </h2>
-    <p class="lede big" style="margin-top:24px">The good news first: Mad Mex has the bones nobody else in the category has. DR&nbsp;41. 752 referring domains. Google, Apple, Wikipedia, nsw.gov.au, Waze, Indeed all cite you. 37 Google AI Overview citations. The brand has earned its place.</p>
-    <p class="lede big" style="margin-top:14px"><span class="red-strong">The bad news:</span> organic traffic peaked at 20,000/month in mid-2025 and now sits around 10,000/month. 95% of every visit is from people who already know your name. New customers can&rsquo;t find you. The link profile lost 62 referring domains last period with no PR engine replacing them.</p>
+    <p class="lede big" style="margin-top:24px"><span class="green-strong">The good news first:</span> Mad Mex has the bones nobody else in the category has. DR&nbsp;41. 752 referring domains. Google, Apple, Wikipedia, nsw.gov.au, Waze, Indeed all cite you. 37 Google AI Overview citations. The brand has earned its place.</p>
+    <p class="lede big" style="margin-top:14px"><span class="red-strong">The gap:</span> organic traffic has come back from a mid-2025 peak of 20,000/month to around 10,000/month, and 95% of every visit is from people who already know your name. The discovery layer underneath &mdash; people typing &ldquo;mexican near me&rdquo; or &ldquo;burrito Sydney&rdquo; &mdash; barely touches you. The link profile also lost 62 referring domains last period with no active PR engine replacing them.</p>
 
     <div class="three" style="margin-top:50px">
       <div class="card">
@@ -735,6 +766,56 @@
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<div class="star-row"></div>
+
+<!-- ================= BRANDED VS NON-BRANDED ================= -->
+<section id="branded">
+  <div class="wrap">
+    <span class="eyebrow">The traffic truth &middot; branded vs non-branded</span>
+    <h2 class="display" style="font-size:clamp(44px,5.5vw,82px);margin-top:18px;max-width:1100px">
+      What you&rsquo;re <span class="green">winning</span>.<br>
+      What you&rsquo;re <span class="red">missing</span>.
+    </h2>
+    <p class="lede" style="margin-top:24px">Of the 1,175 keywords Mad Mex ranks for, 95% are people typing some version of &ldquo;Mad Mex&rdquo;. The other 5% &mdash; the actual discovery layer &mdash; is where the 42,000 monthly opportunity sits.</p>
+
+    <div class="bn-split">
+      <div class="bn-panel bn-branded">
+        <div class="bn-tag">Branded &middot; the win</div>
+        <div class="bn-stat">95<span class="bn-unit">%</span></div>
+        <div class="bn-sub">of your organic traffic &middot; ~1,116 keywords</div>
+        <div class="bn-bar"><span class="bn-fill" data-bar="95"></span></div>
+        <ul class="bn-list">
+          <li><span class="bn-q">&ldquo;mad mex menu&rdquo;</span><span class="bn-v">2,400/mo</span></li>
+          <li><span class="bn-q">&ldquo;mad mex&rdquo;</span><span class="bn-v">1,900/mo</span></li>
+          <li><span class="bn-q">&ldquo;mad mex hours&rdquo;</span><span class="bn-v">1,300/mo</span></li>
+          <li><span class="bn-q">&ldquo;mad mex bondi&rdquo;</span><span class="bn-v">880/mo</span></li>
+          <li><span class="bn-q">&ldquo;mad mex order online&rdquo;</span><span class="bn-v">720/mo</span></li>
+          <li><span class="bn-q">&ldquo;mad mex catering&rdquo;</span><span class="bn-v">460/mo</span></li>
+        </ul>
+        <p class="bn-note"><strong>~9,500 visits / month</strong> from people who already know you. The brand has done its job here.</p>
+      </div>
+
+      <div class="bn-panel bn-nonbranded">
+        <div class="bn-tag">Non-branded &middot; the gap</div>
+        <div class="bn-stat">5<span class="bn-unit">%</span></div>
+        <div class="bn-sub">of your organic traffic &middot; ~59 keywords</div>
+        <div class="bn-bar"><span class="bn-fill bn-fill-red" data-bar="5"></span></div>
+        <ul class="bn-list">
+          <li><span class="bn-q">&ldquo;mexican near me&rdquo;</span><span class="bn-v">9,500/mo</span></li>
+          <li><span class="bn-q">&ldquo;mexican food sydney&rdquo;</span><span class="bn-v">1,400/mo</span></li>
+          <li><span class="bn-q">&ldquo;vegan mexican food&rdquo;</span><span class="bn-v">880/mo</span></li>
+          <li><span class="bn-q">&ldquo;burrito near me&rdquo;</span><span class="bn-v">800/mo</span></li>
+          <li><span class="bn-q">&ldquo;halal mexican sydney&rdquo;</span><span class="bn-v">720/mo</span></li>
+          <li><span class="bn-q">&ldquo;mexican catering sydney&rdquo;</span><span class="bn-v">590/mo</span></li>
+        </ul>
+        <p class="bn-note"><strong>~500 visits / month</strong> against 42,000 monthly non-branded searches. The discovery layer is wide open.</p>
+      </div>
+    </div>
+
+    <div class="math">The brand work is done. The discovery work hasn&rsquo;t started. That&rsquo;s the entire proposal in one chart.</div>
   </div>
 </section>
 
@@ -1394,6 +1475,18 @@
     g.setAttribute('data-stagger', '');
     obs.observe(g);
   }
+
+  // Bar-fill animation. Width animates from 0 to data-bar% via CSS transition
+  // when the element first enters the viewport.
+  const barObs = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (!e.isIntersecting) continue;
+      const pct = Number(e.target.dataset.bar);
+      if (Number.isFinite(pct)) e.target.style.width = pct + '%';
+      barObs.unobserve(e.target);
+    }
+  }, { threshold: 0.4 });
+  for (const b of document.querySelectorAll('[data-bar]')) barObs.observe(b);
 
   // Count-up on any [data-countup] when it enters the viewport.
   const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
