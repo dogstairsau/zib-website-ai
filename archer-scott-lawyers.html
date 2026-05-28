@@ -189,7 +189,23 @@
   @media(max-width:680px){
     .math-show{padding:22px 18px}
     .math-show h3{font-size:20px}
-    .math-show table.t-stack tbody tr.row-sub td:last-child,.math-show table.t-stack tbody tr.row-grand td:last-child{font-size:18px}
+    .math-show .sub{font-size:13.5px}
+    .math-show table.t-stack thead{display:none}
+    .math-show table.t-stack tbody td{text-align:left}
+    .math-show table.t-stack tbody td:last-child{font-size:17px;font-weight:700;color:var(--blue)}
+    .math-show table.t-stack tbody tr.row-sub,
+    .math-show table.t-stack tbody tr.row-grand{border-bottom:none;padding:16px 16px 18px;margin-top:6px}
+    .math-show table.t-stack tbody tr.row-sub{background:rgba(17,86,216,.08)}
+    .math-show table.t-stack tbody tr.row-grand{background:var(--blue)}
+    .math-show table.t-stack tbody tr.row-sub td,
+    .math-show table.t-stack tbody tr.row-grand td{background:transparent}
+    .math-show table.t-stack tbody tr.row-sub td:first-child,
+    .math-show table.t-stack tbody tr.row-grand td:first-child{padding-top:0}
+    .math-show table.t-stack tbody tr.row-grand td{color:#fff}
+    .math-show table.t-stack tbody tr.row-grand td:last-child{color:#fff;font-size:22px}
+    .math-show table.t-stack tbody tr.row-grand td::before{color:rgba(255,255,255,.55)}
+    .math-show table.t-stack tbody tr.row-sub td:last-child{font-size:20px}
+    .math-show .math-foot{font-size:12.5px}
   }
 
   /* costs */
