@@ -508,6 +508,51 @@
   footer.foot a{color:var(--ink-2);transition:color var(--dur-fast) var(--ease)}
   footer.foot a:hover{color:var(--red)}
 
+  /* nav — active section indicator */
+  header.site nav a[aria-current="location"]{color:var(--red);position:relative}
+  header.site nav a[aria-current="location"]:not(.btn)::after{
+    content:'';position:absolute;left:0;right:0;bottom:-6px;
+    height:2px;background:var(--red);border-radius:1px;
+  }
+  /* tighten nav at 880–1040px so all 6 links fit beside the brand */
+  @media(min-width:881px) and (max-width:1040px){
+    header.site nav{gap:16px}
+    header.site nav a:not(.btn){font-size:11px;letter-spacing:0.1em}
+  }
+
+  /* CEO brief — the one-page read */
+  .ceo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:42px}
+  @media(max-width:880px){.ceo-grid{grid-template-columns:1fr}}
+  .ceo-card{
+    background:#fff;border-left:5px solid var(--red);
+    padding:30px clamp(24px,3vw,32px);
+    transition:transform var(--dur) var(--ease),box-shadow var(--dur) var(--ease),border-left-width var(--dur) var(--ease);
+  }
+  .ceo-card:hover{transform:translateY(-3px);box-shadow:0 18px 36px -16px rgba(0,0,0,0.22);border-left-width:9px}
+  .ceo-card .ceo-n{font-family:'Anton',sans-serif;font-size:30px;color:var(--red);line-height:1;letter-spacing:-.02em;margin-bottom:12px}
+  .ceo-card h3{font-family:'Archivo Black',sans-serif;font-size:16px;letter-spacing:0.02em;text-transform:uppercase;color:var(--ink);margin-bottom:12px;line-height:1.22}
+  .ceo-card p{font-size:15px;line-height:1.6;color:var(--ink-2)}
+  .ceo-card p strong{color:var(--ink);font-weight:700}
+
+  .ceo-tldr{
+    margin-top:32px;background:var(--ink);color:#fff;
+    padding:clamp(28px,4vw,40px);border-radius:8px;
+  }
+  .ceo-tldr-row{
+    display:grid;grid-template-columns:repeat(3,1fr);
+    gap:clamp(20px,3vw,40px);
+    padding-bottom:28px;border-bottom:1px solid rgba(255,255,255,0.12);
+  }
+  @media(max-width:780px){.ceo-tldr-row{grid-template-columns:1fr;gap:20px;padding-bottom:22px}}
+  .ceo-tldr-l{font-family:'Archivo Black',sans-serif;font-size:11px;letter-spacing:0.18em;color:var(--red);text-transform:uppercase}
+  .ceo-tldr-v{font-family:'Anton',sans-serif;font-size:clamp(26px,3.2vw,36px);color:#fff;line-height:1;letter-spacing:-.01em;margin:8px 0 6px}
+  .ceo-tldr-s{font-size:12.5px;color:#bcbcbc;line-height:1.5;font-style:italic}
+  .ceo-cta{
+    display:flex;align-items:center;flex-wrap:wrap;
+    gap:14px;margin-top:24px;
+  }
+  .ceo-cta-note{font-family:'Archivo Black',sans-serif;font-size:11px;letter-spacing:0.16em;color:rgba(255,255,255,0.5);text-transform:uppercase;margin-left:4px}
+
   /* helpers */
   .pad-top-lg{padding-top:96px}
   .center{text-align:center}
@@ -556,9 +601,12 @@
       <span class="zib">Zib Digital</span>
     </div>
     <nav>
+      <a href="#ceo">Brief</a>
       <a href="#opportunity">Opportunity</a>
       <a href="#audit">Audit</a>
+      <a href="#fixes">Plan</a>
       <a href="#packages">Packages</a>
+      <a href="#roi">ROI</a>
       <a href="#close" class="btn">Book the call &rarr;</a>
     </nav>
   </div>
@@ -583,6 +631,62 @@
       <span>60+ stores</span>
       <span>National</span>
       <span>Since 2006</span>
+    </div>
+  </div>
+</section>
+
+<div class="star-row"></div>
+
+<!-- ================= CEO BRIEF ================= -->
+<section id="ceo" style="background:var(--paper)">
+  <div class="wrap">
+    <span class="eyebrow">For the CEO &middot; one-page brief</span>
+    <h2 class="display" style="font-size:clamp(44px,5.5vw,82px);margin-top:18px;max-width:1100px">
+      What GEO is.<br>Why it matters.<br><span class="red">How we win it for you.</span>
+    </h2>
+    <p class="lede big" style="margin-top:24px">The 40 pages below are the receipts &mdash; the data, the schema explainer, the eight technical fixes, the competitor breakdown. <strong>This page is the read for whoever doesn&rsquo;t need to read all of it.</strong></p>
+
+    <div class="ceo-grid">
+      <div class="ceo-card">
+        <div class="ceo-n">01</div>
+        <h3>What GEO is</h3>
+        <p>When an Australian asks ChatGPT, Gemini or Google&rsquo;s AI <em>&ldquo;where should I get a burrito tonight in Bondi?&rdquo;</em> &mdash; the AI either names Mad Mex or it doesn&rsquo;t. <strong>Generative Engine Optimisation</strong> is the work of making sure it does. SEO won you Google&rsquo;s blue links. GEO wins you the AI answer that now sits above them.</p>
+      </div>
+      <div class="ceo-card">
+        <div class="ceo-n">02</div>
+        <h3>Why it matters now</h3>
+        <p>Mad Mex is already cited <strong>82 times across 5 AI platforms</strong> &mdash; Google AI Overviews, ChatGPT, Grok, Perplexity, Copilot. Most national QSRs in Australia have <strong>zero</strong>. That head start is real. It&rsquo;s also thin, and Guzman is not standing still.</p>
+      </div>
+      <div class="ceo-card">
+        <div class="ceo-n">03</div>
+        <h3>How we win it for you</h3>
+        <p>Structured data on all 60+ stores. Dedicated halal, vegan, nutrition and city pages AI engines will cite. Active digital PR replacing the 62 referring domains the site lost last period. In 12 months, when an AI is asked about Mexican food in Australia, <strong>the source it pulls from is Mad Mex</strong>.</p>
+      </div>
+    </div>
+
+    <div class="ceo-tldr">
+      <div class="ceo-tldr-row">
+        <div>
+          <div class="ceo-tldr-l">The investment</div>
+          <div class="ceo-tldr-v">$52,500 / year</div>
+          <div class="ceo-tldr-s">Package 3 &middot; 12 months &middot; everything in scope</div>
+        </div>
+        <div>
+          <div class="ceo-tldr-l">The expected return</div>
+          <div class="ceo-tldr-v">~$600K revenue</div>
+          <div class="ceo-tldr-s">11.4&times; on a 1% network lift &mdash; ROI section below</div>
+        </div>
+        <div>
+          <div class="ceo-tldr-l">The unfair advantage</div>
+          <div class="ceo-tldr-v">12-month head start</div>
+          <div class="ceo-tldr-s">No national QSR competitor is investing in AEO yet</div>
+        </div>
+      </div>
+      <div class="ceo-cta">
+        <a class="btn" href="#packages">See packages</a>
+        <a class="btn outline" href="#close" style="border-color:#fff;color:#fff !important">Skip to next steps</a>
+        <span class="ceo-cta-note">Or keep reading for the full strategy &darr;</span>
+      </div>
     </div>
   </div>
 </section>
@@ -1319,6 +1423,29 @@
   for (const n of document.querySelectorAll('[data-countup]')) {
     n.textContent = '0';
     countObs.observe(n);
+  }
+
+  // Active-section nav highlighting. Matches the section under ~the top
+  // third of the viewport to whichever nav link points to it.
+  const navLinks = new Map();
+  for (const a of document.querySelectorAll('header.site nav a[href^="#"]')) {
+    const id = a.getAttribute('href').slice(1);
+    const sec = document.getElementById(id);
+    if (sec) navLinks.set(sec, a);
+  }
+  if (navLinks.size) {
+    const clearAll = () => navLinks.forEach((l) => l.removeAttribute('aria-current'));
+    const navObs = new IntersectionObserver((entries) => {
+      // Pick the entry with the largest visible area (handles fast scroll).
+      const visible = entries.filter((e) => e.isIntersecting);
+      if (!visible.length) return;
+      visible.sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+      const link = navLinks.get(visible[0].target);
+      if (!link) return;
+      clearAll();
+      link.setAttribute('aria-current', 'location');
+    }, { rootMargin: '-30% 0px -55% 0px', threshold: [0, 0.25, 0.5, 0.75, 1] });
+    navLinks.forEach((_l, sec) => navObs.observe(sec));
   }
 
   // Sticky-header-aware smooth-scroll for anchor links.
