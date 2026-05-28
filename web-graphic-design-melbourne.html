@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<title>Web Design Melbourne · Graphic &amp; Website Design · Zib Digital</title>
+<meta name="description" content="Melbourne web design and development that converts. Brand-driven, mobile-responsive, ecommerce-ready. A senior team of designers, developers and copywriters. Since 2009." />
+<meta name="zib:source-tag" content="Web Design Melbourne" />
+<!-- @include _partials/head.html -->
+<link rel="stylesheet" href="/assets/location.css">
+<style>
+/* Service-page tweaks */
+.svc-cards-section {
+  padding-top: clamp(80px, 10vw, 144px);
+  padding-bottom: clamp(80px, 10vw, 144px);
+  border-bottom: 0.5px solid var(--rule);
+}
+.svc-cards-section.paper { background: var(--paper); }
+.svc-cards-section .services-head { max-width: 60ch; margin-bottom: clamp(48px, 6vw, 72px); }
+
+.svc-block-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(16px, 1.8vw, 22px);
+}
+@media (max-width: 1080px) { .svc-block-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .svc-block-grid { grid-template-columns: 1fr; } }
+.svc-block {
+  padding: clamp(28px, 3vw, 36px);
+  border: 1px solid var(--rule);
+  border-radius: 18px;
+  background: #fff;
+  transition: transform 280ms var(--ease), border-color 280ms var(--ease);
+}
+.svc-block:hover { transform: translateY(-3px); border-color: var(--ink); }
+.svc-block .svc-num { font-family: var(--display); font-weight: 500; font-size: clamp(40px, 4vw, 56px); line-height: 1; letter-spacing: -0.04em; color: var(--accent); }
+.svc-block h3 { font-family: var(--display); font-size: clamp(20px, 1.8vw, 24px); font-weight: 500; letter-spacing: -0.018em; margin: 18px 0 12px; }
+.svc-block p { color: var(--muted); font-size: 14.5px; line-height: 1.6; }
+
+/* Why-reasons block */
+.why-block { padding-top: clamp(80px, 10vw, 144px); padding-bottom: clamp(80px, 10vw, 144px); border-bottom: 0.5px solid var(--rule); }
+.why-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(28px, 4vw, 56px) clamp(40px, 5vw, 80px); margin-top: clamp(48px, 6vw, 72px); }
+@media (max-width: 880px) { .why-grid { grid-template-columns: 1fr; } }
+.why-item { display: grid; grid-template-columns: 48px 1fr; gap: 18px; align-items: start; }
+.why-num {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(28px, 3vw, 40px); line-height: 1; letter-spacing: -0.03em;
+  color: var(--accent); font-variant-numeric: tabular-nums;
+}
+.why-item h3 { font-family: var(--display); font-size: clamp(18px, 1.8vw, 22px); font-weight: 500; letter-spacing: -0.015em; margin-bottom: 10px; }
+.why-item p { color: var(--muted); font-size: 15.5px; line-height: 1.55; }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- @include _partials/nav.html -->
+
+<main id="main">
+
+<!-- HERO -->
+<section class="loc-hero">
+  <div class="container">
+    <div class="mono eyebrow reveal">Web design · Melbourne · National</div>
+    <h1 class="hero-h reveal">
+      Beautiful web design. <em>Built around your conversion.</em>
+    </h1>
+
+    <div class="loc-hero-row">
+      <p class="hero-sub reveal">
+        <strong>A Melbourne web design and graphic design agency that ships sites built to convert — not just to look at.</strong>
+        Designers, developers and copywriters under one roof. A senior strategist on every project. Fully hosted and managed. Since 2009.
+      </p>
+      <div class="hero-ctas reveal">
+        <a class="btn btn-primary" href="/audit.html">Run a free audit <span class="arr">→</span></a>
+        <a class="btn btn-outline" href="mailto:hello@zibdigital.com.au?subject=Web%20design%20-%20let's%20talk">Talk to a strategist</a>
+      </div>
+    </div>
+
+    <div class="hero-meta reveal">
+      <span><span class="dot" aria-hidden="true"></span>Shopify Plus Partner</span>
+      <span><span class="dot" aria-hidden="true"></span>Mobile-first &amp; accessibility-ready</span>
+      <span><span class="dot" aria-hidden="true"></span>Designers + developers + copywriters in-house</span>
+      <span><span class="dot" aria-hidden="true"></span>800+ clients since 2009</span>
+    </div>
+  </div>
+</section>
+
+<!-- STATS — why web design matters now -->
+<section class="loc-stats">
+  <div class="container">
+    <div class="mono stats-eyebrow reveal">Why web design matters</div>
+    <h2 class="stats-h reveal">
+      First impressions. <em>Then conversions.</em>
+    </h2>
+
+    <div class="stats-grid reveal-stagger">
+      <div class="stat-cell">
+        <div class="stat-value"><span data-count="75">0</span><span class="suf">%</span></div>
+        <div class="stat-label">Of searches now happen on a smartphone or tablet</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-value"><span data-count="14">0</span><span class="suf">B</span></div>
+        <div class="stat-label">Spent by Australians on online shopping last year</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-value"><span data-count="50">0</span><span class="suf">ms</span></div>
+        <div class="stat-label">All a visitor needs to form a first impression of your site</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-value"><span data-count="800">0</span><span class="suf">+</span></div>
+        <div class="stat-label">Australian brands we've built &amp; marketed since 2009</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT WE BUILD — 4 service blocks -->
+<section class="svc-cards-section paper">
+  <div class="container">
+    <div class="services-head reveal">
+      <div class="mono services-eyebrow">What we build</div>
+      <h2 class="services-h">
+        Design and technology, <em>side by side.</em>
+      </h2>
+      <p style="margin-top: 24px; color: var(--muted); font-size: clamp(16px, 1.4vw, 18px); line-height: 1.55; max-width: 64ch;">
+        There's no point producing a beautiful design that doesn't work across every browser, device and load speed. Our developers, designers and graphic design experts from Melbourne work as one team to build logical, clean, standards-compliant websites that convert.
+      </p>
+    </div>
+
+    <div class="svc-block-grid reveal-stagger">
+      <div class="svc-block">
+        <div class="svc-num">01</div>
+        <h3>Website design &amp; development</h3>
+        <p>Brand-driven, conversion-first. Custom builds from sleek brochure sites to high-end ecommerce, with the developers and graphic designers in the same room as the strategist who owns your number.</p>
+      </div>
+      <div class="svc-block">
+        <div class="svc-num">02</div>
+        <h3>Content &amp; copywriting</h3>
+        <p>A site without content is a hamburger without the patty. Our copywriters research your category, your audience and your competitors, then write content visitors actually read — and that search engines actually rank.</p>
+      </div>
+      <div class="svc-block">
+        <div class="svc-num">03</div>
+        <h3>Mobile responsive design</h3>
+        <p>Every site we build renders cleanly on smartphone, tablet, laptop and desktop. 75% of search now happens on mobile — not being responsive is online suicide. Performance, accessibility and CWV baked in.</p>
+      </div>
+      <div class="svc-block">
+        <div class="svc-num">04</div>
+        <h3>Ecommerce &amp; Shopify</h3>
+        <p>From a simple payment-accepting site to a multi-thousand-SKU Shopify Plus store. Built to your exact business requirements — and engineered for the ecommerce SEO Melbourne brands need to compete.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROOF -->
+<section class="loc-proof">
+  <div class="container">
+    <div class="loc-proof-head">
+      <div>
+        <div class="mono proof-eyebrow reveal">Proof, not promises</div>
+        <h2 class="proof-h reveal">Real sites. <em>Real conversion lifts.</em></h2>
+      </div>
+      <p class="proof-sub reveal">
+        Every build is different. The common thread across the 800+ businesses we've worked with: a commercial outcome they can see in the analytics on day 30 — not just in the design comp.
+      </p>
+    </div>
+
+    <div class="case-grid reveal-stagger">
+      <a class="case-card" href="#audit">
+        <div class="case-head">
+          <div>
+            <div class="case-client">DTC retailer</div>
+            <div class="case-tag">Shopify Plus replatform</div>
+          </div>
+          <span class="case-arr" aria-hidden="true">↗</span>
+        </div>
+        <div class="case-num"><span data-count="220">0</span><span class="pct">%</span></div>
+        <hr>
+        <p class="case-desc">Lift in checkout conversion after a full UX rebuild on Shopify Plus. Same traffic, same paid spend — more revenue per visitor.</p>
+      </a>
+      <a class="case-card" href="#audit">
+        <div class="case-head">
+          <div>
+            <div class="case-client">Professional services</div>
+            <div class="case-tag">Brochure site · Lead gen</div>
+          </div>
+          <span class="case-arr" aria-hidden="true">↗</span>
+        </div>
+        <div class="case-num"><span data-count="180">0</span><span class="pct">%</span></div>
+        <hr>
+        <p class="case-desc">Increase in qualified enquiries off a rebuilt site with clearer positioning, a stronger content layer and a CRO-tested contact flow.</p>
+      </a>
+      <a class="case-card" href="#audit">
+        <div class="case-head">
+          <div>
+            <div class="case-client">B2B manufacturer</div>
+            <div class="case-tag">Custom CMS</div>
+          </div>
+          <span class="case-arr" aria-hidden="true">↗</span>
+        </div>
+        <div class="case-num"><span data-count="62">0</span><span class="pct">%</span></div>
+        <hr>
+        <p class="case-desc">Reduction in time-to-publish for new product pages, with a clean, governance-friendly CMS the marketing team actually uses.</p>
+      </a>
+      <a class="case-card" href="#audit">
+        <div class="case-head">
+          <div>
+            <div class="case-client">Hospitality group</div>
+            <div class="case-tag">Multi-venue · Bookings</div>
+          </div>
+          <span class="case-arr" aria-hidden="true">↗</span>
+        </div>
+        <div class="case-num"><span data-count="140">0</span><span class="pct">%</span></div>
+        <hr>
+        <p class="case-desc">Lift in direct online bookings off a redesigned mobile experience. Less reliance on third-party platforms taking a cut.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- WHY — four reasons -->
+<section class="why-block">
+  <div class="container">
+    <div class="services-head reveal" style="margin-bottom: 0;">
+      <div class="mono services-eyebrow">Four reasons our builds are different</div>
+      <h2 class="services-h">
+        Marriage of design and technology. <em>And a senior strategist running the room.</em>
+      </h2>
+    </div>
+
+    <div class="why-grid reveal-stagger">
+      <div class="why-item">
+        <div class="why-num">01</div>
+        <div>
+          <h3>One in-house team</h3>
+          <p>Designers, developers, copywriters and a senior strategist — under one roof, on the same Slack, in the same standup. No handoffs between three different agencies.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-num">02</div>
+        <div>
+          <h3>Fully hosted &amp; managed</h3>
+          <p>We build it, host it, and look after it. Quality control and support when you need it. You're not stuck with a build the original agency won't open the code for.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-num">03</div>
+        <div>
+          <h3>SEO baked into the build</h3>
+          <p>The same team that built our 4,151-keyword-ranking SEO program shapes the site architecture from day one. Schema, performance, content structure — done right at build time, not bolted on after launch.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-num">04</div>
+        <div>
+          <h3>Brand-driven, results-focused</h3>
+          <p>We work closely with you to understand your vision and tailor the site to match your brand and values — all while adhering to an accessible, user-centric design ethos that supports real conversion goals.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOCAL ADVANTAGE -->
+<section class="loc-local">
+  <div class="container">
+    <div class="local-grid">
+      <div class="reveal">
+        <div class="mono local-eyebrow">More than web design</div>
+        <h2 class="local-h">
+          A web design Melbourne agency, <em>built into a full digital team.</em>
+        </h2>
+        <p style="margin-top: 24px; color: var(--muted); font-size: clamp(16px, 1.4vw, 18px); line-height: 1.55; max-width: 48ch;">
+          Our 140+ digital specialists across AU and NZ include web designers, graphic designers from Melbourne, developers, SEO masters, Google Ads strategists, social experts and copywriters. As a Shopify SEO company Melbourne brands rely on — and an ecommerce SEO agency Melbourne businesses keep coming back to — the build is rarely the only conversation. We pick what moves your number, then we ship it. With 15+ years of pattern-matching to draw on.
+        </p>
+        <div class="partner-badges">
+          <span class="partner-badge">Shopify Plus Partner</span>
+          <span class="partner-badge">Premier Google Partner</span>
+          <span class="partner-badge">Meta Business Partner</span>
+          <span class="partner-badge">TikTok Marketing Partner</span>
+        </div>
+      </div>
+
+      <div class="local-pillars reveal-stagger">
+        <div class="pillar">
+          <h3>One senior strategist, all yours.</h3>
+          <p>A real human owns the project. They know your brand, your conversion goal, and the page that's leaking revenue today.</p>
+        </div>
+        <div class="pillar">
+          <h3>AI-augmented production.</h3>
+          <p>Agents help us ship content variants, asset versions and QA passes at speed. Senior judgement decides what's good enough to ship.</p>
+        </div>
+        <div class="pillar">
+          <h3>Built for the long game.</h3>
+          <p>Standards-compliant, accessible, performance-tuned. Sites built to rank, convert, and not need a rebuild in 18 months.</p>
+        </div>
+        <div class="pillar">
+          <h3>No grey-area handovers.</h3>
+          <p>You own your code, your hosting, your CMS. We host and manage it because we want to — not because you'd be locked out if you left.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="loc-faq">
+  <div class="container">
+    <div class="faq-head reveal">
+      <div class="mono faq-eyebrow">Frequently asked questions</div>
+      <h2 class="faq-h">
+        Things Melbourne operators <em>actually ask us.</em>
+      </h2>
+    </div>
+
+    <div class="faq-list" id="faqList">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span>How much does a website cost?</span>
+          <span class="icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a">
+          <p>It depends on what we're building. A brochure-style site for a service business can land in the low five figures. A full Shopify Plus store with custom theme, integrations and SEO architecture is materially more. We scope to the commercial outcome, not to a feature list — and we won't ship something we don't believe will earn it back.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span>What platforms do you build on?</span>
+          <span class="icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a">
+          <p>WordPress and Shopify cover most of what we do — we're Shopify Plus Partners. For larger custom builds we'll work with headless stacks where it makes sense. We pick the platform that matches your team's capability and your three-year roadmap, not the one with the best agency margins.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span>Do you do hosting and ongoing support?</span>
+          <span class="icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a">
+          <p>Yes. We provide fully hosted and managed solutions for clients who want it, with quality control and support on demand. We also hand over sites to in-house teams cleanly — your code, your CMS, no lock-in.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span>How long does a site take to build?</span>
+          <span class="icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a">
+          <p>A small brochure site can be live in 4–6 weeks. A custom Shopify Plus build is typically 10–16 weeks end-to-end. We work in clear phases — discovery, design, build, QA, launch — and you'll know what's happening every week.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span>Will my new site rank on Google?</span>
+          <span class="icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a">
+          <p>The build won't hurt your rankings, and it'll set the technical foundation to grow them — schema, performance, internal linking, content structure are all done at build time. Lasting ranking growth comes from ongoing SEO work, which our team also runs (see our <a href="/seo-agency.html" style="color: var(--accent); text-decoration: underline;">SEO services</a>).</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span>Is the site mobile responsive?</span>
+          <span class="icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a">
+          <p>Every site we build is mobile-responsive — smartphone, tablet, laptop, desktop. With 75% of search now happening on mobile, anything else is malpractice.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span>Are you using AI in design and build?</span>
+          <span class="icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a">
+          <p>Yes — agents do the repetitive production work (content variants, asset sizing, QA sweeps, copy drafts). Senior designers and developers still make the design and architectural decisions. We've written about how this works on our <a href="/ai-services.html" style="color: var(--accent); text-decoration: underline;">AI services page</a>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="audit">
+  <div class="container">
+    <div class="mono cta-eyebrow reveal">Talk to a senior strategist</div>
+    <h2 class="cta-title reveal">
+      Show us your site. <em>We'll tell you the truth.</em>
+    </h2>
+    <p class="cta-sub reveal">
+      Thirty minutes with one of our senior strategists. We read your current site, flag the one page costing you the most revenue, and give you the unvarnished version. No deck. No upsell. If we're not the fit, we'll tell you that too.
+    </p>
+    <div class="cta-buttons reveal">
+      <a class="btn btn-primary" href="/audit.html">Run the free audit <span class="arr">→</span></a>
+      <a class="btn btn-outline" href="mailto:hello@zibdigital.com.au?subject=Web%20design%20-%20discovery%20call">Book a discovery call</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- @include _partials/footer.html -->
+<!-- @include _partials/scripts.html -->
+
+<script>
+// FAQ accordion
+(() => {
+  const list = document.getElementById('faqList');
+  if (!list) return;
+  list.addEventListener('click', (e) => {
+    const btn = e.target.closest('.faq-q');
+    if (!btn) return;
+    const item = btn.parentElement;
+    const open = item.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+})();
+</script>
+
+</body>
+</html>
