@@ -10,6 +10,9 @@
     },
     "api/prompt-research.ts": {
       "maxDuration": 30
+    },
+    "api/meta-ads-lab.ts": {
+      "maxDuration": 90
     }
   },
   "redirects": [

@@ -677,127 +677,7 @@
         </p>
       </div>
 
-      <div class="mal-ad-grid">
-        <article class="ad-card">
-          <header class="ad-shell">
-            <div class="avatar"></div>
-            <div>
-              <div class="name brand-here">Your brand</div>
-              <div class="sponsored">Sponsored</div>
-            </div>
-            <span class="platform">Instagram · Feed</span>
-          </header>
-          <div class="ad-copy">
-            <strong>"The first thing that actually worked."</strong> 4,200 Australians on the waitlist. Limited drop, Thursday 9am.
-          </div>
-          <div class="ad-visual amber">
-            <div>
-              <div class="v-pre">Hero · 1:1</div>
-              <div class="v-h">Finally, something that <em>actually</em> works.</div>
-              <div class="v-sub brand-here">Your brand</div>
-            </div>
-          </div>
-          <div class="ad-cta-bar">
-            <span class="label brand-domain">yourwebsite.com.au</span>
-            <span class="cta-btn">Shop now</span>
-          </div>
-          <div class="ad-meta-row">
-            <span class="ad-tag angle">Social proof</span>
-            <span class="ad-tag">1:1 · Feed</span>
-            <span class="ad-tag">Warm audience</span>
-          </div>
-        </article>
-
-        <article class="ad-card">
-          <header class="ad-shell">
-            <div class="avatar"></div>
-            <div>
-              <div class="name brand-here">Your brand</div>
-              <div class="sponsored">Sponsored</div>
-            </div>
-            <span class="platform">Instagram · Story</span>
-          </header>
-          <div class="ad-visual story bay">
-            <div class="v-stack">
-              <div class="v-pre">Story · 9:16</div>
-              <div class="v-h">Stop paying for things that don't <em>do</em> anything.</div>
-              <div class="v-sub">Swipe up · 30 day money back</div>
-            </div>
-          </div>
-          <div class="ad-cta-bar">
-            <span class="label brand-domain">yourwebsite.com.au</span>
-            <span class="cta-btn">Learn more</span>
-          </div>
-          <div class="ad-meta-row">
-            <span class="ad-tag angle">Problem-aware</span>
-            <span class="ad-tag">9:16 · Story</span>
-            <span class="ad-tag">Cold audience</span>
-          </div>
-        </article>
-
-        <article class="ad-card">
-          <header class="ad-shell">
-            <div class="avatar"></div>
-            <div>
-              <div class="name brand-here">Your brand</div>
-              <div class="sponsored">Sponsored</div>
-            </div>
-            <span class="platform">Facebook · Carousel</span>
-          </header>
-          <div class="ad-copy">
-            <strong>The 3 things that actually move the needle</strong> (and the 4 most brands hide behind a hashtag). Swipe →
-          </div>
-          <div class="ad-visual carousel linen">
-            <div>
-              <div class="v-pre" style="color: rgba(0,0,0,0.55)">Carousel · 4 frames</div>
-              <div class="v-h">The 3 things <em>worth paying for.</em></div>
-              <div class="v-sub" style="color: rgba(0,0,0,0.6)">Swipe →</div>
-            </div>
-          </div>
-          <div class="ad-cta-bar">
-            <span class="label brand-domain">yourwebsite.com.au</span>
-            <span class="cta-btn">See more</span>
-          </div>
-          <div class="ad-meta-row">
-            <span class="ad-tag angle">Education</span>
-            <span class="ad-tag">4:5 · Carousel</span>
-            <span class="ad-tag">Cold audience</span>
-          </div>
-        </article>
-
-        <article class="ad-card">
-          <header class="ad-shell">
-            <div class="avatar"></div>
-            <div>
-              <div class="name brand-here">Your brand</div>
-              <div class="sponsored">Sponsored</div>
-            </div>
-            <span class="platform">Instagram · Reel</span>
-          </header>
-          <div class="ad-visual story ink">
-            <div class="v-stack">
-              <div class="v-pre">Reel · 9:16</div>
-              <div class="v-h">"I built this because <em>nothing</em> else worked."</div>
-              <div class="v-sub">Founder, 22 sec · Sound on</div>
-            </div>
-          </div>
-          <div class="ad-cta-bar">
-            <span class="label brand-domain">yourwebsite.com.au</span>
-            <span class="cta-btn">Shop now</span>
-          </div>
-          <div class="ad-meta-row">
-            <span class="ad-tag angle">Founder story</span>
-            <span class="ad-tag">9:16 · Reel</span>
-            <span class="ad-tag">Lookalike 1%</span>
-          </div>
-        </article>
-
-        <div class="ad-more">
-          <div class="num">+8</div>
-          <div class="label">More in your inbox</div>
-          <p class="note">Across video hooks, UGC, retargeting and lookalike-only frames.</p>
-        </div>
-      </div>
+      <div id="adGrid" class="mal-ad-grid"></div>
     </div>
   </section>
 
@@ -892,12 +772,24 @@
   const gateCard  = document.getElementById('gateCard');
   const gateForm  = document.getElementById('gateForm');
   const reveal    = document.getElementById('reveal');
+  const adGrid    = document.getElementById('adGrid');
   const brandLbl  = document.getElementById('brandLabel');
   const brandName = document.getElementById('brandName');
-  const brandHere = Array.from(document.querySelectorAll('.brand-here'));
-  const brandDom  = Array.from(document.querySelectorAll('.brand-domain'));
 
-  let elapsedStart = 0, elapsedTick = null, isRunning = false;
+  const state = {
+    url: '', brand: null, audience: '', ads: [],
+    isRunning: false, isDone: false,
+  };
+
+  let elapsedStart = 0, elapsedTick = null;
+
+  const escapeHtml = (s) => String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+  const italicise = (headline, word) => {
+    if (!word) return escapeHtml(headline);
+    const safe = escapeHtml(headline);
+    const w = escapeHtml(word);
+    return safe.replace(new RegExp(`\\b(${w})\\b`, 'i'), '<em>$1</em>');
+  };
 
   const startElapsed = () => {
     elapsedStart = Date.now();
@@ -912,85 +804,233 @@
     elapsed.classList.add('is-done');
   };
 
-  const guessBrand = (raw) => {
-    try {
-      const u = new URL(raw.startsWith('http') ? raw : `https://${raw}`);
-      const host = u.hostname.replace(/^www\./, '');
-      const root = host.split('.')[0];
-      return root.split(/[-_]/).map(s => s ? s[0].toUpperCase() + s.slice(1) : s).join(' ');
-    } catch { return 'your brand'; }
-  };
-  const guessDomain = (raw) => {
-    try {
-      const u = new URL(raw.startsWith('http') ? raw : `https://${raw}`);
-      return u.hostname.replace(/^www\./, '');
-    } catch { return raw; }
-  };
-
-  const resetStages = () => stages.forEach(s => { s.classList.remove('is-active', 'is-done'); s.querySelector('.timer').textContent = 'Queued'; });
-
-  const animateStage = (i) => new Promise(resolve => {
-    if (i >= stages.length) return resolve();
-    const s = stages[i];
-    const dur = Number(s.dataset.dur) || 2000;
-    s.classList.add('is-active');
-    s.querySelector('.timer').textContent = 'Running…';
-    const t0 = Date.now();
-    const interval = setInterval(() => {
-      const e = ((Date.now() - t0) / 1000).toFixed(1);
-      s.querySelector('.timer').textContent = `${e}s · running`;
-    }, 100);
-    setTimeout(() => {
-      clearInterval(interval);
-      s.classList.remove('is-active');
-      s.classList.add('is-done');
-      s.querySelector('.timer').textContent = `${(dur/1000).toFixed(1)}s · done`;
-      resolve();
-    }, dur);
+  const resetStages = () => stages.forEach(s => {
+    s.classList.remove('is-active', 'is-done');
+    s.querySelector('.timer').textContent = 'Queued';
   });
+
+  const stageActive = (i, msg) => {
+    const s = stages[i]; if (!s) return;
+    s.classList.remove('is-done');
+    s.classList.add('is-active');
+    s.querySelector('.timer').textContent = msg || 'Running…';
+  };
+  const stageDone = (i) => {
+    const s = stages[i]; if (!s) return;
+    s.classList.remove('is-active');
+    s.classList.add('is-done');
+    const elapsedSec = ((Date.now() - elapsedStart) / 1000).toFixed(1);
+    s.querySelector('.timer').textContent = `${elapsedSec}s · done`;
+  };
+
+  const FALLBACK_COLORS = ['amber', 'bay', 'linen', 'ink'];
+  const adCardHtml = (ad, brand, i) => {
+    const formatClass = (ad.format || '').includes('9:16') ? 'story' : '';
+    const carouselClass = (ad.format || '').includes('Carousel') ? 'carousel' : '';
+    const fallback = FALLBACK_COLORS[i % FALLBACK_COLORS.length];
+    const visualClasses = ['ad-visual', formatClass, carouselClass, !ad.image_url ? fallback : ''].filter(Boolean).join(' ');
+    const visualStyle = ad.image_url ? `background: #000 center/cover no-repeat url('${ad.image_url}');` : '';
+    const overlayStyle = ad.image_url && (ad.format || '').includes('9:16') ? '' : '';
+    const isStory = (ad.format || '').includes('9:16');
+    const isLinen = !ad.image_url && fallback === 'linen';
+
+    const visualContent = isStory
+      ? `<div class="v-stack" style="background: linear-gradient(180deg, transparent, rgba(0,0,0,0.65) 70%);">
+           <div class="v-pre">${escapeHtml(ad.format || '')}</div>
+           <div class="v-h">${italicise(ad.headline, ad.visual_word)}</div>
+         </div>`
+      : `<div style="position:relative; z-index:1; ${ad.image_url ? 'background:rgba(0,0,0,0.45); padding:18px 22px; border-radius:14px; backdrop-filter: blur(2px);' : ''}">
+           <div class="v-pre"${isLinen ? ' style="color:rgba(0,0,0,0.55)"' : ''}>${escapeHtml(ad.format || '')}</div>
+           <div class="v-h">${italicise(ad.headline, ad.visual_word)}</div>
+           <div class="v-sub"${isLinen ? ' style="color:rgba(0,0,0,0.6)"' : ''}>${escapeHtml(brand?.name || '')}</div>
+         </div>`;
+
+    const copyBlock = !isStory
+      ? `<div class="ad-copy">${escapeHtml(ad.body)}</div>`
+      : '';
+
+    return `
+      <article class="ad-card">
+        <header class="ad-shell">
+          <div class="avatar"></div>
+          <div>
+            <div class="name">${escapeHtml(brand?.name || 'Your brand')}</div>
+            <div class="sponsored">Sponsored</div>
+          </div>
+          <span class="platform">${escapeHtml(ad.platform || '')}</span>
+        </header>
+        ${copyBlock}
+        <div class="${visualClasses}" style="${visualStyle}">
+          ${visualContent}
+        </div>
+        <div class="ad-cta-bar">
+          <span class="label">${escapeHtml(brand?.domain || '')}</span>
+          <span class="cta-btn">${escapeHtml(ad.cta || 'Learn more')}</span>
+        </div>
+        <div class="ad-meta-row">
+          <span class="ad-tag angle">${escapeHtml(ad.angle || '')}</span>
+          <span class="ad-tag">${escapeHtml(ad.format || '')}</span>
+          <span class="ad-tag">${escapeHtml(ad.audience || '')}</span>
+        </div>
+      </article>`;
+  };
+
+  const moreCardHtml = () => `
+    <div class="ad-more">
+      <div class="num">+8</div>
+      <div class="label">More in your inbox</div>
+      <p class="note">Across video hooks, UGC, retargeting and lookalike-only frames.</p>
+    </div>`;
+
+  const renderAds = () => {
+    const html = state.ads.map((ad, i) => adCardHtml(ad, state.brand, i)).join('') + moreCardHtml();
+    adGrid.innerHTML = html;
+    if (brandLbl) brandLbl.textContent = state.brand?.name || 'your brand';
+    if (brandName) brandName.textContent = state.brand?.name || 'your brand';
+  };
+
+  const revealAds = () => {
+    reveal.hidden = false;
+    setTimeout(() => reveal.scrollIntoView({ behavior: 'smooth', block: 'start' }), 400);
+    const cards = adGrid.querySelectorAll('.ad-card, .ad-more');
+    cards.forEach((c, i) => setTimeout(() => c.classList.add('is-revealed'), 240 + i * 140));
+  };
+
+  const showError = (msg) => {
+    stages.forEach(s => { s.classList.remove('is-active', 'is-done'); s.querySelector('.timer').textContent = ''; });
+    stopElapsed();
+    elapsedT.textContent = 'Failed';
+    const head = document.querySelector('.mal-stages h2');
+    if (head) head.insertAdjacentHTML('afterend',
+      `<p id="malErr" style="margin-top:14px; color:var(--score-bad); font-size:15px;">Something went wrong: ${escapeHtml(msg)}. Try a different URL.</p>`);
+  };
+
+  const consumeSse = async (resp) => {
+    const reader = resp.body.getReader();
+    const dec = new TextDecoder();
+    let buf = '';
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      buf += dec.decode(value, { stream: true });
+      let idx;
+      while ((idx = buf.indexOf('\n\n')) !== -1) {
+        const chunk = buf.slice(0, idx); buf = buf.slice(idx + 2);
+        let eventName = 'message', data = '';
+        for (const line of chunk.split('\n')) {
+          if (line.startsWith('event:')) eventName = line.slice(6).trim();
+          else if (line.startsWith('data:')) data += line.slice(5).trim();
+        }
+        let payload = {};
+        try { payload = data ? JSON.parse(data) : {}; } catch {}
+        handleEvent(eventName, payload);
+      }
+    }
+  };
+
+  const handleEvent = (event, payload) => {
+    if (event === 'stage') {
+      if (payload.status === 'active') stageActive(payload.idx, payload.message);
+      if (payload.status === 'done')   stageDone(payload.idx);
+    } else if (event === 'brand') {
+      state.brand = payload;
+      if (brandLbl) brandLbl.textContent = payload.name || 'your brand';
+      if (brandName) brandName.textContent = payload.name || 'your brand';
+    } else if (event === 'ads') {
+      state.audience = payload.audience;
+      state.ads = payload.ads || [];
+      renderAds();
+    } else if (event === 'done') {
+      state.isDone = true;
+      stopElapsed();
+      gateSec.classList.add('is-ready');
+      setTimeout(() => gateSec.scrollIntoView({ behavior: 'smooth', block: 'start' }), 500);
+    } else if (event === 'error') {
+      showError(payload.message || 'unknown');
+    }
+  };
 
   heroForm.addEventListener('submit', async (e) => {
     e.preventDefault();
-    if (isRunning) return;
-    isRunning = true;
-    const url = heroUrl.value.trim();
-    const brand = guessBrand(url);
-    const dom = guessDomain(url);
-    brandHere.forEach(el => el.textContent = brand);
-    brandDom.forEach(el => el.textContent = dom);
-    if (brandLbl) brandLbl.textContent = brand;
-    if (brandName) brandName.textContent = brand;
+    if (state.isRunning) return;
+    state.isRunning = true; state.isDone = false;
+    state.url = heroUrl.value.trim();
+    state.brand = null; state.ads = []; state.audience = '';
 
     document.getElementById('flow').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    document.getElementById('malErr')?.remove();
     resetStages();
     gateSec.classList.remove('is-ready');
     gateCard.classList.remove('is-submitted');
-    if (reveal) reveal.hidden = true;
-    document.querySelectorAll('.ad-card, .ad-more').forEach(el => el.classList.remove('is-revealed'));
+    adGrid.innerHTML = '';
+    reveal.hidden = true;
 
-    await new Promise(r => setTimeout(r, 600));
+    await new Promise(r => setTimeout(r, 300));
     startElapsed();
-    for (let i = 0; i < stages.length; i++) await animateStage(i);
-    stopElapsed();
-    gateSec.classList.add('is-ready');
-    setTimeout(() => gateSec.scrollIntoView({ behavior: 'smooth', block: 'start' }), 500);
-    isRunning = false;
+
+    try {
+      const resp = await fetch('/api/meta-ads-lab', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url: state.url }),
+      });
+      if (!resp.ok) {
+        const err = await resp.json().catch(() => ({}));
+        throw new Error(err.error || `${resp.status}`);
+      }
+      await consumeSse(resp);
+    } catch (e) {
+      showError(e?.message || 'Request failed');
+    } finally {
+      state.isRunning = false;
+    }
   });
 
-  gateForm.addEventListener('submit', (e) => {
+  gateForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     const btn = gateForm.querySelector('.submit');
     btn.disabled = true;
     btn.textContent = 'Sending…';
-    setTimeout(() => {
-      gateCard.classList.add('is-submitted');
-      if (reveal) reveal.hidden = false;
-      setTimeout(() => {
-        reveal.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        const cards = document.querySelectorAll('.ad-card, .ad-more');
-        cards.forEach((c, i) => setTimeout(() => c.classList.add('is-revealed'), 200 + i * 160));
+
+    const fd = new FormData(gateForm);
+    const payload = {
+      url: state.url,
+      email: (fd.get('email') || '').toString(),
+      name: (fd.get('name') || '').toString(),
+      phone: (fd.get('phone') || '').toString(),
+      notes: (fd.get('notes') || '').toString(),
+      brand: state.brand?.name,
+      audience: state.audience,
+      ads: state.ads.map(a => ({ platform: a.platform, angle: a.angle, headline: a.headline })),
+    };
+
+    try {
+      const resp = await fetch('/api/meta-ads-lab-lead', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (!resp.ok) {
+        const err = await resp.json().catch(() => ({}));
+        throw new Error(err.error || 'Lead submit failed');
+      }
+    } catch (e) {
+      console.warn('[lead]', e?.message);
+      // Continue anyway — show success UX so visitor sees the ads
+    }
+
+    gateCard.classList.add('is-submitted');
+    if (state.ads.length === 0) {
+      // No ads yet (still generating). Wait a bit then reveal whatever's there.
+      const waitForAds = setInterval(() => {
+        if (state.ads.length > 0 || state.isDone) {
+          clearInterval(waitForAds);
+          revealAds();
+        }
       }, 500);
-    }, 800);
+    } else {
+      revealAds();
+    }
   });
 })();
 </script>
