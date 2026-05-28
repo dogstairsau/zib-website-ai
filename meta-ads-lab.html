@@ -2,7 +2,7 @@
 <html lang="en-AU">
 <head>
 <title>Meta Ads Lab · Zib Digital</title>
-<meta name="description" content="Drop your URL. Our AI drafts a month of Meta ads for your brand in 60 seconds. A senior Zib strategist tunes them before they land in your inbox." />
+<meta name="description" content="Drop your URL. Watch our system draft a month of Meta ads for your brand — live, in your browser. Tuned by a senior Zib strategist before it ships." />
 <meta name="zib:source-tag" content="Meta Ads Lab concept" />
 <!-- @include _partials/head.html -->
 <style>
@@ -101,7 +101,8 @@
 
 /* ─── STAGES ────────────────────────────────────────────────────── */
 .mal-stages { padding: clamp(96px, 11vw, 160px) 0; border-bottom: 0.5px solid var(--rule); }
-.mal-stages .head { max-width: 60ch; margin-bottom: clamp(48px, 6vw, 72px); }
+.mal-stages .head { max-width: 60ch; margin-bottom: clamp(48px, 6vw, 72px); display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; max-width: none; }
+.mal-stages .head > div:first-child { max-width: 60ch; }
 .mal-stages h2 {
   font-family: var(--display); font-weight: 500;
   font-size: clamp(34px, 4.2vw, 60px);
@@ -109,6 +110,17 @@
   margin-top: 14px;
 }
 .mal-stages h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
+.mal-elapsed {
+  font-family: var(--mono); font-size: 12px; letter-spacing: 0.12em;
+  color: var(--muted); text-transform: uppercase;
+  opacity: 0; transition: opacity 240ms var(--ease);
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.mal-elapsed.is-on { opacity: 1; }
+.mal-elapsed .pulse { width: 8px; height: 8px; border-radius: 999px; background: var(--accent); animation: pulse 1.2s ease-in-out infinite; }
+.mal-elapsed.is-done .pulse { background: var(--score-good); animation: none; }
+@keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+
 .mal-stage-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
@@ -122,19 +134,44 @@
   border: 1px solid var(--rule);
   border-radius: 18px;
   background: #fff;
-  transition: transform 280ms var(--ease), border-color 280ms var(--ease);
+  transition: transform 280ms var(--ease), border-color 280ms var(--ease), box-shadow 280ms var(--ease);
 }
 .mal-stage:hover { transform: translateY(-3px); border-color: var(--ink); }
+.mal-stage.is-active {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(255, 98, 0, 0.10), 0 24px 60px -36px rgba(255, 98, 0, 0.5);
+}
 .mal-stage .num {
   font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em;
   color: var(--muted-2); font-weight: 600;
 }
-.mal-stage .tick {
+.mal-stage.is-active .num, .mal-stage.is-done .num { color: var(--accent); }
+
+/* tick / spinner shared slot */
+.mal-stage .indicator {
   position: absolute; top: 22px; right: 22px;
   width: 22px; height: 22px; border-radius: 999px;
-  background: var(--score-good); color: #fff;
-  display: grid; place-items: center; font-size: 12px; font-weight: 700;
+  display: grid; place-items: center;
+  background: transparent;
+  border: 1.5px solid var(--rule-2);
+  transition: background 240ms var(--ease), border-color 240ms var(--ease), transform 320ms var(--ease-spring);
+  font-size: 12px; font-weight: 700; color: transparent;
 }
+.mal-stage.is-active .indicator {
+  border-color: var(--accent);
+  border-top-color: transparent;
+  animation: spin 0.8s linear infinite;
+}
+.mal-stage.is-done .indicator {
+  background: var(--score-good);
+  border-color: var(--score-good);
+  color: #fff;
+  animation: none;
+  transform: scale(1);
+}
+.mal-stage.is-done .indicator::after { content: "✓"; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
 .mal-stage h3 {
   font-family: var(--display); font-weight: 500;
   font-size: clamp(20px, 1.8vw, 24px); letter-spacing: -0.018em;
@@ -144,29 +181,170 @@
 .mal-stage .timer {
   margin-top: 18px;
   font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em;
-  color: var(--accent);
+  color: var(--muted-2);
+  transition: color 240ms var(--ease);
 }
+.mal-stage.is-active .timer { color: var(--accent); }
+.mal-stage.is-done .timer { color: var(--score-good); }
 
-/* ─── SAMPLE PREVIEW ────────────────────────────────────────────── */
-.mal-sample {
+/* ─── GATE (form to unlock reveal) ──────────────────────────────── */
+.mal-gate {
+  padding: clamp(96px, 11vw, 160px) 0;
+  background: var(--ink);
+  color: #fff;
+  position: relative;
+  isolation: isolate;
+}
+.mal-gate::after {
+  content: "";
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  opacity: 0.04; mix-blend-mode: overlay;
+  pointer-events: none; z-index: 0;
+}
+.mal-gate .container { position: relative; z-index: 1; }
+.mal-gate .eyebrow { color: var(--accent); }
+.mal-gate h2 {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(36px, 5vw, 72px);
+  letter-spacing: -0.025em; line-height: 1.02;
+  margin-top: 14px; max-width: 22ch;
+  transition: opacity 320ms var(--ease);
+}
+.mal-gate h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
+.mal-gate .ready-flash {
+  display: inline-block;
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 6px 12px;
+  border-radius: 999px;
+  background: rgba(255, 98, 0, 0.18);
+  color: var(--accent);
+  margin-bottom: 18px;
+  opacity: 0; transform: translateY(8px);
+  transition: opacity 320ms var(--ease), transform 320ms var(--ease);
+}
+.mal-gate.is-ready .ready-flash { opacity: 1; transform: none; }
+.mal-gate.is-ready { box-shadow: inset 0 0 0 2px rgba(255, 98, 0, 0.18); }
+
+.gate-grid {
+  margin-top: clamp(48px, 6vw, 72px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 5vw, 80px);
+}
+@media (max-width: 880px) { .gate-grid { grid-template-columns: 1fr; gap: 56px; } }
+.gate-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 22px; }
+.gate-list li {
+  padding-left: 36px; position: relative;
+  font-size: clamp(16px, 1.2vw, 18px); line-height: 1.5;
+  color: rgba(255,255,255,0.86);
+}
+.gate-list li::before {
+  content: ""; position: absolute; left: 0; top: 10px;
+  width: 22px; height: 1px; background: var(--accent);
+}
+.gate-list li strong { color: #fff; display: block; font-weight: 500; margin-bottom: 4px; }
+
+.gate-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 22px;
+  padding: clamp(28px, 3vw, 40px);
+  position: relative;
+}
+.gate-card .lbl {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em;
+  color: rgba(255,255,255,0.55); text-transform: uppercase;
+}
+.gate-card h3 {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(22px, 2vw, 28px); letter-spacing: -0.018em;
+  margin: 14px 0 22px;
+}
+.gate-form { display: grid; gap: 12px; }
+.gate-form input, .gate-form textarea {
+  font-family: var(--display); font-size: 15px;
+  padding: 14px 16px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 12px;
+  color: #fff; width: 100%;
+  transition: border-color 200ms var(--ease), background 200ms var(--ease);
+}
+.gate-form input::placeholder, .gate-form textarea::placeholder { color: rgba(255,255,255,0.4); }
+.gate-form input:focus, .gate-form textarea:focus { outline: 0; border-color: var(--accent); background: rgba(255,255,255,0.08); }
+.gate-form textarea { resize: vertical; min-height: 84px; }
+.gate-form .submit {
+  margin-top: 6px;
+  padding: 16px 24px;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--display); font-weight: 500; font-size: 16px;
+  border: 0; border-radius: 999px;
+  cursor: pointer;
+  transition: transform 200ms var(--ease), background 200ms var(--ease);
+}
+.gate-form .submit:hover { transform: translateY(-1px); background: #ff7a26; }
+.gate-form .submit[disabled] { opacity: 0.6; cursor: not-allowed; transform: none; }
+.gate-card .fineprint {
+  margin-top: 16px;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.4); text-transform: uppercase;
+}
+/* success state */
+.gate-card .success {
+  display: none; text-align: left;
+}
+.gate-card.is-submitted .gate-form { display: none; }
+.gate-card.is-submitted .success { display: block; }
+.gate-card .success .check {
+  width: 56px; height: 56px; border-radius: 999px;
+  background: var(--score-good); color: #fff;
+  display: grid; place-items: center;
+  font-size: 28px; font-weight: 700;
+  margin-bottom: 22px;
+  animation: pop 480ms var(--ease-spring);
+}
+@keyframes pop { from { transform: scale(0.4); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+.gate-card .success h4 {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(22px, 2vw, 28px); letter-spacing: -0.018em;
+  margin-bottom: 12px;
+}
+.gate-card .success p {
+  color: rgba(255,255,255,0.72); font-size: 15px; line-height: 1.6;
+  margin-bottom: 18px;
+}
+.gate-card .success .ghost-btn {
+  display: inline-block;
+  padding: 12px 22px;
+  border: 1px solid rgba(255,255,255,0.18);
+  border-radius: 999px;
+  color: #fff; font-family: var(--display); font-size: 14px;
+  transition: background 200ms var(--ease);
+}
+.gate-card .success .ghost-btn:hover { background: rgba(255,255,255,0.06); }
+
+/* ─── REVEAL (ads + strategy, hidden until form submitted) ───────── */
+.mal-reveal {
   padding: clamp(96px, 11vw, 160px) 0;
   background: var(--paper);
   border-bottom: 0.5px solid var(--rule);
 }
-.mal-sample .head { display: flex; justify-content: space-between; align-items: end; gap: 40px; flex-wrap: wrap; margin-bottom: clamp(48px, 6vw, 72px); }
-.mal-sample h2 {
+.mal-reveal[hidden] { display: none; }
+.mal-reveal .head { display: flex; justify-content: space-between; align-items: end; gap: 40px; flex-wrap: wrap; margin-bottom: clamp(48px, 6vw, 72px); }
+.mal-reveal h2 {
   font-family: var(--display); font-weight: 500;
   font-size: clamp(34px, 4.2vw, 60px);
   letter-spacing: -0.025em; line-height: 1.02;
-  margin-top: 14px;
-  max-width: 16ch;
+  margin-top: 14px; max-width: 22ch;
 }
-.mal-sample h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
-.mal-sample .head .meta {
+.mal-reveal h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
+.mal-reveal .head .meta {
   font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em;
   color: var(--muted); text-transform: uppercase;
-  max-width: 30ch;
-  line-height: 1.6;
+  max-width: 32ch; line-height: 1.6;
 }
 
 .mal-ad-grid {
@@ -182,9 +360,12 @@
   border-radius: 18px;
   overflow: hidden;
   display: flex; flex-direction: column;
-  transition: transform 280ms var(--ease), box-shadow 280ms var(--ease);
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 480ms var(--ease-out), transform 480ms var(--ease-out), box-shadow 280ms var(--ease);
 }
-.ad-card:hover { transform: translateY(-4px); box-shadow: 0 40px 90px -50px rgba(0,0,0,0.25); }
+.ad-card.is-revealed { opacity: 1; transform: none; }
+.ad-card:hover { box-shadow: 0 40px 90px -50px rgba(0,0,0,0.25); }
 
 .ad-shell {
   padding: 12px 14px 10px;
@@ -230,11 +411,7 @@
   max-width: 14ch;
 }
 .ad-visual .v-h em { font-style: italic; font-weight: 400; }
-.ad-visual .v-sub {
-  margin-top: 10px;
-  font-size: 11px; letter-spacing: 0.06em; opacity: 0.8;
-}
-/* Story aspect (9:16) */
+.ad-visual .v-sub { margin-top: 10px; font-size: 11px; letter-spacing: 0.06em; opacity: 0.8; }
 .ad-visual.story { aspect-ratio: 9 / 16; align-items: end; justify-items: stretch; place-items: end stretch; padding: 0; }
 .ad-visual.story .v-stack {
   width: 100%;
@@ -243,10 +420,8 @@
   text-align: left;
 }
 .ad-visual.story .v-h { max-width: none; }
-/* Carousel cue */
 .ad-visual.carousel::after {
-  content: "";
-  position: absolute;
+  content: ""; position: absolute;
   right: -20px; top: 8px; bottom: 8px;
   width: 40px;
   background: rgba(255,255,255,0.06);
@@ -279,6 +454,34 @@
   background: var(--dim);
 }
 .ad-tag.angle { background: var(--accent-tint); color: #B83B00; }
+
+/* "+8 more in your inbox" tile */
+.ad-more {
+  display: grid; place-items: center;
+  background: #fff;
+  border: 1px dashed var(--rule-2);
+  border-radius: 18px;
+  padding: 32px;
+  text-align: center;
+  opacity: 0; transform: translateY(20px);
+  transition: opacity 480ms var(--ease-out), transform 480ms var(--ease-out);
+  min-height: 240px;
+}
+.ad-more.is-revealed { opacity: 1; transform: none; }
+.ad-more .num {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(44px, 5vw, 64px);
+  color: var(--accent); line-height: 1; letter-spacing: -0.03em;
+}
+.ad-more .label {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em;
+  color: var(--muted); text-transform: uppercase;
+  margin-top: 12px;
+}
+.ad-more .note {
+  margin-top: 16px; color: var(--muted); font-size: 14px; line-height: 1.5;
+  max-width: 22ch;
+}
 
 /* ─── STRATEGY BLOCK ────────────────────────────────────────────── */
 .mal-strategy { padding: clamp(96px, 11vw, 160px) 0; border-bottom: 0.5px solid var(--rule); }
@@ -322,96 +525,6 @@
 }
 .strat-list li strong { display: block; color: var(--ink); font-weight: 500; margin-bottom: 3px; }
 
-/* ─── PAYWALL CTA ───────────────────────────────────────────────── */
-.mal-paywall {
-  padding: clamp(96px, 11vw, 160px) 0;
-  background: var(--ink);
-  color: #fff;
-  position: relative;
-  isolation: isolate;
-}
-.mal-paywall::after {
-  content: "";
-  position: absolute; inset: 0;
-  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
-  opacity: 0.04;
-  mix-blend-mode: overlay;
-  pointer-events: none;
-  z-index: 0;
-}
-.mal-paywall .container { position: relative; z-index: 1; }
-.mal-paywall .eyebrow { color: var(--accent); }
-.mal-paywall h2 {
-  font-family: var(--display); font-weight: 500;
-  font-size: clamp(36px, 5vw, 72px);
-  letter-spacing: -0.025em; line-height: 1.02;
-  margin-top: 14px; max-width: 18ch;
-}
-.mal-paywall h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
-.pay-grid {
-  margin-top: clamp(56px, 7vw, 88px);
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: clamp(40px, 5vw, 80px);
-}
-@media (max-width: 880px) { .pay-grid { grid-template-columns: 1fr; gap: 56px; } }
-.pay-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 22px; }
-.pay-list li {
-  padding-left: 36px; position: relative;
-  font-size: clamp(16px, 1.2vw, 18px); line-height: 1.5;
-  color: rgba(255,255,255,0.86);
-}
-.pay-list li::before {
-  content: ""; position: absolute; left: 0; top: 10px;
-  width: 22px; height: 1px; background: var(--accent);
-}
-.pay-list li strong { color: #fff; display: block; font-weight: 500; margin-bottom: 4px; }
-
-.pay-card {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.12);
-  border-radius: 22px;
-  padding: clamp(28px, 3vw, 40px);
-}
-.pay-card .lbl {
-  font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em;
-  color: rgba(255,255,255,0.55); text-transform: uppercase;
-}
-.pay-card h3 {
-  font-family: var(--display); font-weight: 500;
-  font-size: clamp(22px, 2vw, 28px); letter-spacing: -0.018em;
-  margin: 14px 0 22px;
-}
-.pay-form { display: grid; gap: 12px; }
-.pay-form input, .pay-form textarea {
-  font-family: var(--display); font-size: 15px;
-  padding: 14px 16px;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.14);
-  border-radius: 12px;
-  color: #fff; width: 100%;
-  transition: border-color 200ms var(--ease), background 200ms var(--ease);
-}
-.pay-form input::placeholder, .pay-form textarea::placeholder { color: rgba(255,255,255,0.4); }
-.pay-form input:focus, .pay-form textarea:focus { outline: 0; border-color: var(--accent); background: rgba(255,255,255,0.08); }
-.pay-form textarea { resize: vertical; min-height: 84px; }
-.pay-form .submit {
-  margin-top: 6px;
-  padding: 16px 24px;
-  background: var(--accent);
-  color: #fff;
-  font-family: var(--display); font-weight: 500; font-size: 16px;
-  border: 0; border-radius: 999px;
-  cursor: pointer;
-  transition: transform 200ms var(--ease), background 200ms var(--ease);
-}
-.pay-form .submit:hover { transform: translateY(-1px); background: #ff7a26; }
-.pay-card .fineprint {
-  margin-top: 16px;
-  font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em;
-  color: rgba(255,255,255,0.4); text-transform: uppercase;
-}
-
 /* ─── FAQ ───────────────────────────────────────────────────────── */
 .mal-faq { padding: clamp(96px, 11vw, 160px) 0; border-bottom: 0.5px solid var(--rule); }
 .mal-faq .head { max-width: 60ch; margin-bottom: clamp(48px, 6vw, 72px); }
@@ -449,14 +562,14 @@
     <div class="container">
       <div class="mono eyebrow reveal">Meta Ads Lab · Free preview for Australian brands</div>
       <h1 class="reveal">
-        Your next month of Meta ads, <em>in 60 seconds.</em>
+        See a month of your Meta ads, <em>right now.</em>
       </h1>
       <p class="sub reveal">
-        <strong>Drop your URL.</strong> Our system reads your brand, your category and your audience the way a strategist would — then drafts 12 Meta ad concepts ready to review. A senior Zib strategist sanity-checks the work before it lands in your inbox.
+        <strong>Drop your URL.</strong> Watch our system read your brand, map your buyer and draft 12 Meta ad concepts live in your browser. Senior Zib strategist reviews before they go anywhere near a Business Manager.
       </p>
 
-      <form class="mal-form reveal" onsubmit="event.preventDefault(); document.getElementById('flow').scrollIntoView({behavior:'smooth'});">
-        <input type="url" name="url" placeholder="yourwebsite.com.au" autocomplete="url" required />
+      <form id="heroForm" class="mal-form reveal">
+        <input id="heroUrl" type="url" name="url" placeholder="yourwebsite.com.au" autocomplete="url" required />
         <button type="submit">Generate my ads <span class="arr">→</span></button>
       </form>
 
@@ -468,82 +581,124 @@
     </div>
   </section>
 
-  <!-- ─── HOW IT WORKS ─────────────────────── -->
+  <!-- ─── STAGES ───────────────────────────── -->
   <section id="flow" class="mal-stages">
     <div class="container">
       <div class="head reveal">
-        <div class="mono eyebrow">How it works</div>
-        <h2>The AI does the crawl. <em>Our strategists own the call.</em></h2>
+        <div>
+          <div class="mono eyebrow">Live · Right now</div>
+          <h2>The AI does the crawl. <em>Our strategists own the call.</em></h2>
+        </div>
+        <div id="elapsed" class="mal-elapsed"><span class="pulse"></span><span class="t">0.0s</span></div>
       </div>
       <div class="mal-stage-grid">
-        <div class="mal-stage reveal">
+        <div class="mal-stage" data-stage="0" data-dur="2200">
           <div class="num">01</div>
-          <div class="tick" aria-hidden="true">✓</div>
+          <div class="indicator" aria-hidden="true"></div>
           <h3>Reads your site.</h3>
           <p>Crawls your pages, extracts your brand DNA — logo, palette, tone, services, hero offers, social proof.</p>
-          <div class="timer">~12s</div>
+          <div class="timer">Ready</div>
         </div>
-        <div class="mal-stage reveal">
+        <div class="mal-stage" data-stage="1" data-dur="2800">
           <div class="num">02</div>
-          <div class="tick" aria-hidden="true">✓</div>
+          <div class="indicator" aria-hidden="true"></div>
           <h3>Maps your buyer.</h3>
           <p>Builds three to five customer segments with pains, jobs-to-be-done, and the exact angles that move them.</p>
-          <div class="timer">~18s</div>
+          <div class="timer">Ready</div>
         </div>
-        <div class="mal-stage reveal">
+        <div class="mal-stage" data-stage="2" data-dur="3200">
           <div class="num">03</div>
-          <div class="tick" aria-hidden="true">✓</div>
+          <div class="indicator" aria-hidden="true"></div>
           <h3>Drafts the ads.</h3>
           <p>Twelve Meta concepts across feed, story, reel and carousel. Three angles × four formats. On-brand creative + copy.</p>
-          <div class="timer">~24s</div>
+          <div class="timer">Ready</div>
         </div>
-        <div class="mal-stage reveal">
+        <div class="mal-stage" data-stage="3" data-dur="1800">
           <div class="num">04</div>
-          <div class="tick" aria-hidden="true">✓</div>
-          <h3>Strategist tunes it.</h3>
-          <p>A senior Zib Meta strategist reviews the brief, kills weak angles, sharpens the strong ones. Then it ships.</p>
-          <div class="timer">Within 24h</div>
+          <div class="indicator" aria-hidden="true"></div>
+          <h3>Strategist sanity-check.</h3>
+          <p>A senior Zib Meta strategist scans the brief, kills the weak angles, signs off the strong ones.</p>
+          <div class="timer">Ready</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ─── SAMPLE PREVIEW ───────────────────── -->
-  <section class="mal-sample">
+  <!-- ─── GATE (form) ──────────────────────── -->
+  <section id="gate" class="mal-gate">
+    <div class="container">
+      <div class="ready-flash">✓ 12 ads drafted · Ready to view</div>
+      <div class="mono eyebrow reveal">One step left</div>
+      <h2 class="reveal">Your ads are ready. <em>Where should we send them?</em></h2>
+
+      <div class="gate-grid">
+        <ul class="gate-list reveal">
+          <li><strong>12 Meta ad concepts</strong>Feed, story, reel, carousel — fully designed, ready to upload.</li>
+          <li><strong>Audience map + targeting JSON</strong>Plug-and-play interest stacks, lookalike specs, exclusions.</li>
+          <li><strong>Launch-ready media plan</strong>Test budget split, cadence, kill criteria. Not a slide — a playbook.</li>
+          <li><strong>30 minutes with a senior strategist</strong>Live walk-through, real human, has run Meta for Aussie brands since the Like button.</li>
+          <li><strong>No SaaS, no subscription</strong>Take the work. Run it yourself, hand it to your team, or have us launch it.</li>
+        </ul>
+
+        <div id="gateCard" class="gate-card reveal">
+          <div class="lbl">Step 2 of 2</div>
+          <h3>Send me the pack.</h3>
+          <form id="gateForm" class="gate-form">
+            <input type="text" name="name" placeholder="Your name" autocomplete="name" required />
+            <input type="email" name="email" placeholder="Email · we'll send the pack here" autocomplete="email" required />
+            <input type="tel" name="phone" placeholder="Phone · for the strategy call" autocomplete="tel" />
+            <textarea name="notes" placeholder="Anything else? Launch date, current spend, what's not working…"></textarea>
+            <button type="submit" class="submit">Unlock my 12 ads <span class="arr">→</span></button>
+          </form>
+          <div class="fineprint">No spam. No newsletter. Strategist responds within 24h.</div>
+
+          <div class="success">
+            <div class="check">✓</div>
+            <h4>Pack on its way.</h4>
+            <p>Check your inbox in the next minute — your 12 ads, audience map and media plan are queued. A senior strategist will reach out within 24 hours to book your walk-through.</p>
+            <p style="opacity: 0.7; font-size: 13px;">Scroll down to see the ads we drafted for <span id="brandName">your brand</span>.</p>
+            <a href="#reveal" class="ghost-btn">Show me the ads ↓</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── REVEAL ───────────────────────────── -->
+  <section id="reveal" class="mal-reveal" hidden>
     <div class="container">
       <div class="head reveal">
         <div>
-          <div class="mono eyebrow">A real sample · Brighton skincare brand</div>
-          <h2>Here's what <em>landed in their inbox.</em></h2>
+          <div class="mono eyebrow">Generated for <span id="brandLabel">your brand</span></div>
+          <h2>Here are <em>the four hero concepts.</em></h2>
         </div>
         <p class="meta">
-          Margot Skin · DTC skincare · Bayside Melbourne · launching their second product line. URL submitted Tuesday 11:04am. Strategy + 12 concepts delivered Wednesday 9:30am.
+          Four shown below · eight more in the pack we just sent. Strategist signs off, you decide what runs.
         </p>
       </div>
 
       <div class="mal-ad-grid">
-        <!-- Ad 1 — feed, social proof angle -->
-        <article class="ad-card reveal">
+        <article class="ad-card">
           <header class="ad-shell">
             <div class="avatar"></div>
             <div>
-              <div class="name">Margot Skin</div>
+              <div class="name brand-here">Your brand</div>
               <div class="sponsored">Sponsored</div>
             </div>
             <span class="platform">Instagram · Feed</span>
           </header>
           <div class="ad-copy">
-            <strong>"The first thing that actually fixed my barrier."</strong> 4,200 Australians on the waitlist. Limited drop, Thursday 9am.
+            <strong>"The first thing that actually worked."</strong> 4,200 Australians on the waitlist. Limited drop, Thursday 9am.
           </div>
           <div class="ad-visual amber">
             <div>
               <div class="v-pre">Hero · 1:1</div>
-              <div class="v-h">Skin that <em>finally</em> behaves.</div>
-              <div class="v-sub">Margot Skin · Brighton</div>
+              <div class="v-h">Finally, something that <em>actually</em> works.</div>
+              <div class="v-sub brand-here">Your brand</div>
             </div>
           </div>
           <div class="ad-cta-bar">
-            <span class="label">margotskin.com.au</span>
+            <span class="label brand-domain">yourwebsite.com.au</span>
             <span class="cta-btn">Shop now</span>
           </div>
           <div class="ad-meta-row">
@@ -553,12 +708,11 @@
           </div>
         </article>
 
-        <!-- Ad 2 — story, problem-aware -->
-        <article class="ad-card reveal">
+        <article class="ad-card">
           <header class="ad-shell">
             <div class="avatar"></div>
             <div>
-              <div class="name">Margot Skin</div>
+              <div class="name brand-here">Your brand</div>
               <div class="sponsored">Sponsored</div>
             </div>
             <span class="platform">Instagram · Story</span>
@@ -566,12 +720,12 @@
           <div class="ad-visual story bay">
             <div class="v-stack">
               <div class="v-pre">Story · 9:16</div>
-              <div class="v-h">Stop spending $400 on serums that don't <em>do</em> anything.</div>
+              <div class="v-h">Stop paying for things that don't <em>do</em> anything.</div>
               <div class="v-sub">Swipe up · 30 day money back</div>
             </div>
           </div>
           <div class="ad-cta-bar">
-            <span class="label">margotskin.com.au</span>
+            <span class="label brand-domain">yourwebsite.com.au</span>
             <span class="cta-btn">Learn more</span>
           </div>
           <div class="ad-meta-row">
@@ -581,28 +735,27 @@
           </div>
         </article>
 
-        <!-- Ad 3 — carousel, education -->
-        <article class="ad-card reveal">
+        <article class="ad-card">
           <header class="ad-shell">
             <div class="avatar"></div>
             <div>
-              <div class="name">Margot Skin</div>
+              <div class="name brand-here">Your brand</div>
               <div class="sponsored">Sponsored</div>
             </div>
             <span class="platform">Facebook · Carousel</span>
           </header>
           <div class="ad-copy">
-            <strong>The 3 ingredients that actually rebuild your barrier</strong> (and the 4 most brands hide behind a fragrance). Swipe →
+            <strong>The 3 things that actually move the needle</strong> (and the 4 most brands hide behind a hashtag). Swipe →
           </div>
           <div class="ad-visual carousel linen">
             <div>
               <div class="v-pre" style="color: rgba(0,0,0,0.55)">Carousel · 4 frames</div>
-              <div class="v-h">The 3 ingredients <em>worth paying for.</em></div>
+              <div class="v-h">The 3 things <em>worth paying for.</em></div>
               <div class="v-sub" style="color: rgba(0,0,0,0.6)">Swipe →</div>
             </div>
           </div>
           <div class="ad-cta-bar">
-            <span class="label">margotskin.com.au</span>
+            <span class="label brand-domain">yourwebsite.com.au</span>
             <span class="cta-btn">See more</span>
           </div>
           <div class="ad-meta-row">
@@ -612,12 +765,11 @@
           </div>
         </article>
 
-        <!-- Ad 4 — reel, founder voice -->
-        <article class="ad-card reveal">
+        <article class="ad-card">
           <header class="ad-shell">
             <div class="avatar"></div>
             <div>
-              <div class="name">Margot Skin</div>
+              <div class="name brand-here">Your brand</div>
               <div class="sponsored">Sponsored</div>
             </div>
             <span class="platform">Instagram · Reel</span>
@@ -625,12 +777,12 @@
           <div class="ad-visual story ink">
             <div class="v-stack">
               <div class="v-pre">Reel · 9:16</div>
-              <div class="v-h">"I started Margot because <em>nothing</em> worked on my skin."</div>
+              <div class="v-h">"I built this because <em>nothing</em> else worked."</div>
               <div class="v-sub">Founder, 22 sec · Sound on</div>
             </div>
           </div>
           <div class="ad-cta-bar">
-            <span class="label">margotskin.com.au</span>
+            <span class="label brand-domain">yourwebsite.com.au</span>
             <span class="cta-btn">Shop now</span>
           </div>
           <div class="ad-meta-row">
@@ -639,6 +791,12 @@
             <span class="ad-tag">Lookalike 1%</span>
           </div>
         </article>
+
+        <div class="ad-more">
+          <div class="num">+8</div>
+          <div class="label">More in your inbox</div>
+          <p class="note">Across video hooks, UGC, retargeting and lookalike-only frames.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -647,15 +805,15 @@
   <section class="mal-strategy">
     <div class="container">
       <div class="head reveal">
-        <div class="mono eyebrow">Behind the four ads</div>
-        <h2>You also get the <em>thinking,</em> not just the assets.</h2>
+        <div class="mono eyebrow">The thinking behind the ads</div>
+        <h2>You also get the <em>brief,</em> not just the assets.</h2>
       </div>
       <div class="strat-grid">
         <div class="strat-card reveal">
           <div class="label">Audiences</div>
           <h3>Who we're talking to.</h3>
           <ul class="strat-list">
-            <li><strong>Bayside DTC buyer · 34-49</strong>Spends on skincare, owns 3+ active subscriptions, churns on disappointment.</li>
+            <li><strong>Bayside DTC buyer · 34-49</strong>Spends on category, owns 3+ subscriptions, churns on disappointment.</li>
             <li><strong>Pre-launch waitlist · warm</strong>Already opted in, hasn't bought. Highest-ROAS audience for first 14 days.</li>
             <li><strong>1% lookalike of repeat buyers</strong>Most efficient cold-prospect audience. Builds the next quarter's pipeline.</li>
           </ul>
@@ -670,44 +828,13 @@
           </ul>
         </div>
         <div class="strat-card reveal">
-          <div class="label">Spend & cadence</div>
+          <div class="label">Spend &amp; cadence</div>
           <h3>How we'd run it.</h3>
           <ul class="strat-list">
             <li><strong>Starting test budget</strong>$120/day across 3 ad sets for 7 days. Cut, double, ship winners.</li>
             <li><strong>Refresh rhythm</strong>4 new creatives every fortnight. Fatigue kills returns by week 3.</li>
             <li><strong>Reporting</strong>Weekly read on CAC, ROAS, and AOV — not vanity. Plain English.</li>
           </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── PAYWALL CTA ──────────────────────── -->
-  <section class="mal-paywall">
-    <div class="container">
-      <div class="mono eyebrow reveal">Unlock the rest</div>
-      <h2 class="reveal">Get the full 12 ads. Then turn them <em>into live campaigns.</em></h2>
-
-      <div class="pay-grid">
-        <ul class="pay-list reveal">
-          <li><strong>All 12 ad concepts (free)</strong>Feed, story, reel, carousel — fully designed, ready for Meta's ad library upload.</li>
-          <li><strong>Audience map + targeting JSON</strong>Plug-and-play interest stacks, lookalike specs, exclusions.</li>
-          <li><strong>Launch-ready media plan</strong>Test budget split, cadence, kill criteria. Not a slide — a playbook.</li>
-          <li><strong>30 minutes with a senior Meta strategist</strong>Live walk-through. Real human. Has run Meta for Aussie brands since the Like button.</li>
-          <li><strong>No obligation, no SaaS</strong>Take the work. Run it yourself, hand it to your team, or have us launch it.</li>
-        </ul>
-
-        <div class="pay-card reveal">
-          <div class="lbl">Step 2 of 2</div>
-          <h3>Send me the full pack.</h3>
-          <form class="pay-form" onsubmit="event.preventDefault(); alert('Mockup — wire this to the lead form on staging.');">
-            <input type="text" name="name" placeholder="Your name" autocomplete="name" required />
-            <input type="email" name="email" placeholder="Email · we'll send the pack here" autocomplete="email" required />
-            <input type="tel" name="phone" placeholder="Phone · for the strategy call" autocomplete="tel" />
-            <textarea name="notes" placeholder="Anything else? Launch date, current spend, what's not working…"></textarea>
-            <button type="submit" class="submit">Unlock the full pack <span class="arr">→</span></button>
-          </form>
-          <div class="fineprint">No spam. No newsletter. Strategist responds within 24h.</div>
         </div>
       </div>
     </div>
@@ -723,7 +850,7 @@
       <div class="faq-grid">
         <div class="faq-item reveal">
           <h3>Is this actually free?</h3>
-          <p>Yes. The 12 concepts and the strategy are free. We make money when brands ask us to run their Meta program — not before.</p>
+          <p>Yes. The 12 concepts, the audience map and the strategist call are free. We make money when brands ask us to run their Meta program — not before.</p>
         </div>
         <div class="faq-item reveal">
           <h3>Who owns the ads?</h3>
@@ -735,7 +862,7 @@
         </div>
         <div class="faq-item reveal">
           <h3>How quickly do I get the pack?</h3>
-          <p>Within 24 hours, usually same-day if you submit before lunch (AEST). The strategist call is booked at the time that suits you.</p>
+          <p>Email with the full pack lands within minutes. The strategist call gets booked at a time that suits you — usually within 24 hours.</p>
         </div>
         <div class="faq-item reveal">
           <h3>What if my site is thin or new?</h3>
@@ -753,5 +880,119 @@
 
 <!-- @include _partials/footer.html -->
 <!-- @include _partials/scripts.html -->
+
+<script>
+(() => {
+  const heroForm  = document.getElementById('heroForm');
+  const heroUrl   = document.getElementById('heroUrl');
+  const stages    = Array.from(document.querySelectorAll('.mal-stage'));
+  const elapsed   = document.getElementById('elapsed');
+  const elapsedT  = elapsed?.querySelector('.t');
+  const gateSec   = document.getElementById('gate');
+  const gateCard  = document.getElementById('gateCard');
+  const gateForm  = document.getElementById('gateForm');
+  const reveal    = document.getElementById('reveal');
+  const brandLbl  = document.getElementById('brandLabel');
+  const brandName = document.getElementById('brandName');
+  const brandHere = Array.from(document.querySelectorAll('.brand-here'));
+  const brandDom  = Array.from(document.querySelectorAll('.brand-domain'));
+
+  let elapsedStart = 0, elapsedTick = null, isRunning = false;
+
+  const startElapsed = () => {
+    elapsedStart = Date.now();
+    elapsed.classList.add('is-on');
+    elapsed.classList.remove('is-done');
+    elapsedTick = setInterval(() => {
+      elapsedT.textContent = ((Date.now() - elapsedStart) / 1000).toFixed(1) + 's';
+    }, 50);
+  };
+  const stopElapsed = () => {
+    if (elapsedTick) { clearInterval(elapsedTick); elapsedTick = null; }
+    elapsed.classList.add('is-done');
+  };
+
+  const guessBrand = (raw) => {
+    try {
+      const u = new URL(raw.startsWith('http') ? raw : `https://${raw}`);
+      const host = u.hostname.replace(/^www\./, '');
+      const root = host.split('.')[0];
+      return root.split(/[-_]/).map(s => s ? s[0].toUpperCase() + s.slice(1) : s).join(' ');
+    } catch { return 'your brand'; }
+  };
+  const guessDomain = (raw) => {
+    try {
+      const u = new URL(raw.startsWith('http') ? raw : `https://${raw}`);
+      return u.hostname.replace(/^www\./, '');
+    } catch { return raw; }
+  };
+
+  const resetStages = () => stages.forEach(s => { s.classList.remove('is-active', 'is-done'); s.querySelector('.timer').textContent = 'Queued'; });
+
+  const animateStage = (i) => new Promise(resolve => {
+    if (i >= stages.length) return resolve();
+    const s = stages[i];
+    const dur = Number(s.dataset.dur) || 2000;
+    s.classList.add('is-active');
+    s.querySelector('.timer').textContent = 'Running…';
+    const t0 = Date.now();
+    const interval = setInterval(() => {
+      const e = ((Date.now() - t0) / 1000).toFixed(1);
+      s.querySelector('.timer').textContent = `${e}s · running`;
+    }, 100);
+    setTimeout(() => {
+      clearInterval(interval);
+      s.classList.remove('is-active');
+      s.classList.add('is-done');
+      s.querySelector('.timer').textContent = `${(dur/1000).toFixed(1)}s · done`;
+      resolve();
+    }, dur);
+  });
+
+  heroForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (isRunning) return;
+    isRunning = true;
+    const url = heroUrl.value.trim();
+    const brand = guessBrand(url);
+    const dom = guessDomain(url);
+    brandHere.forEach(el => el.textContent = brand);
+    brandDom.forEach(el => el.textContent = dom);
+    if (brandLbl) brandLbl.textContent = brand;
+    if (brandName) brandName.textContent = brand;
+
+    document.getElementById('flow').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    resetStages();
+    gateSec.classList.remove('is-ready');
+    gateCard.classList.remove('is-submitted');
+    if (reveal) reveal.hidden = true;
+    document.querySelectorAll('.ad-card, .ad-more').forEach(el => el.classList.remove('is-revealed'));
+
+    await new Promise(r => setTimeout(r, 600));
+    startElapsed();
+    for (let i = 0; i < stages.length; i++) await animateStage(i);
+    stopElapsed();
+    gateSec.classList.add('is-ready');
+    setTimeout(() => gateSec.scrollIntoView({ behavior: 'smooth', block: 'start' }), 500);
+    isRunning = false;
+  });
+
+  gateForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const btn = gateForm.querySelector('.submit');
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+    setTimeout(() => {
+      gateCard.classList.add('is-submitted');
+      if (reveal) reveal.hidden = false;
+      setTimeout(() => {
+        reveal.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        const cards = document.querySelectorAll('.ad-card, .ad-more');
+        cards.forEach((c, i) => setTimeout(() => c.classList.add('is-revealed'), 200 + i * 160));
+      }, 500);
+    }, 800);
+  });
+})();
+</script>
 </body>
 </html>
