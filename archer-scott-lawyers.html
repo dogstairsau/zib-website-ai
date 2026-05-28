@@ -173,6 +173,25 @@
   .plan.b ul li.why{color:#0E2A66}
   .plan.c ul li.why{color:var(--warn)}
 
+  /* show-the-math block */
+  .math-show{margin-top:56px;padding:28px 28px 22px;background:var(--bg-soft);border-left:4px solid var(--blue)}
+  .math-show .tag{font-size:11px;letter-spacing:.16em;font-weight:700;text-transform:uppercase;color:var(--blue);margin-bottom:10px}
+  .math-show h3{font-size:22px;font-weight:800;color:var(--ink);line-height:1.2;letter-spacing:-.02em;margin-bottom:8px;text-wrap:balance}
+  .math-show .sub{font-size:14px;line-height:1.55;color:var(--muted);margin-bottom:6px;max-width:var(--read)}
+  .math-show .tbl-wrap{margin-top:20px}
+  .math-show table.t thead th:last-child,.math-show table.t tbody td:last-child{text-align:right}
+  .math-show table.t tbody td{padding:14px 12px}
+  .math-show table.t tbody tr.row-sub td{background:rgba(17,86,216,.06);font-weight:700;color:var(--ink)}
+  .math-show table.t tbody tr.row-sub td:last-child{color:var(--blue)}
+  .math-show table.t tbody tr.row-grand td{background:var(--blue);color:#fff;font-weight:800;border-bottom-color:transparent}
+  .math-show table.t tbody tr.row-grand td:last-child{font-size:20px}
+  .math-show .math-foot{margin-top:16px;font-size:13px;line-height:1.55;color:var(--muted);font-style:italic;max-width:var(--read)}
+  @media(max-width:680px){
+    .math-show{padding:22px 18px}
+    .math-show h3{font-size:20px}
+    .math-show table.t-stack tbody tr.row-sub td:last-child,.math-show table.t-stack tbody tr.row-grand td:last-child{font-size:18px}
+  }
+
   /* costs */
   .invest{margin-top:36px;display:grid;grid-template-columns:1fr;gap:32px}
   @media(min-width:780px){.invest{grid-template-columns:1fr 1fr;gap:40px}}
@@ -526,6 +545,65 @@
           <li class="why">Better to win one fight, then use the wins to fund the next.</li>
         </ul>
       </div>
+    </div>
+
+    <div class="math-show">
+      <div class="tag">— Show the working</div>
+      <h3>How $2,000 of Google + $500 of Meta becomes ~$4,500 of profit</h3>
+      <p class="sub">Option A worked end-to-end. Numbers use Australian legal-vertical benchmarks &mdash; conservative, defensible, and easy to swap for your real figures once we&rsquo;re a month in.</p>
+      <div class="tbl-wrap">
+        <table class="t t-stack">
+          <thead><tr><th>Step</th><th>Assumption</th><th>Number</th></tr></thead>
+          <tbody>
+            <tr>
+              <td data-lbl="Step" class="name">Ad spend on Wills (search)</td>
+              <td data-lbl="Assumption">From the $2,500 split</td>
+              <td data-lbl="Number" class="num">$2,000</td>
+            </tr>
+            <tr>
+              <td data-lbl="Step" class="name">Cost per visitor from Google</td>
+              <td data-lbl="Assumption">Blended: long-tail ($1&ndash;$2) + head terms ($10+)</td>
+              <td data-lbl="Number" class="num">~$8</td>
+            </tr>
+            <tr>
+              <td data-lbl="Step" class="name">Visitors / month</td>
+              <td data-lbl="Assumption">$2,000 &divide; $8</td>
+              <td data-lbl="Number" class="num">~250</td>
+            </tr>
+            <tr>
+              <td data-lbl="Step" class="name">Visitors who fill the form or call</td>
+              <td data-lbl="Assumption">4% website conversion (legal benchmark)</td>
+              <td data-lbl="Number" class="num">~10</td>
+            </tr>
+            <tr>
+              <td data-lbl="Step" class="name">Retargeting uplift</td>
+              <td data-lbl="Assumption">$500 Meta drives ~20% more from existing visitors</td>
+              <td data-lbl="Number" class="num">+2</td>
+            </tr>
+            <tr class="row-sub">
+              <td data-lbl="Step" class="name">Enquiries / month</td>
+              <td data-lbl="Assumption">10 + 2</td>
+              <td data-lbl="Number" class="num">~12</td>
+            </tr>
+            <tr>
+              <td data-lbl="Step" class="name">Enquiries that become clients</td>
+              <td data-lbl="Assumption">25% close rate (legal benchmark, with good follow-up)</td>
+              <td data-lbl="Number" class="num">~3</td>
+            </tr>
+            <tr>
+              <td data-lbl="Step" class="name">Profit per Wills client</td>
+              <td data-lbl="Assumption">$5K average matter &times; ~30% margin (conservative)</td>
+              <td data-lbl="Number" class="num">$1,500</td>
+            </tr>
+            <tr class="row-grand">
+              <td data-lbl="Step" class="name">Gross profit / month</td>
+              <td data-lbl="Assumption">3 &times; $1,500</td>
+              <td data-lbl="Number" class="num">~$4,500</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="math-foot">Change any assumption &mdash; closing rate, matter size, margin &mdash; and the table moves with it. Happy to rebuild this with your actual numbers once we&rsquo;ve had a month of real data through the door.</p>
     </div>
   </div>
 </section>
