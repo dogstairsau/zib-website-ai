@@ -1,0 +1,1180 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mad Mex × Zib Digital — Make Google Mad About Mad Mex Again</title>
+<meta name="description" content="An SEO + AI search proposal for Mad Mex from Zib Digital. How to reclaim 42,000 non-branded Mexican-food searches every month, and turn an early AI Overview footprint into in-store traffic.">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.ziboutreach.com.au/madmex">
+<meta property="og:title" content="Mad Mex × Zib Digital — Make Google Mad About Mad Mex Again">
+<meta property="og:description" content="An SEO + AI search proposal: how Mad Mex can reclaim Mexican-food search across Australia.">
+<meta property="og:site_name" content="Zib Digital">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo+Black&family=Work+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400;1,600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --cream:#F4EDE4;
+    --cream-dark:#ECE2D3;
+    --paper:#F0E7D6;
+    --red:#EC1944;
+    --red-dark:#C8123A;
+    --green:#20AA4D;
+    --green-dark:#178239;
+    --ink:#1C1C1C;
+    --ink-2:#2A2A2A;
+    --muted:#6E6E6E;
+    --rule:#D8CFC0;
+    --rule-dark:#B8AC95;
+    --black:#000;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:'Work Sans',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+    line-height:1.55;
+    overflow-x:hidden;
+  }
+  /* paper texture overlay */
+  body::before{
+    content:'';
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:1;
+    opacity:.5;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240' viewBox='0 0 240 240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.42  0 0 0 0 0.38  0 0 0 0 0.28  0 0 0 0.08 0'/></filter><rect width='240' height='240' filter='url(%23n)'/></svg>");
+  }
+  main, header, footer{position:relative;z-index:2}
+  a{color:inherit;text-decoration:none}
+  img,video{display:block;max-width:100%}
+
+  /* typography */
+  .display{
+    font-family:'Anton','Bebas Neue','Oswald','Impact',sans-serif;
+    font-weight:400;
+    letter-spacing:-0.005em;
+    line-height:0.88;
+    text-transform:uppercase;
+    color:var(--ink);
+  }
+  .display.green{color:var(--green)}
+  .display.red{color:var(--red)}
+  .eyebrow{
+    font-family:'Archivo Black','Work Sans',sans-serif;
+    font-weight:900;
+    font-size:12px;
+    letter-spacing:0.22em;
+    text-transform:uppercase;
+    color:var(--red);
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+  }
+  .eyebrow::before{
+    content:'';
+    display:inline-block;
+    width:18px;
+    height:3px;
+    background:var(--red);
+  }
+  .eyebrow.green{color:var(--green-dark)}
+  .eyebrow.green::before{background:var(--green-dark)}
+  .lede{
+    font-size:21px;
+    line-height:1.5;
+    color:var(--ink-2);
+    font-weight:400;
+    max-width:760px;
+  }
+  .lede.big{font-size:24px}
+
+  /* layout */
+  .wrap{max-width:1240px;margin:0 auto;padding:0 32px;position:relative}
+  section{position:relative;padding:96px 0}
+  section.tight{padding:64px 0}
+  section.dark{background:var(--ink);color:var(--cream)}
+  section.dark .display{color:var(--cream)}
+  section.dark .lede{color:#bcbcbc}
+  section.green-bg{background:var(--green)}
+  section.green-bg .display, section.green-bg .lede, section.green-bg p{color:#fff}
+  section.red-bg{background:var(--red);color:#fff}
+  section.red-bg .display{color:#fff}
+  @media(max-width:780px){section{padding:64px 0}}
+
+  /* star border ribbon — uses Mad Mex's own star strip asset */
+  .star-row{
+    height:28px;
+    background-repeat:repeat-x;
+    background-position:center;
+    background-size:auto 100%;
+    /* fallback for older browsers */
+    background-image:url("https://www.madmex.com.au/wp-content/uploads/2025/03/Stars-Long-RGB-1200x16.png");
+    background-image:image-set(
+      url("https://www.madmex.com.au/wp-content/uploads/2025/03/Stars-Long-RGB-1200x16.png") 1x,
+      url("https://www.madmex.com.au/wp-content/uploads/2025/03/Stars-Long-RGB.png") 2x
+    );
+    margin:0;
+  }
+  @media(min-width:1400px){.star-row{background-size:auto 22px}}
+  .red-line{height:5px;background:var(--red)}
+  .red-thin{height:2px;background:var(--red)}
+
+  /* header (sticky) */
+  header.site{
+    position:sticky;
+    top:0;
+    background:var(--cream);
+    border-bottom:1px solid var(--rule);
+    padding:14px 0;
+    z-index:50;
+  }
+  header.site::before{content:'';position:absolute;left:0;right:0;top:-1px;height:4px;background:var(--red)}
+  header.site .row{display:flex;align-items:center;justify-content:space-between;gap:20px}
+  header.site .brand{display:flex;align-items:center;gap:18px;font-family:'Archivo Black',sans-serif;font-weight:900;letter-spacing:0.04em;text-transform:uppercase;font-size:13px}
+  header.site .brand .mm{color:var(--green);font-size:18px;letter-spacing:0.02em}
+  header.site .brand .mm em{color:var(--red);font-style:normal}
+  header.site .brand .divider{width:2px;height:22px;background:var(--red)}
+  header.site .brand .zib{color:var(--ink)}
+  header.site nav{display:flex;align-items:center;gap:26px;font-family:'Archivo Black',sans-serif;font-weight:900;font-size:12px;letter-spacing:0.14em;text-transform:uppercase}
+  header.site nav a{color:var(--ink-2)}
+  header.site nav a:hover{color:var(--red)}
+  @media(max-width:780px){header.site nav a:not(.btn){display:none}}
+
+  /* buttons */
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    gap:10px;
+    background:var(--green);
+    color:#fff !important;
+    font-family:'Archivo Black',sans-serif;
+    font-weight:900;
+    text-transform:uppercase;
+    letter-spacing:0.10em;
+    font-size:13px;
+    padding:14px 26px;
+    border-radius:40px;
+    transition:transform .15s, background .15s;
+    border:none;
+    cursor:pointer;
+  }
+  .btn:hover{background:var(--green-dark);transform:translateY(-1px)}
+  .btn.outline{background:transparent;border:2.5px solid var(--ink);color:var(--ink) !important;padding:11.5px 24px}
+  .btn.outline:hover{background:var(--ink);color:#fff !important}
+  .btn.red{background:var(--red)}
+  .btn.red:hover{background:var(--red-dark)}
+  .btn.big{padding:20px 38px;font-size:16px;letter-spacing:0.12em}
+
+  /* hero */
+  .hero{padding:80px 0 110px;position:relative;overflow:hidden}
+  .hero h1{font-size:clamp(72px,12.5vw,196px)}
+  .hero h1 .red{color:var(--red)}
+  .hero h1 .green{color:var(--green)}
+  .hero .lede{margin-top:36px}
+  .hero .cta-row{margin-top:42px;display:flex;flex-wrap:wrap;gap:14px;align-items:center}
+  .hero .meta-strip{margin-top:80px;display:flex;flex-wrap:wrap;gap:34px;align-items:center;font-family:'Archivo Black',sans-serif;font-weight:900;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted)}
+  .hero .meta-strip .dot{width:6px;height:6px;background:var(--red);border-radius:50%}
+  .hero .corner-stat{
+    position:absolute;
+    right:32px;
+    top:50%;
+    transform:translateY(-50%);
+    text-align:right;
+    border-left:5px solid var(--red);
+    padding:14px 0 14px 22px;
+    max-width:280px;
+  }
+  .hero .corner-stat .big-n{font-family:'Anton',sans-serif;font-size:108px;line-height:0.9;color:var(--red);letter-spacing:-.01em}
+  .hero .corner-stat .lbl{font-family:'Archivo Black',sans-serif;font-weight:900;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--ink-2);margin-top:6px}
+  @media(max-width:1100px){.hero .corner-stat{display:none}}
+
+  /* hero opportunity (huge 42K) */
+  .opp-hero{padding:120px 0 130px;text-align:center}
+  .opp-hero .pre{font-family:'Anton',sans-serif;font-size:clamp(28px,4vw,52px);text-transform:uppercase;line-height:1;letter-spacing:-.005em;color:var(--ink-2)}
+  .opp-hero .giant{
+    font-family:'Anton',sans-serif;
+    font-size:clamp(180px,28vw,400px);
+    line-height:0.85;
+    color:var(--red);
+    letter-spacing:-0.03em;
+    margin:18px 0 14px;
+  }
+  .opp-hero .after{font-family:'Anton',sans-serif;font-size:clamp(24px,3vw,36px);text-transform:uppercase;line-height:1.05;letter-spacing:-.005em;color:var(--ink);max-width:1000px;margin:0 auto}
+  .opp-hero .pickup{margin-top:36px;font-size:19px;line-height:1.55;color:var(--ink-2);max-width:780px;margin-left:auto;margin-right:auto;font-style:italic}
+  .opp-hero .pickup b{color:var(--red);font-style:normal;font-weight:700}
+
+  /* table */
+  table.audit{width:100%;border-collapse:collapse;font-size:15px;table-layout:auto;margin-top:38px}
+  table.audit thead th{text-align:left;font-family:'Archivo Black',sans-serif;font-weight:900;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);padding:14px 10px 14px 0;border-bottom:3px solid var(--ink)}
+  table.audit thead th.r{text-align:right}
+  table.audit tbody td{padding:18px 10px 18px 0;border-bottom:1px solid var(--rule);vertical-align:middle}
+  table.audit tbody tr:last-child td{border-bottom:none}
+  table.audit .num{font-family:'Anton',sans-serif;font-size:22px;color:var(--ink);letter-spacing:-.01em}
+  table.audit .rank{font-family:'Anton',sans-serif;font-size:26px;color:var(--red);width:46px;display:inline-block}
+  table.audit .sector{font-family:'Archivo Black',sans-serif;font-size:14px;letter-spacing:0.02em;text-transform:uppercase}
+  table.audit .desc{font-size:13.5px;color:var(--muted);font-style:italic;margin-top:2px;display:block}
+  .pill{display:inline-block;padding:6px 14px;font-family:'Archivo Black',sans-serif;font-size:10.5px;font-weight:900;letter-spacing:0.14em;color:#fff;text-transform:uppercase;border-radius:30px}
+  .pill.go{background:var(--green)}
+  .pill.later{background:var(--ink-2)}
+  .pill.aeo{background:var(--red)}
+  .pill.low{color:var(--green-dark);background:transparent;padding:6px 0;letter-spacing:0.12em}
+  .pill.med{color:var(--ink-2);background:transparent;padding:6px 0;letter-spacing:0.12em}
+
+  /* keyword table */
+  .kw{margin-top:24px}
+  .kw .row{display:grid;grid-template-columns:1fr 110px;align-items:center;padding:14px 0;border-bottom:1px solid var(--rule);gap:18px}
+  .kw .row.head{border-bottom:3px solid var(--ink);padding:10px 0;font-family:'Archivo Black',sans-serif;font-size:10.5px;color:var(--muted);letter-spacing:0.16em;text-transform:uppercase}
+  .kw .row .kn{font-size:16px;color:var(--ink-2)}
+  .kw .row .kv{font-family:'Anton',sans-serif;font-size:24px;text-align:right;color:var(--ink);letter-spacing:-.01em}
+  .kw .row.head .kv{font-family:'Archivo Black',sans-serif;font-size:10.5px;color:var(--muted);text-align:right;letter-spacing:0.16em}
+
+  /* split / side cards */
+  .split{display:grid;grid-template-columns:1.5fr 1fr;gap:48px;align-items:flex-start}
+  @media(max-width:880px){.split{grid-template-columns:1fr;gap:36px}}
+  .why{background:var(--ink);color:#fff;padding:32px 34px;border-radius:6px}
+  .why .head{font-family:'Archivo Black',sans-serif;font-size:11px;letter-spacing:0.18em;color:var(--red);text-transform:uppercase;margin-bottom:22px}
+  .why .item{margin-bottom:20px}
+  .why .item:last-child{margin-bottom:0}
+  .why .item b{display:block;font-family:'Work Sans',sans-serif;font-weight:800;font-size:16px;color:#fff;margin-bottom:4px;line-height:1.3}
+  .why .item span{font-size:14px;color:#cfcfcf;line-height:1.55}
+  .why .item.last b{color:var(--red)}
+
+  /* math strip */
+  .math{background:var(--green);color:#fff;padding:22px 32px;margin-top:36px;font-family:'Archivo Black',sans-serif;font-size:14px;letter-spacing:0.04em;text-align:center;line-height:1.5;text-transform:uppercase}
+  .math.red{background:var(--red)}
+
+  /* 3 cards (city / opportunity columns) */
+  .three{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:38px}
+  @media(max-width:880px){.three{grid-template-columns:1fr}}
+  .card{background:#fff;border:3px solid var(--ink);overflow:hidden;display:flex;flex-direction:column}
+  .card .head{background:var(--ink);color:#fff;padding:14px 22px;font-family:'Archivo Black',sans-serif;font-size:12px;letter-spacing:0.16em;text-transform:uppercase}
+  .card.green .head{background:var(--green)}
+  .card.red .head{background:var(--red)}
+  .card.green{border-color:var(--green)}
+  .card.red{border-color:var(--red)}
+  .card .body{padding:24px 26px;display:flex;flex-direction:column;gap:14px;flex:1}
+  .card .stat{font-family:'Anton',sans-serif;font-size:78px;line-height:.85;color:var(--ink);letter-spacing:-.02em}
+  .card.red .stat{color:var(--red)}
+  .card.green .stat{color:var(--green)}
+  .card .mc{font-family:'Archivo Black',sans-serif;font-size:10px;letter-spacing:0.16em;color:var(--muted);text-transform:uppercase}
+  .card .sep{height:1px;background:var(--rule);margin:4px 0}
+  .card ul{list-style:none;display:flex;flex-direction:column;gap:9px;padding:0;margin:0}
+  .card ul li{font-size:14.5px;line-height:1.45;color:var(--ink-2);padding-left:16px;position:relative}
+  .card ul li::before{content:'';position:absolute;left:0;top:9px;width:7px;height:7px;background:var(--red);transform:rotate(45deg)}
+  .card ul li.goal{font-weight:700;color:var(--red);padding-left:16px}
+  .card.green ul li.goal{color:var(--green-dark)}
+  .card ul li.goal::before{background:currentColor}
+
+  /* AI strip */
+  .ai-strip{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:36px}
+  @media(max-width:880px){.ai-strip{grid-template-columns:repeat(2,1fr)}}
+  .ai-cell{background:rgba(236,25,68,.10);border:1.5px solid rgba(236,25,68,.35);padding:22px 22px;display:flex;flex-direction:column;gap:6px}
+  .ai-cell .platform{font-family:'Archivo Black',sans-serif;font-size:11px;letter-spacing:0.16em;color:var(--red);text-transform:uppercase}
+  .ai-cell .citations{font-family:'Anton',sans-serif;font-size:62px;color:var(--ink);line-height:0.85;letter-spacing:-.02em}
+  .ai-cell .delta{font-family:'Archivo Black',sans-serif;font-size:11.5px;color:var(--green-dark)}
+  .ai-cell .sub{font-size:12px;color:var(--muted);margin-top:auto}
+
+  /* schema explainer */
+  .schema-box{background:#fff;border:3px solid var(--red);padding:48px 52px;display:grid;grid-template-columns:1fr 1.3fr;gap:48px;align-items:flex-start;margin-top:40px}
+  @media(max-width:880px){.schema-box{grid-template-columns:1fr;padding:34px 28px;gap:30px}}
+  .schema-box .tag-vis{position:relative;background:var(--cream-dark);border:2px dashed var(--red);padding:36px 30px;font-family:'Work Sans',sans-serif}
+  .schema-box .tag-vis::after{content:'';position:absolute;top:-14px;left:30px;background:var(--red);color:#fff;font-family:'Archivo Black',sans-serif;font-size:11px;letter-spacing:0.14em;padding:5px 14px;text-transform:uppercase}
+  .schema-box .tag-vis::after{content:'SCHEMA TAGS'}
+  .schema-box .tag-row{display:flex;justify-content:space-between;align-items:baseline;padding:9px 0;border-bottom:1px dashed var(--rule-dark);font-size:14.5px}
+  .schema-box .tag-row:last-child{border-bottom:none}
+  .schema-box .tag-row .k{font-family:'Archivo Black',sans-serif;font-size:11px;letter-spacing:0.12em;text-transform:uppercase;color:var(--muted)}
+  .schema-box .tag-row .v{font-family:'Anton',sans-serif;font-size:20px;color:var(--ink);letter-spacing:-.01em}
+  .schema-box .tag-row .v.green{color:var(--green-dark)}
+  .schema-box .copy h3{font-family:'Anton',sans-serif;font-size:44px;line-height:0.95;text-transform:uppercase;color:var(--red);margin-bottom:18px;letter-spacing:-.005em}
+  .schema-box .copy p{font-size:16px;line-height:1.65;margin-bottom:14px;color:var(--ink-2)}
+  .schema-box .copy p:last-child{margin-bottom:0}
+  .schema-box .copy strong{font-weight:700;color:var(--ink)}
+
+  /* site audit */
+  .audit-grid{display:grid;grid-template-columns:1fr 1fr;gap:34px;margin-top:38px}
+  @media(max-width:880px){.audit-grid{grid-template-columns:1fr}}
+  .good{background:var(--green);color:#fff;padding:38px 36px;border-radius:6px}
+  .good h3{font-family:'Archivo Black',sans-serif;font-size:12px;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:22px;color:#fff;opacity:.9}
+  .good .item{display:flex;gap:14px;margin-bottom:18px;font-size:15px;line-height:1.5;color:#fff}
+  .good .item:last-child{margin-bottom:0}
+  .good .item .ck{font-family:'Anton',sans-serif;color:#fff;font-size:24px;line-height:1;flex:0 0 auto}
+  .good .item b{font-family:'Work Sans',sans-serif;font-weight:800;color:#fff;font-size:15.5px}
+  .video-mock{background:var(--ink);padding:18px;display:flex;flex-direction:column;gap:14px;border-radius:6px}
+  .video-mock .urlbar{background:var(--cream);padding:10px 16px;font-family:'Work Sans',sans-serif;font-size:13px;color:var(--muted);border-radius:3px}
+  .video-mock video{width:100%;height:auto;border-radius:3px;background:#000}
+  .video-mock .caption{font-family:'Archivo Black',sans-serif;font-size:11px;letter-spacing:0.14em;color:var(--cream);text-transform:uppercase}
+
+  /* future state sitemap */
+  .sitemap{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:38px}
+  @media(max-width:880px){.sitemap{grid-template-columns:1fr}}
+  .sm-col{background:#fff;border:2px solid var(--ink);padding:30px 32px}
+  .sm-col.future{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .sm-col h3{font-family:'Archivo Black',sans-serif;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;margin-bottom:16px;color:var(--ink-2)}
+  .sm-col.future h3{color:var(--red)}
+  .sm-col .url{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:11px 0;border-bottom:1px dashed var(--rule);font-family:'Work Sans',sans-serif}
+  .sm-col.future .url{border-color:rgba(255,255,255,.15)}
+  .sm-col .url .path{font-family:'Work Sans',sans-serif;font-weight:600;font-size:13.5px;color:var(--ink-2)}
+  .sm-col.future .url .path{color:#fff}
+  .sm-col .url .tag{font-family:'Archivo Black',sans-serif;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--green-dark);white-space:nowrap}
+  .sm-col .url .tag.miss{color:var(--red)}
+  .sm-col.future .url .tag{color:var(--red)}
+  .sm-col .url.faint{opacity:.45}
+  .sm-col .summary{font-size:13px;color:var(--muted);font-style:italic;margin-top:18px;padding-top:14px;border-top:2px solid var(--ink)}
+  .sm-col.future .summary{color:#bcbcbc;border-color:var(--red)}
+
+  /* 8 fixes grid */
+  .fix-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:38px}
+  @media(max-width:1000px){.fix-grid{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:560px){.fix-grid{grid-template-columns:1fr}}
+  .fix{background:var(--cream-dark);padding:24px 26px;display:flex;flex-direction:column;gap:8px;border-left:5px solid var(--red);min-height:200px}
+  .fix .n{font-family:'Anton',sans-serif;font-size:48px;color:var(--red);line-height:0.85;letter-spacing:-.02em}
+  .fix h4{font-family:'Archivo Black',sans-serif;font-size:15px;line-height:1.22;text-transform:uppercase;color:var(--ink);letter-spacing:0.01em}
+  .fix p{font-size:13.5px;line-height:1.5;color:var(--ink-2)}
+
+  /* packages */
+  .pkgs{display:grid;grid-template-columns:1fr 1.15fr 1fr;gap:18px;margin-top:42px;align-items:stretch}
+  @media(max-width:880px){.pkgs{grid-template-columns:1fr}}
+  .pkg{background:#fff;border:3px solid var(--ink);padding:34px 32px;display:flex;flex-direction:column;gap:14px;position:relative}
+  .pkg.rec{background:var(--green);color:#fff;border-color:var(--green-dark);transform:translateY(-12px)}
+  @media(max-width:880px){.pkg.rec{transform:none}}
+  .pkg.rec h3,.pkg.rec .pname,.pkg.rec .row .val,.pkg.rec .total .v{color:#fff}
+  .pkg.rec .pdesc{color:rgba(255,255,255,.85)}
+  .pkg.rec .row{border-color:rgba(255,255,255,.25)}
+  .pkg.rec .note{color:rgba(255,255,255,.85)}
+  .pkg.rec .total .l{color:rgba(255,255,255,.85)}
+  .pkg .ribbon{position:absolute;top:-16px;right:24px;background:var(--red);color:#fff;font-family:'Archivo Black',sans-serif;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;padding:6px 16px}
+  .pkg h3{font-family:'Archivo Black',sans-serif;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--red)}
+  .pkg .pname{font-family:'Anton',sans-serif;font-size:32px;line-height:1;color:var(--ink);letter-spacing:-.005em;text-transform:uppercase}
+  .pkg .pdesc{font-size:14px;color:var(--muted);font-style:italic;line-height:1.5}
+  .pkg .row{display:flex;justify-content:space-between;align-items:baseline;padding:10px 0;border-bottom:1px solid var(--rule);font-size:14px}
+  .pkg .row .lbl{font-weight:600;color:var(--ink-2)}
+  .pkg.rec .row .lbl{color:#fff}
+  .pkg .row .val{font-family:'Anton',sans-serif;font-size:24px;color:var(--ink);letter-spacing:-.01em}
+  .pkg .total{display:flex;justify-content:space-between;align-items:baseline;margin-top:auto;padding-top:14px}
+  .pkg .total .l{font-family:'Archivo Black',sans-serif;font-size:10.5px;letter-spacing:0.16em;text-transform:uppercase;color:var(--red)}
+  .pkg .total .v{font-family:'Anton',sans-serif;font-size:44px;color:var(--red);letter-spacing:-.02em;line-height:1}
+  .pkg.rec .total .l{color:#fff;opacity:.85}
+  .pkg.rec .total .v{color:#fff}
+  .pkg .note{font-size:12px;color:var(--muted);line-height:1.5;font-style:italic;margin-top:2px}
+
+  /* roi cards */
+  .roi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:38px}
+  @media(max-width:880px){.roi-grid{grid-template-columns:1fr}}
+  .roi{background:var(--cream-dark);padding:36px 34px;display:flex;flex-direction:column;justify-content:space-between;min-height:280px;border-top:8px solid var(--ink)}
+  .roi.hero{background:var(--red);color:#fff;border-color:var(--red-dark);transform:translateY(-12px)}
+  @media(max-width:880px){.roi.hero{transform:none}}
+  .roi .lbl{font-family:'Archivo Black',sans-serif;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--red)}
+  .roi.hero .lbl{color:#fff;opacity:.95}
+  .roi .multi{font-family:'Anton',sans-serif;font-size:128px;color:var(--ink);line-height:.85;letter-spacing:-.03em;margin:16px 0 12px}
+  .roi.hero .multi{color:#fff}
+  .roi .case{font-size:15px;color:var(--ink-2);line-height:1.55;font-style:italic}
+  .roi.hero .case{color:#fff;opacity:.95}
+  .roi .case b{font-style:normal;font-weight:700;color:var(--red)}
+  .roi.hero .case b{color:#fff}
+  .roi .badge{position:absolute;top:14px;right:14px;background:#fff;color:var(--red);font-family:'Archivo Black',sans-serif;font-size:10px;padding:5px 12px;letter-spacing:0.18em;text-transform:uppercase}
+  .roi{position:relative}
+
+  /* big picture */
+  .bigpic{display:grid;grid-template-columns:repeat(4,1fr);gap:18px;margin-top:38px}
+  @media(max-width:880px){.bigpic{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:480px){.bigpic{grid-template-columns:1fr}}
+  .bp{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);padding:24px 26px;position:relative;overflow:hidden;min-height:240px}
+  .bp .yr{font-family:'Archivo Black',sans-serif;font-size:11px;letter-spacing:0.18em;color:var(--red);text-transform:uppercase}
+  .bp .ghost{font-family:'Anton',sans-serif;font-size:118px;color:rgba(255,255,255,.06);line-height:.8;letter-spacing:-.04em;position:absolute;left:16px;top:24px}
+  .bp h3{font-family:'Anton',sans-serif;font-size:30px;color:#fff;margin-top:90px;line-height:1;text-transform:uppercase;letter-spacing:-.005em}
+  .bp p{font-size:13.5px;color:#bcbcbc;line-height:1.55;margin-top:8px}
+
+  /* timeline */
+  .tl{margin-top:40px;display:grid;grid-template-columns:170px 1fr;gap:28px}
+  .tl .row{display:contents}
+  .tl .when{font-family:'Archivo Black',sans-serif;font-size:12px;letter-spacing:0.16em;color:var(--red);text-transform:uppercase;padding-top:14px;text-align:right;border-right:3px solid var(--red);padding-right:18px}
+  .tl .what{padding:8px 0 36px 4px}
+  .tl .what h4{font-family:'Anton',sans-serif;font-size:30px;line-height:1;text-transform:uppercase;color:#fff;margin-bottom:8px;letter-spacing:-.005em}
+  .tl .what p{font-size:14.5px;color:#bcbcbc;line-height:1.55;max-width:700px}
+  .tl .row:last-child .what{padding-bottom:8px}
+  @media(max-width:780px){.tl{grid-template-columns:1fr}.tl .when{text-align:left;border-right:none;border-left:3px solid var(--red);padding-left:14px;padding-right:0}}
+
+  /* competitor table */
+  .comp{margin-top:38px;width:100%;border-collapse:collapse}
+  .comp thead th{font-family:'Archivo Black',sans-serif;font-size:11px;letter-spacing:0.16em;text-transform:uppercase;color:var(--muted);padding:14px 12px 14px 0;text-align:left;border-bottom:3px solid var(--ink)}
+  .comp tbody td{padding:20px 12px 20px 0;border-bottom:1px solid var(--rule);vertical-align:top;font-size:14.5px;line-height:1.5}
+  .comp tbody tr:last-child td{border-bottom:none}
+  .comp .name{font-family:'Archivo Black',sans-serif;font-size:15px;text-transform:uppercase;letter-spacing:0.02em;color:var(--ink)}
+  .comp .dom{font-size:12px;color:var(--muted);font-style:italic;display:block;margin-top:3px;text-transform:none;letter-spacing:0}
+  .comp .threat{display:inline-block;padding:5px 12px;font-family:'Archivo Black',sans-serif;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:#fff;border-radius:30px}
+  .comp .threat.direct{background:var(--red)}
+  .comp .threat.indirect{background:var(--ink-2)}
+  .comp .threat.reclaim{background:var(--green)}
+
+  /* footer / final cta */
+  .closer{padding:140px 0 90px;text-align:center;background:var(--ink);color:#fff;position:relative}
+  .closer h2{font-family:'Anton',sans-serif;font-size:clamp(64px,9vw,140px);line-height:0.88;letter-spacing:-.01em;text-transform:uppercase;color:#fff}
+  .closer h2 .red{color:var(--red)}
+  .closer h2 .green{color:var(--green)}
+  .closer p{font-size:18px;color:#bcbcbc;margin-top:24px;max-width:660px;margin-left:auto;margin-right:auto}
+  .closer .cta-row{margin-top:42px;display:flex;flex-wrap:wrap;gap:14px;justify-content:center}
+  .closer .signature{margin-top:60px;font-family:'Archivo Black',sans-serif;font-size:11px;letter-spacing:0.22em;color:#888;text-transform:uppercase}
+  .closer .signature em{color:var(--red);font-style:normal}
+
+  footer.foot{background:var(--cream);padding:36px 0;font-family:'Archivo Black',sans-serif;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted)}
+  footer.foot .row{display:flex;justify-content:space-between;flex-wrap:wrap;gap:18px;align-items:center}
+  footer.foot a{color:var(--ink-2)}
+
+  /* small helpers */
+  .pad-top-lg{padding-top:120px}
+  .center{text-align:center}
+  .max-narrow{max-width:840px}
+  .max-mid{max-width:1000px}
+  .gap-top-32{margin-top:32px}
+  .gap-top-24{margin-top:24px}
+  .text-italic-note{font-size:13px;color:var(--muted);font-style:italic;margin-top:14px}
+  .green-strong{color:var(--green-dark);font-weight:700}
+  .red-strong{color:var(--red);font-weight:700}
+
+  /* fade in on scroll */
+  .reveal{opacity:0;transform:translateY(20px);transition:opacity .6s ease, transform .6s ease}
+  .reveal.is-in{opacity:1;transform:none}
+</style>
+</head>
+<body>
+
+<!-- ================= STICKY HEADER ================= -->
+<header class="site">
+  <div class="wrap row">
+    <div class="brand">
+      <span class="mm">Mad M<em>&euml;</em>x</span>
+      <span class="divider"></span>
+      <span class="zib">Zib Digital</span>
+    </div>
+    <nav>
+      <a href="#opportunity">Opportunity</a>
+      <a href="#audit">Audit</a>
+      <a href="#packages">Packages</a>
+      <a href="#close" class="btn">Book the call &rarr;</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ================= HERO ================= -->
+<section class="hero">
+  <div class="wrap">
+    <span class="eyebrow">Proposal &middot; May 2026 &middot; Zib Digital for Mad Mex</span>
+    <h1 class="display gap-top-32" style="margin-top:24px">
+      Big. <span class="red">Bold.</span><br>
+      Almost <span class="green">invisible</span><br>
+      on Google.
+    </h1>
+    <p class="lede big">A 20-year national QSR with 60+ stores, real AI Overview citations and DR&nbsp;41 backlink equity &mdash; and a website that&rsquo;s lost half its organic traffic in twelve months. We&rsquo;d like to fix that.</p>
+    <div class="cta-row">
+      <a class="btn" href="#opportunity">Read the audit &darr;</a>
+      <a class="btn outline" href="#packages">Skip to packages</a>
+    </div>
+    <div class="meta-strip">
+      <span><span class="dot" style="display:inline-block;width:6px;height:6px;background:var(--red);border-radius:50%;margin-right:8px;vertical-align:middle"></span>madmex.com.au</span>
+      <span>60+ stores</span>
+      <span>National</span>
+      <span>Since 2006</span>
+    </div>
+  </div>
+  <div class="corner-stat">
+    <div class="big-n">42K</div>
+    <div class="lbl">Monthly searches you&rsquo;re missing</div>
+  </div>
+</section>
+
+<div class="star-row"></div>
+
+<!-- ================= THE STARTING POINT ================= -->
+<section id="starting" style="background:var(--paper)">
+  <div class="wrap">
+    <span class="eyebrow">The starting point</span>
+    <h2 class="display" style="font-size:clamp(46px,6vw,86px);margin-top:18px;max-width:1100px">
+      A loud brand. An invisible site.
+    </h2>
+    <p class="lede big" style="margin-top:24px">The good news first: Mad Mex has the bones nobody else in the category has. DR&nbsp;41. 752 referring domains. Google, Apple, Wikipedia, nsw.gov.au, Waze, Indeed all cite you. 37 Google AI Overview citations. The brand has earned its place.</p>
+    <p class="lede big" style="margin-top:14px"><span class="red-strong">The bad news:</span> organic traffic peaked at 20,000/month in mid-2025 and now sits around 10,000/month. 95% of every visit is from people who already know your name. New customers can&rsquo;t find you. The link profile lost 62 referring domains last period with no PR engine replacing them.</p>
+
+    <div class="three" style="margin-top:50px">
+      <div class="card">
+        <div class="head">Search footprint</div>
+        <div class="body">
+          <div class="stat">10K</div>
+          <div class="mc">Monthly organic visits, down from 20K</div>
+          <div class="sep"></div>
+          <p style="font-size:14.5px;line-height:1.55;color:var(--ink-2);font-style:italic">&ldquo;1,175 ranking keywords &mdash; but 95%+ are branded. The site is found by people who already know it.&rdquo;</p>
+          <div style="margin-top:auto;font-family:'Archivo Black',sans-serif;font-size:11px;color:var(--muted);letter-spacing:.14em;text-transform:uppercase">Ahrefs, May 2026</div>
+        </div>
+      </div>
+      <div class="card red">
+        <div class="head">The local hole</div>
+        <div class="body">
+          <div class="stat">9,500</div>
+          <div class="mc">People/mo Google &ldquo;Mexican near me&rdquo;</div>
+          <div class="sep"></div>
+          <p style="font-size:14.5px;line-height:1.55;color:var(--ink-2);font-style:italic">&ldquo;You rank #4&ndash;#8. You have 60+ stores. <b>Zero</b> have LocalBusiness schema. Single biggest miss on the site.&rdquo;</p>
+          <div style="margin-top:auto;font-family:'Archivo Black',sans-serif;font-size:11px;color:var(--muted);letter-spacing:.14em;text-transform:uppercase">Local SEO benchmark</div>
+        </div>
+      </div>
+      <div class="card green">
+        <div class="head">The AI head-start</div>
+        <div class="body">
+          <div class="stat">82</div>
+          <div class="mc">AI Overview &amp; chatbot citations</div>
+          <div class="sep"></div>
+          <p style="font-size:14.5px;line-height:1.55;color:var(--ink-2);font-style:italic">&ldquo;37 Google AIO, 14 Grok, 12 ChatGPT, 12 Perplexity, 7 Copilot. Most national QSRs in Australia have <b>zero</b>. You have a head start.&rdquo;</p>
+          <div style="margin-top:auto;font-family:'Archivo Black',sans-serif;font-size:11px;color:var(--muted);letter-spacing:.14em;text-transform:uppercase">Ahrefs AI Citations</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="star-row"></div>
+
+<!-- ================= THE 42K HERO ================= -->
+<section class="opp-hero" id="opportunity">
+  <div class="wrap">
+    <span class="eyebrow" style="justify-content:center;display:inline-flex">The opportunity</span>
+    <div class="pre" style="margin-top:18px">Every month, Australians type</div>
+    <div class="giant">42,000</div>
+    <div class="after">non-branded Mexican-food searches into Google.</div>
+    <p class="pickup">Mad Mex captures roughly 2,000 of them. <b>The other 40,000 walk past your stores to Guzman y Gomez, DoorDash and Uber Eats.</b></p>
+    <p style="margin-top:32px;font-size:13px;color:var(--muted);font-style:italic;max-width:780px;margin-left:auto;margin-right:auto">Source: Ahrefs Australian search data, May 2025 &ndash; Apr 2026. Total non-branded volume across local, city, discovery, dietary, nutrition and catering categories. Excludes the ~16,000/mo of branded &ldquo;Mad Mex&rdquo; searches you already own.</p>
+  </div>
+</section>
+
+<div class="star-row"></div>
+
+<!-- ================= SIX CATEGORIES ================= -->
+<section id="categories">
+  <div class="wrap">
+    <span class="eyebrow">The data</span>
+    <h2 class="display" style="font-size:clamp(46px,5.5vw,82px);margin-top:18px;max-width:1100px">
+      Six categories.<br>Three immediate wins.<br>One unfair advantage.
+    </h2>
+    <p class="lede" style="margin-top:24px">Ranked by search volume, commercial intent, competitive difficulty &mdash; and how well your existing assets (60+ stores, halal certification, AI citation footprint) actually fit.</p>
+
+    <table class="audit">
+      <thead>
+        <tr>
+          <th style="width:32%">Category</th>
+          <th>Monthly searches</th>
+          <th>Difficulty</th>
+          <th style="width:24%">Strategic fit for Mad Mex</th>
+          <th class="r">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="rank">01</span><span class="sector">Local &ldquo;near me&rdquo;</span><span class="desc">Walk-in &amp; delivery intent. Ready to buy.</span></td>
+          <td><span class="num">16,000+</span></td>
+          <td><span class="pill low">Low&ndash;Med</span></td>
+          <td><span style="font-size:13px;color:var(--ink-2);font-style:italic">60+ stores. No competitor has your scale.</span></td>
+          <td style="text-align:right"><span class="pill go">Go</span></td>
+        </tr>
+        <tr>
+          <td><span class="rank">02</span><span class="sector">City-level Mexican</span><span class="desc">Discovery + comparison shoppers.</span></td>
+          <td><span class="num">8,500+</span></td>
+          <td><span class="pill med">Medium</span></td>
+          <td><span style="font-size:13px;color:var(--ink-2);font-style:italic">15+ Sydney stores. 12+ Melbourne. No city pages.</span></td>
+          <td style="text-align:right"><span class="pill go">Go</span></td>
+        </tr>
+        <tr>
+          <td><span class="rank">03</span><span class="sector">Discovery &amp; comparison</span><span class="desc">&ldquo;Best&rdquo;, &ldquo;vs&rdquo;, &ldquo;types of&rdquo; queries.</span></td>
+          <td><span class="num">6,500+</span></td>
+          <td><span class="pill low">Low</span></td>
+          <td><span style="font-size:13px;color:var(--ink-2);font-style:italic">Category education = brand authority.</span></td>
+          <td style="text-align:right"><span class="pill go">Go</span></td>
+        </tr>
+        <tr>
+          <td><span class="rank">04</span><span class="sector">Dietary (halal / vegan / GF)</span><span class="desc">High-intent dedicated customer base.</span></td>
+          <td><span class="num">4,800+</span></td>
+          <td><span class="pill low">Low</span></td>
+          <td><span style="font-size:13px;color:var(--ink-2);font-style:italic">You&rsquo;re halal certified &mdash; no page says so.</span></td>
+          <td style="text-align:right"><span class="pill later">Later</span></td>
+        </tr>
+        <tr>
+          <td><span class="rank">05</span><span class="sector">Nutrition &amp; calories</span><span class="desc">Health-conscious + AI Overview bait.</span></td>
+          <td><span class="num">3,400+</span></td>
+          <td><span class="pill low">Low</span></td>
+          <td><span style="font-size:13px;color:var(--ink-2);font-style:italic">Nutrition calculator exists but is invisible.</span></td>
+          <td style="text-align:right"><span class="pill aeo">AEO</span></td>
+        </tr>
+        <tr>
+          <td><span class="rank">06</span><span class="sector">Catering &amp; corporate</span><span class="desc">Bulk orders, office &amp; event channel.</span></td>
+          <td><span class="num">3,200+</span></td>
+          <td><span class="pill low">Low</span></td>
+          <td><span style="font-size:13px;color:var(--ink-2);font-style:italic">Catering page exists &mdash; one city query from being great.</span></td>
+          <td style="text-align:right"><span class="pill later">Later</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="math" style="margin-top:42px">Local + City + Discovery = 31,000 monthly searches Mad Mex is functionally absent from. Nutrition + Dietary are the AI wedge no QSR competitor is investing in.</div>
+  </div>
+</section>
+
+<div class="star-row"></div>
+
+<!-- ================= OPPORTUNITY 1: LOCAL ================= -->
+<section id="opp1" style="background:var(--paper)">
+  <div class="wrap">
+    <span class="eyebrow">Opportunity 01 &middot; Local &ldquo;near me&rdquo;</span>
+    <h2 class="display" style="font-size:clamp(44px,5vw,78px);margin-top:18px;max-width:1100px">
+      9,500 people type<br>&ldquo;Mexican near me&rdquo;<br>every month. <span class="red">You rank #4&ndash;#8.</span>
+    </h2>
+    <p class="lede" style="margin-top:24px">There&rsquo;s a 16,000-search-per-month hole in your site, and the fix is structural &mdash; not a content problem, a plumbing problem. Add the right schema to your 60+ location pages and you fundamentally change how Google sees them.</p>
+
+    <div class="split" style="margin-top:48px">
+      <div>
+        <h3 style="font-family:'Archivo Black',sans-serif;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-bottom:6px">What Australians are Googling</h3>
+        <div class="kw">
+          <div class="row head"><div class="kn">Search phrase</div><div class="kv">People/mo</div></div>
+          <div class="row"><div class="kn">mexican near me</div><div class="kv">9,500</div></div>
+          <div class="row"><div class="kn">mexican food near me</div><div class="kv">2,500</div></div>
+          <div class="row"><div class="kn">mexican restaurant near me</div><div class="kv">1,800</div></div>
+          <div class="row"><div class="kn">burrito near me</div><div class="kv">800</div></div>
+          <div class="row"><div class="kn">taco near me</div><div class="kv">600</div></div>
+          <div class="row"><div class="kn">mexican delivery near me</div><div class="kv">500</div></div>
+          <div class="row"><div class="kn">mad mex [suburb] long tail</div><div class="kv">~300+</div></div>
+        </div>
+        <p class="text-italic-note">Plus 60+ &ldquo;[suburb] Mexican&rdquo; queries &mdash; one per store, every store missing the structured data to win them.</p>
+      </div>
+      <div class="why">
+        <div class="head">Why this is win #1</div>
+        <div class="item"><b>60+ stores. Nobody else has your scale.</b><span>GYG has scale too, but Mad Mex covers suburbs they don&rsquo;t. This is your structural advantage &mdash; it just isn&rsquo;t in your schema yet.</span></div>
+        <div class="item"><b>Zero LocalBusiness schema today.</b><span>Every location page is missing the data Google needs to show you in the Local Pack and Maps. One technical pass fixes all 60.</span></div>
+        <div class="item"><b>No H1. No meta description. No FAQs.</b><span>The lowest-effort, highest-impact fixes in the whole audit. Each store page becomes a ranking asset for its suburb.</span></div>
+        <div class="item last"><b>Google just reweighted local.</b><span>&ldquo;Mexican food near me&rdquo; recently jumped from #18 to #1 in your tracking. The algorithm is actively re-sorting this space. Capture it before it settles.</span></div>
+      </div>
+    </div>
+
+    <div class="math" style="margin-top:42px">Schema + H1s + meta descriptions across 60+ location pages = realistic 4,000&ndash;8,000 additional organic visits/month within 9 months.</div>
+  </div>
+</section>
+
+<div class="star-row"></div>
+
+<!-- ================= SCHEMA EXPLAINER ================= -->
+<section id="schema" style="background:var(--cream)">
+  <div class="wrap">
+    <span class="eyebrow">Quick detour &middot; What is schema, actually?</span>
+    <h2 class="display" style="font-size:clamp(48px,6vw,92px);margin-top:18px;max-width:1100px;color:var(--red)">
+      Schema is name<br>tags on your burrito.
+    </h2>
+    <p class="lede big" style="margin-top:28px">Stay with us. We&rsquo;re using the word &ldquo;schema&rdquo; a lot in this proposal. Here&rsquo;s the whole thing in plain English so the rest reads cleanly.</p>
+
+    <div class="schema-box">
+      <div class="tag-vis">
+        <div style="font-family:'Archivo Black',sans-serif;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;color:var(--red);margin-bottom:14px;padding-top:6px">Mad Mex Bondi Junction</div>
+        <div class="tag-row"><span class="k">Type</span><span class="v">Restaurant</span></div>
+        <div class="tag-row"><span class="k">Cuisine</span><span class="v">Mexican</span></div>
+        <div class="tag-row"><span class="k">Halal</span><span class="v green">Yes &check;</span></div>
+        <div class="tag-row"><span class="k">Open</span><span class="v">11am &ndash; 9pm</span></div>
+        <div class="tag-row"><span class="k">Burrito</span><span class="v">$13.90 &middot; 620 cal</span></div>
+        <div class="tag-row"><span class="k">Delivery</span><span class="v green">Yes &check;</span></div>
+        <div class="tag-row"><span class="k">Address</span><span class="v">Bondi Junction NSW</span></div>
+      </div>
+      <div class="copy">
+        <h3>Imagine you made a burrito for Google.</h3>
+        <p>You know it has rice, chicken, salsa verde, sour cream. But to Google&rsquo;s robots, it&rsquo;s just a tinfoil cylinder. They can <em>guess</em> what&rsquo;s inside &mdash; but they might guess wrong, or guess slowly, or hand the answer to someone else.</p>
+        <p><strong>Schema is the sticker on the foil.</strong> &ldquo;Burrito. Chicken. Halal. 620 calories. $13.90. Bondi Junction. Open until 9pm. Delivery yes.&rdquo; Now Google knows exactly what it&rsquo;s looking at &mdash; and so does ChatGPT, and so does Google AI Overviews.</p>
+        <p>On a website, schema is invisible code that does the same job. It tells Google &ldquo;this is a restaurant, this is the address, this is the menu, this is halal, this location does delivery, the burrito costs $13.90, here&rsquo;s how to order&rdquo;.</p>
+        <p><strong>Without it</strong>, Google guesses from the page text and AI engines often skip Mad Mex entirely. <strong>With it</strong>, Mad Mex Bondi shows up in the Local Pack, your menu prices appear in search results, AI Overviews quote you directly when someone asks &ldquo;is Mad Mex halal?&rdquo;, and your delivery hours pop up automatically.</p>
+        <p style="color:var(--red);font-weight:700">Right now Mad Mex has FAQ schema on two pages (good) and Restaurant / LocalBusiness / Menu schema on zero pages (bad). Fixing that is fix number one in the build-out below.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="star-row"></div>
+
+<!-- ================= OPPORTUNITY 2: CITY PAGES ================= -->
+<section id="opp2">
+  <div class="wrap">
+    <span class="eyebrow">Opportunity 02 &middot; City-level landing pages</span>
+    <h2 class="display" style="font-size:clamp(44px,5vw,78px);margin-top:18px;max-width:1100px">
+      &ldquo;Mexican restaurant Sydney&rdquo;<br>gets 1,400 searches.<br><span class="red">You don&rsquo;t have a Sydney page.</span>
+    </h2>
+    <p class="lede" style="margin-top:24px">Mad Mex has 40+ stores across the four major capitals &mdash; but no aggregate city pages. These queries are won by GYG and Zomato, not by you.</p>
+
+    <div class="three">
+      <div class="card">
+        <div class="head">Sydney</div>
+        <div class="body">
+          <div class="stat">2,400</div>
+          <div class="mc">Monthly searches &middot; city cluster</div>
+          <div class="sep"></div>
+          <ul>
+            <li>mexican restaurant sydney &middot; 1,400/mo</li>
+            <li>mexican food sydney &middot; 480/mo</li>
+            <li>best mexican sydney &middot; 280/mo</li>
+            <li>mexican cbd sydney &middot; 140/mo</li>
+            <li class="goal">15+ stores. No /sydney landing page.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card red">
+        <div class="head">Melbourne</div>
+        <div class="body">
+          <div class="stat">2,100</div>
+          <div class="mc">Monthly searches &middot; city cluster</div>
+          <div class="sep"></div>
+          <ul>
+            <li>mexican restaurant melbourne &middot; 1,200/mo</li>
+            <li>mexican food melbourne &middot; 460/mo</li>
+            <li>best mexican melbourne &middot; 240/mo</li>
+            <li>mexican cbd melbourne &middot; 130/mo</li>
+            <li class="goal">12+ stores. No /melbourne landing page.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="card green">
+        <div class="head">Brisbane &middot; Perth</div>
+        <div class="body">
+          <div class="stat">1,800</div>
+          <div class="mc">Monthly searches &middot; city clusters</div>
+          <div class="sep"></div>
+          <ul>
+            <li>mexican restaurant brisbane &middot; 720/mo</li>
+            <li>mexican restaurant perth &middot; 590/mo</li>
+            <li>mexican food brisbane &middot; 280/mo</li>
+            <li>mexican food perth &middot; 220/mo</li>
+            <li class="goal">8+ stores each. No city pages.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="star-row"></div>
+
+<!-- ================= OPPORTUNITY 3: AEO ================= -->
+<section id="opp3" class="dark">
+  <div class="wrap">
+    <span class="eyebrow">Opportunity 03 &middot; AI Search / AEO</span>
+    <h2 class="display" style="font-size:clamp(46px,5.5vw,82px);margin-top:18px;max-width:1100px;color:#fff">
+      You&rsquo;re already in<br>AI Overviews. <span class="red">Almost no QSR<br>brand can say that.</span>
+    </h2>
+    <p class="lede big" style="color:#bcbcbc;margin-top:28px">37 Google AI Overview citations. 14 Grok. 12 ChatGPT. 12 Perplexity. 7 Copilot. All trending up. This is the foundation. The structured-data layer on top is the moat.</p>
+
+    <div class="ai-strip">
+      <div class="ai-cell"><div class="platform">Google AIO</div><div class="citations">37</div><div class="delta">+4 last period</div><div class="sub">25 pages cited &middot; +7</div></div>
+      <div class="ai-cell"><div class="platform">Grok</div><div class="citations">14</div><div class="delta">+14 (all new)</div><div class="sub">14 pages cited</div></div>
+      <div class="ai-cell"><div class="platform">ChatGPT</div><div class="citations">12</div><div class="delta">+5 last period</div><div class="sub">18 pages cited &middot; +10</div></div>
+      <div class="ai-cell"><div class="platform">Perplexity</div><div class="citations">12</div><div class="delta">+2 last period</div><div class="sub">12 pages cited</div></div>
+      <div class="ai-cell"><div class="platform">Copilot</div><div class="citations">7</div><div class="delta">+4 last period</div><div class="sub">11 pages cited</div></div>
+    </div>
+
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:34px;margin-top:48px">
+      <div style="background:rgba(255,255,255,.05);padding:32px 34px">
+        <h3 style="font-family:'Archivo Black',sans-serif;font-size:11px;letter-spacing:0.18em;color:var(--red);text-transform:uppercase;margin-bottom:22px">What&rsquo;s working already</h3>
+        <div style="margin-bottom:20px"><b style="display:block;color:#fff;font-size:16px;margin-bottom:4px;font-weight:800">FAQ schema on FAQ + Catering pages</b><span style="color:#bcbcbc;font-size:14px;line-height:1.55">The format AI engines cite most. Half the job is already done.</span></div>
+        <div style="margin-bottom:20px"><b style="display:block;color:#fff;font-size:16px;margin-bottom:4px;font-weight:800">Wikipedia + nsw.gov.au cite you</b><span style="color:#bcbcbc;font-size:14px;line-height:1.55">Editorial authority signals AI engines use to validate a brand. Rare and valuable.</span></div>
+        <div><b style="display:block;color:#fff;font-size:16px;margin-bottom:4px;font-weight:800">Organization schema site-wide</b><span style="color:#bcbcbc;font-size:14px;line-height:1.55">The foundation entity is in place. Just needs Restaurant + LocalBusiness layered on top.</span></div>
+      </div>
+      <div style="background:rgba(236,25,68,.10);padding:32px 34px;border:1.5px solid rgba(236,25,68,.4)">
+        <h3 style="font-family:'Archivo Black',sans-serif;font-size:11px;letter-spacing:0.18em;color:var(--red);text-transform:uppercase;margin-bottom:22px">Where AI citations go next</h3>
+        <div style="margin-bottom:20px"><b style="display:block;color:#fff;font-size:16px;margin-bottom:4px;font-weight:800">Nutrition &amp; calorie queries</b><span style="color:#bcbcbc;font-size:14px;line-height:1.55">3,400 searches/mo. &ldquo;Burrito calories Australia&rdquo;. &ldquo;Low cal Mexican&rdquo;. Structured nutrition data = cited everywhere.</span></div>
+        <div style="margin-bottom:20px"><b style="display:block;color:#fff;font-size:16px;margin-bottom:4px;font-weight:800">Dietary &amp; halal queries</b><span style="color:#bcbcbc;font-size:14px;line-height:1.55">You&rsquo;re halal certified. A schema-marked /halal page becomes the canonical AI answer for &ldquo;halal Mexican Australia&rdquo;.</span></div>
+        <div><b style="display:block;color:var(--red);font-size:16px;margin-bottom:4px;font-weight:800">Be the source on Mad Mex</b><span style="color:#bcbcbc;font-size:14px;line-height:1.55">AI engines currently cite Wikipedia and third parties for facts about you. Own the source document, own the answer.</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="star-row"></div>
+
+<!-- ================= OPPORTUNITY 4: DIETARY & CATERING ================= -->
+<section id="opp4">
+  <div class="wrap">
+    <span class="eyebrow">Opportunity 04 &middot; Dietary &amp; catering</span>
+    <h2 class="display" style="font-size:clamp(44px,5vw,76px);margin-top:18px;max-width:1100px">
+      Halal. Vegan. GF. Catering.<br><span class="red">High intent. Low competition.<br>Zero pages.</span>
+    </h2>
+    <p class="lede" style="margin-top:24px">Smaller individual volumes &mdash; but high commercial intent, low difficulty, and assets you already own (halal certification, working nutrition calculator) that nobody knows about.</p>
+
+    <div class="split" style="margin-top:48px">
+      <div>
+        <h3 style="font-family:'Archivo Black',sans-serif;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--muted);margin-bottom:6px">Dietary &amp; catering searches</h3>
+        <div class="kw">
+          <div class="row head"><div class="kn">Search phrase</div><div class="kv">People/mo</div></div>
+          <div class="row"><div class="kn">is mad mex halal</div><div class="kv">260</div></div>
+          <div class="row"><div class="kn">halal mexican food sydney</div><div class="kv">720</div></div>
+          <div class="row"><div class="kn">vegan mexican food</div><div class="kv">880</div></div>
+          <div class="row"><div class="kn">vegan mexican melbourne</div><div class="kv">480</div></div>
+          <div class="row"><div class="kn">gluten free mexican australia</div><div class="kv">390</div></div>
+          <div class="row"><div class="kn">mexican catering sydney</div><div class="kv">590</div></div>
+          <div class="row"><div class="kn">corporate catering mexican</div><div class="kv">320</div></div>
+          <div class="row"><div class="kn">office party mexican food</div><div class="kv">210</div></div>
+        </div>
+        <p class="text-italic-note">Plus 700+ long-tail terms across keto, low-carb, dairy-free, kid-friendly and allergen queries.</p>
+      </div>
+      <div class="why">
+        <div class="head">Why these pages pay off</div>
+        <div class="item"><b>You&rsquo;re halal certified. Nobody knows.</b><span>260 people/month Google &ldquo;is mad mex halal&rdquo; and find third-party answers. One dedicated page captures every one.</span></div>
+        <div class="item"><b>FAQ schema is your existing weapon.</b><span>You already use it on Catering. Same pattern, applied to dietary + city catering pages, opens up 4,800/mo of warm-lead search.</span></div>
+        <div class="item"><b>Catering is the highest-value channel.</b><span>One office catering relationship = recurring weekly orders. The catering page exists &mdash; it just needs city variants.</span></div>
+        <div class="item last"><b>Dietary searchers convert hard.</b><span>Someone Googling &ldquo;halal Mexican Sydney&rdquo; is choosing where to eat tonight, not browsing.</span></div>
+      </div>
+    </div>
+
+    <div class="math" style="margin-top:42px">Five new dietary &amp; catering pages = realistic 1,500&ndash;3,000 organic visits/mo within 12 months. Catering enquiries are the disproportionate prize.</div>
+  </div>
+</section>
+
+<div class="star-row"></div>
+
+<!-- ================= SITE AUDIT ================= -->
+<section id="audit" style="background:var(--paper)">
+  <div class="wrap">
+    <span class="eyebrow green">Site audit</span>
+    <h2 class="display" style="font-size:clamp(46px,5.5vw,82px);margin-top:18px;max-width:1100px">
+      madmex.com.au<br>has the right <span class="green">bones</span>.
+    </h2>
+    <p class="lede" style="margin-top:24px">A real brand with two decades of recognition. Sitewide HTTPS. FAQ schema on key pages. A clean URL structure. An emerging AI citation footprint. The <em>platform</em> is strong &mdash; the <em>structure</em> has been neglected.</p>
+
+    <div class="audit-grid">
+      <div class="good">
+        <h3>What&rsquo;s working</h3>
+        <div class="item"><span class="ck">&check;</span><div><b>DR 41 &middot; 752 referring domains</b><br>Real editorial links from Google, Apple, Wikipedia, nsw.gov.au, Waze, Indeed, Atlassian. Not a thin profile.</div></div>
+        <div class="item"><span class="ck">&check;</span><div><b>Sitemap, HTTPS, canonicals clean</b><br>Sitemap.xml updated 27 May. Mobile-responsive. AVIF imagery. No crawlability red flags.</div></div>
+        <div class="item"><span class="ck">&check;</span><div><b>FAQ schema on FAQ + Catering pages</b><br>The single most-cited schema by AI engines. You have it &mdash; you just need more of it.</div></div>
+        <div class="item"><span class="ck">&check;</span><div><b>20-year brand heritage (since 2006)</b><br>Longevity that QSR-disruptor competitors don&rsquo;t have. Halal certification is rare and citable.</div></div>
+        <div class="item"><span class="ck">&check;</span><div><b>Emerging AI Overview footprint</b><br>82 AI citations across 5 platforms. Most national QSRs in Australia have zero.</div></div>
+      </div>
+      <div class="video-mock">
+        <div class="urlbar">&#x1F50D; &nbsp; madmex.com.au &nbsp; &middot; live</div>
+        <video autoplay loop muted playsinline preload="metadata" poster="https://www.madmex.com.au/wp-content/uploads/2025/11/MM_Website2025_CateringDesktop_2025_11_26.avif">
+          <source src="https://www.madmex.com.au/wp-content/uploads/2023/08/Website-Mobile.mp4" type="video/mp4">
+        </video>
+        <div class="caption">The brand is doing its job. The SEO underneath isn&rsquo;t.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="star-row"></div>
+
+<!-- ================= FUTURE STATE / SITEMAP ================= -->
+<section id="future">
+  <div class="wrap">
+    <span class="eyebrow">Future state</span>
+    <h2 class="display" style="font-size:clamp(46px,5.5vw,82px);margin-top:18px;max-width:1100px">
+      City pages.<br>Dietary pages.<br><span class="red">A fixed location stack.</span>
+    </h2>
+    <p class="lede" style="margin-top:24px">Today the site is a brand homepage plus 60 thin location stubs and a campaign blog. Future state: a structured local + category architecture that wins the searches you&rsquo;re already losing.</p>
+
+    <div class="sitemap">
+      <div class="sm-col">
+        <h3>Today &middot; thin &amp; unstructured</h3>
+        <div class="url"><span class="path">/</span><span class="tag">Branded only</span></div>
+        <div class="url"><span class="path">/our-menu</span><span class="tag miss">No menu schema</span></div>
+        <div class="url"><span class="path">/location/ &middot; 60 stubs</span><span class="tag miss">No H1, no schema</span></div>
+        <div class="url"><span class="path">/catering</span><span class="tag">Good</span></div>
+        <div class="url"><span class="path">/faq</span><span class="tag miss">App-focused</span></div>
+        <div class="url faint"><span class="path">/sydney &middot; /melbourne &middot; /brisbane &middot; /perth</span><span class="tag miss">Missing</span></div>
+        <div class="url faint"><span class="path">/halal-mexican &middot; /vegan &middot; /gluten-free</span><span class="tag miss">Missing</span></div>
+        <div class="url faint"><span class="path">/nutrition (structured)</span><span class="tag miss">Missing</span></div>
+        <div class="url faint"><span class="path">/about (AI authority page)</span><span class="tag miss">Missing</span></div>
+        <div class="url faint"><span class="path">/blog &mdash; SEO content</span><span class="tag miss">Campaign only</span></div>
+        <div class="summary">1,175 keywords. 95%+ branded. ~10,000 visits/mo and falling.</div>
+      </div>
+      <div class="sm-col future">
+        <h3>Future state &middot; local + category</h3>
+        <div class="url"><span class="path">/</span><span class="tag">Optimised</span></div>
+        <div class="url"><span class="path">/our-menu (Menu + Restaurant schema)</span><span class="tag">Upgraded</span></div>
+        <div class="url"><span class="path">/location/* &middot; 60 stores w/ LocalBusiness</span><span class="tag">Schema</span></div>
+        <div class="url"><span class="path">/catering + /catering-sydney + /catering-melbourne</span><span class="tag">New variants</span></div>
+        <div class="url"><span class="path">/faq (discovery-led, AEO rebuilt)</span><span class="tag">Rebuilt</span></div>
+        <div class="url"><span class="path">/sydney &middot; /melbourne &middot; /brisbane &middot; /perth</span><span class="tag">New</span></div>
+        <div class="url"><span class="path">/halal-mexican &middot; /vegan &middot; /gluten-free</span><span class="tag">New</span></div>
+        <div class="url"><span class="path">/nutrition (structured per-item)</span><span class="tag">New</span></div>
+        <div class="url"><span class="path">/about (AI-citable authority doc)</span><span class="tag">New</span></div>
+        <div class="url"><span class="path">/blog (Mexican food &amp; nutrition guides)</span><span class="tag">Rebuilt</span></div>
+        <div class="summary">Target: 25,000&ndash;35,000 visits/mo within 12 months. Non-branded share &rarr; 40%+.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="star-row"></div>
+
+<!-- ================= 8 FIXES ================= -->
+<section id="fixes" style="background:var(--paper)">
+  <div class="wrap">
+    <span class="eyebrow">The build-out</span>
+    <h2 class="display" style="font-size:clamp(46px,5.5vw,82px);margin-top:18px;max-width:1100px">
+      Eight fixes that turn<br>the site into a <span class="red">ranking asset</span>.
+    </h2>
+    <p class="lede" style="margin-top:24px">Quick wins first &mdash; the technical foundations the audit flagged as Priority 1. Then the strategic content layer. All inside the engagement.</p>
+
+    <div class="fix-grid">
+      <div class="fix"><div class="n">01</div><h4>LocalBusiness schema &middot; all 60+ stores</h4><p>Restaurant / LocalBusiness JSON-LD on every store page &mdash; address, hours, geo, cuisine, halal flag, phone. Single biggest local-pack lever on the site.</p></div>
+      <div class="fix"><div class="n">02</div><h4>Fix H1s &amp; meta descriptions site-wide</h4><p>Homepage H1 currently points to a campaign banner. Location pages have no H1. FAQ and Blog have no meta description. All fixed in pass one.</p></div>
+      <div class="fix"><div class="n">03</div><h4>Menu + Restaurant schema</h4><p>Schema.org Menu &amp; MenuItem markup on /our-menu &mdash; unlocks rich results and AI Overview citations for food/nutrition queries.</p></div>
+      <div class="fix"><div class="n">04</div><h4>Image alt text pass</h4><p>27 of 36 homepage images are missing alt text. Site-wide sweep with descriptive, keyword-aware alt for every food, hero and store image.</p></div>
+      <div class="fix"><div class="n">05</div><h4>City landing pages</h4><p>/sydney, /melbourne, /brisbane, /perth &mdash; aggregate-LocalBusiness schema, city-specific copy, internal linking to every store in the city.</p></div>
+      <div class="fix"><div class="n">06</div><h4>Dietary &amp; halal hub</h4><p>Standalone pages for halal, vegan, gluten-free and kids/family. FAQ schema on each. Captures dietary search + answers AI engines directly.</p></div>
+      <div class="fix"><div class="n">07</div><h4>FAQ rebuild for AEO</h4><p>Replace app/loyalty FAQs with the 30 questions Australians actually ask AI engines about Mexican food. Schema-marked, structured for citation.</p></div>
+      <div class="fix"><div class="n">08</div><h4>Active digital PR + links</h4><p>Replace the 62 referring domains the site lost last period. Food media outreach, halal directories, franchise/business press, community sponsorships.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="star-row"></div>
+
+<!-- ================= COMPETITORS ================= -->
+<section id="competitors">
+  <div class="wrap">
+    <span class="eyebrow">Competitor landscape</span>
+    <h2 class="display" style="font-size:clamp(46px,5.5vw,82px);margin-top:18px;max-width:1100px">
+      Who you actually<br>compete with on <span class="green">Google</span>.
+    </h2>
+    <p class="lede" style="margin-top:24px">Two national QSR competitors and an aggregator layer. The aggregators (Zomato, DoorDash, Uber Eats) win the queries your own site should win &mdash; that&rsquo;s the reclaim.</p>
+
+    <table class="comp">
+      <thead>
+        <tr>
+          <th style="width:22%">Competitor</th>
+          <th style="width:10%">DR (est.)</th>
+          <th>Their angle</th>
+          <th style="width:30%">Where they beat you on Google</th>
+          <th class="r">Threat</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="name">Guzman y Gomez</span><span class="dom">gyg.com.au</span></td>
+          <td><span style="font-family:'Anton',sans-serif;font-size:24px;color:var(--red)">55+</span></td>
+          <td>ASX-listed. Premium QSR. Aggressive content programme.</td>
+          <td>Wins city queries, &ldquo;best Mexican&rdquo; queries, brand-adjacent comparisons.</td>
+          <td style="text-align:right"><span class="threat direct">Direct</span></td>
+        </tr>
+        <tr>
+          <td><span class="name">Zambrero</span><span class="dom">zambrero.com.au</span></td>
+          <td><span style="font-family:'Anton',sans-serif;font-size:24px;color:var(--red)">50+</span></td>
+          <td>Plate-for-a-plate mission. Similar national scale.</td>
+          <td>Outranks for dietary, catering and corporate queries.</td>
+          <td style="text-align:right"><span class="threat direct">Direct</span></td>
+        </tr>
+        <tr>
+          <td><span class="name">Salsa&rsquo;s Fresh Mex</span><span class="dom">salsas.com.au</span></td>
+          <td><span style="font-family:'Anton',sans-serif;font-size:24px;color:var(--ink-2)">~35</span></td>
+          <td>Smaller chain. Similar consumer positioning.</td>
+          <td>Less of a threat, but catches long-tail you should own.</td>
+          <td style="text-align:right"><span class="threat indirect">Indirect</span></td>
+        </tr>
+        <tr>
+          <td><span class="name">Aggregators</span><span class="dom">Zomato, DoorDash, Uber Eats, Menulog</span></td>
+          <td><span style="font-family:'Anton',sans-serif;font-size:24px;color:var(--ink-2)">80+</span></td>
+          <td>Listing platforms with massive domain authority.</td>
+          <td>Capture &ldquo;[suburb] Mexican&rdquo; queries your own location pages should win.</td>
+          <td style="text-align:right"><span class="threat reclaim">Reclaim</span></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="math green-bg" style="background:var(--green);margin-top:42px">Good news: nobody in the category owns the AEO conversation yet. The brand with FAQ schema, Menu schema and a real nutrition hub wins the next 24 months of AI search.</div>
+  </div>
+</section>
+
+<div class="star-row"></div>
+
+<!-- ================= PACKAGES ================= -->
+<section id="packages" style="background:var(--paper)">
+  <div class="wrap">
+    <span class="eyebrow">Your investment</span>
+    <h2 class="display" style="font-size:clamp(46px,5.5vw,82px);margin-top:18px;max-width:1100px">
+      Three ways to scope this.<br>We recommend <span class="green">Package&nbsp;3</span>.
+    </h2>
+    <p class="lede" style="margin-top:24px">Mad Mex&rsquo;s national footprint (60+ stores, 4 capitals, 6 search categories) sits squarely in &ldquo;more than 3 locations / 11&ndash;15 categories&rdquo; territory. Package&nbsp;3 is the right fit. All prices ex GST. 12-month tenure.</p>
+
+    <div class="pkgs">
+      <div class="pkg">
+        <h3>Package 2</h3>
+        <div class="pname">Multi-location<br>starter</div>
+        <p class="pdesc">Up to 3 locations / 5&ndash;10 categories. Best for a Sydney-or-Melbourne-only focus + the must-do technical fixes.</p>
+        <div class="row"><div class="lbl">Setup (Month 1)</div><div class="val">$3,500</div></div>
+        <div class="row"><div class="lbl">Monthly</div><div class="val">$3,000</div></div>
+        <div class="row" style="border:none"><div class="lbl">Tenure</div><div class="val" style="font-size:16px">12 months</div></div>
+        <div class="total"><div class="l">Year 1</div><div class="v">$39,500</div></div>
+        <div class="note">Covers the eight technical fixes + one capital city build-out. Leaves three capital cities and the AEO content layer out of scope.</div>
+      </div>
+      <div class="pkg rec">
+        <div class="ribbon">Recommended</div>
+        <h3 style="color:#fff;opacity:.95">Package 3</h3>
+        <div class="pname">National<br>+ AEO</div>
+        <p class="pdesc">More than 3 locations / 11&ndash;15 categories. The right fit for 60+ stores, 4 capitals, plus the dietary &amp; nutrition content that powers AI citations.</p>
+        <div class="row"><div class="lbl">Setup (Month 1)</div><div class="val">$4,500</div></div>
+        <div class="row"><div class="lbl">Monthly</div><div class="val">$4,000</div></div>
+        <div class="row" style="border:none"><div class="lbl">Tenure</div><div class="val" style="font-size:16px">12 months</div></div>
+        <div class="total"><div class="l">Year 1</div><div class="v">$52,500</div></div>
+        <div class="note">All 8 technical fixes + 4 city pages + dietary/halal/vegan hub + nutrition content + FAQ rebuild + active digital PR + monthly reporting.</div>
+      </div>
+      <div class="pkg">
+        <h3>Package 4</h3>
+        <div class="pname">Custom<br>national</div>
+        <p class="pdesc">For when standard tiers don&rsquo;t cover the work. Scoped to a full 60-store local SEO build-out + a deep AEO content programme + monthly franchise-level reporting.</p>
+        <div class="row"><div class="lbl">Setup</div><div class="val">Custom</div></div>
+        <div class="row"><div class="lbl">Monthly</div><div class="val">Custom</div></div>
+        <div class="row" style="border:none"><div class="lbl">Tenure</div><div class="val" style="font-size:16px">12&ndash;24 mo</div></div>
+        <div class="total"><div class="l">Year 1</div><div class="v" style="font-size:30px">Scoped</div></div>
+        <div class="note">Franchise-network-wide rollout, per-store reporting, 60+ location LocalBusiness programme. Quoted on request.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="star-row"></div>
+
+<!-- ================= ROI ================= -->
+<section id="roi" class="dark">
+  <div class="wrap">
+    <span class="eyebrow">The ROI</span>
+    <h2 class="display" style="font-size:clamp(46px,5.5vw,82px);margin-top:18px;max-width:1100px;color:#fff">
+      A half-percent network<br>revenue lift pays the<br>year back <span class="red">six times</span>.
+    </h2>
+    <p class="lede big" style="color:#bcbcbc;margin-top:28px">At ~$800K average annual revenue per store across 60+ stores, Mad Mex network revenue sits in the ~$50&ndash;60M range. Year-1 Package 3 investment is $52,500. The maths is unforgiving in your favour.</p>
+
+    <div class="roi-grid">
+      <div class="roi">
+        <div>
+          <div class="lbl">Conservative case</div>
+          <div class="multi">5.7&times;</div>
+          <div class="case">A 0.5% revenue lift across the network from recovered organic + local-pack traffic. <b>~$300K revenue against $52.5K invested.</b></div>
+        </div>
+      </div>
+      <div class="roi hero">
+        <div class="badge">Expected</div>
+        <div>
+          <div class="lbl">Target case</div>
+          <div class="multi">11.4&times;</div>
+          <div class="case">A 1.0% revenue lift plus a meaningful catering channel from the new city &amp; dietary pages. <b>~$600K revenue against $52.5K invested.</b> Realistic year 1.</div>
+        </div>
+      </div>
+      <div class="roi">
+        <div>
+          <div class="lbl">Upside case</div>
+          <div class="multi">22.8&times;</div>
+          <div class="case">2% network lift + a corporate catering pipeline + AEO-driven brand defence. <b>~$1.2M revenue against $52.5K invested.</b> Plus the asset compounds in year 2.</div>
+        </div>
+      </div>
+    </div>
+    <p style="margin-top:46px;font-size:13.5px;color:#bcbcbc;font-style:italic;max-width:840px">All ROI figures use network revenue lift only and exclude direct online order growth, app installs and catering one-off contract value &mdash; which for a national QSR are material.</p>
+  </div>
+</section>
+
+<div class="star-row"></div>
+
+<!-- ================= BIG PICTURE ================= -->
+<section id="bigpicture" class="dark">
+  <div class="wrap">
+    <span class="eyebrow">The big picture</span>
+    <h2 class="display" style="font-size:clamp(46px,5.5vw,82px);margin-top:18px;max-width:1100px;color:#fff">
+      Year 1 is the reclaim.<br><span class="red">Years 2&ndash;5 are the moat.</span>
+    </h2>
+    <p class="lede big" style="color:#bcbcbc;margin-top:28px">The asset you&rsquo;re building &mdash; schema, city pages, dietary pages, AEO content &mdash; doesn&rsquo;t reset at month 13. AI engines and Local Pack rankings compound.</p>
+
+    <div class="bigpic">
+      <div class="bp">
+        <div class="yr">Year 1</div>
+        <div class="ghost">01</div>
+        <h3>The reclaim</h3>
+        <p>60+ stores schema-marked. City pages live. FAQ rebuilt for AEO. Organic visits ~3&times; baseline by Month 12. Non-branded share crosses 40%.</p>
+      </div>
+      <div class="bp">
+        <div class="yr">Year 2</div>
+        <div class="ghost">02</div>
+        <h3>The category</h3>
+        <p>Mad Mex outranks Zambrero for &ldquo;Mexican near me&rdquo; in every major capital. Catering becomes a real channel. DR climbs past 45.</p>
+      </div>
+      <div class="bp">
+        <div class="yr">Year 3</div>
+        <div class="ghost">03</div>
+        <h3>The AI default</h3>
+        <p>Mad Mex is the source AI engines cite for &ldquo;halal Mexican Australia&rdquo;, &ldquo;burrito calories&rdquo;, &ldquo;vegan Mexican&rdquo;. Branded search grows alongside.</p>
+      </div>
+      <div class="bp">
+        <div class="yr">Year 5+</div>
+        <div class="ghost">04</div>
+        <h3>The moat</h3>
+        <p>Category authority compounds. New store launches rank on day one. Corporate catering pipeline self-fills. Guzman has to chase you.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="star-row"></div>
+
+<!-- ================= NEXT STEPS / TIMELINE ================= -->
+<section id="next" class="dark">
+  <div class="wrap">
+    <span class="eyebrow">Next steps</span>
+    <h2 class="display" style="font-size:clamp(46px,5.5vw,82px);margin-top:18px;max-width:1100px;color:#fff">
+      How we get<br>this <span class="green">live</span>.
+    </h2>
+
+    <div class="tl">
+      <div class="row">
+        <div class="when">This week</div>
+        <div class="what"><h4>Approve scope &amp; sign agreement</h4><p>Two-page engagement letter. SEO Package 3 recommended, 12-month commitment. Custom (Package 4) on request.</p></div>
+      </div>
+      <div class="row">
+        <div class="when">Weeks 1&ndash;3</div>
+        <div class="what"><h4>Foundation pass</h4><p>Search Console + Ahrefs Site Audit setup. H1s, meta descriptions, image alt text fixed site-wide. LocalBusiness schema deployed to all 60+ stores. Menu schema on /our-menu.</p></div>
+      </div>
+      <div class="row">
+        <div class="when">Weeks 4&ndash;6</div>
+        <div class="what"><h4>First city pages live</h4><p>Sydney and Melbourne city pages built with aggregate LocalBusiness schema. Internal linking from every relevant store page. FAQ rebuild begins.</p></div>
+      </div>
+      <div class="row">
+        <div class="when">Months 2&ndash;3</div>
+        <div class="what"><h4>AEO content layer</h4><p>Brisbane + Perth city pages. Halal, vegan and gluten-free hub pages live. Structured nutrition pages built from the existing calculator. About-page authority document for AI citation.</p></div>
+      </div>
+      <div class="row">
+        <div class="when">Month 6</div>
+        <div class="what"><h4>First compounding review</h4><p>Organic should be 1.5&ndash;2&times; baseline. Non-branded share climbing. AI citation count climbing. We sit down with the data and pick where to lean in next.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= CLOSER ================= -->
+<section class="closer" id="close">
+  <div class="wrap">
+    <h2>Make Google<br><span class="red">mad about</span><br>Mad M<span class="green">&euml;</span>x again.</h2>
+    <p>The brand is doing its job. The audit&rsquo;s on the table. The pipeline is sitting there in 42,000 monthly searches. We&rsquo;d like to start.</p>
+    <div class="cta-row">
+      <a class="btn big" href="mailto:michael.glasser@zibdigital.com.au?subject=Mad%20Mex%20%C3%97%20Zib%20Digital%20%E2%80%94%20Kickoff">Book the kickoff call &rarr;</a>
+      <a class="btn outline big" href="https://www.ziboutreach.com.au" style="border-color:#fff;color:#fff !important">View ziboutreach.com.au</a>
+    </div>
+    <div class="signature">An audit proposal by <em>Zib Digital</em> for Mad Mex &middot; May 2026</div>
+  </div>
+</section>
+
+<footer class="foot">
+  <div class="wrap row">
+    <div>&copy; 2026 Zib Digital &middot; Made for Mad Mex</div>
+    <div><a href="mailto:michael.glasser@zibdigital.com.au">michael.glasser@zibdigital.com.au</a></div>
+  </div>
+</footer>
+
+<script>
+  // simple reveal-on-scroll
+  const obs = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('is-in'); obs.unobserve(e.target); } });
+  }, {threshold:0.08, rootMargin:'0px 0px -40px 0px'});
+  document.querySelectorAll('section').forEach(s=>{ s.classList.add('reveal'); obs.observe(s); });
+</script>
+
+</body>
+</html>
