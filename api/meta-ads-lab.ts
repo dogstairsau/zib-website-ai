@@ -1,11 +1,20 @@
 import Anthropic from "@anthropic-ai/sdk";
-import { fetchSiteContent, normaliseUrl } from "../lib/site";
+import { fetchSiteContent, normaliseUrl, isValidEmail } from "../lib/site";
+import { captureLead } from "../lib/hubspot";
+import { sendLeadEmail } from "../lib/email";
 import { checkRateLimit, rateLimitResponse } from "../lib/rateLimit";
 import { META_ADS_SYSTEM_PROMPT, metaAdsUserPrompt } from "../lib/prompts/meta-ads";
 
 export const config = { runtime: "edge" };
 
-type Body = { url?: string };
+type Body = {
+  url?: string;
+  email?: string;
+  firstname?: string;
+  phone?: string;
+  notes?: string;
+  sourceTag?: string;
+};
 
 type AdConcept = {
   platform: string;
@@ -92,7 +101,10 @@ export default async function handler(req: Request): Promise<Response> {
   }
 
   const url = normaliseUrl(body.url || "");
+  const email = (body.email || "").trim();
+  const firstname = (body.firstname || "").trim();
   if (!url) return json({ error: "Enter a valid website URL." }, 400);
+  if (!isValidEmail(email)) return json({ error: "Enter a valid email." }, 400);
 
   if (!process.env.ANTHROPIC_API_KEY) {
     return json({ error: "Server not configured (ANTHROPIC_API_KEY missing)." }, 500);
@@ -107,6 +119,27 @@ export default async function handler(req: Request): Promise<Response> {
       const enc = new TextEncoder();
       const send = (event: string, data: unknown) =>
         controller.enqueue(enc.encode(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`));
+
+      // Kick off lead capture in parallel with generation — we keep the lead
+      // even if Claude/OpenAI later fails, and the email is already in HubSpot
+      // before any expensive AI calls finish.
+      const phone = (body.phone || "").trim();
+      const notes = (body.notes || "").trim();
+      const sourceTag = (body.sourceTag || "").trim();
+      const source = sourceTag ? `Meta Ads Lab · ${sourceTag}` : "Meta Ads Lab";
+      const leadPromise = Promise.all([
+        captureLead(
+          { email, firstname, company: "", website: url, source },
+          { url, strategistText: notes ? `Notes from prospect:\n${notes}` : "" },
+        ).catch((e) => console.warn("[meta-ads lead]", e?.message)),
+        sendLeadEmail({
+          url,
+          email,
+          phone: phone || undefined,
+          source,
+          strategistText: notes ? `## Notes from prospect\n\n${notes}` : "",
+        }).catch((e) => console.warn("[meta-ads email]", e?.message)),
+      ]);
 
       try {
         // Stage 0 — fetch
@@ -180,10 +213,14 @@ export default async function handler(req: Request): Promise<Response> {
 
         send("stage", { idx: 3, status: "done" });
         send("ads", { brand: parsed.brand, audience: parsed.audience, ads: rendered });
+        // Ensure lead capture finishes before the response closes (edge
+        // runtime kills in-flight promises when the stream ends).
+        await leadPromise;
         send("done", {});
       } catch (err: any) {
         console.warn("[meta-ads-lab]", err?.message, err?.stack);
         send("error", { message: err?.message || "Generation failed" });
+        await leadPromise.catch(() => {});
       } finally {
         controller.close();
       }

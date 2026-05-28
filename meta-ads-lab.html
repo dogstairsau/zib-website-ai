@@ -581,6 +581,28 @@
     </div>
   </section>
 
+  <!-- ─── GATE (email-first capture) ────────── -->
+  <section id="gate" class="mal-gate" hidden>
+    <div class="container">
+      <div class="ready-flash">URL accepted</div>
+      <div class="mono eyebrow">Step 2 of 2</div>
+      <h2>First, <em>where do we send the pack?</em></h2>
+      <p style="max-width:54ch;color:rgba(255,255,255,0.72);font-size:clamp(15px,1.2vw,17px);line-height:1.55;margin-top:18px;">
+        Once you submit your details, our system reads your brand, drafts 12 Meta ad concepts and previews 4 of them right here. You'll get the full pack in your inbox.
+      </p>
+
+      <div id="gateCard" class="gate-card" style="margin-top:clamp(40px,5vw,56px);max-width:560px;">
+        <form id="gateForm" class="gate-form">
+          <input type="text" name="name" placeholder="Your name" autocomplete="name" required />
+          <input type="email" name="email" placeholder="Email · we'll send the pack here" autocomplete="email" required />
+          <input type="tel" name="phone" placeholder="Phone · optional, for the strategy call" autocomplete="tel" />
+          <button type="submit" class="submit">Generate my ads <span class="arr">→</span></button>
+        </form>
+        <div class="fineprint">No spam. No newsletter. Senior strategist responds within 24h.</div>
+      </div>
+    </div>
+  </section>
+
   <!-- ─── STAGES ───────────────────────────── -->
   <section id="flow" class="mal-stages">
     <div class="container">
@@ -619,46 +641,6 @@
           <h3>Strategist sanity-check.</h3>
           <p>A senior Zib Meta strategist scans the brief, kills the weak angles, signs off the strong ones.</p>
           <div class="timer">Ready</div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- ─── GATE (form) ──────────────────────── -->
-  <section id="gate" class="mal-gate">
-    <div class="container">
-      <div class="ready-flash">✓ 12 ads drafted · Ready to view</div>
-      <div class="mono eyebrow reveal">One step left</div>
-      <h2 class="reveal">Your ads are ready. <em>Where should we send them?</em></h2>
-
-      <div class="gate-grid">
-        <ul class="gate-list reveal">
-          <li><strong>12 Meta ad concepts</strong>Feed, story, reel, carousel — fully designed, ready to upload.</li>
-          <li><strong>Audience map + targeting JSON</strong>Plug-and-play interest stacks, lookalike specs, exclusions.</li>
-          <li><strong>Launch-ready media plan</strong>Test budget split, cadence, kill criteria. Not a slide — a playbook.</li>
-          <li><strong>30 minutes with a senior strategist</strong>Live walk-through, real human, has run Meta for Aussie brands since the Like button.</li>
-          <li><strong>No SaaS, no subscription</strong>Take the work. Run it yourself, hand it to your team, or have us launch it.</li>
-        </ul>
-
-        <div id="gateCard" class="gate-card reveal">
-          <div class="lbl">Step 2 of 2</div>
-          <h3>Send me the pack.</h3>
-          <form id="gateForm" class="gate-form">
-            <input type="text" name="name" placeholder="Your name" autocomplete="name" required />
-            <input type="email" name="email" placeholder="Email · we'll send the pack here" autocomplete="email" required />
-            <input type="tel" name="phone" placeholder="Phone · for the strategy call" autocomplete="tel" />
-            <textarea name="notes" placeholder="Anything else? Launch date, current spend, what's not working…"></textarea>
-            <button type="submit" class="submit">Unlock my 12 ads <span class="arr">→</span></button>
-          </form>
-          <div class="fineprint">No spam. No newsletter. Strategist responds within 24h.</div>
-
-          <div class="success">
-            <div class="check">✓</div>
-            <h4>Pack on its way.</h4>
-            <p>Check your inbox in the next minute — your 12 ads, audience map and media plan are queued. A senior strategist will reach out within 24 hours to book your walk-through.</p>
-            <p style="opacity: 0.7; font-size: 13px;">Scroll down to see the ads we drafted for <span id="brandName">your brand</span>.</p>
-            <a href="#reveal" class="ghost-btn">Show me the ads ↓</a>
-          </div>
         </div>
       </div>
     </div>
@@ -950,86 +932,84 @@
     }
   };
 
+  // Step 1: URL submit → reveal email gate, scroll to it. No API call yet.
   heroForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     if (state.isRunning) return;
-    state.isRunning = true; state.isDone = false;
     state.url = heroUrl.value.trim();
     state.brand = null; state.ads = []; state.audience = '';
 
-    document.getElementById('flow').scrollIntoView({ behavior: 'smooth', block: 'start' });
     document.getElementById('malErr')?.remove();
     resetStages();
-    gateSec.classList.remove('is-ready');
-    gateCard.classList.remove('is-submitted');
     adGrid.innerHTML = '';
     reveal.hidden = true;
 
-    await new Promise(r => setTimeout(r, 300));
+    gateSec.hidden = false;
+    gateSec.classList.add('is-ready');
+    requestAnimationFrame(() => gateSec.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+    // Focus the first field for keyboard users
+    setTimeout(() => gateForm.querySelector('input[name=name]')?.focus(), 600);
+  });
+
+  // Step 2: Email + name submit → captures lead, fades gate, kicks off real
+  // generation. SSE drives stages, reveal section auto-shows when ads land.
+  gateForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (state.isRunning) return;
+    state.isRunning = true; state.isDone = false;
+
+    const btn = gateForm.querySelector('.submit');
+    btn.disabled = true;
+    btn.textContent = 'Generating…';
+
+    const fd = new FormData(gateForm);
+    const payload = {
+      url: state.url,
+      email: (fd.get('email') || '').toString().trim(),
+      firstname: (fd.get('name') || '').toString().trim(),
+      phone: (fd.get('phone') || '').toString().trim(),
+      sourceTag: document.querySelector('meta[name="zib:source-tag"]')?.content || '',
+    };
+
+    // Fade the gate, then scroll to stages and start the run
+    gateSec.style.transition = 'opacity 320ms ease';
+    gateSec.style.opacity = '0';
+    setTimeout(() => {
+      gateSec.hidden = true;
+      gateSec.style.opacity = '';
+      document.getElementById('flow').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 320);
+
+    await new Promise(r => setTimeout(r, 500));
     startElapsed();
 
     try {
       const resp = await fetch('/api/meta-ads-lab', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ url: state.url }),
+        body: JSON.stringify(payload),
       });
       if (!resp.ok) {
         const err = await resp.json().catch(() => ({}));
         throw new Error(err.error || `${resp.status}`);
       }
       await consumeSse(resp);
-    } catch (e) {
-      showError(e?.message || 'Request failed');
+      // When generation done, auto-reveal ads
+      reveal.hidden = false;
+      setTimeout(() => {
+        reveal.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        adGrid.querySelectorAll('.ad-card, .ad-more').forEach((c, i) =>
+          setTimeout(() => c.classList.add('is-revealed'), 240 + i * 140)
+        );
+      }, 600);
+    } catch (err) {
+      showError(err?.message || 'Request failed');
+      btn.disabled = false;
+      btn.innerHTML = 'Generate my ads <span class="arr">→</span>';
+      // Bring gate back if generation failed
+      gateSec.hidden = false;
     } finally {
       state.isRunning = false;
-    }
-  });
-
-  gateForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    const btn = gateForm.querySelector('.submit');
-    btn.disabled = true;
-    btn.textContent = 'Sending…';
-
-    const fd = new FormData(gateForm);
-    const payload = {
-      url: state.url,
-      email: (fd.get('email') || '').toString(),
-      name: (fd.get('name') || '').toString(),
-      phone: (fd.get('phone') || '').toString(),
-      notes: (fd.get('notes') || '').toString(),
-      brand: state.brand?.name,
-      audience: state.audience,
-      ads: state.ads.map(a => ({ platform: a.platform, angle: a.angle, headline: a.headline })),
-    };
-
-    try {
-      const resp = await fetch('/api/meta-ads-lab-lead', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload),
-      });
-      if (!resp.ok) {
-        const err = await resp.json().catch(() => ({}));
-        throw new Error(err.error || 'Lead submit failed');
-      }
-    } catch (e) {
-      console.warn('[lead]', e?.message);
-      // Continue anyway — show success UX so visitor sees the ads
-    }
-
-    gateCard.classList.add('is-submitted');
-    if (state.ads.length === 0) {
-      // No ads yet (still generating). Wait a bit then reveal whatever's there.
-      const waitForAds = setInterval(() => {
-        if (state.ads.length > 0 || state.isDone) {
-          clearInterval(waitForAds);
-          revealAds();
-        }
-      }, 500);
-    } else {
-      revealAds();
     }
   });
 })();
