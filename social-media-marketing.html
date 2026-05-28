@@ -1,0 +1,529 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<title>Social Media Marketing Agency · Zib Digital</title>
+<meta name="description" content="Australian social media marketing that sells the commercial outcome. Meta Business Partner and TikTok Marketing Partner. Strategy, content, paid social and reporting — since 2009." />
+<meta name="zib:source-tag" content="Social Media AU" />
+<!-- @include _partials/head.html -->
+<link rel="stylesheet" href="/assets/location.css">
+<style>
+/* Service-page tweaks shared with google-ads (kept inline for now) */
+.svc-cards-section {
+  padding-top: clamp(80px, 10vw, 144px);
+  padding-bottom: clamp(80px, 10vw, 144px);
+  border-bottom: 0.5px solid var(--rule);
+}
+.svc-cards-section.paper { background: var(--paper); }
+.svc-cards-section .services-head { max-width: 60ch; margin-bottom: clamp(48px, 6vw, 72px); }
+
+.platform-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(16px, 2vw, 22px);
+}
+@media (max-width: 1080px) { .platform-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .platform-grid { grid-template-columns: 1fr; } }
+.plat-card {
+  padding: clamp(28px, 2.8vw, 36px);
+  border: 1px solid var(--rule);
+  border-radius: 18px;
+  background: #fff;
+  transition: transform 280ms var(--ease), border-color 280ms var(--ease), box-shadow 280ms var(--ease);
+}
+.plat-card:hover { transform: translateY(-4px); border-color: var(--ink); box-shadow: 0 30px 80px -40px rgba(0,0,0,0.18); }
+.plat-num { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; color: var(--muted-2); font-weight: 600; }
+.plat-name { font-family: var(--display); font-size: clamp(22px, 2vw, 28px); font-weight: 500; letter-spacing: -0.02em; margin-top: 10px; }
+.plat-lede { color: var(--muted); font-size: 14.5px; line-height: 1.55; margin: 14px 0 18px; }
+.plat-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+.plat-list li { color: var(--muted); font-size: 14px; line-height: 1.5; padding-left: 16px; position: relative; }
+.plat-list li::before { content: "·"; color: var(--accent); position: absolute; left: 4px; top: -2px; font-weight: 700; font-size: 18px; }
+
+/* Services row variant for the 4 social media service offerings */
+.svc-block-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(16px, 1.8vw, 22px);
+}
+@media (max-width: 1080px) { .svc-block-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .svc-block-grid { grid-template-columns: 1fr; } }
+.svc-block {
+  padding: clamp(28px, 3vw, 36px);
+  border: 1px solid var(--rule);
+  border-radius: 18px;
+  background: #fff;
+  transition: transform 280ms var(--ease), border-color 280ms var(--ease);
+}
+.svc-block:hover { transform: translateY(-3px); border-color: var(--ink); }
+.svc-block .svc-num { font-family: var(--display); font-weight: 500; font-size: clamp(40px, 4vw, 56px); line-height: 1; letter-spacing: -0.04em; color: var(--accent); }
+.svc-block h3 { font-family: var(--display); font-size: clamp(20px, 1.8vw, 24px); font-weight: 500; letter-spacing: -0.018em; margin: 18px 0 12px; }
+.svc-block p { color: var(--muted); font-size: 14.5px; line-height: 1.6; }
+
+/* Why-reasons block (same as google-ads) */
+.gads-why { padding-top: clamp(80px, 10vw, 144px); padding-bottom: clamp(80px, 10vw, 144px); border-bottom: 0.5px solid var(--rule); }
+.why-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(28px, 4vw, 56px) clamp(40px, 5vw, 80px); margin-top: clamp(48px, 6vw, 72px); }
+@media (max-width: 880px) { .why-grid { grid-template-columns: 1fr; } }
+.why-item { display: grid; grid-template-columns: 48px 1fr; gap: 18px; align-items: start; }
+.why-num {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(28px, 3vw, 40px); line-height: 1; letter-spacing: -0.03em;
+  color: var(--accent); font-variant-numeric: tabular-nums;
+}
+.why-item h3 { font-family: var(--display); font-size: clamp(18px, 1.8vw, 22px); font-weight: 500; letter-spacing: -0.015em; margin-bottom: 10px; }
+.why-item p { color: var(--muted); font-size: 15.5px; line-height: 1.55; }
+
+/* Stats with M/H/% suffix tokens */
+.stat-value .pre { color: var(--accent); font-weight: 400; }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- @include _partials/nav.html -->
+
+<main id="main">
+
+<!-- HERO -->
+<section class="loc-hero">
+  <div class="container">
+    <div class="mono eyebrow reveal">Social media · Strategy · Content · Paid</div>
+    <h1 class="hero-h reveal">
+      Social that moves <em>your number.</em>
+    </h1>
+
+    <div class="loc-hero-row">
+      <p class="hero-sub reveal">
+        <strong>An Australian social media marketing agency that reports in CAC and revenue, not impressions and reach.</strong>
+        Meta Business Partner. TikTok Marketing Partner. Strategy, content, paid and community — run by senior strategists, augmented by agents. Since 2009.
+      </p>
+      <div class="hero-ctas reveal">
+        <a class="btn btn-primary" href="/audit.html">Run a free audit <span class="arr">→</span></a>
+        <a class="btn btn-outline" href="mailto:hello@zibdigital.com.au?subject=Social%20-%20let's%20talk">Talk to a strategist</a>
+      </div>
+    </div>
+
+    <div class="hero-meta reveal">
+      <span><span class="dot" aria-hidden="true"></span>Meta Business Partner</span>
+      <span><span class="dot" aria-hidden="true"></span>TikTok Marketing Partner</span>
+      <span><span class="dot" aria-hidden="true"></span>Senior on every account</span>
+      <span><span class="dot" aria-hidden="true"></span>800+ clients since 2009</span>
+    </div>
+  </div>
+</section>
+
+<!-- STATS — why social, why now -->
+<section class="loc-stats">
+  <div class="container">
+    <div class="mono stats-eyebrow reveal">Why social media</div>
+    <h2 class="stats-h reveal">
+      Because that's <em>where your customers already are.</em>
+    </h2>
+
+    <div class="stats-grid reveal-stagger">
+      <div class="stat-cell">
+        <div class="stat-value"><span data-count="21">0</span><span class="suf">.45M</span></div>
+        <div class="stat-label">Social media users in Australia (82.7% of the population)</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-value"><span data-count="99">0</span><span class="suf">.4%</span></div>
+        <div class="stat-label">Of the Australian population over 13 uses social media</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-value"><span data-count="1">0</span><span class="suf">H 57M</span></div>
+        <div class="stat-label">Average daily time spent on social media</div>
+      </div>
+      <div class="stat-cell">
+        <div class="stat-value"><span data-count="58">0</span><span class="suf">.1%</span></div>
+        <div class="stat-label">Of users 16-64 use social media for brand research</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PLATFORMS -->
+<section class="svc-cards-section paper">
+  <div class="container">
+    <div class="services-head reveal">
+      <div class="mono services-eyebrow">Which platform is right for you</div>
+      <h2 class="services-h">
+        No one-size-fits-all. <em>The platform should match the audience.</em>
+      </h2>
+      <p style="margin-top: 24px; color: var(--muted); font-size: clamp(16px, 1.4vw, 18px); line-height: 1.55; max-width: 64ch;">
+        Demographics, user behaviour, platform strengths — we map them against your business model and pick the channels that earn the next dollar. Not the ones in the prettiest case study.
+      </p>
+    </div>
+
+    <div class="platform-grid reveal-stagger">
+      <div class="plat-card">
+        <div class="plat-num mono">01 · TikTok</div>
+        <h3 class="plat-name">TikTok</h3>
+        <p class="plat-lede">The fastest-growing channel in Australia. ~7M monthly users and a feed that promotes content from creators who haven't bought reach.</p>
+        <ul class="plat-list">
+          <li>Strong Gen Z and millennial penetration</li>
+          <li>Algorithm gives small brands a real shot</li>
+          <li>Built for product-led storytelling</li>
+          <li>Viral mechanics compound your spend</li>
+        </ul>
+      </div>
+      <div class="plat-card">
+        <div class="plat-num mono">02 · Instagram</div>
+        <h3 class="plat-name">Instagram</h3>
+        <p class="plat-lede">Visual brand-building and direct-to-consumer commerce. 1B+ monthly active users and a shopping stack that converts. As an Instagram marketing agency Melbourne brands trust — and an Instagram marketing company built for performance — we treat the feed as a commercial channel, not a vanity one.</p>
+        <ul class="plat-list">
+          <li>High-engagement audience</li>
+          <li>Native shopping &amp; product tags</li>
+          <li>Influencer collaboration at any budget</li>
+          <li>Reels for awareness, feed for conversion</li>
+        </ul>
+      </div>
+      <div class="plat-card">
+        <div class="plat-num mono">03 · Facebook</div>
+        <h3 class="plat-name">Facebook</h3>
+        <p class="plat-lede">2.8B+ monthly active users and the deepest ad targeting on the internet. Still the workhorse of paid social for most Australian businesses.</p>
+        <ul class="plat-list">
+          <li>Advanced demographic + interest targeting</li>
+          <li>Image, video, carousel, lead gen formats</li>
+          <li>Detailed analytics &amp; audience insights</li>
+          <li>Groups + Events for community work</li>
+        </ul>
+      </div>
+      <div class="plat-card">
+        <div class="plat-num mono">04 · LinkedIn</div>
+        <h3 class="plat-name">LinkedIn</h3>
+        <p class="plat-lede">Professional networks, decision-makers and high-intent B2B leads. The only platform where job title is a legitimate targeting layer.</p>
+        <ul class="plat-list">
+          <li>Decision-maker access at scale</li>
+          <li>Thought leadership &amp; brand authority</li>
+          <li>Targeted ads + content strategy combined</li>
+          <li>Recruitment doubles as audience signal</li>
+        </ul>
+      </div>
+      <div class="plat-card">
+        <div class="plat-num mono">05 · YouTube</div>
+        <h3 class="plat-name">YouTube</h3>
+        <p class="plat-lede">The second-largest search engine, with billions of monthly users. Long-tail video that compounds — every view today adds to the asset.</p>
+        <ul class="plat-list">
+          <li>Massive global reach</li>
+          <li>Visual storytelling, search-indexed</li>
+          <li>Boosts SEO via descriptions + tags</li>
+          <li>Evergreen content keeps earning</li>
+        </ul>
+      </div>
+      <div class="plat-card">
+        <div class="plat-num mono">06 · Pinterest</div>
+        <h3 class="plat-name">Pinterest</h3>
+        <p class="plat-lede">Visual discovery from an audience that's actively looking to buy or plan. High intent, strong CTR to web, undervalued for most Australian retailers.</p>
+        <ul class="plat-list">
+          <li>Visual search drives qualified clicks</li>
+          <li>Audience is purchase-planning, not scrolling</li>
+          <li>Organic reach still works</li>
+          <li>Long content lifespan</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROOF -->
+<section class="loc-proof">
+  <div class="container">
+    <div class="loc-proof-head">
+      <div>
+        <div class="mono proof-eyebrow reveal">Proof, not promises</div>
+        <h2 class="proof-h reveal">Real social accounts. <em>Real numbers.</em></h2>
+      </div>
+      <p class="proof-sub reveal">
+        Putting our clients' success first. Every brief is different — what stays constant is a commercial outcome they can see, and keep.
+      </p>
+    </div>
+
+    <div class="case-grid reveal-stagger">
+      <a class="case-card" href="#audit">
+        <div class="case-head">
+          <div>
+            <div class="case-client">DTC fashion</div>
+            <div class="case-tag">Meta + TikTok</div>
+          </div>
+          <span class="case-arr" aria-hidden="true">↗</span>
+        </div>
+        <div class="case-num"><span data-count="380">0</span><span class="pct">%</span></div>
+        <hr>
+        <p class="case-desc">Lift in online revenue. Paid social rebuilt around purchase intent; creative iterated weekly, scaled what worked, killed what didn't.</p>
+      </a>
+      <a class="case-card" href="#audit">
+        <div class="case-head">
+          <div>
+            <div class="case-client">Food &amp; beverage</div>
+            <div class="case-tag">Meta + Pinterest</div>
+          </div>
+          <span class="case-arr" aria-hidden="true">↗</span>
+        </div>
+        <div class="case-num"><span data-count="6">0</span><span class="pct">:1</span></div>
+        <hr>
+        <p class="case-desc">ROAS across Meta and Pinterest combined. Same audience, two intents — discovery on Pinterest, conversion on Meta.</p>
+      </a>
+      <a class="case-card" href="#audit">
+        <div class="case-head">
+          <div>
+            <div class="case-client">B2B services</div>
+            <div class="case-tag">LinkedIn lead gen</div>
+          </div>
+          <span class="case-arr" aria-hidden="true">↗</span>
+        </div>
+        <div class="case-num"><span data-count="62">0</span><span class="pct">%</span></div>
+        <hr>
+        <p class="case-desc">Reduction in cost per qualified lead. Title and seniority layered onto interest targeting — the form fills started looking like the pipeline.</p>
+      </a>
+      <a class="case-card" href="#audit">
+        <div class="case-head">
+          <div>
+            <div class="case-client">Multi-venue hospitality</div>
+            <div class="case-tag">Instagram + community</div>
+          </div>
+          <span class="case-arr" aria-hidden="true">↗</span>
+        </div>
+        <div class="case-num"><span data-count="220">0</span><span class="pct">%</span></div>
+        <hr>
+        <p class="case-desc">Lift in direct bookings off a unified content + community management system. Same team replying to DMs and reading the booking data.</p>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- SOCIAL MEDIA SERVICES (4-block) -->
+<section class="svc-cards-section">
+  <div class="container">
+    <div class="services-head reveal">
+      <div class="mono services-eyebrow">Social media services</div>
+      <h2 class="services-h">
+        Strategy. Content. Community. <em>Reporting that actually says something.</em>
+      </h2>
+    </div>
+
+    <div class="svc-block-grid reveal-stagger">
+      <div class="svc-block">
+        <div class="svc-num">01</div>
+        <h3>Social strategy</h3>
+        <p>Posting consistently isn't a strategy. Reaching new customers and growing revenue takes purpose, research and a plan. We use what we've learned as a Meta Business Partner to build SMM strategies senior strategists will defend in person.</p>
+      </div>
+      <div class="svc-block">
+        <div class="svc-num">02</div>
+        <h3>Content creation</h3>
+        <p>Tone, visual identity, posting cadence. We set the style guide once, then produce monthly custom graphics and content that maintain a consistent brand presence across every channel — augmented by agents that ship variants at scale.</p>
+      </div>
+      <div class="svc-block">
+        <div class="svc-num">03</div>
+        <h3>Community &amp; ad management</h3>
+        <p>Monthly content plan, execution, monitoring, reporting and community cultivation. 67% of consumers now go to social for customer service — we read the inbox, run the campaigns, and answer the hard DMs.</p>
+      </div>
+      <div class="svc-block">
+        <div class="svc-num">04</div>
+        <h3>Reporting</h3>
+        <p>Monthly custom reports detailing the impact of your campaign on every platform. Where the budget went, what worked, what to do next month. CAC, ROAS and revenue — not impressions and reach.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY SOCIAL ADVERTISING — four reasons -->
+<section class="gads-why">
+  <div class="container">
+    <div class="services-head reveal" style="margin-bottom: 0;">
+      <div class="mono services-eyebrow">Four reasons to invest in social advertising</div>
+      <h2 class="services-h">
+        Visibility, targeting, formats, <em>and the data to know which one earned the dollar.</em>
+      </h2>
+    </div>
+
+    <div class="why-grid reveal-stagger">
+      <div class="why-item">
+        <div class="why-num">01</div>
+        <div>
+          <h3>Target new customers</h3>
+          <p>Demographic, interest and behaviour targeting precise enough to put your ads only in front of people likely to buy. Less spray. More conversion. Lower CAC.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-num">02</div>
+        <div>
+          <h3>Build brand awareness</h3>
+          <p>Consistent exposure on the platforms your customers are already scrolling. Recognition compounds — by the time they're in market, they already know who you are.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-num">03</div>
+        <div>
+          <h3>Track performance and ROI</h3>
+          <p>Impressions, clicks, conversions, cost per acquisition — all visible, all in close to real time. Optimise the campaign mid-flight instead of debriefing it in the post-mortem.</p>
+        </div>
+      </div>
+      <div class="why-item">
+        <div class="why-num">04</div>
+        <div>
+          <h3>Gain valuable insights</h3>
+          <p>User engagement, demographics and interaction patterns — useful well beyond the ad. The data feeds the product, the website, the email program and the next quarter's category strategy.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LOCAL ADVANTAGE — adapted -->
+<section class="loc-local">
+  <div class="container">
+    <div class="local-grid">
+      <div class="reveal">
+        <div class="mono local-eyebrow">More than social</div>
+        <h2 class="local-h">
+          A team of digital experts, <em>not just a social media agency.</em>
+        </h2>
+        <p style="margin-top: 24px; color: var(--muted); font-size: clamp(16px, 1.4vw, 18px); line-height: 1.55; max-width: 48ch;">
+          Our 140+ digital specialists across AU and NZ include social media experts, SEO masters, Google Ads strategists, designers, email gurus and strategists. As one of the social media management companies that actually answers to commercial KPIs — and a social media marketing company for small business as well as for enterprise — the channel decision is never the only one on the table. We pick what moves your number, then we run it. With 15+ years of pattern-matching to draw on.
+        </p>
+        <div class="partner-badges">
+          <span class="partner-badge">Meta Business Partner</span>
+          <span class="partner-badge">TikTok Marketing Partner</span>
+          <span class="partner-badge">Premier Google Partner</span>
+          <span class="partner-badge">Shopify Plus Partner</span>
+        </div>
+      </div>
+
+      <div class="local-pillars reveal-stagger">
+        <div class="pillar">
+          <h3>One senior strategist, all yours.</h3>
+          <p>A real human owns your account. Not a dashboard. Not a ticket queue. They know your number, your margin, and what your audience actually stops scrolling for.</p>
+        </div>
+        <div class="pillar">
+          <h3>Creative iteration at speed.</h3>
+          <p>Agents help us ship creative variants in hours, not weeks. We scale what works, kill what doesn't, and back-test the winners — so your CAC compounds in the right direction.</p>
+        </div>
+        <div class="pillar">
+          <h3>Organic + paid, one team.</h3>
+          <p>Strategy, content, community and ads aren't four separate engagements. The same team reads the DMs, briefs the creative, and reads the booking data.</p>
+        </div>
+        <div class="pillar">
+          <h3>Reported in commercial language.</h3>
+          <p>CAC, ROAS, blended LTV, revenue. Not engagement. Not reach. We file weekly briefs you can forward to a CFO without translating.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="loc-faq">
+  <div class="container">
+    <div class="faq-head reveal">
+      <div class="mono faq-eyebrow">Frequently asked questions</div>
+      <h2 class="faq-h">
+        Things Australian operators <em>actually ask us.</em>
+      </h2>
+    </div>
+
+    <div class="faq-list" id="faqList">
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span>Which social platform is right for my business?</span>
+          <span class="icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a">
+          <p>Depends on the audience, the industry and the marketing objective — not on what's trending. We research where your customers actually are, then pick the platforms that maximise reach, engagement and conversion against your unit economics. For most Australian businesses that's a combination of two or three platforms, not all six.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span>What's the difference between organic and paid social content?</span>
+          <span class="icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a">
+          <p>Organic content lives on your profile and reaches followers naturally — it builds community and authority over time. Paid content is strategically promoted to a wider, targeted audience to hit specific goals like leads or sales. We run them as one system: organic shows you what resonates, paid scales what's working.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span>Is it worth investing in social media content?</span>
+          <span class="icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a">
+          <p>If your customers spend close to two hours a day on social, yes. The risk isn't being too invested in social — it's running social as content theatre instead of as a commercial channel. With the right strategy, content and reporting, social can compound brand awareness, traffic, leads and revenue in a way few channels can.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span>How quickly can I expect to see results?</span>
+          <span class="icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a">
+          <p>Paid campaigns can move within days; the optimised version of that campaign needs 4–8 weeks of data. Organic compounds over 90–180 days. Anyone promising you breakout growth in week one is either selling you brand search you'd have won anyway or burning budget to inflate the dashboard.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span>What sort of results can I expect?</span>
+          <span class="icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a">
+          <p>Brand awareness, qualified website traffic, lead generation, customer engagement, conversions — measured against the objectives we set with you on day one. Across our paid retainers in 2025, average ROAS is 8:1 and retention is 97%. Those numbers come from running things this way, not from selling them.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span>What can I expect when I partner with Zib?</span>
+          <span class="icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a">
+          <p>A senior strategist who owns your account, a content + ads team behind them, transparent monthly reporting in commercial language, and month-to-month terms. No juniors on rotation, no offshore teams you've never met. The human you talk to in week one is the human you talk to in year three.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span>Are you using AI in social media work?</span>
+          <span class="icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a">
+          <p>Yes — agents do the repetitive work (creative variant generation, audience research, copy drafts, reporting briefs). A senior human still does the judgement: what to test, what to kill, what your number tells us next. We've written about how this works on our <a href="/ai-services.html" style="color: var(--accent); text-decoration: underline;">AI services page</a>.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="audit">
+  <div class="container">
+    <div class="mono cta-eyebrow reveal">Talk to a senior strategist</div>
+    <h2 class="cta-title reveal">
+      Show us your accounts. <em>We'll tell you the truth.</em>
+    </h2>
+    <p class="cta-sub reveal">
+      Thirty minutes with one of our senior strategists. We read your social accounts, flag the one thing we'd change first, and give you the unvarnished version. No deck. No upsell. If we're not the fit, we'll tell you that too.
+    </p>
+    <div class="cta-buttons reveal">
+      <a class="btn btn-primary" href="/audit.html">Run the free audit <span class="arr">→</span></a>
+      <a class="btn btn-outline" href="mailto:hello@zibdigital.com.au?subject=Social%20-%20discovery%20call">Book a discovery call</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- @include _partials/footer.html -->
+<!-- @include _partials/scripts.html -->
+
+<script>
+// FAQ accordion
+(() => {
+  const list = document.getElementById('faqList');
+  if (!list) return;
+  list.addEventListener('click', (e) => {
+    const btn = e.target.closest('.faq-q');
+    if (!btn) return;
+    const item = btn.parentElement;
+    const open = item.classList.toggle('open');
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+  });
+})();
+</script>
+
+</body>
+</html>
