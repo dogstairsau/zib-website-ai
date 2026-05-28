@@ -167,7 +167,6 @@
   header.site nav{display:flex;align-items:center;gap:22px;font-family:'Archivo Black',sans-serif;font-weight:900;font-size:12px;letter-spacing:0.14em;text-transform:uppercase}
   header.site nav a{color:var(--ink-2);transition:color var(--dur-fast) var(--ease)}
   header.site nav a:hover{color:var(--red)}
-  @media(max-width:880px){header.site nav a:not(.btn){display:none}}
   @media(max-width:420px){header.site .brand .zib,header.site .brand .divider{display:none}}
 
   /* buttons */
@@ -635,16 +634,78 @@
   .green-strong{color:var(--green-dark);font-weight:700}
   .red-strong{color:var(--red);font-weight:700}
 
-  /* Below ~540px, manual <br> breaks in display headlines force awkward
-     two-word lines. Let text wrap naturally on phones; keep the editorial
-     breaks on tablet and up. */
-  @media (max-width:540px){
-    .display br{display:none}
-    .closer h2 br{display:none}
-  }
-
   /* count-up number — reserves space, prevents layout shift */
   .countup{font-variant-numeric:tabular-nums}
+
+  /* Scroll hint inside .scroll-x tables — sticks to the viewport's left edge
+     so users see a "swipe →" cue while the table content scrolls behind it.
+     Only shown when the table would actually overflow (≤780px). */
+  .scroll-hint{display:none}
+  @media(max-width:780px){
+    .scroll-x .scroll-hint{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      position:sticky;
+      left:0;
+      margin-bottom:10px;
+      padding:6px 10px;
+      background:rgba(244,237,228,0.92);
+      backdrop-filter:saturate(140%) blur(4px);
+      -webkit-backdrop-filter:saturate(140%) blur(4px);
+      border-radius:4px;
+      font-family:'Archivo Black',sans-serif;
+      font-size:11px;
+      letter-spacing:0.16em;
+      color:var(--red);
+      text-transform:uppercase;
+      animation:swipe-nudge 1.8s ease-in-out infinite;
+      z-index:1;
+    }
+  }
+  @keyframes swipe-nudge{
+    0%, 100%{transform:translateX(0); opacity:.85}
+    50%{transform:translateX(6px); opacity:1}
+  }
+
+  /* AEO section's bottom 2-col grid — stack on mobile */
+  .aeo-cols{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,3vw,34px);margin-top:48px}
+  @media(max-width:780px){.aeo-cols{grid-template-columns:1fr;gap:18px}}
+
+  /* Buttons never wrap their own label */
+  .btn{white-space:nowrap}
+
+  /* Mobile nav — show the section links as a scrollable strip below brand,
+     keep the Book CTA in the top row beside the brand. */
+  .book-mobile{display:none}
+  @media(max-width:880px){
+    header.site .row{display:grid;grid-template-columns:1fr auto;grid-template-areas:"brand cta" "nav nav";align-items:center;gap:8px 12px}
+    header.site .row .brand{grid-area:brand}
+    header.site .row .book-mobile{grid-area:cta;display:inline-flex;padding:10px 16px;font-size:11px;letter-spacing:0.1em}
+    header.site .row nav{
+      grid-area:nav;
+      width:100%;
+      display:flex;
+      gap:20px;
+      overflow-x:auto;
+      -webkit-overflow-scrolling:touch;
+      padding:4px 0 6px;
+      scrollbar-width:none;
+      margin-left:-4px;
+    }
+    header.site .row nav::-webkit-scrollbar{display:none}
+    header.site .row nav a:not(.btn){
+      display:inline-block;
+      font-size:11px;
+      letter-spacing:0.1em;
+      white-space:nowrap;
+      flex-shrink:0;
+      padding:6px 0;
+    }
+    header.site .row nav .btn{display:none}
+    /* Move the active-section underline closer to the link on mobile */
+    header.site .row nav a[aria-current="location"]:not(.btn)::after{bottom:0}
+  }
 
   /* reveal — sections fade in, grids stagger their children */
   .reveal{opacity:0;transform:translateY(24px);transition:opacity var(--dur-slow) var(--ease),transform var(--dur-slow) var(--ease)}
@@ -671,6 +732,7 @@
       <span class="divider"></span>
       <span class="zib">Zib Digital</span>
     </div>
+    <a href="#close" class="btn book-mobile">Book &rarr;</a>
     <nav>
       <a href="#ceo">Brief</a>
       <a href="#opportunity">Opportunity</a>
@@ -885,6 +947,7 @@
     <p class="lede" style="margin-top:24px">Ranked by search volume, commercial intent, competitive difficulty &mdash; and how well your existing assets (60+ stores, halal certification, AI citation footprint) actually fit.</p>
 
     <div class="scroll-x">
+    <span class="scroll-hint">Swipe to see more &rarr;</span>
     <table class="audit">
       <thead>
         <tr>
@@ -1129,7 +1192,7 @@
       <div class="ai-cell"><div class="platform">Copilot</div><div class="citations">7</div><div class="delta">+4 last period</div><div class="sub">11 pages cited</div></div>
     </div>
 
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:34px;margin-top:48px">
+    <div class="aeo-cols">
       <div style="background:rgba(255,255,255,.05);padding:32px 34px">
         <h3 style="font-family:'Archivo Black',sans-serif;font-size:11px;letter-spacing:0.18em;color:var(--red);text-transform:uppercase;margin-bottom:22px">What&rsquo;s working already</h3>
         <div style="margin-bottom:20px"><b style="display:block;color:#fff;font-size:16px;margin-bottom:4px;font-weight:800">FAQ schema on FAQ + Catering pages</b><span style="color:#bcbcbc;font-size:14px;line-height:1.55">The format AI engines cite most. Half the job is already done.</span></div>
@@ -1297,6 +1360,7 @@
     <p class="lede" style="margin-top:24px">Two national QSR competitors and an aggregator layer. The aggregators (Zomato, DoorDash, Uber Eats) win the queries your own site should win &mdash; that&rsquo;s the reclaim.</p>
 
     <div class="scroll-x">
+    <span class="scroll-hint">Swipe to see more &rarr;</span>
     <table class="comp">
       <thead>
         <tr>
@@ -1525,7 +1589,7 @@
     <p>The brand is doing its job. The audit&rsquo;s on the table. The pipeline is sitting there in 42,000 monthly searches. We&rsquo;d like to start.</p>
     <div class="cta-row">
       <a class="btn big" href="mailto:michael.glasser@zibdigital.com.au?subject=Mad%20Mex%20%C3%97%20Zib%20Digital%20%E2%80%94%20Kickoff">Book the kickoff call &rarr;</a>
-      <a class="btn outline big" href="https://www.ziboutreach.com.au" style="border-color:#fff;color:#fff !important">View ziboutreach.com.au</a>
+      <a class="btn outline big" href="https://www.ziboutreach.com.au" style="border-color:#fff;color:#fff !important">ziboutreach.com.au &rarr;</a>
     </div>
     <div class="signature">An audit proposal by <em>Zib Digital</em> for Mad Mex &middot; May 2026</div>
   </div>
