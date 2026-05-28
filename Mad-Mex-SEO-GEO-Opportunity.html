@@ -132,18 +132,15 @@
   section.red-bg{background:var(--red);color:#fff}
   section.red-bg .display{color:#fff}
 
-  /* star ribbon — self-hosted via CSS, no external asset */
+  /* star ribbon — repeating SVG stars on red, no external asset */
   .star-row{
     height:22px;
     background-color:var(--red);
-    background-image:
-      radial-gradient(circle, var(--cream) 1.6px, transparent 2px),
-      repeating-linear-gradient(90deg, var(--red) 0 16px, var(--red-dark) 16px 18px);
-    background-size:22px 22px, auto;
-    background-position:center, 0 0;
-    background-repeat:repeat-x, repeat;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='22' viewBox='0 0 32 22'><path fill='%23F4EDE4' d='M16 3 L17.76 8.42 L23.46 8.42 L18.85 11.77 L20.61 17.19 L16 13.85 L11.39 17.19 L13.15 11.77 L8.54 8.42 L14.24 8.42 Z'/></svg>");
+    background-repeat:repeat-x;
+    background-position:center;
   }
-  @media(min-width:880px){.star-row{height:26px;background-size:26px 26px, auto}}
+  @media(min-width:880px){.star-row{height:26px}}
   .red-line{height:5px;background:var(--red)}
   .red-thin{height:2px;background:var(--red)}
 
@@ -522,6 +519,17 @@
   .green-strong{color:var(--green-dark);font-weight:700}
   .red-strong{color:var(--red);font-weight:700}
 
+  /* Below ~540px, manual <br> breaks in display headlines force awkward
+     two-word lines. Let text wrap naturally on phones; keep the editorial
+     breaks on tablet and up. */
+  @media (max-width:540px){
+    .display br{display:none}
+    .closer h2 br{display:none}
+  }
+
+  /* count-up number — reserves space, prevents layout shift */
+  .countup{font-variant-numeric:tabular-nums}
+
   /* reveal — sections fade in, grids stagger their children */
   .reveal{opacity:0;transform:translateY(24px);transition:opacity var(--dur-slow) var(--ease),transform var(--dur-slow) var(--ease)}
   .reveal.is-in{opacity:1;transform:none}
@@ -633,7 +641,7 @@
   <div class="wrap">
     <span class="eyebrow" style="justify-content:center;display:inline-flex">The opportunity</span>
     <div class="pre" style="margin-top:18px">Every month, Australians type</div>
-    <div class="giant">42,000</div>
+    <div class="giant countup" data-countup="42000" aria-label="42,000">42,000</div>
     <div class="after">non-branded Mexican-food searches into Google.</div>
     <p class="pickup">Mad Mex captures roughly 2,000 of them. <b>The other 40,000 walk past your stores to Guzman y Gomez, DoorDash and Uber Eats.</b></p>
     <p style="margin-top:32px;font-size:13px;color:var(--muted);font-style:italic;max-width:780px;margin-left:auto;margin-right:auto">Source: Ahrefs Australian search data, May 2025 &ndash; Apr 2026. Total non-branded volume across local, city, discovery, dietary, nutrition and catering categories. Excludes the ~16,000/mo of branded &ldquo;Mad Mex&rdquo; searches you already own.</p>
@@ -1263,6 +1271,8 @@
 </footer>
 
 <script>
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
   // Reveal-on-scroll. Sections fade up; grids stagger their children in sequence.
   const obs = new IntersectionObserver((entries) => {
     for (const e of entries) {
@@ -1281,7 +1291,37 @@
     obs.observe(g);
   }
 
-  // Smooth-scroll anchor offset for the sticky header
+  // Count-up on any [data-countup] when it enters the viewport.
+  const easeOutCubic = (t) => 1 - Math.pow(1 - t, 3);
+  const countObs = new IntersectionObserver((entries) => {
+    for (const e of entries) {
+      if (!e.isIntersecting) continue;
+      const el = e.target;
+      const target = Number(el.dataset.countup);
+      if (!Number.isFinite(target)) { countObs.unobserve(el); continue; }
+      if (reduceMotion) {
+        el.textContent = target.toLocaleString('en-AU');
+        countObs.unobserve(el);
+        continue;
+      }
+      const duration = 1500;
+      const start = performance.now();
+      const fmt = new Intl.NumberFormat('en-AU');
+      const tick = (now) => {
+        const p = Math.min((now - start) / duration, 1);
+        el.textContent = fmt.format(Math.floor(easeOutCubic(p) * target));
+        if (p < 1) requestAnimationFrame(tick);
+      };
+      requestAnimationFrame(tick);
+      countObs.unobserve(el);
+    }
+  }, { threshold: 0.4 });
+  for (const n of document.querySelectorAll('[data-countup]')) {
+    n.textContent = '0';
+    countObs.observe(n);
+  }
+
+  // Sticky-header-aware smooth-scroll for anchor links.
   document.addEventListener('click', (ev) => {
     const a = ev.target.closest('a[href^="#"]');
     if (!a) return;
@@ -1292,7 +1332,7 @@
     ev.preventDefault();
     const headerH = document.querySelector('header.site')?.offsetHeight ?? 0;
     const y = el.getBoundingClientRect().top + window.scrollY - headerH - 12;
-    window.scrollTo({ top: y, behavior: 'smooth' });
+    window.scrollTo({ top: y, behavior: reduceMotion ? 'auto' : 'smooth' });
   });
 </script>
 
