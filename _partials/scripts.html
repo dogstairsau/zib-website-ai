@@ -36,12 +36,37 @@
     });
   }
 
-  // Mark current nav item
+  // Nav dropdown groups (Locations) — toggle on click for mobile / keyboard
+  document.querySelectorAll('[data-nav-group]').forEach((group) => {
+    const trigger = group.querySelector('.nav-group-toggle');
+    if (!trigger) return;
+    trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const open = group.classList.toggle('is-open');
+      trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    });
+  });
+  // Close any open dropdown when clicking outside
+  document.addEventListener('click', (e) => {
+    document.querySelectorAll('[data-nav-group].is-open').forEach((group) => {
+      if (!group.contains(e.target)) {
+        group.classList.remove('is-open');
+        const t = group.querySelector('.nav-group-toggle');
+        if (t) t.setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
+
+  // Mark current nav item (top-level + sub-menu items + parent group)
   const here = location.pathname.replace(/index\.html$/, '/');
   document.querySelectorAll('.nav a:not(.cta)').forEach(a => {
     try {
       const linkPath = new URL(a.href, location.origin).pathname.replace(/index\.html$/, '/');
-      if (linkPath === here) a.setAttribute('aria-current', 'page');
+      if (linkPath === here) {
+        a.setAttribute('aria-current', 'page');
+        const group = a.closest('[data-nav-group]');
+        if (group) group.classList.add('has-current');
+      }
     } catch {}
   });
 

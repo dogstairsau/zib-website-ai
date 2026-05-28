@@ -83,6 +83,77 @@ h1, h2, h3, .hero-h, .fork-h, .path-title, .moat-h, .cta-title { text-wrap: bala
 .nav a { color: var(--ink); opacity: 0.72; transition: opacity 200ms var(--ease); }
 .nav a:hover, .nav a[aria-current="page"] { opacity: 1; }
 
+/* ─── Nav dropdown (Locations) ────────────────────────────────── */
+.nav-group { position: relative; }
+.nav-group-toggle {
+  font: inherit;
+  color: var(--ink);
+  background: transparent;
+  border: 0;
+  padding: 0;
+  margin: 0;
+  cursor: pointer;
+  opacity: 0.72;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: opacity 200ms var(--ease);
+}
+.nav-group-toggle:hover,
+.nav-group-toggle[aria-expanded="true"],
+.nav-group.has-current .nav-group-toggle { opacity: 1; }
+.nav-group-toggle .chev {
+  transition: transform 240ms var(--ease);
+  opacity: 0.72;
+}
+.nav-group-toggle[aria-expanded="true"] .chev { transform: rotate(180deg); }
+.nav-group-menu {
+  position: absolute;
+  top: calc(100% + 14px);
+  left: 50%;
+  transform: translate(-50%, 6px);
+  background: #fff;
+  border: 0.5px solid var(--rule);
+  border-radius: 14px;
+  padding: 8px;
+  min-width: 200px;
+  box-shadow: 0 24px 60px -28px rgba(0,0,0,0.22), 0 2px 6px rgba(0,0,0,0.04);
+  display: grid;
+  gap: 2px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 220ms var(--ease), transform 220ms var(--ease);
+  z-index: 60;
+}
+.nav-group:hover .nav-group-menu,
+.nav-group:focus-within .nav-group-menu,
+.nav-group.is-open .nav-group-menu {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translate(-50%, 0);
+}
+.nav-group-menu::before {
+  content: "";
+  position: absolute;
+  inset: -14px 0 auto 0;
+  height: 14px;
+}
+.nav-group-menu a {
+  display: block;
+  padding: 10px 14px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: var(--ink);
+  opacity: 0.78;
+  transition: background 180ms var(--ease), opacity 180ms var(--ease);
+}
+.nav-group-menu a:hover,
+.nav-group-menu a[aria-current="page"] {
+  background: var(--paper);
+  opacity: 1;
+}
+.nav-group-menu a[aria-current="page"] { color: var(--accent); }
+
 /* Header end region — holds the persistent CTA + the burger toggle.
    CTA stays visible at every viewport; burger only appears below 880px. */
 .nav-end {
@@ -155,6 +226,49 @@ h1, h2, h3, .hero-h, .fork-h, .path-title, .moat-h, .cta-title { text-wrap: bala
     opacity: 1;
   }
   .nav a:last-child { border-bottom: 0; }
+
+  /* Mobile: nav dropdown becomes an inline collapsible group */
+  .nav-group { width: 100%; border-bottom: 0.5px solid var(--rule); }
+  .nav-group-toggle {
+    width: 100%;
+    padding: 14px clamp(20px, 5vw, 28px);
+    justify-content: space-between;
+    font-size: 16px;
+    opacity: 1;
+    text-align: left;
+  }
+  .nav-group-menu {
+    position: static;
+    transform: none;
+    box-shadow: none;
+    border: 0;
+    border-radius: 0;
+    background: var(--paper);
+    padding: 0;
+    min-width: 0;
+    max-height: 0;
+    overflow: hidden;
+    opacity: 1;
+    pointer-events: auto;
+    transition: max-height 280ms var(--ease);
+  }
+  .nav-group.is-open .nav-group-menu {
+    transform: none;
+    max-height: 600px;
+  }
+  .nav-group-menu::before { content: none; }
+  .nav-group-menu a {
+    border-radius: 0;
+    border-bottom: 0.5px solid var(--rule);
+    padding: 12px clamp(32px, 8vw, 44px);
+    font-size: 15px;
+  }
+  .nav-group-menu a:last-child { border-bottom: 0; }
+  /* Don't auto-open on hover on mobile — only via tap (.is-open) */
+  .nav-group:hover .nav-group-menu,
+  .nav-group:focus-within .nav-group-menu { max-height: 0; }
+  .nav-group.is-open:hover .nav-group-menu,
+  .nav-group.is-open:focus-within .nav-group-menu { max-height: 600px; }
 }
 .header-spacer { height: 68px; }
 
@@ -185,9 +299,13 @@ footer {
 }
 .foot-grid {
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1fr;
-  gap: clamp(24px, 4vw, 64px);
+  grid-template-columns: 1.7fr 1fr 1fr 1fr 1fr;
+  gap: clamp(24px, 3vw, 48px);
   padding-bottom: clamp(56px, 7vw, 88px);
+}
+@media (max-width: 1080px) {
+  .foot-grid { grid-template-columns: 2fr 1fr 1fr 1fr; }
+  .foot-grid > div:first-child { grid-column: 1 / -1; }
 }
 .foot-grid h4 {
   font-family: var(--display);
