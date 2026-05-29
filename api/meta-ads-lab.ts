@@ -198,29 +198,38 @@ export default async function handler(req: Request): Promise<Response> {
         });
         const allAds = [...heroAds, ...variationAds];
 
+        // Render the 12 cards immediately with gradient placeholders so the
+        // frontend has something to show even if image gen later times out.
+        const placeholderAds: RenderedAd[] = allAds.map((ad, i) => ({
+          ...ad,
+          image_url: null,
+          id: `ad-${i + 1}`,
+        }));
+        send("ads", {
+          brand: parsed.brand,
+          audience: parsed.audience,
+          ads: placeholderAds,
+        });
+
         const apiKey = process.env.OPENAI_API_KEY;
-        const rendered: RenderedAd[] = await Promise.all(
-          allAds.map(async (ad, i): Promise<RenderedAd> => {
+        const rendered: RenderedAd[] = [...placeholderAds];
+        await Promise.all(
+          allAds.map(async (ad, i) => {
             const size = SIZE_FOR_FORMAT[ad.format] || "1024x1024";
-            let image_url: string | null = null;
-            if (apiKey && ad.image_prompt) {
-              try {
-                image_url = await generateAdImage(parsed.brand.name, ad.image_prompt, size, apiKey);
-                send("ad-image", { idx: i });
-              } catch (e: any) {
-                console.warn(`[image ${i}]`, e?.message);
-              }
+            if (!apiKey || !ad.image_prompt) return;
+            try {
+              const image_url = await generateAdImage(parsed.brand.name, ad.image_prompt, size, apiKey);
+              rendered[i] = { ...rendered[i], image_url };
+              // Stream each image as it finishes so the frontend can drop
+              // it onto the right card without waiting for the slowest one.
+              send("ad-image", { idx: i, image_url });
+            } catch (e: any) {
+              console.warn(`[image ${i}]`, e?.message);
             }
-            return { ...ad, image_url, id: `ad-${i + 1}` };
           })
         );
 
         send("stage", { idx: 3, status: "done" });
-        send("ads", {
-          brand: parsed.brand,
-          audience: parsed.audience,
-          ads: rendered,
-        });
 
         // Email pack ships text descriptions for all 12 (split into hero +
         // additional in the email template, but every variation now also has

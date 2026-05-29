@@ -832,7 +832,7 @@
       : '';
 
     return `
-      <article class="ad-card">
+      <article class="ad-card" data-ad-idx="${i}">
         <header class="ad-shell">
           <div class="avatar"></div>
           <div>
@@ -915,6 +915,32 @@
       state.audience = payload.audience;
       state.ads = payload.ads || [];
       renderAds();
+      // Reveal the section as soon as the 12 cards land (placeholder visuals).
+      // Images stream in via ad-image events while the section is visible.
+      if (reveal.hidden) {
+        reveal.hidden = false;
+        setTimeout(() => {
+          reveal.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          adGrid.querySelectorAll('.ad-card').forEach((c, i) =>
+            setTimeout(() => c.classList.add('is-revealed'), 240 + i * 80)
+          );
+        }, 400);
+      }
+    } else if (event === 'ad-image') {
+      // Re-render the specific card so the photo gets the proper backdrop
+      // styling on its text overlay (full re-render is cheaper than DOM surgery).
+      if (typeof payload.idx === 'number' && payload.image_url && state.ads[payload.idx]) {
+        state.ads[payload.idx].image_url = payload.image_url;
+        const card = adGrid.querySelector(`[data-ad-idx="${payload.idx}"]`);
+        if (card) {
+          const wasRevealed = card.classList.contains('is-revealed');
+          const tpl = document.createElement('template');
+          tpl.innerHTML = adCardHtml(state.ads[payload.idx], state.brand, payload.idx).trim();
+          const next = tpl.content.firstElementChild;
+          if (next && wasRevealed) next.classList.add('is-revealed');
+          if (next) card.replaceWith(next);
+        }
+      }
     } else if (event === 'done') {
       state.isDone = true;
       stopElapsed();
