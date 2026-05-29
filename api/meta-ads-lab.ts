@@ -208,7 +208,12 @@ export default async function handler(req: Request): Promise<Response> {
         );
 
         send("stage", { idx: 3, status: "done" });
-        send("ads", { brand: parsed.brand, audience: parsed.audience, ads: rendered });
+        send("ads", {
+          brand: parsed.brand,
+          audience: parsed.audience,
+          ads: rendered,
+          variations: variationAds,
+        });
 
         // Send the full 12-ad pack email — to the prospect AND internal team.
         // Strip image_url + image_prompt from hero ads for the email (just copy).

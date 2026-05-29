@@ -652,10 +652,10 @@
       <div class="head reveal">
         <div>
           <div class="mono eyebrow">Generated for <span id="brandLabel">your brand</span></div>
-          <h2>Here are <em>the four hero concepts.</em></h2>
+          <h2>Here are <em>the 12 concepts.</em></h2>
         </div>
         <p class="meta">
-          Four shown below · eight more in the pack we just sent. Strategist signs off, you decide what runs.
+          First four with visuals. Eight more across retargeting, lookalikes and video hooks. Full pack also lives in your inbox.
         </p>
       </div>
 
@@ -759,7 +759,7 @@
   const brandName = document.getElementById('brandName');
 
   const state = {
-    url: '', brand: null, audience: '', ads: [],
+    url: '', brand: null, audience: '', ads: [], variations: [],
     isRunning: false, isDone: false,
   };
 
@@ -857,15 +857,9 @@
       </article>`;
   };
 
-  const moreCardHtml = () => `
-    <div class="ad-more">
-      <div class="num">+8</div>
-      <div class="label">More in your inbox</div>
-      <p class="note">Across video hooks, UGC, retargeting and lookalike-only frames.</p>
-    </div>`;
-
   const renderAds = () => {
-    const html = state.ads.map((ad, i) => adCardHtml(ad, state.brand, i)).join('') + moreCardHtml();
+    const all = [...state.ads, ...state.variations];
+    const html = all.map((ad, i) => adCardHtml(ad, state.brand, i)).join('');
     adGrid.innerHTML = html;
     if (brandLbl) brandLbl.textContent = state.brand?.name || 'your brand';
     if (brandName) brandName.textContent = state.brand?.name || 'your brand';
@@ -874,8 +868,8 @@
   const revealAds = () => {
     reveal.hidden = false;
     setTimeout(() => reveal.scrollIntoView({ behavior: 'smooth', block: 'start' }), 400);
-    const cards = adGrid.querySelectorAll('.ad-card, .ad-more');
-    cards.forEach((c, i) => setTimeout(() => c.classList.add('is-revealed'), 240 + i * 140));
+    const cards = adGrid.querySelectorAll('.ad-card');
+    cards.forEach((c, i) => setTimeout(() => c.classList.add('is-revealed'), 240 + i * 100));
   };
 
   const showError = (msg) => {
@@ -921,6 +915,7 @@
     } else if (event === 'ads') {
       state.audience = payload.audience;
       state.ads = payload.ads || [];
+      state.variations = payload.variations || [];
       renderAds();
     } else if (event === 'done') {
       state.isDone = true;
@@ -937,7 +932,7 @@
     e.preventDefault();
     if (state.isRunning) return;
     state.url = heroUrl.value.trim();
-    state.brand = null; state.ads = []; state.audience = '';
+    state.brand = null; state.ads = []; state.variations = []; state.audience = '';
 
     document.getElementById('malErr')?.remove();
     resetStages();
