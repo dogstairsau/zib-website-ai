@@ -290,7 +290,7 @@ function renderMetaAdsPackHtml(pack: MetaAdsPack): string {
   <div style="text-align:center;margin-bottom:32px;padding-bottom:24px;border-bottom:2px solid #0F0F0F;">
     <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#FF6200;font-weight:600;margin-bottom:10px;">Zib Digital · Meta Ads Lab</div>
     <h1 style="font-size:28px;margin:0 0 8px;line-height:1.1;letter-spacing:-0.02em;">Your ${totalCount} Meta ads, ${safe(pack.firstname) || "ready"}.</h1>
-    <p style="color:#6B6B6B;margin:0;font-size:14px;">Drafted for ${safe(pack.brand?.name || pack.url)} — reviewed by a senior strategist.</p>
+    <p style="color:#6B6B6B;margin:0;font-size:14px;">Drafted for ${safe(pack.brand?.name || pack.url)} — strategy call within 24h.</p>
   </div>
 
   <table style="border-collapse:collapse;width:100%;margin-bottom:28px;font-size:13.5px;">
