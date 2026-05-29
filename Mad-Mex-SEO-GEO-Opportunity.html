@@ -630,15 +630,14 @@
   @media(max-width:420px){.tech-headlines{grid-template-columns:1fr}}
   .tech-card{
     background:#fff;border-top:5px solid var(--red);
-    padding:22px 20px;display:flex;flex-direction:column;gap:6px;min-height:240px;
+    padding:22px 20px;display:flex;flex-direction:column;gap:4px;
     transition:transform var(--dur) var(--ease),box-shadow var(--dur) var(--ease),border-top-width var(--dur) var(--ease);
   }
   .tech-card:hover{transform:translateY(-3px);box-shadow:0 18px 36px -16px rgba(0,0,0,0.22);border-top-width:9px}
-  .tech-card-priority{background:linear-gradient(to bottom,rgba(236,25,68,0.05),#fff 35%)}
   .tech-card .tech-n{font-family:'Anton',sans-serif;font-size:clamp(48px,6vw,68px);color:var(--red);line-height:0.85;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
   .tech-card .tech-pct{font-family:'Archivo Black',sans-serif;font-size:10.5px;letter-spacing:0.16em;color:var(--muted);text-transform:uppercase}
-  .tech-card h3{font-family:'Archivo Black',sans-serif;font-size:13px;line-height:1.25;letter-spacing:0.02em;text-transform:uppercase;color:var(--ink);margin-top:6px}
-  .tech-card p{font-size:13px;line-height:1.5;color:var(--ink-2);margin-top:auto}
+  .tech-card h3{font-family:'Archivo Black',sans-serif;font-size:13px;line-height:1.25;letter-spacing:0.02em;text-transform:uppercase;color:var(--ink);margin-top:10px}
+  .tech-card p{font-size:13px;line-height:1.5;color:var(--ink-2);margin-top:8px}
 
   .tech-cats{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:32px}
   @media(max-width:780px){.tech-cats{grid-template-columns:1fr}}
@@ -1394,19 +1393,19 @@
         <h3>Meta descriptions truncating in SERPs</h3>
         <p>Every Google result is being cut off mid-sentence. Direct CTR drag on every blue link.</p>
       </div>
-      <div class="tech-card tech-card-priority">
+      <div class="tech-card">
         <div class="tech-n">101</div>
         <div class="tech-pct">66% of images</div>
         <h3>Images missing alt text</h3>
         <p>Invisible to AI engines, screen readers and Google Images. Direct AEO impact &mdash; the AI can&rsquo;t reference what it can&rsquo;t read.</p>
       </div>
-      <div class="tech-card tech-card-priority">
+      <div class="tech-card">
         <div class="tech-n">10</div>
         <div class="tech-pct">10% of pages</div>
         <h3>Pages missing an H1</h3>
         <p>Core ranking signal absent. Includes location pages &mdash; exactly where the local-pack opportunity lives.</p>
       </div>
-      <div class="tech-card tech-card-priority">
+      <div class="tech-card">
         <div class="tech-n">7</div>
         <div class="tech-pct">7% of pages</div>
         <h3>Pages canonicalised to other URLs</h3>
