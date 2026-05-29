@@ -194,3 +194,130 @@ function esc(s: string): string {
     .replace(/>/g, "&gt;")
     .replace(/"/g, "&quot;");
 }
+
+// ─── Meta Ads Lab pack email ────────────────────────────────────────
+// Sent to the prospect (the actual pack) AND to the internal team
+// (so partners can see what the prospect saw). Same HTML body, different
+// recipients + subject lines.
+
+export type MetaAdsPackAd = {
+  platform: string;
+  format: string;
+  angle: string;
+  audience: string;
+  headline: string;
+  body: string;
+  cta: string;
+};
+
+export type MetaAdsPack = {
+  url: string;
+  email: string;
+  firstname: string;
+  phone?: string;
+  brand: { name: string; tagline: string; category: string; domain: string };
+  audience: string;
+  heroAds: MetaAdsPackAd[];      // shown on the page with images
+  variationAds: MetaAdsPackAd[]; // text-only, additional 8
+};
+
+export async function sendMetaAdsPack(pack: MetaAdsPack): Promise<void> {
+  const apiKey = process.env.RESEND_API_KEY;
+  const from = process.env.LEAD_NOTIFY_FROM || "onboarding@resend.dev";
+  const internalTo = process.env.LEAD_NOTIFY_EMAIL;
+
+  if (!apiKey) {
+    console.log("[meta-ads pack:stub]", { url: pack.url, email: pack.email });
+    return;
+  }
+
+  const html = renderMetaAdsPackHtml(pack);
+  const brandName = pack.brand?.name || "your brand";
+  const prospectSubject = `Your Meta ads pack — ${brandName}`;
+  const internalSubject = `New Meta Ads Lab lead · ${brandName} · ${pack.email}`;
+
+  const sends: Promise<unknown>[] = [];
+  // Prospect — the deliverable
+  if (pack.email) {
+    sends.push(
+      fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+        body: JSON.stringify({ from, to: pack.email, subject: prospectSubject, html }),
+        signal: AbortSignal.timeout(10_000),
+      }).catch((e) => console.warn("[meta-ads pack:prospect]", (e as Error).message)),
+    );
+  }
+  // Internal — notification + the full pack so partners can see what landed
+  if (internalTo) {
+    sends.push(
+      fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+        body: JSON.stringify({ from, to: internalTo, subject: internalSubject, html }),
+        signal: AbortSignal.timeout(10_000),
+      }).catch((e) => console.warn("[meta-ads pack:internal]", (e as Error).message)),
+    );
+  }
+  await Promise.all(sends);
+}
+
+function renderMetaAdsPackHtml(pack: MetaAdsPack): string {
+  const safe = (s: string | undefined) => esc(s || "");
+  const all = [...pack.heroAds, ...pack.variationAds];
+  const totalCount = all.length;
+
+  const adCard = (ad: MetaAdsPackAd, i: number, isHero: boolean) => `
+    <div style="margin:0 0 14px;padding:18px 20px;background:#FAFAF8;border:1px solid #E8E5DD;border-left:4px solid ${isHero ? "#FF6200" : "#0F0F0F"};border-radius:8px;">
+      <div style="display:flex;justify-content:space-between;gap:12px;margin-bottom:8px;font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:#9C9C9C;font-weight:600;">
+        <span>${isHero ? "Hero" : "Variation"} ${String(i).padStart(2, "0")} · ${safe(ad.angle)}</span>
+        <span>${safe(ad.format)}</span>
+      </div>
+      <div style="font-size:17px;font-weight:500;line-height:1.25;color:#0F0F0F;margin-bottom:8px;">${safe(ad.headline)}</div>
+      <div style="font-size:14px;line-height:1.55;color:#1A1A1A;margin-bottom:14px;">${safe(ad.body)}</div>
+      <div style="display:flex;justify-content:space-between;gap:12px;font-size:12px;color:#6B6B6B;">
+        <span>${safe(ad.platform)} · ${safe(ad.audience)}</span>
+        <span style="background:#0F0F0F;color:#fff;padding:3px 10px;border-radius:4px;font-weight:500;">${safe(ad.cta)}</span>
+      </div>
+    </div>`;
+
+  let i = 0;
+  const heroBlock = pack.heroAds.map((ad) => adCard(ad, ++i, true)).join("");
+  const variationBlock = pack.variationAds.map((ad) => adCard(ad, ++i, false)).join("");
+
+  return `<!doctype html>
+<html><body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;line-height:1.55;color:#0F0F0F;max-width:720px;margin:0 auto;padding:24px;background:#fff;">
+  <div style="text-align:center;margin-bottom:32px;padding-bottom:24px;border-bottom:2px solid #0F0F0F;">
+    <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#FF6200;font-weight:600;margin-bottom:10px;">Zib Digital · Meta Ads Lab</div>
+    <h1 style="font-size:28px;margin:0 0 8px;line-height:1.1;letter-spacing:-0.02em;">Your ${totalCount} Meta ads, ${safe(pack.firstname) || "ready"}.</h1>
+    <p style="color:#6B6B6B;margin:0;font-size:14px;">Drafted for ${safe(pack.brand?.name || pack.url)} — reviewed by a senior strategist.</p>
+  </div>
+
+  <table style="border-collapse:collapse;width:100%;margin-bottom:28px;font-size:13.5px;">
+    <tr><td style="padding:6px 12px 6px 0;color:#6B6B6B;width:120px;">Brand</td><td style="padding:6px 0;font-weight:500;">${safe(pack.brand?.name)}</td></tr>
+    <tr><td style="padding:6px 12px 6px 0;color:#6B6B6B;">Category</td><td style="padding:6px 0;">${safe(pack.brand?.category)}</td></tr>
+    <tr><td style="padding:6px 12px 6px 0;color:#6B6B6B;">Audience</td><td style="padding:6px 0;">${safe(pack.audience)}</td></tr>
+    <tr><td style="padding:6px 12px 6px 0;color:#6B6B6B;">Site</td><td style="padding:6px 0;"><a href="${safe(pack.url)}" style="color:#FF6200;">${safe(pack.url)}</a></td></tr>
+  </table>
+
+  <h2 style="font-size:18px;margin:0 0 6px;letter-spacing:-0.01em;">Hero ads</h2>
+  <p style="font-size:13px;color:#6B6B6B;margin:0 0 16px;">The 4 we previewed on the page — fully designed visuals + copy.</p>
+  ${heroBlock}
+
+  <h2 style="font-size:18px;margin:28px 0 6px;letter-spacing:-0.01em;">Additional concepts</h2>
+  <p style="font-size:13px;color:#6B6B6B;margin:0 0 16px;">8 more concepts across retargeting, lookalikes and video hooks. Copy is ready — happy to mock the visuals on the strategy call.</p>
+  ${variationBlock}
+
+  <div style="margin-top:36px;padding:24px;background:#0F0F0F;color:#fff;border-radius:12px;text-align:center;">
+    <h3 style="margin:0 0 8px;font-size:18px;letter-spacing:-0.01em;">Want us to run these?</h3>
+    <p style="margin:0 0 14px;font-size:14px;color:rgba(255,255,255,0.72);line-height:1.5;">A senior Meta strategist will reach out within 24 hours to walk through the brief, refine targeting and (if you want) launch the campaigns end-to-end.</p>
+    <a href="mailto:hello@zibdigital.com.au?subject=Meta%20Ads%20Lab%20-%20${encodeURIComponent(pack.brand?.name || pack.url)}" style="display:inline-block;padding:12px 24px;background:#FF6200;color:#fff;text-decoration:none;border-radius:999px;font-weight:500;font-size:14px;">Reply to talk to a strategist →</a>
+  </div>
+
+  <p style="margin-top:36px;font-size:11px;color:#9C9C9C;text-align:center;line-height:1.6;">
+    Zib Digital · Australian digital agency, est. 2009 · Meta Business Partner<br/>
+    This pack was drafted from a one-shot read of ${safe(new URL(pack.url).hostname.replace(/^www\./, ""))}. Real campaign work involves deeper customer research and creative iteration.
+  </p>
+</body></html>`;
+}
+
