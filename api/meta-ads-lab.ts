@@ -144,7 +144,7 @@ export default async function handler(req: Request): Promise<Response> {
         const anthropic = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
         const claudeResp = await anthropic.messages.create({
           model: "claude-sonnet-4-6",
-          max_tokens: 2400,
+          max_tokens: 6000,
           system: META_ADS_SYSTEM_PROMPT,
           messages: [{
             role: "user",
@@ -160,12 +160,39 @@ export default async function handler(req: Request): Promise<Response> {
         });
 
         const txt = claudeResp.content?.[0]?.type === "text" ? claudeResp.content[0].text : "";
-        const cleaned = txt.replace(/^```json\s*|\s*```$/g, "").trim();
+        const stopReason = claudeResp.stop_reason;
+        console.log("[meta-ads-lab] claude raw", {
+          length: txt.length,
+          stopReason,
+          first200: txt.slice(0, 200),
+          last200: txt.slice(-200),
+        });
+
+        // Robust JSON extraction — handles markdown fences, leading prose,
+        // trailing commentary. If Claude truncated, parse still fails and we
+        // surface a clear error.
+        let cleaned = txt.trim().replace(/^```(?:json)?\s*/i, "").replace(/\s*```$/, "");
+        const firstBrace = cleaned.indexOf("{");
+        const lastBrace = cleaned.lastIndexOf("}");
+        if (firstBrace >= 0 && lastBrace > firstBrace) {
+          cleaned = cleaned.slice(firstBrace, lastBrace + 1);
+        }
         let parsed: ClaudeResponse;
         try {
           parsed = JSON.parse(cleaned);
-        } catch {
-          throw new Error("Failed to parse generated ads JSON");
+        } catch (e: any) {
+          console.warn("[meta-ads-lab] JSON parse failed", {
+            stopReason,
+            length: txt.length,
+            cleanedStart: cleaned.slice(0, 200),
+            cleanedEnd: cleaned.slice(-200),
+            parseError: e?.message,
+          });
+          throw new Error(
+            stopReason === "max_tokens"
+              ? "Claude response truncated — try a shorter URL or contact support."
+              : "Failed to parse generated ads JSON",
+          );
         }
 
         // Ensure domain is set from URL if Claude didn't include it
