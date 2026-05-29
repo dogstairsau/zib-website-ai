@@ -1,7 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { fetchSiteContent, normaliseUrl, isValidEmail } from "../lib/site";
 import { captureLead } from "../lib/hubspot";
-import { sendLeadEmail } from "../lib/email";
+import { sendMetaAdsPack, type MetaAdsPackAd } from "../lib/email";
 import { checkRateLimit, rateLimitResponse } from "../lib/rateLimit";
 import { META_ADS_SYSTEM_PROMPT, metaAdsUserPrompt } from "../lib/prompts/meta-ads";
 
@@ -16,7 +16,7 @@ type Body = {
   sourceTag?: string;
 };
 
-type AdConcept = {
+type HeroAdConcept = {
   platform: string;
   format: string;
   angle: string;
@@ -28,13 +28,16 @@ type AdConcept = {
   image_prompt: string;
 };
 
+type VariationAdConcept = Omit<HeroAdConcept, "image_prompt" | "visual_word">;
+
 type ClaudeResponse = {
   brand: { name: string; tagline: string; category: string; domain: string };
   audience: string;
-  ads: AdConcept[];
+  hero_ads: HeroAdConcept[];
+  variation_ads: VariationAdConcept[];
 };
 
-type RenderedAd = AdConcept & {
+type RenderedAd = HeroAdConcept & {
   image_url: string | null;
   id: string;
 };
@@ -120,26 +123,16 @@ export default async function handler(req: Request): Promise<Response> {
       const send = (event: string, data: unknown) =>
         controller.enqueue(enc.encode(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`));
 
-      // Kick off lead capture in parallel with generation — we keep the lead
-      // even if Claude/OpenAI later fails, and the email is already in HubSpot
-      // before any expensive AI calls finish.
+      // Capture the lead in HubSpot immediately (parallel with generation).
+      // The pack email is sent at the END once the 12 concepts are ready.
       const phone = (body.phone || "").trim();
       const notes = (body.notes || "").trim();
       const sourceTag = (body.sourceTag || "").trim();
       const source = sourceTag ? `Meta Ads Lab · ${sourceTag}` : "Meta Ads Lab";
-      const leadPromise = Promise.all([
-        captureLead(
-          { email, firstname, company: "", website: url, source },
-          { url, strategistText: notes ? `Notes from prospect:\n${notes}` : "" },
-        ).catch((e) => console.warn("[meta-ads lead]", e?.message)),
-        sendLeadEmail({
-          url,
-          email,
-          phone: phone || undefined,
-          source,
-          strategistText: notes ? `## Notes from prospect\n\n${notes}` : "",
-        }).catch((e) => console.warn("[meta-ads email]", e?.message)),
-      ]);
+      const hubspotPromise = captureLead(
+        { email, firstname, company: "", website: url, source },
+        { url, strategistText: notes ? `Notes from prospect:\n${notes}` : "" },
+      ).catch((e) => console.warn("[meta-ads lead]", e?.message));
 
       try {
         // Stage 0 — fetch
@@ -191,12 +184,15 @@ export default async function handler(req: Request): Promise<Response> {
         await new Promise(r => setTimeout(r, 1000));
         send("stage", { idx: 2, status: "done" });
 
-        // Stage 3 — strategist review + image gen (parallel images)
+        // Stage 3 — strategist review + image gen (parallel images on hero ads only)
         send("stage", { idx: 3, status: "active", message: "Generating creatives…" });
+
+        const heroAds = parsed.hero_ads || [];
+        const variationAds = parsed.variation_ads || [];
 
         const apiKey = process.env.OPENAI_API_KEY;
         const rendered: RenderedAd[] = await Promise.all(
-          parsed.ads.map(async (ad, i): Promise<RenderedAd> => {
+          heroAds.map(async (ad, i): Promise<RenderedAd> => {
             const size = SIZE_FOR_FORMAT[ad.format] || "1024x1024";
             let image_url: string | null = null;
             if (apiKey) {
@@ -213,14 +209,37 @@ export default async function handler(req: Request): Promise<Response> {
 
         send("stage", { idx: 3, status: "done" });
         send("ads", { brand: parsed.brand, audience: parsed.audience, ads: rendered });
-        // Ensure lead capture finishes before the response closes (edge
-        // runtime kills in-flight promises when the stream ends).
-        await leadPromise;
+
+        // Send the full 12-ad pack email — to the prospect AND internal team.
+        // Strip image_url + image_prompt from hero ads for the email (just copy).
+        const stripForEmail = (ad: HeroAdConcept | VariationAdConcept): MetaAdsPackAd => ({
+          platform: ad.platform,
+          format: ad.format,
+          angle: ad.angle,
+          audience: ad.audience,
+          headline: ad.headline,
+          body: ad.body,
+          cta: ad.cta,
+        });
+        const emailPromise = sendMetaAdsPack({
+          url,
+          email,
+          firstname,
+          phone: phone || undefined,
+          brand: parsed.brand,
+          audience: parsed.audience,
+          heroAds: heroAds.map(stripForEmail),
+          variationAds: variationAds.map(stripForEmail),
+        }).catch((e) => console.warn("[meta-ads pack email]", e?.message));
+
+        // Ensure lead capture + pack email finish before the response closes
+        // (edge runtime kills in-flight promises when the stream ends).
+        await Promise.all([hubspotPromise, emailPromise]);
         send("done", {});
       } catch (err: any) {
         console.warn("[meta-ads-lab]", err?.message, err?.stack);
         send("error", { message: err?.message || "Generation failed" });
-        await leadPromise.catch(() => {});
+        await hubspotPromise.catch(() => {});
       } finally {
         controller.close();
       }
