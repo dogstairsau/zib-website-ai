@@ -623,6 +623,52 @@
   }
   .ceo-cta-note{font-family:'Archivo Black',sans-serif;font-size:11px;letter-spacing:0.16em;color:rgba(255,255,255,0.5);text-transform:uppercase;margin-left:4px}
 
+  /* technical audit — Screaming Frog scoreboard */
+  .tech-headlines{display:grid;grid-template-columns:repeat(5,1fr);gap:14px;margin-top:36px}
+  @media(max-width:1100px){.tech-headlines{grid-template-columns:repeat(3,1fr)}}
+  @media(max-width:680px){.tech-headlines{grid-template-columns:repeat(2,1fr)}}
+  @media(max-width:420px){.tech-headlines{grid-template-columns:1fr}}
+  .tech-card{
+    background:#fff;border-top:5px solid var(--red);
+    padding:22px 20px;display:flex;flex-direction:column;gap:6px;min-height:240px;
+    transition:transform var(--dur) var(--ease),box-shadow var(--dur) var(--ease),border-top-width var(--dur) var(--ease);
+  }
+  .tech-card:hover{transform:translateY(-3px);box-shadow:0 18px 36px -16px rgba(0,0,0,0.22);border-top-width:9px}
+  .tech-card-priority{background:linear-gradient(to bottom,rgba(236,25,68,0.05),#fff 35%)}
+  .tech-card .tech-n{font-family:'Anton',sans-serif;font-size:clamp(48px,6vw,68px);color:var(--red);line-height:0.85;letter-spacing:-.02em;font-variant-numeric:tabular-nums}
+  .tech-card .tech-pct{font-family:'Archivo Black',sans-serif;font-size:10.5px;letter-spacing:0.16em;color:var(--muted);text-transform:uppercase}
+  .tech-card h3{font-family:'Archivo Black',sans-serif;font-size:13px;line-height:1.25;letter-spacing:0.02em;text-transform:uppercase;color:var(--ink);margin-top:6px}
+  .tech-card p{font-size:13px;line-height:1.5;color:var(--ink-2);margin-top:auto}
+
+  .tech-cats{display:grid;grid-template-columns:repeat(2,1fr);gap:18px;margin-top:32px}
+  @media(max-width:780px){.tech-cats{grid-template-columns:1fr}}
+  .tech-cat{background:#fff;border:2px solid var(--ink);padding:24px 26px;display:flex;flex-direction:column;gap:0}
+  .tech-cat-wide{grid-column:1/-1}
+  .tech-cat h3{font-family:'Archivo Black',sans-serif;font-size:11px;letter-spacing:0.18em;text-transform:uppercase;color:var(--red);margin-bottom:14px}
+  .tech-row{display:flex;justify-content:space-between;align-items:baseline;padding:9px 0;border-bottom:1px dashed var(--rule);gap:14px}
+  .tech-row:last-child{border-bottom:none}
+  .tech-row > span:first-child{font-size:14px;color:var(--ink-2);line-height:1.4}
+  .tech-row .tech-v{font-family:'Anton',sans-serif;font-size:20px;color:var(--ink);letter-spacing:-.01em;flex-shrink:0;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .tech-row .tech-v em{font-family:'Archivo Black',sans-serif;font-size:10px;letter-spacing:0.12em;color:var(--muted);font-style:normal;margin-left:4px}
+  .tech-row-grid{display:grid;grid-template-columns:1fr 1fr;gap:0 28px}
+  @media(max-width:780px){.tech-row-grid{grid-template-columns:1fr}}
+
+  /* ROI methodology — how the multipliers are calculated */
+  .roi-method{
+    margin-top:42px;
+    background:rgba(255,255,255,0.04);
+    border:1px solid rgba(255,255,255,0.12);
+    padding:clamp(24px,3vw,32px);
+    border-radius:8px;
+  }
+  .roi-method h3{font-family:'Archivo Black',sans-serif;font-size:11px;letter-spacing:0.18em;color:var(--red);text-transform:uppercase;margin-bottom:18px}
+  .roi-method-row{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(20px,3vw,40px);padding-bottom:18px;border-bottom:1px solid rgba(255,255,255,0.1)}
+  @media(max-width:780px){.roi-method-row{grid-template-columns:1fr;gap:20px}}
+  .roi-method-l{font-family:'Archivo Black',sans-serif;font-size:10.5px;letter-spacing:0.14em;color:rgba(255,255,255,0.55);text-transform:uppercase}
+  .roi-method-v{font-family:'Anton',sans-serif;font-size:clamp(24px,3vw,30px);color:#fff;line-height:1;letter-spacing:-.005em;margin:6px 0 4px}
+  .roi-method-s{font-size:12.5px;color:#bcbcbc;line-height:1.5;font-style:italic}
+  .roi-method-note{margin-top:18px;font-size:12.5px;color:#bcbcbc;line-height:1.55;font-style:italic;max-width:820px}
+
   /* helpers */
   .pad-top-lg{padding-top:96px}
   .center{text-align:center}
@@ -1326,6 +1372,109 @@
 
 <div class="star-row"></div>
 
+<!-- ================= TECHNICAL AUDIT (real Screaming Frog data) ================= -->
+<section id="technical-audit">
+  <div class="wrap">
+    <span class="eyebrow">Technical audit &middot; by the numbers</span>
+    <h2 class="display" style="font-size:clamp(46px,5.5vw,82px);margin-top:18px;max-width:1100px">
+      What the crawl<br>actually <span class="red">found</span>.
+    </h2>
+    <p class="lede" style="margin-top:24px">A Screaming Frog crawl of <strong>madmex.com.au</strong> across 416 URLs / ~105 HTML pages. These are the highest-impact issues we&rsquo;d fix inside Package 3, ordered by how much they cost the site in search visibility today.</p>
+
+    <div class="tech-headlines">
+      <div class="tech-card">
+        <div class="tech-n">75</div>
+        <div class="tech-pct">71% of pages</div>
+        <h3>Multiple meta descriptions on the same page</h3>
+        <p>Plugin or template outputting two competing tags. Google ignores conflicting markup. Site-wide fix.</p>
+      </div>
+      <div class="tech-card">
+        <div class="tech-n">85</div>
+        <div class="tech-pct">81% of pages</div>
+        <h3>Meta descriptions truncating in SERPs</h3>
+        <p>Every Google result is being cut off mid-sentence. Direct CTR drag on every blue link.</p>
+      </div>
+      <div class="tech-card tech-card-priority">
+        <div class="tech-n">101</div>
+        <div class="tech-pct">66% of images</div>
+        <h3>Images missing alt text</h3>
+        <p>Invisible to AI engines, screen readers and Google Images. Direct AEO impact &mdash; the AI can&rsquo;t reference what it can&rsquo;t read.</p>
+      </div>
+      <div class="tech-card tech-card-priority">
+        <div class="tech-n">10</div>
+        <div class="tech-pct">10% of pages</div>
+        <h3>Pages missing an H1</h3>
+        <p>Core ranking signal absent. Includes location pages &mdash; exactly where the local-pack opportunity lives.</p>
+      </div>
+      <div class="tech-card tech-card-priority">
+        <div class="tech-n">7</div>
+        <div class="tech-pct">7% of pages</div>
+        <h3>Pages canonicalised to other URLs</h3>
+        <p>You&rsquo;re telling Google: don&rsquo;t index me, index this other URL. If any of these are commercial pages, you&rsquo;re deindexing yourself.</p>
+      </div>
+    </div>
+
+    <div class="tech-cats">
+      <div class="tech-cat">
+        <h3>SERP real estate</h3>
+        <div class="tech-row"><span>Meta descriptions over 155 chars (truncating)</span><span class="tech-v">85</span></div>
+        <div class="tech-row"><span>Meta descriptions duplicated</span><span class="tech-v">14</span></div>
+        <div class="tech-row"><span>Meta descriptions missing</span><span class="tech-v">9</span></div>
+        <div class="tech-row"><span>Page titles over 60 chars (truncating)</span><span class="tech-v">23</span></div>
+        <div class="tech-row"><span>Page titles under 30 chars (room for more)</span><span class="tech-v">17</span></div>
+        <div class="tech-row"><span>Page titles duplicated</span><span class="tech-v">4</span></div>
+        <div class="tech-row"><span>Page titles match H1 exactly</span><span class="tech-v">18</span></div>
+      </div>
+      <div class="tech-cat">
+        <h3>Structural SEO</h3>
+        <div class="tech-row"><span>Pages with multiple H1s</span><span class="tech-v">9</span></div>
+        <div class="tech-row"><span>Pages with duplicate H1s</span><span class="tech-v">9</span></div>
+        <div class="tech-row"><span>H1s over 70 chars</span><span class="tech-v">15</span></div>
+        <div class="tech-row"><span>Internal redirects (chain hops)</span><span class="tech-v">34</span></div>
+        <div class="tech-row"><span>Internal 4xx errors (broken links)</span><span class="tech-v">1</span></div>
+        <div class="tech-row"><span>Canonical missing on a page</span><span class="tech-v">1</span></div>
+        <div class="tech-row"><span>H2 hierarchy non-sequential</span><span class="tech-v">81</span></div>
+      </div>
+      <div class="tech-cat">
+        <h3>AI / AEO readiness</h3>
+        <div class="tech-row"><span>Images with no alt attribute at all</span><span class="tech-v">5</span></div>
+        <div class="tech-row"><span>Low-content pages (&lt;200 words)</span><span class="tech-v">16</span></div>
+        <div class="tech-row"><span>Internal links with no anchor text</span><span class="tech-v">14</span></div>
+        <div class="tech-row"><span>Non-descriptive anchors (&ldquo;click here&rdquo;)</span><span class="tech-v">13</span></div>
+        <div class="tech-row"><span>H2 duplicated across pages</span><span class="tech-v">84</span></div>
+        <div class="tech-row"><span>H2 multiple per page</span><span class="tech-v">26</span></div>
+        <div class="tech-row"><span>H2 missing on a key page</span><span class="tech-v">1</span></div>
+      </div>
+      <div class="tech-cat">
+        <h3>Performance &amp; crawl</h3>
+        <div class="tech-row"><span>Images over 100 KB</span><span class="tech-v">53</span></div>
+        <div class="tech-row"><span>Images missing size attributes (CLS hit)</span><span class="tech-v">6</span></div>
+        <div class="tech-row"><span>Protocol-relative resource links</span><span class="tech-v">1</span></div>
+        <div class="tech-row"><span>URLs over 115 chars</span><span class="tech-v">6</span></div>
+        <div class="tech-row"><span>Repetitive URL paths</span><span class="tech-v">2</span></div>
+        <div class="tech-row"><span>Pages with high external outlinks</span><span class="tech-v">17</span></div>
+      </div>
+      <div class="tech-cat tech-cat-wide">
+        <h3>Security headers &middot; one server-config change fixes all pages</h3>
+        <div class="tech-row-grid">
+          <div class="tech-row"><span>Missing HSTS header</span><span class="tech-v">381 <em>(92%)</em></span></div>
+          <div class="tech-row"><span>Missing X-Frame-Options header</span><span class="tech-v">381 <em>(92%)</em></span></div>
+          <div class="tech-row"><span>Missing Content-Security-Policy header</span><span class="tech-v">381 <em>(92%)</em></span></div>
+          <div class="tech-row"><span>Missing secure Referrer-Policy header</span><span class="tech-v">276 <em>(66%)</em></span></div>
+          <div class="tech-row"><span>Missing X-Content-Type-Options header</span><span class="tech-v">130 <em>(31%)</em></span></div>
+          <div class="tech-row"><span>Unsafe cross-origin links (target=_blank)</span><span class="tech-v">105 <em>(25%)</em></span></div>
+        </div>
+      </div>
+    </div>
+
+    <p class="text-italic-note" style="text-align:center;margin-top:32px">Source: Screaming Frog SEO Spider crawl of madmex.com.au &middot; May 2026. Issue counts and % of total reflect the crawl export.</p>
+
+    <div class="math" style="margin-top:24px">Every single issue above is in scope for Package 3. The technical work is mechanical &mdash; the value is what it unlocks once Google and the AI engines can finally read the site clearly.</div>
+  </div>
+</section>
+
+<div class="star-row"></div>
+
 <!-- ================= 8 FIXES ================= -->
 <section id="fixes" style="background:var(--paper)">
   <div class="wrap">
@@ -1503,7 +1652,28 @@
         </div>
       </div>
     </div>
-    <p style="margin-top:46px;font-size:13.5px;color:#bcbcbc;font-style:italic;max-width:840px">All ROI figures use network revenue lift only and exclude direct online order growth, app installs and catering one-off contract value &mdash; which for a national QSR are material.</p>
+
+    <div class="roi-method">
+      <h3>How the multipliers are calculated</h3>
+      <div class="roi-method-row">
+        <div>
+          <div class="roi-method-l">Network revenue (est.)</div>
+          <div class="roi-method-v">~$60M / year</div>
+          <div class="roi-method-s">60 stores &times; ~$800K avg revenue per store &mdash; industry benchmark for AU QSR Mexican</div>
+        </div>
+        <div>
+          <div class="roi-method-l">Year-1 investment</div>
+          <div class="roi-method-v">$52,500</div>
+          <div class="roi-method-s">Package 3 &mdash; $4,500 setup + ($4,000 &times; 12 months)</div>
+        </div>
+        <div>
+          <div class="roi-method-l">Formula</div>
+          <div class="roi-method-v">(lift &times; $60M) &divide; $52.5K</div>
+          <div class="roi-method-s">e.g. 1.0% lift &rarr; $600K incremental revenue &rarr; <strong style="color:#fff">11.4&times;</strong></div>
+        </div>
+      </div>
+      <p class="roi-method-note">Network revenue is an industry estimate from AU QSR averages, <strong style="color:#fff">not Mad Mex&rsquo;s published financials</strong>. The three lift cases are scenarios, not forecasts &mdash; actual outcome depends on conversion of recovered organic traffic to in-store, delivery and catering revenue. ROI figures exclude direct online order growth, app installs and catering one-off contract value, all of which compound on top for a national QSR.</p>
+    </div>
   </div>
 </section>
 
