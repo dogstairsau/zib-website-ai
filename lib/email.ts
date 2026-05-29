@@ -226,8 +226,17 @@ export async function sendMetaAdsPack(pack: MetaAdsPack): Promise<void> {
   const from = process.env.LEAD_NOTIFY_FROM || "onboarding@resend.dev";
   const internalTo = process.env.LEAD_NOTIFY_EMAIL;
 
+  console.log("[meta-ads pack] sending", {
+    hasApiKey: !!apiKey,
+    from,
+    prospectTo: pack.email,
+    internalTo: internalTo || "(not set)",
+    heroCount: pack.heroAds?.length || 0,
+    variationCount: pack.variationAds?.length || 0,
+  });
+
   if (!apiKey) {
-    console.log("[meta-ads pack:stub]", { url: pack.url, email: pack.email });
+    console.log("[meta-ads pack:stub] no RESEND_API_KEY", { url: pack.url, email: pack.email });
     return;
   }
 
@@ -236,29 +245,28 @@ export async function sendMetaAdsPack(pack: MetaAdsPack): Promise<void> {
   const prospectSubject = `Your Meta ads pack — ${brandName}`;
   const internalSubject = `New Meta Ads Lab lead · ${brandName} · ${pack.email}`;
 
-  const sends: Promise<unknown>[] = [];
-  // Prospect — the deliverable
-  if (pack.email) {
-    sends.push(
-      fetch("https://api.resend.com/emails", {
+  const sendTo = async (to: string, subject: string, label: string) => {
+    try {
+      const res = await fetch("https://api.resend.com/emails", {
         method: "POST",
         headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
-        body: JSON.stringify({ from, to: pack.email, subject: prospectSubject, html }),
+        body: JSON.stringify({ from, to, subject, html }),
         signal: AbortSignal.timeout(10_000),
-      }).catch((e) => console.warn("[meta-ads pack:prospect]", (e as Error).message)),
-    );
-  }
-  // Internal — notification + the full pack so partners can see what landed
-  if (internalTo) {
-    sends.push(
-      fetch("https://api.resend.com/emails", {
-        method: "POST",
-        headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
-        body: JSON.stringify({ from, to: internalTo, subject: internalSubject, html }),
-        signal: AbortSignal.timeout(10_000),
-      }).catch((e) => console.warn("[meta-ads pack:internal]", (e as Error).message)),
-    );
-  }
+      });
+      const body = await res.text().catch(() => "");
+      if (!res.ok) {
+        console.warn(`[meta-ads pack:${label}] Resend ${res.status}`, body.slice(0, 300));
+      } else {
+        console.log(`[meta-ads pack:${label}] sent ok`, { status: res.status, htmlLength: html.length });
+      }
+    } catch (e) {
+      console.warn(`[meta-ads pack:${label}] fetch failed`, (e as Error).message);
+    }
+  };
+
+  const sends: Promise<void>[] = [];
+  if (pack.email) sends.push(sendTo(pack.email, prospectSubject, "prospect"));
+  if (internalTo) sends.push(sendTo(internalTo, internalSubject, "internal"));
   await Promise.all(sends);
 }
 

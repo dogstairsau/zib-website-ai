@@ -187,6 +187,15 @@ export default async function handler(req: Request): Promise<Response> {
 
         const heroAds = parsed.hero_ads || [];
         const variationAds = parsed.variation_ads || [];
+
+        console.log("[meta-ads-lab] claude parsed", {
+          topLevelKeys: Object.keys(parsed),
+          brandName: parsed.brand?.name,
+          heroAdsCount: heroAds.length,
+          variationAdsCount: variationAds.length,
+          firstHeroHeadline: heroAds[0]?.headline,
+          firstVariationHeadline: variationAds[0]?.headline,
+        });
         const allAds = [...heroAds, ...variationAds];
 
         const apiKey = process.env.OPENAI_API_KEY;
