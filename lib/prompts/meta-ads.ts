@@ -40,7 +40,9 @@ Output ONLY valid JSON in this exact shape — no markdown fences, no commentary
       "audience": "Retargeting · 30d view" | "Lookalike 3%" | "Cold · broad interest" | "Past purchasers" | "Cart abandon" | "Engagement audience",
       "headline": "...",
       "body": "...",
-      "cta": "Shop now"
+      "cta": "Shop now",
+      "visual_word": "Single word from the headline to italicise. Must match a word in the headline exactly.",
+      "image_prompt": "Editorial photograph art direction. Concrete subject, scene, lighting, composition. NO text, NO logos, NO typography in the image."
     },
     /* 7 more variations */
   ]
@@ -53,11 +55,11 @@ THE 4 HERO ADS MUST INCLUDE (in this order):
 4. Founder story, 9:16 Reel, lookalike 1%. First-person voice.
 
 THE 8 VARIATION ADS:
-- No image briefs required (text only — they get emailed to the prospect as part of the full pack).
 - Each ad must be distinct from the others and from the hero ads.
 - Cover different audiences (retargeting, lookalike, broader interest, past purchasers, cart abandon, engagement) and different angles (urgency, scarcity, comparison, testimonial, UGC, video hooks).
 - At least 2 should be Reel/video hooks (3-second openers).
 - At least 2 should be retargeting / lower-funnel.
+- Every variation needs its own image_prompt and visual_word — they render with real visuals on the page.
 
 VOICE — non-negotiable:
 - Confident, commercial. No agency jargon. Banned: "unlock", "elevate", "leverage", "synergy", "premium experience", "next-level", "actually" (AI tell — never use), "delve", "in the realm of".
@@ -67,7 +69,7 @@ VOICE — non-negotiable:
 - Headlines stop the scroll. Bodies make people tap.
 - Make every ad's angle distinct — never repeat the same idea.
 
-IMAGE PROMPTS (hero ads only) — critical:
+IMAGE PROMPTS (all 12 ads) — critical:
 - Editorial, magazine-quality, not stock.
 - Concrete subjects and scenes. "A close-up of a barista's hands pouring milk into espresso, morning light on a warm timber bar" — not "vibrant coffee scene".
 - Match the brand's category.

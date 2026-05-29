@@ -16,7 +16,7 @@ type Body = {
   sourceTag?: string;
 };
 
-type HeroAdConcept = {
+type AdConcept = {
   platform: string;
   format: string;
   angle: string;
@@ -28,16 +28,14 @@ type HeroAdConcept = {
   image_prompt: string;
 };
 
-type VariationAdConcept = Omit<HeroAdConcept, "image_prompt" | "visual_word">;
-
 type ClaudeResponse = {
   brand: { name: string; tagline: string; category: string; domain: string };
   audience: string;
-  hero_ads: HeroAdConcept[];
-  variation_ads: VariationAdConcept[];
+  hero_ads: AdConcept[];
+  variation_ads: AdConcept[];
 };
 
-type RenderedAd = HeroAdConcept & {
+type RenderedAd = AdConcept & {
   image_url: string | null;
   id: string;
 };
@@ -184,18 +182,19 @@ export default async function handler(req: Request): Promise<Response> {
         await new Promise(r => setTimeout(r, 1000));
         send("stage", { idx: 2, status: "done" });
 
-        // Stage 3 — strategist review + image gen (parallel images on hero ads only)
-        send("stage", { idx: 3, status: "active", message: "Generating creatives…" });
+        // Stage 3 — strategist review + image gen for all 12 in parallel
+        send("stage", { idx: 3, status: "active", message: "Generating 12 creatives…" });
 
         const heroAds = parsed.hero_ads || [];
         const variationAds = parsed.variation_ads || [];
+        const allAds = [...heroAds, ...variationAds];
 
         const apiKey = process.env.OPENAI_API_KEY;
         const rendered: RenderedAd[] = await Promise.all(
-          heroAds.map(async (ad, i): Promise<RenderedAd> => {
+          allAds.map(async (ad, i): Promise<RenderedAd> => {
             const size = SIZE_FOR_FORMAT[ad.format] || "1024x1024";
             let image_url: string | null = null;
-            if (apiKey) {
+            if (apiKey && ad.image_prompt) {
               try {
                 image_url = await generateAdImage(parsed.brand.name, ad.image_prompt, size, apiKey);
                 send("ad-image", { idx: i });
@@ -212,12 +211,12 @@ export default async function handler(req: Request): Promise<Response> {
           brand: parsed.brand,
           audience: parsed.audience,
           ads: rendered,
-          variations: variationAds,
         });
 
-        // Send the full 12-ad pack email — to the prospect AND internal team.
-        // Strip image_url + image_prompt from hero ads for the email (just copy).
-        const stripForEmail = (ad: HeroAdConcept | VariationAdConcept): MetaAdsPackAd => ({
+        // Email pack ships text descriptions for all 12 (split into hero +
+        // additional in the email template, but every variation now also has
+        // its own visual on the page itself).
+        const stripForEmail = (ad: AdConcept): MetaAdsPackAd => ({
           platform: ad.platform,
           format: ad.format,
           angle: ad.angle,

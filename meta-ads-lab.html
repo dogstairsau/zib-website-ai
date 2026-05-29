@@ -858,8 +858,7 @@
   };
 
   const renderAds = () => {
-    const all = [...state.ads, ...state.variations];
-    const html = all.map((ad, i) => adCardHtml(ad, state.brand, i)).join('');
+    const html = state.ads.map((ad, i) => adCardHtml(ad, state.brand, i)).join('');
     adGrid.innerHTML = html;
     if (brandLbl) brandLbl.textContent = state.brand?.name || 'your brand';
     if (brandName) brandName.textContent = state.brand?.name || 'your brand';
@@ -915,7 +914,6 @@
     } else if (event === 'ads') {
       state.audience = payload.audience;
       state.ads = payload.ads || [];
-      state.variations = payload.variations || [];
       renderAds();
     } else if (event === 'done') {
       state.isDone = true;

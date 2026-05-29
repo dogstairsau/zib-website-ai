@@ -23,7 +23,7 @@
       "permanent": false
     },
     {
-      "source": "/:path((?!audit$|audit\\.html$|chelsea-teelow$|chelsea-teelow\\.html$|marty-tucker$|marty-tucker\\.html$|daniel-harris$|daniel-harris\\.html$|brad-reece$|brad-reece\\.html$|corrine-chalmers$|corrine-chalmers\\.html$|matt-arnot$|matt-arnot\\.html$|dylan-and-jake$|dylan-and-jake\\.html$|roi-calculator$|roi-calculator\\.html$|sandra$|sandra\\.html$|prompt-research$|prompt-research\\.html$|australian-infinity-hospitality-solutions$|australian-infinity-hospitality-solutions\\.html$|archer-scott-lawyers$|archer-scott-lawyers\\.html$|Mad-Mex-SEO-GEO-Opportunity$|Mad-Mex-SEO-GEO-Opportunity\\.html$|api/|assets/|robots\\.txt$|llms\\.txt$|sitemap\\.xml$|favicon\\.ico$).+)",
+      "source": "/:path((?!audit$|audit\\.html$|meta-ads-lab$|meta-ads-lab\\.html$|chelsea-teelow$|chelsea-teelow\\.html$|marty-tucker$|marty-tucker\\.html$|daniel-harris$|daniel-harris\\.html$|brad-reece$|brad-reece\\.html$|corrine-chalmers$|corrine-chalmers\\.html$|matt-arnot$|matt-arnot\\.html$|dylan-and-jake$|dylan-and-jake\\.html$|roi-calculator$|roi-calculator\\.html$|sandra$|sandra\\.html$|prompt-research$|prompt-research\\.html$|australian-infinity-hospitality-solutions$|australian-infinity-hospitality-solutions\\.html$|archer-scott-lawyers$|archer-scott-lawyers\\.html$|Mad-Mex-SEO-GEO-Opportunity$|Mad-Mex-SEO-GEO-Opportunity\\.html$|api/|assets/|robots\\.txt$|llms\\.txt$|sitemap\\.xml$|favicon\\.ico$).+)",
       "has": [{ "type": "host", "value": "(www\\.)?ziboutreach\\.com\\.au" }],
       "destination": "https://zibdigital.com.au/:path",
       "permanent": false
