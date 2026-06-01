@@ -38,7 +38,7 @@ type Competitor = { name: string; reason: string };
 type Category = { label: string; search_query: string };
 
 type ClaudeResponse = {
-  brand: { name: string; tagline: string; category: string; domain: string };
+  brand: { name: string; tagline: string; category: string; domain: string; facebookUrl?: string };
   audience: string;
   competitors?: Competitor[];
   category?: Category;
@@ -46,6 +46,32 @@ type ClaudeResponse = {
   hero_ads: AdConcept[];
   variation_ads: AdConcept[];
 };
+
+// Find the prospect's Facebook Page URL in their crawled HTML.
+// Skips social-share buttons, the FB pixel, plugins, etc — picks the first
+// link that looks like an actual brand Page or Profile.
+function extractFacebookPage(html: string): string | null {
+  if (!html) return null;
+  const exclude = new Set([
+    "sharer", "sharer.php", "plugins", "tr", "dialog", "share", "login",
+    "search", "hashtag", "home", "people", "groups", "watch", "marketplace",
+    "events", "messages", "settings", "help", "policies", "terms", "policy",
+    "privacy", "ads", "business", "iq", "gaming", "fundraisers",
+  ]);
+  const re = /(?:https?:)?\/\/(?:[a-z]{2,3}-[a-z]{2,3}\.|www\.|m\.|web\.)?facebook\.com\/([A-Za-z0-9.\-_]+)/gi;
+  let m: RegExpExecArray | null;
+  while ((m = re.exec(html)) !== null) {
+    const handle = m[1];
+    if (!handle) continue;
+    const lower = handle.toLowerCase();
+    if (exclude.has(lower)) continue;
+    if (handle.length < 2 || handle.length > 60) continue;
+    if (/^\d+$/.test(handle)) continue; // skip raw numeric IDs (likely ad params)
+    if (handle.endsWith(".php")) continue;
+    return `https://www.facebook.com/${handle}`;
+  }
+  return null;
+}
 
 type RenderedAd = AdConcept & {
   image_url: string | null;
@@ -211,6 +237,15 @@ export default async function handler(req: Request): Promise<Response> {
         if (!parsed.brand.domain) {
           try { parsed.brand.domain = new URL(site.url).hostname.replace(/^www\./, ""); }
           catch { parsed.brand.domain = site.url; }
+        }
+
+        // Try to find the prospect's actual Facebook Page from their site so
+        // we can deep-link straight to it instead of doing a keyword search
+        // that returns multiple advertisers with similar names.
+        const facebookUrl = extractFacebookPage(site.rawHtml);
+        if (facebookUrl) {
+          (parsed.brand as any).facebookUrl = facebookUrl;
+          console.log("[meta-ads-lab] facebook page found", { facebookUrl });
         }
 
         send("brand", parsed.brand);
