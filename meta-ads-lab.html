@@ -525,6 +525,85 @@
 }
 .strat-list li strong { display: block; color: var(--ink); font-weight: 500; margin-bottom: 3px; }
 
+/* ─── AUDIT (Ad Library deep-links) ─────────────────────────────── */
+.mal-audit { padding: clamp(96px, 11vw, 160px) 0; background: var(--paper); border-bottom: 0.5px solid var(--rule); }
+.mal-audit[hidden] { display: none; }
+.mal-audit .head { max-width: 60ch; margin-bottom: clamp(48px, 6vw, 72px); }
+.mal-audit h2 {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(34px, 4.2vw, 60px);
+  letter-spacing: -0.025em; line-height: 1.02;
+  margin-top: 14px;
+}
+.mal-audit h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
+.mal-audit .head p { color: var(--muted); font-size: clamp(15px, 1.2vw, 17px); line-height: 1.6; margin-top: 18px; max-width: 60ch; }
+
+.audit-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr 1fr;
+  gap: clamp(16px, 1.8vw, 22px);
+}
+@media (max-width: 1080px) { .audit-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .audit-grid { grid-template-columns: 1fr; } }
+
+.audit-card {
+  padding: clamp(24px, 2.6vw, 32px);
+  border: 1px solid var(--rule);
+  border-radius: 18px;
+  background: #fff;
+  display: flex; flex-direction: column; gap: 14px;
+  transition: transform 280ms var(--ease), border-color 280ms var(--ease);
+}
+.audit-card:hover { transform: translateY(-3px); border-color: var(--ink); }
+.audit-card.is-own {
+  background: var(--ink); color: #fff;
+  border-color: var(--ink);
+}
+.audit-card.is-own:hover { border-color: var(--accent); }
+.audit-card .lbl {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em;
+  color: var(--accent); font-weight: 600; text-transform: uppercase;
+}
+.audit-card .name {
+  font-family: var(--display); font-size: clamp(20px, 1.8vw, 24px);
+  font-weight: 500; letter-spacing: -0.018em;
+  background: transparent; border: 0; padding: 0; margin: 0; color: inherit;
+  width: 100%; outline: 0;
+  border-bottom: 1px solid transparent;
+  transition: border-color 200ms var(--ease);
+}
+.audit-card input.name { cursor: text; }
+.audit-card input.name:focus { border-bottom-color: var(--accent); }
+.audit-card input.name:hover:not(:focus) { border-bottom-color: var(--rule-2); }
+.audit-card .reason {
+  color: var(--muted); font-size: 14px; line-height: 1.55;
+  flex: 1;
+}
+.audit-card.is-own .reason { color: rgba(255,255,255,0.7); }
+.audit-card .audit-link {
+  font-family: var(--display); font-size: 14px; font-weight: 500;
+  padding: 12px 18px;
+  background: var(--accent); color: #fff;
+  border-radius: 999px;
+  display: inline-flex; align-items: center; justify-content: space-between; gap: 8px;
+  transition: transform 200ms var(--ease), background 200ms var(--ease);
+  text-align: left;
+}
+.audit-card .audit-link:hover { background: #ff7a26; transform: translateY(-1px); }
+.audit-card .audit-link .arr { transition: transform 200ms var(--ease); }
+.audit-card .audit-link:hover .arr { transform: translateX(3px); }
+
+.audit-fallback {
+  margin-top: clamp(32px, 4vw, 48px);
+  padding-top: clamp(28px, 3vw, 36px);
+  border-top: 1px solid var(--rule);
+  font-size: 15px; line-height: 1.6; color: var(--muted);
+}
+.audit-fallback a {
+  color: var(--accent); font-weight: 500; border-bottom: 1px solid var(--accent);
+  padding-bottom: 1px;
+}
+
 /* ─── FAQ ───────────────────────────────────────────────────────── */
 .mal-faq { padding: clamp(96px, 11vw, 160px) 0; border-bottom: 0.5px solid var(--rule); }
 .mal-faq .head { max-width: 60ch; margin-bottom: clamp(48px, 6vw, 72px); }
@@ -702,6 +781,51 @@
     </div>
   </section>
 
+  <!-- ─── COMPETITIVE AUDIT (Ad Library deep-links) ───────── -->
+  <section id="audit" class="mal-audit" hidden>
+    <div class="container">
+      <div class="head reveal">
+        <div class="mono eyebrow">Competitive audit</div>
+        <h2>See what's <em>actually running.</em></h2>
+        <p>One click takes you to Meta's public Ad Library — real ads, real creative, real platform mix. Start with yours, then check the rooms your category lives in.</p>
+      </div>
+
+      <div class="audit-grid">
+        <div class="audit-card is-own">
+          <div class="lbl">Start here · your ads</div>
+          <div class="name" id="auditOwnName">Your brand</div>
+          <p class="reason">Everything currently active under your Page — Facebook, Instagram, Reels, Stories. Your real baseline.</p>
+          <a id="auditOwnLink" href="#" target="_blank" rel="noopener" class="audit-link">View in Ad Library <span class="arr">→</span></a>
+        </div>
+
+        <div class="audit-card" data-comp-idx="0">
+          <div class="lbl">Competitor 01</div>
+          <input class="name" type="text" placeholder="Competitor name" />
+          <p class="reason"></p>
+          <a href="#" target="_blank" rel="noopener" class="audit-link">View in Ad Library <span class="arr">→</span></a>
+        </div>
+
+        <div class="audit-card" data-comp-idx="1">
+          <div class="lbl">Competitor 02</div>
+          <input class="name" type="text" placeholder="Competitor name" />
+          <p class="reason"></p>
+          <a href="#" target="_blank" rel="noopener" class="audit-link">View in Ad Library <span class="arr">→</span></a>
+        </div>
+
+        <div class="audit-card" data-comp-idx="2">
+          <div class="lbl">Competitor 03</div>
+          <input class="name" type="text" placeholder="Competitor name" />
+          <p class="reason"></p>
+          <a href="#" target="_blank" rel="noopener" class="audit-link">View in Ad Library <span class="arr">→</span></a>
+        </div>
+      </div>
+
+      <div class="audit-fallback">
+        Picks not quite right? Edit the names above to your real competitors. Or <a id="auditCategoryLink" href="#" target="_blank" rel="noopener">browse all <span id="auditCategoryLabel">brands in your category</span> →</a>
+      </div>
+    </div>
+  </section>
+
   <!-- ─── FAQ ──────────────────────────────── -->
   <section class="mal-faq">
     <div class="container">
@@ -759,7 +883,9 @@
   const brandName = document.getElementById('brandName');
 
   const state = {
-    url: '', brand: null, audience: '', strategy: null, ads: [], variations: [],
+    url: '', brand: null, audience: '', strategy: null,
+    competitors: [], category: null,
+    ads: [], variations: [],
     isRunning: false, isDone: false,
   };
 
@@ -864,6 +990,64 @@
     if (brandName) brandName.textContent = state.brand?.name || 'your brand';
   };
 
+  // Meta Ad Library deep-link builder. Country defaults to AU.
+  const adLibraryUrl = (query) => {
+    const q = encodeURIComponent((query || '').trim());
+    return `https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country=AU&q=${q}`;
+  };
+
+  const renderAudit = () => {
+    const auditSec = document.getElementById('audit');
+    if (!auditSec) return;
+    auditSec.hidden = false;
+
+    // Own brand card
+    const ownName = document.getElementById('auditOwnName');
+    const ownLink = document.getElementById('auditOwnLink');
+    const brandName = state.brand?.name || 'Your brand';
+    if (ownName) ownName.textContent = brandName;
+    if (ownLink) ownLink.href = adLibraryUrl(brandName);
+
+    // Competitor cards (3 fixed slots)
+    const comps = state.competitors || [];
+    auditSec.querySelectorAll('[data-comp-idx]').forEach((card, i) => {
+      const c = comps[i] || { name: '', reason: '' };
+      const input = card.querySelector('input.name');
+      const reason = card.querySelector('.reason');
+      const link = card.querySelector('.audit-link');
+      if (input) input.value = c.name || '';
+      if (reason) reason.textContent = c.reason || '';
+      if (link) link.href = adLibraryUrl(c.name || '');
+      // Hide cards that have no Claude pick AND no user input yet
+      card.style.display = c.name ? '' : 'none';
+    });
+
+    // Category fallback
+    const catLink = document.getElementById('auditCategoryLink');
+    const catLabel = document.getElementById('auditCategoryLabel');
+    const cat = state.category;
+    if (catLink && catLabel) {
+      if (cat?.search_query) {
+        catLink.href = adLibraryUrl(cat.search_query);
+        catLabel.textContent = cat.label || `${cat.search_query} brands`;
+      } else {
+        catLink.parentElement.style.display = 'none';
+      }
+    }
+  };
+
+  // Live-update the deep-link as user edits competitor names
+  document.querySelectorAll('#audit [data-comp-idx]').forEach((card) => {
+    const input = card.querySelector('input.name');
+    const link = card.querySelector('.audit-link');
+    if (input && link) {
+      input.addEventListener('input', () => {
+        link.href = adLibraryUrl(input.value);
+        card.style.display = '';
+      });
+    }
+  });
+
   const renderStrategy = () => {
     const s = state.strategy;
     if (!s) return;
@@ -930,9 +1114,12 @@
     } else if (event === 'ads') {
       state.audience = payload.audience;
       state.strategy = payload.strategy || null;
+      state.competitors = payload.competitors || [];
+      state.category = payload.category || null;
       state.ads = payload.ads || [];
       renderAds();
       renderStrategy();
+      renderAudit();
       // Reveal the section as soon as the 12 cards land (placeholder visuals).
       // Images stream in via ad-image events while the section is visible.
       if (reveal.hidden) {
