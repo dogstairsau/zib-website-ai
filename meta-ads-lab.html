@@ -525,58 +525,6 @@
 }
 .strat-list li strong { display: block; color: var(--ink); font-weight: 500; margin-bottom: 3px; }
 
-/* ─── AUDIT (Ad Library deep-links) ─────────────────────────────── */
-.mal-audit { padding: clamp(96px, 11vw, 160px) 0; background: var(--paper); border-bottom: 0.5px solid var(--rule); }
-.mal-audit[hidden] { display: none; }
-.mal-audit .head { max-width: 60ch; margin-bottom: clamp(48px, 6vw, 72px); }
-.mal-audit h2 {
-  font-family: var(--display); font-weight: 500;
-  font-size: clamp(34px, 4.2vw, 60px);
-  letter-spacing: -0.025em; line-height: 1.02;
-  margin-top: 14px;
-}
-.mal-audit h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
-.mal-audit .head p { color: var(--muted); font-size: clamp(15px, 1.2vw, 17px); line-height: 1.6; margin-top: 18px; max-width: 60ch; }
-
-.audit-card {
-  padding: clamp(32px, 3.6vw, 48px);
-  border: 1px solid var(--ink);
-  border-radius: 22px;
-  background: var(--ink); color: #fff;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  align-items: center;
-  gap: clamp(24px, 3vw, 40px);
-  transition: border-color 280ms var(--ease), transform 280ms var(--ease);
-}
-.audit-card:hover { border-color: var(--accent); transform: translateY(-2px); }
-@media (max-width: 720px) { .audit-card { grid-template-columns: 1fr; } }
-.audit-card .lbl {
-  font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em;
-  color: var(--accent); font-weight: 600; text-transform: uppercase;
-}
-.audit-card .name {
-  font-family: var(--display); font-size: clamp(24px, 2.4vw, 32px);
-  font-weight: 500; letter-spacing: -0.022em;
-  margin: 10px 0 12px; color: #fff;
-}
-.audit-card .reason {
-  color: rgba(255,255,255,0.7); font-size: 15px; line-height: 1.55;
-  max-width: 52ch;
-}
-.audit-card .audit-link {
-  font-family: var(--display); font-size: 15px; font-weight: 500;
-  padding: 16px 28px;
-  background: var(--accent); color: #fff;
-  border-radius: 999px;
-  display: inline-flex; align-items: center; gap: 10px;
-  transition: transform 200ms var(--ease), background 200ms var(--ease);
-  white-space: nowrap;
-}
-.audit-card .audit-link:hover { background: #ff7a26; transform: translateY(-1px); }
-.audit-card .audit-link .arr { transition: transform 200ms var(--ease); }
-.audit-card .audit-link:hover .arr { transform: translateX(3px); }
-
 /* ─── FAQ ───────────────────────────────────────────────────────── */
 .mal-faq { padding: clamp(96px, 11vw, 160px) 0; border-bottom: 0.5px solid var(--rule); }
 .mal-faq .head { max-width: 60ch; margin-bottom: clamp(48px, 6vw, 72px); }
@@ -754,26 +702,6 @@
     </div>
   </section>
 
-  <!-- ─── YOUR CURRENT ADS ────────────────────────────────── -->
-  <section id="audit" class="mal-audit" hidden>
-    <div class="container">
-      <div class="head reveal">
-        <div class="mono eyebrow">Your current ads</div>
-        <h2>See what you're <em>already running.</em></h2>
-        <p>Before you decide what to launch, look at what's live now. We'll send you straight to your Facebook Page so you can scan every active ad in two clicks.</p>
-      </div>
-
-      <div class="audit-card">
-        <div>
-          <div class="lbl">Audit your own ads</div>
-          <div class="name" id="auditOwnName">Your brand</div>
-          <p class="reason" id="auditOwnReason">Opens your Facebook Page. Click "Page Transparency" in the right column, then "See all" to view every active ad across Facebook, Instagram, Reels and Stories.</p>
-        </div>
-        <a id="auditOwnLink" href="#" target="_blank" rel="noopener" class="audit-link">Open my Page <span class="arr">→</span></a>
-      </div>
-    </div>
-  </section>
-
   <!-- ─── FAQ ──────────────────────────────── -->
   <section class="mal-faq">
     <div class="container">
@@ -937,37 +865,6 @@
     if (brandName) brandName.textContent = state.brand?.name || 'your brand';
   };
 
-  // Meta Ad Library keyword-search fallback (used when no FB Page found).
-  const adLibraryUrl = (query) => {
-    const q = encodeURIComponent((query || '').trim());
-    return `https://www.facebook.com/ads/library/?active_status=active&ad_type=all&country=AU&q=${q}`;
-  };
-
-  const renderAudit = () => {
-    const auditSec = document.getElementById('audit');
-    if (!auditSec) return;
-
-    const ownName = document.getElementById('auditOwnName');
-    const ownLink = document.getElementById('auditOwnLink');
-    const ownReason = document.getElementById('auditOwnReason');
-    const brandName = state.brand?.name || 'Your brand';
-    const fbUrl = state.brand?.facebookUrl;
-
-    if (ownName) ownName.textContent = brandName;
-    if (ownLink) {
-      if (fbUrl) {
-        ownLink.href = fbUrl;
-        ownLink.innerHTML = 'Open my Page <span class="arr">→</span>';
-        if (ownReason) ownReason.textContent = 'Opens your Facebook Page. Click "Page Transparency" in the right column, then "See all" to view every active ad across Facebook, Instagram, Reels and Stories.';
-      } else {
-        ownLink.href = adLibraryUrl(brandName);
-        ownLink.innerHTML = 'Find me in Ad Library <span class="arr">→</span>';
-        if (ownReason) ownReason.textContent = "We couldn't find your Facebook Page from your site. Search Meta's Ad Library for your brand — pick yours from the dropdown if multiple show.";
-      }
-    }
-    auditSec.hidden = false;
-  };
-
   const renderStrategy = () => {
     const s = state.strategy;
     if (!s) return;
@@ -1037,7 +934,6 @@
       state.ads = payload.ads || [];
       renderAds();
       renderStrategy();
-      renderAudit();
       // Reveal the section as soon as the 12 cards land (placeholder visuals).
       // Images stream in via ad-image events while the section is visible.
       if (reveal.hidden) {
