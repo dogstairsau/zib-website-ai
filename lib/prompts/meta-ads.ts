@@ -16,6 +16,23 @@ Output ONLY valid JSON in this exact shape — no markdown fences, no commentary
     "domain": "yoursite.com.au"
   },
   "audience": "One sentence describing the primary buyer — who, age, motivation.",
+  "strategy": {
+    "audiences": [
+      { "title": "Short label, max 6 words. Eg 'Tradies, 30-55, Greater Sydney'.", "detail": "One sentence. Who they are, where they are, what they spend on, what makes them click." },
+      { "title": "Warm/retargeting audience label", "detail": "Why this audience converts. Be specific to the brand's funnel." },
+      { "title": "Cold prospecting audience label", "detail": "Interest stack or lookalike spec. Why it builds pipeline." }
+    ],
+    "angles": [
+      { "title": "Angle name, 2-3 words", "detail": "One sentence on what we say and why it works for this brand." },
+      { "title": "Angle name 2", "detail": "..." },
+      { "title": "Angle name 3", "detail": "..." }
+    ],
+    "cadence": [
+      { "title": "Starting test budget", "detail": "Dollar amount per day, number of ad sets, test window. Tune to the brand's likely revenue scale (a $30 DTC product gets different starting budget than a $20k B2B contract)." },
+      { "title": "Refresh rhythm", "detail": "How often we ship new creatives, framed against the brand's audience size and category." },
+      { "title": "Reporting", "detail": "Which commercial metrics we track for this brand. CAC/ROAS/AOV for ecom, CPL/SQL for services, etc. Match the business model." }
+    ]
+  },
   "hero_ads": [
     {
       "platform": "Instagram · Feed",

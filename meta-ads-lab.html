@@ -674,7 +674,7 @@
         <div class="strat-card reveal">
           <div class="label">Audiences</div>
           <h3>Who we're talking to.</h3>
-          <ul class="strat-list">
+          <ul class="strat-list" id="stratAudiences">
             <li><strong>Bayside DTC buyer · 34-49</strong>Spends on category, owns 3+ subscriptions, churns on disappointment.</li>
             <li><strong>Pre-launch waitlist · warm</strong>Already opted in, hasn't bought. Highest-ROAS audience for first 14 days.</li>
             <li><strong>1% lookalike of repeat buyers</strong>Most efficient cold-prospect audience. Builds the next quarter's pipeline.</li>
@@ -683,7 +683,7 @@
         <div class="strat-card reveal">
           <div class="label">Angles</div>
           <h3>What we're saying.</h3>
-          <ul class="strat-list">
+          <ul class="strat-list" id="stratAngles">
             <li><strong>Social proof</strong>Waitlist size, customer quote, results-led. Highest CTR in test data.</li>
             <li><strong>Problem-aware</strong>Names the frustration before naming the brand. Best for cold.</li>
             <li><strong>Founder story</strong>Voice + face on screen. Drops CPM, lifts brand recall.</li>
@@ -692,7 +692,7 @@
         <div class="strat-card reveal">
           <div class="label">Spend &amp; cadence</div>
           <h3>How we'd run it.</h3>
-          <ul class="strat-list">
+          <ul class="strat-list" id="stratCadence">
             <li><strong>Starting test budget</strong>$120/day across 3 ad sets for 7 days. Cut, double, ship winners.</li>
             <li><strong>Refresh rhythm</strong>4 new creatives every fortnight. Fatigue kills returns by week 3.</li>
             <li><strong>Reporting</strong>Weekly read on CAC, ROAS, and AOV — not vanity. Plain English.</li>
@@ -759,7 +759,7 @@
   const brandName = document.getElementById('brandName');
 
   const state = {
-    url: '', brand: null, audience: '', ads: [], variations: [],
+    url: '', brand: null, audience: '', strategy: null, ads: [], variations: [],
     isRunning: false, isDone: false,
   };
 
@@ -864,6 +864,22 @@
     if (brandName) brandName.textContent = state.brand?.name || 'your brand';
   };
 
+  const renderStrategy = () => {
+    const s = state.strategy;
+    if (!s) return;
+    const itemHtml = (it) =>
+      `<li><strong>${escapeHtml(it.title || '')}</strong>${escapeHtml(it.detail || '')}</li>`;
+    const fill = (id, items) => {
+      const el = document.getElementById(id);
+      if (el && Array.isArray(items) && items.length) {
+        el.innerHTML = items.map(itemHtml).join('');
+      }
+    };
+    fill('stratAudiences', s.audiences);
+    fill('stratAngles', s.angles);
+    fill('stratCadence', s.cadence);
+  };
+
   const revealAds = () => {
     reveal.hidden = false;
     setTimeout(() => reveal.scrollIntoView({ behavior: 'smooth', block: 'start' }), 400);
@@ -913,8 +929,10 @@
       if (brandName) brandName.textContent = payload.name || 'your brand';
     } else if (event === 'ads') {
       state.audience = payload.audience;
+      state.strategy = payload.strategy || null;
       state.ads = payload.ads || [];
       renderAds();
+      renderStrategy();
       // Reveal the section as soon as the 12 cards land (placeholder visuals).
       // Images stream in via ad-image events while the section is visible.
       if (reveal.hidden) {

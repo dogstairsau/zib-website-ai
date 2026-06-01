@@ -28,9 +28,17 @@ type AdConcept = {
   image_prompt: string;
 };
 
+type StrategyItem = { title: string; detail: string };
+type Strategy = {
+  audiences: StrategyItem[];
+  angles: StrategyItem[];
+  cadence: StrategyItem[];
+};
+
 type ClaudeResponse = {
   brand: { name: string; tagline: string; category: string; domain: string };
   audience: string;
+  strategy?: Strategy;
   hero_ads: AdConcept[];
   variation_ads: AdConcept[];
 };
@@ -235,6 +243,7 @@ export default async function handler(req: Request): Promise<Response> {
         send("ads", {
           brand: parsed.brand,
           audience: parsed.audience,
+          strategy: parsed.strategy || null,
           ads: placeholderAds,
         });
 
