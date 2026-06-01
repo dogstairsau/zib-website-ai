@@ -34,14 +34,9 @@ type Strategy = {
   angles: StrategyItem[];
   cadence: StrategyItem[];
 };
-type Competitor = { name: string; reason: string };
-type Category = { label: string; search_query: string };
-
 type ClaudeResponse = {
   brand: { name: string; tagline: string; category: string; domain: string; facebookUrl?: string };
   audience: string;
-  competitors?: Competitor[];
-  category?: Category;
   strategy?: Strategy;
   hero_ads: AdConcept[];
   variation_ads: AdConcept[];
@@ -283,8 +278,6 @@ export default async function handler(req: Request): Promise<Response> {
           brand: parsed.brand,
           audience: parsed.audience,
           strategy: parsed.strategy || null,
-          competitors: parsed.competitors || [],
-          category: parsed.category || null,
           ads: placeholderAds,
         });
 

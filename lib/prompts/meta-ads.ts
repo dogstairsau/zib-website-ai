@@ -16,15 +16,6 @@ Output ONLY valid JSON in this exact shape — no markdown fences, no commentary
     "domain": "yoursite.com.au"
   },
   "audience": "One sentence describing the primary buyer — who, age, motivation.",
-  "competitors": [
-    { "name": "Competitor brand name as they're commonly known", "reason": "One short sentence on why they're a relevant competitor for this brand (similar audience, similar offer, similar geo). Specific, not generic." },
-    { "name": "Competitor 2 name", "reason": "..." },
-    { "name": "Competitor 3 name", "reason": "..." }
-  ],
-  "category": {
-    "label": "Plain-language category name in plural form. Eg 'Australian skincare brands' or 'Melbourne plumbers' or 'B2B law firms in Sydney'. Match the brand's geo if relevant.",
-    "search_query": "1-3 word category keyword for searching Meta Ad Library. Eg 'skincare' or 'plumber' or 'law firm'."
-  },
   "strategy": {
     "audiences": [
       { "title": "Short label, max 6 words. Eg 'Tradies, 30-55, Greater Sydney'.", "detail": "One sentence. Who they are, where they are, what they spend on, what makes them click." },
