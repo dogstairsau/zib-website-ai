@@ -317,8 +317,8 @@ function renderMetaAdsPackHtml(pack: MetaAdsPack): string {
   ${variationBlock}
 
   <div style="margin-top:36px;padding:24px;background:#0F0F0F;color:#fff;border-radius:12px;text-align:center;">
-    <h3 style="margin:0 0 8px;font-size:18px;letter-spacing:-0.01em;">Want us to run these?</h3>
-    <p style="margin:0 0 14px;font-size:14px;color:rgba(255,255,255,0.72);line-height:1.5;">A senior Meta strategist will reach out within 24 hours to walk through the brief, refine targeting and (if you want) launch the campaigns end-to-end.</p>
+    <h3 style="margin:0 0 8px;font-size:18px;letter-spacing:-0.01em;">Want a second pair of eyes on this?</h3>
+    <p style="margin:0 0 14px;font-size:14px;color:rgba(255,255,255,0.72);line-height:1.5;">A senior Meta strategist will reach out within 24 hours to walk through the brief, sharpen the angles and answer any questions on targeting.</p>
     <a href="mailto:hello@zibdigital.com.au?subject=Meta%20Ads%20Lab%20-%20${encodeURIComponent(pack.brand?.name || pack.url)}" style="display:inline-block;padding:12px 24px;background:#FF6200;color:#fff;text-decoration:none;border-radius:999px;font-weight:500;font-size:14px;">Reply to talk to a strategist →</a>
   </div>
 
