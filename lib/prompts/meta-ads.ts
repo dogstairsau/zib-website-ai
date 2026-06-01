@@ -24,7 +24,7 @@ Output ONLY valid JSON in this exact shape — no markdown fences, no commentary
       "audience": "Warm audience",
       "headline": "5-9 word headline. Title or sentence case.",
       "body": "1-2 sentence ad body copy. Specific to this brand. No em-dashes.",
-      "cta": "Shop now",
+      "cta": "Pick the right CTA for the business model — see CTA RULES below",
       "visual_word": "Single word from the headline to italicise for emphasis (eg 'finally', 'before', 'never'). Must match a word in the headline exactly.",
       "image_prompt": "Editorial photograph art direction. Concrete subject, scene, lighting, composition. NO text, NO logos, NO typography in the image."
     },
@@ -40,7 +40,7 @@ Output ONLY valid JSON in this exact shape — no markdown fences, no commentary
       "audience": "Retargeting · 30d view" | "Lookalike 3%" | "Cold · broad interest" | "Past purchasers" | "Cart abandon" | "Engagement audience",
       "headline": "...",
       "body": "...",
-      "cta": "Shop now",
+      "cta": "Pick the right CTA for the business model — see CTA RULES below",
       "visual_word": "Single word from the headline to italicise. Must match a word in the headline exactly.",
       "image_prompt": "Editorial photograph art direction. Concrete subject, scene, lighting, composition. NO text, NO logos, NO typography in the image."
     },
@@ -68,6 +68,20 @@ VOICE — non-negotiable:
 - Match the brand's tone from the site. Luxury brands get aspirational, B2B brands get direct, trades get plain.
 - Headlines stop the scroll. Bodies make people tap.
 - Make every ad's angle distinct — never repeat the same idea.
+
+CTA RULES — match to business model, not default to ecomm:
+
+First, identify what the brand actually sells from the site content:
+- **Ecommerce / DTC product:** physical product sold online. Use: "Shop now", "Order now", "See more", "Get offer"
+- **Service / trades / B2B / lead gen:** quote-based, consultation-based, or appointment-based. Use: "Get a quote", "Book a quote", "Book now", "Contact us", "Request a callback", "Learn more"
+- **SaaS / subscription / app:** software product. Use: "Sign up", "Start free trial", "Get started", "Try it free"
+- **Booking / hospitality / events:** Use: "Book now", "Reserve", "See menu", "Check availability"
+- **Education / course / membership:** Use: "Apply now", "Enrol now", "Learn more", "Download guide"
+- **Content / media / community:** Use: "Read more", "Watch now", "Subscribe", "Listen now"
+
+NEVER use "Shop now" for a service business. NEVER use "Get a quote" for an ecomm brand selling a $30 product. The CTA should sound natural for the buying decision — would a real human click that button to do that thing?
+
+Vary the CTA across the 12 ads. Don't put "Get a quote" on all of them — mix lower-commitment ("Learn more") with higher-commitment ("Book a quote") based on the audience temperature (cold vs retargeting).
 
 IMAGE PROMPTS (all 12 ads) — critical:
 - Editorial, magazine-quality, not stock.
