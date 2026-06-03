@@ -21,7 +21,8 @@
     --maxw:1120px;
   }
   *{box-sizing:border-box;margin:0;padding:0}
-  html{scroll-behavior:smooth}
+  html{scroll-behavior:smooth;overflow-x:clip}
+  body{overflow-x:clip}
   body{font-family:'Neurial Grotesk',system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--ink-2);background:#fff;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;line-height:1.5}
   .wrap{max-width:var(--maxw);margin:0 auto;padding:0 32px}
   a{color:inherit}
@@ -219,6 +220,24 @@
   #nextBtn .nb-title{display:block;font-size:13px;font-weight:700;color:#fff;margin-top:3px;max-width:180px;line-height:1.15}
   #nextBtn .nb-arrow{font-size:20px;color:var(--blue);font-weight:700;line-height:1}
   @media(max-width:600px){#nextBtn .nb-title{max-width:120px}#nextBtn{right:14px;bottom:14px;padding:10px 14px}}
+
+  /* ---- mobile polish ---- */
+  .tscroll{max-width:100%;overflow-x:auto;-webkit-overflow-scrolling:touch}
+  @media(max-width:760px){
+    section{padding:56px 0}
+    .wrap{padding:0 20px}
+    .hero{padding:84px 0 64px}
+  }
+  @media(max-width:640px){
+    .tscroll.x{margin-top:34px;border:1px solid var(--rule)}
+    .tscroll.x table.z{min-width:600px;margin-top:0;border:none}
+  }
+  @media(max-width:600px){
+    .nav .wrap{gap:10px}
+    .brandmark{font-size:10px;letter-spacing:.08em;min-width:0;overflow:hidden;text-overflow:ellipsis}
+    .nav .book{padding:8px 12px;font-size:10px}
+  }
+
   @media print{#nextBtn,.nav{display:none}}
 
   /* ---- Alchemy brand theme ---- */
@@ -314,6 +333,7 @@
     <div class="tag">Current state · the drop</div>
     <h2 class="t wide">A sharp decline, of the wrong visitors.</h2>
     <p class="sub">The number of search terms the site was found for peaked near 400 in mid-2025, then fell to about 25 by early 2026. Every term lost is a building name.</p>
+    <div class="tscroll x">
     <table class="z">
       <thead><tr><th>Search terms lost</th><th class="r">Searches</th><th class="r">Rank</th><th class="r">Visits</th></tr></thead>
       <tbody>
@@ -324,6 +344,7 @@
         <tr><td class="k">point cook</td><td class="r">90</td><td class="r">9 → out</td><td class="r vol o">–3</td></tr>
       </tbody>
     </table>
+    </div>
     <div class="takeaway"><b>Every term lost is a project Alchemy delivered, not a service it sells.</b> People searching those names wanted the building, not a builder. The real problem is what was never there.</div>
   </div>
 </section>
@@ -335,6 +356,7 @@
     <h2 class="t wide">You win the names. You're missing the buyers.</h2>
     <p class="sub">Your name and project names versus what buyers actually type. Figures are searches per month in Victoria.</p>
     <div class="two">
+      <div class="tscroll">
       <table class="z" style="margin-top:0">
         <thead><tr><th>Your name &amp; project names · you show up</th><th class="r">/ mo</th></tr></thead>
         <tbody>
@@ -345,6 +367,8 @@
           <tr><td class="k">community centre tarneit</td><td class="r vol">40</td></tr>
         </tbody>
       </table>
+      </div>
+      <div class="tscroll">
       <table class="z" style="margin-top:0">
         <thead><tr><th>What buyers search · you're absent</th><th class="r">/ mo</th></tr></thead>
         <tbody>
@@ -355,6 +379,7 @@
           <tr><td class="k">commercial fit out melbourne</td><td class="r vol o">150</td></tr>
         </tbody>
       </table>
+      </div>
     </div>
     <p class="note">The name and project searches have no buying intent, and are now declining. The searches on the right are the buyers, and the site shows up for none of them.</p>
     <div class="takeaway ink"><b>The brand and projects win the name search.</b> The searches that start a tender or a fit-out enquiry are wide open.</div>
@@ -367,6 +392,7 @@
     <div class="tag">Competitors · Victoria</div>
     <h2 class="t wide">Nobody owns the service searches.</h2>
     <p class="sub">Every competitor, and Alchemy, shows up almost entirely for its own name and individual project names. None has built pages for the searches that win work.</p>
+    <div class="tscroll x">
     <table class="z">
       <thead><tr><th>Competitor</th><th class="c">Authority</th><th class="c">Visits / mo</th><th class="c">Search terms</th><th>What they show up for</th></tr></thead>
       <tbody>
@@ -376,6 +402,7 @@
         <tr class="you"><td class="k">Alchemy Construct <b>(you)</b></td><td class="c">27</td><td class="c">~90</td><td class="c">25</td><td>Mostly your own name. Level with all three on authority, the gap is small and closeable.</td></tr>
       </tbody>
     </table>
+    </div>
     <div class="takeaway ink"><b>The same blind spot across the whole market.</b> All four show up for who they are and what they've built, none for what buyers search. The searches that win work are unclaimed.</div>
   </div>
 </section>
@@ -402,6 +429,7 @@
     <h2 class="t wide">Two service lines. Two sets of searches to win.</h2>
     <p class="sub">The searches behind each service line, Victoria. “Searches” = per month. “Competition” = how hard to win, lower is easier (green = quickest).</p>
     <div class="two">
+      <div class="tscroll">
       <table class="z" style="margin-top:0">
         <thead><tr><th>Construction · commercial building</th><th class="r">Searches</th><th class="r">Comp.</th></tr></thead>
         <tbody>
@@ -413,6 +441,8 @@
           <tr><td class="k">commercial construction melbourne</td><td class="r vol">30</td><td class="r kd mid">26</td></tr>
         </tbody>
       </table>
+      </div>
+      <div class="tscroll">
       <table class="z" style="margin-top:0">
         <thead><tr><th>Fit-out &amp; refurbishment · Alchemy Flex</th><th class="r">Searches</th><th class="r">Comp.</th></tr></thead>
         <tbody>
@@ -424,6 +454,7 @@
           <tr><td class="k">commercial fit out melbourne</td><td class="r vol o">150</td><td class="r kd mid">37</td></tr>
         </tbody>
       </table>
+      </div>
     </div>
     <div class="takeaway"><b>Where to start:</b> first, a “Commercial Builders Melbourne / Victoria” page, the low-competition terms are the quickest wins. Then an Alchemy Flex fit-out hub with pages for medical, retail, hospitality and education fit-outs, the most valuable group. Plus the live-environment work no rival targets.</div>
   </div>
