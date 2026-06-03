@@ -271,6 +271,19 @@
   .foot a{color:#CFC7B6}
   .calc .ci.hi b{color:#FFF84A}
   ::selection{background:#FFF84A;color:#413C3A}
+
+  /* ---- scroll-reveal animations ---- */
+  @media (prefers-reduced-motion: no-preference){
+    .reveal{opacity:0;transform:translateY(20px);transition:opacity .7s cubic-bezier(.22,.61,.36,1),transform .7s cubic-bezier(.22,.61,.36,1)}
+    .reveal.in{opacity:1;transform:none}
+    .hero .ribbon{transform:scaleY(0);transform-origin:top;transition:transform .9s cubic-bezier(.22,.61,.36,1) .15s}
+    .hero.in .ribbon{transform:scaleY(1)}
+    /* hover lift uses an inner shadow-only cue so it never fights the reveal transform */
+    .stat,.mv,.cell,.pc,.panel{box-shadow:0 0 0 rgba(65,60,58,0);transition:box-shadow .28s ease,opacity .7s cubic-bezier(.22,.61,.36,1),transform .7s cubic-bezier(.22,.61,.36,1)}
+    @media (hover:hover) and (pointer:fine){
+      .stat:hover,.mv:hover,.cell:hover,.panel:hover,.pc:not(.reco):hover{box-shadow:0 14px 34px rgba(65,60,58,.13)}
+    }
+  }
 </style>
 </head>
 <body>
@@ -671,6 +684,39 @@
   window.addEventListener('scroll', ()=>{ if(!ticking){ window.requestAnimationFrame(()=>{ updateBtn(); ticking=false; }); ticking=true; } }, {passive:true});
   window.addEventListener('resize', updateBtn);
   updateBtn();
+
+  /* scroll-reveal — progressive enhancement, respects reduced-motion */
+  (function(){
+    if(!('IntersectionObserver' in window)) return;
+    if(window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const sel = [
+      '.hero .ey','.hero h1','.hero p.lede','.hero .cta','.hero .facts',
+      'section .tag','section .t','section .sub',
+      '.stat','.panel','.mv','.cell','.ba .item','.pc','.tl .step',
+      '.tscroll','.takeaway','.note','.schemaText','.card','.calcbox',
+      '.close h2','.close p','.close .cta'
+    ].join(',');
+    const els = Array.from(document.querySelectorAll(sel));
+    const counts = new Map();
+    els.forEach(el=>{
+      el.classList.add('reveal');
+      const p = el.parentElement;
+      const n = counts.get(p) || 0; counts.set(p, n + 1);
+      el.style.transitionDelay = Math.min(n * 70, 280) + 'ms';
+    });
+    const io = new IntersectionObserver((entries)=>{
+      entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { rootMargin:'0px 0px -8% 0px', threshold:0.06 });
+    els.forEach(el=>io.observe(el));
+
+    const hero = document.querySelector('.hero');
+    if(hero){
+      const hio = new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{ if(e.isIntersecting){ hero.classList.add('in'); hio.disconnect(); } });
+      }, { threshold:0.01 });
+      hio.observe(hero);
+    }
+  })();
 </script>
 </body>
 </html>
