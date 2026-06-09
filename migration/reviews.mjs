@@ -12,7 +12,7 @@ import { ROOT, esc } from "./lib.mjs";
 
 const RATING = "4.8";
 const COUNT = "90";
-const GOOGLE_URL = "https://www.google.com/search?q=Zib+Digital+South+Melbourne+reviews"; // TODO: swap for the GBP review link
+const GOOGLE_URL = "https://share.google/C6H6hRcfPfYKd2dwO"; // Zib Digital Google Business Profile
 
 // 29 five-star reviews (the top-30 export minus the lone 1-star). featured → home strip.
 const REVIEWS = [
