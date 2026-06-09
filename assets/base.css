@@ -168,7 +168,6 @@ h1, h2, h3, .hero-h, .fork-h, .path-title, .moat-h, .cta-title { text-wrap: bala
 .nav-group--mega:hover > .nav-group-menu,
 .nav-group--mega:focus-within > .nav-group-menu,
 .nav-group--mega.is-open > .nav-group-menu { transform: translate(-50%, 0); }
-.nav-group-menu.mega-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .nav-group-menu.mega-cities { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .mega-col { display: flex; flex-direction: column; gap: 1px; align-items: stretch; }
 .mega-h {
@@ -179,10 +178,34 @@ h1, h2, h3, .hero-h, .fork-h, .path-title, .moat-h, .cta-title { text-wrap: bala
 .mega-city { font-weight: 500; opacity: 1 !important; }
 .mega-cities .mega-col { margin-bottom: 12px; }
 .mega-cities .mega-col a:not(.mega-city) { font-size: 13px; color: var(--muted); padding: 5px 14px; }
-.mega-feature {
-  margin-top: 8px; color: var(--accent) !important; opacity: 1 !important; font-weight: 500;
+
+/* Services — richer panel: service list + descriptions, with a promo panel */
+.nav-group-menu.mega-services { grid-template-columns: 1.55fr 1fr; gap: 24px; width: min(820px, 94vw); }
+.mega-services-list { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; align-content: start; }
+.nav-group-menu.mega-services a.mega-svc {
+  display: flex; flex-direction: column; gap: 3px;
+  padding: 11px 14px; border-radius: 10px; opacity: 1;
 }
-.mega-feature:hover { background: var(--paper); }
+.mega-svc:hover { background: var(--paper); }
+.mega-svc-name { font-weight: 500; font-size: 15px; color: var(--ink); }
+.mega-svc-desc { font-size: 12.5px; line-height: 1.42; color: var(--muted); }
+.mega-promo {
+  background: var(--ink); color: #fff; border-radius: 14px; padding: 22px;
+  display: flex; flex-direction: column; gap: 14px; justify-content: center;
+}
+.mega-promo-eyebrow { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.6); }
+.nav-group-menu.mega-services a.mega-promo-cta {
+  background: var(--accent); color: #fff; opacity: 1; font-weight: 500; font-size: 14px;
+  padding: 12px 16px; border-radius: 999px; text-align: center;
+  transition: transform 180ms var(--ease);
+}
+.mega-promo-cta:hover { transform: translateY(-1px); }
+.nav-group-menu.mega-services a.mega-promo-reviews {
+  color: rgba(255,255,255,0.82); opacity: 1; font-size: 13px; padding: 0;
+}
+.mega-promo-reviews:hover { color: #fff; background: transparent; }
+.mega-promo-reviews .stars { color: var(--accent); letter-spacing: 1px; }
+.mega-promo-reviews strong { color: #fff; }
 
 /* Header end region — holds the persistent CTA + the burger toggle.
    CTA stays visible at every viewport; burger only appears below 880px. */
@@ -322,6 +345,15 @@ h1, h2, h3, .hero-h, .fork-h, .path-title, .moat-h, .cta-title { text-wrap: bala
   .nav-group--mega .nav-group-menu a { padding: 12px clamp(32px,8vw,44px); border-bottom: 0.5px solid var(--rule); }
   .mega-cities .mega-col { margin-bottom: 0; }
   .mega-cities .mega-col a:not(.mega-city) { padding: 10px clamp(40px,10vw,52px); font-size: 14px; color: var(--muted); }
+
+  .nav-group-menu.mega-services { grid-template-columns: 1fr; width: auto; gap: 0; }
+  .mega-services-list { grid-template-columns: 1fr; }
+  .nav-group-menu.mega-services a.mega-svc { padding: 13px clamp(32px,8vw,44px); border-bottom: 0.5px solid var(--rule); }
+  .mega-svc-desc { display: none; }
+  .mega-promo { background: transparent; color: var(--ink); border-radius: 0; padding: 14px clamp(32px,8vw,44px) 20px; }
+  .mega-promo-eyebrow { color: var(--muted); }
+  .mega-promo-reviews { color: var(--muted) !important; }
+  .mega-promo-reviews strong { color: var(--ink); }
 }
 
 /* ─── Buttons (shared) ────────────────────────────────────────── */
