@@ -31,6 +31,8 @@
     { "source": "/design-branding", "destination": "/web-graphic-design-melbourne", "permanent": true },
     { "source": "/team", "destination": "/meet-the-team", "permanent": true },
     { "source": "/wp-content/uploads/2022/02/ZibDigital_WhitePaper_2022-1.pdf", "destination": "/blog", "permanent": true },
+    { "source": "/google-ads-old", "destination": "/google-ads-management-agency-melbourne", "permanent": true },
+    { "source": "/social-media-marketing-old", "destination": "/social-media-marketing", "permanent": true },
     { "source": "/category/:slug*", "destination": "/blog", "permanent": true },
     { "source": "/casestudy-category/:slug*", "destination": "/case-studies", "permanent": true },
     {
