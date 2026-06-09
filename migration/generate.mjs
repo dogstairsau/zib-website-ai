@@ -11,7 +11,7 @@
  *
  * Usage: node migration/generate.mjs <path-to-wordpress-export.xml>
  */
-import { writeFile, mkdir } from "node:fs/promises";
+import { writeFile, mkdir, readFile } from "node:fs/promises";
 import { join } from "node:path";
 import { ROOT, esc, decodeEntities, loadSf, loadWp, loadCopy } from "./lib.mjs";
 
@@ -132,7 +132,10 @@ function locationPage({ slug, service, city, sf, wp, copy }) {
   const locLinks = SIBLINGS[service].filter(([c]) => c !== city)
     .map(([c, href]) => `        <a class="loc-link" href="${href}">${hub.label} ${c} <span aria-hidden="true">→</span></a>`).join("\n");
 
+  const ld = { "@context": "https://schema.org", "@type": "Service", serviceType: `${hub.label} ${city}`, name: decodeEntities(h1), description: decodeEntities(desc), provider: { "@id": "https://zibdigital.com.au/#org" }, areaServed: { "@type": "City", name: city } };
+
   return `${HEAD(title, desc, "/assets/location.css")}
+<script type="application/ld+json">${JSON.stringify(ld)}</script>
 
 <section class="loc-hero">
   <div class="container">
@@ -275,8 +278,10 @@ function blogPage({ slug, sf, wp, copy }) {
   const h1 = sf?.h1 || wp?.title || slug;
   const date = wp?.date ? new Date(wp.date.replace(" ", "T")).toLocaleDateString("en-AU", { year: "numeric", month: "long", day: "numeric" }) : "";
   const blocks = copy.map((l) => (l.length <= 70 && !/[.!?]$/.test(l)) ? `      <h2>${esc(decodeEntities(l))}</h2>` : `      <p>${esc(decodeEntities(l))}</p>`).join("\n");
+  const ld = { "@context": "https://schema.org", "@type": "BlogPosting", headline: decodeEntities(h1), description: decodeEntities(desc || h1), datePublished: wp?.date ? new Date(wp.date.replace(" ", "T")).toISOString() : undefined, author: { "@type": "Organization", name: "Zib Digital" }, publisher: { "@id": "https://zibdigital.com.au/#org" }, mainEntityOfPage: `https://zibdigital.com.au/${slug}` };
 
   return `${HEAD(title, desc || h1)}
+<script type="application/ld+json">${JSON.stringify(ld)}</script>
 <article class="post">
   <header class="post-hero">
     <div class="container">
@@ -356,6 +361,71 @@ ${grid}
 ${FOOT}`;
 }
 
+// ───────────────────────── PARTNER case studies (from partials) ─────────────────────────
+const PARTNER_CS = ["4x4-automotive", "car-subscription", "commercial-door", "custom-trailer", "golf-club", "licensed-club-gbp", "licensed-club-seo", "photo-booth", "plant-hire", "pool-fencing", "refrigerated-transport", "roof-restoration", "trampoline-seo"];
+
+async function parsePartial(slug) {
+  const html = await readFile(join(ROOT, "_partials/case-studies", `${slug}.html`), "utf8");
+  const eyebrow = (html.match(/<div class="case-card-eyebrow[^"]*"[^>]*>([\s\S]*?)<\/div>/) || [])[1] || "";
+  const tags = [...eyebrow.matchAll(/<span>([^<]*)<\/span>/g)].map((m) => decodeEntities(m[1].trim()));
+  const stat = decodeEntities(((html.match(/<div class="case-card-stat">([\s\S]*?)<\/div>/) || [])[1] || "").replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim());
+  const blurb = decodeEntities(((html.match(/<p class="case-card-blurb">([\s\S]*?)<\/p>/) || [])[1] || "").trim());
+  const title = decodeEntities(((html.match(/<h4>([\s\S]*?)<\/h4>/) || [])[1] || "").replace(/\s+/g, " ").trim());
+  let sections = (html.match(/<div class="case-card-body">([\s\S]*?)<\/div>\s*<\/details>/) || [])[1] || "";
+  sections = sections.replace(/<h4>[\s\S]*?<\/h4>/, "").replace(/^\s+/gm, "  ").trim();
+  return { slug, tags, stat, blurb, title, sections };
+}
+
+function partnerCaseStudyPage({ slug, tags, stat, blurb, title, sections }) {
+  const pageTitle = `${title} | Zib Digital Case Study`;
+  const desc = `${stat}. ${blurb}`.replace(/\s+/g, " ").slice(0, 200);
+  const ld = { "@context": "https://schema.org", "@type": "Article", headline: `${title} case study`, description: desc, author: { "@type": "Organization", name: "Zib Digital" }, publisher: { "@id": "https://zibdigital.com.au/#org" }, mainEntityOfPage: `https://zibdigital.com.au/casestudy/${slug}` };
+  return `${HEAD(pageTitle, desc)}
+<script type="application/ld+json">${JSON.stringify(ld)}</script>
+<article class="cs">
+  <header class="cs-hero">
+    <div class="container">
+      <a class="cs-back" href="/case-studies">← All case studies</a>
+      <div class="cs-tags mono">${tags.map(esc).join(" · ")}</div>
+      <h1 class="cs-stat">${esc(stat)}</h1>
+      <p class="cs-lede">${esc(blurb)}</p>
+      <div class="cs-sub mono">${esc(title)}</div>
+    </div>
+  </header>
+  <div class="container cs-body cs-structured">
+${sections}
+  </div>
+  <section class="cs-cta">
+    <div class="container">
+      <h2>Want results like this?</h2>
+      <p>Thirty minutes with a senior strategist. We'll tell you where we'd move first.</p>
+      <a class="btn btn-primary" href="/audit">Run a free audit <span class="arr">→</span></a>
+      <a class="btn btn-outline" href="/case-studies">More case studies</a>
+    </div>
+  </section>
+</article>
+<style>
+.cs-hero{padding:clamp(120px,14vw,180px) 0 clamp(40px,5vw,64px);border-bottom:1px solid var(--rule)}
+.cs-back{color:var(--muted);text-decoration:none;font-size:14px}.cs-back:hover{color:var(--accent)}
+.cs-tags{margin:20px 0 18px;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;font-size:13px}
+.cs-stat{font-family:var(--display);font-weight:500;font-size:clamp(40px,7vw,92px);line-height:.98;letter-spacing:-0.03em}
+.cs-lede{margin-top:20px;color:var(--muted);font-size:clamp(17px,1.6vw,21px);line-height:1.5;max-width:60ch}
+.cs-sub{margin-top:14px;color:var(--ink);font-size:13px;text-transform:uppercase;letter-spacing:.06em}
+.cs-body{padding:clamp(40px,6vw,80px) 0;max-width:760px}
+.cs-structured .case-section{margin:0 0 32px}
+.cs-structured h5{font-size:13px;text-transform:uppercase;letter-spacing:.08em;color:var(--accent);margin:0 0 10px}
+.cs-structured p{color:var(--ink);font-size:clamp(16px,1.4vw,18px);line-height:1.7;margin:0}
+.cs-structured ul{margin:0;padding-left:20px;color:var(--ink);font-size:clamp(16px,1.4vw,18px);line-height:1.85}
+.cs-structured .case-quote{font-style:italic;color:var(--muted);border-left:2px solid var(--accent);padding-left:16px}
+.cs-structured .case-quote-author{display:block;font-style:normal;font-size:14px;margin-top:8px;color:var(--ink)}
+.cs-cta{background:var(--ink);color:#fff;padding:clamp(56px,7vw,96px) 0;text-align:center}
+.cs-cta h2{font-family:var(--display);font-size:clamp(28px,3.4vw,44px);font-weight:500}
+.cs-cta p{color:rgba(255,255,255,.7);margin:16px 0 28px}
+.cs-cta .btn{margin:0 6px}.cs-cta .btn-outline{border-color:rgba(255,255,255,.36);color:#fff}
+</style>
+${FOOT}`;
+}
+
 // ───────────────────────── run ─────────────────────────
 const xmlPath = process.argv[2];
 if (!xmlPath) { console.error("Usage: node migration/generate.mjs <export.xml>"); process.exit(1); }
@@ -399,6 +469,15 @@ for (const cfg of CASE_STUDIES) {
   hubCards.push({ slug: cfg.slug, tag: cfg.services.map((s) => HUBS[s].label).join(" · "), h1: sf.h1 || wp.get(cfg.slug)?.title || cfg.slug, desc: sf.metadesc || "" });
   log(`casestudy/${cfg.slug}.html`);
 }
+
+// Partner (franchise) case studies — sourced from the curated partials
+for (const slug of PARTNER_CS) {
+  const cs = await parsePartial(slug);
+  await writeFile(join(ROOT, "casestudy", `${slug}.html`), partnerCaseStudyPage(cs), "utf8");
+  hubCards.push({ slug, tag: cs.tags.join(" · "), h1: cs.stat, desc: cs.blurb });
+  log(`casestudy/${slug}.html (partner)`);
+}
+
 await writeFile(join(ROOT, "case-studies.html"), caseHub(hubCards), "utf8");
 log("case-studies.html (hub)");
 
