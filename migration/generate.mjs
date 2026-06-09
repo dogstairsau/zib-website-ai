@@ -90,6 +90,16 @@ const CASE_STUDIES = [
   { slug: "wicked-sista", services: ["social", "ppc"] },
 ];
 
+// Keyword-variant sentence woven into each page so it covers the synonyms it
+// already ranks for (optimisation, AdWords, consultants, management, packages…).
+const SYNONYMS = {
+  seo: (c) => `Whether you're after SEO consultants, search engine optimisation packages, or simply the best SEO company ${c ? "in " + c : "in Australia"}, that's exactly what we do.`,
+  social: (c) => `From social media management to paid social advertising and content, we run the full social stack ${c ? "for " + c + " businesses" : "across Australia"}.`,
+  ppc: (c) => `Google Ads (formerly AdWords) and PPC management, structured around the searches that convert${c ? " in " + c : ""}.`,
+  web: (c) => `Website design, web development and responsive, conversion-first builds${c ? " for " + c : " across Australia"}.`,
+  content: () => "",
+};
+
 // ───────────────────────── shared fragments ─────────────────────────
 const HEAD = (title, desc, extraCss = "") => `<!doctype html>
 <html lang="en-AU">
@@ -128,6 +138,7 @@ function locationPage({ slug, service, city, sf, wp, copy }) {
   const h2b = sf.h2_2 || `Why ${city} businesses choose Zib`;
   const sub = copy[0] || `Zib Digital delivers commercial ${hub.label} for ${city} businesses. Senior strategists, AI-augmented execution, since 2009.`;
   const body = copy.slice(1, 4);
+  const syn = SYNONYMS[service]?.(city); if (syn) body.push(syn);
 
   // internal links: every other service hub + this city's digital-marketing page
   const serviceRows = CORE
@@ -245,6 +256,7 @@ function servicePage({ slug, label, city, hub, sf, wp, copy }) {
   const h1 = sf.h1 || wp?.title || `${label}${city ? " " + city : ""}`;
   const sub = copy[0] || `Zib Digital delivers commercial ${label.toLowerCase()}${city ? " for " + city + " businesses" : " across Australia"}. Senior strategists, AI-augmented execution, since 2009.`;
   const body = copy.slice(1, 4);
+  const syn = SYNONYMS[hub]?.(city); if (syn) body.push(syn);
   const ld = { "@context": "https://schema.org", "@type": "Service", serviceType: label, name: decodeEntities(h1), description: decodeEntities(desc), provider: { "@id": "https://zibdigital.com.au/#org" }, areaServed: { "@type": city ? "City" : "Country", name: where } };
   const serviceRows = CORE.map((k, i) => { const hh = HUBS[k]; return `      <a class="service-row" href="${hh.href}">
         <span class="service-num mono">0${i + 1}</span>
