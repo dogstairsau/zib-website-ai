@@ -2912,7 +2912,7 @@ footer {
     });
     const poly = dataPts.map(p => `${p.x},${p.y}`).join(' ');
     const dots = dataPts.map(p => `<circle cx="${p.x}" cy="${p.y}" r="3" class="radar-dot"/>`).join('');
-    // labels — short aliases keep long category names from clipping at the viewBox edges
+    // labels, short aliases keep long category names from clipping at the viewBox edges
     const radarLabel = {
       foundation: 'FOUND', crawl: 'CRAWL', content: 'CONTENT', meta: 'META',
       media: 'MEDIA', architecture: 'LINKS', geo: 'GEO',
@@ -2954,7 +2954,7 @@ footer {
   };
 
   const renderSeoWall = (audit) => {
-    // Top stats — count up so the numbers feel earned
+    // Top stats, count up so the numbers feel earned
     const raw = urlInput.value.trim().replace(/^https?:\/\//i, '');
     try { wallDomainEl.textContent = new URL('https://' + raw).hostname; } catch { wallDomainEl.textContent = raw; }
     statScoreEl.textContent = '0%';
@@ -2963,7 +2963,7 @@ footer {
     statPagesEl.textContent = '0';
     statScoreBox.className = 'wall-stat is-score ' + scoreClass(audit.overallScore);
 
-    // Categories — rendered hidden, revealed one-by-one below
+    // Categories, rendered hidden, revealed one-by-one below
     catGridEl.innerHTML = audit.categories.map(cat => {
       const cls = scoreClass(cat.score);
       const items = cat.checks.map(ch => `
@@ -2990,13 +2990,13 @@ footer {
     resSeoWall.classList.add('is-shown');
     renderRadar(audit.categories);
 
-    // Count-up the headline stats — ~1.2s
+    // Count-up the headline stats, ~1.2s
     countUp(statScoreEl, audit.overallScore, { suffix: '%' });
     countUp(statPassedEl, audit.passed);
     countUp(statIssuesEl, audit.issues);
     countUp(statPagesEl, audit.pagesCrawled);
 
-    // Stagger each category card — 120ms apart × 8 cards ≈ 1s visual reveal
+    // Stagger each category card, 120ms apart × 8 cards ≈ 1s visual reveal
     const cards = [...catGridEl.querySelectorAll('.cat-card')];
     cards.forEach((card, idx) => {
       setTimeout(() => {
@@ -3048,7 +3048,7 @@ footer {
       stageActivate('fetch');
       clearStatus();
 
-      // Page-specific source tag — read from <meta name="zib:source-tag">
+      // Page-specific source tag, read from <meta name="zib:source-tag">
       const sourceTag = document.querySelector('meta[name="zib:source-tag"]')?.content || '';
 
       try {
@@ -3073,7 +3073,7 @@ footer {
         let buf = '';
         let strategistText = '';
         let pendingChecks = null;
-        // Minimum perceived work — don't reveal the wall before this many ms have elapsed
+        // Minimum perceived work, don't reveal the wall before this many ms have elapsed
         // since submit, so it never feels "instant / made up" on fast sites.
         const MIN_REVEAL_MS = 9000;
         const revealWallWhenReady = async (audit) => {
@@ -3104,7 +3104,7 @@ footer {
               stageActivate('crawl');
               stageSetDetail('crawl', `${data.done}/${data.total}`);
             } else if (event === 'checks') {
-              // Deterministic audit — the wow payload. Gate reveal on MIN_REVEAL_MS.
+              // Deterministic audit, the wow payload. Gate reveal on MIN_REVEAL_MS.
               stageComplete('crawl', `${data.pagesCrawled} pages`);
               stageActivate('score');
               pendingChecks = data;

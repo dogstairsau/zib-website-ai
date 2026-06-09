@@ -93,12 +93,25 @@ const NOISE = [
   /^google reviews$/i, /^read more about our thoughts/i, /^our alliances help you/i,
   /^share your details with us/i, /privacy policy \| terms/i, /^©/, /all rights reserved/i,
   /^book a demo of our roi tool/i, /^\*\s*ytd/i, /^\d+(\.\d+)?$/, /^\d+%$/, /^\d+\+$/,
+  /^we only work with the smartest companies/i, /^oi, there.?s more down here/i,
 ];
 const isNoise = (l) => NOISE.some((re) => re.test(l));
+
+// Strip orphaned page-builder fragments/labels that bled into the dumps, and
+// repair sentences the extractor glued together without a space.
+function tidy(l) {
+  return l
+    .replace(/^that'?s because the rest don'?t realise they have a problem yet\.?\s*/i, "")
+    .replace(/^(let'?s chat|find out more|oi,? there'?s more down here)\.?\s*/i, "")
+    .replace(/(let'?s chat|find out more)(?=[A-Z])/gi, "")          // glued mid-line label
+    .replace(/([.!?])([A-Z])/g, "$1 $2")                            // missing space after sentence
+    .replace(/\s{2,}/g, " ")
+    .trim();
+}
 
 /** Load a content dump's substantive lines. */
 export async function loadCopy(slug, { min = 0 } = {}) {
   let txt = "";
   try { txt = await readFile(join(HERE, "content", `${slug}.txt`), "utf8"); } catch { return []; }
-  return txt.split("\n").map((l) => l.trim()).filter((l) => l.length > min && !isNoise(l));
+  return txt.split("\n").map((l) => tidy(l.trim())).filter((l) => l.length > min && !isNoise(l));
 }

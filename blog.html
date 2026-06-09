@@ -128,7 +128,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
   isolation: isolate;
 }
 
-/* placeholder gradients per category — colourful but restrained */
+/* placeholder gradients per category, colourful but restrained */
 .post-thumb[data-cat="seo"]            { background: linear-gradient(135deg, #1A1A1A 0%, #3a3a3a 100%); }
 .post-thumb[data-cat="paid"]           { background: linear-gradient(135deg, #FF6200 0%, #FFB07A 100%); }
 .post-thumb[data-cat="social"]         { background: linear-gradient(135deg, #2D2A4A 0%, #6B5DD3 100%); }
@@ -1000,7 +1000,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
   const render = () => {
     const list = filtered();
     if (!list.length) {
-      grid.innerHTML = '<div class="empty-state">No articles in that category yet — check back soon.</div>';
+      grid.innerHTML = '<div class="empty-state">No articles in that category yet, check back soon.</div>';
       loadMoreBtn.hidden = true;
       filterCount.textContent = '0 articles';
       return;

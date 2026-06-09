@@ -8,7 +8,7 @@
     onScroll();
   }
 
-  // Mobile burger toggle — opens/closes the nav drawer
+  // Mobile burger toggle, opens/closes the nav drawer
   const navToggle = document.getElementById('navToggle');
   const navList = document.getElementById('navList');
   if (navToggle && navList) {
@@ -36,7 +36,7 @@
     });
   }
 
-  // Nav dropdown groups (Locations) — toggle on click for mobile / keyboard
+  // Nav dropdown groups (Locations), toggle on click for mobile / keyboard
   document.querySelectorAll('[data-nav-group]').forEach((group) => {
     const trigger = group.querySelector('.nav-group-toggle');
     if (!trigger) return;
@@ -102,7 +102,7 @@
     document.querySelectorAll('[data-count]').forEach(el => cIO.observe(el));
   }
 
-  // Marquee tone band — duplicate items for seamless loop
+  // Marquee tone band, duplicate items for seamless loop
   const marqueeTrack = document.getElementById('marqueeTrack');
   if (marqueeTrack) {
     const marqueeItems = [
@@ -119,7 +119,7 @@
     marqueeTrack.innerHTML = html + html;
   }
 
-  // Keyword rails — render two scrolling rails of ranked keywords
+  // Keyword rails, render two scrolling rails of ranked keywords
   const kwRailsEl = document.getElementById('kwRails');
   if (kwRailsEl) {
     const keywords = [
