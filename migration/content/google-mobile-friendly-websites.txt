@@ -1,0 +1,16 @@
+It’s nothing new for those in the business of building websites, but if you’re not, you’re going to want to read on and find out more about the importance of Google & mobile-friendly websites.
+Google has been shifting its indexing to take into account market behaviour and reflect user trends. That’s why mobile-first indexing has become a buzzword over the last 12 months. So how does this shift affect business owners?
+The mobile-first index
+Google is changing its algorithm to focus on mobile as its first point of indexing. So what does this mean for you? If your website has not yet been migrated to a mobile-friendly website, you could be penalised by Google. At the moment desktop sites are still being indexed the same way, however, once the rollout is complete your site will be indexed through your mobile website first, making the need for a good mobile-friendly website important.
+When to migrate your site
+So when should you migrate your site? The short answer is, now. The sooner you migrate your site to a mobile-friendly one, the sooner you’ll benefit from it. Once your site has migrated, it will then mean Google will use your mobile version for site rankings. This is not necessarily a bad thing, and by following Google’s guidelines on mobile-first indexing, you shouldn’t have a problem sustaining your website's SEO ranking.
+User experience
+One of the main reasons for Google’s decision to index mobile-first is the user. Migrating to a mobile-friendly site contributes to your customer’s experience. There is nothing worse than coming to a website on your mobile where the menu buttons are too small, the text is hard to read, or you have to zoom out to read text or see an image. And although the mobile-first changes are about making your existing website mobile-friendly, the number one aim is to have a great user experience for your customer.
+What will be the impact?
+If your desktop website and mobile website are identical, nothing will change. It’s a gradual rollout by Google to lessen the impact. However, it’s a good idea to look at the following points when migrating your site;
+1. Images are optimised for user experience
+2. Make sure your content is the same, both on mobile and desktop
+3. Use the same structure on your mobile and desktop
+4. Metadata should be used on both sites
+These are just a few potential changes that will impact your site when you switch to your mobile-friendly website.
+Google’s mobile-first indexing pages have information about migrating your site to a mobile-friendly one. It may be a big change for some businesses, however, it’s a change that will benefit the customer’s experience.

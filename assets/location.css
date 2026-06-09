@@ -76,7 +76,7 @@ h1, h2, h3, .hero-h, .local-h, .services-h, .stats-h, .faq-h, .cta-title { text-
 .loc-hero .btn-primary { background: var(--ink); color: #fff; }
 .loc-hero .btn-primary:hover { background: var(--accent); }
 .loc-hero .btn-outline { border: 1px solid var(--rule-2); color: var(--ink); }
-.loc-hero .btn-outline:hover { border-color: var(--ink); }
+.loc-hero .btn-outline:hover { border-color: var(--ink); background: var(--ink); color: #fff; }
 
 .hero-meta {
   margin-top: clamp(40px, 5vw, 64px);

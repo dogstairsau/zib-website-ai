@@ -16,6 +16,15 @@
     }
   },
   "redirects": [
+    { "source": "/dylan-jake", "destination": "/dylan-and-jake", "permanent": true },
+    { "source": "/new-final-home-page", "destination": "/", "permanent": true },
+    { "source": "/team/matt-jackson", "destination": "/meet-the-team", "permanent": true },
+    { "source": "/team/brandon-wood", "destination": "/meet-the-team", "permanent": true },
+    { "source": "/contact-zibdigital", "destination": "/audit", "permanent": true },
+    { "source": "/get-in-touch", "destination": "/audit", "permanent": true },
+    { "source": "/zib-partner-opportunity", "destination": "/partner", "permanent": true },
+    { "source": "/category/:slug*", "destination": "/blog", "permanent": true },
+    { "source": "/casestudy-category/:slug*", "destination": "/case-studies", "permanent": true },
     {
       "source": "/",
       "has": [{ "type": "host", "value": "(www\\.)?ziboutreach\\.com\\.au" }],

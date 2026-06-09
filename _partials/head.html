@@ -37,3 +37,43 @@
   gtag('js', new Date());
   gtag('config', 'G-LQDQEYFP98');
 </script>
+
+<!-- Sitewide structured data · Organization + WebSite (page-specific schema is added per page) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": ["Organization", "ProfessionalService"],
+      "@id": "https://zibdigital.com.au/#org",
+      "name": "Zib Digital",
+      "url": "https://zibdigital.com.au/",
+      "logo": "https://zibdigital.com.au/assets/zib-logo.png",
+      "image": "https://zibdigital.com.au/assets/zib-logo.png",
+      "description": "Zib Digital is an Australian digital marketing agency, established 2009, delivering SEO, Google Ads, paid social and web across Australia.",
+      "telephone": "+61-1300-942-633",
+      "foundingDate": "2009",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "South Melbourne",
+        "addressRegion": "VIC",
+        "addressCountry": "AU"
+      },
+      "areaServed": "AU",
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "reviewCount": "90",
+        "bestRating": "5"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://zibdigital.com.au/#website",
+      "url": "https://zibdigital.com.au/",
+      "name": "Zib Digital",
+      "publisher": { "@id": "https://zibdigital.com.au/#org" }
+    }
+  ]
+}
+</script>

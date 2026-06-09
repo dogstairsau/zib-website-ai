@@ -1,0 +1,20 @@
+When creating a website that reflects your companies values and brand, it's essential that it appears flawlessly across all viewing platforms. In the past decade, the development of smartphones and tablets has expanded web requirements. With over half of web traffic coming from mobile, having a mobile responsive website is no longer an option for businesses who want to garner online attention, it’s a requirement.
+What is mobile optimisation?
+Mobile optimisation refers to a website that has been specifically built to reconfigure itself to a mobile device or tablet. This includes reformatted navigation bars, larger font sizes and different design configuration to ensure that a site looks its best on a smaller screen. You'll recognise a site that isn't optimised for mobile as one with tiny text or that you need to scroll horizontally to read.
+As smartphones become even smarter, and more web traffic moves to handheld devices, developers have made the move from creating 'mobile friendly' sites to developing sites that are specifically geared towards mobile viewing. Responsive design practices allow sites to respond to each device your customers could be using as well as different browsers or device orientation.
+Suppose your site isn't easily accessible through mobile or presents a frustrating handheld viewing experience. In that case, your customers aren't going to pick up their laptop and head to your site there instead; they're going to move on to another site. Ensuring you’re optimising for mobile means holding onto those customers who choose to browse through devices other than home computers.
+Necessary features
+You'll want to include some essential features on your site to make the customer journey effortless and help online viewers find what they're looking for quickly and easily.
+Large touch points for easy finger swiping or tapping (especially back keys and CTAs)
+- Clickable phone numbers, email addresses, and addresses trigger an action to open up the phone, email or maps app on your phone.
+- Easily loadable images and design elements
+Elements that work across all operating systems and mobile brands
+- A sticky navigation menu (one that follows you)
+- Text that resizes for the screen
+- Eliminate flash (it isn't mobile-friendly)
+- Eliminate pop-ups (these small items are hard to close)
+These basics are critical for providing a pleasant viewing experience, but there are many more ways to enhance your mobile presence.
+Google is on board
+In 2018, Google announced that they were switching to 'mobile-first indexing. This shows that the search giant understands what consumers want and how they want it. By making this announcement, they let web developers know that sites optimised for mobile were becoming non-negotiable. To please customers and search engines, companies must reconfigure sites to work optimally on all screens across the board.
+With the move away from desktops in recent years and the advancements being made yearly in digital technology, we think this trend will only continue to grow as sites need to be adapted to more new and varied mediums.
+Zib Digital is a leading specialist in SEO, website development and digital marketing work. Get in touch to learn what we can do to enhance your digital presence, including mobile optimisation and responsive web design.
