@@ -62,6 +62,21 @@ const SIBLINGS = {
   content: [["Melbourne", "/content-marketing-agency-melbourne"]],
 };
 
+// Standalone service / vertical pages that rank on the old site but were missing
+// from the first migration (not in the Screaming Frog crawl). Ported from WP.
+const SERVICE_PAGES = [
+  { slug: "linkedin-marketing-agency-melbourne", label: "LinkedIn marketing", city: "Melbourne", hub: "social" },
+  { slug: "email-marketing", label: "Email marketing", city: null, hub: "social" },
+  { slug: "facebook-marketing-melbourne", label: "Facebook marketing", city: "Melbourne", hub: "social" },
+  { slug: "instagram-marketing-melbourne", label: "Instagram marketing", city: "Melbourne", hub: "social" },
+  { slug: "shopify-seo", label: "Shopify SEO", city: null, hub: "seo" },
+  { slug: "google-shopping-agency-melbourne", label: "Google Shopping", city: "Melbourne", hub: "ppc" },
+  { slug: "ecommerce-seo-melbourne", label: "eCommerce SEO", city: "Melbourne", hub: "seo" },
+  { slug: "shopify-developer-melbourne", label: "Shopify development", city: "Melbourne", hub: "web" },
+  { slug: "woocommerce-seo", label: "WooCommerce SEO", city: null, hub: "seo" },
+  { slug: "real-estate-digital-marketing", label: "Real estate digital marketing", city: null, hub: "seo" },
+];
+
 const CASE_STUDIES = [
   { slug: "amazing-graze", services: ["seo", "social"] },
   { slug: "assured-roofing", services: ["seo", "ppc"] },
@@ -74,6 +89,16 @@ const CASE_STUDIES = [
   { slug: "twelve-board-store", services: ["ppc", "social"] },
   { slug: "wicked-sista", services: ["social", "ppc"] },
 ];
+
+// Keyword-variant sentence woven into each page so it covers the synonyms it
+// already ranks for (optimisation, AdWords, consultants, management, packages…).
+const SYNONYMS = {
+  seo: (c) => `Whether you're after SEO consultants, search engine optimisation packages, or simply the best SEO company ${c ? "in " + c : "in Australia"}, that's exactly what we do.`,
+  social: (c) => `From social media management to paid social advertising and content, we run the full social stack ${c ? "for " + c + " businesses" : "across Australia"}.`,
+  ppc: (c) => `Google Ads (formerly AdWords) and PPC management, structured around the searches that convert${c ? " in " + c : ""}.`,
+  web: (c) => `Website design, web development and responsive, conversion-first builds${c ? " for " + c : " across Australia"}.`,
+  content: () => "",
+};
 
 // ───────────────────────── shared fragments ─────────────────────────
 const HEAD = (title, desc, extraCss = "") => `<!doctype html>
@@ -113,6 +138,7 @@ function locationPage({ slug, service, city, sf, wp, copy }) {
   const h2b = sf.h2_2 || `Why ${city} businesses choose Zib`;
   const sub = copy[0] || `Zib Digital delivers commercial ${hub.label} for ${city} businesses. Senior strategists, AI-augmented execution, since 2009.`;
   const body = copy.slice(1, 4);
+  const syn = SYNONYMS[service]?.(city); if (syn) body.push(syn);
 
   // internal links: every other service hub + this city's digital-marketing page
   const serviceRows = CORE
@@ -219,6 +245,96 @@ ${locLinks}
 </section>
 
 <style>.loc-link{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 4px;border-bottom:1px solid var(--rule-2);color:var(--ink);text-decoration:none;font-weight:500;font-size:clamp(16px,1.4vw,19px);transition:color .2s,padding-left .2s}.loc-link:hover{color:var(--accent);padding-left:10px}</style>
+${FOOT}`;
+}
+
+// ───────────────────────── SERVICE page template ─────────────────────────
+function servicePage({ slug, label, city, hub, sf, wp, copy }) {
+  const where = city || "Australia";
+  const title = sf.title || wp?.seoTitle || `${label} ${city || "Agency Australia"} | Zib Digital`;
+  const desc = sf.metadesc || wp?.metadesc || `${label} services from Zib Digital${city ? " in " + city : " across Australia"}. Commercial outcomes, senior strategy, AI-augmented execution since 2009.`;
+  const h1 = sf.h1 || wp?.title || `${label}${city ? " " + city : ""}`;
+  const sub = copy[0] || `Zib Digital delivers commercial ${label.toLowerCase()}${city ? " for " + city + " businesses" : " across Australia"}. Senior strategists, AI-augmented execution, since 2009.`;
+  const body = copy.slice(1, 4);
+  const syn = SYNONYMS[hub]?.(city); if (syn) body.push(syn);
+  const ld = { "@context": "https://schema.org", "@type": "Service", serviceType: label, name: decodeEntities(h1), description: decodeEntities(desc), provider: { "@id": "https://zibdigital.com.au/#org" }, areaServed: { "@type": city ? "City" : "Country", name: where } };
+  const serviceRows = CORE.map((k, i) => { const hh = HUBS[k]; return `      <a class="service-row" href="${hh.href}">
+        <span class="service-num mono">0${i + 1}</span>
+        <span class="service-name">${hh.label}</span>
+        <span class="service-desc">${k === hub ? `Closely paired with ${label.toLowerCase()}.` : `Pair ${label.toLowerCase()} with ${hh.label} for compounding results.`}</span>
+        <span class="service-arrow">→</span>
+      </a>`; }).join("\n");
+
+  return `${HEAD(title, desc, "/assets/location.css")}
+<script type="application/ld+json">${JSON.stringify(ld)}</script>
+
+<section class="loc-hero">
+  <div class="container">
+    <div class="mono eyebrow reveal">${esc(label)}${city ? " · " + esc(city) : " · Australia"}</div>
+    <h1 class="hero-h reveal">${esc(decodeEntities(h1))}</h1>
+    <div class="loc-hero-row">
+      <p class="hero-sub reveal">${esc(decodeEntities(sub))}</p>
+      <div class="hero-ctas reveal">
+        <a class="btn btn-primary" href="/audit">Run a free audit <span class="arr">→</span></a>
+        <a class="btn btn-outline" href="mailto:hello@zibdigital.com.au?subject=${encodeURIComponent(label + (city ? " " + city : ""))}">Talk to a strategist</a>
+      </div>
+    </div>
+    <div class="hero-meta reveal">
+      <span><span class="dot" aria-hidden="true"></span>Premier Google Partner</span>
+      <span><span class="dot" aria-hidden="true"></span>Meta Business Partner</span>
+      <span><span class="dot" aria-hidden="true"></span>Senior on every account</span>
+      <span><span class="dot" aria-hidden="true"></span>800+ clients since 2009</span>
+    </div>
+  </div>
+</section>
+
+<section class="loc-proof">
+  <div class="container">
+    <div class="loc-proof-head">
+      <div><div class="mono proof-eyebrow reveal">Why Zib</div>
+      <h2 class="proof-h reveal">${esc(label)} that moves <em>your number.</em></h2></div>
+      <p class="proof-sub reveal">${esc(decodeEntities(body[0] || sub))}</p>
+    </div>
+${body.length > 1 ? para(body.slice(1)) : ""}
+  </div>
+</section>
+
+<section class="loc-services">
+  <div class="container">
+    <div class="services-head reveal">
+      <div class="mono services-eyebrow">Every channel that matters</div>
+      <h2 class="services-h">${esc(label)} works best <em>linked, not siloed.</em></h2>
+    </div>
+    <div class="service-list reveal">
+${serviceRows}
+    </div>
+  </div>
+</section>
+
+<section class="loc-stats">
+  <div class="container">
+    <div class="mono stats-eyebrow reveal">Sixteen years on the record</div>
+    <h2 class="stats-h reveal">The compound interest of <em>doing this since 2009.</em></h2>
+    <div class="stats-grid reveal-stagger">
+      <div class="stat-cell"><div class="stat-value"><span data-count="140">0</span><span class="suf">+</span></div><div class="stat-label">Digital specialists across AU &amp; NZ</div></div>
+      <div class="stat-cell"><div class="stat-value"><span data-count="800">0</span><span class="suf">+</span></div><div class="stat-label">Australian brands since 2009</div></div>
+      <div class="stat-cell"><div class="stat-value"><span data-count="97">0</span><span class="suf">%</span></div><div class="stat-label">Year-on-year retention</div></div>
+      <div class="stat-cell"><div class="stat-value"><span data-count="8">0</span><span class="suf">:1</span></div><div class="stat-label">Average ROAS on paid retainers, 2025</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="cta-section" id="audit">
+  <div class="container">
+    <div class="mono cta-eyebrow reveal">Talk to a senior strategist</div>
+    <h2 class="cta-title reveal">Drop the URL. <em>We'll tell you the truth.</em></h2>
+    <p class="cta-sub reveal">Thirty minutes with a senior strategist on your ${esc(label.toLowerCase())}. We read your business, flag where we'd move first, and give you the unvarnished version.</p>
+    <div class="cta-buttons reveal">
+      <a class="btn btn-primary" href="/audit">Run the free audit <span class="arr">→</span></a>
+      <a class="btn btn-outline" href="/case-studies">See the results we get</a>
+    </div>
+  </div>
+</section>
 ${FOOT}`;
 }
 
@@ -457,6 +573,14 @@ for (const cfg of LOCATIONS) {
   const copy = await loadCopy(cfg.slug, { min: 40 });
   await writeFile(join(ROOT, `${cfg.slug}.html`), locationPage({ ...cfg, sf, wp: wp.get(cfg.slug), copy }), "utf8");
   log(`${cfg.slug}.html`);
+}
+
+// Standalone service / vertical pages (ported from WP, were missing)
+for (const cfg of SERVICE_PAGES) {
+  const sf = sfFor(`${OLD}/${cfg.slug}`);
+  const copy = await loadCopy(cfg.slug, { min: 40 });
+  await writeFile(join(ROOT, `${cfg.slug}.html`), servicePage({ ...cfg, sf, wp: wp.get(cfg.slug), copy }), "utf8");
+  log(`${cfg.slug}.html (service)`);
 }
 
 // Case studies + hub
