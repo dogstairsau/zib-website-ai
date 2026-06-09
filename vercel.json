@@ -26,6 +26,11 @@
     { "source": "/partner-opportunity", "destination": "/partner", "permanent": true },
     { "source": "/about", "destination": "/meet-the-team", "permanent": true },
     { "source": "/email-marketing-melbourne", "destination": "/email-marketing", "permanent": true },
+    { "source": "/local-seo-melbourne", "destination": "/seo-melbourne", "permanent": true },
+    { "source": "/web-graphic-designers", "destination": "/web-graphic-design-melbourne", "permanent": true },
+    { "source": "/design-branding", "destination": "/web-graphic-design-melbourne", "permanent": true },
+    { "source": "/team", "destination": "/meet-the-team", "permanent": true },
+    { "source": "/wp-content/uploads/2022/02/ZibDigital_WhitePaper_2022-1.pdf", "destination": "/blog", "permanent": true },
     { "source": "/category/:slug*", "destination": "/blog", "permanent": true },
     { "source": "/casestudy-category/:slug*", "destination": "/case-studies", "permanent": true },
     {
