@@ -1,0 +1,22 @@
+The brief: fill the calendar, grow the margins
+This client is a well-established tourism operator specialising in guided multi-day river adventures through some of the country's most dramatic natural landscapes. With an expert team of local guides who bring together cultural history, ecology, and adventure, the brand had built a loyal following — but was operating at around 70% capacity and needed a targeted digital strategy to close the gap. The brief centred on three priorities: filling remaining capacity slots throughout the year, targeting shoulder season periods (September–October and March–April) where demand typically softened, and promoting the highest-profit tour products. Zib Digital was engaged to design, deploy and manage a full-funnel digital marketing programme to deliver measurable growth across all three goals.
+A three-phase strategy: establish, deepen, convert
+With a well-defined target audience and a clear competitive landscape, the strategy focused on building layered digital presence — from search intent capture at the top, to retargeting warm audiences at the bottom. Each phase built on the last.
+Google Ads & Technical SEO Foundation
+Built a new Google Ads account structure around high-intent search terms, with clear differentiation of the brand's USPs versus key competitors. Simultaneously, a technical SEO audit addressed schema markup, Google Business Profile optimisation, and foundational site health to improve organic visibility and credibility.
+Content Growth & Attribution Setup
+Broadened SEO authority through top-of-funnel content targeting consideration-stage searches. Set up ecommerce integration and lead-to-sale conversion tracking to create accurate ROI attribution — solving the measurement gaps left by the previous agency's flawed conversion goal structure.
+Meta Retargeting Layer
+Introduced Meta retargeting as an additional conversion layer, re-engaging users who had shown interest but not yet committed to booking. Video and carousel creatives drove strong CTR, reinforcing the brand's social proof and the immersive nature of the experience to nudge hesitant prospects to enquire.
+A record season — and a step-change in monthly bookings
++35% Booking growth in 2025/26 season vs prior year — a record season for the brand
++53% Increase in average monthly bookings since Zib Digital took over vs the preceding period
+70→100% Capacity utilisation trajectory — from persistent under-capacity to full seasons
+⚠ Challenges
+The website CMS was incompatible with several modern SEO best practices — including the inability to serve images in next-gen formats such as .webp — limiting page speed and technical optimisation options. The previous agency had configured conversion tracking incorrectly, counting any contact page visit as a lead. This made meaningful benchmarking against prior performance effectively impossible and obscured the true funnel picture.
+✓ Solutions
+Prioritised impactful SEO workarounds within CMS constraints — focusing on schema markup implementation, structured data, and Google Business Profile optimisation to build authority and visibility where it mattered most. Rebuilt conversion tracking from scratch with accurate ecommerce integration and lead-to-sale conversion events, establishing a clean baseline and enabling genuine ROI attribution going forward. Maintained agility by focusing budget and effort on channels (Google Ads, Meta) where performance could be clearly measured and optimised without CMS dependency.
+The formats that moved the needle
+🎬 META · VIDEO — Immersive River Video Short-form video showcasing the on-river experience — rapids, scenery, campsites. Highest-performing Meta asset for CTR and lead generation, driving emotional connection and urgency.
+⭐ META · CAROUSEL — Social Proof Carousel Multi-card carousel featuring top-rated reviews and testimonials, anchored by the brand's #1 TripAdvisor ranking. Highly effective for converting warm retargeting audiences.
+🔍 GOOGLE ADS · SEARCH — High-Intent Search Ads Purpose-built ad copy structured around clear USP differentiation vs competitor terms. Ad groups aligned to tour types and seasonal availability to capture demand at the right moment.
