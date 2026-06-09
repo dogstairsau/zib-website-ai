@@ -20,7 +20,6 @@
     { "source": "/new-final-home-page", "destination": "/", "permanent": true },
     { "source": "/team/matt-jackson", "destination": "/meet-the-team", "permanent": true },
     { "source": "/team/brandon-wood", "destination": "/meet-the-team", "permanent": true },
-    { "source": "/starsha-green", "destination": "/meet-the-team", "permanent": true },
     { "source": "/contact-zibdigital", "destination": "/audit", "permanent": true },
     { "source": "/get-in-touch", "destination": "/audit", "permanent": true },
     { "source": "/zib-partner-opportunity", "destination": "/partner", "permanent": true },
