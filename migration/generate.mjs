@@ -100,6 +100,17 @@ const SYNONYMS = {
   content: () => "",
 };
 
+// Brand-voice lead copy per service, anchored to "Human first. Commercially
+// driven. AI enhanced." Used to re-voice the hero + proof intro of generated pages.
+const PITCH = {
+  seo:     { metric: "rankings, traffic and revenue", h2: `Rankings that compound. <em>Revenue that follows.</em>`, sub: (c) => `We treat ${c ? c + " " : ""}SEO as a commercial channel, not a vanity one. Technical foundations, content that earns its place, and authority built to last, all measured against leads and revenue.` },
+  ppc:     { metric: "leads, CPA and ROAS", h2: `Spend that's accountable. <em>To the dollar.</em>`, sub: (c) => `Google Ads built around buying intent, optimised daily by our agent stack and reviewed weekly by a senior human. Reported in ${c ? c + " " : ""}leads, CPA and ROAS.` },
+  social:  { metric: "reach, leads and ROAS", h2: `Social that sells. <em>Not just posts.</em>`, sub: (c) => `Paid and organic social engineered for pipeline. We scale what converts and kill what doesn't, and report in ${c ? c + " " : ""}leads and ROAS, not likes.` },
+  web:     { metric: "conversion and revenue", h2: `Sites that rank. <em>And convert.</em>`, sub: (c) => `Conversion-first web and design for ${c || "Australian"} businesses. Built to be found, built to sell, measured against the number that matters.` },
+  content: { metric: "rankings and pipeline", h2: `Content with a commercial job. <em>Done.</em>`, sub: (c) => `Content and copy that earns rankings and moves buyers, planned around ${c ? c + " " : ""}search demand and your pipeline.` },
+};
+const pitchFor = (k) => PITCH[k] || PITCH.seo;
+
 // ───────────────────────── shared fragments ─────────────────────────
 const HEAD = (title, desc, extraCss = "") => `<!doctype html>
 <html lang="en-AU">
@@ -168,7 +179,7 @@ function locationPage({ slug, service, city, sf, wp, copy }) {
     <div class="mono eyebrow reveal">${hub.label} · ${city}</div>
     <h1 class="hero-h reveal">${esc(decodeEntities(h1))}</h1>
     <div class="loc-hero-row">
-      <p class="hero-sub reveal">${esc(decodeEntities(sub))}</p>
+      <p class="hero-sub reveal"><strong>${esc(hub.label)} in ${esc(city)}, built around your commercial number.</strong> Human first, commercially driven, AI enhanced: senior strategists own the thinking, AI handles the scale.</p>
       <div class="hero-ctas reveal">
         <a class="btn btn-primary" href="/audit">Run a free audit <span class="arr">→</span></a>
         <a class="btn btn-outline" href="mailto:hello@zibdigital.com.au?subject=${encodeURIComponent(hub.label + " " + city)}">Talk to a strategist</a>
@@ -186,11 +197,11 @@ function locationPage({ slug, service, city, sf, wp, copy }) {
 <section class="loc-proof">
   <div class="container">
     <div class="loc-proof-head">
-      <div><div class="mono proof-eyebrow reveal">${esc(decodeEntities(h2b))}</div>
-      <h2 class="proof-h reveal">${esc(decodeEntities(h2a))}</h2></div>
-      <p class="proof-sub reveal">${esc(decodeEntities(body[0] || sub))}</p>
+      <div><div class="mono proof-eyebrow reveal">${esc(hub.label)} · ${esc(city)}</div>
+      <h2 class="proof-h reveal">${pitchFor(service).h2}</h2></div>
+      <p class="proof-sub reveal">${esc(pitchFor(service).sub(city))}</p>
     </div>
-${body.length > 1 ? para(body.slice(1)) : ""}
+${body.length ? para(body) : ""}
   </div>
 </section>
 
@@ -273,7 +284,7 @@ function servicePage({ slug, label, city, hub, sf, wp, copy }) {
     <div class="mono eyebrow reveal">${esc(label)}${city ? " · " + esc(city) : " · Australia"}</div>
     <h1 class="hero-h reveal">${esc(decodeEntities(h1))}</h1>
     <div class="loc-hero-row">
-      <p class="hero-sub reveal">${esc(decodeEntities(sub))}</p>
+      <p class="hero-sub reveal"><strong>${esc(label)}${city ? " in " + esc(city) : ""}, built around your commercial number.</strong> Human first, commercially driven, AI enhanced: senior strategists own the thinking, AI handles the scale.</p>
       <div class="hero-ctas reveal">
         <a class="btn btn-primary" href="/audit">Run a free audit <span class="arr">→</span></a>
         <a class="btn btn-outline" href="mailto:hello@zibdigital.com.au?subject=${encodeURIComponent(label + (city ? " " + city : ""))}">Talk to a strategist</a>
@@ -291,11 +302,11 @@ function servicePage({ slug, label, city, hub, sf, wp, copy }) {
 <section class="loc-proof">
   <div class="container">
     <div class="loc-proof-head">
-      <div><div class="mono proof-eyebrow reveal">Why Zib</div>
+      <div><div class="mono proof-eyebrow reveal">${esc(label)}</div>
       <h2 class="proof-h reveal">${esc(label)} that moves <em>your number.</em></h2></div>
-      <p class="proof-sub reveal">${esc(decodeEntities(body[0] || sub))}</p>
+      <p class="proof-sub reveal">${esc(pitchFor(hub).sub(city))}</p>
     </div>
-${body.length > 1 ? para(body.slice(1)) : ""}
+${body.length ? para(body) : ""}
   </div>
 </section>
 
