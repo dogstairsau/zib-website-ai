@@ -76,7 +76,7 @@ h1, h2, h3, .hero-h, .fork-h, .path-title, .moat-h, .cta-title { text-wrap: bala
   transition: border-color 320ms var(--ease), background 320ms var(--ease);
 }
 .site-header.scrolled { border-bottom-color: var(--rule); background: rgba(255,255,255,0.92); }
-.site-header .row { display: flex; align-items: center; justify-content: space-between; height: 68px; }
+.site-header .row { display: flex; align-items: center; justify-content: space-between; height: 68px; position: relative; }
 .brand { display: inline-flex; align-items: baseline; }
 .brand img { height: 28px; width: auto; }
 .nav { display: flex; gap: clamp(14px, 2vw, 28px); align-items: center; font-family: var(--display); font-size: 14px; }
@@ -153,6 +153,36 @@ h1, h2, h3, .hero-h, .fork-h, .path-title, .moat-h, .cta-title { text-wrap: bala
   opacity: 1;
 }
 .nav-group-menu a[aria-current="page"] { color: var(--accent); }
+
+/* ─── Mega menu (Services + Locations) ────────────────────────── */
+/* Panel anchors to the header row so it can be wide + centred. */
+.nav-group--mega { position: static; }
+.nav-group--mega > .nav-group-menu {
+  left: 50%;
+  right: auto;
+  transform: translate(-50%, 6px);
+  width: min(940px, 94vw);
+  padding: 28px 28px 24px;
+  gap: 4px 28px;
+}
+.nav-group--mega:hover > .nav-group-menu,
+.nav-group--mega:focus-within > .nav-group-menu,
+.nav-group--mega.is-open > .nav-group-menu { transform: translate(-50%, 0); }
+.nav-group-menu.mega-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.nav-group-menu.mega-cities { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.mega-col { display: flex; flex-direction: column; gap: 1px; align-items: stretch; }
+.mega-h {
+  font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--muted); padding: 2px 14px 8px;
+}
+.nav-group--mega .nav-group-menu a { padding: 8px 14px; opacity: 0.78; }
+.mega-city { font-weight: 500; opacity: 1 !important; }
+.mega-cities .mega-col { margin-bottom: 12px; }
+.mega-cities .mega-col a:not(.mega-city) { font-size: 13px; color: var(--muted); padding: 5px 14px; }
+.mega-feature {
+  margin-top: 8px; color: var(--accent) !important; opacity: 1 !important; font-weight: 500;
+}
+.mega-feature:hover { background: var(--paper); }
 
 /* Header end region — holds the persistent CTA + the burger toggle.
    CTA stays visible at every viewport; burger only appears below 880px. */
@@ -271,6 +301,28 @@ h1, h2, h3, .hero-h, .fork-h, .path-title, .moat-h, .cta-title { text-wrap: bala
   .nav-group.is-open:focus-within .nav-group-menu { max-height: 600px; }
 }
 .header-spacer { height: 68px; }
+
+/* ─── Mega menu · mobile (stacks inside the drawer) ───────────── */
+@media (max-width: 880px) {
+  .nav-group--mega { position: static; width: 100%; border-bottom: 0.5px solid var(--rule); }
+  .nav-group--mega > .nav-group-menu {
+    position: static; left: auto; right: auto; transform: none;
+    width: auto; padding: 0; min-width: 0;
+    grid-template-columns: 1fr;
+    background: var(--paper);
+    max-height: 0; overflow: hidden; opacity: 1; pointer-events: auto;
+    box-shadow: none; border: 0; border-radius: 0;
+    transition: max-height 320ms var(--ease);
+  }
+  .nav-group--mega:hover > .nav-group-menu,
+  .nav-group--mega:focus-within > .nav-group-menu { transform: none; max-height: 0; }
+  .nav-group--mega.is-open > .nav-group-menu { transform: none; max-height: 1600px; }
+  .nav-group-menu.mega-4, .nav-group-menu.mega-cities { grid-template-columns: 1fr; }
+  .mega-h { padding: 14px clamp(32px,8vw,44px) 4px; }
+  .nav-group--mega .nav-group-menu a { padding: 12px clamp(32px,8vw,44px); border-bottom: 0.5px solid var(--rule); }
+  .mega-cities .mega-col { margin-bottom: 0; }
+  .mega-cities .mega-col a:not(.mega-city) { padding: 10px clamp(40px,10vw,52px); font-size: 14px; color: var(--muted); }
+}
 
 /* ─── Buttons (shared) ────────────────────────────────────────── */
 .btn {
