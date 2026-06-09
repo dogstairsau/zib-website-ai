@@ -23,6 +23,9 @@
     { "source": "/contact-zibdigital", "destination": "/audit", "permanent": true },
     { "source": "/get-in-touch", "destination": "/audit", "permanent": true },
     { "source": "/zib-partner-opportunity", "destination": "/partner", "permanent": true },
+    { "source": "/partner-opportunity", "destination": "/partner", "permanent": true },
+    { "source": "/about", "destination": "/meet-the-team", "permanent": true },
+    { "source": "/email-marketing-melbourne", "destination": "/email-marketing", "permanent": true },
     { "source": "/category/:slug*", "destination": "/blog", "permanent": true },
     { "source": "/casestudy-category/:slug*", "destination": "/case-studies", "permanent": true },
     {
