@@ -825,8 +825,12 @@ footer ul li a:hover { color: var(--accent); }
 .ai-svc-grid a.pillar { display:block; text-decoration:none; color:inherit; transition:transform 200ms var(--ease), border-color 200ms var(--ease); }
 .ai-svc-grid a.pillar:hover { transform:translateY(-2px); border-color:var(--accent); }
 .ai-svc-grid a.pillar h4 { margin:0 0 6px; }
+/* tighten the gap between intro and cards, and collapse the gap into the moat below (both dark) */
+.ai-svc-grid.moat-pillars { margin-top: clamp(32px, 4vw, 52px); }
+.ai-svc-section { padding-bottom: clamp(48px, 6vw, 72px); }
+.ai-svc-section + .moat { padding-top: clamp(48px, 6vw, 72px); }
 </style>
-<section class="moat" style="border-top:0; padding-top:0;">
+<section class="moat ai-svc-section">
   <div class="container">
     <div class="mono moat-eyebrow reveal">AI marketing services</div>
     <h2 class="moat-h reveal">
