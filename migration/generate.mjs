@@ -157,11 +157,11 @@ const pointsList = (service, city) => {
 
 // One-line cross-link descriptions (better than "Pair X with Y…").
 const HUB_DESC = {
-  seo: "Rank for the terms your buyers search, tied to revenue.",
-  ppc: "Premier Partner Google Ads, optimised daily, reported in ROAS.",
-  social: "Paid and organic social that scales what converts.",
-  web: "Conversion-first websites and design that sell.",
-  content: "Search-led content that earns rankings and moves buyers.",
+  seo: "Rank for the commercial terms your buyers actually search. Technical, content and authority work tied to pipeline, not vanity positions.",
+  ppc: "Premier Partner Google Ads built around your cost per acquisition. Optimised daily, reported in ROAS, never set and forget.",
+  social: "Paid and organic social that builds the brand and scales what already converts. Creative, targeting and spend run as one system.",
+  web: "Conversion-first websites and design engineered to turn the traffic you earn into revenue, on Shopify, WordPress or a custom build.",
+  content: "Search-led content that earns rankings, citations and buyer trust, mapped to real intent rather than keyword counts.",
 };
 
 // H1 with an orange <em> accent (on the city if present, else the last word).
@@ -222,13 +222,13 @@ function locationPage({ slug, service, city, sf, wp, copy }) {
     .map((k, i) => { const h = HUBS[k]; return `      <a class="service-row" href="${h.href}">
         <span class="service-num mono">0${i + 1}</span>
         <span class="service-name">${h.label}</span>
-        <span class="service-desc">${k === service ? `Our core ${h.label} offering, tuned for ${city}.` : HUB_DESC[k]}</span>
+        <span class="service-desc">${k === service ? `Our core ${h.label} practice for ${city}, the discipline this page is built around and the same senior team behind it.` : HUB_DESC[k]}</span>
         <span class="service-arrow">→</span>
       </a>`; }).join("\n") +
     `\n      <a class="service-row" href="${DM_CITY[city] || "/"}">
         <span class="service-num mono">05</span>
         <span class="service-name">Full digital marketing · ${city}</span>
-        <span class="service-desc">Every channel that matters for ${city}, run as one commercial system.</span>
+        <span class="service-desc">Every channel that matters for ${city}, planned and run as one commercial system rather than disconnected retainers.</span>
         <span class="service-arrow">→</span>
       </a>`;
 
@@ -358,7 +358,7 @@ function servicePage({ slug, label, city, hub, sf, wp, copy }) {
   const serviceRows = CORE.map((k, i) => { const hh = HUBS[k]; return `      <a class="service-row" href="${hh.href}">
         <span class="service-num mono">0${i + 1}</span>
         <span class="service-name">${hh.label}</span>
-        <span class="service-desc">${k === hub ? `Closely paired with ${label.toLowerCase()}.` : HUB_DESC[k]}</span>
+        <span class="service-desc">${k === hub ? `The wider ${hh.label} practice ${label.toLowerCase()} sits inside, owned by senior strategists end to end.` : HUB_DESC[k]}</span>
         <span class="service-arrow">→</span>
       </a>`; }).join("\n");
 
