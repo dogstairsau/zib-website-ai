@@ -6,6 +6,26 @@
 <meta name="zib:source-tag" content="SEO Melbourne AU" />
 <!-- @include _partials/head.html -->
 <link rel="stylesheet" href="/assets/location.css">
+<style>
+/* dot-pointed SEO coverage list */
+.seo-points { list-style:none; padding:0; margin:clamp(24px,3vw,36px) 0 0; border-top:1px solid var(--rule-2); max-width:760px; }
+.seo-points li { padding:18px 2px; border-bottom:1px solid var(--rule-2); color:var(--muted); font-size:clamp(15px,1.4vw,17px); line-height:1.55; }
+.seo-points li strong { color:var(--ink); font-weight:500; }
+/* AEO / GEO cards */
+.aeo-grid { display:grid; grid-template-columns:1fr 1fr; gap:clamp(16px,2vw,28px); margin-top:clamp(28px,3.5vw,44px); }
+@media (max-width:760px){ .aeo-grid{ grid-template-columns:1fr; } }
+.aeo-card { border:1px solid var(--rule-2); border-radius:16px; padding:clamp(24px,3vw,34px); }
+.aeo-card .tag { font-family:var(--mono); font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); }
+.aeo-card h3 { font-family:var(--display); font-weight:500; font-size:clamp(20px,2vw,26px); margin:10px 0 10px; }
+.aeo-card p { color:var(--muted); font-size:15px; line-height:1.6; }
+/* lead-capture form on the dark CTA */
+.lead-form { display:flex; flex-wrap:wrap; gap:12px; justify-content:center; margin-top:clamp(24px,3vw,36px); }
+.lead-form input { background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.22); border-radius:999px; padding:15px 22px; color:#fff; font-size:15px; min-width:220px; flex:1 1 220px; max-width:300px; }
+.lead-form input::placeholder { color:rgba(255,255,255,0.5); }
+.lead-form input:focus { outline:none; border-color:var(--accent); background:rgba(255,255,255,0.12); }
+.lead-form .btn-primary { background:var(--accent); color:#fff; border:0; cursor:pointer; }
+.lead-form .btn-primary:hover { transform:translateY(-1px); }
+</style>
 </head>
 <body>
 
@@ -52,13 +72,17 @@
         <h2 class="proof-h reveal">Achieve <em>sustainable SEO success.</em></h2>
       </div>
       <p class="proof-sub reveal">
-        Every business is unique, but a successful SEO strategy shares a common goal: establishing your business as an authoritative and original content source in search engines' eyes. Our mission is to achieve this and ensure long-term success.
+        A successful SEO strategy has one goal: making your business the authoritative answer in search. Human first, commercially driven, AI enhanced, here's what our Melbourne SEO consultants cover end to end.
       </p>
     </div>
 
-    <p style="margin-top: 24px; color: var(--muted); font-size: clamp(16px, 1.4vw, 18px); line-height: 1.55; max-width: 70ch;">
-      While achieving results is our top priority, we believe strong relationships yield the best outcomes. This approach has earned us lifetime partnerships with numerous clients, cementing our position as a trusted SEO agency in Melbourne. With hundreds of successful campaigns under our belt, our extensive data and case studies demonstrate our expertise as Melbourne's leading SEO company. Melbourne businesses can trust our SEO service to prioritise their needs, ensuring a seamless and transparent process that delivers exceptional results. As Melbourne SEO consultants, we cover search engine optimisation strategy, technical audits and SEO packages end to end.
-    </p>
+    <ul class="seo-points reveal">
+      <li><strong>Technical SEO &amp; site audits.</strong> Crawlability, speed, structure and Core Web Vitals, fixed at the foundation.</li>
+      <li><strong>Content that ranks and converts.</strong> Original, search-led content mapped to real buyer intent, not keyword stuffing.</li>
+      <li><strong>Authority &amp; link building.</strong> Quality backlinks that move competitive Melbourne keywords.</li>
+      <li><strong>Local SEO.</strong> Google Business Profile, local packs and suburb-level visibility across Melbourne.</li>
+      <li><strong>Transparent reporting.</strong> Monthly reviews in rankings, traffic and revenue, not vanity metrics.</li>
+    </ul>
   </div>
 </section>
 
@@ -101,6 +125,31 @@
   </div>
 </section>
 
+<!-- AEO / GEO -->
+<section class="loc-local" style="border-top:1px solid var(--rule-2);">
+  <div class="container">
+    <div class="reveal">
+      <div class="mono local-eyebrow">The next era of search</div>
+      <h2 class="local-h">SEO is becoming <em>AEO and GEO.</em></h2>
+      <p style="margin-top:20px; color:var(--muted); font-size:clamp(16px,1.4vw,18px); line-height:1.55; max-width:62ch;">
+        Search is shifting from ten blue links to AI-generated answers. We optimise you to be the answer, not just a result, across Google's AI Overviews and the AI tools your customers now ask first.
+      </p>
+    </div>
+    <div class="aeo-grid reveal">
+      <div class="aeo-card">
+        <div class="tag">AEO</div>
+        <h3>Answer Engine Optimisation</h3>
+        <p>Structured content, schema and entity signals so you're the cited answer in Google's AI Overviews, featured snippets and voice search, not buried on page two.</p>
+      </div>
+      <div class="aeo-card">
+        <div class="tag">GEO</div>
+        <h3>Generative Engine Optimisation</h3>
+        <p>Getting your brand recommended inside ChatGPT, Perplexity, Gemini and Claude when Melbourne buyers ask them who the best SEO agency is.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- STATS -->
 <section class="loc-stats">
   <div class="container">
@@ -111,7 +160,7 @@
 
     <div class="stats-grid reveal-stagger">
       <div class="stat-cell">
-        <div class="stat-value"><span data-count="140">0</span><span class="suf">+</span></div>
+        <div class="stat-value"><span data-count="100">0</span><span class="suf">+</span></div>
         <div class="stat-label">Digital specialists across AU &amp; NZ</div>
       </div>
       <div class="stat-cell">
@@ -193,17 +242,22 @@
 <!-- CTA -->
 <section class="cta-section" id="audit">
   <div class="container">
-    <div class="mono cta-eyebrow reveal">Talk to a senior SEO strategist</div>
+    <div class="mono cta-eyebrow reveal">Get your free SEO audit</div>
     <h2 class="cta-title reveal">
       Drop the URL. <em>We'll tell you the truth.</em>
     </h2>
     <p class="cta-sub reveal">
-      With misinformation and unrealistic promises surrounding SEO, it's natural to have doubts. That's why we created a unique tool to provide a realistic picture of your potential return on investment with Zib Digital, calculations based on industry benchmarks and your business data.
+      A senior strategist reads your site, your rankings and your commercial opportunity, then tells you the truth. Human first, commercially driven, AI enhanced. No deck, no obligation.
     </p>
-    <div class="cta-buttons reveal">
-      <a class="btn btn-primary" href="/audit.html">Run the free audit <span class="arr">→</span></a>
-      <a class="btn btn-outline" href="mailto:hello@zibdigital.com.au?subject=SEO%20Melbourne%20-%20discovery%20call">Book a discovery call</a>
-    </div>
+    <form class="lead-form reveal" action="/audit.html" method="get">
+      <input type="url" name="url" placeholder="yourwebsite.com.au" aria-label="Website URL" required />
+      <input type="email" name="email" placeholder="Work email" aria-label="Work email" required />
+      <input type="tel" name="phone" placeholder="Phone" aria-label="Phone number" required />
+      <button type="submit" class="btn btn-primary">Run my free audit <span class="arr">→</span></button>
+    </form>
+    <p class="cta-sub reveal" style="margin-top:18px; font-size:14px;">
+      Prefer to talk? <a href="mailto:hello@zibdigital.com.au?subject=SEO%20Melbourne%20-%20discovery%20call" style="color:var(--accent); text-decoration:underline;">Book a discovery call</a>.
+    </p>
   </div>
 </section>
 
