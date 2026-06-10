@@ -6,6 +6,7 @@
 <meta name="zib:source-tag" content="SEO Melbourne AU" />
 <!-- @include _partials/head.html -->
 <link rel="stylesheet" href="/assets/location.css">
+<link rel="stylesheet" href="/assets/audit-widget.css">
 </head>
 <body>
 
@@ -15,31 +16,18 @@
 
 <main id="main">
 
-<!-- HERO -->
-<section class="loc-hero">
+<!-- HERO + LIVE AUDIT · shared component (matches /seo-agency) -->
+<section class="loc-hero" id="audit-top">
   <div class="container">
-    <div class="mono eyebrow reveal">SEO · Melbourne</div>
-    <h1 class="hero-h reveal">
-      Explore Our <em>SEO Services in Melbourne.</em>
-    </h1>
-
-    <div class="loc-hero-row">
-      <p class="hero-sub reveal">
-        <strong>Welcome to Melbourne's most trusted SEO agency.</strong>
-        Our seasoned SEO specialists help businesses of all sizes enhance their organic traffic, establish connections with new customers and ultimately boost sales, market share and overall growth.
+    <div class="audit-hero-intro reveal">
+      <div class="eyebrow mono"><span>SEO Agency · Melbourne</span></div>
+      <h1 class="hero-h">Explore our <em>SEO services in Melbourne.</em></h1>
+      <p class="audit-hero-sub">
+        <strong>Melbourne's SEO agency since 2009. First to hybrid agents today.</strong>
+        Drop your URL below and a senior strategist reads your positioning, technical SEO and commercial opportunities in 30 seconds. We rank for 4,151 commercial keywords on our own domain. Search engine optimisation tied to revenue, for Melbourne businesses.
       </p>
-      <div class="hero-ctas reveal">
-        <a class="btn btn-primary" href="/audit.html">Run a free audit <span class="arr">→</span></a>
-        <a class="btn btn-outline" href="mailto:hello@zibdigital.com.au?subject=SEO%20Melbourne%20-%20let's%20talk">Talk to a strategist</a>
-      </div>
     </div>
-
-    <div class="hero-meta reveal">
-      <span><span class="dot" aria-hidden="true"></span>4.8 Google Reviews</span>
-      <span><span class="dot" aria-hidden="true"></span>Premier Google Partner</span>
-      <span><span class="dot" aria-hidden="true"></span>60+ SEO specialists</span>
-      <span><span class="dot" aria-hidden="true"></span>800+ clients since 2009</span>
-    </div>
+    <!-- @include _partials/audit-embed.html -->
   </div>
 </section>
 
@@ -52,13 +40,17 @@
         <h2 class="proof-h reveal">Achieve <em>sustainable SEO success.</em></h2>
       </div>
       <p class="proof-sub reveal">
-        Every business is unique, but a successful SEO strategy shares a common goal: establishing your business as an authoritative and original content source in search engines' eyes. Our mission is to achieve this and ensure long-term success.
+        A successful SEO strategy has one goal: making your business the authoritative answer in search. Here's what our Melbourne SEO consultants cover end to end.
       </p>
     </div>
 
-    <p style="margin-top: 24px; color: var(--muted); font-size: clamp(16px, 1.4vw, 18px); line-height: 1.55; max-width: 70ch;">
-      While achieving results is our top priority, we believe strong relationships yield the best outcomes. This approach has earned us lifetime partnerships with numerous clients, cementing our position as a trusted SEO agency in Melbourne. With hundreds of successful campaigns under our belt, our extensive data and case studies demonstrate our expertise as Melbourne's leading SEO company. Melbourne businesses can trust our SEO service to prioritise their needs, ensuring a seamless and transparent process that delivers exceptional results. As Melbourne SEO consultants, we cover search engine optimisation strategy, technical audits and SEO packages end to end.
-    </p>
+    <ul class="seo-points reveal">
+      <li><strong>Technical SEO &amp; site audits.</strong> Crawlability, speed, structure and Core Web Vitals, fixed at the foundation.</li>
+      <li><strong>Content that ranks and converts.</strong> Original, search-led content mapped to real buyer intent, not keyword stuffing.</li>
+      <li><strong>Authority &amp; link building.</strong> Quality backlinks that move competitive Melbourne keywords.</li>
+      <li><strong>Local SEO.</strong> Google Business Profile, local packs and suburb-level visibility across Melbourne.</li>
+      <li><strong>Transparent reporting.</strong> Monthly reviews in rankings, traffic and revenue, not vanity metrics.</li>
+    </ul>
   </div>
 </section>
 
@@ -101,6 +93,8 @@
   </div>
 </section>
 
+<!-- @include _partials/aeo-geo.html -->
+
 <!-- STATS -->
 <section class="loc-stats">
   <div class="container">
@@ -111,7 +105,7 @@
 
     <div class="stats-grid reveal-stagger">
       <div class="stat-cell">
-        <div class="stat-value"><span data-count="140">0</span><span class="suf">+</span></div>
+        <div class="stat-value"><span data-count="100">0</span><span class="suf">+</span></div>
         <div class="stat-label">Digital specialists across AU &amp; NZ</div>
       </div>
       <div class="stat-cell">
@@ -195,13 +189,13 @@
   <div class="container">
     <div class="mono cta-eyebrow reveal">Talk to a senior SEO strategist</div>
     <h2 class="cta-title reveal">
-      Drop the URL. <em>We'll tell you the truth.</em>
+      Ready to <em>own Melbourne search?</em>
     </h2>
     <p class="cta-sub reveal">
-      With misinformation and unrealistic promises surrounding SEO, it's natural to have doubts. That's why we created a unique tool to provide a realistic picture of your potential return on investment with Zib Digital, calculations based on industry benchmarks and your business data.
+      Run the free audit up top, or book a 30-minute discovery call. We read your business, flag where we'd move first, and give you the unvarnished version. No deck, no pitch.
     </p>
     <div class="cta-buttons reveal">
-      <a class="btn btn-primary" href="/audit.html">Run the free audit <span class="arr">→</span></a>
+      <a class="btn btn-primary" href="#audit-top">Run the free audit <span class="arr">→</span></a>
       <a class="btn btn-outline" href="mailto:hello@zibdigital.com.au?subject=SEO%20Melbourne%20-%20discovery%20call">Book a discovery call</a>
     </div>
   </div>
@@ -211,6 +205,7 @@
 
 <!-- @include _partials/footer.html -->
 <!-- @include _partials/scripts.html -->
+<script src="/assets/audit-widget.js" defer></script>
 
 <script>
 // FAQ accordion

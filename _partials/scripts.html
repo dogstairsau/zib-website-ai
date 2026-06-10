@@ -102,6 +102,23 @@
     document.querySelectorAll('[data-count]').forEach(el => cIO.observe(el));
   }
 
+  // Cycling hero words: <em class="word-cycle" data-words="a,b,c">a</em>
+  document.querySelectorAll('.word-cycle[data-words]').forEach(el => {
+    const words = el.dataset.words.split(',').map(w => w.trim()).filter(Boolean);
+    if (words.length < 2) return;
+    el.textContent = words[0];
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    let i = 0;
+    setInterval(() => {
+      el.classList.add('swap');
+      setTimeout(() => {
+        i = (i + 1) % words.length;
+        el.textContent = words[i];
+        el.classList.remove('swap');
+      }, 300);
+    }, 2400);
+  });
+
   // Marquee tone band, duplicate items for seamless loop
   const marqueeTrack = document.getElementById('marqueeTrack');
   if (marqueeTrack) {
