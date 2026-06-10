@@ -203,7 +203,7 @@ h1, h2, h3, .hero-h, .fork-h, .path-title, .moat-h, .cta-title { text-wrap: bala
 .nav-group-menu.mega-services a.mega-promo-reviews {
   color: rgba(255,255,255,0.82); opacity: 1; font-size: 13px; padding: 0;
 }
-.mega-promo-reviews:hover { color: #fff; background: transparent; }
+.nav-group-menu.mega-services a.mega-promo-reviews:hover { color: #fff; background: rgba(255,255,255,0.08); }
 .mega-promo-reviews .stars { color: var(--accent); letter-spacing: 1px; }
 .mega-promo-reviews strong { color: #fff; }
 
