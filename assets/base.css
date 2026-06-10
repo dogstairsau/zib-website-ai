@@ -414,6 +414,30 @@ footer {
   max-width: 28ch;
   margin-top: 24px;
 }
+.foot-address {
+  font-style: normal;
+  margin-top: 24px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.5;
+}
+.foot-partners {
+  margin-top: 28px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+}
+.foot-partner {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink-3);
+}
+.foot-partner img { display: block; }
+.foot-bar a { color: inherit; border-bottom: 1px solid transparent; transition: border-color 200ms var(--ease); }
+.foot-bar a:hover { border-bottom-color: currentColor; }
 .foot-bar {
   display: flex;
   justify-content: space-between;

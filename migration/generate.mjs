@@ -271,7 +271,7 @@ function locationPage({ slug, service, city, sf, wp, copy }) {
   const proofBody = pointsList(service, city) || (body.length ? para(body) : "");
   const synLine = syn ? `\n    <p class="proof-sub reveal" style="margin-top:24px; max-width:64ch;">${esc(syn)}</p>` : "";
 
-  return `${HEAD(title, desc, isSeo ? ["/assets/location.css", "/assets/audit-widget.css"] : "/assets/location.css")}
+  return `${HEAD(title, desc, isSeo ? ["/assets/location.css", "/assets/audit-widget.css", "/assets/contact-form.css"] : ["/assets/location.css", "/assets/contact-form.css"])}
 <script type="application/ld+json">${JSON.stringify(ld)}</script>
 
 ${heroSection}
@@ -339,6 +339,8 @@ ${isSeo ? "<!-- @include _partials/aeo-geo.html -->\n" : ""}
 </section>
 
 <style>.loc-link{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 4px;border-bottom:1px solid var(--rule-2);color:var(--ink);text-decoration:none;font-weight:500;font-size:clamp(16px,1.4vw,19px);transition:color .2s,padding-left .2s}.loc-link:hover{color:var(--accent);padding-left:10px}</style>
+<!-- @include _partials/contact-form.html -->
+<script src="/assets/contact-form.js" defer></script>
 ${isSeo ? '<script src="/assets/audit-widget.js" defer></script>\n' : ""}${FOOT}`;
 }
 
@@ -362,7 +364,7 @@ function servicePage({ slug, label, city, hub, sf, wp, copy }) {
         <span class="service-arrow">→</span>
       </a>`; }).join("\n");
 
-  return `${HEAD(title, desc, ["/assets/location.css", "/assets/orange-stats.css"])}
+  return `${HEAD(title, desc, ["/assets/location.css", "/assets/orange-stats.css", "/assets/contact-form.css"])}
 <script type="application/ld+json">${JSON.stringify(ld)}</script>
 
 <section class="loc-hero">
@@ -421,6 +423,9 @@ ${serviceRows}
     </div>
   </div>
 </section>
+
+<!-- @include _partials/contact-form.html -->
+<script src="/assets/contact-form.js" defer></script>
 ${FOOT}`;
 }
 
