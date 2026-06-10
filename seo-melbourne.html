@@ -6,26 +6,19 @@
 <meta name="zib:source-tag" content="SEO Melbourne AU" />
 <!-- @include _partials/head.html -->
 <link rel="stylesheet" href="/assets/location.css">
+<link rel="stylesheet" href="/assets/audit-widget.css">
 <style>
 /* dot-pointed SEO coverage list */
 .seo-points { list-style:none; padding:0; margin:clamp(24px,3vw,36px) 0 0; border-top:1px solid var(--rule-2); max-width:760px; }
 .seo-points li { padding:18px 2px; border-bottom:1px solid var(--rule-2); color:var(--muted); font-size:clamp(15px,1.4vw,17px); line-height:1.55; }
 .seo-points li strong { color:var(--ink); font-weight:500; }
-/* top audit band (light) */
+/* top audit band (light) — uses the shared audit widget */
 .loc-audit { padding:clamp(48px,6vw,84px) 0; border-bottom:1px solid var(--rule); background:var(--paper); }
-.loc-audit-inner { display:grid; grid-template-columns:1fr 1fr; gap:clamp(28px,4vw,56px); align-items:center; }
-@media (max-width:880px){ .loc-audit-inner{ grid-template-columns:1fr; } }
 .loc-audit .eyebrow { color:var(--accent); }
-.loc-audit h2 { font-family:var(--display); font-weight:500; font-size:clamp(28px,3.4vw,46px); line-height:1.05; letter-spacing:-0.025em; margin-top:14px; }
+.loc-audit h2 { font-family:var(--display); font-weight:500; font-size:clamp(28px,3.4vw,46px); line-height:1.05; letter-spacing:-0.025em; margin-top:14px; max-width:20ch; }
 .loc-audit h2 em { font-style:italic; color:var(--accent); font-weight:400; }
-.loc-audit p { color:var(--muted); margin-top:14px; font-size:clamp(15px,1.4vw,17px); line-height:1.5; max-width:46ch; }
-.loc-audit-form { display:flex; flex-direction:column; gap:12px; }
-.loc-audit-form input { background:#fff; border:1px solid var(--rule-2); border-radius:999px; padding:15px 22px; font-size:15px; color:var(--ink); }
-.loc-audit-form input:focus { outline:none; border-color:var(--accent); }
-.loc-audit-form button { background:var(--ink); color:#fff; border:0; border-radius:999px; padding:16px 24px; font-weight:500; font-size:15px; cursor:pointer; display:inline-flex; align-items:center; justify-content:center; gap:10px; transition:background .2s var(--ease), transform .2s var(--ease); }
-.loc-audit-form button:hover { background:var(--accent); transform:translateY(-1px); }
-.loc-audit-meta { margin-top:6px; color:var(--muted); font-family:var(--mono); font-size:11px; letter-spacing:.08em; text-transform:uppercase; }
-.loc-audit-meta .check { color:var(--accent); margin-right:4px; }
+.loc-audit p { color:var(--muted); margin-top:14px; font-size:clamp(15px,1.4vw,17px); line-height:1.5; max-width:60ch; }
+.loc-audit .audit-form { margin-top:clamp(28px,3.5vw,44px); }
 /* AEO / GEO frontier (matches seo-agency) */
 #frontier { padding:clamp(80px,10vw,144px) 0; }
 .frontier-head { margin:0 0 clamp(48px,6vw,80px); }
@@ -87,20 +80,12 @@
 <!-- AUDIT BAND -->
 <section class="loc-audit" id="audit-top">
   <div class="container">
-    <div class="loc-audit-inner reveal">
-      <div>
-        <div class="mono eyebrow">Free SEO audit</div>
-        <h2>See where you stand <em>in 30 seconds.</em></h2>
-        <p>A senior strategist reads your site, your rankings and your commercial opportunity, then tells you the truth. No deck, no obligation.</p>
-      </div>
-      <form class="loc-audit-form" action="/audit.html" method="get">
-        <input type="url" name="url" placeholder="yourwebsite.com.au" aria-label="Website URL" required />
-        <input type="email" name="email" placeholder="Work email" aria-label="Work email" required />
-        <input type="tel" name="phone" placeholder="Phone" aria-label="Phone number" required />
-        <button type="submit">Run my free audit <span class="arr">→</span></button>
-        <div class="loc-audit-meta"><span class="check">✓</span> Technical crawl <span class="check">✓</span> AEO + GEO readiness <span class="check">✓</span> Senior strategist read</div>
-      </form>
+    <div class="reveal" style="max-width:760px;">
+      <div class="mono eyebrow">Free SEO audit</div>
+      <h2>See where you stand <em>in 30 seconds.</em></h2>
+      <p>A senior strategist reads your site, your rankings and your commercial opportunity, then tells you the truth. No deck, no obligation.</p>
     </div>
+    <!-- @include _partials/audit-embed.html -->
   </div>
 </section>
 
@@ -315,6 +300,7 @@
 
 <!-- @include _partials/footer.html -->
 <!-- @include _partials/scripts.html -->
+<script src="/assets/audit-widget.js" defer></script>
 
 <script>
 // FAQ accordion
