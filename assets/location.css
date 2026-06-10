@@ -382,6 +382,18 @@ h1, h2, h3, .hero-h, .local-h, .services-h, .stats-h, .faq-h, .cta-title { text-
 .cta-section .btn-outline { border-color: rgba(255,255,255,0.36); color: #fff; }
 .cta-section .btn-outline:hover { border-color: #fff; }
 
+/* Avoid two stacked dark slabs: when the CTA directly follows the dark stats
+   band (service pages), render it on paper so the rhythm alternates dark→light. */
+.loc-stats + .cta-section {
+  background: var(--paper);
+  color: var(--ink);
+  border-top: 0.5px solid var(--rule);
+}
+.loc-stats + .cta-section .cta-title { color: var(--ink); }
+.loc-stats + .cta-section .cta-sub { color: var(--muted); }
+.loc-stats + .cta-section .btn-outline { border-color: var(--rule-2); color: var(--ink); }
+.loc-stats + .cta-section .btn-outline:hover { border-color: var(--ink); }
+
 /* ─── SEO page additions (shared: audit band, coverage list, AEO/GEO frontier) ─── */
 .seo-points { list-style:none; padding:0; margin:clamp(24px,3vw,36px) 0 0; border-top:1px solid var(--rule-2); max-width:760px; }
 .seo-points li { padding:18px 2px; border-bottom:1px solid var(--rule-2); color:var(--muted); font-size:clamp(15px,1.4vw,17px); line-height:1.55; }
