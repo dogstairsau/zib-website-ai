@@ -7,39 +7,6 @@
 <!-- @include _partials/head.html -->
 <link rel="stylesheet" href="/assets/location.css">
 <link rel="stylesheet" href="/assets/audit-widget.css">
-<style>
-/* dot-pointed SEO coverage list */
-.seo-points { list-style:none; padding:0; margin:clamp(24px,3vw,36px) 0 0; border-top:1px solid var(--rule-2); max-width:760px; }
-.seo-points li { padding:18px 2px; border-bottom:1px solid var(--rule-2); color:var(--muted); font-size:clamp(15px,1.4vw,17px); line-height:1.55; }
-.seo-points li strong { color:var(--ink); font-weight:500; }
-/* top audit band (light) — uses the shared audit widget */
-.loc-audit { padding:clamp(48px,6vw,84px) 0; border-bottom:1px solid var(--rule); background:var(--paper); }
-.loc-audit .eyebrow { color:var(--accent); }
-.loc-audit h2 { font-family:var(--display); font-weight:500; font-size:clamp(28px,3.4vw,46px); line-height:1.05; letter-spacing:-0.025em; margin-top:14px; max-width:20ch; }
-.loc-audit h2 em { font-style:italic; color:var(--accent); font-weight:400; }
-.loc-audit p { color:var(--muted); margin-top:14px; font-size:clamp(15px,1.4vw,17px); line-height:1.5; max-width:60ch; }
-.loc-audit .audit-form { margin-top:clamp(28px,3.5vw,44px); }
-/* AEO / GEO frontier (matches seo-agency) */
-#frontier { padding:clamp(80px,10vw,144px) 0; }
-.frontier-head { margin:0 0 clamp(48px,6vw,80px); }
-.frontier-head .eyebrow { color:var(--accent); }
-.frontier-head h2 { font-family:var(--display); font-weight:500; font-size:clamp(36px,5.5vw,80px); line-height:0.98; letter-spacing:-0.04em; max-width:18ch; text-wrap:balance; color:var(--ink); margin-top:18px; }
-.frontier-head h2 em { font-style:italic; font-weight:400; color:var(--accent); }
-.frontier-head p { font-size:clamp(16px,1.5vw,20px); line-height:1.5; color:var(--muted); max-width:62ch; margin-top:clamp(20px,3vw,28px); }
-.frontier-grid { display:grid; grid-template-columns:1fr 1fr; border-top:0.5px solid var(--rule); }
-.frontier-col { padding:clamp(36px,5vw,72px) clamp(20px,3vw,48px); }
-.frontier-col + .frontier-col { border-left:0.5px solid var(--rule); }
-.frontier-abbr { font-family:var(--display); font-weight:500; font-size:clamp(64px,11vw,168px); line-height:0.9; letter-spacing:-0.06em; color:var(--ink); margin-bottom:16px; }
-.frontier-abbr em { font-style:italic; font-weight:400; color:var(--accent); }
-.frontier-col .full { font-family:var(--mono); font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent); margin-bottom:clamp(20px,3vw,32px); }
-.frontier-col h3 { font-family:var(--display); font-weight:500; font-size:clamp(22px,2.2vw,28px); letter-spacing:-0.025em; line-height:1.15; margin-bottom:16px; text-wrap:balance; color:var(--ink); }
-.frontier-col h3 em { font-style:italic; font-weight:400; color:var(--accent); }
-.frontier-col p { font-size:clamp(15px,1.4vw,17px); line-height:1.55; color:var(--muted); margin-bottom:24px; max-width:44ch; }
-.frontier-col ul { list-style:none; padding:0; margin:0; }
-.frontier-col li { padding:14px 0; border-top:0.5px solid var(--rule); font-size:clamp(14px,1.3vw,16px); line-height:1.5; color:var(--muted); display:flex; gap:14px; }
-.frontier-col li::before { content:"+"; color:var(--accent); flex-shrink:0; font-family:var(--mono); font-weight:500; }
-@media (max-width:820px){ .frontier-grid{ grid-template-columns:1fr; } .frontier-col + .frontier-col{ border-left:0; border-top:0.5px solid var(--rule); } }
-</style>
 </head>
 <body>
 
@@ -49,41 +16,16 @@
 
 <main id="main">
 
-<!-- HERO -->
-<section class="loc-hero">
+<!-- HERO + LIVE AUDIT · shared component (matches /seo-agency) -->
+<section class="loc-hero" id="audit-top">
   <div class="container">
-    <div class="mono eyebrow reveal">SEO · Melbourne</div>
-    <h1 class="hero-h reveal">
-      Explore Our <em>SEO Services in Melbourne.</em>
-    </h1>
-
-    <div class="loc-hero-row">
-      <p class="hero-sub reveal">
-        <strong>Welcome to Melbourne's most trusted SEO agency.</strong>
-        Our seasoned SEO specialists help businesses of all sizes enhance their organic traffic, establish connections with new customers and ultimately boost sales, market share and overall growth.
+    <div class="audit-hero-intro reveal">
+      <div class="eyebrow mono"><span>SEO Agency · Melbourne</span></div>
+      <h1 class="hero-h">Explore our <em>SEO services in Melbourne.</em></h1>
+      <p class="audit-hero-sub">
+        <strong>Melbourne's SEO agency since 2009. First to hybrid agents today.</strong>
+        Drop your URL below and a senior strategist reads your positioning, technical SEO and commercial opportunities in 30 seconds. We rank for 4,151 commercial keywords on our own domain. Search engine optimisation tied to revenue, for Melbourne businesses.
       </p>
-      <div class="hero-ctas reveal">
-        <a class="btn btn-primary" href="/audit.html">Run a free audit <span class="arr">→</span></a>
-        <a class="btn btn-outline" href="mailto:hello@zibdigital.com.au?subject=SEO%20Melbourne%20-%20let's%20talk">Talk to a strategist</a>
-      </div>
-    </div>
-
-    <div class="hero-meta reveal">
-      <span><span class="dot" aria-hidden="true"></span>4.8 Google Reviews</span>
-      <span><span class="dot" aria-hidden="true"></span>Premier Google Partner</span>
-      <span><span class="dot" aria-hidden="true"></span>60+ SEO specialists</span>
-      <span><span class="dot" aria-hidden="true"></span>800+ clients since 2009</span>
-    </div>
-  </div>
-</section>
-
-<!-- AUDIT BAND -->
-<section class="loc-audit" id="audit-top">
-  <div class="container">
-    <div class="reveal" style="max-width:760px;">
-      <div class="mono eyebrow">Free SEO audit</div>
-      <h2>See where you stand <em>in 30 seconds.</em></h2>
-      <p>A senior strategist reads your site, your rankings and your commercial opportunity, then tells you the truth. No deck, no obligation.</p>
     </div>
     <!-- @include _partials/audit-embed.html -->
   </div>
@@ -151,44 +93,7 @@
   </div>
 </section>
 
-<!-- AEO / GEO · the next frontier (matches /seo-agency) -->
-<section id="frontier">
-  <div class="container">
-    <div class="frontier-head reveal">
-      <div class="eyebrow mono"><span>The next frontier · AEO &amp; GEO</span></div>
-      <h2>AI changed search. <em>We changed SEO.</em></h2>
-      <p>Google AI Overviews. ChatGPT Search. Perplexity. Roughly a third of commercial queries now return an AI-generated answer before a single blue link. Traditional SEO ranks pages. AEO and GEO get your brand cited inside the answer itself. Different playbook, same operating system.</p>
-    </div>
-
-    <div class="frontier-grid reveal">
-      <div class="frontier-col">
-        <div class="frontier-abbr">AEO<em>.</em></div>
-        <div class="full">Answer Engine Optimisation</div>
-        <h3>Structured for the <em>answer</em>, not the click.</h3>
-        <p>Structured data, direct-answer content, question-intent mapping. We position your brand as the source Google, ChatGPT and Perplexity cite when users ask for one.</p>
-        <ul>
-          <li>Schema.org markup for eligibility in rich answers and AI Overviews</li>
-          <li>Direct-answer content formats written for voice and AI surfaces</li>
-          <li>Question-intent mapping at the query level, not just the keyword</li>
-          <li>Featured snippet and People Also Ask capture strategy</li>
-        </ul>
-      </div>
-
-      <div class="frontier-col">
-        <div class="frontier-abbr">GEO<em>.</em></div>
-        <div class="full">Generative Engine Optimisation</div>
-        <h3>Your brand <em>inside</em> the model, not just the index.</h3>
-        <p>Citation-worthy authority content, entity optimisation, knowledge graph alignment. The brands that appear inside generative answers aren't there by accident. They're engineered to be the reference.</p>
-        <ul>
-          <li>Entity-level SEO tying your brand to its commercial category</li>
-          <li>Authority content built to be cited by LLMs and AI search engines</li>
-          <li>Knowledge graph alignment across Wikipedia, Wikidata and trusted sources</li>
-          <li>Prompt-surface monitoring: tracking how AI answers describe your brand</li>
-        </ul>
-      </div>
-    </div>
-  </div>
-</section>
+<!-- @include _partials/aeo-geo.html -->
 
 <!-- STATS -->
 <section class="loc-stats">
