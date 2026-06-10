@@ -399,6 +399,8 @@ footer {
   color: var(--muted);
   margin-bottom: 20px;
 }
+/* Stacked groups within one column (e.g. Services + AI services) */
+.foot-grid ul + h4 { margin-top: 32px; }
 .foot-grid ul { list-style: none; display: grid; gap: 10px; padding: 0; margin: 0; }
 .foot-grid li { font-size: 15px; color: var(--ink-3); }
 .foot-grid a { font-size: 15px; color: var(--ink-3); transition: color 200ms var(--ease); }
