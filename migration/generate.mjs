@@ -202,7 +202,23 @@ const FAQ_JS = `<script>
     const i = b.parentElement; const o = i.classList.toggle('open'); b.setAttribute('aria-expanded', o ? 'true':'false'); }); })();
 </script>`;
 
-const para = (lines) => lines.map((l) => `      <p>${esc(decodeEntities(l))}</p>`).join("\n");
+// Split long extracted paragraphs (>360 chars) at sentence boundaries so no
+// page renders an unbroken slab of text. ~2-3 sentences per <p>.
+const splitSlab = (text) => {
+  if (text.length <= 360) return [text];
+  const sentences = text.match(/[^.!?]+[.!?]+(?:\s|$)/g) || [text];
+  const out = [];
+  let chunk = "";
+  for (const s of sentences) {
+    if (chunk && (chunk + s).length > 320) { out.push(chunk.trim()); chunk = s; }
+    else chunk += s;
+  }
+  if (chunk.trim()) out.push(chunk.trim());
+  return out;
+};
+const para = (lines) => lines
+  .flatMap((l) => splitSlab(decodeEntities(l)))
+  .map((l) => `      <p>${esc(l)}</p>`).join("\n");
 
 // ───────────────────────── LOCATION template ─────────────────────────
 function locationPage({ slug, service, city, sf, wp, copy }) {
@@ -444,7 +460,7 @@ function caseStudyPage({ slug, services, sf, wp, copy }) {
     <div class="container">
       <a class="cs-back" href="/case-studies">← All case studies</a>
       <div class="cs-tags mono">${serviceLinks}</div>
-      <h1>${esc(decodeEntities(h1))}</h1>
+      <h1>${emH1(h1)}</h1>
       ${desc ? `<p class="cs-lede">${esc(decodeEntities(desc))}</p>` : ""}
     </div>
   </header>
@@ -466,6 +482,7 @@ ${para(body.length ? body : [intro].filter(Boolean))}
 .cs-tags{margin:20px 0 14px;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;font-size:13px}
 .cs-tags a{color:inherit}
 .cs h1{font-family:var(--display);font-weight:500;font-size:clamp(34px,5vw,72px);line-height:1.02;letter-spacing:-0.03em;max-width:18ch}
+.cs h1 em{font-style:italic;color:var(--accent);font-weight:400}
 .cs-lede{margin-top:24px;color:var(--muted);font-size:clamp(17px,1.6vw,21px);line-height:1.5;max-width:60ch}
 .cs-body{padding:clamp(40px,6vw,80px) 0;max-width:760px}
 .cs-body p{color:var(--ink);font-size:clamp(16px,1.4vw,18px);line-height:1.7;margin:0 0 20px}

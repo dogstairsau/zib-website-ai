@@ -5,6 +5,20 @@
 <meta name="description" content="Zib Digital is an AI marketing agency in Australia delivering AI marketing services across SEO, advertising, social and content. AI execution run by senior strategists, since 2009." />
 <!-- @include _partials/head.html -->
 <link rel="stylesheet" href="/assets/orange-stats.css">
+<link rel="stylesheet" href="/assets/ai-sections.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "What does an AI marketing agency actually do?", "acceptedAnswer": { "@type": "Answer", "text": "Zib Digital pairs senior strategists with AI agents across search, paid media, social and content. The agents handle scale (bids, variants, audits, reporting); the humans own strategy and the commercial calls. You get more output, faster, tied to revenue rather than activity." } },
+    { "@type": "Question", "name": "What is the difference between Managed AI and AI Partner?", "acceptedAnswer": { "@type": "Answer", "text": "Managed AI is done-for-you: Zib builds and runs the agents and you get the leads and revenue. AI Partner is done-with-you: Zib builds an agent inside your stack, your team learns to run it, and you own everything, with monthly senior check-ins." } },
+    { "@type": "Question", "name": "How fast do AI marketing agents show results?", "acceptedAnswer": { "@type": "Answer", "text": "Managed AI typically shows the first commercial signal in about four weeks. AI Partner agents launch in about two weeks and compound from there. Anyone promising transformative results in days is selling a demo, not a system." } },
+    { "@type": "Question", "name": "Will AI-generated content hurt our brand or rankings?", "acceptedAnswer": { "@type": "Answer", "text": "Not the way we run it. Every output passes a brand-voice pass and a senior editorial pass before it ships. Google rewards helpful content regardless of how it is produced, and penalises spam regardless of who wrote it. Human-edited, search-led content is the standard on every account." } },
+    { "@type": "Question", "name": "Do we need our own data or tools to start?", "acceptedAnswer": { "@type": "Answer", "text": "For Managed AI, no: we run the agents in our environment against your accounts. For AI Partner, you need a real business with real data and a workflow worth automating; the agent is built inside your tools so you own it." } }
+  ]
+}
+</script>
 <style>
 h1, h2, h3, .hero-h, .fork-h, .path-title, .moat-h, .cta-title { text-wrap: balance; }
 
@@ -826,6 +840,9 @@ footer ul li a:hover { color: var(--accent); }
 .ai-svc-grid a.pillar { display:block; text-decoration:none; color:inherit; transition:transform 200ms var(--ease), border-color 200ms var(--ease); }
 .ai-svc-grid a.pillar:hover { transform:translateY(-2px); border-color:var(--accent); }
 .ai-svc-grid a.pillar h4 { margin:0 0 6px; }
+/* two-tier pricing variant; collapses to one column on mobile */
+.tier-grid.two { grid-template-columns: repeat(2, 1fr); max-width: 900px; }
+@media (max-width: 880px) { .tier-grid.two { grid-template-columns: 1fr; } }
 /* tighten the gap between intro and cards, and collapse the gap into the moat below (both dark) */
 .ai-svc-grid.moat-pillars { margin-top: clamp(32px, 4vw, 52px); align-items: start; row-gap: clamp(36px, 4vw, 52px); }
 /* even out 1- and 2-line titles so rows align and the inter-row gap stays consistent */
@@ -912,6 +929,175 @@ footer ul li a:hover { color: var(--accent); }
         <h4>Outcomes on the record</h4>
         <p>Case studies with real numbers. References you can call. No black boxes.</p>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="section how" id="how">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="mono section-eyebrow">How it works</div>
+      <h2 class="section-h">Three steps to <em>an AI-run growth engine.</em></h2>
+      <p class="section-sub">Same playbook on either path. <strong>We read the business first, pick the channel where AI moves your number fastest, then compound from there.</strong></p>
+    </div>
+    <div class="how-grid reveal-stagger">
+      <div class="how-step">
+        <div class="how-num">01</div>
+        <h3>Audit <em>the commercial picture</em></h3>
+        <p>Free 30-second AI audit, then a 30-minute conversation with a senior strategist. We map where the revenue leak is and which agent closes it first.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-num">02</div>
+        <h3>Pick the path: <em>for you, or with you</em></h3>
+        <p>Managed AI if you want it run for you on a retainer. AI Partner if you want the agent built in your stack and the capability owned in-house. Same engine, two delivery models.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-num">03</div>
+        <h3>Compound, <em>reviewed weekly</em></h3>
+        <p>Agents optimise daily; a senior strategist reviews weekly and reports in leads, revenue, CAC and ROAS. Every month the system gets sharper, not staler.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHICH PATH FITS -->
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="mono section-eyebrow">Before you choose</div>
+      <h2 class="section-h">Honest about <em>which path fits.</em></h2>
+      <p class="section-sub">Both paths run the same agents. <strong>The only question is how involved you want to be.</strong></p>
+    </div>
+    <div class="fit-grid reveal-stagger">
+      <div class="fit-card yes">
+        <h3><span class="mark">✓</span>Managed AI fits if…</h3>
+        <ul>
+          <li>You want outcomes, not another system to learn. We run it, you read one weekly report.</li>
+          <li>Marketing isn't your core team's job and hiring for it doesn't stack up.</li>
+          <li>You want the first commercial signal in about four weeks.</li>
+          <li>You'd rather scale spend than headcount.</li>
+        </ul>
+      </div>
+      <div class="fit-card yes">
+        <h3><span class="mark">✓</span>AI Partner fits if…</h3>
+        <ul>
+          <li>You want to own the capability in three years, not rent it forever.</li>
+          <li>You have real data, real tools, and a team that can give it 60 minutes a month.</li>
+          <li>You want the agent living in your stack, auditable end to end.</li>
+          <li>You see AI as a ten-year shift and want the moat in-house.</li>
+        </ul>
+      </div>
+    </div>
+    <div class="fit-foot reveal">
+      Not sure? <a href="mailto:hello@zibdigital.com.au?subject=AI%20services%20-%20fit%20call">Book a 15-min fit call</a> · we'll tell you straight which path fits.
+    </div>
+  </div>
+</section>
+
+<!-- COMPARE -->
+<section class="section compare">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="mono section-eyebrow">Compare the two paths</div>
+      <h2 class="section-h">Managed AI <em>vs</em> AI Partner</h2>
+      <p class="section-sub">Same playbook, two delivery models. <strong>Pick the one that matches how involved you want to be.</strong></p>
+    </div>
+    <div class="reveal" style="overflow-x: auto;">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>What you get</th>
+            <th><span class="col-tag">Do it for me</span>Managed AI</th>
+            <th><span class="col-tag">Do it with me</span>AI Partner</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Who runs the agents</td><td>Zib senior strategist team</td><td>You own them, we coach</td></tr>
+          <tr><td>Where the agents live</td><td>In our environment</td><td>In <strong>your</strong> stack</td></tr>
+          <tr><td>Time required from you</td><td>~1 hr / week</td><td>60 min / month + your team runs it</td></tr>
+          <tr><td>Ongoing cost</td><td>Retainer, scales with scope</td><td>Setup fee + flat monthly</td></tr>
+          <tr><td>What happens if we part ways</td><td>Agents stay with Zib</td><td><span class="check">You keep everything</span></td></tr>
+          <tr><td>Best for</td><td>Operators who want it run for them</td><td>Operators who want to own the capability</td></tr>
+          <tr><td>Time to first commercial signal</td><td>~4 weeks</td><td>~2 weeks to launch · 4–6 to compound</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="reveal" style="text-align:center; margin-top: 32px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase;">
+      <a href="/managed-ai" style="color: var(--ink); border-bottom: 0.5px solid var(--rule-2);">Explore Managed AI →</a> &nbsp;·&nbsp; <a href="/ai-partner" style="color: var(--ink); border-bottom: 0.5px solid var(--rule-2);">Explore AI Partner →</a>
+    </p>
+  </div>
+</section>
+
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="mono section-eyebrow">Pricing</div>
+      <h2 class="section-h">Transparent. <em>No retainer maze.</em></h2>
+      <p class="section-sub"><strong>Two models, both simple.</strong> Managed AI scales with scope; AI Partner is a setup fee plus a flat monthly. Every dollar maps to a deliverable you can point at.</p>
+    </div>
+    <div class="tier-grid two">
+      <div class="tier">
+        <h3>Managed AI</h3>
+        <div class="desc">Done for you. We build and run the agents; you get the leads, the revenue and one weekly report.</div>
+        <div class="price">Retainer<span class="per">scoped to channels</span></div>
+        <div class="setup">From ~4 weeks to first commercial signal</div>
+        <ul>
+          <li>Senior strategist owns the account</li>
+          <li>Agents across search, social, ecomm and reporting</li>
+          <li>Weekly commercial report in leads, CAC, ROAS</li>
+          <li>Scale channels up or down with the quarter</li>
+        </ul>
+        <a class="tier-cta" href="/managed-ai">Explore Managed AI <span aria-hidden="true">→</span></a>
+      </div>
+      <div class="tier featured">
+        <span class="badge">Own the capability</span>
+        <h3>AI Partner</h3>
+        <div class="desc">Done with you. We build the agent in your stack, your team learns it, you own everything.</div>
+        <div class="price"><span class="cur">$</span>1,500<span class="per">/ month · from</span></div>
+        <div class="setup">+ setup, scoped per agent · monthly, no lock-in</div>
+        <ul>
+          <li>Agent built inside your tools, on your data</li>
+          <li>Your team trained to run and extend it</li>
+          <li>Monthly senior-strategist check-ins</li>
+          <li>Part ways anytime, you keep the agent</li>
+        </ul>
+        <a class="tier-cta" href="/ai-partner#pricing">See AI Partner pricing <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+    <p class="footnote">All prices AUD ex GST · scoped on the fit call · no surprises mid-quarter</p>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="section" id="faq">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="mono section-eyebrow">FAQ</div>
+      <h2 class="section-h">Common questions, <em>straight answers.</em></h2>
+    </div>
+    <div class="faq-list reveal">
+      <details class="faq-item">
+        <summary>What does an AI marketing agency actually do?<span class="plus" aria-hidden="true"></span></summary>
+        <p>We pair senior strategists with AI agents across search, paid media, social and content. The agents handle the scale (bids, variants, audits, reporting); the humans own strategy and the commercial calls. You get more output, faster, tied to revenue rather than activity.</p>
+      </details>
+      <details class="faq-item">
+        <summary>What's the difference between Managed AI and AI Partner?<span class="plus" aria-hidden="true"></span></summary>
+        <p>Managed AI is done-for-you: we build and run the agents and you get the leads and revenue. AI Partner is done-with-you: we build an agent inside your stack, your team learns to run it, and you own everything, with monthly senior check-ins.</p>
+      </details>
+      <details class="faq-item">
+        <summary>How fast do AI marketing agents show results?<span class="plus" aria-hidden="true"></span></summary>
+        <p>Managed AI typically shows the first commercial signal in about four weeks. AI Partner agents launch in about two weeks and compound from there. Anyone promising transformative results in days is selling a demo, not a system.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Will AI-generated content hurt our brand or rankings?<span class="plus" aria-hidden="true"></span></summary>
+        <p>Not the way we run it. Every output passes a brand-voice pass and a senior editorial pass before it ships. Google rewards helpful content regardless of how it's produced, and penalises spam regardless of who wrote it. Human-edited, search-led content is the standard on every account.</p>
+      </details>
+      <details class="faq-item">
+        <summary>Do we need our own data or tools to start?<span class="plus" aria-hidden="true"></span></summary>
+        <p>For Managed AI, no: we run the agents in our environment against your accounts. For AI Partner, you need a real business with real data and a workflow worth automating; the agent is built inside your tools so you own it.</p>
+      </details>
     </div>
   </div>
 </section>

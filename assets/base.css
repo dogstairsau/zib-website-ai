@@ -521,15 +521,15 @@ footer {
 
 /* ─── Numbered category cards · shared component ──────────────────────
    Reusable "01 · Label / Title / desc" card grid (originated on /google-ads).
-   Add a .cat-grid with .cat-card children (.cat-num, .cat-name, .cat-desc). */
-.cat-grid {
+   Add a .feat-grid with .feat-card children (.feat-num, .feat-name, .feat-desc). */
+.feat-grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: clamp(16px, 2vw, 24px);
 }
-@media (max-width: 1080px) { .cat-grid { grid-template-columns: repeat(2, 1fr); } }
-@media (max-width: 560px) { .cat-grid { grid-template-columns: 1fr; } }
-.cat-card {
+@media (max-width: 1080px) { .feat-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .feat-grid { grid-template-columns: 1fr; } }
+.feat-card {
   display: block;
   padding: clamp(28px, 3vw, 36px);
   border: 1px solid var(--rule);
@@ -537,8 +537,8 @@ footer {
   background: #fff;
   transition: transform 280ms var(--ease), border-color 280ms var(--ease), box-shadow 280ms var(--ease);
 }
-a.cat-card { text-decoration: none; color: inherit; }
-.cat-card:hover { transform: translateY(-4px); border-color: var(--ink); box-shadow: 0 30px 80px -40px rgba(0,0,0,0.18); }
-.cat-num { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; color: var(--muted-2); font-weight: 600; }
-.cat-name { font-family: var(--display); font-size: clamp(22px, 2vw, 28px); font-weight: 500; letter-spacing: -0.02em; margin-top: 12px; }
-.cat-desc { color: var(--muted); font-size: 15px; line-height: 1.55; margin-top: 14px; }
+a.feat-card { text-decoration: none; color: inherit; }
+.feat-card:hover { transform: translateY(-4px); border-color: var(--ink); box-shadow: 0 30px 80px -40px rgba(0,0,0,0.18); }
+.feat-num { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; color: var(--muted-2); font-weight: 600; }
+.feat-name { font-family: var(--display); font-size: clamp(22px, 2vw, 28px); font-weight: 500; letter-spacing: -0.02em; margin-top: 12px; }
+.feat-desc { color: var(--muted); font-size: 15px; line-height: 1.55; margin-top: 14px; }
