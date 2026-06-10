@@ -1,0 +1,47 @@
+/* ─── Orange stats band · shared component ───────────────────────────
+   Big orange proof band. Namespaced (.orange-band / .ob-*) so it never
+   clashes with .loc-stats or other .stat rules. Drop in via
+   _partials/orange-stats.html and link this stylesheet. */
+.orange-band {
+  background: var(--accent);
+  color: #fff;
+  padding-top: clamp(96px, 12vw, 160px);
+  padding-bottom: clamp(96px, 12vw, 160px);
+  position: relative;
+  overflow: hidden;
+}
+.ob-lead {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(36px, 5vw, 76px);
+  line-height: 1.0;
+  letter-spacing: -0.04em;
+  max-width: 22ch;
+  margin-bottom: clamp(64px, 8vw, 96px);
+  color: #fff;
+}
+.ob-lead em { font-style: italic; font-weight: 400; color: rgba(255,255,255,0.78); }
+.ob-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border-top: 0.5px solid rgba(255,255,255,0.32);
+  padding-top: 40px;
+}
+@media (max-width: 880px) { .ob-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; } }
+.ob-stat { padding-left: 28px; border-left: 0.5px solid rgba(255,255,255,0.32); }
+.ob-stat:first-child { border-left: 0; padding-left: 0; }
+@media (max-width: 880px) { .ob-stat:nth-child(3) { border-left: 0; padding-left: 0; } }
+.ob-value {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(60px, 7.5vw, 112px);
+  line-height: 0.92;
+  letter-spacing: -0.05em;
+  font-variant-numeric: tabular-nums;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: baseline;
+}
+.ob-value .suf { font-size: 0.55em; opacity: 0.85; margin-left: 2px; }
+.ob-label { font-size: 14px; color: #FFF6EE; max-width: 220px; line-height: 1.4; }

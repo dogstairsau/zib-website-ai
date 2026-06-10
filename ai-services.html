@@ -693,7 +693,7 @@ footer ul li a:hover { color: var(--accent); }
           <li>Reports in commercial language: leads, sales, CAC, ROAS. Not impressions.</li>
         </ul>
         <div class="path-cta-row">
-          <a class="path-cta" href="#managed">Explore managed AI <span class="arr">→</span></a>
+          <a class="path-cta" href="/managed-ai">Explore managed AI <span class="arr">→</span></a>
           <span class="path-note">Retainer · from ~4 weeks to launch</span>
         </div>
       </article>
@@ -826,7 +826,9 @@ footer ul li a:hover { color: var(--accent); }
 .ai-svc-grid a.pillar:hover { transform:translateY(-2px); border-color:var(--accent); }
 .ai-svc-grid a.pillar h4 { margin:0 0 6px; }
 /* tighten the gap between intro and cards, and collapse the gap into the moat below (both dark) */
-.ai-svc-grid.moat-pillars { margin-top: clamp(32px, 4vw, 52px); }
+.ai-svc-grid.moat-pillars { margin-top: clamp(32px, 4vw, 52px); align-items: start; row-gap: clamp(36px, 4vw, 52px); }
+/* even out 1- and 2-line titles so rows align and the inter-row gap stays consistent */
+.ai-svc-grid .pillar h4 { min-height: 2.3em; }
 .ai-svc-section { padding-bottom: clamp(48px, 6vw, 72px); }
 .ai-svc-section + .moat { padding-top: clamp(48px, 6vw, 72px); }
 </style>
