@@ -111,18 +111,83 @@ const PITCH = {
 };
 const pitchFor = (k) => PITCH[k] || PITCH.seo;
 
+// Scannable coverage points per service — replaces the rough ported "slab" copy.
+const POINTS = (city) => ({
+  seo: [
+    ["Technical SEO & site audits", "Crawlability, speed, structure and Core Web Vitals, fixed at the foundation."],
+    ["Content that ranks and converts", "Original, search-led content mapped to real buyer intent."],
+    ["Authority & link building", `Quality backlinks that move competitive ${city} keywords.`],
+    ["Local SEO", `Google Business Profile, local packs and suburb-level visibility across ${city}.`],
+    ["Transparent reporting", "Monthly reviews in rankings, traffic and revenue, not vanity metrics."],
+  ],
+  social: [
+    ["Content & creative", "Scroll-stopping monthly creative built for your brand, voice and channels."],
+    ["Paid social", "Meta, Instagram and TikTok ads engineered for leads and ROAS, not vanity reach."],
+    ["Community management", "We engage your audience and manage conversations, positive and negative."],
+    ["Social strategy", "A clear channel-by-channel plan tied to commercial goals, refreshed monthly."],
+    ["Transparent reporting", "Monthly reviews in leads, engagement and ROAS you can act on."],
+  ],
+  ppc: [
+    ["Campaign architecture", "Account structure built around buying intent and your margins."],
+    ["Daily optimisation", "Bids, budgets and creative tuned daily by our agent stack, reviewed weekly by a human."],
+    ["Google Ads & Performance Max", "Search, PMax, Shopping and remarketing (formerly AdWords), run end to end."],
+    ["Conversion tracking", "Proper tracking and landing-page advice so spend becomes leads, not just clicks."],
+    ["Transparent reporting", "Monthly reviews in leads, CPA and ROAS, not impressions."],
+  ],
+  web: [
+    ["Conversion-first design", "Sites designed to convert, mapped to how buyers actually decide."],
+    ["Built to be found", "SEO-ready builds with clean structure, speed and Core Web Vitals from day one."],
+    ["Brand & UX", "Cohesive brand, messaging and UX that reflects the business you're running."],
+    ["Development", "Responsive, standards-compliant builds across Shopify, WordPress, Webflow and custom."],
+    ["Measured", "Analytics and conversion tracking so the site is accountable to a number."],
+  ],
+  content: [
+    ["Search-led content", "Content planned around real search demand and buyer questions."],
+    ["Editorial & copy", "Original articles and copy, AI-augmented, always human-edited."],
+    ["Authority building", "Content engineered to earn rankings, links and citations."],
+    ["Content strategy", "A roadmap tied to pipeline, not a calendar for its own sake."],
+    ["Reporting", "Tracked against rankings, traffic and leads."],
+  ],
+});
+const pointsList = (service, city) => {
+  const pts = POINTS(city)[service];
+  if (!pts) return null;
+  return `    <ul class="seo-points reveal">\n${pts.map(([l, d]) => `      <li><strong>${esc(l)}.</strong> ${esc(d)}</li>`).join("\n")}\n    </ul>`;
+};
+
+// One-line cross-link descriptions (better than "Pair X with Y…").
+const HUB_DESC = {
+  seo: "Rank for the terms your buyers search, tied to revenue.",
+  ppc: "Premier Partner Google Ads, optimised daily, reported in ROAS.",
+  social: "Paid and organic social that scales what converts.",
+  web: "Conversion-first websites and design that sell.",
+  content: "Search-led content that earns rankings and moves buyers.",
+};
+
+// H1 with an orange <em> accent (on the city if present, else the last word).
+function emH1(h1, city) {
+  const e = esc(decodeEntities(h1));
+  if (city && e.includes(esc(city))) return e.replace(esc(city), `<em>${esc(city)}</em>`);
+  const parts = e.trim().split(/\s+/);
+  return parts.length > 1 ? `${parts.slice(0, -1).join(" ")} <em>${parts[parts.length - 1]}</em>` : e;
+}
+
 // ───────────────────────── shared fragments ─────────────────────────
-const HEAD = (title, desc, extraCss = "") => `<!doctype html>
+const HEAD = (title, desc, extraCss = "") => {
+  const links = (Array.isArray(extraCss) ? extraCss : [extraCss]).filter(Boolean)
+    .map((h) => `<link rel="stylesheet" href="${h}">`).join("\n");
+  return `<!doctype html>
 <html lang="en-AU">
 <head>
 <title>${esc(title)}</title>
 <meta name="description" content="${esc(desc)}" />
-<!-- @include _partials/head.html -->${extraCss ? `\n<link rel="stylesheet" href="${extraCss}">` : ""}
+<!-- @include _partials/head.html -->${links ? `\n${links}` : ""}
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
 <!-- @include _partials/nav.html -->
 <main id="main">`;
+};
 
 const FOOT = `</main>
 <!-- @include _partials/footer.html -->
@@ -142,21 +207,22 @@ const para = (lines) => lines.map((l) => `      <p>${esc(decodeEntities(l))}</p>
 // ───────────────────────── LOCATION template ─────────────────────────
 function locationPage({ slug, service, city, sf, wp, copy }) {
   const hub = HUBS[service];
+  const isSeo = service === "seo";
   const title = sf.title || wp?.seoTitle || `${hub.label} ${city} | Zib Digital`;
   const desc = sf.metadesc || wp?.metadesc || `${hub.label} services in ${city} from Zib Digital, Australia's digital marketing agency since 2009.`;
   const h1 = sf.h1 || `${hub.label} ${city}`;
   const h2a = sf.h2_1 || `Our approach to ${hub.label} in ${city}`;
   const h2b = sf.h2_2 || `Why ${city} businesses choose Zib`;
-  const sub = copy[0] || `Zib Digital delivers commercial ${hub.label} for ${city} businesses. Senior strategists, AI-augmented execution, since 2009.`;
   const body = copy.slice(1, 4);
-  const syn = SYNONYMS[service]?.(city); if (syn) body.push(syn);
+  const syn = SYNONYMS[service]?.(city);
+  const h1html = emH1(h1, city);
 
   // internal links: every other service hub + this city's digital-marketing page
   const serviceRows = CORE
     .map((k, i) => { const h = HUBS[k]; return `      <a class="service-row" href="${h.href}">
         <span class="service-num mono">0${i + 1}</span>
         <span class="service-name">${h.label}</span>
-        <span class="service-desc">${k === service ? `Our core ${h.label} offering, tuned for ${city}.` : `Pair ${hub.label} with ${h.label} for compounding results.`}</span>
+        <span class="service-desc">${k === service ? `Our core ${h.label} offering, tuned for ${city}.` : HUB_DESC[k]}</span>
         <span class="service-arrow">→</span>
       </a>`; }).join("\n") +
     `\n      <a class="service-row" href="${DM_CITY[city] || "/"}">
@@ -171,13 +237,20 @@ function locationPage({ slug, service, city, sf, wp, copy }) {
 
   const ld = { "@context": "https://schema.org", "@type": "Service", serviceType: `${hub.label} ${city}`, name: decodeEntities(h1), description: decodeEntities(desc), provider: { "@id": "https://zibdigital.com.au/#org" }, areaServed: { "@type": "City", name: city } };
 
-  return `${HEAD(title, desc, "/assets/location.css")}
-<script type="application/ld+json">${JSON.stringify(ld)}</script>
-
-<section class="loc-hero">
+  // SEO city pages use the shared live-audit hero component (matches /seo-agency + /seo-melbourne)
+  const heroSection = isSeo ? `<section class="loc-hero" id="audit-top">
+  <div class="container">
+    <div class="audit-hero-intro reveal">
+      <div class="eyebrow mono"><span>SEO Agency · ${esc(city)}</span></div>
+      <h1 class="hero-h">${h1html}</h1>
+      <p class="audit-hero-sub"><strong>${esc(city)}'s SEO agency since 2009. First to hybrid agents today.</strong> Drop your URL below and a senior strategist reads your positioning, technical SEO and commercial opportunities in 30 seconds. Search engine optimisation tied to revenue, for ${esc(city)} businesses.</p>
+    </div>
+    <!-- @include _partials/audit-embed.html -->
+  </div>
+</section>` : `<section class="loc-hero">
   <div class="container">
     <div class="mono eyebrow reveal">${hub.label} · ${city}</div>
-    <h1 class="hero-h reveal">${esc(decodeEntities(h1))}</h1>
+    <h1 class="hero-h reveal">${h1html}</h1>
     <div class="loc-hero-row">
       <p class="hero-sub reveal"><strong>${esc(hub.label)} in ${esc(city)}, built around your commercial number.</strong> Human first, commercially driven, AI enhanced: senior strategists own the thinking, AI handles the scale.</p>
       <div class="hero-ctas reveal">
@@ -192,7 +265,16 @@ function locationPage({ slug, service, city, sf, wp, copy }) {
       <span><span class="dot" aria-hidden="true"></span>800+ clients since 2009</span>
     </div>
   </div>
-</section>
+</section>`;
+
+  // Scannable dot-points (per service) replace the rough ported "slab" copy.
+  const proofBody = pointsList(service, city) || (body.length ? para(body) : "");
+  const synLine = syn ? `\n    <p class="proof-sub reveal" style="margin-top:24px; max-width:64ch;">${esc(syn)}</p>` : "";
+
+  return `${HEAD(title, desc, isSeo ? ["/assets/location.css", "/assets/audit-widget.css"] : "/assets/location.css")}
+<script type="application/ld+json">${JSON.stringify(ld)}</script>
+
+${heroSection}
 
 <section class="loc-proof">
   <div class="container">
@@ -201,7 +283,7 @@ function locationPage({ slug, service, city, sf, wp, copy }) {
       <h2 class="proof-h reveal">${pitchFor(service).h2}</h2></div>
       <p class="proof-sub reveal">${esc(pitchFor(service).sub(city))}</p>
     </div>
-${body.length ? para(body) : ""}
+${proofBody}${synLine}
   </div>
 </section>
 
@@ -243,6 +325,7 @@ ${locLinks}
   </div>
 </section>
 
+${isSeo ? "<!-- @include _partials/aeo-geo.html -->\n" : ""}
 <section class="cta-section" id="audit">
   <div class="container">
     <div class="mono cta-eyebrow reveal">Talk to a senior strategist</div>
@@ -256,7 +339,7 @@ ${locLinks}
 </section>
 
 <style>.loc-link{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:18px 4px;border-bottom:1px solid var(--rule-2);color:var(--ink);text-decoration:none;font-weight:500;font-size:clamp(16px,1.4vw,19px);transition:color .2s,padding-left .2s}.loc-link:hover{color:var(--accent);padding-left:10px}</style>
-${FOOT}`;
+${isSeo ? '<script src="/assets/audit-widget.js" defer></script>\n' : ""}${FOOT}`;
 }
 
 // ───────────────────────── SERVICE page template ─────────────────────────
@@ -267,12 +350,15 @@ function servicePage({ slug, label, city, hub, sf, wp, copy }) {
   const h1 = sf.h1 || wp?.title || `${label}${city ? " " + city : ""}`;
   const sub = copy[0] || `Zib Digital delivers commercial ${label.toLowerCase()}${city ? " for " + city + " businesses" : " across Australia"}. Senior strategists, AI-augmented execution, since 2009.`;
   const body = copy.slice(1, 4);
-  const syn = SYNONYMS[hub]?.(city); if (syn) body.push(syn);
+  const syn = SYNONYMS[hub]?.(city);
+  const h1html = emH1(h1, city);
+  const proofBody = pointsList(hub, where) || (body.length ? para(body) : "");
+  const synLine = syn ? `\n    <p class="proof-sub reveal" style="margin-top:24px; max-width:64ch;">${esc(syn)}</p>` : "";
   const ld = { "@context": "https://schema.org", "@type": "Service", serviceType: label, name: decodeEntities(h1), description: decodeEntities(desc), provider: { "@id": "https://zibdigital.com.au/#org" }, areaServed: { "@type": city ? "City" : "Country", name: where } };
   const serviceRows = CORE.map((k, i) => { const hh = HUBS[k]; return `      <a class="service-row" href="${hh.href}">
         <span class="service-num mono">0${i + 1}</span>
         <span class="service-name">${hh.label}</span>
-        <span class="service-desc">${k === hub ? `Closely paired with ${label.toLowerCase()}.` : `Pair ${label.toLowerCase()} with ${hh.label} for compounding results.`}</span>
+        <span class="service-desc">${k === hub ? `Closely paired with ${label.toLowerCase()}.` : HUB_DESC[k]}</span>
         <span class="service-arrow">→</span>
       </a>`; }).join("\n");
 
@@ -282,7 +368,7 @@ function servicePage({ slug, label, city, hub, sf, wp, copy }) {
 <section class="loc-hero">
   <div class="container">
     <div class="mono eyebrow reveal">${esc(label)}${city ? " · " + esc(city) : " · Australia"}</div>
-    <h1 class="hero-h reveal">${esc(decodeEntities(h1))}</h1>
+    <h1 class="hero-h reveal">${h1html}</h1>
     <div class="loc-hero-row">
       <p class="hero-sub reveal"><strong>${esc(label)}${city ? " in " + esc(city) : ""}, built around your commercial number.</strong> Human first, commercially driven, AI enhanced: senior strategists own the thinking, AI handles the scale.</p>
       <div class="hero-ctas reveal">
@@ -306,7 +392,7 @@ function servicePage({ slug, label, city, hub, sf, wp, copy }) {
       <h2 class="proof-h reveal">${esc(label)} that moves <em>your number.</em></h2></div>
       <p class="proof-sub reveal">${esc(pitchFor(hub).sub(city))}</p>
     </div>
-${body.length ? para(body) : ""}
+${proofBody}${synLine}
   </div>
 </section>
 
