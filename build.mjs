@@ -15,6 +15,57 @@ import { fileURLToPath } from "node:url";
 const ROOT = fileURLToPath(new URL(".", import.meta.url));
 const OUT = join(ROOT, "dist");
 
+// Canonical host for the new site (replaces the old WP domain).
+const HOST = "https://zibdigital.com.au";
+const OG_IMAGE = `${HOST}/assets/og-default.png`;
+
+const decode = (s) => s
+  .replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">")
+  .replace(/&quot;/g, '"').replace(/&#0?39;/g, "'").replace(/&apos;/g, "'");
+const attrEsc = (s) => decode(s)
+  .replace(/&/g, "&amp;").replace(/"/g, "&quot;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+
+/** Map a built file's path (relative to /dist) to its clean canonical URL. */
+function canonicalFor(relPath) {
+  let p = relPath.replace(/\\/g, "/").replace(/\.html$/, "");
+  if (p === "index" || p === "") return `${HOST}/`;
+  p = p.replace(/\/index$/, "");
+  return `${HOST}/${p}`;
+}
+
+/**
+ * Inject a self-referencing canonical + Open Graph / Twitter Card tags before
+ * </head>. Canonical is added only if absent; the OG block only if the page
+ * doesn't already declare its own (so bespoke pages keep theirs).
+ */
+function injectHead(html, relPath) {
+  if (!/<\/head>/i.test(html)) return html;
+  const canonical = canonicalFor(relPath);
+  const titleM = html.match(/<title>([\s\S]*?)<\/title>/i);
+  const descM = html.match(/<meta\s+name=["']description["']\s+content=["']([\s\S]*?)["']/i);
+  const title = titleM ? decode(titleM[1].trim()) : "Zib Digital";
+  const desc = descM ? decode(descM[1].trim()) : "";
+  let tags = "";
+  if (!/rel=["']canonical["']/i.test(html)) {
+    tags += `<link rel="canonical" href="${canonical}">\n`;
+  }
+  if (!/property=["']og:title["']/i.test(html)) {
+    tags +=
+      `<meta property="og:type" content="website">\n` +
+      `<meta property="og:site_name" content="Zib Digital">\n` +
+      `<meta property="og:locale" content="en_AU">\n` +
+      `<meta property="og:title" content="${attrEsc(title)}">\n` +
+      (desc ? `<meta property="og:description" content="${attrEsc(desc)}">\n` : "") +
+      `<meta property="og:url" content="${canonical}">\n` +
+      `<meta property="og:image" content="${OG_IMAGE}">\n` +
+      `<meta name="twitter:card" content="summary_large_image">\n` +
+      `<meta name="twitter:title" content="${attrEsc(title)}">\n` +
+      (desc ? `<meta name="twitter:description" content="${attrEsc(desc)}">\n` : "") +
+      `<meta name="twitter:image" content="${OG_IMAGE}">\n`;
+  }
+  return tags ? html.replace(/<\/head>/i, `${tags}</head>`) : html;
+}
+
 // <!-- @include _partials/nav.html -->  (non-global; matchAll uses /g locally)
 const INCLUDE_RE_SRC = "<!--\\s*@include\\s+([^\\s]+?)\\s*-->";
 
@@ -81,9 +132,10 @@ async function processHtmlTree(srcDir, destDir, counter) {
     if (!entry.isFile() || !entry.name.endsWith(".html")) continue;
     const html = await readFile(join(srcDir, entry.name), "utf8");
     const expanded = await expand(html);
-    await writeFile(join(destDir, entry.name), expanded, "utf8");
-    counter.count++;
     const rel = join(destDir, entry.name).slice(OUT.length + 1);
+    const withHead = injectHead(expanded, rel);
+    await writeFile(join(destDir, entry.name), withHead, "utf8");
+    counter.count++;
     console.log(`  ✓ ${rel}`);
   }
 }
