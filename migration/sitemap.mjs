@@ -19,7 +19,7 @@ const HOST = "https://zibdigital.com.au";
 const EXCLUDE = new Set([
   "alchemy-construct", "archer-scott-lawyers", "australian-infinity-hospitality-solutions",
   "Mad-Mex-SEO-GEO-Opportunity", "sandra", "prompt-research", "meta-ads-lab", "roi-calculator",
-  "audit", "index-nz", "p/matt/apiam-animal-health",
+  "audit", "p/matt/apiam-animal-health",
 ]);
 
 async function walk(dir) {
