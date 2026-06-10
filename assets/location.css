@@ -428,3 +428,7 @@ h1, h2, h3, .hero-h, .local-h, .services-h, .stats-h, .faq-h, .cta-title { text-
 
 /* Rounded audit-form inputs on location/SEO pages (match the pill aesthetic) */
 .loc-hero .audit-form input { border-radius: 999px; }
+
+/* ─── Cycling hero word (digital-marketing location headlines) ─── */
+.word-cycle { display: inline-block; transition: opacity 300ms var(--ease), transform 300ms var(--ease); }
+.word-cycle.swap { opacity: 0; transform: translateY(-6px); }
