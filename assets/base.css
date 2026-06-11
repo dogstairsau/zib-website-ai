@@ -310,7 +310,7 @@ h1, h2, h3, .hero-h, .fork-h, .path-title, .moat-h, .cta-title { text-wrap: bala
     pointer-events: auto;
     display: none;
   }
-  .nav-group.is-open .nav-group-menu { display: block; }
+  .nav-group.is-open .nav-group-menu { display: block; transform: none; }
   .nav-group-menu::before { content: none; }
   .nav-group-menu a {
     border-radius: 0;
@@ -334,7 +334,7 @@ h1, h2, h3, .hero-h, .fork-h, .path-title, .moat-h, .cta-title { text-wrap: bala
     box-shadow: none; border: 0; border-radius: 0;
     display: none;
   }
-  .nav-group--mega.is-open > .nav-group-menu { display: block; }
+  .nav-group--mega.is-open > .nav-group-menu { display: block; transform: none; }
   .nav-group-menu.mega-4, .nav-group-menu.mega-cities { grid-template-columns: 1fr; }
   .mega-h { padding: 14px clamp(32px,8vw,44px) 4px; }
   .nav-group--mega .nav-group-menu a { padding: 12px clamp(32px,8vw,44px); border-bottom: 0.5px solid var(--rule); }
