@@ -40,7 +40,9 @@ export default async function handler(req: Request): Promise<Response> {
   if (!lastname) return json({ error: "Enter your last name." }, 400);
   if (!emailRe.test(email)) return json({ error: "Enter a valid email." }, 400);
   if (phone.replace(/\D/g, "").length < 6) return json({ error: "Enter a valid phone number." }, 400);
-  if (!emailRe.test(partnerEmail)) return json({ error: "Configuration error · invalid partner email." }, 500);
+  // partnerEmail is optional — the notification routes to LEAD_NOTIFY_EMAIL.
+  // Only reject if one was supplied but is malformed.
+  if (partnerEmail && !emailRe.test(partnerEmail)) return json({ error: "Invalid partner email." }, 400);
 
   const rl = await checkRateLimit(req, "contact", 5, 600);
   if (!rl.allowed) return rateLimitResponse(rl.retryAfter);

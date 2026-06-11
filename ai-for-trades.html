@@ -1,0 +1,354 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<title>AI for Trades · Win more jobs, kill the admin | Zib Digital</title>
+<meta name="description" content="AI built for trade businesses. Capture every lead, follow up automatically, get found on Google, and win more jobs while you're on the tools. Free game-plan call." />
+<meta name="zib:source-tag" content="AI for Trades landing page" />
+<!-- @include _partials/head.html -->
+<link rel="stylesheet" href="/assets/contact-form.css">
+<style>
+/* ───────────────────────── LANDING PAGE · AI for Trades ─────────────
+   Self-contained, conversion-first, mobile-first. Reuses base.css tokens.
+   Not linked from the nav (campaign/standalone page). */
+
+/* Lean header: logo + click-to-call + single CTA. No mega nav = fewer exits. */
+.lp-header {
+  position: sticky; top: 0; z-index: 50;
+  background: rgba(255,255,255,0.92);
+  backdrop-filter: saturate(160%) blur(14px);
+  -webkit-backdrop-filter: saturate(160%) blur(14px);
+  border-bottom: 0.5px solid var(--rule);
+}
+.lp-header .row { display: flex; align-items: center; justify-content: space-between; height: 64px; gap: 12px; }
+.lp-header .brand img { height: 26px; width: auto; display: block; }
+.lp-header-cta { display: flex; align-items: center; gap: 10px; }
+.lp-call {
+  font-family: var(--display); font-weight: 500; font-size: 15px; color: var(--ink);
+  display: inline-flex; align-items: center; gap: 8px; white-space: nowrap;
+}
+.lp-call .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--score-good, #0BAB6E); }
+.lp-call span.num { border-bottom: 1px solid var(--rule-2); }
+.lp-btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  font-family: var(--display); font-weight: 500; border-radius: 999px;
+  padding: 12px 22px; transition: transform 200ms var(--ease), background 200ms var(--ease);
+  white-space: nowrap;
+}
+.lp-btn-primary { background: var(--accent); color: #fff; }
+.lp-btn-primary:hover { background: #ff7a24; transform: translateY(-1px); }
+.lp-btn-dark { background: var(--ink); color: #fff; }
+.lp-btn-dark:hover { transform: translateY(-1px); }
+.lp-btn-ghost { border: 1px solid rgba(255,255,255,0.4); color: #fff; }
+.lp-btn-ghost:hover { border-color: #fff; }
+@media (max-width: 600px) { .lp-header .lp-call { display: none; } }
+
+.lp-section { padding: clamp(56px, 8vw, 120px) 0; }
+.lp-eyebrow {
+  font-family: var(--mono); font-size: 12px; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--accent); display: inline-flex; align-items: center; gap: 10px; margin-bottom: 20px;
+}
+.lp-eyebrow::before { content: ""; width: 22px; height: 0.5px; background: currentColor; }
+.lp-h2 { font-family: var(--display); font-weight: 500; font-size: clamp(30px, 4.6vw, 60px); line-height: 1.02; letter-spacing: -0.035em; text-wrap: balance; max-width: 20ch; }
+.lp-h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
+.lp-lead { font-size: clamp(16px, 1.6vw, 20px); line-height: 1.6; color: var(--muted); max-width: 60ch; margin-top: 20px; }
+.lp-lead strong { color: var(--ink); font-weight: 500; }
+
+/* ─── HERO ─── */
+.lp-hero { padding: clamp(40px, 6vw, 80px) 0 clamp(48px, 7vw, 96px); background: linear-gradient(180deg, #fff 0%, var(--paper) 100%); }
+.lp-hero-grid { display: grid; gap: clamp(36px, 5vw, 64px); align-items: center; }
+@media (min-width: 940px) { .lp-hero-grid { grid-template-columns: 1.05fr 0.95fr; } }
+.lp-hero h1 {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(38px, 6.4vw, 84px); line-height: 0.98; letter-spacing: -0.04em;
+  text-wrap: balance; max-width: 15ch;
+}
+.lp-hero h1 em { font-style: italic; color: var(--accent); font-weight: 400; }
+.lp-hero-sub { font-size: clamp(17px, 1.7vw, 21px); line-height: 1.55; color: var(--ink-3); max-width: 46ch; margin-top: clamp(20px, 2.6vw, 28px); }
+.lp-hero-list { list-style: none; padding: 0; margin: clamp(22px, 3vw, 30px) 0 0; display: grid; gap: 12px; }
+.lp-hero-list li { display: flex; gap: 12px; align-items: flex-start; font-size: 16px; line-height: 1.45; color: var(--ink); }
+.lp-hero-list li::before { content: "✓"; color: var(--accent); font-weight: 700; flex-shrink: 0; }
+.lp-hero-ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-top: clamp(28px, 3.4vw, 36px); }
+.lp-trust { margin-top: clamp(28px, 3.4vw, 40px); display: flex; flex-wrap: wrap; gap: 10px 22px; align-items: center; font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.lp-trust .star { color: var(--accent); }
+.lp-trust span { display: inline-flex; align-items: center; gap: 7px; }
+.lp-trust span::before { content: ""; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); }
+
+/* ─── Lead form card ─── */
+.lp-form-card {
+  background: #fff; border: 0.5px solid var(--rule); border-radius: 22px;
+  padding: clamp(24px, 3vw, 36px);
+  box-shadow: 0 40px 120px -50px rgba(0,0,0,0.22);
+}
+.lp-form-card h2 { font-family: var(--display); font-weight: 500; font-size: clamp(22px, 2.4vw, 28px); letter-spacing: -0.02em; }
+.lp-form-card .sub { color: var(--muted); font-size: 14.5px; line-height: 1.5; margin: 8px 0 22px; }
+.lp-form-card .contact-form { max-width: none; margin: 0; gap: 16px; }
+.lp-form-card .contact-submit { width: 100%; min-width: 0; }
+.lp-form-card .reassure { margin-top: 14px; font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted-2); text-align: center; }
+
+/* ─── Problem ─── */
+.lp-problem { background: var(--ink); color: #fff; }
+.lp-problem .lp-h2 { color: #fff; }
+.lp-problem .lp-eyebrow { color: var(--accent); }
+.lp-pain-grid { display: grid; gap: 1px; margin-top: clamp(40px, 5vw, 64px); background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.12); border-radius: 16px; overflow: hidden; }
+@media (min-width: 720px) { .lp-pain-grid { grid-template-columns: repeat(2, 1fr); } }
+.lp-pain { background: var(--ink); padding: clamp(24px, 3vw, 36px); }
+.lp-pain h3 { font-family: var(--display); font-weight: 500; font-size: clamp(18px, 1.9vw, 22px); margin-bottom: 10px; }
+.lp-pain p { color: rgba(255,255,255,0.66); font-size: 15.5px; line-height: 1.55; }
+
+/* ─── Video + reels ─── */
+.lp-video { aspect-ratio: 16 / 9; border-radius: 18px; overflow: hidden; background: var(--ink); margin-top: clamp(36px, 4.5vw, 56px); position: relative; border: 0.5px solid var(--rule); }
+.lp-video iframe, .lp-video video { width: 100%; height: 100%; border: 0; display: block; object-fit: cover; }
+.lp-video-ph { position: absolute; inset: 0; display: grid; place-items: center; color: rgba(255,255,255,0.6); font-family: var(--mono); font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; text-align: center; gap: 14px; }
+.lp-video-ph .play { width: 72px; height: 72px; border-radius: 50%; border: 1.5px solid rgba(255,255,255,0.5); display: grid; place-items: center; }
+.lp-video-ph .play::after { content: ""; border-left: 18px solid #fff; border-top: 11px solid transparent; border-bottom: 11px solid transparent; margin-left: 5px; }
+.lp-reels { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top: 20px; }
+@media (min-width: 720px) { .lp-reels { grid-template-columns: repeat(4, 1fr); } }
+.lp-reel { aspect-ratio: 9 / 16; border-radius: 14px; overflow: hidden; background: var(--ink); position: relative; border: 0.5px solid var(--rule); }
+.lp-reel iframe, .lp-reel video { width: 100%; height: 100%; border: 0; display: block; object-fit: cover; }
+.lp-reel-ph { position: absolute; inset: 0; display: grid; place-items: center; color: rgba(255,255,255,0.5); font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; }
+
+/* ─── Services ─── */
+.lp-svc-grid { display: grid; gap: 1px; margin-top: clamp(40px, 5vw, 64px); background: var(--rule); border: 1px solid var(--rule); border-radius: 16px; overflow: hidden; }
+@media (min-width: 680px) { .lp-svc-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 1000px) { .lp-svc-grid { grid-template-columns: repeat(3, 1fr); } }
+.lp-svc { background: #fff; padding: clamp(26px, 3vw, 38px); }
+.lp-svc .n { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; color: var(--accent); font-weight: 600; }
+.lp-svc h3 { font-family: var(--display); font-weight: 500; font-size: clamp(19px, 2vw, 23px); letter-spacing: -0.015em; margin: 14px 0 10px; }
+.lp-svc p { color: var(--muted); font-size: 15px; line-height: 1.55; }
+
+/* ─── Orange proof band ─── */
+.lp-proof { background: var(--accent); color: #fff; }
+.lp-proof .lp-h2 { color: #fff; max-width: 24ch; }
+.lp-proof .lp-h2 em { color: rgba(255,255,255,0.82); }
+.lp-stats { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(28px, 4vw, 48px) 24px; margin-top: clamp(44px, 6vw, 72px); border-top: 0.5px solid rgba(255,255,255,0.3); padding-top: clamp(32px, 4vw, 48px); }
+@media (min-width: 760px) { .lp-stats { grid-template-columns: repeat(3, 1fr); } }
+.lp-stat .v { font-family: var(--display); font-weight: 500; font-size: clamp(44px, 6vw, 80px); line-height: 0.95; letter-spacing: -0.04em; }
+.lp-stat .v .suf { opacity: 0.85; }
+.lp-stat .l { font-size: 14.5px; line-height: 1.45; color: #FFF1E6; margin-top: 12px; max-width: 26ch; }
+
+/* ─── FAQ ─── */
+.lp-faq { max-width: 820px; margin: clamp(40px, 5vw, 56px) auto 0; border-top: 0.5px solid var(--rule); }
+.lp-faq details { border-bottom: 0.5px solid var(--rule); padding: 22px 0; }
+.lp-faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; gap: 20px; font-family: var(--display); font-weight: 500; font-size: clamp(17px, 1.7vw, 20px); color: var(--ink); }
+.lp-faq summary::-webkit-details-marker { display: none; }
+.lp-faq summary .pl { color: var(--accent); transition: transform 200ms var(--ease); flex-shrink: 0; }
+.lp-faq details[open] summary .pl { transform: rotate(45deg); }
+.lp-faq p { margin-top: 14px; color: var(--muted); font-size: 16px; line-height: 1.6; max-width: 68ch; }
+
+/* ─── Final CTA ─── */
+.lp-final { background: var(--ink); color: #fff; text-align: center; }
+.lp-final h2 { font-family: var(--display); font-weight: 500; font-size: clamp(34px, 5.4vw, 76px); line-height: 1.0; letter-spacing: -0.04em; max-width: 18ch; margin: 0 auto; text-wrap: balance; }
+.lp-final h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
+.lp-final p { color: rgba(255,255,255,0.7); font-size: clamp(16px, 1.5vw, 19px); max-width: 50ch; margin: 22px auto 0; }
+.lp-final-ctas { display: inline-flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-top: clamp(32px, 4vw, 44px); }
+
+/* ─── Lean footer ─── */
+.lp-foot { padding: 40px 0; border-top: 0.5px solid var(--rule); }
+.lp-foot .row { display: flex; flex-wrap: wrap; gap: 16px 28px; align-items: center; justify-content: space-between; }
+.lp-foot .links { display: flex; flex-wrap: wrap; gap: 8px 22px; font-size: 14px; }
+.lp-foot a { color: var(--muted); } .lp-foot a:hover { color: var(--accent); }
+.lp-foot .legal { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted-2); }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#book">Skip to form</a>
+
+<!-- LEAN HEADER -->
+<header class="lp-header">
+  <div class="container row">
+    <a href="/" class="brand" aria-label="Zib Digital home"><img src="/assets/zib-logo.png" alt="Zib Digital" /></a>
+    <div class="lp-header-cta">
+      <a class="lp-call" href="tel:+61386859290"><span class="dot" aria-hidden="true"></span><span class="num">03 8685 9290</span></a>
+      <a class="lp-btn lp-btn-primary" href="#book">Get my game plan</a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- HERO -->
+<section class="lp-hero">
+  <div class="container">
+    <div class="lp-hero-grid">
+      <div class="reveal">
+        <div class="lp-eyebrow">AI for trades · built for the tools-down reality</div>
+        <h1>Win more jobs. <em>Kill the admin.</em></h1>
+        <p class="lp-hero-sub">AI that answers every enquiry, chases every quote and gets you found on Google, so you book more work while you're still on the tools. Set up and run by senior humans, since 2009.</p>
+        <ul class="lp-hero-list">
+          <li>Never miss a lead again, even when your hands are full</li>
+          <li>Quotes followed up automatically until they say yes or no</li>
+          <li>More 5-star reviews and a phone that rings with the right jobs</li>
+        </ul>
+        <div class="lp-hero-ctas">
+          <a class="lp-btn lp-btn-dark" href="#book">Get my free game plan <span aria-hidden="true">→</span></a>
+          <a class="lp-btn" style="border:1px solid var(--rule-2);color:var(--ink);" href="tel:+61386859290">Call 03 8685 9290</a>
+        </div>
+        <div class="lp-trust">
+          <span><strong>4.8</strong><span class="star">★</span> · 90 Google reviews</span>
+          <span>Premier Google Partner</span>
+          <span>800+ businesses since 2009</span>
+        </div>
+      </div>
+
+      <!-- LEAD FORM (primary conversion) -->
+      <div class="lp-form-card reveal" id="book">
+        <h2>Get your free AI game plan</h2>
+        <p class="sub">A 30-minute call with a senior strategist. We'll map where AI wins you the most jobs, fastest. No jargon, no obligation.</p>
+        <form class="contact-form" id="contactForm" autocomplete="on" data-success-redirect="/thank-you">
+          <input type="hidden" name="partnerName" value="Zib Digital" />
+          <input type="hidden" name="source" value="AI for Trades landing page" />
+          <div class="contact-field">
+            <label for="cf-firstname">First name *</label>
+            <input type="text" id="cf-firstname" name="firstname" required autocomplete="given-name" />
+          </div>
+          <div class="contact-field">
+            <label for="cf-lastname">Last name *</label>
+            <input type="text" id="cf-lastname" name="lastname" required autocomplete="family-name" />
+          </div>
+          <div class="contact-field">
+            <label for="cf-phone">Mobile *</label>
+            <input type="tel" id="cf-phone" name="phone" required autocomplete="tel" />
+          </div>
+          <div class="contact-field">
+            <label for="cf-email">Email *</label>
+            <input type="email" id="cf-email" name="email" required autocomplete="email" />
+          </div>
+          <div class="contact-field full">
+            <label for="cf-jobtitle">Your trade &amp; business</label>
+            <input type="text" id="cf-jobtitle" name="jobTitle" placeholder="e.g. Plumber · Smith Plumbing" autocomplete="organization" />
+          </div>
+          <button type="submit" class="contact-submit" id="contactSubmit">Get my free game plan</button>
+          <div class="contact-status mono" id="contactStatus" role="status" aria-live="polite"></div>
+        </form>
+        <div class="reassure">No lock-in · No obligation · We reply within 1 business day</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="lp-section lp-problem">
+  <div class="container">
+    <div class="reveal">
+      <div class="lp-eyebrow">Sound familiar?</div>
+      <h2 class="lp-h2">The job's never just <em>the job.</em></h2>
+    </div>
+    <div class="lp-pain-grid reveal-stagger">
+      <div class="lp-pain"><h3>Missed calls = missed money</h3><p>You're up a ladder or under a sink. The call goes to voicemail, they ring the next bloke, and that job's gone.</p></div>
+      <div class="lp-pain"><h3>Quotes that go quiet</h3><p>You send the quote at 9pm, then never hear back. No time to chase, so good jobs slip through the cracks.</p></div>
+      <div class="lp-pain"><h3>Word of mouth only goes so far</h3><p>Referrals dry up and there's nothing in the pipeline. When it's quiet, it's quiet, and that's stressful.</p></div>
+      <div class="lp-pain"><h3>No time for marketing</h3><p>You know you should be online, getting reviews, posting the work. But by knock-off you're cooked.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- HOW WE THINK ABOUT AI -->
+<section class="lp-section">
+  <div class="container">
+    <div class="reveal" style="max-width:760px;">
+      <div class="lp-eyebrow">How we think about AI</div>
+      <h2 class="lp-h2">AI does the chasing. <em>You do the trade.</em></h2>
+      <p class="lp-lead"><strong>Human first. Commercially driven. AI enhanced.</strong> We don't sell you a robot and walk away. We build AI into the boring, repeatable parts of your business, answering enquiries, following up, booking jobs, asking for reviews, so the work that wins you money keeps moving while you're on site. A senior strategist owns the plan; the AI just never clocks off.</p>
+    </div>
+
+    <!-- VIDEO · drop in a YouTube/Vimeo embed or a <video> tag in place of .lp-video-ph -->
+    <div class="lp-video reveal">
+      <!-- Example: <iframe src="https://www.youtube.com/embed/VIDEO_ID" title="How AI works for your trade" allowfullscreen loading="lazy"></iframe> -->
+      <div class="lp-video-ph"><div class="play" aria-hidden="true"></div><div>Add explainer video</div></div>
+    </div>
+
+    <!-- REELS · drop a vertical reel/short into each (.lp-reel): Instagram/TikTok/YouTube Shorts embed or <video> -->
+    <div class="lp-reels reveal-stagger">
+      <div class="lp-reel"><div class="lp-reel-ph">Reel 1</div></div>
+      <div class="lp-reel"><div class="lp-reel-ph">Reel 2</div></div>
+      <div class="lp-reel"><div class="lp-reel-ph">Reel 3</div></div>
+      <div class="lp-reel"><div class="lp-reel-ph">Reel 4</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="lp-section" style="background:var(--paper);border-top:0.5px solid var(--rule);border-bottom:0.5px solid var(--rule);">
+  <div class="container">
+    <div class="reveal">
+      <div class="lp-eyebrow">What we set up for you</div>
+      <h2 class="lp-h2">Everything that turns a search into <em>a booked job.</em></h2>
+    </div>
+    <div class="lp-svc-grid reveal-stagger">
+      <div class="lp-svc"><div class="n mono">01</div><h3>AI lead capture &amp; reply</h3><p>Missed-call text-back, instant enquiry replies and a smart chat that books the job while you're busy. No lead left hanging.</p></div>
+      <div class="lp-svc"><div class="n mono">02</div><h3>Automated quote follow-up</h3><p>Every quote chased on autopilot with friendly, on-brand nudges until the customer decides. More quotes turn into work.</p></div>
+      <div class="lp-svc"><div class="n mono">03</div><h3>Google Ads &amp; Local Services</h3><p>Show up the second someone searches "[your trade] near me." Premier Google Partner, optimised daily, reported in jobs not clicks.</p></div>
+      <div class="lp-svc"><div class="n mono">04</div><h3>SEO &amp; Google Business Profile</h3><p>Rank in the map pack across your service area so you get found for free, again and again.</p></div>
+      <div class="lp-svc"><div class="n mono">05</div><h3>Reviews engine</h3><p>Automatic review requests after every job. More 5-stars, higher rankings, more trust before they even call.</p></div>
+      <div class="lp-svc"><div class="n mono">06</div><h3>Social &amp; reels content</h3><p>Show off the work. We turn your on-site photos and videos into scroll-stopping reels that build the brand.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- PROOF -->
+<section class="lp-section lp-proof">
+  <div class="container">
+    <div class="reveal">
+      <div class="lp-eyebrow" style="color:#fff;">Real trade clients. Real numbers.</div>
+      <h2 class="lp-h2">We've done this for <em>trades like yours.</em></h2>
+    </div>
+    <div class="lp-stats reveal-stagger">
+      <div class="lp-stat"><div class="v"><span data-count="226">0</span><span class="suf">%</span></div><div class="l">More leads for a custom trailer builder, 5 a month to 28</div></div>
+      <div class="lp-stat"><div class="v"><span data-count="300">0</span><span class="suf">%</span></div><div class="l">Increase in social leads for Assured Roofing</div></div>
+      <div class="lp-stat"><div class="v"><span data-count="20">0</span><span class="suf">+</span></div><div class="l">Leads a day for ProCut Tree Services, booked out</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section class="lp-section">
+  <div class="container">
+    <div class="reveal" style="max-width:760px;">
+      <div class="lp-eyebrow">Straight answers</div>
+      <h2 class="lp-h2">The questions trades <em>actually ask.</em></h2>
+    </div>
+    <div class="lp-faq reveal">
+      <details><summary>I'm flat out already. How much of my time does this take?<span class="pl" aria-hidden="true">+</span></summary><p>Almost none. We set it up, we run it, and a senior strategist reviews it weekly. You get a simple monthly report and otherwise stay on the tools. The whole point is to give you time back, not add another job.</p></details>
+      <details><summary>Does AI actually work for a trade business?<span class="pl" aria-hidden="true">+</span></summary><p>Yes, because the wins are practical, not hype. Answering every enquiry, chasing quotes, asking for reviews, getting found on Google. That's where jobs are won or lost, and it's exactly the stuff AI is good at handling around the clock.</p></details>
+      <details><summary>What does it cost?<span class="pl" aria-hidden="true">+</span></summary><p>It depends on your trade, your area and how fast you want to grow. The game-plan call is free and you'll leave knowing exactly what we'd do and what it costs. No pressure, no lock-in contracts.</p></details>
+      <details><summary>Will it sound like a robot to my customers?<span class="pl" aria-hidden="true">+</span></summary><p>No. Everything is set up in your voice and reviewed by real people. Customers get fast, friendly replies that sound like your business, just quicker than you could manage between jobs.</p></details>
+      <details><summary>I've been burned by a marketing agency before.<span class="pl" aria-hidden="true">+</span></summary><p>Fair enough, most trades have. We report in leads and booked jobs, not vanity metrics, and there's no lock-in. If it stops working, we change it or you walk. We've backed ourselves like that since 2009.</p></details>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="lp-section lp-final">
+  <div class="container">
+    <div class="reveal">
+      <h2>Let's fill the <em>job board.</em></h2>
+      <p>Book a free 30-minute game-plan call. We'll show you exactly where AI wins you more work, then you decide. No deck, no pressure.</p>
+      <div class="lp-final-ctas">
+        <a class="lp-btn lp-btn-primary" href="#book">Get my free game plan <span aria-hidden="true">→</span></a>
+        <a class="lp-btn lp-btn-ghost" href="tel:+61386859290">Call 03 8685 9290</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- LEAN FOOTER -->
+<footer class="lp-foot">
+  <div class="container row">
+    <a href="/" class="brand" aria-label="Zib Digital home"><img src="/assets/zib-logo.png" alt="Zib Digital" style="height:24px;width:auto;display:block;" /></a>
+    <div class="links">
+      <a href="tel:+61386859290">03 8685 9290</a>
+      <a href="mailto:hello@zibdigital.com.au">hello@zibdigital.com.au</a>
+      <a href="/privacy-policy">Privacy</a>
+    </div>
+    <div class="legal">© 2026 Zib Digital Pty Ltd</div>
+  </div>
+</footer>
+
+<!-- @include _partials/scripts.html -->
+<script src="/assets/contact-form.js" defer></script>
+
+</body>
+</html>
