@@ -4,6 +4,7 @@ import { captureLead } from "../lib/hubspot";
 import { sendMetaAdsPack, type MetaAdsPackAd } from "../lib/email";
 import { checkRateLimit, rateLimitResponse } from "../lib/rateLimit";
 import { META_ADS_SYSTEM_PROMPT, metaAdsUserPrompt } from "../lib/prompts/meta-ads";
+import { isSafeFetchUrl } from "../lib/safeUrl";
 
 export const config = { runtime: "edge" };
 
@@ -112,6 +113,7 @@ export default async function handler(req: Request): Promise<Response> {
   const email = (body.email || "").trim();
   const firstname = (body.firstname || "").trim();
   if (!url) return json({ error: "Enter a valid website URL." }, 400);
+  if (!isSafeFetchUrl(url).ok) return json({ error: "That URL can't be processed." }, 400);
   if (!isValidEmail(email)) return json({ error: "Enter a valid email." }, 400);
 
   if (!process.env.ANTHROPIC_API_KEY) {

@@ -5,6 +5,8 @@
   "description": "Zib Digital homepage + AI audit endpoint",
   "scripts": {
     "build": "node build.mjs",
+    "test": "node --experimental-strip-types --test 'lib/**/*.test.ts'",
+    "typecheck": "tsc --noEmit",
     "dev": "node --env-file=.env.local dev-server.mjs",
     "dev:vercel": "vercel dev",
     "deploy": "vercel deploy --prod"
