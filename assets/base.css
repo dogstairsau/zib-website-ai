@@ -383,13 +383,25 @@ footer {
 }
 .foot-grid {
   display: grid;
-  grid-template-columns: 1.7fr 1fr 1fr 1fr 1fr;
-  gap: clamp(24px, 3vw, 48px);
+  grid-template-columns: 1.3fr 2.7fr;
+  gap: clamp(40px, 5vw, 88px);
   padding-bottom: clamp(56px, 7vw, 88px);
 }
+/* The four link groups live in their own sub-grid so the brand block's
+   height (address + partner logos) can never push a column onto a new row. */
+.foot-links {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(24px, 3vw, 40px);
+}
 @media (max-width: 1080px) {
-  .foot-grid { grid-template-columns: 2fr 1fr 1fr 1fr; }
-  .foot-grid > div:first-child { grid-column: 1 / -1; }
+  .foot-grid { grid-template-columns: 1fr; gap: 48px; }
+}
+@media (max-width: 720px) {
+  .foot-links { grid-template-columns: 1fr 1fr; gap: 36px 24px; }
+}
+@media (max-width: 480px) {
+  .foot-links { grid-template-columns: 1fr; }
 }
 .foot-grid h4 {
   font-family: var(--display);
