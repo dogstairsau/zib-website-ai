@@ -1,6 +1,7 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { fetchSiteContent, normaliseUrl, type SiteContent } from "../lib/site";
 import { checkRateLimit, rateLimitResponse } from "../lib/rateLimit";
+import { isSafeFetchUrl } from "../lib/safeUrl";
 
 export const config = { runtime: "edge" };
 
@@ -81,6 +82,7 @@ export default async function handler(req: Request): Promise<Response> {
 
   const url = normaliseUrl(body.url || "");
   if (!url) return json({ error: "Missing URL." }, 400);
+  if (!isSafeFetchUrl(url).ok) return json({ error: "That URL can't be processed." }, 400);
   if (!process.env.ANTHROPIC_API_KEY) {
     return json({ error: "Server not configured (ANTHROPIC_API_KEY missing)." }, 500);
   }

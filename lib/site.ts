@@ -3,6 +3,8 @@
  * Edge-runtime safe (no jsdom, just regex).
  */
 
+import { safeFetch } from "./safeUrl";
+
 const decode = (s: string) =>
   s
     .replace(/&amp;/g, "&")
@@ -39,12 +41,13 @@ export async function fetchSiteContent(rawUrl: string): Promise<SiteContent> {
   const url = normaliseUrl(rawUrl);
   if (!url) throw new Error("Invalid URL");
 
-  const res = await fetch(url, {
+  // safeFetch validates the host (and every redirect hop) against the SSRF
+  // guard before fetching — this is the user-controlled entry point.
+  const res = await safeFetch(url, {
     headers: {
       "User-Agent": "ZibAudit/1.0 (+https://zibdigital.com.au/audit)",
       Accept: "text/html,application/xhtml+xml",
     },
-    redirect: "follow",
     signal: AbortSignal.timeout(10_000),
   });
 

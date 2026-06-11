@@ -12,6 +12,7 @@ import {
 import { fetchSupporting, crawlSite, buildAudit } from "../lib/seoChecks";
 import { checkRateLimit, rateLimitResponse } from "../lib/rateLimit";
 import { sendLeadEmail } from "../lib/email";
+import { isSafeFetchUrl } from "../lib/safeUrl";
 
 export const config = { runtime: "edge" };
 
@@ -175,6 +176,7 @@ export default async function handler(req: Request): Promise<Response> {
   const email = (body.email || "").trim();
   const mode = (body.mode || "").trim(); // "seo" → skip image generation
   if (!url) return json({ error: "Enter a valid website URL." }, 400);
+  if (!isSafeFetchUrl(url).ok) return json({ error: "That URL can't be audited." }, 400);
   if (!isValidEmail(email)) return json({ error: "Enter a valid work email." }, 400);
 
   if (!process.env.ANTHROPIC_API_KEY) {
