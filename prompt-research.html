@@ -554,6 +554,29 @@
   }
   .pr-faq-body p + p { margin-top: 12px; }
   .pr-faq-body strong { color: var(--ink); font-weight: 500; }
+
+  /* AEO/GEO "next frontier" section (shared markup from _partials/aeo-geo.html).
+     This page has no scroll-reveal observer, so show .reveal content statically. */
+  #frontier .reveal { opacity: 1 !important; transform: none !important; filter: none !important; }
+  #frontier { padding: clamp(80px,10vw,144px) 0; border-top: 0.5px solid var(--rule); }
+  .frontier-head { margin: 0 0 clamp(48px,6vw,80px); }
+  .frontier-head .eyebrow { color: var(--accent); }
+  .frontier-head h2 { font-family: var(--display); font-weight: 500; font-size: clamp(36px,5.5vw,80px); line-height: 0.98; letter-spacing: -0.04em; max-width: 18ch; text-wrap: balance; color: var(--ink); margin-top: 18px; }
+  .frontier-head h2 em { font-style: italic; font-weight: 400; color: var(--accent); }
+  .frontier-head p { font-size: clamp(16px,1.5vw,20px); line-height: 1.5; color: var(--muted); max-width: 62ch; margin-top: clamp(20px,3vw,28px); }
+  .frontier-grid { display: grid; grid-template-columns: 1fr 1fr; border-top: 0.5px solid var(--rule); }
+  .frontier-col { padding: clamp(36px,5vw,72px) clamp(20px,3vw,48px); }
+  .frontier-col + .frontier-col { border-left: 0.5px solid var(--rule); }
+  .frontier-abbr { font-family: var(--display); font-weight: 500; font-size: clamp(64px,11vw,168px); line-height: 0.9; letter-spacing: -0.06em; color: var(--ink); margin-bottom: 16px; }
+  .frontier-abbr em { font-style: italic; font-weight: 400; color: var(--accent); }
+  .frontier-col .full { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: clamp(20px,3vw,32px); }
+  .frontier-col h3 { font-family: var(--display); font-weight: 500; font-size: clamp(22px,2.2vw,28px); letter-spacing: -0.025em; line-height: 1.15; margin-bottom: 16px; text-wrap: balance; color: var(--ink); }
+  .frontier-col h3 em { font-style: italic; font-weight: 400; color: var(--accent); }
+  .frontier-col p { font-size: clamp(15px,1.4vw,17px); line-height: 1.55; color: var(--muted); margin-bottom: 24px; max-width: 44ch; }
+  .frontier-col ul { list-style: none; padding: 0; margin: 0; }
+  .frontier-col li { padding: 14px 0; border-top: 0.5px solid var(--rule); font-size: clamp(14px,1.3vw,16px); line-height: 1.5; color: var(--muted); display: flex; gap: 14px; }
+  .frontier-col li::before { content: "+"; color: var(--accent); flex-shrink: 0; font-family: var(--mono); font-weight: 500; }
+  @media (max-width: 820px) { .frontier-grid { grid-template-columns: 1fr; } .frontier-col + .frontier-col { border-left: 0; border-top: 0.5px solid var(--rule); } }
 </style>
 </head>
 
@@ -754,6 +777,8 @@
         </details>
       </div>
     </section>
+
+    <!-- @include _partials/aeo-geo.html -->
 
     <div class="pr-wheel-tooltip" id="prTooltip"></div>
   </main>
