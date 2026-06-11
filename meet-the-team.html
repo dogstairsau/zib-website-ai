@@ -1986,8 +1986,15 @@ h1.hero-h em {
 .team-card {
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 6px;
+  padding: clamp(24px, 2.6vw, 36px);
+  border: 0.5px solid var(--rule);
+  border-radius: 16px;
+  transition: border-color 240ms var(--ease), transform 240ms var(--ease);
 }
+.team-card:hover { border-color: var(--rule-2); transform: translateY(-2px); }
+/* No headshots yet — show name + role only on the leadership grid. */
+.team-card .team-avatar { display: none; }
 
 .team-avatar {
   aspect-ratio: 1/1;
@@ -2073,6 +2080,7 @@ h1.hero-h em {
 }
 
 .partner-card .team-avatar { aspect-ratio: 1/1; }
+.partner-card .team-avatar img { object-position: center top; }
 
 .partner-card .team-avatar::before { font-size: clamp(32px, 4.5vw, 56px); }
 
@@ -2338,10 +2346,10 @@ footer {
       </article>
 
       <article class="team-card">
-        <div class="team-avatar" data-initials="CM"></div>
+        <div class="team-avatar" data-initials="CL"></div>
         <div class="team-card-body">
-          <div class="team-name">Clara McLachlan</div>
-          <div class="team-role mono">CFO</div>
+          <div class="team-name">Courtney Little</div>
+          <div class="team-role mono">Head of Finance</div>
         </div>
       </article>
 
@@ -2412,9 +2420,9 @@ footer {
       </article>
 
       <article class="team-card">
-        <div class="team-avatar" data-initials="CL"></div>
+        <div class="team-avatar" data-initials="CM"></div>
         <div class="team-card-body">
-          <div class="team-name">Courtney Little</div>
+          <div class="team-name">Clara McLachlan</div>
           <div class="team-role mono">Accounts</div>
         </div>
       </article>
@@ -2453,7 +2461,9 @@ footer {
         <div class="partner-cta">View profile <span>→</span></div>
       </a>
       <a class="partner-card" href="/daniel-harris">
-        <div class="team-avatar" data-initials="DH"></div>
+        <div class="team-avatar" data-initials="DH">
+          <img src="/assets/dan-harris-header-photo.jpeg" alt="Daniel Harris" loading="lazy" onerror="this.style.display='none'" />
+        </div>
         <div>
           <div class="team-name">Daniel Harris</div>
           <div class="team-role mono">Victoria</div>
@@ -2461,7 +2471,9 @@ footer {
         <div class="partner-cta">View profile <span>→</span></div>
       </a>
       <a class="partner-card" href="/marty-tucker">
-        <div class="team-avatar" data-initials="MT"></div>
+        <div class="team-avatar" data-initials="MT">
+          <img src="https://zibdigital.com.au/wp-content/uploads/2025/07/Marty-Tucker-fullwidth-version-5-copy.png" alt="Marty Tucker" loading="lazy" onerror="this.style.display='none'" />
+        </div>
         <div>
           <div class="team-name">Marty Tucker</div>
           <div class="team-role mono">Victoria</div>
@@ -2477,7 +2489,9 @@ footer {
         <div class="partner-cta">View profile <span>→</span></div>
       </a>
       <a class="partner-card" href="/dylan-and-jake">
-        <div class="team-avatar" data-initials="DJ"></div>
+        <div class="team-avatar" data-initials="DJ">
+          <img src="/assets/dylan-and-jake-104.webp" alt="Dylan &amp; Jake Pinksterboer" loading="lazy" onerror="this.style.display='none'" />
+        </div>
         <div>
           <div class="team-name">Dylan &amp; Jake Pinksterboer</div>
           <div class="team-role mono">South Australia</div>
@@ -2485,7 +2499,9 @@ footer {
         <div class="partner-cta">View profile <span>→</span></div>
       </a>
       <a class="partner-card" href="/brad-reece">
-        <div class="team-avatar" data-initials="BR"></div>
+        <div class="team-avatar" data-initials="BR">
+          <img src="https://zibdigital.com.au/wp-content/uploads/2025/07/IMG_9643-copy-2.webp" alt="Brad Reece" loading="lazy" onerror="this.style.display='none'" />
+        </div>
         <div>
           <div class="team-name">Brad Reece</div>
           <div class="team-role mono">Queensland</div>
@@ -2493,7 +2509,9 @@ footer {
         <div class="partner-cta">View profile <span>→</span></div>
       </a>
       <a class="partner-card" href="/corrine-chalmers">
-        <div class="team-avatar" data-initials="CC"></div>
+        <div class="team-avatar" data-initials="CC">
+          <img src="https://zibdigital.com.au/wp-content/uploads/2024/11/Corrine-Chalmers-Team-768x975-1.webp" alt="Corrine Chalmers" loading="lazy" onerror="this.style.display='none'" />
+        </div>
         <div>
           <div class="team-name">Corrine Chalmers</div>
           <div class="team-role mono">Geelong · VIC</div>
