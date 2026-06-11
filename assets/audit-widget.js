@@ -331,6 +331,14 @@
 
       if (!res.ok || !res.body) {
         const j = await res.json().catch(() => ({}));
+        // Rate limited — turn the wall into a sales moment, not an error.
+        if (res.status === 429) {
+          setStatus(
+            'Looks like you\'re running a few audits. <a href="mailto:hello@zibdigital.com.au?subject=Let\'s%20talk%20audits" style="color:inherit;text-decoration:underline;">Let\'s jump on a call instead.</a>',
+            'error'
+          );
+          return;
+        }
         throw new Error(j.error || `Request failed (${res.status})`);
       }
 
