@@ -36,8 +36,11 @@
       });
       const json = await res.json().catch(() => ({}));
       if (!res.ok) throw new Error(json.error || `Request failed (${res.status})`);
-      setStatus(`Thanks. ${firstName} will be in touch shortly.`, 'success');
       form.reset();
+      // If the form opts into a thank-you page, go there; else show inline.
+      const redirect = form.getAttribute('data-success-redirect');
+      if (redirect) { window.location.assign(redirect); return; }
+      setStatus(`Thanks. ${firstName} will be in touch shortly.`, 'success');
     } catch (err) {
       setStatus(err.message || `Submission failed. Please call ${firstName} directly.`, 'error');
     } finally {
