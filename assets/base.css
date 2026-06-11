@@ -306,16 +306,11 @@ h1, h2, h3, .hero-h, .fork-h, .path-title, .moat-h, .cta-title { text-wrap: bala
     background: var(--paper);
     padding: 0;
     min-width: 0;
-    max-height: 0;
-    overflow: hidden;
     opacity: 1;
     pointer-events: auto;
-    transition: max-height 280ms var(--ease);
+    display: none;
   }
-  .nav-group.is-open .nav-group-menu {
-    transform: none;
-    max-height: 600px;
-  }
+  .nav-group.is-open .nav-group-menu { display: block; }
   .nav-group-menu::before { content: none; }
   .nav-group-menu a {
     border-radius: 0;
@@ -335,11 +330,11 @@ h1, h2, h3, .hero-h, .fork-h, .path-title, .moat-h, .cta-title { text-wrap: bala
     width: auto; padding: 0; min-width: 0;
     grid-template-columns: 1fr;
     background: var(--paper);
-    max-height: 0; overflow: hidden; opacity: 1; pointer-events: auto;
+    opacity: 1; pointer-events: auto;
     box-shadow: none; border: 0; border-radius: 0;
-    transition: max-height 320ms var(--ease);
+    display: none;
   }
-  .nav-group--mega.is-open > .nav-group-menu { transform: none; max-height: 1600px; }
+  .nav-group--mega.is-open > .nav-group-menu { display: block; }
   .nav-group-menu.mega-4, .nav-group-menu.mega-cities { grid-template-columns: 1fr; }
   .mega-h { padding: 14px clamp(32px,8vw,44px) 4px; }
   .nav-group--mega .nav-group-menu a { padding: 12px clamp(32px,8vw,44px); border-bottom: 0.5px solid var(--rule); }
