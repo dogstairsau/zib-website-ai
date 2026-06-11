@@ -127,6 +127,9 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
   place-items: center;
   isolation: isolate;
 }
+.post-thumb-img { width: 100%; height: 100%; object-fit: cover; display: block; position: relative; z-index: 2; transition: transform 600ms var(--ease-out, ease); }
+.post-card:hover .post-thumb-img { transform: scale(1.04); }
+.post-thumb.has-img::after { display: none; } /* drop the noise overlay over real photos */
 
 /* placeholder gradients per category, colourful but restrained */
 .post-thumb[data-cat="seo"]            { background: linear-gradient(135deg, #1A1A1A 0%, #3a3a3a 100%); }
@@ -367,6 +370,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "how-we-delivered-a-record-season-for-an-adventure-tourism-brand",
       "title": "How we delivered a record season for an adventure tourism brand",
+      "img": "/assets/blog/how-we-delivered-a-record-season-for-an-adventure-tourism-brand.jpg",
       "cat": "digital-marketing",
       "catLabel": "Digital marketing",
       "date": "13 May 2026",
@@ -376,6 +380,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "google-ads-2025-roas",
       "title": "Google Ads in 2025: Why Your ROAS Plateaued (and What to Do About It)",
+      "img": "/assets/blog/google-ads-2025-roas.jpg",
       "cat": "digital-marketing",
       "catLabel": "Digital marketing",
       "date": "6 Aug 2025",
@@ -385,6 +390,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "how_to_align_seo",
       "title": "From Clicks to Customers: How to Align SEO and UX for Better Lead Quality",
+      "img": "/assets/blog/how_to_align_seo.jpg",
       "cat": "digital-marketing",
       "catLabel": "Digital marketing",
       "date": "22 July 2025",
@@ -394,6 +400,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "adapting-business-to-2025-interest-rates",
       "title": "Adapting to Uncertainty: How Digital Marketing Services Can Help Your Business Thrive in 2025",
+      "img": "/assets/blog/adapting-business-to-2025-interest-rates.webp",
       "cat": "digital-marketing",
       "catLabel": "Digital marketing",
       "date": "22 May 2025",
@@ -403,6 +410,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "autumn-marketing",
       "title": "Autumn Leaves and Rising Sales: Seasonal Trends to Inform Your Marketing",
+      "img": "/assets/blog/autumn-marketing.jpg",
       "cat": "digital-marketing",
       "catLabel": "Digital marketing",
       "date": "20 Mar 2025",
@@ -412,6 +420,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "measuring_content_marketing_success",
       "title": "Measuring Content Marketing Success: A Guide for Australian Businesses",
+      "img": "/assets/blog/measuring_content_marketing_success.jpg",
       "cat": "digital-marketing",
       "catLabel": "Digital marketing",
       "date": "18 Feb 2025",
@@ -421,6 +430,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "2025-digital-marketing-trends",
       "title": "2025 Digital Marketing Trends: What You Need to Know to Remain Relevant in Business This Year",
+      "img": "/assets/blog/2025-digital-marketing-trends.jpg",
       "cat": "digital-marketing",
       "catLabel": "Digital marketing",
       "date": "2 Dec 2024",
@@ -430,6 +440,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "zib-digital-partners-with-melbourne-victory",
       "title": "Kicking Off a Winning Partnership: Zib Digital Joins Forces with Melbourne Victory",
+      "img": "/assets/blog/zib-digital-partners-with-melbourne-victory.jpg",
       "cat": "digital-marketing",
       "catLabel": "Digital marketing",
       "date": "12 Nov 2024",
@@ -439,6 +450,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "spring-clean-your-marketing",
       "title": "Spring Clean Your Marketing: Refresh Your Strategy for Success",
+      "img": "/assets/blog/spring-clean-your-marketing.jpg",
       "cat": "digital-marketing",
       "catLabel": "Digital marketing",
       "date": "17 Sept 2024",
@@ -448,6 +460,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "search-meets-social-fathers-day-gifting-insights",
       "title": "Search Meets Social: Uncovering Father’s Day Gifting Insights from Google and TikTok",
+      "img": "/assets/blog/search-meets-social-fathers-day-gifting-insights.jpg",
       "cat": "digital-marketing",
       "catLabel": "Digital marketing",
       "date": "21 Aug 2024",
@@ -457,6 +470,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "tiktok-vs-google-the-battle-for-search-supremacy",
       "title": "TikTok vs Google: The Battle for Search Supremacy",
+      "img": "/assets/blog/tiktok-vs-google-the-battle-for-search-supremacy.jpg",
       "cat": "digital-marketing",
       "catLabel": "Digital marketing",
       "date": "30 July 2024",
@@ -466,6 +480,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "the-art-of-conversion-write-copy-that-delivers",
       "title": "The Art of Conversion: How to Write Copy That Delivers",
+      "img": "/assets/blog/the-art-of-conversion-write-copy-that-delivers.png",
       "cat": "digital-marketing",
       "catLabel": "Digital marketing",
       "date": "16 July 2024",
@@ -475,6 +490,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "human-touch-ai-power",
       "title": "Human Touch, AI Power: Elevating Digital Marketing with Collaborative Innovation",
+      "img": "/assets/blog/human-touch-ai-power.jpg",
       "cat": "digital-marketing",
       "catLabel": "Digital marketing",
       "date": "5 July 2024",
@@ -484,6 +500,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "navigating-the-post-tax-time-slump",
       "title": "Navigating the Post-Tax Time Slump: How to Keep Your Business Thriving",
+      "img": "/assets/blog/navigating-the-post-tax-time-slump.jpg",
       "cat": "digital-marketing",
       "catLabel": "Digital marketing",
       "date": "26 June 2024",
@@ -493,6 +510,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "the-end-of-financial-year-effect",
       "title": "The End Of Financial Year Effect",
+      "img": "/assets/blog/the-end-of-financial-year-effect.png",
       "cat": "digital-marketing",
       "catLabel": "Digital marketing",
       "date": "24 May 2024",
@@ -502,6 +520,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "happy-mothers-day-from-zib-digital",
       "title": "Happy Mother’s Day From Zib Digital",
+      "img": "/assets/blog/happy-mothers-day-from-zib-digital.jpg",
       "cat": "digital-marketing",
       "catLabel": "Digital marketing",
       "date": "13 May 2024",
@@ -511,6 +530,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "consumer-shift-towards-direct-brand-engagement-reshaping-digital-marketing-and-seo-strategies",
       "title": "Consumer Shift Towards Direct Brand Engagement, Set to Reshape Digital Marketing and SEO Strategies",
+      "img": "/assets/blog/consumer-shift-towards-direct-brand-engagement-reshaping-digital-marketing-and-seo-strategies.jpg",
       "cat": "digital-marketing",
       "catLabel": "Digital marketing",
       "date": "9 Apr 2024",
@@ -520,6 +540,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "satisfying-search-trends-tiktok-challenges-google-in-2024s-search-realm",
       "title": "Satisfying Search Trends: TikTok Challenges Google in 2024’s Search Realm",
+      "img": "/assets/blog/satisfying-search-trends-tiktok-challenges-google-in-2024s-search-realm.jpg",
       "cat": "seo",
       "catLabel": "SEO",
       "date": "22 Mar 2024",
@@ -529,6 +550,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "the-digital-landscape-is-changing-8-shifts-redefining-marketing-success-in-2024",
       "title": "The digital landscape is changing: 8 shifts redefining marketing success in 2024",
+      "img": "/assets/blog/the-digital-landscape-is-changing-8-shifts-redefining-marketing-success-in-2024.jpg",
       "cat": "seo",
       "catLabel": "SEO",
       "date": "2 Feb 2024",
@@ -538,6 +560,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "how-is-ai-impacting-digital-marketing",
       "title": "How is AI Impacting Digital Marketing?",
+      "img": "/assets/blog/how-is-ai-impacting-digital-marketing.jpg",
       "cat": "seo",
       "catLabel": "SEO",
       "date": "14 Dec 2023",
@@ -547,6 +570,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "the-ultimate-christmas-gift-guide-finding-the-perfect-presents-for-everyone-you-know",
       "title": "The Ultimate Christmas Gift Guide: Finding the Perfect Presents for Everyone You Know",
+      "img": "/assets/blog/the-ultimate-christmas-gift-guide-finding-the-perfect-presents-for-everyone-you-know.jpg",
       "cat": "digital-marketing",
       "catLabel": "Digital marketing",
       "date": "24 Nov 2023",
@@ -556,6 +580,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "unwrap-success-the-ultimate-guide-to-dominating-festive-season-sales-for-your-ecommerce-business",
       "title": "Unwrap Success: the ultimate guide to dominating festive season sales for your eCommerce business",
+      "img": "/assets/blog/unwrap-success-the-ultimate-guide-to-dominating-festive-season-sales-for-your-ecommerce-business.png",
       "cat": "digital-marketing",
       "catLabel": "Digital marketing",
       "date": "11 Oct 2023",
@@ -565,6 +590,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "meta-ad-formats-101",
       "title": "Zib Classroom: Meta Ad Formats 101",
+      "img": "/assets/blog/meta-ad-formats-101.png",
       "cat": "digital-marketing",
       "catLabel": "Digital marketing",
       "date": "22 Aug 2023",
@@ -574,6 +600,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "navigating-the-transition-to-google-analytics-4",
       "title": "Navigating The Transition To Google Analytics 4",
+      "img": "/assets/blog/navigating-the-transition-to-google-analytics-4.jpg",
       "cat": "social",
       "catLabel": "Social media",
       "date": "28 July 2023",
@@ -583,6 +610,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "spotlight-on-zib-growth-specialist-matt-jackson",
       "title": "Spotlight on Zib Growth Specialist: Matt Jackson",
+      "img": "/assets/blog/spotlight-on-zib-growth-specialist-matt-jackson.jpg",
       "cat": "digital-marketing",
       "catLabel": "Digital marketing",
       "date": "30 June 2023",
@@ -592,6 +620,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "conquering-the-tiktok-marketing-world",
       "title": "Zib Digital's TikTok Takeover Event: Conquering the TikTok Marketing World",
+      "img": "/assets/blog/conquering-the-tiktok-marketing-world.jpg",
       "cat": "social",
       "catLabel": "Social media",
       "date": "30 June 2023",
@@ -601,6 +630,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "how-to-find-your-brand-voice",
       "title": "How to find your brand voice",
+      "img": "/assets/blog/how-to-find-your-brand-voice.png",
       "cat": "digital-marketing",
       "catLabel": "Digital marketing",
       "date": "14 Nov 2022",
@@ -610,6 +640,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "why-ppc-is-the-perfect-complement-to-your-seo-strategy",
       "title": "Why PPC Is the Perfect Complement to Your SEO Strategy",
+      "img": "/assets/blog/why-ppc-is-the-perfect-complement-to-your-seo-strategy.jpg",
       "cat": "paid-advertising",
       "catLabel": "Paid advertising",
       "date": "12 Aug 2022",
@@ -619,6 +650,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "we-may-soon-be-saying-goodbye-to-instagram-videos",
       "title": "We may soon be saying goodbye to Instagram videos",
+      "img": "/assets/blog/we-may-soon-be-saying-goodbye-to-instagram-videos.jpg",
       "cat": "social",
       "catLabel": "Social media",
       "date": "13 July 2022",
@@ -628,6 +660,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "the-economy-is-shifting-how-is-this-going-to-impact-digital-media",
       "title": "The economy is shifting – how is this going to impact digital media?",
+      "img": "/assets/blog/the-economy-is-shifting-how-is-this-going-to-impact-digital-media.jpg",
       "cat": "digital-marketing",
       "catLabel": "Digital marketing",
       "date": "11 July 2022",
@@ -637,6 +670,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "instagram-introduces-nfts",
       "title": "Instagram introduces NFTs",
+      "img": "/assets/blog/instagram-introduces-nfts.jpg",
       "cat": "social",
       "catLabel": "Social media",
       "date": "22 June 2022",
@@ -646,6 +680,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "how-to-effectively-increase-your-websites-conversion-rate",
       "title": "How to effectively increase your website’s conversion rate",
+      "img": "/assets/blog/how-to-effectively-increase-your-websites-conversion-rate.jpg",
       "cat": "digital-marketing",
       "catLabel": "Digital marketing",
       "date": "12 May 2022",
@@ -655,6 +690,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "email-marketing-practices-that-actually-drive-results",
       "title": "Email marketing practices that actually drive results",
+      "img": "/assets/blog/email-marketing-practices-that-actually-drive-results.jpg",
       "cat": "digital-marketing",
       "catLabel": "Digital marketing",
       "date": "11 Apr 2022",
@@ -664,6 +700,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "how-to-make-tiktok-work-for-your-business",
       "title": "How to make TikTok work for your business",
+      "img": "/assets/blog/how-to-make-tiktok-work-for-your-business.jpg",
       "cat": "social",
       "catLabel": "Social media",
       "date": "9 Mar 2022",
@@ -673,6 +710,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "how-your-email-habits-might-be-damaging-to-the-environment",
       "title": "How your email habits might be damaging to the environment",
+      "img": "/assets/blog/how-your-email-habits-might-be-damaging-to-the-environment.jpg",
       "cat": "digital-marketing",
       "catLabel": "Digital marketing",
       "date": "22 Feb 2022",
@@ -682,6 +720,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "what-is-an-instagram-shadowban-and-does-it-matter",
       "title": "What is an Instagram shadowban and does it matter?",
+      "img": "/assets/blog/what-is-an-instagram-shadowban-and-does-it-matter.png",
       "cat": "social",
       "catLabel": "Social media",
       "date": "15 Oct 2021",
@@ -691,6 +730,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "how-search-algorithms-work",
       "title": "How search algorithms work",
+      "img": "/assets/blog/how-search-algorithms-work.png",
       "cat": "seo",
       "catLabel": "SEO",
       "date": "9 Oct 2021",
@@ -700,6 +740,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "5-simple-ways-to-optimise-your-linkedin-company-page",
       "title": "5 Simple Ways to Optimise Your LinkedIn Company Page",
+      "img": "/assets/blog/5-simple-ways-to-optimise-your-linkedin-company-page.png",
       "cat": "social",
       "catLabel": "Social media",
       "date": "15 Sept 2021",
@@ -709,6 +750,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "linkedin-advertising-101-a-guide-to-the-different-ad-types",
       "title": "LinkedIn advertising 101: a guide to the different ad types",
+      "img": "/assets/blog/linkedin-advertising-101-a-guide-to-the-different-ad-types.png",
       "cat": "social",
       "catLabel": "Social media",
       "date": "9 Sept 2021",
@@ -718,6 +760,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "how-to-optimise-your-websites-landing-page-and-why-its-important",
       "title": "How to optimise your website’s landing page and why it’s important",
+      "img": "/assets/blog/how-to-optimise-your-websites-landing-page-and-why-its-important.webp",
       "cat": "seo",
       "catLabel": "SEO",
       "date": "30 July 2021",
@@ -727,6 +770,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "why-you-should-get-over-your-fear-of-reels-and-how-they-can-grow-your-business",
       "title": "Why You Should Get Over Your Fear of Reels And How They Can Grow Your Business?",
+      "img": "/assets/blog/why-you-should-get-over-your-fear-of-reels-and-how-they-can-grow-your-business.png",
       "cat": "social",
       "catLabel": "Social media",
       "date": "29 July 2021",
@@ -736,6 +780,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "5-tips-to-help-businesses-prepare-for-the-new-financial-year",
       "title": "5 Tips to Help Businesses Prepare for the New Financial Year",
+      "img": "/assets/blog/5-tips-to-help-businesses-prepare-for-the-new-financial-year.png",
       "cat": "digital-marketing",
       "catLabel": "Digital marketing",
       "date": "24 June 2021",
@@ -745,6 +790,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "choosing-a-social-media-platform-for-your-business",
       "title": "Choosing A Social Media Platform For Your Business",
+      "img": "/assets/blog/choosing-a-social-media-platform-for-your-business.png",
       "cat": "social",
       "catLabel": "Social media",
       "date": "15 Apr 2021",
@@ -754,6 +800,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "email-marketing-more-than-sending-emails",
       "title": "Email Marketing: More Than Sending Emails",
+      "img": "/assets/blog/email-marketing-more-than-sending-emails.png",
       "cat": "digital-marketing",
       "catLabel": "Digital marketing",
       "date": "22 Mar 2021",
@@ -763,6 +810,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "the-importance-of-mobile-optimisation",
       "title": "The Importance of Mobile Optimisation",
+      "img": "/assets/blog/the-importance-of-mobile-optimisation.png",
       "cat": "digital-marketing",
       "catLabel": "Digital marketing",
       "date": "1 Mar 2021",
@@ -772,6 +820,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "wasting-google-ad-budget",
       "title": "Signs You’re Wasting Your Google Ad Budget",
+      "img": "/assets/blog/wasting-google-ad-budget.png",
       "cat": "paid-advertising",
       "catLabel": "Paid advertising",
       "date": "15 Feb 2021",
@@ -781,6 +830,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "customers-valentines-day",
       "title": "Share The Love With Your Customers This Valentine’s Day",
+      "img": "/assets/blog/customers-valentines-day.png",
       "cat": "digital-marketing",
       "catLabel": "Digital marketing",
       "date": "2 Feb 2021",
@@ -790,6 +840,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "converting-leads-from-website-visits",
       "title": "Why You’re Not Converting Leads From Website Visits",
+      "img": "/assets/blog/converting-leads-from-website-visits.webp",
       "cat": "digital-marketing",
       "catLabel": "Digital marketing",
       "date": "25 Jan 2021",
@@ -799,6 +850,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "seo-expectation-vs-reality",
       "title": "SEO: Expectation Vs. Reality",
+      "img": "/assets/blog/seo-expectation-vs-reality.jpg",
       "cat": "seo",
       "catLabel": "SEO",
       "date": "10 Jan 2021",
@@ -808,6 +860,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "instanight-shop-where-you-scroll",
       "title": "InstaNight: Shop Where You Scroll",
+      "img": "/assets/blog/instanight-shop-where-you-scroll.png",
       "cat": "social",
       "catLabel": "Social media",
       "date": "25 Dec 2020",
@@ -817,6 +870,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "how-2020-changed-social-media-use",
       "title": "How 2020 Changed Social Media",
+      "img": "/assets/blog/how-2020-changed-social-media-use.jpg",
       "cat": "social",
       "catLabel": "Social media",
       "date": "21 Dec 2020",
@@ -826,6 +880,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "the-holidays-go-digital",
       "title": "The Holidays Go Digital",
+      "img": "/assets/blog/the-holidays-go-digital.webp",
       "cat": "paid-advertising",
       "catLabel": "Paid advertising",
       "date": "11 Dec 2020",
@@ -835,6 +890,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "case-study-tomorrow-starts-tonight-by-ikea",
       "title": "Case Study: Tomorrow Starts Tonight by IKEA",
+      "img": "/assets/blog/case-study-tomorrow-starts-tonight-by-ikea.jpg",
       "cat": "digital-marketing",
       "catLabel": "Digital marketing",
       "date": "1 Dec 2020",
@@ -844,6 +900,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "black-friday-2020-is-your-business-ready",
       "title": "Black Friday 2020: Is your business ready?",
+      "img": "/assets/blog/black-friday-2020-is-your-business-ready.png",
       "cat": "social",
       "catLabel": "Social media",
       "date": "16 Nov 2020",
@@ -853,6 +910,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "5-ways-to-build-an-online-presence",
       "title": "5 Proven Ways to Build a Strong Online Presence for Your Business",
+      "img": "/assets/blog/5-ways-to-build-an-online-presence.jpg",
       "cat": "digital-marketing",
       "catLabel": "Digital marketing",
       "date": "25 Oct 2020",
@@ -862,6 +920,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "how-to-maintain-your-digital-marketing-strategy-during-covid-19",
       "title": "How to maintain your digital marketing strategy during COVID-19",
+      "img": "/assets/blog/how-to-maintain-your-digital-marketing-strategy-during-covid-19.jpg",
       "cat": "digital-marketing",
       "catLabel": "Digital marketing",
       "date": "8 Apr 2020",
@@ -871,6 +930,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "business-resilience-during-the-covid-19-crisis",
       "title": "Business resilience during the Covid-19 crisis",
+      "img": "/assets/blog/business-resilience-during-the-covid-19-crisis.png",
       "cat": "digital-marketing",
       "catLabel": "Digital marketing",
       "date": "25 Mar 2020",
@@ -880,6 +940,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "how-long-will-it-take-to-rank",
       "title": "How long will it take for my keywords to rank?",
+      "img": "/assets/blog/how-long-will-it-take-to-rank.jpg",
       "cat": "seo",
       "catLabel": "SEO",
       "date": "8 Jan 2020",
@@ -889,6 +950,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "zib-digital-bushfire-donation-fund",
       "title": "Zib digital bushfire donation fund",
+      "img": "/assets/blog/zib-digital-bushfire-donation-fund.jpg",
       "cat": "digital-marketing",
       "catLabel": "Digital marketing",
       "date": "7 Jan 2020",
@@ -898,6 +960,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "creating-an-email-marketing-welcome-sequence",
       "title": "How to Create a High-Converting Email Marketing Welcome Sequence",
+      "img": "/assets/blog/creating-an-email-marketing-welcome-sequence.jpg",
       "cat": "digital-marketing",
       "catLabel": "Digital marketing",
       "date": "16 May 2019",
@@ -907,6 +970,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "how-ssl-can-help-google-ranking",
       "title": "How an SSL certificate can help your Google ranking",
+      "img": "/assets/blog/how-ssl-can-help-google-ranking.jpg",
       "cat": "seo",
       "catLabel": "SEO",
       "date": "1 Apr 2019",
@@ -916,6 +980,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "why-your-business-needs-social-media-2019",
       "title": "Why your business needs social media in 2019",
+      "img": "/assets/blog/why-your-business-needs-social-media-2019.jpg",
       "cat": "social",
       "catLabel": "Social media",
       "date": "13 Feb 2019",
@@ -925,6 +990,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "are-you-on-google-my-business",
       "title": "Are you on 'Google My Business'?",
+      "img": "/assets/blog/are-you-on-google-my-business.jpg",
       "cat": "seo",
       "catLabel": "SEO",
       "date": "12 Feb 2019",
@@ -934,6 +1000,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "using-digital-for-effective-targeted-marketing",
       "title": "Using digital for effective targeted marketing",
+      "img": "/assets/blog/using-digital-for-effective-targeted-marketing.jpg",
       "cat": "digital-marketing",
       "catLabel": "Digital marketing",
       "date": "12 Feb 2019",
@@ -943,6 +1010,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "2019-web-design-trend-alert-fluid-design",
       "title": "2019 web design trend alert: fluid design",
+      "img": "/assets/blog/2019-web-design-trend-alert-fluid-design.jpg",
       "cat": "digital-marketing",
       "catLabel": "Digital marketing",
       "date": "2 Feb 2019",
@@ -952,6 +1020,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "google-mobile-friendly-websites",
       "title": "Google & mobile-friendly websites",
+      "img": "/assets/blog/google-mobile-friendly-websites.jpg",
       "cat": "digital-marketing",
       "catLabel": "Digital marketing",
       "date": "23 Jan 2019",
@@ -961,6 +1030,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     {
       "slug": "using-chatbots-to-convert",
       "title": "Using chatbots to convert",
+      "img": "/assets/blog/using-chatbots-to-convert.png",
       "cat": "digital-marketing",
       "catLabel": "Digital marketing",
       "date": "19 Jan 2019",
@@ -986,8 +1056,8 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
 
   const cardHtml = (p) => `
     <a class="post-card" href="/${escape(p.slug)}">
-      <div class="post-thumb" data-cat="${escape(p.cat)}" aria-hidden="true">
-        <div class="post-thumb-mark">${escape(p.title.split(':')[0])}</div>
+      <div class="post-thumb${p.img ? ' has-img' : ''}" data-cat="${escape(p.cat)}" aria-hidden="true">
+        ${p.img ? `<img class="post-thumb-img" src="${escape(p.img)}" alt="" loading="lazy">` : `<div class="post-thumb-mark">${escape(p.title.split(':')[0])}</div>`}
       </div>
       <div class="post-cat">${escape(p.catLabel)}</div>
       <h2 class="post-title">${escape(p.title)}</h2>
