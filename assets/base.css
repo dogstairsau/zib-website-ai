@@ -130,15 +130,6 @@ h1, h2, h3, .hero-h, .fork-h, .path-title, .moat-h, .cta-title { text-wrap: bala
   pointer-events: auto;
   transform: translate(-50%, 0);
 }
-/* Hover-to-open is mouse-only, so touch devices rely purely on tap (.is-open). */
-@media (hover: hover) and (pointer: fine) {
-  .nav-group:hover .nav-group-menu,
-  .nav-group:focus-within .nav-group-menu {
-    opacity: 1;
-    pointer-events: auto;
-    transform: translate(-50%, 0);
-  }
-}
 .nav-group-menu::before {
   content: "";
   position: absolute;
@@ -173,10 +164,6 @@ h1, h2, h3, .hero-h, .fork-h, .path-title, .moat-h, .cta-title { text-wrap: bala
   gap: 4px 28px;
 }
 .nav-group--mega.is-open > .nav-group-menu { transform: translate(-50%, 0); }
-@media (hover: hover) and (pointer: fine) {
-  .nav-group--mega:hover > .nav-group-menu,
-  .nav-group--mega:focus-within > .nav-group-menu { transform: translate(-50%, 0); }
-}
 .nav-group-menu.mega-cities { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .mega-col { display: flex; flex-direction: column; gap: 1px; align-items: stretch; }
 .mega-h {
