@@ -17,6 +17,9 @@ import { ROOT, esc, decodeEntities, loadSf, loadWp, loadCopy } from "./lib.mjs";
 
 const OLD = "https://zibdigital.com.au";
 
+// Blog featured images (slug → /assets/blog/<file>), built by /tmp map step.
+const BLOG_IMAGES = JSON.parse(await readFile(join(ROOT, "migration/blog-images.json"), "utf8").catch(() => "{}"));
+
 // ───────────────────────── internal-link maps ─────────────────────────
 const HUBS = {
   seo:    { label: "SEO",                 href: "/seo-agency" },
@@ -502,7 +505,8 @@ function blogPage({ slug, sf, wp, copy }) {
   const h1 = sf?.h1 || wp?.title || slug;
   const date = wp?.date ? new Date(wp.date.replace(" ", "T")).toLocaleDateString("en-AU", { year: "numeric", month: "long", day: "numeric" }) : "";
   const blocks = copy.map((l) => (l.length <= 70 && !/[.!?]$/.test(l)) ? `      <h2>${esc(decodeEntities(l))}</h2>` : `      <p>${esc(decodeEntities(l))}</p>`).join("\n");
-  const ld = { "@context": "https://schema.org", "@type": "BlogPosting", headline: decodeEntities(h1), description: decodeEntities(desc || h1), datePublished: wp?.date ? new Date(wp.date.replace(" ", "T")).toISOString() : undefined, author: { "@type": "Organization", name: "Zib Digital" }, publisher: { "@id": "https://zibdigital.com.au/#org" }, mainEntityOfPage: `https://zibdigital.com.au/${slug}` };
+  const img = BLOG_IMAGES[slug] || "";
+  const ld = { "@context": "https://schema.org", "@type": "BlogPosting", headline: decodeEntities(h1), description: decodeEntities(desc || h1), image: img ? `https://zibdigital.com.au${img}` : undefined, datePublished: wp?.date ? new Date(wp.date.replace(" ", "T")).toISOString() : undefined, author: { "@type": "Organization", name: "Zib Digital" }, publisher: { "@id": "https://zibdigital.com.au/#org" }, mainEntityOfPage: `https://zibdigital.com.au/${slug}` };
 
   return `${HEAD(title, desc || h1)}
 <script type="application/ld+json">${JSON.stringify(ld)}</script>
@@ -512,6 +516,7 @@ function blogPage({ slug, sf, wp, copy }) {
       <a class="post-back" href="/blog">← All articles</a>
       ${date ? `<div class="post-date mono">${date}</div>` : ""}
       <h1>${esc(decodeEntities(h1))}</h1>
+      ${img ? `<img class="post-hero-img" src="${img}" alt="${esc(decodeEntities(h1))}" width="920" height="518" />` : ""}
     </div>
   </header>
   <div class="container post-body">
@@ -531,6 +536,7 @@ ${blocks}
 .post-back{color:var(--muted);text-decoration:none;font-size:14px}.post-back:hover{color:var(--accent)}
 .post-date{margin:20px 0 12px;color:var(--accent);text-transform:uppercase;letter-spacing:.08em;font-size:13px}
 .post h1{font-family:var(--display);font-weight:500;font-size:clamp(30px,4.4vw,60px);line-height:1.04;letter-spacing:-0.03em;max-width:22ch}
+.post-hero-img{width:100%;max-width:920px;aspect-ratio:16/9;height:auto;object-fit:cover;border-radius:16px;margin-top:clamp(28px,4vw,44px);display:block;background:var(--paper)}
 .post-body{padding:clamp(40px,6vw,72px) 0;max-width:720px}
 .post-body p{color:var(--ink);font-size:clamp(16px,1.4vw,18px);line-height:1.75;margin:0 0 22px}
 .post-body h2{font-family:var(--display);font-weight:500;font-size:clamp(22px,2.4vw,30px);margin:40px 0 14px}

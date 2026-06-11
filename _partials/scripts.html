@@ -40,11 +40,23 @@
   document.querySelectorAll('[data-nav-group]').forEach((group) => {
     const trigger = group.querySelector('.nav-group-toggle');
     if (!trigger) return;
+    const closeOthers = () => {
+      document.querySelectorAll('[data-nav-group].is-open').forEach((g) => {
+        if (g !== group) {
+          g.classList.remove('is-open');
+          g.querySelector('.nav-group-toggle')?.setAttribute('aria-expanded', 'false');
+        }
+      });
+    };
     trigger.addEventListener('click', (e) => {
       e.stopPropagation();
-      const open = group.classList.toggle('is-open');
-      trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+      const willOpen = !group.classList.contains('is-open');
+      closeOthers(); // only one dropdown open at a time
+      group.classList.toggle('is-open', willOpen);
+      trigger.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
     });
+    // Hovering another group closes a click-opened one (prevents overlap)
+    group.addEventListener('mouseenter', closeOthers);
   });
   // Close any open dropdown when clicking outside
   document.addEventListener('click', (e) => {

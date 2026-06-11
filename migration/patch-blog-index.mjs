@@ -24,6 +24,7 @@ const CAT_FILTER = { // map to blog.html's filter chips
 const xmlPath = process.argv[2];
 const xml = await readFile(xmlPath, "utf8");
 const items = xml.split("<item>").slice(1);
+const BLOG_IMAGES = JSON.parse(await readFile(join(ROOT, "migration/blog-images.json"), "utf8").catch(() => "{}"));
 
 const posts = [];
 for (const raw of items) {
@@ -38,6 +39,7 @@ for (const raw of items) {
   const catLabel = CAT_LABEL[cat] || "Digital marketing";
   posts.push({
     slug, title,
+    img: BLOG_IMAGES[slug] || "",
     cat: CAT_FILTER[catLabel] || "digital-marketing",
     catLabel,
     date: date ? new Date(date.replace(" ", "T")).toLocaleDateString("en-AU", { day: "numeric", month: "short", year: "numeric" }) : "",
