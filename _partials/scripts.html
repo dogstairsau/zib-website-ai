@@ -36,27 +36,36 @@
     });
   }
 
-  // Nav dropdown groups (Locations), toggle on click for mobile / keyboard
-  document.querySelectorAll('[data-nav-group]').forEach((group) => {
+  // Nav dropdown groups — opening is driven entirely by the .is-open class
+  // (set here), so it never depends on CSS :hover media-query support.
+  // Click/tap toggles on every device; hover opens on hover-capable devices.
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const navGroups = document.querySelectorAll('[data-nav-group]');
+  const closeAllGroups = (except) => {
+    navGroups.forEach((g) => {
+      if (g !== except) {
+        g.classList.remove('is-open');
+        g.querySelector('.nav-group-toggle')?.setAttribute('aria-expanded', 'false');
+      }
+    });
+  };
+  navGroups.forEach((group) => {
     const trigger = group.querySelector('.nav-group-toggle');
     if (!trigger) return;
-    const closeOthers = () => {
-      document.querySelectorAll('[data-nav-group].is-open').forEach((g) => {
-        if (g !== group) {
-          g.classList.remove('is-open');
-          g.querySelector('.nav-group-toggle')?.setAttribute('aria-expanded', 'false');
-        }
-      });
+    const setOpen = (open) => {
+      group.classList.toggle('is-open', open);
+      trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
     };
     trigger.addEventListener('click', (e) => {
       e.stopPropagation();
       const willOpen = !group.classList.contains('is-open');
-      closeOthers(); // only one dropdown open at a time
-      group.classList.toggle('is-open', willOpen);
-      trigger.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+      closeAllGroups(group);
+      setOpen(willOpen);
     });
-    // Hovering another group closes a click-opened one (prevents overlap)
-    group.addEventListener('mouseenter', closeOthers);
+    if (canHover) {
+      group.addEventListener('mouseenter', () => { closeAllGroups(group); setOpen(true); });
+      group.addEventListener('mouseleave', () => setOpen(false));
+    }
   });
   // Close any open dropdown when clicking outside
   document.addEventListener('click', (e) => {
