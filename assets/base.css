@@ -310,7 +310,15 @@ h1, h2, h3, .hero-h, .fork-h, .path-title, .moat-h, .cta-title { text-wrap: bala
     pointer-events: auto;
     display: none;
   }
-  .nav-group.is-open .nav-group-menu { display: block; transform: none; }
+  .nav-group.is-open > .nav-group-menu {
+    display: block !important;
+    position: static !important;
+    transform: none !important;
+    opacity: 1 !important;
+    max-height: none !important;
+    overflow: visible !important;
+    pointer-events: auto !important;
+  }
   .nav-group-menu::before { content: none; }
   .nav-group-menu a {
     border-radius: 0;
