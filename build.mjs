@@ -33,6 +33,76 @@ function canonicalFor(relPath) {
   return `${HOST}/${p}`;
 }
 
+/** Clean leaf label for a breadcrumb: the title up to its first separator. */
+function leafName(title) {
+  return title.split(/\s+[·—–|]\s+|\s+-\s+/)[0].trim() || "Zib Digital";
+}
+
+/**
+ * Build a BreadcrumbList JSON-LD block for an indexable page. Home is always
+ * the root; blog posts nest under Field notes and case studies under Case
+ * studies (detected from the page's own BlogPosting/Article schema). Everything
+ * else is a flat Home → Page trail. Returns "" when no breadcrumb applies.
+ */
+function breadcrumbFor(html, relPath, canonical, title) {
+  // Home needs no breadcrumb; never add to noindex or already-tagged pages.
+  if (canonical === `${HOST}/`) return "";
+  if (/name=["']robots["'][^>]*noindex/i.test(html)) return "";
+  if (/"BreadcrumbList"/.test(html)) return "";
+
+  const rel = relPath.replace(/\\/g, "/");
+  const items = [{ name: "Home", item: `${HOST}/` }];
+  if (rel.startsWith("casestudy/") || /"@type":\s*"Article"/.test(html)) {
+    items.push({ name: "Case studies", item: `${HOST}/case-studies` });
+  } else if (/"@type":\s*"BlogPosting"/.test(html)) {
+    items.push({ name: "Field notes", item: `${HOST}/blog` });
+  }
+  items.push({ name: leafName(title), item: canonical });
+
+  const elements = items.map((it, i) => ({
+    "@type": "ListItem",
+    position: i + 1,
+    name: it.name,
+    item: it.item,
+  }));
+  const graph = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: elements,
+  };
+  return `<script type="application/ld+json">\n${JSON.stringify(graph, null, 2)}\n</script>\n`;
+}
+
+const stripTags = (s) => decode(s.replace(/<[^>]+>/g, " ")).replace(/\s+/g, " ").trim();
+
+/**
+ * Auto-generate FAQPage JSON-LD from a page's visible .faq-item markup
+ * (button.faq-q holds the question, div.faq-a holds the answer). Skips pages
+ * that already declare FAQPage and noindex pages. Returns "" when nothing
+ * usable is found.
+ */
+function faqFor(html) {
+  if (/"FAQPage"/.test(html)) return "";
+  if (/name=["']robots["'][^>]*noindex/i.test(html)) return "";
+
+  const questions = [...html.matchAll(/<button[^>]*class="[^"]*faq-q[^"]*"[^>]*>\s*<span>([\s\S]*?)<\/span>/g)]
+    .map((m) => stripTags(m[1]));
+  const answers = [...html.matchAll(/<div class="faq-a">([\s\S]*?)<\/div>/g)]
+    .map((m) => stripTags(m[1]));
+  if (questions.length < 2 || questions.length !== answers.length) return "";
+
+  const graph = {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: questions.map((q, i) => ({
+      "@type": "Question",
+      name: q,
+      acceptedAnswer: { "@type": "Answer", text: answers[i] },
+    })),
+  };
+  return `<script type="application/ld+json">\n${JSON.stringify(graph, null, 2)}\n</script>\n`;
+}
+
 /**
  * Inject a self-referencing canonical + Open Graph / Twitter Card tags before
  * </head>. Canonical is added only if absent; the OG block only if the page
@@ -45,7 +115,7 @@ function injectHead(html, relPath) {
   const descM = html.match(/<meta\s+name=["']description["']\s+content=["']([\s\S]*?)["']/i);
   const title = titleM ? decode(titleM[1].trim()) : "Zib Digital";
   const desc = descM ? decode(descM[1].trim()) : "";
-  let tags = "";
+  let tags = breadcrumbFor(html, relPath, canonical, title) + faqFor(html);
   if (!/rel=["']canonical["']/i.test(html)) {
     tags += `<link rel="canonical" href="${canonical}">\n`;
   }
