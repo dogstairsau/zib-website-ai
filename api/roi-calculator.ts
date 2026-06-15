@@ -1,6 +1,6 @@
 import { sendLeadEmail } from "../lib/email";
 import { captureLead } from "../lib/hubspot";
-import { checkRateLimit, rateLimitResponse } from "../lib/rateLimit";
+import { guard } from "../lib/rateLimit";
 
 export const config = { runtime: "edge" };
 
@@ -45,8 +45,8 @@ export default async function handler(req: Request): Promise<Response> {
   if (!firstname) return json({ error: "Enter your first name." }, 400);
   if (!emailRe.test(email)) return json({ error: "Enter a valid email." }, 400);
 
-  const rl = await checkRateLimit(req, "roi-calculator", 5, 600);
-  if (!rl.allowed) return rateLimitResponse(rl.retryAfter);
+  const blocked = await guard(req, "roi-calculator");
+  if (blocked) return blocked;
 
   const channelLabel = (body.channelLabel || body.channel || "Unknown channel").trim();
   const tag = (body.sourceTag || "ROI Calculator").trim();

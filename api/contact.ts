@@ -1,4 +1,4 @@
-import { checkRateLimit, rateLimitResponse } from "../lib/rateLimit";
+import { guard } from "../lib/rateLimit";
 
 export const config = { runtime: "edge" };
 
@@ -44,8 +44,8 @@ export default async function handler(req: Request): Promise<Response> {
   // Only reject if one was supplied but is malformed.
   if (partnerEmail && !emailRe.test(partnerEmail)) return json({ error: "Invalid partner email." }, 400);
 
-  const rl = await checkRateLimit(req, "contact", 5, 600);
-  if (!rl.allowed) return rateLimitResponse(rl.retryAfter);
+  const blocked = await guard(req, "contact");
+  if (blocked) return blocked;
 
   try {
     await sendDirectToPartner({

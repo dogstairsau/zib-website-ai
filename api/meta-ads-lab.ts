@@ -2,7 +2,7 @@ import Anthropic from "@anthropic-ai/sdk";
 import { fetchSiteContent, normaliseUrl, isValidEmail } from "../lib/site";
 import { captureLead } from "../lib/hubspot";
 import { sendMetaAdsPack, type MetaAdsPackAd } from "../lib/email";
-import { checkRateLimit, rateLimitResponse } from "../lib/rateLimit";
+import { guard } from "../lib/rateLimit";
 import { META_ADS_SYSTEM_PROMPT, metaAdsUserPrompt } from "../lib/prompts/meta-ads";
 import { isSafeFetchUrl } from "../lib/safeUrl";
 
@@ -121,8 +121,8 @@ export default async function handler(req: Request): Promise<Response> {
   }
 
   // Rate limit: 2 generations per 10 min per IP
-  const rl = await checkRateLimit(req, "meta-ads-lab", 2, 600);
-  if (!rl.allowed) return rateLimitResponse(rl.retryAfter);
+  const blocked = await guard(req, "meta-ads-lab");
+  if (blocked) return blocked;
 
   const stream = new ReadableStream({
     async start(controller) {

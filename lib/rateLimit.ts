@@ -98,3 +98,47 @@ export function rateLimitResponse(retryAfter: number): Response {
     },
   );
 }
+
+export type RateTier = { limit: number; windowSeconds: number; suffix: string };
+
+// Site-wide default: a short burst cap plus a daily ceiling, per IP.
+// Tightened from the old single 3-5/10min window after an abuser ran a tool
+// repeatedly. The burst tier stops rapid hammering; the daily tier stops a
+// slow drip. Both are no-ops until Vercel KV is connected.
+export const DEFAULT_TIERS: RateTier[] = [
+  { limit: 2, windowSeconds: 600, suffix: "10m" }, // 2 per 10 minutes
+  { limit: 15, windowSeconds: 86400, suffix: "1d" }, // 15 per day
+];
+
+/** Check a key against several windows; the first tripped tier wins. */
+export async function checkRateLimits(
+  req: Request,
+  key: string,
+  tiers: RateTier[] = DEFAULT_TIERS,
+): Promise<RateResult> {
+  for (const t of tiers) {
+    const r = await checkRateLimit(req, `${key}:${t.suffix}`, t.limit, t.windowSeconds);
+    if (!r.allowed) return r;
+  }
+  return { allowed: true, retryAfter: 0 };
+}
+
+/**
+ * One-call guard for an endpoint: hard IP denylist (403) then tiered per-IP
+ * rate limiting (429). Returns a Response to send back, or null to proceed.
+ */
+export async function guard(
+  req: Request,
+  key: string,
+  tiers: RateTier[] = DEFAULT_TIERS,
+): Promise<Response | null> {
+  if (isIpBlocked(req)) {
+    return new Response(JSON.stringify({ error: "Forbidden" }), {
+      status: 403,
+      headers: { "Content-Type": "application/json" },
+    });
+  }
+  const rl = await checkRateLimits(req, key, tiers);
+  if (!rl.allowed) return rateLimitResponse(rl.retryAfter);
+  return null;
+}

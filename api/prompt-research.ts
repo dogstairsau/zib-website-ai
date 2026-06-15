@@ -1,5 +1,5 @@
 import Anthropic from "@anthropic-ai/sdk";
-import { checkRateLimit, rateLimitResponse } from "../lib/rateLimit";
+import { guard } from "../lib/rateLimit";
 
 export const config = { runtime: "edge" };
 
@@ -175,8 +175,8 @@ export default async function handler(req: Request): Promise<Response> {
 
   // Two paid LLM calls per request — rate limit to prevent cost abuse.
   // (No-op until Vercel KV is provisioned; see lib/rateLimit.ts.)
-  const rl = await checkRateLimit(req, "prompt-research", 5, 600);
-  if (!rl.allowed) return rateLimitResponse(rl.retryAfter);
+  const blocked = await guard(req, "prompt-research");
+  if (blocked) return blocked;
 
   const domain = normaliseDomain(body.domain);
 
