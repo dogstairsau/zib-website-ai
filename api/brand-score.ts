@@ -4,10 +4,15 @@ import { isSafeFetchUrl, safeFetch } from "../lib/safeUrl";
 import { runPsi, type PsiResult } from "../lib/psi";
 import { auditSocials, type SocialAudit } from "../lib/brand/socials";
 import { fetchTrends, brandTermFromUrl, type TrendSeries } from "../lib/brand/trends";
-import { computeBrandScore, type TargetSignals } from "../lib/brand/score";
+import { fetchReviews } from "../lib/brand/reviews";
+import { fetchNews } from "../lib/brand/news";
+import { fetchReddit } from "../lib/brand/reddit";
+import { computeBrandScore, type TargetSignals, type LlmVisibilitySignal } from "../lib/brand/score";
 import {
   CLARITY_SYSTEM_PROMPT,
   clarityUserPrompt,
+  LLM_VISIBILITY_SYSTEM_PROMPT,
+  llmVisibilityUserPrompt,
   BRAND_READ_SYSTEM_PROMPT,
   brandReadUserPrompt,
   LEVER_SYSTEM_PROMPT,
@@ -109,6 +114,13 @@ export default async function handler(req: Request): Promise<Response> {
         const compBrandTerms = competitorUrls.map((u) => brandTermFromUrl(u));
         const trendTerms = [yourBrand, ...compBrandTerms].filter(Boolean);
 
+        // Search-friendly business name for reviews / news / reddit: the lead
+        // of the page title (before any separator), falling back to the domain.
+        const businessName = (() => {
+          const lead = (site.title || "").split(/\s*[|\-–—·:]\s*/)[0].trim();
+          return lead.length >= 3 && lead.length <= 60 ? lead : yourBrand;
+        })();
+
         const psiPromise = runPsi(url).catch((e) => {
           console.warn("[psi]", e?.message);
           return null;
@@ -137,6 +149,38 @@ export default async function handler(req: Request): Promise<Response> {
             return null;
           });
 
+        // Reputation signals — main target only. Each fails closed to null.
+        const reviewsPromise = fetchReviews(businessName).catch(() => null);
+        const newsPromise = fetchNews(businessName).catch(() => null);
+        const redditPromise = fetchReddit(businessName).catch(() => null);
+
+        // AI visibility depends on the clarity read (category/promise), so it
+        // chains off that promise but still runs concurrently with everything else.
+        const llmVisPromise: Promise<LlmVisibilitySignal | null> = clarityPromise.then(async (c) => {
+          try {
+            const m = await anthropic.messages.create({
+              model: "claude-haiku-4-5-20251001",
+              max_tokens: 200,
+              system: LLM_VISIBILITY_SYSTEM_PROMPT,
+              messages: [
+                {
+                  role: "user",
+                  content: llmVisibilityUserPrompt({ url, brand: businessName, promise: c?.promise, forWhom: c?.for_whom }),
+                },
+              ],
+            });
+            const parsed = m.content[0]?.type === "text"
+              ? parseJson<{ visibility: string; category?: string; reason?: string }>(m.content[0].text)
+              : null;
+            if (!parsed) return null;
+            const map: Record<string, number> = { yes: 88, maybe: 55, no: 22 };
+            return { available: true, score: map[parsed.visibility] ?? 50, label: parsed.visibility };
+          } catch (e: any) {
+            console.warn("[llm-visibility]", e?.message);
+            return null;
+          }
+        });
+
         // Competitor signals: light HTML (for socials) + PSI, in parallel.
         const compSignalPromises = competitorUrls.map(async (cu) => {
           const [html, psi] = await Promise.all([
@@ -147,12 +191,16 @@ export default async function handler(req: Request): Promise<Response> {
           return { url: cu, psi, social };
         });
 
-        const [psi, social, trends, clarity, compSignals] = await Promise.all([
+        const [psi, social, trends, clarity, compSignals, reviews, news, reddit, llmVisibility] = await Promise.all([
           psiPromise,
           socialPromise,
           trendsPromise,
           clarityPromise,
           Promise.all(compSignalPromises),
+          reviewsPromise,
+          newsPromise,
+          redditPromise,
+          llmVisPromise,
         ]);
 
         // Map trend series back to each brand term.
@@ -165,6 +213,10 @@ export default async function handler(req: Request): Promise<Response> {
           social: !!social,
           trends: trends.some((t) => t.available),
           clarity: !!clarity,
+          reviews: !!reviews?.available,
+          news: !!news?.available,
+          reddit: !!reddit?.available,
+          llmVisibility: !!llmVisibility?.available,
           competitors: compSignals.filter((c) => c.psi || c.social).length,
         });
 
@@ -179,6 +231,10 @@ export default async function handler(req: Request): Promise<Response> {
           brandTrend: trendFor(yourBrand),
           site: { title: site.title, description: site.description, h1: site.h1, h2s: site.h2s },
           clarityScore: clarity ? clarity.clarity : null,
+          reviews,
+          news,
+          reddit,
+          llmVisibility,
         };
 
         const competitors: TargetSignals[] = compSignals.map((c, i) => ({

@@ -50,6 +50,39 @@ Score the positioning clarity. Return only the JSON.
 `.trim();
 
 // ──────────────────────────────────────────────────────────────────
+// AI / LLM visibility — would a leading AI assistant name this brand when
+// asked for top providers in its category? Feeds Market Visibility.
+// ──────────────────────────────────────────────────────────────────
+export const LLM_VISIBILITY_SYSTEM_PROMPT = `
+You assess whether a leading AI assistant (ChatGPT, Claude, Gemini) would name a specific business when a user asks for the top providers in that business's category and region. Use your own knowledge of the brand's prominence, authority and category. Be honest and calibrated — most small or local businesses are "no".
+
+Output ONLY valid JSON, no fences, no commentary:
+{
+  "visibility": "yes" | "maybe" | "no",
+  "category": "the category + region you assessed, max 60 chars",
+  "reason": "max 90 chars, plain English"
+}
+
+- "yes": a leading AI would very likely name this brand among the top options.
+- "maybe": plausible but depends on phrasing or competition.
+- "no": unlikely to be named.
+`.trim();
+
+export const llmVisibilityUserPrompt = (input: {
+  url: string;
+  brand: string;
+  promise?: string;
+  forWhom?: string;
+}) =>
+  `
+Business: ${input.brand} (${input.url})
+What they do: ${input.promise || "unknown"}
+Who they serve: ${input.forWhom || "unknown"}
+
+Would a leading AI assistant name this business among the top providers in its category and region? Return only the JSON.
+`.trim();
+
+// ──────────────────────────────────────────────────────────────────
 // The strategist read — streamed to the prospect under the score.
 // ──────────────────────────────────────────────────────────────────
 export const BRAND_READ_SYSTEM_PROMPT = `

@@ -65,6 +65,11 @@ with no available signals falls back to a neutral 50 and is flagged.
 | Competitor head-to-head (SEO + social + brand interest) | PSI + Trends + crawl per competitor | Competitive |
 | Category/brand trend trajectory | Google Trends (slope of last N points) | Momentum |
 | Performance + accessibility + best-practices | PageSpeed Insights | Experience |
+| Google reviews (rating + volume) | Google Places API (needs key) | Social |
+| News mentions volume | GDELT (free, keyless) | Visibility |
+| News coverage tone | GDELT (free, keyless) | Social |
+| Reddit / forum mentions + sentiment | Reddit search JSON (free) | Social |
+| AI / LLM visibility (would an assistant name you) | Claude (AI estimate) | Visibility |
 
 > "Wire real free data sources first" (the chosen path): v1 ships with PSI,
 > Google Trends and live social-profile verification all actually called — not

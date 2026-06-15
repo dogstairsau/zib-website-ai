@@ -15,6 +15,11 @@
 import type { PsiResult } from "../psi";
 import type { SocialAudit } from "./socials";
 import type { TrendSeries } from "./trends";
+import type { ReviewSignal } from "./reviews";
+import type { NewsSignal } from "./news";
+import type { RedditSignal } from "./reddit";
+
+export type LlmVisibilitySignal = { available: boolean; score: number; label?: string };
 
 export type PillarKey =
   | "visibility"
@@ -51,6 +56,11 @@ export type TargetSignals = {
   brandTrend?: TrendSeries | null;
   site?: SiteSnapshot | null;
   clarityScore?: number | null; // AI-supplied, main target only
+  // Extended reputation signals — main target only, all optional.
+  reviews?: ReviewSignal | null;
+  news?: NewsSignal | null;
+  reddit?: RedditSignal | null;
+  llmVisibility?: LlmVisibilitySignal | null;
 };
 
 export type Pillar = {
@@ -128,22 +138,29 @@ function messageConsistency(site?: SiteSnapshot | null): number | null {
 // ── per-pillar builders. Each returns {score, available, note}. ──
 type Built = { score: number; available: boolean; note: string };
 
+// Blend a set of optional sub-signals into one pillar. SEO is weighted highest
+// in visibility, but everything averages once present, and missing signals are
+// dropped (renormalised) rather than dragging the pillar to a neutral 50.
+type Contribution = { label: string; value: number; weight: number; available: boolean };
+
+function blend(contribs: Contribution[], emptyNote: string): Built {
+  const avail = contribs.filter((c) => c.available);
+  if (!avail.length) return { score: 50, available: false, note: emptyNote };
+  const wSum = avail.reduce((a, c) => a + c.weight, 0);
+  const score = avail.reduce((a, c) => a + c.value * (c.weight / wSum), 0);
+  return { score: clamp(score), available: true, note: avail.map((c) => c.label).join(" · ") };
+}
+
 function visibilityPillar(t: TargetSignals): Built {
-  const notes: string[] = [];
-  if (t.psi) notes.push(`SEO ${t.psi.scores.seo}`);
-  let score: number;
-  if (t.psi && t.brandTrend?.available) {
-    score = t.psi.scores.seo * 0.6 + t.brandTrend.latest * 0.4;
-    notes.push(`brand interest ${t.brandTrend.latest}/100`);
-  } else if (t.psi) {
-    score = t.psi.scores.seo;
-  } else if (t.brandTrend?.available) {
-    score = t.brandTrend.latest;
-    notes.push(`brand interest ${t.brandTrend.latest}/100`);
-  } else {
-    return { score: 50, available: false, note: "no visibility signal" };
-  }
-  return { score: clamp(score), available: true, note: notes.join(" · ") };
+  return blend(
+    [
+      { label: `SEO ${t.psi?.scores.seo ?? ""}`, value: t.psi?.scores.seo ?? 0, weight: 0.4, available: !!t.psi },
+      { label: `brand interest ${t.brandTrend?.latest ?? ""}/100`, value: t.brandTrend?.latest ?? 0, weight: 0.3, available: !!t.brandTrend?.available },
+      { label: `news ${t.news?.articleCount ?? 0} mentions`, value: t.news?.volumeScore ?? 0, weight: 0.18, available: !!t.news?.available },
+      { label: `AI visibility ${t.llmVisibility?.label ?? ""}`, value: t.llmVisibility?.score ?? 0, weight: 0.12, available: !!t.llmVisibility?.available },
+    ],
+    "no visibility signal",
+  );
 }
 
 function clarityPillar(t: TargetSignals): Built {
@@ -163,13 +180,20 @@ function clarityPillar(t: TargetSignals): Built {
 }
 
 function socialPillar(t: TargetSignals): Built {
-  if (!t.social) return { score: 50, available: false, note: "socials not checked" };
-  const n = t.social.present.length;
-  return {
-    score: t.social.score,
-    available: true,
-    note: n ? `${n} verified · core ${t.social.coreCovered}/3` : "no verified profiles",
-  };
+  const profilesNote = t.social
+    ? t.social.present.length
+      ? `${t.social.present.length} profiles · core ${t.social.coreCovered}/3`
+      : "no verified profiles"
+    : "";
+  return blend(
+    [
+      { label: profilesNote, value: t.social?.score ?? 0, weight: 0.4, available: !!t.social },
+      { label: `reviews ${t.reviews?.rating ?? ""}★ (${t.reviews?.count ?? 0})`, value: t.reviews?.score ?? 0, weight: 0.3, available: !!t.reviews?.available },
+      { label: `reddit ${t.reddit?.mentionCount ?? 0} mentions`, value: t.reddit?.score ?? 0, weight: 0.16, available: !!t.reddit?.available },
+      { label: `coverage tone ${t.news?.avgTone ?? ""}`, value: t.news?.toneScore ?? 0, weight: 0.14, available: !!t.news?.available },
+    ],
+    "socials not checked",
+  );
 }
 
 function momentumPillar(t: TargetSignals): Built {
