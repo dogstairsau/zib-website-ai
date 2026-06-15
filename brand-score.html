@@ -39,8 +39,8 @@
   details.bs-disclose[open] > summary { color: var(--muted); }
 
   /* result */
-  .bs-result { max-width: 980px; margin: 28px auto 0; opacity:0; transform: translateY(12px); transition: opacity .5s var(--ease), transform .5s var(--ease); }
-  .bs-result.is-shown { opacity:1; transform:none; }
+  .bs-result { display: none; max-width: 980px; margin: 28px auto 0; opacity:0; transform: translateY(12px); transition: opacity .5s var(--ease), transform .5s var(--ease); }
+  .bs-result.is-shown { display: block; opacity:1; transform:none; }
 
   .bs-stages { font-family:var(--mono); font-size:13px; color:var(--muted); display:grid; gap:8px; margin: 8px 0 22px; }
   .bs-stage { display:flex; align-items:center; gap:10px; opacity:.4; transition: opacity .3s; }
