@@ -10,7 +10,7 @@ import {
   discoveryQuestionUserPrompt,
 } from "../lib/prompts/audit";
 import { fetchSupporting, crawlSite, buildAudit } from "../lib/seoChecks";
-import { checkRateLimit, rateLimitResponse } from "../lib/rateLimit";
+import { checkRateLimit, rateLimitResponse, isIpBlocked, clientIp } from "../lib/rateLimit";
 import { sendLeadEmail } from "../lib/email";
 import { isSafeFetchUrl } from "../lib/safeUrl";
 
@@ -182,6 +182,13 @@ export default async function handler(req: Request): Promise<Response> {
   if (!process.env.ANTHROPIC_API_KEY) {
     return json({ error: "Server not configured (ANTHROPIC_API_KEY missing)." }, 500);
   }
+
+  // Log the client IP so abusive sources can be identified in the function
+  // logs and added to BLOCKED_IPS (this is what surfaces the IP to block).
+  console.log("[audit] request", { ip: clientIp(req), url });
+
+  // Hard denylist — works without KV. Block known abusers outright.
+  if (isIpBlocked(req)) return json({ error: "That URL can't be audited." }, 403);
 
   // Rate limit: 3 audits per 10 minutes per IP (no-op until Vercel KV is set up)
   const rl = await checkRateLimit(req, "audit", 3, 600);

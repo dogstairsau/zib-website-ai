@@ -67,6 +67,25 @@ function getIp(req: Request): string {
   return req.headers.get("x-real-ip") || "unknown";
 }
 
+/** Client IP from proxy headers. Exposed for logging so abusive IPs can be
+ *  identified in the function logs and added to BLOCKED_IPS. */
+export function clientIp(req: Request): string {
+  return getIp(req);
+}
+
+/**
+ * Hard IP denylist via the BLOCKED_IPS env var (comma-separated). Works
+ * WITHOUT Vercel KV — checked in-process — so a single abuser can be blocked
+ * immediately by adding their IP in the Vercel dashboard and redeploying.
+ */
+export function isIpBlocked(req: Request): boolean {
+  const raw = process.env.BLOCKED_IPS;
+  if (!raw) return false;
+  const ip = getIp(req);
+  if (ip === "unknown") return false;
+  return raw.split(",").map((s) => s.trim()).filter(Boolean).includes(ip);
+}
+
 export function rateLimitResponse(retryAfter: number): Response {
   return new Response(
     JSON.stringify({ error: `Slow down. Try again in ${retryAfter}s.` }),
