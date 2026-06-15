@@ -4,7 +4,6 @@ import { isSafeFetchUrl, safeFetch } from "../lib/safeUrl";
 import { runPsi, type PsiResult } from "../lib/psi";
 import { auditSocials, type SocialAudit } from "../lib/brand/socials";
 import { fetchTrends, brandTermFromUrl, type TrendSeries } from "../lib/brand/trends";
-import { fetchReviews } from "../lib/brand/reviews";
 import { fetchNews } from "../lib/brand/news";
 import { fetchReddit } from "../lib/brand/reddit";
 import { computeBrandScore, type TargetSignals, type LlmVisibilitySignal } from "../lib/brand/score";
@@ -150,7 +149,6 @@ export default async function handler(req: Request): Promise<Response> {
           });
 
         // Reputation signals — main target only. Each fails closed to null.
-        const reviewsPromise = fetchReviews(businessName).catch(() => null);
         const newsPromise = fetchNews(businessName).catch(() => null);
         const redditPromise = fetchReddit(businessName).catch(() => null);
 
@@ -191,13 +189,12 @@ export default async function handler(req: Request): Promise<Response> {
           return { url: cu, psi, social };
         });
 
-        const [psi, social, trends, clarity, compSignals, reviews, news, reddit, llmVisibility] = await Promise.all([
+        const [psi, social, trends, clarity, compSignals, news, reddit, llmVisibility] = await Promise.all([
           psiPromise,
           socialPromise,
           trendsPromise,
           clarityPromise,
           Promise.all(compSignalPromises),
-          reviewsPromise,
           newsPromise,
           redditPromise,
           llmVisPromise,
@@ -213,7 +210,6 @@ export default async function handler(req: Request): Promise<Response> {
           social: !!social,
           trends: trends.some((t) => t.available),
           clarity: !!clarity,
-          reviews: !!reviews?.available,
           news: !!news?.available,
           reddit: !!reddit?.available,
           llmVisibility: !!llmVisibility?.available,
@@ -231,7 +227,6 @@ export default async function handler(req: Request): Promise<Response> {
           brandTrend: trendFor(yourBrand),
           site: { title: site.title, description: site.description, h1: site.h1, h2s: site.h2s },
           clarityScore: clarity ? clarity.clarity : null,
-          reviews,
           news,
           reddit,
           llmVisibility,

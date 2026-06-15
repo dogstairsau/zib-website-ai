@@ -15,7 +15,6 @@
 import type { PsiResult } from "../psi";
 import type { SocialAudit } from "./socials";
 import type { TrendSeries } from "./trends";
-import type { ReviewSignal } from "./reviews";
 import type { NewsSignal } from "./news";
 import type { RedditSignal } from "./reddit";
 
@@ -57,7 +56,6 @@ export type TargetSignals = {
   site?: SiteSnapshot | null;
   clarityScore?: number | null; // AI-supplied, main target only
   // Extended reputation signals — main target only, all optional.
-  reviews?: ReviewSignal | null;
   news?: NewsSignal | null;
   reddit?: RedditSignal | null;
   llmVisibility?: LlmVisibilitySignal | null;
@@ -187,10 +185,9 @@ function socialPillar(t: TargetSignals): Built {
     : "";
   return blend(
     [
-      { label: profilesNote, value: t.social?.score ?? 0, weight: 0.4, available: !!t.social },
-      { label: `reviews ${t.reviews?.rating ?? ""}★ (${t.reviews?.count ?? 0})`, value: t.reviews?.score ?? 0, weight: 0.3, available: !!t.reviews?.available },
-      { label: `reddit ${t.reddit?.mentionCount ?? 0} mentions`, value: t.reddit?.score ?? 0, weight: 0.16, available: !!t.reddit?.available },
-      { label: `coverage tone ${t.news?.avgTone ?? ""}`, value: t.news?.toneScore ?? 0, weight: 0.14, available: !!t.news?.available },
+      { label: profilesNote, value: t.social?.score ?? 0, weight: 0.5, available: !!t.social },
+      { label: `reddit ${t.reddit?.mentionCount ?? 0} mentions`, value: t.reddit?.score ?? 0, weight: 0.28, available: !!t.reddit?.available },
+      { label: `coverage tone ${t.news?.avgTone ?? ""}`, value: t.news?.toneScore ?? 0, weight: 0.22, available: !!t.news?.available },
     ],
     "socials not checked",
   );
