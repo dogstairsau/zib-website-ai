@@ -1,6 +1,6 @@
 import Anthropic from "@anthropic-ai/sdk";
 import { fetchSiteContent, normaliseUrl, type SiteContent } from "../lib/site";
-import { checkRateLimit, rateLimitResponse } from "../lib/rateLimit";
+import { guard } from "../lib/rateLimit";
 import { isSafeFetchUrl } from "../lib/safeUrl";
 
 export const config = { runtime: "edge" };
@@ -88,8 +88,8 @@ export default async function handler(req: Request): Promise<Response> {
   }
 
   // Rate limit: 3 blog generations per 10 minutes per IP (no-op until KV is set up)
-  const rl = await checkRateLimit(req, "blog", 3, 600);
-  if (!rl.allowed) return rateLimitResponse(rl.retryAfter);
+  const blocked = await guard(req, "blog");
+  if (blocked) return blocked;
 
   const stream = new ReadableStream({
     async start(controller) {

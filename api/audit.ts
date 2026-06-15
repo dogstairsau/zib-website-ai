@@ -10,7 +10,7 @@ import {
   discoveryQuestionUserPrompt,
 } from "../lib/prompts/audit";
 import { fetchSupporting, crawlSite, buildAudit } from "../lib/seoChecks";
-import { checkRateLimit, rateLimitResponse, isIpBlocked, clientIp } from "../lib/rateLimit";
+import { guard, clientIp } from "../lib/rateLimit";
 import { sendLeadEmail } from "../lib/email";
 import { isSafeFetchUrl } from "../lib/safeUrl";
 
@@ -187,12 +187,10 @@ export default async function handler(req: Request): Promise<Response> {
   // logs and added to BLOCKED_IPS (this is what surfaces the IP to block).
   console.log("[audit] request", { ip: clientIp(req), url });
 
-  // Hard denylist — works without KV. Block known abusers outright.
-  if (isIpBlocked(req)) return json({ error: "That URL can't be audited." }, 403);
-
-  // Rate limit: 3 audits per 10 minutes per IP (no-op until Vercel KV is set up)
-  const rl = await checkRateLimit(req, "audit", 3, 600);
-  if (!rl.allowed) return rateLimitResponse(rl.retryAfter);
+  // IP denylist (403) + tiered rate limit: 2 per 10 min, 15 per day, per IP.
+  // No-op until Vercel KV is connected (denylist works regardless).
+  const blocked = await guard(req, "audit");
+  if (blocked) return blocked;
 
   const stream = new ReadableStream({
     async start(controller) {
