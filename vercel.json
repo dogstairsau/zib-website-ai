@@ -8,6 +8,9 @@
     "api/audit.ts": {
       "maxDuration": 60
     },
+    "api/brand-score.ts": {
+      "maxDuration": 60
+    },
     "api/prompt-research.ts": {
       "maxDuration": 30
     },
