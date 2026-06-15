@@ -36,6 +36,12 @@
     { "source": "/category/:slug*", "destination": "/blog", "permanent": true },
     { "source": "/casestudy-category/:slug*", "destination": "/case-studies", "permanent": true },
     {
+      "source": "/commercial-cleaning",
+      "has": [{ "type": "host", "value": "(www\\.)?zibdigital\\.com\\.au" }],
+      "destination": "https://ziboutreach.com.au/commercial-cleaning",
+      "permanent": false
+    },
+    {
       "source": "/",
       "has": [{ "type": "host", "value": "(www\\.)?ziboutreach\\.com\\.au" }],
       "destination": "/audit",
