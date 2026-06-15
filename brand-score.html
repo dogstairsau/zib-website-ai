@@ -139,11 +139,19 @@
   .bx-pie p strong { color: var(--ink); }
   .pie-stack { display: grid; gap: 10px; }
   .pie-row { display: grid; grid-template-columns: 1fr; gap: 6px; }
-  .pie-bar { height: 64px; border-radius: 12px; display: flex; align-items: center; padding: 0 20px; color: #fff; font-family: var(--display); font-weight: 600; }
-  .pie-bar small { display: block; font-family: var(--mono); font-weight: 400; font-size: 11px; opacity: .85; margin-top: 2px; }
-  .pie-wtp { background: var(--accent); }
-  .pie-margin { background: var(--ink); }
-  .pie-cost { background: var(--muted); }
+  .pie-bar { height: 64px; border-radius: 12px; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding: 0 22px; color: #fff; font-family: var(--display); font-weight: 600; line-height: 1.15;
+    clip-path: inset(0 0 0 0); animation: pieCycle 5s var(--ease) infinite; will-change: clip-path; }
+  .pie-bar small { display: block; font-family: var(--mono); font-weight: 400; font-size: 11px; opacity: .82; margin-top: 6px; letter-spacing: .02em; }
+  .pie-wtp { background: var(--accent); animation-delay: 0s; }
+  .pie-margin { background: var(--ink); animation-delay: .3s; }
+  .pie-cost { background: var(--muted); animation-delay: .6s; }
+  @keyframes pieCycle {
+    0%   { clip-path: inset(0 100% 0 0); }
+    14%  { clip-path: inset(0 0 0 0); }
+    86%  { clip-path: inset(0 0 0 0); }
+    100% { clip-path: inset(0 100% 0 0); }
+  }
+  @media (prefers-reduced-motion: reduce) { .pie-bar { animation: none; clip-path: none; } }
   .pie-cap { font-family: var(--mono); font-size: 12px; color: var(--muted); text-align: center; margin-top: 4px; }
 
   /* six pillars grid */
