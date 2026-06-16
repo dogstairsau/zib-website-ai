@@ -13,6 +13,9 @@
     },
     "api/meta-ads-lab.ts": {
       "maxDuration": 90
+    },
+    "api/growth-benchmarks.ts": {
+      "maxDuration": 30
     }
   },
   "redirects": [
