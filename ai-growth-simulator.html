@@ -1270,7 +1270,13 @@ svg.chart { display: block; width: 100%; height: auto; overflow: visible; }
     homeservices: { conv: 11,  deal: 2600, responseMins: 12, label: 'home-service businesses' },
     other:        { conv: 7,   deal: 2500, responseMins: 20, label: 'businesses' },
   };
-  const bench = () => BENCH[state.industry] || BENCH.other;
+  // Live benchmark override fetched per industry+region from the cached API.
+  let liveBench = null;   // { conv, deal, responseMins }
+  let benchNote = '';     // short data-source note shown on the score card
+  const bench = () => {
+    const base = BENCH[state.industry] || BENCH.other;
+    return liveBench ? { ...base, ...liveBench } : base;
+  };
 
   // Maturity (0–1) per categorical answer → feeds the 8 score dimensions.
   const MAT = {
@@ -1577,7 +1583,7 @@ svg.chart { display: block; width: 100%; height: auto; overflow: visible; }
       `<div class="dim-row"><span class="dim-label">${dim.name}</span><span class="dim-track"><span class="dim-fill ${dim.score >= 70 ? 'is-strong' : ''}" style="width:${dim.score}%"></span></span><span class="dim-val">${dim.score}</span></div>`
     ).join('');
     scoreSection.innerHTML = `<div class="score-card"><div class="score-grid">
-      <div class="score-ring-wrap"><div class="score-eyebrow">AI Opportunity Score</div>${ring}<div class="score-band"><strong>${band}</strong></div></div>
+      <div class="score-ring-wrap"><div class="score-eyebrow">AI Opportunity Score</div>${ring}<div class="score-band"><strong>${band}</strong></div>${benchNote ? `<div class="score-band" style="margin-top:5px;font-size:11px;font-family:var(--mono);letter-spacing:0.04em;">${benchNote}</div>` : ''}</div>
       <div><div class="dims">${dimsHtml}</div></div>
     </div></div>`;
   }
@@ -1956,8 +1962,11 @@ svg.chart { display: block; width: 100%; height: auto; overflow: visible; }
     sel.addEventListener('change', () => {
       state[sel.dataset.q] = sel.value;
       sel.classList.toggle('is-empty', sel.value === '');
+      if (sel.dataset.q === 'industry' || sel.dataset.q === 'region') {
+        liveBench = null; benchNote = ''; benchFetchedFor = '';
+      }
       introNext.disabled = !introValid();
-      if (!gridEl.hidden) recalc();
+      if (!gridEl.hidden) { recalc(); fetchBenchmarks(); }
     });
   });
   function syncQuals() {
@@ -1967,12 +1976,36 @@ svg.chart { display: block; width: 100%; height: auto; overflow: visible; }
     });
   }
 
+  // Fetch current industry benchmarks (cached server-side). Fire-and-forget:
+  // diagnostics already render with the placeholder; this upgrades them when
+  // the live data lands. Fails silently — the tool never depends on it.
+  let benchFetchedFor = '';
+  async function fetchBenchmarks() {
+    const id = state.industry + '|' + state.region;
+    if (!state.industry || !state.region || id === benchFetchedFor) return;
+    benchFetchedFor = id;
+    try {
+      const res = await fetch('/api/growth-benchmarks', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ industry: state.industry, region: state.region }),
+      });
+      const j = await res.json().catch(() => ({}));
+      if (j && j.ok && j.benchmark && id === state.industry + '|' + state.region) {
+        liveBench = { conv: j.benchmark.conv, deal: j.benchmark.deal, responseMins: j.benchmark.responseMins };
+        benchNote = `Benchmarked against ${state.region} ${(BENCH[state.industry] || BENCH.other).label}`;
+        recalc();
+      }
+    } catch { /* fail open — keep the placeholder benchmark */ }
+  }
+
   function revealTool() {
     introEl.hidden = true;
     gridEl.hidden = false;
     syncAll();
     syncQuals();
     recalc();
+    fetchBenchmarks();
   }
   introNext.addEventListener('click', () => {
     if (!introValid()) return;
