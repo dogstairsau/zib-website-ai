@@ -142,6 +142,9 @@ input, select, button, textarea { font: inherit; color: inherit; }
   gap: clamp(20px, 2.4vw, 32px);
   align-items: start;
 }
+/* Must override the `display: grid` above when hidden during the intro step —
+   otherwise the author rule beats the browser's [hidden] { display:none }. */
+.sim-grid[hidden] { display: none; }
 @media (max-width: 880px) {
   .sim-grid { grid-template-columns: 1fr; }
 }
