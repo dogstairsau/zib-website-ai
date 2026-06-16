@@ -16,6 +16,20 @@ type Inputs = {
   aiSpend?: number;
   aiSetup?: number;
   hourRate?: number;
+  industry?: string;
+  region?: string;
+  responseTime?: string;
+  followUp?: string;
+  aiToday?: string;
+  reporting?: string;
+};
+
+type Diagnostics = {
+  score?: number;
+  dims?: { name: string; score: number }[];
+  leakTotal?: number;
+  forgoneYear?: number;
+  leaks?: { name: string; amt: number }[];
 };
 
 type Results = {
@@ -41,6 +55,7 @@ type Body = {
   intent?: string;
   inputs?: Inputs;
   results?: Results;
+  diagnostics?: Diagnostics;
   shareUrl?: string;
   partner?: string;
   partnerName?: string;
@@ -110,6 +125,17 @@ function buildScenarioSummary(b: Body): string {
   if (b.phone) lines.push(`Phone: ${b.phone}`);
   lines.push("");
 
+  if (i.industry || i.region) {
+    lines.push("PROFILE");
+    if (i.industry) lines.push(`  Industry: ${i.industry}`);
+    if (i.region) lines.push(`  Region: ${i.region}`);
+    if (i.responseTime) lines.push(`  Lead response time: ${i.responseTime}`);
+    if (i.followUp) lines.push(`  Follow-up: ${i.followUp}`);
+    if (i.aiToday) lines.push(`  AI today: ${i.aiToday}`);
+    if (i.reporting) lines.push(`  Reporting: ${i.reporting}`);
+    lines.push("");
+  }
+
   lines.push("BUSINESS TODAY");
   lines.push(`  Monthly leads: ${num(i.leads)}`);
   lines.push(`  Conversion rate: ${num(i.conv)}%`);
@@ -142,6 +168,22 @@ function buildScenarioSummary(b: Body): string {
   lines.push(`  Year-1 ROI on AI: ${r.roi == null ? "n/a" : Math.round(r.roi) + "%"}`);
   lines.push(`  Payback period: ${r.payback == null ? "no payback" : r.payback.toFixed(1) + " months"}`);
   lines.push(`  Hours reclaimed/year: ${num(r.hoursYear)} (≈ $${money(r.timeValue)} of capacity)`);
+
+  const d = b.diagnostics;
+  if (d) {
+    lines.push("");
+    lines.push("DIAGNOSTIC");
+    if (d.score != null) lines.push(`  AI Opportunity Score: ${d.score}/100`);
+    if (Array.isArray(d.dims)) {
+      for (const dim of d.dims) lines.push(`    ${dim.name}: ${dim.score}`);
+    }
+    if (Array.isArray(d.leaks) && d.leaks.length) {
+      lines.push("  Revenue leaks (per month):");
+      for (const l of d.leaks) lines.push(`    ${l.name}: $${money(l.amt)}`);
+    }
+    if (d.leakTotal != null) lines.push(`  Total leaking/month: $${money(d.leakTotal)}`);
+    if (d.forgoneYear != null) lines.push(`  12-month profit forgone by standing still: $${money(d.forgoneYear)}`);
+  }
 
   if (b.shareUrl) {
     lines.push("");
