@@ -458,6 +458,109 @@ input[type="range"]:focus-visible { outline: 2px solid var(--accent); outline-of
 svg.chart { display: block; width: 100%; height: auto; overflow: visible; }
 .chart-svg-wrap { margin-top: 14px; }
 
+/* ─── DIAGNOSTIC: AI OPPORTUNITY SCORE ──────────────────────────── */
+.score-card {
+  padding: clamp(20px, 2.4vw, 30px);
+  border: 0.5px solid var(--rule);
+  border-radius: 18px;
+  background: var(--ink);
+  color: #fff;
+}
+.score-grid {
+  display: grid;
+  grid-template-columns: 220px 1fr;
+  gap: clamp(20px, 3vw, 40px);
+  align-items: center;
+}
+@media (max-width: 640px) { .score-grid { grid-template-columns: 1fr; } }
+.score-ring-wrap { text-align: center; }
+.score-ring { width: 200px; max-width: 100%; height: auto; }
+.score-eyebrow {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 14px;
+}
+.score-band {
+  margin-top: 12px;
+  font-family: var(--display);
+  font-size: 14px;
+  color: rgba(255,255,255,0.72);
+}
+.score-band strong { color: #fff; font-weight: 500; }
+.dims { display: grid; gap: 11px; }
+.dim-row { display: grid; grid-template-columns: 130px 1fr 34px; gap: 12px; align-items: center; }
+@media (max-width: 420px) { .dim-row { grid-template-columns: 104px 1fr 30px; gap: 8px; } }
+.dim-label { font-family: var(--display); font-size: 12.5px; color: rgba(255,255,255,0.8); }
+.dim-track { height: 7px; border-radius: 999px; background: rgba(255,255,255,0.14); overflow: hidden; }
+.dim-fill { height: 100%; border-radius: 999px; background: var(--accent); transition: width 400ms var(--ease); }
+.dim-fill.is-strong { background: #5ce08e; }
+.dim-val { font-family: var(--mono); font-size: 12px; color: #fff; text-align: right; font-variant-numeric: tabular-nums; }
+
+/* ─── DIAGNOSTIC: REVENUE LEAKS ─────────────────────────────────── */
+.leak-card {
+  padding: clamp(18px, 2vw, 26px);
+  border: 0.5px solid rgba(255,98,0,0.3);
+  border-radius: 16px;
+  background: var(--accent-tint);
+}
+.leak-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+}
+.leak-title { font-family: var(--display); font-weight: 500; font-size: 16px; color: var(--ink); }
+.leak-sub { font-family: var(--display); font-size: 12.5px; line-height: 1.4; color: var(--muted); margin: 0 0 16px; }
+.leak-total-v { font-family: var(--display); font-weight: 500; font-size: clamp(22px, 2.6vw, 30px); letter-spacing: -0.02em; color: var(--accent); }
+.leak-list { display: grid; gap: 0; }
+.leak-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 14px;
+  padding: 12px 0;
+  border-top: 0.5px solid rgba(255,98,0,0.2);
+}
+.leak-row .l-name { font-family: var(--display); font-size: 14px; color: var(--ink); }
+.leak-row .l-why { display: block; font-family: var(--display); font-size: 12px; color: var(--muted); margin-top: 2px; }
+.leak-row .l-amt { font-family: var(--display); font-weight: 500; font-size: 17px; color: var(--accent); white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+/* ─── DIAGNOSTIC: COST OF INACTION ──────────────────────────────── */
+.inaction-card {
+  padding: clamp(20px, 2.4vw, 30px);
+  border: 0.5px solid var(--rule);
+  border-radius: 16px;
+  background: #fff;
+}
+.inaction-eyebrow {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 12px;
+}
+.inaction-card h3 {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(20px, 2.2vw, 26px);
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin: 0 0 6px;
+  text-wrap: balance;
+}
+.inaction-card h3 em { font-style: normal; color: var(--accent); }
+.inaction-card > p { font-family: var(--display); font-size: 14px; line-height: 1.5; color: var(--muted); margin: 0 0 18px; max-width: 56ch; }
+.inaction-list { display: grid; gap: 10px; }
+.inaction-item { display: flex; gap: 10px; align-items: flex-start; font-family: var(--display); font-size: 14px; line-height: 1.45; color: var(--ink); }
+.inaction-item .mark { color: var(--accent); flex: none; margin-top: 1px; }
+.inaction-item strong { font-weight: 500; }
+
 /* ─── EXPORT BAR ─────────────────────────────────────────────────── */
 .sim-actions {
   display: flex;
@@ -579,6 +682,33 @@ svg.chart { display: block; width: 100%; height: auto; overflow: visible; }
 .intro-input input::-webkit-outer-spin-button,
 .intro-input input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
 .intro-input input::placeholder { color: var(--muted-2); }
+.intro-field select {
+  height: 48px;
+  padding: 0 12px;
+  border: 0.5px solid var(--rule-2);
+  border-radius: 10px;
+  background: #fff;
+  font-family: var(--display);
+  font-size: 16px;
+  color: var(--ink);
+  appearance: auto;
+  cursor: pointer;
+  width: 100%;
+  box-sizing: border-box;
+}
+.intro-field select:focus { border-color: var(--ink); outline: none; }
+.intro-field select.is-empty { color: var(--muted-2); }
+.intro-subhead {
+  grid-column: 1 / -1;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: clamp(6px, 1vw, 12px) 0 -6px;
+  padding-top: clamp(10px, 1.4vw, 16px);
+  border-top: 0.5px solid var(--rule);
+}
 .intro-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
 .intro-hint { font-family: var(--display); font-size: 13px; line-height: 1.4; color: var(--muted); }
 .sim-btn:disabled { opacity: 0.4; cursor: not-allowed; }
@@ -781,6 +911,73 @@ svg.chart { display: block; width: 100%; height: auto; overflow: visible; }
             <label for="introCost">Monthly costs to deliver</label>
             <div class="intro-input"><span class="pre">$</span><input type="number" id="introCost" inputmode="numeric" min="0" step="500" placeholder="18,000" /></div>
           </div>
+
+          <div class="intro-subhead">A bit about how you operate</div>
+
+          <div class="intro-field">
+            <label for="qIndustry">Your industry</label>
+            <select id="qIndustry" data-q="industry" class="is-empty">
+              <option value="">Select your industry…</option>
+              <option value="accounting">Accounting / Bookkeeping</option>
+              <option value="legal">Legal services</option>
+              <option value="trades">Trades &amp; construction</option>
+              <option value="realestate">Real estate</option>
+              <option value="health">Health &amp; allied health</option>
+              <option value="hospitality">Hospitality</option>
+              <option value="ecommerce">Ecommerce / retail</option>
+              <option value="proservices">Professional services</option>
+              <option value="homeservices">Home services</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+          <div class="intro-field">
+            <label for="qRegion">Where you're based</label>
+            <select id="qRegion" data-q="region" class="is-empty">
+              <option value="">Select a region…</option>
+              <option value="Melbourne">Melbourne</option>
+              <option value="Sydney">Sydney</option>
+              <option value="Brisbane">Brisbane</option>
+              <option value="Adelaide">Adelaide</option>
+              <option value="Perth">Perth</option>
+              <option value="Gold Coast">Gold Coast</option>
+              <option value="Geelong">Geelong</option>
+              <option value="Canberra">Canberra</option>
+              <option value="Regional">Regional / other</option>
+            </select>
+          </div>
+          <div class="intro-field">
+            <label for="qResponse">How fast you respond to a new lead</label>
+            <select id="qResponse" data-q="responseTime">
+              <option value="under5">Under 5 minutes</option>
+              <option value="hour" selected>Within an hour</option>
+              <option value="fewhrs">A few hours</option>
+              <option value="nextday">Next day or longer</option>
+            </select>
+          </div>
+          <div class="intro-field">
+            <label for="qFollow">Your follow-up with leads</label>
+            <select id="qFollow" data-q="followUp">
+              <option value="oneanddone">One contact, then stop</option>
+              <option value="couple" selected>A couple of attempts</option>
+              <option value="structured">Structured multi-touch sequence</option>
+            </select>
+          </div>
+          <div class="intro-field">
+            <label for="qAi">AI in your business today</label>
+            <select id="qAi" data-q="aiToday">
+              <option value="none" selected>Not really using it</option>
+              <option value="experimenting">Experimenting</option>
+              <option value="embedded">Embedded in our workflow</option>
+            </select>
+          </div>
+          <div class="intro-field">
+            <label for="qReporting">How you track results</label>
+            <select id="qReporting" data-q="reporting">
+              <option value="gut">Gut feel</option>
+              <option value="spreadsheets" selected>Spreadsheets</option>
+              <option value="dashboards">Live dashboards</option>
+            </select>
+          </div>
         </div>
 
         <div class="intro-actions">
@@ -911,7 +1108,11 @@ svg.chart { display: block; width: 100%; height: auto; overflow: visible; }
         <!-- ═══ RESULTS ═══ -->
         <div class="sim-results">
 
+          <div id="scoreSection"><!-- AI Opportunity Score injected --></div>
+
           <div class="cards-grid" id="cards"><!-- metrics injected --></div>
+
+          <div id="leaksSection"><!-- Revenue leaks injected --></div>
 
           <div class="chart-card">
             <div class="chart-head">
@@ -936,6 +1137,8 @@ svg.chart { display: block; width: 100%; height: auto; overflow: visible; }
             <div class="chart-svg-wrap"><svg class="chart" id="lineChart" viewBox="0 0 600 280" role="img" aria-label="Line chart of cumulative profit over 12 months, current vs AI-optimised"></svg></div>
             <p class="chart-note" id="lineNote"></p>
           </div>
+
+          <div id="inactionSection"><!-- Cost of inaction injected --></div>
 
           <div class="chart-card">
             <div class="chart-head">
@@ -1045,6 +1248,45 @@ svg.chart { display: block; width: 100%; height: auto; overflow: visible; }
     'matt-arnot':     { name: 'Matt Arnot',      title: 'Growth Specialist',                 email: 'matt.arnot@zibdigital.com.au',     phone: '', photo: '', tagline: 'Local commercial digital marketing.' },
   };
 
+  // ─── DIAGNOSTIC INPUTS + BENCHMARKS ─────────────────────────────
+  const QUAL_KEYS = ['industry', 'region', 'responseTime', 'followUp', 'aiToday', 'reporting'];
+  Object.assign(state, {
+    industry: '', region: '',
+    responseTime: 'hour', followUp: 'couple', aiToday: 'none', reporting: 'spreadsheets',
+  });
+
+  // Placeholder industry benchmarks — replaced per industry+region by the
+  // cached /api/growth-benchmarks lookup (Phase 2b). Conservative, defensible
+  // figures so the comparison has substance before the live data lands.
+  const BENCH = {
+    accounting:   { conv: 8,   deal: 2200, responseMins: 11, label: 'accounting firms' },
+    legal:        { conv: 6,   deal: 5000, responseMins: 20, label: 'legal firms' },
+    trades:       { conv: 12,  deal: 3500, responseMins: 15, label: 'trade businesses' },
+    realestate:   { conv: 4,   deal: 9000, responseMins: 8,  label: 'agencies' },
+    health:       { conv: 10,  deal: 1800, responseMins: 13, label: 'clinics' },
+    hospitality:  { conv: 9,   deal: 1200, responseMins: 20, label: 'venues' },
+    ecommerce:    { conv: 2.5, deal: 120,  responseMins: 30, label: 'online stores' },
+    proservices:  { conv: 7,   deal: 4000, responseMins: 18, label: 'firms' },
+    homeservices: { conv: 11,  deal: 2600, responseMins: 12, label: 'home-service businesses' },
+    other:        { conv: 7,   deal: 2500, responseMins: 20, label: 'businesses' },
+  };
+  const bench = () => BENCH[state.industry] || BENCH.other;
+
+  // Maturity (0–1) per categorical answer → feeds the 8 score dimensions.
+  const MAT = {
+    responseTime: { under5: 1.0, hour: 0.72, fewhrs: 0.4, nextday: 0.15 },
+    followUp:     { structured: 1.0, couple: 0.55, oneanddone: 0.2 },
+    aiToday:      { embedded: 1.0, experimenting: 0.5, none: 0.12 },
+    reporting:    { dashboards: 1.0, spreadsheets: 0.55, gut: 0.2 },
+  };
+  // Fraction of winnable deals currently lost to each gap.
+  const RESP_LOSS = { under5: 0, hour: 0.10, fewhrs: 0.26, nextday: 0.42 };
+  const FOLLOW_LOSS = { structured: 0, couple: 0.12, oneanddone: 0.30 };
+  const RESP_LABEL = { under5: 'under 5 minutes', hour: 'within an hour', fewhrs: 'a few hours', nextday: 'next day or longer' };
+
+  const clamp01 = (x) => Math.max(0, Math.min(1, x));
+  const pct100 = (x) => Math.round(clamp01(x) * 100);
+
   // ─── FORMATTERS ─────────────────────────────────────────────────
   const money = (n) => '$' + Math.round(n).toLocaleString('en-AU');
   const moneyK = (n) => {
@@ -1095,6 +1337,67 @@ svg.chart { display: block; width: 100%; height: auto; overflow: visible; }
       hoursYear, timeValue,
       baseMonthly: curProfit, optMonthly: optProfit, setup: s.aiSetup,
     };
+  }
+
+  // ─── DIAGNOSTICS: SCORE / LEAKS / INACTION ──────────────────────
+  function computeDiagnostics(m) {
+    const b = bench();
+    const s = state;
+    const aiM = MAT.aiToday[s.aiToday] ?? 0.12;
+    const repM = MAT.reporting[s.reporting] ?? 0.55;
+    const respM = MAT.responseTime[s.responseTime] ?? 0.72;
+    const folM = MAT.followUp[s.followUp] ?? 0.55;
+    const convScore = clamp01(s.conv / b.conv);
+    const margin = m.curRevenue > 0 ? m.curProfit / m.curRevenue : 0;
+    const opM = clamp01(margin / 0.35);
+    const volM = clamp01(s.leads / 300);
+
+    const dims = [
+      { name: 'Lead generation', score: pct100(0.55 * aiM + 0.45 * volM) },
+      { name: 'Conversion',      score: pct100(convScore) },
+      { name: 'Sales process',   score: pct100(0.55 * respM + 0.45 * folM) },
+      { name: 'Automation',      score: pct100(0.6 * aiM + 0.4 * repM) },
+      { name: 'AI adoption',     score: pct100(aiM) },
+      { name: 'Op. efficiency',  score: pct100(0.6 * opM + 0.4 * aiM) },
+      { name: 'Retention',       score: pct100(0.5 * folM + 0.5 * repM) },
+      { name: 'Reporting',       score: pct100(repM) },
+    ];
+    const score = Math.round(dims.reduce((a, d) => a + d.score, 0) / dims.length);
+
+    // ── Revenue leaks (potential revenue/month) ──
+    const respLoss = RESP_LOSS[s.responseTime] ?? 0;
+    const folLoss = FOLLOW_LOSS[s.followUp] ?? 0;
+    const leaks = [];
+    if (respLoss > 0) leaks.push({
+      name: 'Slow lead response',
+      why: `Responding ${RESP_LABEL[s.responseTime]} loses contactable leads to faster competitors.`,
+      amt: m.curRevenue * (respLoss / (1 - respLoss)),
+    });
+    if (folLoss > 0) leaks.push({
+      name: 'Weak follow-up',
+      why: `Stopping at "${s.followUp === 'oneanddone' ? 'one contact' : 'a couple of attempts'}" leaves deals on the table a sequence would close.`,
+      amt: m.curRevenue * (folLoss / (1 - folLoss)),
+    });
+    if (s.conv < b.conv) leaks.push({
+      name: 'Below-average conversion',
+      why: `Your ${s.conv}% vs the ${b.label} benchmark of ${b.conv}% — the gap, at your volume, is unconverted demand.`,
+      amt: s.leads * ((b.conv - s.conv) / 100) * s.deal,
+    });
+    const leakTotal = leaks.reduce((a, l) => a + l.amt, 0);
+
+    // ── Conversion gap vs benchmark (for headline tension) ──
+    const convGapPct = b.conv > 0 ? Math.round(((b.conv - s.conv) / b.conv) * 100) : 0;
+
+    // ── Cost of inaction (12 months) ──
+    const forgoneYear = Math.max(0, m.profitUplift) * 12;
+    const items = [];
+    if (forgoneYear > 0) items.push(`<strong>${money(forgoneYear)}</strong> in profit left uncaptured over 12 months — the gap between standing still and the AI-optimised path you just modelled.`);
+    if (leakTotal > 0) items.push(`<strong>${money(leakTotal * 12)}/year</strong> keeps leaking from the gaps above while nothing changes.`);
+    if (aiM < 0.5) items.push(`Your team's manual workload climbs as volume grows — <strong>no capacity is reclaimed</strong>, so people become the ceiling on growth.`);
+    if (convGapPct > 0) items.push(`Competitors adopting AI pull further ahead of the ${b.label} benchmark you're already <strong>${convGapPct}% below</strong> on conversion.`);
+    else items.push(`Without compounding efficiency, cost per acquisition drifts up as you <strong>buy</strong> growth instead of <strong>compounding</strong> it.`);
+
+    return { score, dims, leaks, leakTotal, forgoneYear, items, convGapPct, benchLabel: b.label, benchConv: b.conv };
   }
 
   // ─── RENDER METRICS ─────────────────────────────────────────────
@@ -1252,14 +1555,73 @@ svg.chart { display: block; width: 100%; height: auto; overflow: visible; }
     }
   }
 
+  // ─── DIAGNOSTIC RENDER (score / leaks / inaction) ───────────────
+  const scoreSection = document.getElementById('scoreSection');
+  const leaksSection = document.getElementById('leaksSection');
+  const inactionSection = document.getElementById('inactionSection');
+
+  function renderScore(d) {
+    const C = 326.7;
+    const off = C * (1 - d.score / 100);
+    const band = d.score >= 75 ? 'Strong — scale is the play'
+      : d.score >= 55 ? 'Solid, with clear upside'
+      : d.score >= 35 ? 'Significant untapped opportunity'
+      : 'Major untapped opportunity';
+    const ring = `<svg class="score-ring" viewBox="0 0 120 120" role="img" aria-label="AI Opportunity Score ${d.score} out of 100">
+      <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,0.14)" stroke-width="10"/>
+      <circle cx="60" cy="60" r="52" fill="none" stroke="var(--accent)" stroke-width="10" stroke-linecap="round" stroke-dasharray="${C.toFixed(1)}" stroke-dashoffset="${off.toFixed(1)}" transform="rotate(-90 60 60)"/>
+      <text x="60" y="58" text-anchor="middle" font-family="var(--display)" font-weight="500" font-size="34" fill="#fff">${d.score}</text>
+      <text x="60" y="77" text-anchor="middle" font-family="var(--mono)" font-size="9" letter-spacing="0.1em" fill="rgba(255,255,255,0.6)">/ 100</text>
+    </svg>`;
+    const dimsHtml = d.dims.map(dim =>
+      `<div class="dim-row"><span class="dim-label">${dim.name}</span><span class="dim-track"><span class="dim-fill ${dim.score >= 70 ? 'is-strong' : ''}" style="width:${dim.score}%"></span></span><span class="dim-val">${dim.score}</span></div>`
+    ).join('');
+    scoreSection.innerHTML = `<div class="score-card"><div class="score-grid">
+      <div class="score-ring-wrap"><div class="score-eyebrow">AI Opportunity Score</div>${ring}<div class="score-band"><strong>${band}</strong></div></div>
+      <div><div class="dims">${dimsHtml}</div></div>
+    </div></div>`;
+  }
+
+  function renderLeaks(d) {
+    if (!d.leaks.length) {
+      leaksSection.innerHTML = `<div class="leak-card"><span class="leak-title">No major revenue leaks detected</span><p class="leak-sub" style="margin:8px 0 0;">Your speed, follow-up and conversion are at or above the ${d.benchLabel} benchmark — the upside now is scale. Model it with the sliders.</p></div>`;
+      return;
+    }
+    const rows = d.leaks.map(l =>
+      `<div class="leak-row"><span class="l-name">${l.name}<span class="l-why">${l.why}</span></span><span class="l-amt">${money(l.amt)}/mo</span></div>`
+    ).join('');
+    leaksSection.innerHTML = `<div class="leak-card">
+      <div class="leak-head"><span class="leak-title">Where revenue is leaking now</span><span class="leak-total-v">${money(d.leakTotal)}/mo</span></div>
+      <p class="leak-sub">Estimated potential revenue slipping through fixable gaps each month — before any new ad spend.</p>
+      <div class="leak-list">${rows}</div>
+    </div>`;
+  }
+
+  function renderInaction(d) {
+    if (!d.items.length) { inactionSection.innerHTML = ''; return; }
+    const items = d.items.map(t => `<div class="inaction-item"><span class="mark" aria-hidden="true">→</span><span>${t}</span></div>`).join('');
+    inactionSection.innerHTML = `<div class="inaction-card">
+      <div class="inaction-eyebrow">If nothing changes</div>
+      <h3>The cost of <em>standing still.</em></h3>
+      <p>Doing nothing isn't free. Here's what the next 12 months look like on your current setup:</p>
+      <div class="inaction-list">${items}</div>
+    </div>`;
+  }
+
   // ─── MAIN RECALC ────────────────────────────────────────────────
   let raf = null;
+  let lastDiag = null;
   function recalc() {
     const m = model(state);
     renderCards(m);
     renderBars(m);
     renderLine(m);
+    const d = computeDiagnostics(m);
+    renderScore(d);
+    renderLeaks(d);
+    renderInaction(d);
     last = m;
+    lastDiag = d;
   }
   let last = null;
   function scheduleRecalc() {
@@ -1316,14 +1678,17 @@ svg.chart { display: block; width: 100%; height: auto; overflow: visible; }
 
   // ─── SHARE LINK (state in URL hash) ─────────────────────────────
   function encodeState() {
-    const ordered = KEYS.map(k => state[k]).join(',');
-    return btoa(ordered);
+    const obj = {};
+    KEYS.forEach(k => { obj[k] = state[k]; });
+    QUAL_KEYS.forEach(k => { obj[k] = state[k]; });
+    return btoa(unescape(encodeURIComponent(JSON.stringify(obj))));
   }
   function decodeState(str) {
     try {
-      const parts = atob(str).split(',').map(Number);
-      if (parts.length !== KEYS.length) return false;
-      KEYS.forEach((k, i) => { if (!isNaN(parts[i])) state[k] = clamp(k, parts[i]); });
+      const obj = JSON.parse(decodeURIComponent(escape(atob(str))));
+      if (!obj || typeof obj !== 'object') return false;
+      KEYS.forEach(k => { const v = parseFloat(obj[k]); if (!isNaN(v)) state[k] = clamp(k, v); });
+      QUAL_KEYS.forEach(k => { if (typeof obj[k] === 'string') state[k] = obj[k]; });
       return true;
     } catch { return false; }
   }
@@ -1355,9 +1720,19 @@ svg.chart { display: block; width: 100%; height: auto; overflow: visible; }
   // ─── CSV EXPORT ─────────────────────────────────────────────────
   document.getElementById('csvBtn').addEventListener('click', () => {
     const m = last || model(state);
+    const d = lastDiag || computeDiagnostics(m);
     const rows = [
       ['Zib Digital — AI Growth Simulator', ''],
       ['Generated', new Date().toLocaleString('en-AU')],
+      state.partner && PARTNERS[state.partner] ? ['Prepared by', PARTNERS[state.partner].name] : ['', ''],
+      ['', ''],
+      ['PROFILE', 'VALUE'],
+      ['Industry', state.industry],
+      ['Region', state.region],
+      ['Lead response time', state.responseTime],
+      ['Follow-up', state.followUp],
+      ['AI today', state.aiToday],
+      ['Reporting', state.reporting],
       ['', ''],
       ['INPUT', 'VALUE'],
       ['Monthly leads', state.leads],
@@ -1383,6 +1758,14 @@ svg.chart { display: block; width: 100%; height: auto; overflow: visible; }
       ['Payback (months)', m.payback === Infinity ? 'n/a' : m.payback.toFixed(1)],
       ['Hours reclaimed / year', Math.round(m.hoursYear)],
       ['Value of time reclaimed ($)', Math.round(m.timeValue)],
+      ['', ''],
+      ['AI OPPORTUNITY SCORE', d.score + ' / 100'],
+      ...d.dims.map(dim => [dim.name, dim.score]),
+      ['', ''],
+      ['REVENUE LEAKS', 'PER MONTH'],
+      ...d.leaks.map(l => [l.name, Math.round(l.amt)]),
+      ['Total leaking / month', Math.round(d.leakTotal)],
+      ['12-month profit forgone by standing still', Math.round(d.forgoneYear)],
     ];
     const csv = rows.map(r => r.map(c => {
       const s = String(c);
@@ -1476,6 +1859,13 @@ svg.chart { display: block; width: 100%; height: auto; overflow: visible; }
             payback: m.payback === Infinity ? null : m.payback,
             hoursYear: m.hoursYear, timeValue: m.timeValue,
           },
+          diagnostics: lastDiag ? {
+            score: lastDiag.score,
+            dims: lastDiag.dims,
+            leakTotal: Math.round(lastDiag.leakTotal),
+            forgoneYear: Math.round(lastDiag.forgoneYear),
+            leaks: lastDiag.leaks.map(l => ({ name: l.name, amt: Math.round(l.amt) })),
+          } : null,
           shareUrl: buildShareUrl(),
           partner: state.partner || '',
           partnerName: state.partner && PARTNERS[state.partner] ? PARTNERS[state.partner].name : '',
@@ -1553,17 +1943,35 @@ svg.chart { display: block; width: 100%; height: auto; overflow: visible; }
     deal: document.getElementById('introDeal'),
     cost: document.getElementById('introCost'),
   };
-  // Need leads, conversion and deal value to project anything meaningful;
-  // costs may legitimately be zero.
-  const introValid = () => ['leads', 'conv', 'deal'].every(k => parseFloat(introInputs[k].value) > 0);
+  // Need leads, conversion and deal value to project anything meaningful
+  // (costs may be zero), plus industry + region to benchmark against.
+  const introValid = () =>
+    ['leads', 'conv', 'deal'].every(k => parseFloat(introInputs[k].value) > 0) &&
+    !!state.industry && !!state.region;
   Object.values(introInputs).forEach(inp => {
     inp.addEventListener('input', () => { introNext.disabled = !introValid(); });
   });
+  // Categorical "how you operate" selects feed the score, leaks and benchmarks.
+  document.querySelectorAll('[data-q]').forEach(sel => {
+    sel.addEventListener('change', () => {
+      state[sel.dataset.q] = sel.value;
+      sel.classList.toggle('is-empty', sel.value === '');
+      introNext.disabled = !introValid();
+      if (!gridEl.hidden) recalc();
+    });
+  });
+  function syncQuals() {
+    QUAL_KEYS.forEach(k => {
+      const sel = document.querySelector(`[data-q="${k}"]`);
+      if (sel) { sel.value = state[k]; sel.classList.toggle('is-empty', !state[k]); }
+    });
+  }
 
   function revealTool() {
     introEl.hidden = true;
     gridEl.hidden = false;
     syncAll();
+    syncQuals();
     recalc();
   }
   introNext.addEventListener('click', () => {
