@@ -42,6 +42,8 @@ type Body = {
   inputs?: Inputs;
   results?: Results;
   shareUrl?: string;
+  partner?: string;
+  partnerName?: string;
   sourceTag?: string;
 };
 
@@ -67,7 +69,10 @@ export default async function handler(req: Request): Promise<Response> {
 
   const tag = (body.sourceTag || "AI Growth Simulator").trim();
   const intent = body.intent === "book" ? "Book a call" : "Email scenario";
-  const source = `${tag} · ${intent}`;
+  const partnerName = (body.partnerName || "").trim();
+  const source = [tag, intent, partnerName && `Partner: ${partnerName}`]
+    .filter(Boolean)
+    .join(" · ");
 
   const summary = buildScenarioSummary(body);
 
@@ -100,6 +105,7 @@ function buildScenarioSummary(b: Body): string {
   const lines: string[] = [];
 
   lines.push(`Intent: ${b.intent === "book" ? "Book a commercial conversation" : "Email scenario"}`);
+  if (b.partnerName) lines.push(`Routed to partner: ${b.partnerName}`);
   if (b.company) lines.push(`Company: ${b.company}`);
   if (b.phone) lines.push(`Phone: ${b.phone}`);
   lines.push("");

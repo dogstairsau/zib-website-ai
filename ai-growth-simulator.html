@@ -56,6 +56,83 @@ input, select, button, textarea { font: inherit; color: inherit; }
   max-width: 64ch;
 }
 
+/* ─── PARTNER BRANDING ───────────────────────────────────────────── */
+.partner-bar { display: none; }
+.partner-bar.is-active {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  margin-top: clamp(22px, 2.6vw, 30px);
+  padding: 12px 22px 12px 12px;
+  border: 0.5px solid var(--rule);
+  border-radius: 999px;
+  background: #fff;
+  width: max-content;
+  max-width: 100%;
+}
+@media (max-width: 560px) { .partner-bar.is-active { width: auto; border-radius: 18px; } }
+.partner-photo {
+  width: 54px; height: 54px;
+  border-radius: 50%;
+  flex: none;
+  overflow: hidden;
+  background: var(--accent-tint);
+  display: grid;
+  place-items: center;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 18px;
+  color: var(--accent);
+}
+.partner-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.partner-meta { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.partner-kicker {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+.partner-name {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.partner-sub { font-family: var(--display); font-size: 12.5px; line-height: 1.35; color: var(--muted); }
+.partner-sub a { color: var(--muted); border-bottom: 1px solid var(--rule-2); }
+.partner-sub a:hover { color: var(--accent); }
+
+/* Partner picker (in export card) */
+.partner-pick {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: 14px;
+  flex-wrap: wrap;
+}
+.partner-pick label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.partner-pick select {
+  height: 40px;
+  padding: 0 12px;
+  border: 0.5px solid var(--rule);
+  border-radius: 999px;
+  background: #fff;
+  font-family: var(--display);
+  font-size: 14px;
+  color: var(--ink);
+  cursor: pointer;
+  appearance: auto;
+}
+.partner-pick select:focus { outline: 2px solid var(--accent); outline-offset: 2px; }
+
 /* ─── LAYOUT ─────────────────────────────────────────────────────── */
 .sim-wrap { padding: 0 0 clamp(72px, 9vw, 120px); }
 .sim-wrap .container { max-width: 1180px; }
@@ -666,6 +743,15 @@ svg.chart { display: block; width: 100%; height: auto; overflow: visible; }
       <div class="eyebrow">AI Growth Simulator</div>
       <h1>See what AI does to <em>your bottom line.</em></h1>
       <p>Drag the sliders. Watch revenue, profit, ROI and payback recalculate live — current vs AI-optimised — then save or export the scenario to bring to the table.</p>
+
+      <div class="partner-bar" id="partnerBar">
+        <div class="partner-photo" id="partnerPhoto"></div>
+        <div class="partner-meta">
+          <span class="partner-kicker">Prepared by</span>
+          <span class="partner-name" id="partnerName"></span>
+          <span class="partner-sub" id="partnerSub"></span>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -861,6 +947,10 @@ svg.chart { display: block; width: 100%; height: auto; overflow: visible; }
               <button type="button" class="sim-btn" id="csvBtn">Download CSV</button>
               <button type="button" class="sim-btn" id="printBtn">Print / PDF</button>
             </div>
+            <div class="partner-pick">
+              <label for="partnerSelect">Branding</label>
+              <select id="partnerSelect"></select>
+            </div>
             <div class="sim-status" id="exportStatus" style="margin-top:12px;">&nbsp;</div>
             <p class="disclaimer" style="margin-top:6px;">Projections are indicative only and depend on your inputs. Actual results vary; no liability is accepted.</p>
           </div>
@@ -940,6 +1030,20 @@ svg.chart { display: block; width: 100%; height: auto; overflow: visible; }
   };
   const KEYS = Object.keys(DEFAULTS);
   const state = { ...DEFAULTS };
+  state.partner = '';
+
+  // ─── PARTNER REGISTRY (branded reports) ─────────────────────────
+  // Each Zib growth partner gets their own branded version of the tool
+  // via ?partner=<slug>. Photo/contact sourced from their partner pages.
+  const PARTNERS = {
+    'brad-reece':     { name: 'Brad Reece',     title: 'Growth Partner · Brisbane',        email: 'brad.reece@zibdigital.com.au',     phone: '+61404007441', photo: '/assets/brad-reece-header.webp',  tagline: 'Local SEO + Google Ads. A 4-week complimentary digital consultation for selected businesses.' },
+    'chelsea-teelow': { name: 'Chelsea Teelow',  title: 'Growth Partner · Adelaide & SA',    email: 'chelsea.teelow@zibdigital.com.au', phone: '', photo: '/assets/chelsea-header.webp',   tagline: 'Twenty years across sales, marketing and media. Paid social speciality.' },
+    'corrine-chalmers':{ name: 'Corrine Chalmers', title: 'Growth Partner · Geelong',       email: 'corrine.chalmers@zibdigital.com.au', phone: '', photo: '/assets/corrine-front.webp',  tagline: 'Entrepreneur turned growth specialist — built and run multiple ventures.' },
+    'daniel-harris':  { name: 'Daniel Harris',   title: 'Growth Specialist',                 email: 'daniel.harris@zibdigital.com.au',  phone: '', photo: '/assets/dan-harris-header-photo.jpeg', tagline: 'A decade across finance, sport, telco, utilities and government.' },
+    'dylan-and-jake': { name: 'Dylan & Jake Pinksterboer', title: 'Growth Partners · Adelaide & SA', email: '', phone: '', photo: '/assets/dylan-and-jake-104.webp', tagline: 'Twin brothers, sales-driven growth specialists. Hospitality speciality.' },
+    'marty-tucker':   { name: 'Marty Tucker',    title: 'Growth Partner · Melbourne Bayside', email: 'marty.tucker@zibdigital.com.au',  phone: '', photo: '/assets/marty-tucker-header.png', tagline: 'Decades of sales, account management and media experience.' },
+    'matt-arnot':     { name: 'Matt Arnot',      title: 'Growth Specialist',                 email: 'matt.arnot@zibdigital.com.au',     phone: '', photo: '', tagline: 'Local commercial digital marketing.' },
+  };
 
   // ─── FORMATTERS ─────────────────────────────────────────────────
   const money = (n) => '$' + Math.round(n).toLocaleString('en-AU');
@@ -1231,9 +1335,15 @@ svg.chart { display: block; width: 100%; height: auto; overflow: visible; }
     flash._t = setTimeout(() => { exportStatus.textContent = ''; exportStatus.className = 'sim-status'; }, 3200);
   }
 
+  // Build a shareable URL that carries both the scenario and the partner brand.
+  function buildShareUrl() {
+    const q = state.partner ? '?partner=' + encodeURIComponent(state.partner) : '';
+    return location.origin + location.pathname + q + '#s=' + encodeState();
+  }
+
   document.getElementById('shareBtn').addEventListener('click', async () => {
-    const url = location.origin + location.pathname + '#s=' + encodeState();
-    history.replaceState(null, '', '#s=' + encodeState());
+    const url = buildShareUrl();
+    history.replaceState(null, '', (state.partner ? '?partner=' + state.partner : location.pathname) + '#s=' + encodeState());
     try {
       await navigator.clipboard.writeText(url);
       flash('Link copied to clipboard', 'ok');
@@ -1303,15 +1413,17 @@ svg.chart { display: block; width: 100%; height: auto; overflow: visible; }
 
   function openModal(intent) {
     modalIntent = intent;
+    const p = state.partner ? PARTNERS[state.partner] : null;
+    const who = p ? p.name.split(/[\s&]/)[0] : 'a growth partner';
     if (intent === 'book') {
       modalEyebrow.textContent = 'Book a conversation';
-      modalTitle.innerHTML = 'Thirty minutes with a <em>growth partner.</em>';
-      modalBlurb.textContent = "We'll bring your full scenario to the call so you spend the time on the conversation, not the catch-up. A growth partner will be in touch within 24 hours.";
+      modalTitle.innerHTML = p ? `Thirty minutes with <em>${p.name.split(/[\s&]/)[0]}.</em>` : 'Thirty minutes with a <em>growth partner.</em>';
+      modalBlurb.textContent = `We'll bring your full scenario to the call so you spend the time on the conversation, not the catch-up. ${p ? p.name.split(/[\s&]/)[0] : 'A growth partner'} will be in touch within 24 hours.`;
       simSubmit.innerHTML = 'Request my call <span aria-hidden="true">→</span>';
     } else {
       modalEyebrow.textContent = 'Send my scenario';
       modalTitle.innerHTML = 'Where should we <em>send your numbers?</em>';
-      modalBlurb.textContent = "Drop your details and we'll email a copy of this scenario. A growth partner will be in touch within 24 hours to pressure-test how to actually hit it.";
+      modalBlurb.textContent = `Drop your details and we'll email a copy of this scenario. ${who.charAt(0).toUpperCase() + who.slice(1)} will be in touch within 24 hours to pressure-test how to actually hit it.`;
       simSubmit.innerHTML = 'Send my scenario <span aria-hidden="true">→</span>';
     }
     simForm.hidden = false;
@@ -1364,7 +1476,9 @@ svg.chart { display: block; width: 100%; height: auto; overflow: visible; }
             payback: m.payback === Infinity ? null : m.payback,
             hoursYear: m.hoursYear, timeValue: m.timeValue,
           },
-          shareUrl: location.origin + location.pathname + '#s=' + encodeState(),
+          shareUrl: buildShareUrl(),
+          partner: state.partner || '',
+          partnerName: state.partner && PARTNERS[state.partner] ? PARTNERS[state.partner].name : '',
           sourceTag: document.querySelector('meta[name="zib:source-tag"]')?.content || 'AI Growth Simulator',
         }),
       });
@@ -1378,6 +1492,45 @@ svg.chart { display: block; width: 100%; height: auto; overflow: visible; }
       simSubmit.disabled = false;
     }
   });
+
+  // ─── PARTNER BRANDING ───────────────────────────────────────────
+  const partnerBar = document.getElementById('partnerBar');
+  const partnerPhoto = document.getElementById('partnerPhoto');
+  const partnerNameEl = document.getElementById('partnerName');
+  const partnerSubEl = document.getElementById('partnerSub');
+  const partnerSelect = document.getElementById('partnerSelect');
+  const bookBtn = document.getElementById('bookBtn');
+  const bookBtnDefault = bookBtn.innerHTML;
+
+  // Build the picker: unbranded + every partner
+  partnerSelect.innerHTML = '<option value="">Zib Digital (unbranded)</option>' +
+    Object.entries(PARTNERS).map(([slug, p]) => `<option value="${slug}">${p.name}</option>`).join('');
+
+  const initials = (name) => name.split(/[\s&]+/).filter(Boolean).slice(0, 2).map(w => w[0]).join('').toUpperCase();
+
+  function applyPartner(slug, opts) {
+    const p = PARTNERS[slug];
+    state.partner = p ? slug : '';
+    partnerSelect.value = state.partner;
+    if (!p) {
+      partnerBar.classList.remove('is-active');
+      bookBtn.innerHTML = bookBtnDefault;
+      return;
+    }
+    // Photo or initials fallback
+    partnerPhoto.innerHTML = p.photo
+      ? `<img src="${p.photo}" alt="${p.name}" loading="lazy" onerror="this.parentNode.textContent='${initials(p.name)}'">`
+      : initials(p.name);
+    partnerNameEl.textContent = p.name;
+    const contactBits = [];
+    if (p.email) contactBits.push(`<a href="mailto:${p.email}">${p.email}</a>`);
+    if (p.phone) contactBits.push(`<a href="tel:${p.phone}">${p.phone.replace(/^\+61/, '0')}</a>`);
+    partnerSubEl.innerHTML = [p.title, contactBits.join(' · ')].filter(Boolean).join(' &nbsp;·&nbsp; ');
+    partnerBar.classList.add('is-active');
+    bookBtn.innerHTML = `Book a commercial conversation with ${p.name.split(/[\s&]/)[0]} <span aria-hidden="true">→</span>`;
+    if (opts && opts.flash) flash('Branded for ' + p.name + ' — share your link', 'ok');
+  }
+  partnerSelect.addEventListener('change', () => applyPartner(partnerSelect.value, { flash: true }));
 
   // ─── INFO TOGGLES (AI-gain explainers) ──────────────────────────
   document.querySelectorAll('.ctrl-info').forEach(btn => {
@@ -1426,6 +1579,9 @@ svg.chart { display: block; width: 100%; height: auto; overflow: visible; }
   });
 
   // ─── INIT ───────────────────────────────────────────────────────
+  // Partner branding from ?partner=<slug> (each partner has their own link).
+  applyPartner(new URLSearchParams(location.search).get('partner') || '');
+
   // A shared link already carries every number — skip the intro and go
   // straight to the saved scenario.
   if (location.hash.startsWith('#s=') && decodeState(location.hash.slice(3))) {
