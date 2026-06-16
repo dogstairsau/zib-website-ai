@@ -421,6 +421,92 @@ svg.chart { display: block; width: 100%; height: auto; overflow: visible; }
 .sim-status.ok { color: #0a7d3c; }
 .sim-status.is-error { color: var(--accent); }
 
+/* ─── INTRO STEP (capture current numbers) ──────────────────────── */
+.sim-intro {
+  max-width: 720px;
+  margin: 0 auto;
+  background: #fff;
+  border: 0.5px solid var(--rule);
+  border-radius: 20px;
+  padding: clamp(28px, 4vw, 52px);
+}
+.sim-intro[hidden] { display: none; }
+.sim-intro .intro-eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 14px;
+}
+.sim-intro h2 {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(26px, 3.4vw, 40px);
+  line-height: 1.05;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  margin: 0 0 12px;
+  text-wrap: balance;
+  max-width: 18ch;
+}
+.sim-intro h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
+.sim-intro > p {
+  font-family: var(--display);
+  font-size: clamp(15px, 1.4vw, 17px);
+  line-height: 1.55;
+  color: var(--muted);
+  max-width: 54ch;
+  margin: 0 0 clamp(24px, 3vw, 34px);
+}
+.intro-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(18px, 2.4vw, 26px);
+  margin-bottom: clamp(24px, 3vw, 34px);
+}
+@media (max-width: 560px) { .intro-grid { grid-template-columns: 1fr; } }
+.intro-field { display: flex; flex-direction: column; }
+.intro-field label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 9px;
+}
+.intro-input {
+  display: flex;
+  align-items: center;
+  border-bottom: 1px solid var(--rule-2);
+  transition: border-color 200ms var(--ease);
+}
+.intro-input:focus-within { border-bottom-color: var(--ink); }
+.intro-input .pre,
+.intro-input .suf { font-family: var(--mono); font-size: 14px; color: var(--muted); flex: none; }
+.intro-input .pre { margin-right: 4px; }
+.intro-input .suf { margin-left: 4px; }
+.intro-input input {
+  flex: 1;
+  width: 100%;
+  height: 48px;
+  font-family: var(--display);
+  font-size: 20px;
+  color: var(--ink);
+  border: 0;
+  outline: 0;
+  background: none;
+  padding: 0;
+  -moz-appearance: textfield;
+}
+.intro-input input::-webkit-outer-spin-button,
+.intro-input input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.intro-input input::placeholder { color: var(--muted-2); }
+.intro-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.intro-hint { font-family: var(--display); font-size: 13px; line-height: 1.4; color: var(--muted); }
+.sim-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+@media (hover: hover) { .sim-btn-primary:disabled:hover { background: var(--ink); color: #fff; border-color: var(--ink); transform: none; } }
+
 /* ─── CLOSER ─────────────────────────────────────────────────────── */
 .sim-closer {
   margin-top: clamp(8px, 1vw, 14px);
@@ -585,7 +671,39 @@ svg.chart { display: block; width: 100%; height: auto; overflow: visible; }
 
   <section class="sim-wrap" id="sim">
     <div class="container">
-      <div class="sim-grid">
+
+      <!-- ═══ INTRO · CURRENT NUMBERS ═══ -->
+      <div class="sim-intro" id="simIntro">
+        <div class="intro-eyebrow">Step 1 · Your business today</div>
+        <h2>Start with <em>your current numbers.</em></h2>
+        <p>Four quick figures about how your funnel runs right now. We'll project current vs AI-optimised from your real baseline — adjust anything later.</p>
+
+        <div class="intro-grid">
+          <div class="intro-field">
+            <label for="introLeads">Monthly leads</label>
+            <div class="intro-input"><input type="number" id="introLeads" inputmode="numeric" min="0" step="10" placeholder="200" /></div>
+          </div>
+          <div class="intro-field">
+            <label for="introConv">Conversion rate</label>
+            <div class="intro-input"><input type="number" id="introConv" inputmode="decimal" min="0" max="100" step="0.5" placeholder="5" /><span class="suf">%</span></div>
+          </div>
+          <div class="intro-field">
+            <label for="introDeal">Average deal value</label>
+            <div class="intro-input"><span class="pre">$</span><input type="number" id="introDeal" inputmode="numeric" min="0" step="50" placeholder="2,500" /></div>
+          </div>
+          <div class="intro-field">
+            <label for="introCost">Monthly costs to deliver</label>
+            <div class="intro-input"><span class="pre">$</span><input type="number" id="introCost" inputmode="numeric" min="0" step="500" placeholder="18,000" /></div>
+          </div>
+        </div>
+
+        <div class="intro-actions">
+          <button type="button" class="sim-btn sim-btn-primary" id="simIntroNext" disabled>See my numbers <span aria-hidden="true">→</span></button>
+          <span class="intro-hint">Takes 20 seconds. No email needed to see your projection.</span>
+        </div>
+      </div>
+
+      <div class="sim-grid" id="simGrid" hidden>
 
         <!-- ═══ CONTROLS ═══ -->
         <div class="sim-panel sim-controls">
@@ -1082,8 +1200,11 @@ svg.chart { display: block; width: 100%; height: auto; overflow: visible; }
   function syncAll() { KEYS.forEach(syncControl); }
 
   // ─── RESET ──────────────────────────────────────────────────────
+  // Resets the AI levers + investment to defaults but keeps the prospect's
+  // own current-business numbers — those are theirs, not ours to wipe.
+  const AI_KEYS = ['aiLeads', 'aiConv', 'aiCost', 'aiHours', 'aiSpend', 'aiSetup', 'hourRate'];
   document.getElementById('simReset').addEventListener('click', () => {
-    Object.assign(state, DEFAULTS);
+    AI_KEYS.forEach(k => { state[k] = DEFAULTS[k]; });
     syncAll();
     recalc();
     history.replaceState(null, '', location.pathname);
@@ -1269,10 +1390,51 @@ svg.chart { display: block; width: 100%; height: auto; overflow: visible; }
     });
   });
 
+  // ─── INTRO STEP (capture current numbers) ───────────────────────
+  const introEl = document.getElementById('simIntro');
+  const gridEl = document.getElementById('simGrid');
+  const introNext = document.getElementById('simIntroNext');
+  const introInputs = {
+    leads: document.getElementById('introLeads'),
+    conv: document.getElementById('introConv'),
+    deal: document.getElementById('introDeal'),
+    cost: document.getElementById('introCost'),
+  };
+  // Need leads, conversion and deal value to project anything meaningful;
+  // costs may legitimately be zero.
+  const introValid = () => ['leads', 'conv', 'deal'].every(k => parseFloat(introInputs[k].value) > 0);
+  Object.values(introInputs).forEach(inp => {
+    inp.addEventListener('input', () => { introNext.disabled = !introValid(); });
+  });
+
+  function revealTool() {
+    introEl.hidden = true;
+    gridEl.hidden = false;
+    syncAll();
+    recalc();
+  }
+  introNext.addEventListener('click', () => {
+    if (!introValid()) return;
+    ['leads', 'conv', 'deal', 'cost'].forEach(k => {
+      state[k] = clamp(k, parseFloat(introInputs[k].value) || 0);
+    });
+    revealTool();
+    window.scrollTo({ top: document.getElementById('sim').offsetTop - 20, behavior: 'smooth' });
+  });
+  introEl.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && introValid()) { e.preventDefault(); introNext.click(); }
+  });
+
   // ─── INIT ───────────────────────────────────────────────────────
-  if (location.hash.startsWith('#s=')) decodeState(location.hash.slice(3));
-  syncAll();
-  recalc();
+  // A shared link already carries every number — skip the intro and go
+  // straight to the saved scenario.
+  if (location.hash.startsWith('#s=') && decodeState(location.hash.slice(3))) {
+    revealTool();
+  } else {
+    // Intro is visible by default; tool stays hidden until they continue.
+    syncAll();
+    introNext.disabled = !introValid();
+  }
 })();
 </script>
 </body>
