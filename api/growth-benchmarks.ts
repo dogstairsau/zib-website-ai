@@ -1,5 +1,5 @@
 import Anthropic from "@anthropic-ai/sdk";
-import { guard } from "../lib/rateLimit";
+import { guard, type RateTier } from "../lib/rateLimit";
 
 export const config = { runtime: "edge" };
 
@@ -24,7 +24,15 @@ const MODEL = process.env.BENCH_MODEL || "claude-sonnet-4-6";
 // Stable web-search tool version; overridable if the account is on a newer one.
 const SEARCH_TOOL = process.env.BENCH_SEARCH_TOOL || "web_search_20250305";
 const CACHE_TTL = 60 * 60 * 24 * 30; // 30 days
-const CACHE_VERSION = "v1";
+const CACHE_VERSION = "v2";
+
+// Benchmarks are cheap and cached, so this only ever gates the live-lookup
+// path (cache hits are served before the guard runs). Looser than the
+// site default — a partner can explore a handful of fresh industries.
+const BENCH_TIERS: RateTier[] = [
+  { limit: 10, windowSeconds: 600, suffix: "10m" }, // 10 fresh lookups / 10 min
+  { limit: 80, windowSeconds: 86400, suffix: "1d" }, // 80 fresh lookups / day
+];
 
 // Allow-list so a caller can't make us search arbitrary attacker-chosen text.
 const INDUSTRIES = new Set([
@@ -60,20 +68,20 @@ export default async function handler(req: Request): Promise<Response> {
     return json({ ok: false, error: "Unknown industry or region" }, 200);
   }
 
-  // Rate-limit abusive bursts (fails open if KV isn't configured).
-  const blocked = await guard(req, "growth-benchmarks");
-  if (blocked) return blocked;
-
   const cacheKey = `bench:${CACHE_VERSION}:${industry}:${region.toLowerCase()}`;
 
-  // 1) Serve from cache when we have it.
+  // 1) Serve from cache first — cheap, consistent, and not rate-limited.
   const cached = await kvGet(cacheKey);
   if (cached) return json({ ok: true, benchmark: cached, cached: true });
 
   // 2) No key → fail open, client keeps its placeholder.
   if (!process.env.ANTHROPIC_API_KEY) return json({ ok: false, error: "not configured" }, 200);
 
-  // 3) Live lookup.
+  // 3) Only the expensive live lookup is rate-limited (fails open without KV).
+  const blocked = await guard(req, "growth-benchmarks", BENCH_TIERS);
+  if (blocked) return blocked;
+
+  // 4) Live lookup.
   const benchmark = await lookup(industry, region).catch((e) => {
     console.warn("[bench:lookup]", (e as Error).message);
     return null;
@@ -96,10 +104,13 @@ async function lookup(industry: string, region: string): Promise<Benchmark | nul
 
   const user =
     `Find typical benchmarks for ${label} in ${region}, Australia. Return JSON with:\n` +
-    `{"conv": <average enquiry/lead-to-customer conversion rate as a percentage, e.g. 8>,` +
+    `{"conv": <the percentage of leads/enquiries that become PAYING CUSTOMERS — i.e. ` +
+    `the enquiry-to-client close rate for service businesses, or the visitor-to-purchase ` +
+    `rate for ecommerce/retail. NOT click-through or website-visitor-to-lead rate>,` +
     `"deal": <average deal or transaction value in AUD>,` +
     `"responseMins": <best-practice lead response time in minutes>,` +
-    `"note": "<one short sentence (<140 chars) citing the basis>",` +
+    `"note": "<one short sentence (<140 chars) citing the basis, and stating which ` +
+    `conversion metric you used>",` +
     `"confidence": "low|medium|high"}\n` +
     `Use realistic ranges. conv is 0.1–60, deal is 10–1000000, responseMins is 1–1440.`;
 
