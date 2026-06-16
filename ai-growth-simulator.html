@@ -1,0 +1,1219 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<title>AI Growth Simulator · Zib Digital</title>
+<meta name="description" content="See what AI does to your bottom line. Drag the sliders and instantly model revenue, profit, ROI and payback — current vs AI-optimised — then save or export your scenario." />
+<meta name="zib:source-tag" content="AI Growth Simulator" />
+<!-- @include _partials/head.html -->
+<style>
+input, select, button, textarea { font: inherit; color: inherit; }
+
+.skip-link {
+  position: absolute;
+  top: 8px; left: 8px;
+  background: var(--ink);
+  color: #fff;
+  padding: 12px 18px;
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  z-index: 100;
+  transform: translateY(-200%);
+  transition: transform 200ms var(--ease);
+}
+.skip-link:focus { transform: translateY(0); outline: 2px solid var(--accent); outline-offset: 2px; }
+
+/* ─── HERO ──────────────────────────────────────────────────────── */
+.sim-hero { padding: clamp(36px, 5vw, 80px) 0 clamp(16px, 2vw, 28px); }
+.sim-hero .container { max-width: 1180px; }
+.sim-hero .eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: clamp(14px, 1.6vw, 20px);
+}
+.sim-hero h1 {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(38px, 5.4vw, 72px);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+  margin: 0 0 clamp(14px, 1.6vw, 22px);
+  text-wrap: balance;
+  max-width: 18ch;
+}
+.sim-hero h1 em { font-style: italic; color: var(--accent); font-weight: 400; }
+.sim-hero p {
+  font-family: var(--display);
+  font-size: clamp(16px, 1.5vw, 19px);
+  line-height: 1.55;
+  color: var(--muted);
+  max-width: 64ch;
+}
+
+/* ─── LAYOUT ─────────────────────────────────────────────────────── */
+.sim-wrap { padding: 0 0 clamp(72px, 9vw, 120px); }
+.sim-wrap .container { max-width: 1180px; }
+.sim-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 360px) minmax(0, 1fr);
+  gap: clamp(20px, 2.4vw, 32px);
+  align-items: start;
+}
+@media (max-width: 880px) {
+  .sim-grid { grid-template-columns: 1fr; }
+}
+
+.sim-panel {
+  background: #fff;
+  border: 0.5px solid var(--rule);
+  border-radius: 20px;
+  padding: clamp(22px, 2.6vw, 32px);
+}
+.sim-controls { position: sticky; top: 92px; }
+@media (max-width: 880px) {
+  .sim-controls { position: static; }
+}
+
+.sim-panel-eyebrow {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 6px;
+}
+.sim-group + .sim-group { margin-top: clamp(22px, 2.6vw, 30px); padding-top: clamp(20px, 2.4vw, 26px); border-top: 0.5px solid var(--rule); }
+.sim-group-title {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 17px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin: 0 0 16px;
+}
+.sim-group-title .hint {
+  display: block;
+  font-family: var(--display);
+  font-weight: 400;
+  font-size: 12.5px;
+  line-height: 1.4;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+/* ─── CONTROL ROW ────────────────────────────────────────────────── */
+.ctrl { margin-bottom: 18px; }
+.ctrl:last-child { margin-bottom: 0; }
+.ctrl-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+.ctrl-label {
+  font-family: var(--display);
+  font-size: 14px;
+  color: var(--ink);
+}
+.ctrl-val {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 1px;
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--ink);
+  background: var(--paper);
+  border: 0.5px solid var(--rule);
+  border-radius: 8px;
+  padding: 3px 8px;
+}
+.ctrl-val .pre { color: var(--muted); }
+.ctrl-val input {
+  width: 7ch;
+  text-align: right;
+  border: 0;
+  outline: 0;
+  background: none;
+  font: inherit;
+  color: var(--accent);
+  padding: 0;
+  -moz-appearance: textfield;
+}
+.ctrl-val input::-webkit-outer-spin-button,
+.ctrl-val input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+.ctrl-val .suf { color: var(--muted); }
+.ctrl-val.is-ai input { color: var(--accent); }
+
+input[type="range"] {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--rule-2);
+  outline: 0;
+  cursor: pointer;
+}
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: var(--ink);
+  border: 3px solid #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+  transition: transform 120ms var(--ease);
+}
+input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.12); }
+input[type="range"]::-moz-range-thumb {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: var(--ink);
+  border: 3px solid #fff;
+  box-shadow: 0 1px 4px rgba(0,0,0,0.25);
+}
+.ctrl.is-ai input[type="range"]::-webkit-slider-thumb { background: var(--accent); }
+.ctrl.is-ai input[type="range"]::-moz-range-thumb { background: var(--accent); }
+input[type="range"]:focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; }
+
+.sim-reset {
+  margin-top: 22px;
+  width: 100%;
+  height: 44px;
+  border-radius: 999px;
+  background: transparent;
+  border: 0.5px solid var(--rule);
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: border-color 200ms var(--ease), color 200ms var(--ease);
+}
+.sim-reset:hover { border-color: var(--ink); color: var(--ink); }
+
+/* ─── RESULTS ────────────────────────────────────────────────────── */
+.sim-results { display: grid; gap: clamp(16px, 2vw, 22px); }
+
+.scenario-toggle {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  background: var(--paper);
+  border: 0.5px solid var(--rule);
+  border-radius: 999px;
+}
+.scenario-toggle button {
+  padding: 8px 16px;
+  border-radius: 999px;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: background 200ms var(--ease), color 200ms var(--ease);
+}
+.scenario-toggle button.is-active { background: var(--ink); color: #fff; }
+.scenario-toggle button.is-active.is-ai { background: var(--accent); color: var(--ink); }
+
+.cards-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: clamp(12px, 1.4vw, 16px);
+}
+.metric {
+  padding: clamp(14px, 1.6vw, 20px);
+  border: 0.5px solid var(--rule);
+  border-radius: 14px;
+  background: #fff;
+  position: relative;
+}
+.metric.span-2 { grid-column: span 2; }
+@media (max-width: 520px) { .metric.span-2 { grid-column: span 1; } }
+.metric.is-headline { background: var(--ink); color: #fff; border-color: var(--ink); }
+.metric.is-headline .metric-lbl { color: rgba(255,255,255,0.6); }
+.metric.is-headline .metric-v { color: #fff; }
+.metric.is-headline .metric-sub { color: rgba(255,255,255,0.66); }
+.metric.is-accent { background: var(--accent-tint); border-color: rgba(255,98,0,0.25); }
+.metric.is-accent .metric-v { color: var(--accent); }
+.metric-lbl {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.13em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 9px;
+}
+.metric-v {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(22px, 2.4vw, 30px);
+  line-height: 1;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+  transition: color 120ms var(--ease);
+}
+.metric-sub {
+  display: block;
+  margin-top: 7px;
+  font-family: var(--display);
+  font-size: 12px;
+  line-height: 1.4;
+  color: var(--muted);
+}
+.delta {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-family: var(--mono);
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  padding: 2px 7px;
+  border-radius: 999px;
+}
+.delta.up { color: #0a7d3c; background: rgba(10,125,60,0.1); }
+.delta.down { color: var(--accent); background: var(--accent-tint); }
+.metric.is-headline .delta.up { color: #5ce08e; background: rgba(92,224,142,0.14); }
+
+/* ─── CHART CARD ─────────────────────────────────────────────────── */
+.chart-card {
+  padding: clamp(18px, 2vw, 26px);
+  border: 0.5px solid var(--rule);
+  border-radius: 16px;
+  background: #fff;
+}
+.chart-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  margin-bottom: 6px;
+  flex-wrap: wrap;
+}
+.chart-title {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.chart-legend {
+  display: flex;
+  gap: 14px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.chart-legend span { display: inline-flex; align-items: center; gap: 6px; }
+.swatch { width: 11px; height: 11px; border-radius: 3px; display: inline-block; }
+.swatch.ink { background: var(--ink); }
+.swatch.accent { background: var(--accent); }
+.chart-note {
+  font-family: var(--display);
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--muted);
+  margin: 10px 0 0;
+}
+.chart-note strong { color: var(--ink); font-weight: 500; }
+.chart-note em { color: var(--accent); font-style: normal; font-weight: 500; }
+svg.chart { display: block; width: 100%; height: auto; overflow: visible; }
+.chart-svg-wrap { margin-top: 14px; }
+
+/* ─── EXPORT BAR ─────────────────────────────────────────────────── */
+.sim-actions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.sim-btn {
+  height: 48px;
+  padding: 0 22px;
+  border-radius: 999px;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 14px;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 0.5px solid var(--rule);
+  background: #fff;
+  color: var(--ink);
+  transition: background 200ms var(--ease), color 200ms var(--ease), border-color 200ms var(--ease), transform 200ms var(--ease);
+  white-space: nowrap;
+}
+.sim-btn:hover { border-color: var(--ink); background: var(--paper); }
+.sim-btn-primary { background: var(--ink); color: #fff; border-color: var(--ink); }
+@media (hover: hover) {
+  .sim-btn-primary:hover { background: var(--accent); color: var(--ink); border-color: var(--accent); transform: translateY(-1px); }
+}
+.sim-status {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  min-height: 16px;
+}
+.sim-status.ok { color: #0a7d3c; }
+.sim-status.is-error { color: var(--accent); }
+
+/* ─── CLOSER ─────────────────────────────────────────────────────── */
+.sim-closer {
+  margin-top: clamp(8px, 1vw, 14px);
+  padding: clamp(24px, 3vw, 40px);
+  background: var(--ink);
+  color: #fff;
+  border-radius: 18px;
+}
+.sim-closer .lbl {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+.sim-closer p {
+  font-family: var(--display);
+  font-size: clamp(18px, 1.8vw, 22px);
+  line-height: 1.4;
+  letter-spacing: -0.015em;
+  color: #fff;
+  margin: 0 0 clamp(18px, 2vw, 26px);
+  max-width: 52ch;
+  text-wrap: balance;
+}
+.sim-closer p em { font-style: italic; color: var(--accent); }
+.sim-closer .sim-btn-primary { background: var(--accent); color: var(--ink); border-color: var(--accent); }
+.sim-closer .sim-btn-primary:hover { background: #fff; color: var(--ink); border-color: #fff; }
+
+.disclaimer {
+  font-size: 12px;
+  color: var(--muted);
+  font-family: var(--display);
+  line-height: 1.5;
+}
+
+/* ─── MODAL ──────────────────────────────────────────────────────── */
+.sim-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  padding: 24px;
+}
+.sim-modal[hidden] { display: none; }
+.sim-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.62);
+  backdrop-filter: blur(4px);
+  cursor: pointer;
+}
+.sim-modal-content {
+  position: relative;
+  background: #fff;
+  border-radius: 20px;
+  padding: clamp(28px, 4vw, 44px);
+  width: 100%;
+  max-width: 560px;
+  max-height: calc(100vh - 48px);
+  overflow-y: auto;
+  box-shadow: 0 40px 120px -30px rgba(0,0,0,0.5);
+  animation: sim-in 240ms var(--ease-spring);
+}
+@keyframes sim-in {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.sim-modal-close {
+  position: absolute;
+  top: 16px; right: 16px;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  font-size: 22px;
+  line-height: 1;
+  color: var(--muted);
+  cursor: pointer;
+  background: none;
+  border: 0;
+  transition: background 200ms var(--ease), color 200ms var(--ease);
+}
+.sim-modal-close:hover { background: var(--paper); color: var(--ink); }
+.sim-modal-eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 12px;
+}
+.sim-modal-content h3 {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(22px, 2.6vw, 28px);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  margin: 0 0 12px;
+  text-wrap: balance;
+}
+.sim-modal-content h3 em { font-style: italic; color: var(--accent); font-weight: 400; }
+.sim-modal-content > p {
+  font-family: var(--display);
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--muted);
+  margin: 0 0 clamp(20px, 2.4vw, 26px);
+  max-width: 48ch;
+}
+.sim-form { display: grid; gap: 16px; }
+.sim-form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 480px) { .sim-form-row { grid-template-columns: 1fr; } }
+.sim-form .field { display: flex; flex-direction: column; }
+.sim-form .field label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.sim-form .field input {
+  height: 44px;
+  font-family: var(--display);
+  font-size: 15px;
+  color: var(--ink);
+  border: 0;
+  border-bottom: 1px solid var(--rule-2);
+  outline: 0;
+  padding: 0 0 8px;
+  background: none;
+  transition: border-color 200ms var(--ease);
+}
+.sim-form .field input:focus { border-bottom-color: var(--ink); }
+.sim-form .field input::placeholder { color: var(--muted-2); }
+.sim-form button[type="submit"] { justify-self: flex-start; margin-top: 4px; }
+.sim-success[hidden] { display: none; }
+
+@media print {
+  .site-header, .header-spacer, .sim-controls, .sim-actions, .sim-closer,
+  footer, .skip-link, .scenario-toggle, .sim-modal { display: none !important; }
+  .sim-grid { grid-template-columns: 1fr !important; }
+  .sim-panel, .chart-card, .metric { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<a href="#sim" class="skip-link">Skip to content</a>
+
+<!-- @include _partials/nav.html -->
+
+<main id="main">
+  <section class="sim-hero">
+    <div class="container">
+      <div class="eyebrow">AI Growth Simulator</div>
+      <h1>See what AI does to <em>your bottom line.</em></h1>
+      <p>Drag the sliders. Watch revenue, profit, ROI and payback recalculate live — current vs AI-optimised — then save or export the scenario to bring to the table.</p>
+    </div>
+  </section>
+
+  <section class="sim-wrap" id="sim">
+    <div class="container">
+      <div class="sim-grid">
+
+        <!-- ═══ CONTROLS ═══ -->
+        <div class="sim-panel sim-controls">
+          <div class="sim-panel-eyebrow">Your numbers</div>
+
+          <div class="sim-group">
+            <h3 class="sim-group-title">Your business today
+              <span class="hint">The funnel as it runs right now — no AI.</span>
+            </h3>
+
+            <div class="ctrl" data-ctrl>
+              <div class="ctrl-head">
+                <span class="ctrl-label">Monthly leads</span>
+                <span class="ctrl-val"><input type="number" data-num="leads" min="0" max="5000" step="10" /></span>
+              </div>
+              <input type="range" data-range="leads" min="0" max="2000" step="10" />
+            </div>
+
+            <div class="ctrl" data-ctrl>
+              <div class="ctrl-head">
+                <span class="ctrl-label">Conversion rate</span>
+                <span class="ctrl-val"><input type="number" data-num="conv" min="0" max="100" step="0.5" /><span class="suf">%</span></span>
+              </div>
+              <input type="range" data-range="conv" min="0" max="100" step="0.5" />
+            </div>
+
+            <div class="ctrl" data-ctrl>
+              <div class="ctrl-head">
+                <span class="ctrl-label">Average deal value</span>
+                <span class="ctrl-val"><span class="pre">$</span><input type="number" data-num="deal" min="0" max="200000" step="50" /></span>
+              </div>
+              <input type="range" data-range="deal" min="0" max="20000" step="50" />
+            </div>
+
+            <div class="ctrl" data-ctrl>
+              <div class="ctrl-head">
+                <span class="ctrl-label">Monthly costs to deliver</span>
+                <span class="ctrl-val"><span class="pre">$</span><input type="number" data-num="cost" min="0" max="1000000" step="500" /></span>
+              </div>
+              <input type="range" data-range="cost" min="0" max="200000" step="500" />
+            </div>
+          </div>
+
+          <div class="sim-group">
+            <h3 class="sim-group-title">AI efficiency gains
+              <span class="hint">What an AI-augmented operating system lifts and trims.</span>
+            </h3>
+
+            <div class="ctrl is-ai" data-ctrl>
+              <div class="ctrl-head">
+                <span class="ctrl-label">More leads</span>
+                <span class="ctrl-val is-ai"><span class="pre">+</span><input type="number" data-num="aiLeads" min="0" max="200" step="1" /><span class="suf">%</span></span>
+              </div>
+              <input type="range" data-range="aiLeads" min="0" max="100" step="1" />
+            </div>
+
+            <div class="ctrl is-ai" data-ctrl>
+              <div class="ctrl-head">
+                <span class="ctrl-label">Better conversion</span>
+                <span class="ctrl-val is-ai"><span class="pre">+</span><input type="number" data-num="aiConv" min="0" max="200" step="1" /><span class="suf">%</span></span>
+              </div>
+              <input type="range" data-range="aiConv" min="0" max="100" step="1" />
+            </div>
+
+            <div class="ctrl is-ai" data-ctrl>
+              <div class="ctrl-head">
+                <span class="ctrl-label">Costs reduced</span>
+                <span class="ctrl-val is-ai"><span class="pre">−</span><input type="number" data-num="aiCost" min="0" max="80" step="1" /><span class="suf">%</span></span>
+              </div>
+              <input type="range" data-range="aiCost" min="0" max="80" step="1" />
+            </div>
+
+            <div class="ctrl is-ai" data-ctrl>
+              <div class="ctrl-head">
+                <span class="ctrl-label">Time saved</span>
+                <span class="ctrl-val is-ai"><input type="number" data-num="aiHours" min="0" max="2000" step="5" /><span class="suf">hrs/mo</span></span>
+              </div>
+              <input type="range" data-range="aiHours" min="0" max="500" step="5" />
+            </div>
+          </div>
+
+          <div class="sim-group">
+            <h3 class="sim-group-title">AI investment
+              <span class="hint">What the AI operating system costs you.</span>
+            </h3>
+
+            <div class="ctrl" data-ctrl>
+              <div class="ctrl-head">
+                <span class="ctrl-label">Monthly AI cost</span>
+                <span class="ctrl-val"><span class="pre">$</span><input type="number" data-num="aiSpend" min="0" max="100000" step="100" /></span>
+              </div>
+              <input type="range" data-range="aiSpend" min="0" max="20000" step="100" />
+            </div>
+
+            <div class="ctrl" data-ctrl>
+              <div class="ctrl-head">
+                <span class="ctrl-label">One-time setup</span>
+                <span class="ctrl-val"><span class="pre">$</span><input type="number" data-num="aiSetup" min="0" max="500000" step="500" /></span>
+              </div>
+              <input type="range" data-range="aiSetup" min="0" max="50000" step="500" />
+            </div>
+
+            <div class="ctrl" data-ctrl>
+              <div class="ctrl-head">
+                <span class="ctrl-label">Value of an hour</span>
+                <span class="ctrl-val"><span class="pre">$</span><input type="number" data-num="hourRate" min="0" max="2000" step="5" /></span>
+              </div>
+              <input type="range" data-range="hourRate" min="0" max="300" step="5" />
+            </div>
+          </div>
+
+          <button type="button" class="sim-reset" id="simReset">Reset to defaults</button>
+        </div>
+
+        <!-- ═══ RESULTS ═══ -->
+        <div class="sim-results">
+
+          <div class="cards-grid" id="cards"><!-- metrics injected --></div>
+
+          <div class="chart-card">
+            <div class="chart-head">
+              <span class="chart-title">Current vs AI-optimised — monthly</span>
+              <span class="chart-legend">
+                <span><span class="swatch ink"></span>Current</span>
+                <span><span class="swatch accent"></span>AI-optimised</span>
+              </span>
+            </div>
+            <div class="chart-svg-wrap"><svg class="chart" id="barChart" viewBox="0 0 600 240" role="img" aria-label="Bar chart comparing current and AI-optimised monthly revenue and profit"></svg></div>
+            <p class="chart-note" id="barNote"></p>
+          </div>
+
+          <div class="chart-card">
+            <div class="chart-head">
+              <span class="chart-title">Cumulative profit — 12 month timeline</span>
+              <span class="chart-legend">
+                <span><span class="swatch ink"></span>Current</span>
+                <span><span class="swatch accent"></span>AI-optimised</span>
+              </span>
+            </div>
+            <div class="chart-svg-wrap"><svg class="chart" id="lineChart" viewBox="0 0 600 280" role="img" aria-label="Line chart of cumulative profit over 12 months, current vs AI-optimised"></svg></div>
+            <p class="chart-note" id="lineNote"></p>
+          </div>
+
+          <div class="chart-card">
+            <div class="chart-head">
+              <span class="chart-title">Save &amp; export this scenario</span>
+            </div>
+            <div class="sim-actions" style="margin-top:6px;">
+              <button type="button" class="sim-btn sim-btn-primary" id="emailBtn">Email me this scenario <span aria-hidden="true">→</span></button>
+              <button type="button" class="sim-btn" id="shareBtn">Copy share link</button>
+              <button type="button" class="sim-btn" id="csvBtn">Download CSV</button>
+              <button type="button" class="sim-btn" id="printBtn">Print / PDF</button>
+            </div>
+            <div class="sim-status" id="exportStatus" style="margin-top:12px;">&nbsp;</div>
+            <p class="disclaimer" style="margin-top:6px;">Projections are indicative only and depend on your inputs. Actual results vary; no liability is accepted.</p>
+          </div>
+
+          <div class="sim-closer">
+            <div class="lbl">The Zib read</div>
+            <p>This is what AI is worth on paper. <em>The hard part is building the operating system that actually delivers it.</em> Plan it with a commercial partner who's accountable for the numbers, not just running tools.</p>
+            <button type="button" class="sim-btn sim-btn-primary" id="bookBtn">Book a commercial conversation <span aria-hidden="true">→</span></button>
+          </div>
+
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ EMAIL / BOOK MODAL ═══ -->
+  <div class="sim-modal" id="simModal" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="simModalTitle">
+    <div class="sim-modal-backdrop" data-close-modal></div>
+    <div class="sim-modal-content">
+      <button type="button" class="sim-modal-close" data-close-modal aria-label="Close">×</button>
+      <div class="sim-modal-eyebrow" id="simModalEyebrow">Send my scenario</div>
+      <h3 id="simModalTitle">Where should we <em>send your numbers?</em></h3>
+      <p id="simModalBlurb">Drop your details and we'll email a copy of this scenario. A growth partner will be in touch within 24 hours to pressure-test how to actually hit it.</p>
+
+      <form class="sim-form" id="simForm" autocomplete="on">
+        <div class="sim-form-row">
+          <div class="field">
+            <label for="simFirstname">First name</label>
+            <input type="text" id="simFirstname" name="firstname" required autocomplete="given-name" placeholder="Jane" />
+          </div>
+          <div class="field">
+            <label for="simEmail">Work email</label>
+            <input type="email" id="simEmail" name="email" required autocomplete="email" placeholder="jane@yourcompany.com.au" />
+          </div>
+        </div>
+        <div class="sim-form-row">
+          <div class="field">
+            <label for="simCompany">Company <span style="color:var(--muted-2);">(optional)</span></label>
+            <input type="text" id="simCompany" name="company" autocomplete="organization" placeholder="Your business" />
+          </div>
+          <div class="field">
+            <label for="simPhone">Phone <span style="color:var(--muted-2);">(optional)</span></label>
+            <input type="tel" id="simPhone" name="phone" autocomplete="tel" placeholder="0400 000 000" />
+          </div>
+        </div>
+        <button type="submit" class="sim-btn sim-btn-primary" id="simSubmit">Send my scenario <span aria-hidden="true">→</span></button>
+        <div class="sim-status" id="simFormStatus">&nbsp;</div>
+      </form>
+
+      <div class="sim-success" id="simSuccess" hidden>
+        <div class="sim-modal-eyebrow" style="color:var(--accent);">All sent</div>
+        <h3>Thanks — it's on its way.</h3>
+        <p style="margin-bottom:18px;">Your scenario has been emailed across and a growth partner will be in touch within 24 hours with something specific to talk about.</p>
+        <button type="button" class="sim-btn" data-close-modal>Close</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- @include _partials/footer.html -->
+<!-- @include _partials/scripts.html -->
+
+<script>
+(() => {
+  // ─── DEFAULTS + STATE ───────────────────────────────────────────
+  const DEFAULTS = {
+    leads: 200, conv: 5, deal: 2500, cost: 18000,
+    aiLeads: 25, aiConv: 30, aiCost: 15, aiHours: 40,
+    aiSpend: 3000, aiSetup: 8000, hourRate: 75,
+  };
+  // Bounds used when clamping typed input (number fields allow > slider max).
+  const BOUNDS = {
+    leads: [0, 5000], conv: [0, 100], deal: [0, 200000], cost: [0, 1000000],
+    aiLeads: [0, 200], aiConv: [0, 200], aiCost: [0, 80], aiHours: [0, 2000],
+    aiSpend: [0, 100000], aiSetup: [0, 500000], hourRate: [0, 2000],
+  };
+  const KEYS = Object.keys(DEFAULTS);
+  const state = { ...DEFAULTS };
+
+  // ─── FORMATTERS ─────────────────────────────────────────────────
+  const money = (n) => '$' + Math.round(n).toLocaleString('en-AU');
+  const moneyK = (n) => {
+    const a = Math.abs(n);
+    if (a >= 1e6) return (n < 0 ? '−$' : '$') + (a / 1e6).toFixed(a >= 1e7 ? 0 : 1) + 'M';
+    if (a >= 1e3) return (n < 0 ? '−$' : '$') + Math.round(a / 1e3) + 'k';
+    return (n < 0 ? '−$' : '$') + Math.round(a);
+  };
+  const intf = (n) => Math.round(n).toLocaleString('en-AU');
+  const unit = (n) => n.toLocaleString('en-AU', { maximumFractionDigits: 1 });
+  const pctf = (n) => (n >= 0 ? '+' : '') + Math.round(n) + '%';
+
+  // ─── MODEL ──────────────────────────────────────────────────────
+  function model(s) {
+    // Current
+    const curCustomers = s.leads * (s.conv / 100);
+    const curRevenue = curCustomers * s.deal;
+    const curProfit = curRevenue - s.cost;
+
+    // AI-optimised
+    const optLeads = s.leads * (1 + s.aiLeads / 100);
+    const optConv = Math.min(100, s.conv * (1 + s.aiConv / 100));
+    const optCustomers = optLeads * (optConv / 100);
+    const optRevenue = optCustomers * s.deal;
+    const optOpCost = s.cost * (1 - s.aiCost / 100);
+    const optProfit = optRevenue - optOpCost - s.aiSpend; // net of monthly AI cost
+
+    // Uplift + ROI
+    const revUplift = optRevenue - curRevenue;
+    const profitUplift = optProfit - curProfit;
+    const annualNet = profitUplift * 12 - s.aiSetup;
+    const annualAiCost = s.aiSpend * 12 + s.aiSetup;
+    const roi = annualAiCost > 0 ? (annualNet / annualAiCost) * 100 : (profitUplift > 0 ? Infinity : 0);
+
+    // Payback (months until cumulative optimised overtakes current)
+    let payback = null;
+    if (profitUplift > 0) payback = s.aiSetup / profitUplift; // months
+    else payback = Infinity;
+
+    // Time reclaimed
+    const hoursYear = s.aiHours * 12;
+    const timeValue = s.aiHours * s.hourRate * 12;
+
+    return {
+      curCustomers, curRevenue, curProfit,
+      optCustomers, optRevenue, optProfit, optConv,
+      revUplift, profitUplift, annualNet, roi, payback,
+      hoursYear, timeValue,
+      baseMonthly: curProfit, optMonthly: optProfit, setup: s.aiSetup,
+    };
+  }
+
+  // ─── RENDER METRICS ─────────────────────────────────────────────
+  const cardsEl = document.getElementById('cards');
+  function deltaBadge(curr, opt, fmt) {
+    const d = opt - curr;
+    const pct = curr !== 0 ? (d / Math.abs(curr)) * 100 : (d > 0 ? 100 : 0);
+    const cls = d >= 0 ? 'up' : 'down';
+    const arrow = d >= 0 ? '▲' : '▼';
+    return `<span class="delta ${cls}">${arrow} ${pctf(pct)}</span>`;
+  }
+
+  function renderCards(m) {
+    const roiStr = m.roi === Infinity ? '∞' : Math.round(m.roi).toLocaleString('en-AU') + '%';
+    const paybackStr = m.payback === Infinity ? 'No payback'
+      : m.payback <= 0.05 ? 'Immediate'
+      : m.payback < 1 ? '< 1 mo'
+      : m.payback.toFixed(1) + ' mo';
+    const cards = [
+      { lbl: 'Extra annual profit', v: moneyK(m.annualNet), cls: 'is-headline span-2',
+        sub: `${money(m.profitUplift)}/mo uplift, net of setup` },
+      { lbl: 'Year-1 ROI on AI', v: roiStr, cls: 'is-accent',
+        sub: m.roi === Infinity ? 'No AI cost entered' : 'Return on total AI spend' },
+      { lbl: 'Payback period', v: paybackStr, cls: '',
+        sub: m.payback === Infinity ? 'Profit uplift ≤ 0' : 'To recover setup cost' },
+      { lbl: 'Monthly revenue', v: money(m.optRevenue), cls: '',
+        sub: `${money(m.curRevenue)} today ${deltaBadge(m.curRevenue, m.optRevenue)}` },
+      { lbl: 'Monthly profit', v: money(m.optProfit), cls: '',
+        sub: `${money(m.curProfit)} today ${deltaBadge(m.curProfit, m.optProfit)}` },
+      { lbl: 'New customers / mo', v: unit(m.optCustomers), cls: '',
+        sub: `${unit(m.curCustomers)} today ${deltaBadge(m.curCustomers, m.optCustomers)}` },
+      { lbl: 'Time reclaimed / yr', v: intf(m.hoursYear) + ' hrs', cls: '',
+        sub: `≈ ${money(m.timeValue)} of capacity` },
+    ];
+    cardsEl.innerHTML = cards.map(c =>
+      `<div class="metric ${c.cls}"><div class="metric-lbl">${c.lbl}</div><div class="metric-v">${c.v}</div>${c.sub ? `<span class="metric-sub">${c.sub}</span>` : ''}</div>`
+    ).join('');
+  }
+
+  // ─── SVG HELPERS ────────────────────────────────────────────────
+  const SVGNS = 'http://www.w3.org/2000/svg';
+  function el(name, attrs, text) {
+    const n = document.createElementNS(SVGNS, name);
+    for (const k in attrs) n.setAttribute(k, attrs[k]);
+    if (text != null) n.textContent = text;
+    return n;
+  }
+
+  // ─── BAR CHART (revenue + profit, current vs optimised) ─────────
+  const barChart = document.getElementById('barChart');
+  const barNote = document.getElementById('barNote');
+  function renderBars(m) {
+    const W = 600, H = 240, padB = 34, padT = 16;
+    const groups = [
+      { label: 'Revenue', cur: m.curRevenue, opt: m.optRevenue },
+      { label: 'Profit', cur: m.curProfit, opt: m.optProfit },
+    ];
+    const maxV = Math.max(1, ...groups.flatMap(g => [g.cur, g.opt, 0]));
+    const minV = Math.min(0, ...groups.flatMap(g => [g.cur, g.opt]));
+    const range = maxV - minV || 1;
+    const plotH = H - padB - padT;
+    const yOf = (v) => padT + (maxV - v) / range * plotH;
+    const zeroY = yOf(0);
+
+    barChart.innerHTML = '';
+    // zero baseline
+    barChart.appendChild(el('line', { x1: 40, y1: zeroY, x2: W, y2: zeroY, stroke: 'var(--rule-2)', 'stroke-width': 1 }));
+
+    const groupW = (W - 60) / groups.length;
+    const barW = Math.min(70, groupW / 3);
+    groups.forEach((g, i) => {
+      const gx = 50 + i * groupW + groupW / 2;
+      const pairs = [
+        { v: g.cur, color: 'var(--ink)', dx: -barW - 6 },
+        { v: g.opt, color: 'var(--accent)', dx: 6 },
+      ];
+      pairs.forEach(p => {
+        const x = gx + p.dx;
+        const y = p.v >= 0 ? yOf(p.v) : zeroY;
+        const h = Math.max(1, Math.abs(yOf(p.v) - zeroY));
+        barChart.appendChild(el('rect', { x, y, width: barW, height: h, rx: 4, fill: p.color }));
+        barChart.appendChild(el('text', {
+          x: x + barW / 2, y: (p.v >= 0 ? y - 6 : y + h + 13),
+          'text-anchor': 'middle', 'font-family': 'var(--mono)', 'font-size': 11,
+          fill: p.v >= 0 ? 'var(--ink)' : 'var(--accent)', 'font-weight': 500,
+        }, moneyK(p.v)));
+      });
+      barChart.appendChild(el('text', {
+        x: gx, y: H - 10, 'text-anchor': 'middle',
+        'font-family': 'var(--mono)', 'font-size': 11, fill: 'var(--muted)',
+        'letter-spacing': '0.08em',
+      }, g.label.toUpperCase()));
+    });
+
+    const pPct = m.curProfit !== 0 ? Math.round((m.profitUplift / Math.abs(m.curProfit)) * 100) : 100;
+    barNote.innerHTML = `AI lifts monthly profit by <strong>${money(m.profitUplift)}</strong> ` +
+      `<em>(${pPct >= 0 ? '+' : ''}${pPct.toLocaleString('en-AU')}%)</em> on these settings.`;
+  }
+
+  // ─── LINE CHART (cumulative profit, 12 months) ──────────────────
+  const lineChart = document.getElementById('lineChart');
+  const lineNote = document.getElementById('lineNote');
+  function renderLine(m) {
+    const W = 600, H = 280, padL = 52, padR = 14, padT = 16, padB = 30;
+    const months = 12;
+    const cur = [], opt = [];
+    for (let i = 0; i <= months; i++) {
+      cur.push(m.baseMonthly * i);
+      opt.push(m.optMonthly * i - m.setup);
+    }
+    const all = [...cur, ...opt, 0];
+    const maxV = Math.max(...all), minV = Math.min(...all);
+    const range = (maxV - minV) || 1;
+    const plotW = W - padL - padR, plotH = H - padT - padB;
+    const xOf = (i) => padL + (i / months) * plotW;
+    const yOf = (v) => padT + (maxV - v) / range * plotH;
+
+    lineChart.innerHTML = '';
+    // zero line
+    const zy = yOf(0);
+    lineChart.appendChild(el('line', { x1: padL, y1: zy, x2: W - padR, y2: zy, stroke: 'var(--rule-2)', 'stroke-width': 1, 'stroke-dasharray': '3 3' }));
+    lineChart.appendChild(el('text', { x: padL - 8, y: zy + 4, 'text-anchor': 'end', 'font-family': 'var(--mono)', 'font-size': 10, fill: 'var(--muted-2)' }, '$0'));
+    // top + bottom axis labels
+    lineChart.appendChild(el('text', { x: padL - 8, y: padT + 4, 'text-anchor': 'end', 'font-family': 'var(--mono)', 'font-size': 10, fill: 'var(--muted-2)' }, moneyK(maxV)));
+    if (minV < 0) lineChart.appendChild(el('text', { x: padL - 8, y: padT + plotH + 2, 'text-anchor': 'end', 'font-family': 'var(--mono)', 'font-size': 10, fill: 'var(--muted-2)' }, moneyK(minV)));
+
+    const path = (arr) => arr.map((v, i) => (i === 0 ? 'M' : 'L') + xOf(i).toFixed(1) + ' ' + yOf(v).toFixed(1)).join(' ');
+
+    // shaded gap between the two lines
+    const gap = path(opt) + ' ' + cur.map((v, i) => 'L' + xOf(months - i).toFixed(1) + ' ' + yOf(cur[months - i]).toFixed(1)).join(' ') + ' Z';
+    lineChart.appendChild(el('path', { d: gap, fill: 'var(--accent-tint)', opacity: 0.7 }));
+
+    lineChart.appendChild(el('path', { d: path(cur), fill: 'none', stroke: 'var(--ink)', 'stroke-width': 2.5, 'stroke-linejoin': 'round' }));
+    lineChart.appendChild(el('path', { d: path(opt), fill: 'none', stroke: 'var(--accent)', 'stroke-width': 2.5, 'stroke-linejoin': 'round' }));
+
+    // month ticks
+    [0, 3, 6, 9, 12].forEach(i => {
+      lineChart.appendChild(el('text', { x: xOf(i), y: H - 10, 'text-anchor': 'middle', 'font-family': 'var(--mono)', 'font-size': 10, fill: 'var(--muted)' }, i === 0 ? 'Now' : 'M' + i));
+    });
+
+    // payback crossover marker
+    if (m.payback !== Infinity && m.payback >= 0 && m.payback <= months) {
+      const px = xOf(m.payback);
+      lineChart.appendChild(el('line', { x1: px, y1: padT, x2: px, y2: padT + plotH, stroke: 'var(--accent)', 'stroke-width': 1, 'stroke-dasharray': '4 3', opacity: 0.6 }));
+      lineChart.appendChild(el('circle', { cx: px, cy: yOf(m.baseMonthly * m.payback), r: 4.5, fill: 'var(--accent)', stroke: '#fff', 'stroke-width': 2 }));
+      const lblX = Math.min(px + 6, W - padR - 90);
+      lineChart.appendChild(el('text', { x: lblX, y: padT + 14, 'font-family': 'var(--mono)', 'font-size': 10, fill: 'var(--accent)', 'font-weight': 600 }, 'PAYBACK ' + (m.payback < 1 ? '<1' : m.payback.toFixed(1)) + ' MO'));
+    }
+
+    const yr1Cur = cur[months], yr1Opt = opt[months];
+    if (m.payback === Infinity) {
+      lineNote.innerHTML = `At these settings the AI spend doesn't pay back — <strong>raise an efficiency gain or trim the AI cost</strong> to find the crossover.`;
+    } else {
+      lineNote.innerHTML = `By month 12, AI-optimised cumulative profit reaches <strong>${money(yr1Opt)}</strong> vs <strong>${money(yr1Cur)}</strong> — a <em>${money(yr1Opt - yr1Cur)}</em> swing.`;
+    }
+  }
+
+  // ─── MAIN RECALC ────────────────────────────────────────────────
+  let raf = null;
+  function recalc() {
+    const m = model(state);
+    renderCards(m);
+    renderBars(m);
+    renderLine(m);
+    last = m;
+  }
+  let last = null;
+  function scheduleRecalc() {
+    if (raf) return;
+    raf = requestAnimationFrame(() => { raf = null; recalc(); });
+  }
+
+  // ─── BIND CONTROLS ──────────────────────────────────────────────
+  const ranges = {}, nums = {};
+  KEYS.forEach(k => {
+    ranges[k] = document.querySelector(`[data-range="${k}"]`);
+    nums[k] = document.querySelector(`[data-num="${k}"]`);
+  });
+  function clamp(k, v) {
+    const [lo, hi] = BOUNDS[k];
+    if (isNaN(v)) return DEFAULTS[k];
+    return Math.max(lo, Math.min(hi, v));
+  }
+  function syncControl(k) {
+    const v = state[k];
+    if (nums[k]) nums[k].value = v;
+    if (ranges[k]) {
+      // keep slider in range even when typed value exceeds slider max
+      const rMax = parseFloat(ranges[k].max);
+      ranges[k].value = Math.min(v, rMax);
+    }
+  }
+  KEYS.forEach(k => {
+    if (ranges[k]) ranges[k].addEventListener('input', () => {
+      state[k] = parseFloat(ranges[k].value) || 0;
+      if (nums[k]) nums[k].value = state[k];
+      scheduleRecalc();
+    });
+    if (nums[k]) nums[k].addEventListener('input', () => {
+      state[k] = clamp(k, parseFloat(nums[k].value));
+      if (ranges[k]) ranges[k].value = Math.min(state[k], parseFloat(ranges[k].max));
+      scheduleRecalc();
+    });
+    if (nums[k]) nums[k].addEventListener('blur', () => { syncControl(k); });
+  });
+
+  function syncAll() { KEYS.forEach(syncControl); }
+
+  // ─── RESET ──────────────────────────────────────────────────────
+  document.getElementById('simReset').addEventListener('click', () => {
+    Object.assign(state, DEFAULTS);
+    syncAll();
+    recalc();
+    history.replaceState(null, '', location.pathname);
+  });
+
+  // ─── SHARE LINK (state in URL hash) ─────────────────────────────
+  function encodeState() {
+    const ordered = KEYS.map(k => state[k]).join(',');
+    return btoa(ordered);
+  }
+  function decodeState(str) {
+    try {
+      const parts = atob(str).split(',').map(Number);
+      if (parts.length !== KEYS.length) return false;
+      KEYS.forEach((k, i) => { if (!isNaN(parts[i])) state[k] = clamp(k, parts[i]); });
+      return true;
+    } catch { return false; }
+  }
+  const exportStatus = document.getElementById('exportStatus');
+  function flash(msg, cls) {
+    exportStatus.textContent = msg;
+    exportStatus.className = 'sim-status ' + (cls || 'ok');
+    clearTimeout(flash._t);
+    flash._t = setTimeout(() => { exportStatus.textContent = ''; exportStatus.className = 'sim-status'; }, 3200);
+  }
+
+  document.getElementById('shareBtn').addEventListener('click', async () => {
+    const url = location.origin + location.pathname + '#s=' + encodeState();
+    history.replaceState(null, '', '#s=' + encodeState());
+    try {
+      await navigator.clipboard.writeText(url);
+      flash('Link copied to clipboard', 'ok');
+    } catch {
+      flash('Copy failed — link is in the address bar', 'is-error');
+    }
+  });
+
+  // ─── CSV EXPORT ─────────────────────────────────────────────────
+  document.getElementById('csvBtn').addEventListener('click', () => {
+    const m = last || model(state);
+    const rows = [
+      ['Zib Digital — AI Growth Simulator', ''],
+      ['Generated', new Date().toLocaleString('en-AU')],
+      ['', ''],
+      ['INPUT', 'VALUE'],
+      ['Monthly leads', state.leads],
+      ['Conversion rate (%)', state.conv],
+      ['Average deal value ($)', state.deal],
+      ['Monthly costs to deliver ($)', state.cost],
+      ['AI — more leads (%)', state.aiLeads],
+      ['AI — better conversion (%)', state.aiConv],
+      ['AI — costs reduced (%)', state.aiCost],
+      ['AI — time saved (hrs/mo)', state.aiHours],
+      ['AI — monthly cost ($)', state.aiSpend],
+      ['AI — one-time setup ($)', state.aiSetup],
+      ['Value of an hour ($)', state.hourRate],
+      ['', ''],
+      ['RESULT', 'CURRENT', 'AI-OPTIMISED'],
+      ['Monthly revenue', Math.round(m.curRevenue), Math.round(m.optRevenue)],
+      ['Monthly profit', Math.round(m.curProfit), Math.round(m.optProfit)],
+      ['Customers / month', m.curCustomers.toFixed(1), m.optCustomers.toFixed(1)],
+      ['', ''],
+      ['HEADLINE', 'VALUE'],
+      ['Extra annual profit ($)', Math.round(m.annualNet)],
+      ['Year-1 ROI on AI (%)', m.roi === Infinity ? 'n/a' : Math.round(m.roi)],
+      ['Payback (months)', m.payback === Infinity ? 'n/a' : m.payback.toFixed(1)],
+      ['Hours reclaimed / year', Math.round(m.hoursYear)],
+      ['Value of time reclaimed ($)', Math.round(m.timeValue)],
+    ];
+    const csv = rows.map(r => r.map(c => {
+      const s = String(c);
+      return /[",\n]/.test(s) ? '"' + s.replace(/"/g, '""') + '"' : s;
+    }).join(',')).join('\n');
+    const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'zib-ai-growth-scenario.csv';
+    a.click();
+    URL.revokeObjectURL(a.href);
+    flash('CSV downloaded', 'ok');
+  });
+
+  // ─── PRINT ──────────────────────────────────────────────────────
+  document.getElementById('printBtn').addEventListener('click', () => window.print());
+
+  // ─── MODAL (email me / book) ────────────────────────────────────
+  const modal = document.getElementById('simModal');
+  const simForm = document.getElementById('simForm');
+  const simSuccess = document.getElementById('simSuccess');
+  const simSubmit = document.getElementById('simSubmit');
+  const simFormStatus = document.getElementById('simFormStatus');
+  const modalEyebrow = document.getElementById('simModalEyebrow');
+  const modalTitle = document.getElementById('simModalTitle');
+  const modalBlurb = document.getElementById('simModalBlurb');
+  let modalIntent = 'email';
+
+  function openModal(intent) {
+    modalIntent = intent;
+    if (intent === 'book') {
+      modalEyebrow.textContent = 'Book a conversation';
+      modalTitle.innerHTML = 'Thirty minutes with a <em>growth partner.</em>';
+      modalBlurb.textContent = "We'll bring your full scenario to the call so you spend the time on the conversation, not the catch-up. A growth partner will be in touch within 24 hours.";
+      simSubmit.innerHTML = 'Request my call <span aria-hidden="true">→</span>';
+    } else {
+      modalEyebrow.textContent = 'Send my scenario';
+      modalTitle.innerHTML = 'Where should we <em>send your numbers?</em>';
+      modalBlurb.textContent = "Drop your details and we'll email a copy of this scenario. A growth partner will be in touch within 24 hours to pressure-test how to actually hit it.";
+      simSubmit.innerHTML = 'Send my scenario <span aria-hidden="true">→</span>';
+    }
+    simForm.hidden = false;
+    simSuccess.hidden = true;
+    modal.hidden = false;
+    modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => document.getElementById('simFirstname').focus(), 60);
+  }
+  function closeModal() {
+    modal.hidden = true;
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+  document.getElementById('emailBtn').addEventListener('click', () => openModal('email'));
+  document.getElementById('bookBtn').addEventListener('click', () => openModal('book'));
+  document.querySelectorAll('[data-close-modal]').forEach(b => b.addEventListener('click', closeModal));
+  document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modal.hidden) closeModal(); });
+
+  simForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const data = Object.fromEntries(new FormData(simForm).entries());
+    const firstname = (data.firstname || '').trim();
+    const email = (data.email || '').trim();
+    if (!firstname || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      simFormStatus.textContent = 'Enter a name and valid email';
+      simFormStatus.className = 'sim-status is-error';
+      return;
+    }
+    simSubmit.disabled = true;
+    simFormStatus.textContent = 'Sending…';
+    simFormStatus.className = 'sim-status';
+
+    const m = last || model(state);
+    try {
+      const res = await fetch('/api/growth-simulator', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstname, email,
+          company: data.company || '',
+          phone: data.phone || '',
+          intent: modalIntent,
+          inputs: { ...state },
+          results: {
+            curRevenue: m.curRevenue, curProfit: m.curProfit, curCustomers: m.curCustomers,
+            optRevenue: m.optRevenue, optProfit: m.optProfit, optCustomers: m.optCustomers,
+            profitUplift: m.profitUplift, annualNet: m.annualNet,
+            roi: m.roi === Infinity ? null : m.roi,
+            payback: m.payback === Infinity ? null : m.payback,
+            hoursYear: m.hoursYear, timeValue: m.timeValue,
+          },
+          shareUrl: location.origin + location.pathname + '#s=' + encodeState(),
+          sourceTag: document.querySelector('meta[name="zib:source-tag"]')?.content || 'AI Growth Simulator',
+        }),
+      });
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(json.error || `Request failed (${res.status})`);
+      simForm.hidden = true;
+      simSuccess.hidden = false;
+    } catch (err) {
+      simFormStatus.textContent = err.message || 'Submission failed — try again';
+      simFormStatus.className = 'sim-status is-error';
+      simSubmit.disabled = false;
+    }
+  });
+
+  // ─── INIT ───────────────────────────────────────────────────────
+  if (location.hash.startsWith('#s=')) decodeState(location.hash.slice(3));
+  syncAll();
+  recalc();
+})();
+</script>
+</body>
+</html>
