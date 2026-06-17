@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<title>ZiB OS · An operating system for business growth · Zib Digital</title>
+<meta name="description" content="ZiB OS — the commercial-intelligence suite from Zib Digital. Audit, forecast, score AI readiness, map automation and model growth, all in one place." />
+<meta name="zib:source-tag" content="ZiB OS" />
+<!-- @include _partials/head.html -->
+<style>
+.os-hero { padding: clamp(40px, 6vw, 92px) 0 clamp(8px, 1.5vw, 20px); }
+.os-hero .container { max-width: 1180px; }
+.os-hero .eyebrow {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: clamp(14px, 1.6vw, 20px);
+}
+.os-hero h1 {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(40px, 6vw, 78px);
+  line-height: 0.98;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+  margin: 0 0 clamp(14px, 1.8vw, 24px);
+  text-wrap: balance;
+  max-width: 17ch;
+}
+.os-hero h1 em { font-style: italic; color: var(--accent); font-weight: 400; }
+.os-hero p {
+  font-family: var(--display);
+  font-size: clamp(16px, 1.5vw, 19px);
+  line-height: 1.55;
+  color: var(--muted);
+  max-width: 60ch;
+}
+
+/* Partner branding */
+.partner-bar { display: none; }
+.partner-bar.is-active {
+  display: flex; align-items: center; gap: 15px;
+  margin-top: clamp(22px, 2.6vw, 30px);
+  padding: 12px 22px 12px 12px;
+  border: 0.5px solid var(--rule); border-radius: 999px;
+  background: #fff; width: max-content; max-width: 100%;
+}
+@media (max-width: 560px) { .partner-bar.is-active { width: auto; border-radius: 18px; } }
+.partner-photo {
+  width: 54px; height: 54px; border-radius: 50%; flex: none; overflow: hidden;
+  background: var(--accent-tint); display: grid; place-items: center;
+  font-family: var(--display); font-weight: 500; font-size: 18px; color: var(--accent);
+}
+.partner-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.partner-meta { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.partner-kicker { font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); }
+.partner-name { font-family: var(--display); font-weight: 500; font-size: 16px; letter-spacing: -0.01em; color: var(--ink); }
+.partner-sub { font-family: var(--display); font-size: 12.5px; line-height: 1.35; color: var(--muted); }
+.partner-sub a { color: var(--muted); border-bottom: 1px solid var(--rule-2); }
+.partner-sub a:hover { color: var(--accent); }
+
+/* Module grid */
+.os-modules { padding: clamp(28px, 4vw, 56px) 0 clamp(72px, 9vw, 120px); }
+.os-modules .container { max-width: 1180px; }
+.os-section-label {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--muted-2);
+  padding-bottom: 14px; margin-bottom: clamp(18px, 2vw, 26px);
+  border-bottom: 0.5px solid var(--rule);
+}
+.os-section-label:not(:first-child) { margin-top: clamp(36px, 4vw, 56px); }
+.os-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: clamp(14px, 1.8vw, 22px);
+}
+.os-card {
+  display: flex; flex-direction: column;
+  padding: clamp(22px, 2.6vw, 30px);
+  border: 0.5px solid var(--rule); border-radius: 18px;
+  background: #fff; text-align: left;
+  transition: border-color 220ms var(--ease), transform 220ms var(--ease), background 220ms var(--ease);
+  min-height: 200px;
+}
+a.os-card:hover { border-color: var(--ink); }
+@media (hover: hover) { a.os-card:hover { transform: translateY(-3px); } }
+.os-card .badge {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.13em;
+  text-transform: uppercase; color: var(--accent); margin-bottom: 12px;
+}
+.os-card h3 {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(20px, 2vw, 24px); line-height: 1.1;
+  letter-spacing: -0.02em; color: var(--ink); margin: 0 0 8px;
+}
+.os-card p {
+  font-family: var(--display); font-size: 14px; line-height: 1.5;
+  color: var(--muted); margin: 0;
+}
+.os-card .go {
+  margin-top: auto; padding-top: 18px;
+  font-family: var(--display); font-weight: 500; font-size: 14px; color: var(--ink);
+  display: inline-flex; align-items: center; gap: 7px;
+}
+.os-card.is-soon { background: var(--paper); border-style: dashed; }
+.os-card.is-soon .badge { color: var(--muted-2); }
+.os-card.is-soon h3 { color: var(--muted); }
+.os-card .soon-tag {
+  margin-top: auto; padding-top: 18px;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--muted-2);
+}
+
+/* Closer */
+.os-closer {
+  margin-top: clamp(40px, 5vw, 64px);
+  padding: clamp(28px, 3.4vw, 48px);
+  background: var(--ink); color: #fff; border-radius: 20px;
+  display: flex; justify-content: space-between; align-items: center;
+  gap: clamp(20px, 3vw, 40px); flex-wrap: wrap;
+}
+.os-closer .lbl { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+.os-closer h2 { font-family: var(--display); font-weight: 500; font-size: clamp(24px, 2.8vw, 34px); line-height: 1.1; letter-spacing: -0.025em; margin: 0; max-width: 22ch; text-wrap: balance; }
+.os-closer h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
+.os-cta {
+  flex: none; height: 56px; padding: 0 30px; border-radius: 999px;
+  background: var(--accent); color: var(--ink);
+  font-family: var(--display); font-weight: 500; font-size: 16px;
+  display: inline-flex; align-items: center; gap: 10px;
+  transition: background 200ms var(--ease), transform 200ms var(--ease);
+}
+@media (hover: hover) { .os-cta:hover { background: #fff; transform: translateY(-1px); } }
+</style>
+</head>
+<body>
+
+<!-- @include _partials/nav.html -->
+
+<main id="main">
+  <section class="os-hero">
+    <div class="container">
+      <div class="eyebrow">ZiB OS</div>
+      <h1>An operating system for <em>business growth.</em></h1>
+      <p>Not an agency tool — a commercial-intelligence suite. Audit your site, model your growth, score your AI readiness, map your automation and forecast the upside, all in one place. Built by Zib Digital.</p>
+
+      <div class="partner-bar" id="partnerBar">
+        <div class="partner-photo" id="partnerPhoto"></div>
+        <div class="partner-meta">
+          <span class="partner-kicker">Your growth partner</span>
+          <span class="partner-name" id="partnerName"></span>
+          <span class="partner-sub" id="partnerSub"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="os-modules">
+    <div class="container">
+
+      <div class="os-section-label">Live now</div>
+      <div class="os-grid">
+        <a class="os-card" href="/audit" data-tool>
+          <div class="badge">Diagnose</div>
+          <h3>AI Site Audit</h3>
+          <p>Drop a URL — a 10-page crawl, senior strategist read, hero rewrite and sample ad creative, streamed live in 30 seconds.</p>
+          <span class="go">Open <span aria-hidden="true">→</span></span>
+        </a>
+        <a class="os-card" href="/ai-growth-simulator" data-tool>
+          <div class="badge">Diagnose &amp; model</div>
+          <h3>AI Growth Simulator</h3>
+          <p>AI Opportunity Score, revenue leaks, industry benchmarks and a live current-vs-AI-optimised revenue, profit and payback model.</p>
+          <span class="go">Open <span aria-hidden="true">→</span></span>
+        </a>
+        <a class="os-card" href="/roi-calculator" data-tool>
+          <div class="badge">Forecast</div>
+          <h3>ROI Calculator</h3>
+          <p>Project monthly leads, revenue and ROI across SEO, Google Ads and paid social — based on your real margins and a plan you control.</p>
+          <span class="go">Open <span aria-hidden="true">→</span></span>
+        </a>
+        <a class="os-card" href="/meta-ads-lab" data-tool>
+          <div class="badge">Create</div>
+          <h3>Meta Ads Lab</h3>
+          <p>Generate and pressure-test Meta ad creative and copy against your offer before a dollar of spend goes out the door.</p>
+          <span class="go">Open <span aria-hidden="true">→</span></span>
+        </a>
+        <a class="os-card" href="/prompt-research" data-tool>
+          <div class="badge">Research</div>
+          <h3>Prompt Research</h3>
+          <p>See how AI search engines describe your market and your brand — and where you show up against competitors.</p>
+          <span class="go">Open <span aria-hidden="true">→</span></span>
+        </a>
+      </div>
+
+      <div class="os-section-label">Coming soon</div>
+      <div class="os-grid">
+        <div class="os-card is-soon">
+          <div class="badge">Assess</div>
+          <h3>AI Readiness</h3>
+          <p>How ready is your business to adopt AI? A short assessment scores you out of 100 and returns a tailored adoption roadmap.</p>
+          <span class="soon-tag">In build</span>
+        </div>
+        <div class="os-card is-soon">
+          <div class="badge">Map</div>
+          <h3>Automation Map</h3>
+          <p>Map what AI can take off your team's plate — across sales, marketing, ops and admin — ranked by impact and effort, with hours and dollars reclaimed.</p>
+          <span class="soon-tag">In build</span>
+        </div>
+      </div>
+
+      <div class="os-closer">
+        <div>
+          <div class="lbl">Where to start</div>
+          <h2>Not sure which one? <em>Run the 30-second audit.</em></h2>
+        </div>
+        <a class="os-cta" href="/audit" data-tool>Start with an audit <span aria-hidden="true">→</span></a>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<!-- @include _partials/footer.html -->
+<!-- @include _partials/scripts.html -->
+<script src="/assets/partners.js"></script>
+<script>
+(() => {
+  const PARTNERS = window.ZIB_PARTNERS || {};
+  const slug = new URLSearchParams(location.search).get('partner') || '';
+  const p = PARTNERS[slug];
+
+  // Carry the partner through to every tool so the whole suite stays branded.
+  if (slug && p) {
+    document.querySelectorAll('[data-tool]').forEach(a => {
+      const u = new URL(a.getAttribute('href'), location.origin);
+      u.searchParams.set('partner', slug);
+      a.setAttribute('href', u.pathname + u.search);
+    });
+
+    const initials = p.name.split(/[\s&]+/).filter(Boolean).slice(0, 2).map(w => w[0]).join('').toUpperCase();
+    const photo = document.getElementById('partnerPhoto');
+    photo.innerHTML = p.photo
+      ? `<img src="${p.photo}" alt="${p.name}" loading="lazy" onerror="this.parentNode.textContent='${initials}'">`
+      : initials;
+    document.getElementById('partnerName').textContent = p.name;
+    const bits = [];
+    if (p.email) bits.push(`<a href="mailto:${p.email}">${p.email}</a>`);
+    if (p.phone) bits.push(`<a href="tel:${p.phone}">${p.phone.replace(/^\+61/, '0')}</a>`);
+    document.getElementById('partnerSub').innerHTML = [p.title, bits.join(' · ')].filter(Boolean).join(' &nbsp;·&nbsp; ');
+    document.getElementById('partnerBar').classList.add('is-active');
+  }
+})();
+</script>
+</body>
+</html>
