@@ -71,6 +71,16 @@ const URGENCY_LABEL: Record<string, string> = {
 
 const clip = (s: string | undefined, n: number) => (s || "").trim().slice(0, n);
 
+// Word-safe clip for prospect-facing copy: never cuts mid-word, adds an
+// ellipsis only when it actually had to trim something.
+const clipWords = (s: string | undefined, n: number) => {
+  const t = (s || "").trim();
+  if (t.length <= n) return t;
+  const cut = t.slice(0, n);
+  const lastSpace = cut.lastIndexOf(" ");
+  return (lastSpace > n * 0.5 ? cut.slice(0, lastSpace) : cut).replace(/[\s,;:.—-]+$/, "") + "…";
+};
+
 export default async function handler(req: Request): Promise<Response> {
   if (req.method !== "POST") return json({ error: "Method not allowed" }, 405);
 
@@ -237,12 +247,12 @@ function parseTeaser(text: string): Teaser | null {
   let volume = Number(obj.volume);
   if (!isFinite(volume) || volume < 0 || volume > 5_000_000) volume = 0;
   const steps = Array.isArray(obj.nextSteps)
-    ? obj.nextSteps.filter((s: any) => typeof s === "string").map((s: string) => s.slice(0, 160)).slice(0, 3)
+    ? obj.nextSteps.filter((s: any) => typeof s === "string").slice(0, 3).map((s: string) => clipWords(s, 200))
     : [];
   return {
     volume: Math.round(volume),
-    volumeNote: typeof obj.volumeNote === "string" ? obj.volumeNote.slice(0, 160) : "",
-    channelRead: typeof obj.channelRead === "string" ? obj.channelRead.slice(0, 320) : "",
+    volumeNote: typeof obj.volumeNote === "string" ? clipWords(obj.volumeNote, 160) : "",
+    channelRead: typeof obj.channelRead === "string" ? clipWords(obj.channelRead, 320) : "",
     nextSteps: steps,
     confidence: ["low", "medium", "high"].includes(obj.confidence) ? obj.confidence : "medium",
   };
