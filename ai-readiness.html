@@ -1,0 +1,485 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<title>AI Readiness · ZiB OS · Zib Digital</title>
+<meta name="description" content="How ready is your business to adopt AI? Answer 8 quick questions for an AI Readiness Score out of 100 and a tailored adoption roadmap." />
+<meta name="zib:source-tag" content="AI Readiness" />
+<!-- @include _partials/head.html -->
+<style>
+input, button, textarea { font: inherit; color: inherit; }
+.skip-link { position:absolute; top:8px; left:8px; background:var(--ink); color:#fff; padding:12px 18px; border-radius:999px; font-family:var(--mono); font-size:11px; letter-spacing:0.14em; text-transform:uppercase; z-index:100; transform:translateY(-200%); transition:transform 200ms var(--ease); }
+.skip-link:focus { transform:translateY(0); outline:2px solid var(--accent); outline-offset:2px; }
+
+/* HERO */
+.ar-hero { padding: clamp(38px,5.4vw,80px) 0 clamp(8px,1.5vw,18px); }
+.ar-hero .container { max-width: 1020px; }
+.ar-hero .eyebrow { font-family:var(--mono); font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent); margin-bottom:clamp(14px,1.6vw,20px); }
+.ar-hero h1 { font-family:var(--display); font-weight:500; font-size:clamp(38px,5.4vw,72px); line-height:0.98; letter-spacing:-0.035em; color:var(--ink); margin:0 0 clamp(14px,1.6vw,22px); text-wrap:balance; max-width:17ch; }
+.ar-hero h1 em { font-style:italic; color:var(--accent); font-weight:400; }
+.ar-hero p { font-family:var(--display); font-size:clamp(16px,1.5vw,19px); line-height:1.55; color:var(--muted); max-width:60ch; }
+
+/* PARTNER BAR */
+.partner-bar { display:none; }
+.partner-bar.is-active { display:flex; align-items:center; gap:15px; margin-top:clamp(22px,2.6vw,30px); padding:12px 22px 12px 12px; border:0.5px solid var(--rule); border-radius:999px; background:#fff; width:max-content; max-width:100%; }
+@media (max-width:560px){ .partner-bar.is-active { width:auto; border-radius:18px; } }
+.partner-photo { width:54px; height:54px; border-radius:50%; flex:none; overflow:hidden; background:var(--accent-tint); display:grid; place-items:center; font-family:var(--display); font-weight:500; font-size:18px; color:var(--accent); }
+.partner-photo img { width:100%; height:100%; object-fit:cover; display:block; }
+.partner-meta { display:flex; flex-direction:column; gap:2px; min-width:0; }
+.partner-kicker { font-family:var(--mono); font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent); }
+.partner-name { font-family:var(--display); font-weight:500; font-size:16px; letter-spacing:-0.01em; color:var(--ink); }
+.partner-sub { font-family:var(--display); font-size:12.5px; line-height:1.35; color:var(--muted); }
+.partner-sub a { color:var(--muted); border-bottom:1px solid var(--rule-2); }
+.partner-sub a:hover { color:var(--accent); }
+
+/* WRAP */
+.ar-wrap { padding: clamp(20px,3vw,40px) 0 clamp(72px,9vw,120px); }
+.ar-wrap .container { max-width: 1020px; }
+.ar-panel { background:#fff; border:0.5px solid var(--rule); border-radius:20px; padding:clamp(24px,3.4vw,44px); }
+.ar-panel[hidden], .ar-results[hidden] { display:none; }
+
+.ar-panel-eyebrow { font-family:var(--mono); font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent); margin-bottom:12px; }
+.ar-panel h2 { font-family:var(--display); font-weight:500; font-size:clamp(24px,3.2vw,38px); line-height:1.05; letter-spacing:-0.025em; color:var(--ink); margin:0 0 10px; text-wrap:balance; }
+.ar-panel h2 em { font-style:italic; color:var(--accent); font-weight:400; }
+.ar-panel > .sub { font-family:var(--display); font-size:clamp(15px,1.4vw,17px); line-height:1.55; color:var(--muted); max-width:58ch; margin:0 0 clamp(24px,3vw,34px); }
+
+/* QUESTIONS */
+.q-block { padding: clamp(16px,2vw,22px) 0; border-top:0.5px solid var(--rule); }
+.q-block:first-of-type { border-top:0; padding-top:0; }
+.q-head { display:flex; gap:10px; align-items:baseline; margin-bottom:14px; }
+.q-num { font-family:var(--mono); font-size:11px; color:var(--accent); font-weight:600; flex:none; }
+.q-label { font-family:var(--display); font-weight:500; font-size:clamp(16px,1.5vw,18px); letter-spacing:-0.01em; color:var(--ink); }
+.q-options { display:grid; grid-template-columns: repeat(auto-fit, minmax(160px,1fr)); gap:10px; }
+.q-opt { padding:13px 15px; border:0.5px solid var(--rule-2); border-radius:12px; background:#fff; font-family:var(--display); font-size:14px; line-height:1.35; color:var(--ink); cursor:pointer; text-align:left; transition:border-color 160ms var(--ease), background 160ms var(--ease); }
+.q-opt:hover { border-color:var(--ink); }
+.q-opt.is-selected { border-color:var(--accent); background:var(--accent-tint); }
+.q-opt:focus-visible { outline:2px solid var(--accent); outline-offset:2px; }
+
+.ar-actions { display:flex; align-items:center; gap:16px; flex-wrap:wrap; margin-top:clamp(24px,3vw,32px); padding-top:clamp(20px,2.4vw,26px); border-top:0.5px solid var(--rule); }
+.ar-btn { height:52px; padding:0 28px; border-radius:999px; font-family:var(--display); font-weight:500; font-size:15px; cursor:pointer; display:inline-flex; align-items:center; gap:10px; border:0.5px solid var(--rule); background:#fff; color:var(--ink); transition:background 200ms var(--ease), color 200ms var(--ease), border-color 200ms var(--ease), transform 200ms var(--ease); white-space:nowrap; }
+.ar-btn:hover { border-color:var(--ink); background:var(--paper); }
+.ar-btn-primary { background:var(--ink); color:#fff; border-color:var(--ink); }
+@media (hover:hover){ .ar-btn-primary:hover:not(:disabled){ background:var(--accent); color:var(--ink); border-color:var(--accent); transform:translateY(-1px); } }
+.ar-btn:disabled { opacity:0.4; cursor:not-allowed; }
+.ar-hint { font-family:var(--display); font-size:13px; color:var(--muted); }
+
+/* RESULTS */
+.ar-results { display:grid; gap:clamp(16px,2vw,22px); }
+.score-card { padding:clamp(20px,2.4vw,30px); border:0.5px solid var(--rule); border-radius:18px; background:var(--ink); color:#fff; }
+.score-grid { display:grid; grid-template-columns:220px 1fr; gap:clamp(20px,3vw,40px); align-items:center; }
+@media (max-width:640px){ .score-grid { grid-template-columns:1fr; } }
+.score-ring-wrap { text-align:center; }
+.score-ring { width:200px; max-width:100%; height:auto; }
+.score-eyebrow { font-family:var(--mono); font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent); margin-bottom:14px; }
+.score-band { margin-top:12px; font-family:var(--display); font-size:14px; color:rgba(255,255,255,0.72); }
+.score-band strong { color:#fff; font-weight:500; }
+.dims { display:grid; gap:11px; }
+.dim-row { display:grid; grid-template-columns:148px 1fr 34px; gap:12px; align-items:center; }
+@media (max-width:420px){ .dim-row { grid-template-columns:110px 1fr 30px; gap:8px; } }
+.dim-label { font-family:var(--display); font-size:12.5px; color:rgba(255,255,255,0.8); }
+.dim-track { height:7px; border-radius:999px; background:rgba(255,255,255,0.14); overflow:hidden; }
+.dim-fill { height:100%; border-radius:999px; background:var(--accent); transition:width 400ms var(--ease); }
+.dim-fill.is-strong { background:#5ce08e; }
+.dim-val { font-family:var(--mono); font-size:12px; color:#fff; text-align:right; font-variant-numeric:tabular-nums; }
+
+.roadmap-card { padding:clamp(20px,2.4vw,30px); border:0.5px solid var(--rule); border-radius:16px; background:#fff; }
+.roadmap-card .lbl { font-family:var(--mono); font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent); margin-bottom:12px; }
+.roadmap-card h3 { font-family:var(--display); font-weight:500; font-size:clamp(20px,2.2vw,26px); letter-spacing:-0.02em; color:var(--ink); margin:0 0 6px; text-wrap:balance; }
+.roadmap-card > p { font-family:var(--display); font-size:14px; line-height:1.5; color:var(--muted); margin:0 0 18px; max-width:58ch; }
+.prio-list { display:grid; gap:12px; }
+.prio { display:flex; gap:14px; align-items:flex-start; padding:14px 16px; border:0.5px solid rgba(255,98,0,0.25); background:var(--accent-tint); border-radius:12px; }
+.prio .n { font-family:var(--display); font-weight:500; font-size:16px; color:var(--accent); flex:none; line-height:1.3; }
+.prio .t .d { font-family:var(--display); font-weight:500; font-size:14px; color:var(--ink); }
+.prio .t .r { font-family:var(--display); font-size:13.5px; line-height:1.5; color:var(--muted); margin-top:2px; }
+.full-list { margin-top:22px; padding-top:18px; border-top:0.5px solid var(--rule); display:grid; gap:14px; }
+.fl-row { display:grid; grid-template-columns:148px 1fr; gap:14px; }
+@media (max-width:560px){ .fl-row { grid-template-columns:1fr; gap:4px; } }
+.fl-row .d { font-family:var(--display); font-weight:500; font-size:13.5px; color:var(--ink); }
+.fl-row .r { font-family:var(--display); font-size:13.5px; line-height:1.5; color:var(--muted); }
+
+.export-card { padding:clamp(18px,2vw,26px); border:0.5px solid var(--rule); border-radius:16px; background:#fff; }
+.export-card .chart-title { font-family:var(--display); font-weight:500; font-size:16px; color:var(--ink); }
+.ar-export-row { display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; }
+.ar-status { font-family:var(--mono); font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); min-height:16px; margin-top:12px; }
+.ar-status.ok { color:#0a7d3c; } .ar-status.is-error { color:var(--accent); }
+
+.ar-closer { padding:clamp(24px,3vw,40px); background:var(--ink); color:#fff; border-radius:18px; }
+.ar-closer .lbl { font-family:var(--mono); font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent); margin-bottom:12px; }
+.ar-closer p { font-family:var(--display); font-size:clamp(18px,1.8vw,22px); line-height:1.4; letter-spacing:-0.015em; color:#fff; margin:0 0 clamp(18px,2vw,26px); max-width:52ch; text-wrap:balance; }
+.ar-closer p em { font-style:italic; color:var(--accent); }
+.ar-closer .ar-btn-primary { background:var(--accent); color:var(--ink); border-color:var(--accent); }
+.ar-closer .ar-btn-primary:hover { background:#fff; color:var(--ink); border-color:#fff; }
+.disclaimer { font-size:12px; color:var(--muted); font-family:var(--display); line-height:1.5; margin-top:6px; }
+
+/* MODAL */
+.ar-modal { position:fixed; inset:0; z-index:9999; display:grid; place-items:center; padding:24px; }
+.ar-modal[hidden]{ display:none; }
+.ar-modal-backdrop { position:absolute; inset:0; background:rgba(0,0,0,0.62); backdrop-filter:blur(4px); cursor:pointer; }
+.ar-modal-content { position:relative; background:#fff; border-radius:20px; padding:clamp(28px,4vw,44px); width:100%; max-width:560px; max-height:calc(100vh - 48px); overflow-y:auto; box-shadow:0 40px 120px -30px rgba(0,0,0,0.5); animation:ar-in 240ms var(--ease-spring); }
+@keyframes ar-in { from{opacity:0; transform:translateY(12px) scale(0.98);} to{opacity:1; transform:translateY(0) scale(1);} }
+.ar-modal-close { position:absolute; top:16px; right:16px; width:36px; height:36px; border-radius:50%; font-size:22px; line-height:1; color:var(--muted); cursor:pointer; background:none; border:0; }
+.ar-modal-close:hover { background:var(--paper); color:var(--ink); }
+.ar-modal-eyebrow { font-family:var(--mono); font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent); margin-bottom:12px; }
+.ar-modal-content h3 { font-family:var(--display); font-weight:500; font-size:clamp(22px,2.6vw,28px); line-height:1.1; letter-spacing:-0.025em; color:var(--ink); margin:0 0 12px; text-wrap:balance; }
+.ar-modal-content h3 em { font-style:italic; color:var(--accent); font-weight:400; }
+.ar-modal-content > p { font-family:var(--display); font-size:15px; line-height:1.55; color:var(--muted); margin:0 0 clamp(20px,2.4vw,26px); max-width:48ch; }
+.ar-form { display:grid; gap:16px; }
+.ar-form-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+@media (max-width:480px){ .ar-form-row { grid-template-columns:1fr; } }
+.ar-form .field { display:flex; flex-direction:column; }
+.ar-form .field label { font-family:var(--mono); font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); margin-bottom:6px; }
+.ar-form .field input { height:44px; font-family:var(--display); font-size:15px; color:var(--ink); border:0; border-bottom:1px solid var(--rule-2); outline:0; padding:0 0 8px; background:none; transition:border-color 200ms var(--ease); }
+.ar-form .field input:focus { border-bottom-color:var(--ink); }
+.ar-form .field input::placeholder { color:var(--muted-2); }
+.ar-form button[type="submit"]{ justify-self:flex-start; margin-top:4px; }
+.ar-success[hidden]{ display:none; }
+
+@media print {
+  .site-header, .header-spacer, .ar-actions, .ar-export-row, .ar-closer, footer, .skip-link, .ar-modal { display:none !important; }
+}
+</style>
+</head>
+<body>
+<a href="#assess" class="skip-link">Skip to content</a>
+
+<!-- @include _partials/nav.html -->
+
+<main id="main">
+  <section class="ar-hero">
+    <div class="container">
+      <div class="eyebrow">ZiB OS · AI Readiness</div>
+      <h1>How ready are you to <em>put AI to work?</em></h1>
+      <p>Eight quick questions. You'll get an AI Readiness Score out of 100, a breakdown across the eight things that matter, and a tailored roadmap of where to start — no jargon, no email required to see it.</p>
+
+      <div class="partner-bar" id="partnerBar">
+        <div class="partner-photo" id="partnerPhoto"></div>
+        <div class="partner-meta">
+          <span class="partner-kicker">Prepared by</span>
+          <span class="partner-name" id="partnerName"></span>
+          <span class="partner-sub" id="partnerSub"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ar-wrap" id="assess">
+    <div class="container">
+
+      <div class="ar-panel" id="quiz">
+        <div class="ar-panel-eyebrow">The assessment</div>
+        <h2>Answer honestly — <em>it's only useful if you do.</em></h2>
+        <p class="sub">Pick the option that best describes your business right now.</p>
+        <div id="questions"><!-- injected --></div>
+        <div class="ar-actions">
+          <button type="button" class="ar-btn ar-btn-primary" id="seeScore" disabled>See my readiness <span aria-hidden="true">→</span></button>
+          <span class="ar-hint" id="progressHint">0 of 8 answered</span>
+        </div>
+      </div>
+
+      <div class="ar-results" id="results" hidden>
+        <div id="scoreSection"></div>
+        <div id="roadmapSection"></div>
+
+        <div class="export-card">
+          <span class="chart-title">Save &amp; export your roadmap</span>
+          <div class="ar-export-row">
+            <button type="button" class="ar-btn ar-btn-primary" id="emailBtn">Email me my roadmap <span aria-hidden="true">→</span></button>
+            <button type="button" class="ar-btn" id="shareBtn">Copy share link</button>
+            <button type="button" class="ar-btn" id="printBtn">Print / PDF</button>
+            <button type="button" class="ar-btn" id="redoBtn">Start over</button>
+          </div>
+          <div class="ar-status" id="exportStatus">&nbsp;</div>
+          <p class="disclaimer">Indicative guidance based on your answers. Your growth partner will tailor it to your business.</p>
+        </div>
+
+        <div class="ar-closer">
+          <div class="lbl">The Zib read</div>
+          <p>A score is a mirror. <em>The roadmap is where the value is.</em> Walk through yours with a commercial partner who'll turn it into a 90-day plan you can actually run.</p>
+          <button type="button" class="ar-btn ar-btn-primary" id="bookBtn">Book a commercial conversation <span aria-hidden="true">→</span></button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="ar-modal" id="arModal" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="arModalTitle">
+    <div class="ar-modal-backdrop" data-close-modal></div>
+    <div class="ar-modal-content">
+      <button type="button" class="ar-modal-close" data-close-modal aria-label="Close">×</button>
+      <div class="ar-modal-eyebrow" id="arModalEyebrow">Send my roadmap</div>
+      <h3 id="arModalTitle">Where should we <em>send it?</em></h3>
+      <p id="arModalBlurb">Drop your details and we'll email your readiness score + roadmap, and a growth partner will be in touch within 24 hours.</p>
+      <form class="ar-form" id="arForm" autocomplete="on">
+        <div class="ar-form-row">
+          <div class="field"><label for="arFirstname">First name</label><input type="text" id="arFirstname" name="firstname" required autocomplete="given-name" placeholder="Jane" /></div>
+          <div class="field"><label for="arEmail">Work email</label><input type="email" id="arEmail" name="email" required autocomplete="email" placeholder="jane@yourcompany.com.au" /></div>
+        </div>
+        <div class="ar-form-row">
+          <div class="field"><label for="arCompany">Company <span style="color:var(--muted-2);">(optional)</span></label><input type="text" id="arCompany" name="company" autocomplete="organization" placeholder="Your business" /></div>
+          <div class="field"><label for="arPhone">Phone <span style="color:var(--muted-2);">(optional)</span></label><input type="tel" id="arPhone" name="phone" autocomplete="tel" placeholder="0400 000 000" /></div>
+        </div>
+        <button type="submit" class="ar-btn ar-btn-primary" id="arSubmit">Send my roadmap <span aria-hidden="true">→</span></button>
+        <div class="ar-status" id="arFormStatus">&nbsp;</div>
+      </form>
+      <div class="ar-success" id="arSuccess" hidden>
+        <div class="ar-modal-eyebrow" style="color:var(--accent);">All sent</div>
+        <h3>Thanks — it's on its way.</h3>
+        <p style="margin-bottom:18px;">Your readiness roadmap has been emailed across and a growth partner will be in touch within 24 hours.</p>
+        <button type="button" class="ar-btn" data-close-modal>Close</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- @include _partials/footer.html -->
+<!-- @include _partials/scripts.html -->
+<script src="/assets/partners.js"></script>
+<script>
+(() => {
+  const PARTNERS = window.ZIB_PARTNERS || {};
+
+  // ─── ASSESSMENT ─────────────────────────────────────────────────
+  const QUESTIONS = [
+    { key: 'data', name: 'Data & systems', label: 'Where does your business data live?',
+      opts: ['Scattered across spreadsheets & inboxes', 'A few disconnected tools', 'A central CRM, mostly tidy', 'Integrated, clean — one source of truth'] },
+    { key: 'process', name: 'Process docs', label: 'How documented are your day-to-day workflows?',
+      opts: ["Mostly in people's heads", 'A few notes here and there', 'Most key processes documented', 'Documented, followed and improved'] },
+    { key: 'tooling', name: 'Tooling & automation', label: 'Your software stack is…',
+      opts: ['Mostly manual / paper / email', 'Cloud tools, used in isolation', 'Connected tools, some automation', 'Automated and integrated'] },
+    { key: 'team', name: 'Team capability', label: "Your team's comfort with AI…",
+      opts: ['Sceptical or resistant', 'Curious but unsure', 'Keen — a few already using it', 'Confident, using it daily'] },
+    { key: 'leadership', name: 'Leadership & strategy', label: "Leadership's stance on AI…",
+      opts: ['Not on the radar', 'Interested, no plan yet', 'A plan and some budget', 'Funded priority with an owner'] },
+    { key: 'usecase', name: 'Use-case clarity', label: 'Do you know where AI would help you most?',
+      opts: ['No idea where to start', 'A vague sense', 'A few clear ideas', 'A prioritised list'] },
+    { key: 'datacapture', name: 'Data capture', label: 'How do you capture leads & customer interactions?',
+      opts: ['Mostly offline / not captured', 'Some captured, inconsistently', 'Most captured digitally', 'Everything captured & tracked'] },
+    { key: 'governance', name: 'Governance & risk', label: 'Data, privacy & AI guardrails…',
+      opts: ["Haven't thought about it", 'Aware, nothing formal', 'Some guidelines in place', 'A clear policy we follow'] },
+  ];
+  // Recommendations per dimension by bucket [low, mid, high].
+  const REC = {
+    data: ['Get to one source of truth — a CRM your whole team works from. AI is only as sharp as the data it can see.', 'Connect your core systems so customer data flows automatically — that’s the fuel for everything else.', 'Strong foundation — you’re ready to layer AI on clean, connected data.'],
+    process: ['Document your five highest-volume workflows — documented processes are exactly the ones AI can take over.', 'Turn your notes into followed SOPs; consistency is what makes automation reliable.', 'Well-documented — your automation candidates are already mapped.'],
+    tooling: ['Move core admin off paper/email into connected cloud tools — the first rung of the automation ladder.', 'Automate the hand-offs between the tools you already have before adding more.', 'Modern, integrated stack — AI agents will slot straight in.'],
+    team: ['Run a short AI-literacy session so the team sees leverage, not threat. Adoption is a people problem first.', 'Give your early-adopters real use cases and let them lead — momentum spreads.', 'Confident team — channel that into prioritised, high-impact use cases.'],
+    leadership: ["Put one person in charge of 'AI for growth' with a small budget — without an owner, nothing ships.", 'Turn interest into a funded 90-day plan with clear success metrics.', 'Funded and owned — you’re set up to move faster than competitors.'],
+    usecase: ["Start with the obvious wins: lead response, follow-up and reporting. Don't boil the ocean.", 'Rank your ideas by impact vs effort and commit to the top two.', 'Clear backlog — execution and measurement are the next step.'],
+    datacapture: ["Capture every lead and interaction digitally — you can't optimise what you don't record.", 'Close the gaps so capture is consistent across every channel.', 'Comprehensive capture — rich signal for AI to act on.'],
+    governance: ['Set simple ground rules for data and AI use now — a one-pager beats a policy vacuum.', 'Firm up your guidelines into something the team actually follows.', 'Clear guardrails — you can adopt AI with confidence.'],
+  };
+  const SCORE_STEPS = [0, 34, 67, 100]; // option index → dimension score
+
+  const answers = new Array(QUESTIONS.length).fill(null);
+
+  // ─── PARTNER BRANDING ───────────────────────────────────────────
+  let partner = '';
+  function applyPartner(slug) {
+    const p = PARTNERS[slug];
+    partner = p ? slug : '';
+    const bar = document.getElementById('partnerBar');
+    if (!p) { bar.classList.remove('is-active'); return; }
+    const initials = p.name.split(/[\s&]+/).filter(Boolean).slice(0, 2).map(w => w[0]).join('').toUpperCase();
+    document.getElementById('partnerPhoto').innerHTML = p.photo
+      ? `<img src="${p.photo}" alt="${p.name}" loading="lazy" onerror="this.parentNode.textContent='${initials}'">` : initials;
+    document.getElementById('partnerName').textContent = p.name;
+    const bits = [];
+    if (p.email) bits.push(`<a href="mailto:${p.email}">${p.email}</a>`);
+    if (p.phone) bits.push(`<a href="tel:${p.phone}">${p.phone.replace(/^\+61/, '0')}</a>`);
+    document.getElementById('partnerSub').innerHTML = [p.title, bits.join(' · ')].filter(Boolean).join(' &nbsp;·&nbsp; ');
+    bar.classList.add('is-active');
+    const bk = document.getElementById('bookBtn');
+    bk.innerHTML = `Book a commercial conversation with ${p.name.split(/[\s&]/)[0]} <span aria-hidden="true">→</span>`;
+  }
+
+  // ─── RENDER QUESTIONS ───────────────────────────────────────────
+  const qEl = document.getElementById('questions');
+  const seeScore = document.getElementById('seeScore');
+  const progressHint = document.getElementById('progressHint');
+  qEl.innerHTML = QUESTIONS.map((q, i) => `
+    <div class="q-block" data-q="${i}">
+      <div class="q-head"><span class="q-num">${i + 1}</span><span class="q-label">${q.label}</span></div>
+      <div class="q-options">
+        ${q.opts.map((o, j) => `<button type="button" class="q-opt" data-q="${i}" data-opt="${j}">${o}</button>`).join('')}
+      </div>
+    </div>`).join('');
+
+  qEl.querySelectorAll('.q-opt').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const i = +btn.dataset.q, j = +btn.dataset.opt;
+      answers[i] = j;
+      qEl.querySelectorAll(`.q-opt[data-q="${i}"]`).forEach(b => b.classList.toggle('is-selected', b === btn));
+      const done = answers.filter(a => a !== null).length;
+      progressHint.textContent = `${done} of ${QUESTIONS.length} answered`;
+      seeScore.disabled = done < QUESTIONS.length;
+    });
+  });
+
+  // ─── COMPUTE + RENDER ───────────────────────────────────────────
+  const quiz = document.getElementById('quiz');
+  const results = document.getElementById('results');
+  const scoreSection = document.getElementById('scoreSection');
+  const roadmapSection = document.getElementById('roadmapSection');
+  let lastResult = null;
+
+  function bucket(score) { return score <= 34 ? 0 : score <= 67 ? 1 : 2; }
+
+  function compute() {
+    const dims = QUESTIONS.map((q, i) => ({ key: q.key, name: q.name, score: SCORE_STEPS[answers[i]] ?? 0 }));
+    const score = Math.round(dims.reduce((a, d) => a + d.score, 0) / dims.length);
+    const band = score >= 80 ? { t: 'AI-ready', s: "You're set up to lead — now scale it." }
+      : score >= 60 ? { t: 'Advancing', s: "You're ahead of most. Now compound it." }
+      : score >= 35 ? { t: 'Emerging', s: 'The pieces are forming — sequence them and you’ll move fast.' }
+      : { t: 'Foundational', s: 'Groundwork first — and that’s the fastest ROI.' };
+    // 3 lowest dimensions = where to start
+    const priorities = [...dims].sort((a, b) => a.score - b.score).slice(0, 3);
+    return { dims, score, band, priorities };
+  }
+
+  function renderScore(r) {
+    const C = 326.7, off = C * (1 - r.score / 100);
+    const ring = `<svg class="score-ring" viewBox="0 0 120 120" role="img" aria-label="AI Readiness Score ${r.score} out of 100">
+      <circle cx="60" cy="60" r="52" fill="none" stroke="rgba(255,255,255,0.14)" stroke-width="10"/>
+      <circle cx="60" cy="60" r="52" fill="none" stroke="var(--accent)" stroke-width="10" stroke-linecap="round" stroke-dasharray="${C}" stroke-dashoffset="${off.toFixed(1)}" transform="rotate(-90 60 60)"/>
+      <text x="60" y="58" text-anchor="middle" font-family="var(--display)" font-weight="500" font-size="34" fill="#fff">${r.score}</text>
+      <text x="60" y="77" text-anchor="middle" font-family="var(--mono)" font-size="9" letter-spacing="0.1em" fill="rgba(255,255,255,0.6)">/ 100</text>
+    </svg>`;
+    const bars = r.dims.map(d => `<div class="dim-row"><span class="dim-label">${d.name}</span><span class="dim-track"><span class="dim-fill ${d.score >= 67 ? 'is-strong' : ''}" style="width:${d.score}%"></span></span><span class="dim-val">${d.score}</span></div>`).join('');
+    scoreSection.innerHTML = `<div class="score-card"><div class="score-grid">
+      <div class="score-ring-wrap"><div class="score-eyebrow">AI Readiness Score</div>${ring}<div class="score-band"><strong>${r.band.t}</strong> · ${r.band.s}</div></div>
+      <div><div class="dims">${bars}</div></div>
+    </div></div>`;
+  }
+
+  function renderRoadmap(r) {
+    const prio = r.priorities.map((d, i) => `<div class="prio"><span class="n">${i + 1}</span><span class="t"><span class="d">${d.name}</span><span class="r">${REC[d.key][bucket(d.score)]}</span></span></div>`).join('');
+    const full = r.dims.map(d => `<div class="fl-row"><span class="d">${d.name}</span><span class="r">${REC[d.key][bucket(d.score)]}</span></div>`).join('');
+    roadmapSection.innerHTML = `<div class="roadmap-card">
+      <div class="lbl">Your roadmap · start here</div>
+      <h3>Three moves that’ll lift your score fastest</h3>
+      <p>Ranked by where you have the most ground to make up. Nail these before anything shiny.</p>
+      <div class="prio-list">${prio}</div>
+      <div class="full-list">${full}</div>
+    </div>`;
+  }
+
+  function showResults() {
+    const r = compute();
+    lastResult = r;
+    renderScore(r);
+    renderRoadmap(r);
+    quiz.hidden = true;
+    results.hidden = false;
+    window.scrollTo({ top: document.getElementById('assess').offsetTop - 20, behavior: 'smooth' });
+  }
+  seeScore.addEventListener('click', () => { if (answers.every(a => a !== null)) { syncUrl(); showResults(); } });
+
+  // ─── SHARE LINK (answers + partner) ─────────────────────────────
+  function buildShareUrl() {
+    const a = answers.map(x => (x == null ? '' : x)).join('');
+    const q = partner ? '?partner=' + encodeURIComponent(partner) : '';
+    return location.origin + location.pathname + q + (a.length === QUESTIONS.length ? '#a=' + a : '');
+  }
+  function syncUrl() {
+    const a = answers.join('');
+    history.replaceState(null, '', (partner ? '?partner=' + partner : location.pathname) + '#a=' + a);
+  }
+  const exportStatus = document.getElementById('exportStatus');
+  function flash(msg, cls) {
+    exportStatus.textContent = msg; exportStatus.className = 'ar-status ' + (cls || 'ok');
+    clearTimeout(flash._t); flash._t = setTimeout(() => { exportStatus.textContent = ''; exportStatus.className = 'ar-status'; }, 3200);
+  }
+  document.getElementById('shareBtn').addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(buildShareUrl()); flash('Link copied to clipboard', 'ok'); }
+    catch { flash('Copy failed — link is in the address bar', 'is-error'); }
+  });
+  document.getElementById('printBtn').addEventListener('click', () => window.print());
+  document.getElementById('redoBtn').addEventListener('click', () => {
+    answers.fill(null);
+    qEl.querySelectorAll('.q-opt').forEach(b => b.classList.remove('is-selected'));
+    seeScore.disabled = true; progressHint.textContent = `0 of ${QUESTIONS.length} answered`;
+    results.hidden = true; quiz.hidden = false;
+    history.replaceState(null, '', partner ? '?partner=' + partner : location.pathname);
+    window.scrollTo({ top: document.getElementById('assess').offsetTop - 20, behavior: 'smooth' });
+  });
+
+  // ─── MODAL (email / book) ───────────────────────────────────────
+  const modal = document.getElementById('arModal');
+  const form = document.getElementById('arForm');
+  const success = document.getElementById('arSuccess');
+  const submitBtn = document.getElementById('arSubmit');
+  const formStatus = document.getElementById('arFormStatus');
+  const mEyebrow = document.getElementById('arModalEyebrow');
+  const mTitle = document.getElementById('arModalTitle');
+  const mBlurb = document.getElementById('arModalBlurb');
+  let intent = 'email';
+
+  function openModal(which) {
+    intent = which;
+    const p = partner ? PARTNERS[partner] : null;
+    const who = p ? p.name.split(/[\s&]/)[0] : 'a growth partner';
+    if (which === 'book') {
+      mEyebrow.textContent = 'Book a conversation';
+      mTitle.innerHTML = p ? `Thirty minutes with <em>${p.name.split(/[\s&]/)[0]}.</em>` : 'Thirty minutes with a <em>growth partner.</em>';
+      mBlurb.textContent = `We'll bring your readiness roadmap to the call. ${p ? p.name.split(/[\s&]/)[0] : 'A growth partner'} will be in touch within 24 hours.`;
+      submitBtn.innerHTML = 'Request my call <span aria-hidden="true">→</span>';
+    } else {
+      mEyebrow.textContent = 'Send my roadmap';
+      mTitle.innerHTML = 'Where should we <em>send it?</em>';
+      mBlurb.textContent = `Drop your details and we'll email your readiness score + roadmap. ${who.charAt(0).toUpperCase() + who.slice(1)} will be in touch within 24 hours.`;
+      submitBtn.innerHTML = 'Send my roadmap <span aria-hidden="true">→</span>';
+    }
+    form.hidden = false; success.hidden = true;
+    modal.hidden = false; modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => document.getElementById('arFirstname').focus(), 60);
+  }
+  function closeModal() { modal.hidden = true; modal.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; }
+  document.getElementById('emailBtn').addEventListener('click', () => openModal('email'));
+  document.getElementById('bookBtn').addEventListener('click', () => openModal('book'));
+  document.querySelectorAll('[data-close-modal]').forEach(b => b.addEventListener('click', closeModal));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !modal.hidden) closeModal(); });
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const data = Object.fromEntries(new FormData(form).entries());
+    const firstname = (data.firstname || '').trim(), email = (data.email || '').trim();
+    if (!firstname || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { formStatus.textContent = 'Enter a name and valid email'; formStatus.className = 'ar-status is-error'; return; }
+    submitBtn.disabled = true; formStatus.textContent = 'Sending…'; formStatus.className = 'ar-status';
+    const r = lastResult || compute();
+    try {
+      const res = await fetch('/api/ai-readiness', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstname, email, company: data.company || '', phone: data.phone || '',
+          intent, score: r.score, band: r.band.t,
+          dims: r.dims, priorities: r.priorities.map(d => d.name),
+          answers, partner: partner || '',
+          partnerName: partner && PARTNERS[partner] ? PARTNERS[partner].name : '',
+          shareUrl: buildShareUrl(),
+          sourceTag: document.querySelector('meta[name="zib:source-tag"]')?.content || 'AI Readiness',
+        }),
+      });
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(json.error || `Request failed (${res.status})`);
+      form.hidden = true; success.hidden = false;
+    } catch (err) { formStatus.textContent = err.message || 'Submission failed — try again'; formStatus.className = 'ar-status is-error'; submitBtn.disabled = false; }
+  });
+
+  // ─── INIT ───────────────────────────────────────────────────────
+  applyPartner(new URLSearchParams(location.search).get('partner') || '');
+  // Restore from a shared link (#a=01230123)
+  const hash = location.hash.match(/^#a=([0-3]{8})$/);
+  if (hash) {
+    hash[1].split('').forEach((c, i) => {
+      answers[i] = +c;
+      const btn = qEl.querySelector(`.q-opt[data-q="${i}"][data-opt="${c}"]`);
+      if (btn) btn.classList.add('is-selected');
+    });
+    progressHint.textContent = `${QUESTIONS.length} of ${QUESTIONS.length} answered`;
+    seeScore.disabled = false;
+    showResults();
+  }
+})();
+</script>
+</body>
+</html>
