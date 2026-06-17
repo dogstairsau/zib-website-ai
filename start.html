@@ -2,7 +2,7 @@
 <html lang="en-AU">
 <head>
 <title>Quick start · Pre-discovery · Zib Digital</title>
-<meta name="description" content="Answer a few quick questions before our call so we walk in already useful — and get an instant, indicative read on the size of your opportunity." />
+<meta name="description" content="A few quick questions before our call — so we show up already knowing your business, and you get an instant, indicative read on the size of your opportunity." />
 <meta name="robots" content="noindex, follow" />
 <meta name="zib:source-tag" content="Pre-discovery Qualifier" />
 <!-- @include _partials/head.html -->
@@ -136,7 +136,7 @@ input, button, textarea, select { font: inherit; color: inherit; }
   <section class="pq-hero">
     <div class="container">
       <div class="eyebrow">Pre-discovery · 2-3 minutes</div>
-      <h1>Answer a few quick questions <em>so we walk in already useful.</em></h1>
+      <h1>A few quick questions <em>before our call.</em></h1>
       <p>A handful of plain questions before our call. You'll get an instant, high-level read on the size of your opportunity — and we'll show up already knowing your business.</p>
 
       <div class="partner-bar" id="partnerBar">
@@ -314,10 +314,9 @@ input, button, textarea, select { font: inherit; color: inherit; }
         </div>
 
         <div class="pq-closer">
-          <div class="lbl">Next step</div>
-          <p>Want us to turn this into <em>a proper audit?</em> Lock in your call and we'll walk you through exactly where the opportunity is.</p>
-          <button type="button" class="pq-btn pq-btn-primary" id="bookBtn">Lock in my call <span aria-hidden="true">→</span></button>
-          <p class="disclaimer">This snapshot is a rough, indicative read built from what you told us — not a full audit. Your growth partner will pressure-test it on the call.</p>
+          <div class="lbl">See you on the call</div>
+          <p>We've got this in front of us for our chat — we'll dig into <em>where the real opportunity is</em> together.</p>
+          <p class="disclaimer">An indicative read built from what you told us — not a full audit. We'll pressure-test it properly when we talk.</p>
         </div>
       </div>
 
@@ -479,22 +478,6 @@ input, button, textarea, select { font: inherit; color: inherit; }
     document.getElementById('teaserChannel').hidden = !(t && t.channelRead);
   }
 
-  function setupBookCta() {
-    const p = partner ? PARTNERS[partner] : null;
-    const btn = document.getElementById('bookBtn');
-    if (p) {
-      const who = p.name.split(/[\s&]/)[0];
-      btn.innerHTML = `Lock in my call with ${who} <span aria-hidden="true">→</span>`;
-      if (p.email) {
-        btn.addEventListener('click', () => {
-          location.href = `mailto:${p.email}?subject=${encodeURIComponent('Book my discovery call')}`;
-        });
-        return;
-      }
-    }
-    btn.addEventListener('click', () => { location.href = '/contact'; });
-  }
-
   quiz.addEventListener('submit', async (e) => {
     e.preventDefault();
     const err = validateStep(0);
@@ -515,6 +498,10 @@ input, button, textarea, select { font: inherit; color: inherit; }
 
     quiz.hidden = true;
     loading.hidden = false;
+    // Scroll to the spinner straight away — the form just collapsed from a tall
+    // step to a short panel, so without this the viewport is left stranded in
+    // empty space and it looks like nothing happened.
+    window.scrollTo({ top: document.getElementById('start').offsetTop - 20, behavior: 'smooth' });
     let teaser = null;
     try {
       const res = await fetch('/api/start', {
@@ -526,7 +513,6 @@ input, button, textarea, select { font: inherit; color: inherit; }
     } catch (_) { /* fail open — still show the prospect a teaser */ }
 
     renderTeaser(teaser, payload.locations);
-    setupBookCta();
     loading.hidden = true;
     results.hidden = false;
     window.scrollTo({ top: document.getElementById('start').offsetTop - 20, behavior: 'smooth' });
