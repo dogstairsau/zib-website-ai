@@ -11,6 +11,7 @@
 import { readFile, writeFile, readdir, mkdir, rm, copyFile, stat } from "node:fs/promises";
 import { join, dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
+import { createHash } from "node:crypto";
 
 const ROOT = fileURLToPath(new URL(".", import.meta.url));
 const OUT = join(ROOT, "dist");
@@ -18,6 +19,37 @@ const OUT = join(ROOT, "dist");
 // Canonical host for the new site (replaces the old WP domain).
 const HOST = "https://zibdigital.com.au";
 const OG_IMAGE = `${HOST}/assets/og-default.png`;
+
+// Cache-bust shared assets that are referenced (not hashed) across every page.
+// base.css/fonts.css have stable URLs, so without a version query a browser or
+// CDN can keep serving a stale copy after a deploy — which silently breaks
+// newer CSS (e.g. the mobile nav dropdown rules). We append ?v=<content-hash>
+// so any change to the file produces a fresh URL.
+const VERSIONED_ASSETS = ["assets/base.css", "assets/fonts.css", "assets/partners.js"];
+const ASSET_VERSIONS = new Map(); // "/assets/base.css" -> "?v=abcd1234"
+
+async function computeAssetVersions() {
+  for (const rel of VERSIONED_ASSETS) {
+    try {
+      const buf = await readFile(join(ROOT, rel));
+      const hash = createHash("sha1").update(buf).digest("hex").slice(0, 8);
+      ASSET_VERSIONS.set(`/${rel}`, `?v=${hash}`);
+    } catch (e) {
+      if (e.code !== "ENOENT") throw e;
+    }
+  }
+}
+
+/** Append ?v=<hash> to references of the versioned assets in a page. */
+function bustAssetCache(html) {
+  let out = html;
+  for (const [path, ver] of ASSET_VERSIONS) {
+    // Match href/src="/assets/x.css" that doesn't already carry a query.
+    const re = new RegExp(`((?:href|src)=["'])${path.replace(/[.]/g, "\\$&")}(["'?])`, "g");
+    out = out.replace(re, (_m, pre, tail) => `${pre}${path}${ver}${tail === "?" ? "&" : tail}`);
+  }
+  return out;
+}
 
 const decode = (s) => s
   .replace(/&amp;/g, "&").replace(/&lt;/g, "<").replace(/&gt;/g, ">")
@@ -203,7 +235,7 @@ async function processHtmlTree(srcDir, destDir, counter) {
     const html = await readFile(join(srcDir, entry.name), "utf8");
     const expanded = await expand(html);
     const rel = join(destDir, entry.name).slice(OUT.length + 1);
-    const withHead = injectHead(expanded, rel);
+    const withHead = bustAssetCache(injectHead(expanded, rel));
     await writeFile(join(destDir, entry.name), withHead, "utf8");
     counter.count++;
     console.log(`  ✓ ${rel}`);
@@ -214,6 +246,9 @@ async function build() {
   const start = Date.now();
   await rm(OUT, { recursive: true, force: true });
   await mkdir(OUT, { recursive: true });
+
+  // Hash shared assets up front so every page can reference a versioned URL.
+  await computeAssetVersions();
 
   // Copy static asset folders
   await copyDir(join(ROOT, "assets"), join(OUT, "assets"));
