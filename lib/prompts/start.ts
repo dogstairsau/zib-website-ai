@@ -53,6 +53,6 @@ export const teaserUserPrompt = (d: TeaserInput) =>
   `cost-per-opportunity framing; for SEO note they're likely missing ` +
   `non-branded demand; for Social frame reach-to-customer; for 'Not sure' ` +
   `recommend the most likely best-fit channel and why — all in plain English>",` +
-  `"nextSteps": ["<2-3 plain bullets of what Zib would look at next>"],` +
+  `"nextSteps": ["<2-3 plain bullets of what Zib would look at next, each a complete thought of ≤ 18 words / one short line>"],` +
   `"confidence": "low|medium|high"}\n` +
   `Keep volume realistic (0 to 5,000,000). Never invent precision.`;
