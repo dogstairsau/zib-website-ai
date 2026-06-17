@@ -16,6 +16,9 @@
     },
     "api/growth-benchmarks.ts": {
       "maxDuration": 30
+    },
+    "api/start.ts": {
+      "maxDuration": 30
     }
   },
   "redirects": [

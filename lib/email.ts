@@ -195,6 +195,171 @@ function esc(s: string): string {
     .replace(/"/g, "&quot;");
 }
 
+// ─── Pre-discovery qualifier email (/start) ─────────────────────────
+// Internal notification to the partner. Carries the prospect's answers, the
+// indicative teaser they saw, and the behind-the-scenes qualification (RAG,
+// opportunity + confidence scores, recommended next action). No HubSpot for
+// now — the partner gets the lead straight to their inbox.
+
+export type QualifierLead = {
+  business: string;
+  website: string;
+  name: string;
+  email: string;
+  phone: string;
+  locations: string;
+  industry: string;
+  keywords: string;
+  frustration: string;
+  extra: string;
+  goal: string;
+  channel: string;
+  urgency: string;
+  dealValue: string;
+  spend: string;
+  running: string;
+  partnerName: string;
+  prospectFor: string;
+  sourceTag: string;
+};
+
+export type QualifierQualification = {
+  rag: "green" | "yellow" | "red";
+  opportunityScore: number;
+  confidence: number;
+  nextAction: string;
+  completeness: number;
+  reasons: string[];
+};
+
+export type QualifierTeaser = {
+  volume: number;
+  volumeNote: string;
+  channelRead: string;
+  nextSteps: string[];
+  confidence: string;
+} | null;
+
+export async function sendQualifierEmail(payload: {
+  lead: QualifierLead;
+  qualification: QualifierQualification;
+  teaser: QualifierTeaser;
+}): Promise<void> {
+  const apiKey = process.env.RESEND_API_KEY;
+  const from = process.env.LEAD_NOTIFY_FROM || "onboarding@resend.dev";
+  const to = process.env.LEAD_NOTIFY_EMAIL;
+
+  if (!apiKey || !to) {
+    console.log("[qualifier:stub]", {
+      business: payload.lead.business,
+      email: payload.lead.email,
+      rag: payload.qualification.rag,
+      opportunity: payload.qualification.opportunityScore,
+    });
+    return;
+  }
+
+  const { lead, qualification } = payload;
+  const ragWord = { green: "GREEN", yellow: "YELLOW", red: "RED" }[qualification.rag];
+  const subject = `Pre-discovery · ${ragWord} · ${lead.business} · ${lead.email}`;
+  const html = renderQualifierHtml(payload);
+
+  try {
+    const res = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ from, to, subject, html }),
+      signal: AbortSignal.timeout(10_000),
+    });
+    if (!res.ok) {
+      const b = await res.text().catch(() => "");
+      console.warn("[qualifier] Resend error:", res.status, b.slice(0, 200));
+    }
+  } catch (e) {
+    console.warn("[qualifier] fetch failed:", (e as Error).message);
+  }
+}
+
+function renderQualifierHtml(p: {
+  lead: QualifierLead;
+  qualification: QualifierQualification;
+  teaser: QualifierTeaser;
+}): string {
+  const { lead: l, qualification: q, teaser: t } = p;
+  const safe = (s: string | undefined) => esc(s || "");
+  const ragColor = { green: "#0BAB6E", yellow: "#FF9D00", red: "#E03A3A" }[q.rag];
+  const ragLabel = { green: "Green · strong fit", yellow: "Yellow · needs clarifying", red: "Red · low fit" }[q.rag];
+
+  const row = (k: string, v: string, link?: string) =>
+    `<tr><td style="padding:6px 12px 6px 0;color:#6B6B6B;width:150px;vertical-align:top;">${k}</td><td style="padding:6px 0;">${link ? `<a href="${link}">${v}</a>` : v}</td></tr>`;
+
+  const teaserBlock = t
+    ? `
+  <h2 style="font-size:16px;margin:24px 0 8px;">Teaser the prospect saw</h2>
+  <div style="font-size:14px;line-height:1.6;color:#1A1A1A;background:#FAFAF8;border:1px solid #E8E5DD;border-radius:8px;padding:16px;">
+    <div style="font-weight:600;margin-bottom:6px;">Indicative monthly demand: ${t.volume > 0 ? `~${t.volume.toLocaleString("en-AU")}` : "n/a"}${t.volumeNote ? ` <span style="color:#6B6B6B;font-weight:400;">(${safe(t.volumeNote)})</span>` : ""}</div>
+    ${t.channelRead ? `<div style="margin-bottom:8px;">${safe(t.channelRead)}</div>` : ""}
+    ${t.nextSteps && t.nextSteps.length ? `<ul style="margin:6px 0 0;padding-left:18px;">${t.nextSteps.map((s) => `<li>${safe(s)}</li>`).join("")}</ul>` : ""}
+    <div style="font-size:11px;color:#9C9C9C;margin-top:10px;text-transform:uppercase;letter-spacing:0.06em;">Teaser confidence: ${safe(t.confidence)}</div>
+  </div>`
+    : `<p style="font-size:13px;color:#9C9C9C;margin:18px 0;">No teaser generated (lookup unavailable). Prospect saw the qualitative fallback.</p>`;
+
+  return `<!doctype html>
+<html><body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;line-height:1.55;color:#0F0F0F;max-width:680px;margin:0 auto;padding:24px;">
+  <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#FF6200;font-weight:600;margin-bottom:8px;">Zib Digital · Pre-discovery qualifier</div>
+  <h1 style="font-size:22px;margin:0 0 4px;">${safe(l.business)}</h1>
+  <p style="color:#6B6B6B;margin:0 0 20px;">${safe(l.industry) || "New pre-discovery lead"}</p>
+
+  <div style="display:inline-block;padding:8px 16px;border-radius:999px;background:${ragColor};color:#fff;font-weight:600;font-size:13px;letter-spacing:0.04em;margin-bottom:18px;">${ragLabel}</div>
+
+  <table style="border-collapse:collapse;width:100%;margin-bottom:20px;font-size:14px;background:#FAFAF8;border:1px solid #E8E5DD;border-radius:8px;overflow:hidden;">
+    ${row("Recommended action", `<strong>${safe(q.nextAction)}</strong>`)}
+    ${row("Opportunity score", `${q.opportunityScore}/100`)}
+    ${row("Confidence score", `${q.confidence}/100`)}
+    ${row("Completeness", `${q.completeness}%`)}
+  </table>
+
+  <h2 style="font-size:16px;margin:0 0 8px;">Why</h2>
+  <ul style="margin:0 0 20px;padding-left:18px;font-size:13.5px;color:#1A1A1A;">
+    ${q.reasons.map((r) => `<li>${safe(r)}</li>`).join("")}
+  </ul>
+  <p style="font-size:12px;color:#9C9C9C;margin:-10px 0 24px;font-style:italic;">RAG + scores are indicative — a human still makes the call. Nothing here auto-declines anyone.</p>
+
+  <h2 style="font-size:16px;margin:0 0 8px;">Contact</h2>
+  <table style="border-collapse:collapse;width:100%;margin-bottom:8px;font-size:14px;">
+    ${row("Name", safe(l.name))}
+    ${row("Email", safe(l.email), `mailto:${safe(l.email)}`)}
+    ${l.phone ? row("Phone", safe(l.phone), `tel:${safe(l.phone)}`) : ""}
+    ${l.website ? row("Website", safe(l.website), safe(l.website)) : ""}
+    ${l.locations ? row("Target locations", safe(l.locations)) : ""}
+    ${l.partnerName ? row("Routed to partner", safe(l.partnerName)) : ""}
+    ${l.prospectFor ? row("Personalised for", safe(l.prospectFor)) : ""}
+  </table>
+
+  <h2 style="font-size:16px;margin:24px 0 8px;">What they want</h2>
+  <table style="border-collapse:collapse;width:100%;margin-bottom:8px;font-size:14px;">
+    ${row("Primary goal", safe(l.goal))}
+    ${row("Channel interest", safe(l.channel))}
+    ${row("Timeframe", safe(l.urgency))}
+    ${l.keywords ? row("Wants to be found for", safe(l.keywords)) : ""}
+  </table>
+
+  <h2 style="font-size:16px;margin:24px 0 8px;">Fit &amp; scale</h2>
+  <table style="border-collapse:collapse;width:100%;margin-bottom:8px;font-size:14px;">
+    ${row("Avg deal value", safe(l.dealValue))}
+    ${row("Monthly spend", safe(l.spend))}
+    ${row("Running ads/SEO now", safe(l.running))}
+  </table>
+
+  ${l.frustration ? `<h2 style="font-size:16px;margin:24px 0 8px;">Biggest frustration</h2><div style="white-space:pre-wrap;font-size:14px;line-height:1.6;background:#FAFAF8;border:1px solid #E8E5DD;border-radius:8px;padding:14px;">${safe(l.frustration)}</div>` : ""}
+  ${l.extra ? `<h2 style="font-size:16px;margin:24px 0 8px;">Anything else</h2><div style="white-space:pre-wrap;font-size:14px;line-height:1.6;background:#FAFAF8;border:1px solid #E8E5DD;border-radius:8px;padding:14px;">${safe(l.extra)}</div>` : ""}
+
+  ${teaserBlock}
+
+  <p style="margin-top:32px;font-size:11px;color:#9C9C9C;text-align:center;">Zib Digital · Pre-discovery qualifier · ${safe(l.sourceTag)}</p>
+</body></html>`;
+}
+
 // ─── Meta Ads Lab pack email ────────────────────────────────────────
 // Sent to the prospect (the actual pack) AND to the internal team
 // (so partners can see what the prospect saw). Same HTML body, different
