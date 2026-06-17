@@ -1,0 +1,544 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<title>Automation Map · ZiB OS · Zib Digital</title>
+<meta name="description" content="Map what AI can take off your team's plate — across sales, marketing, ops and admin — ranked by impact and effort, with the hours and dollars you'd reclaim." />
+<meta name="zib:source-tag" content="Automation Map" />
+<!-- @include _partials/head.html -->
+<style>
+input, button, textarea, select { font: inherit; color: inherit; }
+.skip-link { position:absolute; top:8px; left:8px; background:var(--ink); color:#fff; padding:12px 18px; border-radius:999px; font-family:var(--mono); font-size:11px; letter-spacing:0.14em; text-transform:uppercase; z-index:100; transform:translateY(-200%); transition:transform 200ms var(--ease); }
+.skip-link:focus { transform:translateY(0); outline:2px solid var(--accent); outline-offset:2px; }
+
+/* HERO */
+.am-hero { padding: clamp(38px,5.4vw,80px) 0 clamp(8px,1.5vw,18px); }
+.am-hero .container { max-width: 1040px; }
+.am-hero .eyebrow { font-family:var(--mono); font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent); margin-bottom:clamp(14px,1.6vw,20px); }
+.am-hero h1 { font-family:var(--display); font-weight:500; font-size:clamp(38px,5.4vw,72px); line-height:0.98; letter-spacing:-0.035em; color:var(--ink); margin:0 0 clamp(14px,1.6vw,22px); text-wrap:balance; max-width:18ch; }
+.am-hero h1 em { font-style:italic; color:var(--accent); font-weight:400; }
+.am-hero p { font-family:var(--display); font-size:clamp(16px,1.5vw,19px); line-height:1.55; color:var(--muted); max-width:62ch; }
+
+/* PARTNER BAR */
+.partner-bar { display:none; }
+.partner-bar.is-active { display:flex; align-items:center; gap:15px; margin-top:clamp(22px,2.6vw,30px); padding:12px 22px 12px 12px; border:0.5px solid var(--rule); border-radius:999px; background:#fff; width:max-content; max-width:100%; }
+@media (max-width:560px){ .partner-bar.is-active { width:auto; border-radius:18px; } }
+.partner-photo { width:54px; height:54px; border-radius:50%; flex:none; overflow:hidden; background:var(--accent-tint); display:grid; place-items:center; font-family:var(--display); font-weight:500; font-size:18px; color:var(--accent); }
+.partner-photo img { width:100%; height:100%; object-fit:cover; display:block; }
+.partner-meta { display:flex; flex-direction:column; gap:2px; min-width:0; }
+.partner-kicker { font-family:var(--mono); font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent); }
+.partner-name { font-family:var(--display); font-weight:500; font-size:16px; letter-spacing:-0.01em; color:var(--ink); }
+.partner-sub { font-family:var(--display); font-size:12.5px; line-height:1.35; color:var(--muted); }
+.partner-sub a { color:var(--muted); border-bottom:1px solid var(--rule-2); }
+.partner-sub a:hover { color:var(--accent); }
+
+/* WRAP */
+.am-wrap { padding: clamp(20px,3vw,40px) 0 clamp(72px,9vw,120px); }
+.am-wrap .container { max-width: 1040px; }
+.am-panel { background:#fff; border:0.5px solid var(--rule); border-radius:20px; padding:clamp(24px,3.4vw,44px); }
+.am-panel[hidden], .am-results[hidden] { display:none; }
+.am-panel-eyebrow { font-family:var(--mono); font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent); margin-bottom:12px; }
+.am-panel h2 { font-family:var(--display); font-weight:500; font-size:clamp(24px,3.2vw,38px); line-height:1.05; letter-spacing:-0.025em; color:var(--ink); margin:0 0 10px; text-wrap:balance; }
+.am-panel h2 em { font-style:italic; color:var(--accent); font-weight:400; }
+.am-panel > .sub { font-family:var(--display); font-size:clamp(15px,1.4vw,17px); line-height:1.55; color:var(--muted); max-width:60ch; margin:0 0 clamp(22px,2.6vw,30px); }
+
+/* RATE */
+.rate-row { display:flex; align-items:center; gap:14px; flex-wrap:wrap; padding:16px 18px; border:0.5px solid var(--rule-2); border-radius:14px; background:var(--paper); margin-bottom:clamp(22px,2.6vw,30px); }
+.rate-row label { font-family:var(--display); font-weight:500; font-size:15px; color:var(--ink); }
+.rate-row .hint { font-family:var(--display); font-size:13px; color:var(--muted); }
+.rate-field { display:inline-flex; align-items:center; gap:4px; border:0.5px solid var(--rule-2); border-radius:10px; background:#fff; padding:0 12px; height:46px; }
+.rate-field span { font-family:var(--display); font-size:15px; color:var(--muted); }
+.rate-field input { width:64px; border:0; outline:0; background:none; font-family:var(--display); font-weight:500; font-size:16px; color:var(--ink); text-align:right; }
+
+/* TASK GROUPS */
+.area { padding-top:clamp(16px,2vw,22px); margin-top:clamp(16px,2vw,22px); border-top:0.5px solid var(--rule); }
+.area:first-of-type { border-top:0; padding-top:0; margin-top:0; }
+.area-head { font-family:var(--mono); font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent); margin-bottom:14px; }
+.task-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(232px,1fr)); gap:12px; }
+.task { border:0.5px solid var(--rule-2); border-radius:14px; background:#fff; padding:14px 16px; cursor:pointer; transition:border-color 160ms var(--ease), background 160ms var(--ease); }
+.task:hover { border-color:var(--ink); }
+.task.is-on { border-color:var(--accent); background:var(--accent-tint); }
+.task-top { display:flex; align-items:flex-start; gap:10px; }
+.task-check { width:20px; height:20px; border-radius:6px; border:1.5px solid var(--rule-2); flex:none; margin-top:1px; display:grid; place-items:center; color:#fff; transition:background 160ms var(--ease), border-color 160ms var(--ease); }
+.task.is-on .task-check { background:var(--accent); border-color:var(--accent); }
+.task-check svg { width:12px; height:12px; opacity:0; }
+.task.is-on .task-check svg { opacity:1; }
+.task-name { font-family:var(--display); font-weight:500; font-size:14.5px; line-height:1.3; color:var(--ink); }
+.task-how { font-family:var(--display); font-size:12.5px; line-height:1.45; color:var(--muted); margin-top:4px; }
+.task-hours { margin-top:12px; padding-top:12px; border-top:0.5px solid var(--rule); display:none; align-items:center; gap:10px; }
+.task.is-on .task-hours { display:flex; }
+.task-hours label { font-family:var(--display); font-size:12.5px; color:var(--muted); flex:none; }
+.task-hours select { flex:1; height:38px; border:0.5px solid var(--rule-2); border-radius:9px; background:#fff; padding:0 10px; font-family:var(--display); font-size:13px; color:var(--ink); cursor:pointer; }
+
+.am-actions { display:flex; align-items:center; gap:16px; flex-wrap:wrap; margin-top:clamp(24px,3vw,32px); padding-top:clamp(20px,2.4vw,26px); border-top:0.5px solid var(--rule); }
+.am-btn { height:52px; padding:0 28px; border-radius:999px; font-family:var(--display); font-weight:500; font-size:15px; cursor:pointer; display:inline-flex; align-items:center; gap:10px; border:0.5px solid var(--rule); background:#fff; color:var(--ink); transition:background 200ms var(--ease), color 200ms var(--ease), border-color 200ms var(--ease), transform 200ms var(--ease); white-space:nowrap; }
+.am-btn:hover { border-color:var(--ink); background:var(--paper); }
+.am-btn-primary { background:var(--ink); color:#fff; border-color:var(--ink); }
+@media (hover:hover){ .am-btn-primary:hover:not(:disabled){ background:var(--accent); color:var(--ink); border-color:var(--accent); transform:translateY(-1px); } }
+.am-btn:disabled { opacity:0.4; cursor:not-allowed; }
+.am-hint { font-family:var(--display); font-size:13px; color:var(--muted); }
+
+/* RESULTS */
+.am-results { display:grid; gap:clamp(16px,2vw,22px); }
+.totals-card { padding:clamp(22px,2.6vw,34px); border:0.5px solid var(--rule); border-radius:18px; background:var(--ink); color:#fff; }
+.totals-eyebrow { font-family:var(--mono); font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent); margin-bottom:18px; }
+.totals-grid { display:grid; grid-template-columns:1fr 1fr; gap:clamp(18px,3vw,40px); }
+@media (max-width:520px){ .totals-grid { grid-template-columns:1fr; gap:20px; } }
+.totals-num { font-family:var(--display); font-weight:500; font-size:clamp(36px,6vw,60px); line-height:0.95; letter-spacing:-0.03em; color:#fff; }
+.totals-num em { font-style:normal; color:var(--accent); }
+.totals-lbl { font-family:var(--display); font-size:14px; color:rgba(255,255,255,0.7); margin-top:8px; }
+.totals-foot { margin-top:22px; padding-top:18px; border-top:0.5px solid rgba(255,255,255,0.14); font-family:var(--display); font-size:13.5px; line-height:1.5; color:rgba(255,255,255,0.72); }
+
+.map-card { padding:clamp(20px,2.4vw,30px); border:0.5px solid var(--rule); border-radius:16px; background:#fff; }
+.map-card .lbl { font-family:var(--mono); font-size:10px; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent); margin-bottom:12px; }
+.map-card h3 { font-family:var(--display); font-weight:500; font-size:clamp(20px,2.2vw,26px); letter-spacing:-0.02em; color:var(--ink); margin:0 0 6px; text-wrap:balance; }
+.map-card > p { font-family:var(--display); font-size:14px; line-height:1.5; color:var(--muted); margin:0 0 18px; max-width:60ch; }
+
+.opp { display:grid; grid-template-columns:1fr auto; gap:6px 16px; padding:15px 0; border-top:0.5px solid var(--rule); }
+.opp:first-child { border-top:0; }
+.opp.is-start { background:var(--accent-tint); border:0.5px solid rgba(255,98,0,0.25); border-radius:12px; padding:15px 16px; margin-bottom:10px; }
+.opp-main { min-width:0; }
+.opp-name { font-family:var(--display); font-weight:500; font-size:15px; color:var(--ink); }
+.opp-name .tag { font-family:var(--mono); font-size:9.5px; letter-spacing:0.1em; text-transform:uppercase; color:var(--accent); margin-right:8px; }
+.opp-how { font-family:var(--display); font-size:13px; line-height:1.45; color:var(--muted); margin-top:3px; max-width:54ch; }
+.opp-bar { height:6px; border-radius:999px; background:var(--paper); overflow:hidden; margin-top:10px; }
+.opp-bar span { display:block; height:100%; border-radius:999px; background:var(--accent); }
+.opp-metrics { text-align:right; flex:none; }
+.opp-dollars { font-family:var(--display); font-weight:500; font-size:17px; color:var(--ink); white-space:nowrap; }
+.opp-hours { font-family:var(--mono); font-size:11px; color:var(--muted); margin-top:3px; white-space:nowrap; }
+.eff { display:inline-block; margin-top:6px; font-family:var(--mono); font-size:9.5px; letter-spacing:0.08em; text-transform:uppercase; padding:3px 8px; border-radius:999px; }
+.eff-1 { background:#e6f7ed; color:#0a7d3c; }
+.eff-2 { background:#fff3e0; color:#b25c00; }
+.eff-3 { background:#fdeaea; color:#b42318; }
+
+.export-card { padding:clamp(18px,2vw,26px); border:0.5px solid var(--rule); border-radius:16px; background:#fff; }
+.export-card .chart-title { font-family:var(--display); font-weight:500; font-size:16px; color:var(--ink); }
+.am-export-row { display:flex; gap:10px; flex-wrap:wrap; margin-top:14px; }
+.am-status { font-family:var(--mono); font-size:11px; letter-spacing:0.1em; text-transform:uppercase; color:var(--muted); min-height:16px; margin-top:12px; }
+.am-status.ok { color:#0a7d3c; } .am-status.is-error { color:var(--accent); }
+.disclaimer { font-size:12px; color:var(--muted); font-family:var(--display); line-height:1.5; margin-top:6px; }
+
+.am-closer { padding:clamp(24px,3vw,40px); background:var(--ink); color:#fff; border-radius:18px; }
+.am-closer .lbl { font-family:var(--mono); font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent); margin-bottom:12px; }
+.am-closer p { font-family:var(--display); font-size:clamp(18px,1.8vw,22px); line-height:1.4; letter-spacing:-0.015em; color:#fff; margin:0 0 clamp(18px,2vw,26px); max-width:52ch; text-wrap:balance; }
+.am-closer p em { font-style:italic; color:var(--accent); }
+.am-closer .am-btn-primary { background:var(--accent); color:var(--ink); border-color:var(--accent); }
+.am-closer .am-btn-primary:hover { background:#fff; color:var(--ink); border-color:#fff; }
+
+/* MODAL */
+.am-modal { position:fixed; inset:0; z-index:9999; display:grid; place-items:center; padding:24px; }
+.am-modal[hidden]{ display:none; }
+.am-modal-backdrop { position:absolute; inset:0; background:rgba(0,0,0,0.62); backdrop-filter:blur(4px); cursor:pointer; }
+.am-modal-content { position:relative; background:#fff; border-radius:20px; padding:clamp(28px,4vw,44px); width:100%; max-width:560px; max-height:calc(100vh - 48px); overflow-y:auto; box-shadow:0 40px 120px -30px rgba(0,0,0,0.5); animation:am-in 240ms var(--ease-spring); }
+@keyframes am-in { from{opacity:0; transform:translateY(12px) scale(0.98);} to{opacity:1; transform:translateY(0) scale(1);} }
+.am-modal-close { position:absolute; top:16px; right:16px; width:36px; height:36px; border-radius:50%; font-size:22px; line-height:1; color:var(--muted); cursor:pointer; background:none; border:0; }
+.am-modal-close:hover { background:var(--paper); color:var(--ink); }
+.am-modal-eyebrow { font-family:var(--mono); font-size:11px; letter-spacing:0.14em; text-transform:uppercase; color:var(--accent); margin-bottom:12px; }
+.am-modal-content h3 { font-family:var(--display); font-weight:500; font-size:clamp(22px,2.6vw,28px); line-height:1.1; letter-spacing:-0.025em; color:var(--ink); margin:0 0 12px; text-wrap:balance; }
+.am-modal-content h3 em { font-style:italic; color:var(--accent); font-weight:400; }
+.am-modal-content > p { font-family:var(--display); font-size:15px; line-height:1.55; color:var(--muted); margin:0 0 clamp(20px,2.4vw,26px); max-width:48ch; }
+.am-form { display:grid; gap:16px; }
+.am-form-row { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+@media (max-width:480px){ .am-form-row { grid-template-columns:1fr; } }
+.am-form .field { display:flex; flex-direction:column; }
+.am-form .field label { font-family:var(--mono); font-size:10px; letter-spacing:0.12em; text-transform:uppercase; color:var(--muted); margin-bottom:6px; }
+.am-form .field input { height:44px; font-family:var(--display); font-size:15px; color:var(--ink); border:0; border-bottom:1px solid var(--rule-2); outline:0; padding:0 0 8px; background:none; transition:border-color 200ms var(--ease); }
+.am-form .field input:focus { border-bottom-color:var(--ink); }
+.am-form .field input::placeholder { color:var(--muted-2); }
+.am-form button[type="submit"]{ justify-self:flex-start; margin-top:4px; }
+.am-success[hidden]{ display:none; }
+
+@media print {
+  .site-header, .header-spacer, .am-actions, .am-export-row, .am-closer, footer, .skip-link, .am-modal { display:none !important; }
+}
+</style>
+</head>
+<body>
+<a href="#build" class="skip-link">Skip to content</a>
+
+<!-- @include _partials/nav.html -->
+
+<main id="main">
+  <section class="am-hero">
+    <div class="container">
+      <div class="eyebrow">ZiB OS · Automation Map</div>
+      <h1>What could AI <em>take off your plate?</em></h1>
+      <p>Tick the work that eats your team's week — across sales, marketing, ops and admin. We'll map it into a ranked plan of automation opportunities, with the hours and dollars you'd reclaim and where to start.</p>
+
+      <div class="partner-bar" id="partnerBar">
+        <div class="partner-photo" id="partnerPhoto"></div>
+        <div class="partner-meta">
+          <span class="partner-kicker">Prepared by</span>
+          <span class="partner-name" id="partnerName"></span>
+          <span class="partner-sub" id="partnerSub"></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="am-wrap" id="build">
+    <div class="container">
+
+      <div class="am-panel" id="builder">
+        <div class="am-panel-eyebrow">Build your map</div>
+        <h2>Where does the time <em>actually go?</em></h2>
+        <p class="sub">Tick the tasks your team spends real time on and set rough hours per week. Honest estimates make the map worth more.</p>
+
+        <div class="rate-row">
+          <label for="rate">Blended hourly cost</label>
+          <div class="rate-field"><span>$</span><input type="number" id="rate" min="20" max="500" step="5" value="45" inputmode="numeric" /><span>/hr</span></div>
+          <span class="hint">Roughly what an hour of this work costs you — wages, on-costs and all.</span>
+        </div>
+
+        <div id="areas"><!-- injected --></div>
+
+        <div class="am-actions">
+          <button type="button" class="am-btn am-btn-primary" id="seeMap" disabled>Map my opportunities <span aria-hidden="true">→</span></button>
+          <span class="am-hint" id="selHint">Nothing selected yet</span>
+        </div>
+      </div>
+
+      <div class="am-results" id="results" hidden>
+        <div id="totalsSection"></div>
+        <div id="mapSection"></div>
+
+        <div class="export-card">
+          <span class="chart-title">Save &amp; export your map</span>
+          <div class="am-export-row">
+            <button type="button" class="am-btn am-btn-primary" id="emailBtn">Email me my map <span aria-hidden="true">→</span></button>
+            <button type="button" class="am-btn" id="shareBtn">Copy share link</button>
+            <button type="button" class="am-btn" id="printBtn">Print / PDF</button>
+            <button type="button" class="am-btn" id="redoBtn">Start over</button>
+          </div>
+          <div class="am-status" id="exportStatus">&nbsp;</div>
+          <p class="disclaimer">Indicative estimates based on your inputs and typical automation outcomes. Your growth partner will pressure-test them against your business.</p>
+        </div>
+
+        <div class="am-closer">
+          <div class="lbl">The Zib read</div>
+          <p>This is the opportunity. <em>The sequencing is the skill.</em> Walk through your map with a commercial partner who'll turn the top three into a 90-day build plan.</p>
+          <button type="button" class="am-btn am-btn-primary" id="bookBtn">Book a commercial conversation <span aria-hidden="true">→</span></button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <div class="am-modal" id="amModal" hidden aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="amModalTitle">
+    <div class="am-modal-backdrop" data-close-modal></div>
+    <div class="am-modal-content">
+      <button type="button" class="am-modal-close" data-close-modal aria-label="Close">×</button>
+      <div class="am-modal-eyebrow" id="amModalEyebrow">Send my map</div>
+      <h3 id="amModalTitle">Where should we <em>send it?</em></h3>
+      <p id="amModalBlurb">Drop your details and we'll email your automation map, and a growth partner will be in touch within 24 hours.</p>
+      <form class="am-form" id="amForm" autocomplete="on">
+        <div class="am-form-row">
+          <div class="field"><label for="amFirstname">First name</label><input type="text" id="amFirstname" name="firstname" required autocomplete="given-name" placeholder="Jane" /></div>
+          <div class="field"><label for="amEmail">Work email</label><input type="email" id="amEmail" name="email" required autocomplete="email" placeholder="jane@yourcompany.com.au" /></div>
+        </div>
+        <div class="am-form-row">
+          <div class="field"><label for="amCompany">Company <span style="color:var(--muted-2);">(optional)</span></label><input type="text" id="amCompany" name="company" autocomplete="organization" placeholder="Your business" /></div>
+          <div class="field"><label for="amPhone">Phone <span style="color:var(--muted-2);">(optional)</span></label><input type="tel" id="amPhone" name="phone" autocomplete="tel" placeholder="0400 000 000" /></div>
+        </div>
+        <button type="submit" class="am-btn am-btn-primary" id="amSubmit">Send my map <span aria-hidden="true">→</span></button>
+        <div class="am-status" id="amFormStatus">&nbsp;</div>
+      </form>
+      <div class="am-success" id="amSuccess" hidden>
+        <div class="am-modal-eyebrow" style="color:var(--accent);">All sent</div>
+        <h3>Thanks — it's on its way.</h3>
+        <p style="margin-bottom:18px;">Your automation map has been emailed across and a growth partner will be in touch within 24 hours.</p>
+        <button type="button" class="am-btn" data-close-modal>Close</button>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- @include _partials/footer.html -->
+<!-- @include _partials/scripts.html -->
+<script src="/assets/partners.js"></script>
+<script>
+(() => {
+  const PARTNERS = window.ZIB_PARTNERS || {};
+  const fmt$ = n => '$' + Math.round(n).toLocaleString('en-AU');
+
+  // ─── TASK LIBRARY ───────────────────────────────────────────────
+  // auto = share of the time AI can realistically take; effort 1=quick win … 3=project
+  const TASKS = [
+    { area: 'Sales', name: 'Lead response & follow-up', auto: 0.7, effort: 1, how: 'AI replies to and qualifies new enquiries in seconds, then books the meeting.' },
+    { area: 'Sales', name: 'Quotes & proposals', auto: 0.6, effort: 2, how: 'First-draft quotes and proposals generated from a template and your CRM.' },
+    { area: 'Sales', name: 'CRM updates & note-taking', auto: 0.8, effort: 1, how: 'Calls, emails and notes logged automatically against the right contact.' },
+    { area: 'Marketing', name: 'Content & social posts', auto: 0.6, effort: 1, how: 'On-brand posts, captions and emails drafted and ready for your approval.' },
+    { area: 'Marketing', name: 'Ad copy & creative testing', auto: 0.5, effort: 2, how: 'Ad variants generated and rotated, with the winners flagged for you.' },
+    { area: 'Marketing', name: 'Reporting & dashboards', auto: 0.8, effort: 2, how: 'Every channel pulled into one live report with plain-English insight.' },
+    { area: 'Operations', name: 'Scheduling & dispatch', auto: 0.6, effort: 2, how: 'Jobs booked, reshuffled and confirmed automatically around your constraints.' },
+    { area: 'Operations', name: 'Customer support & FAQs', auto: 0.7, effort: 1, how: 'Repeat questions deflected by an AI assistant on your site and inbox.' },
+    { area: 'Operations', name: 'Supplier & inventory admin', auto: 0.5, effort: 3, how: 'Reorders flagged and supplier emails drafted from your stock data.' },
+    { area: 'Admin', name: 'Invoicing & chasing payments', auto: 0.7, effort: 2, how: 'Invoices raised automatically and polite payment chasers sent on time.' },
+    { area: 'Admin', name: 'Data entry & documents', auto: 0.8, effort: 1, how: 'Data extracted from PDFs, forms and emails straight into your systems.' },
+    { area: 'Admin', name: 'Meeting notes & actions', auto: 0.8, effort: 1, how: 'Meetings transcribed, summarised and turned into assigned actions.' },
+  ];
+  const HOUR_OPTS = [
+    { v: 0.5, label: 'Under 1 hr / wk' },
+    { v: 1.5, label: '1–2 hrs / wk' },
+    { v: 4,   label: '3–5 hrs / wk' },
+    { v: 8,   label: '6–10 hrs / wk' },
+    { v: 14,  label: '10+ hrs / wk' },
+  ];
+  const EFFORT_LABEL = { 1: 'Quick win', 2: 'Moderate', 3: 'Bigger project' };
+
+  // state: selected[index] = hours (number) or undefined
+  const selected = {};
+  let rate = 45;
+
+  // ─── PARTNER BRANDING ───────────────────────────────────────────
+  let partner = '';
+  function applyPartner(slug) {
+    const p = PARTNERS[slug];
+    partner = p ? slug : '';
+    const bar = document.getElementById('partnerBar');
+    if (!p) { bar.classList.remove('is-active'); return; }
+    const initials = p.name.split(/[\s&]+/).filter(Boolean).slice(0, 2).map(w => w[0]).join('').toUpperCase();
+    document.getElementById('partnerPhoto').innerHTML = p.photo
+      ? `<img src="${p.photo}" alt="${p.name}" loading="lazy" onerror="this.parentNode.textContent='${initials}'">` : initials;
+    document.getElementById('partnerName').textContent = p.name;
+    const bits = [];
+    if (p.email) bits.push(`<a href="mailto:${p.email}">${p.email}</a>`);
+    if (p.phone) bits.push(`<a href="tel:${p.phone}">${p.phone.replace(/^\+61/, '0')}</a>`);
+    document.getElementById('partnerSub').innerHTML = [p.title, bits.join(' · ')].filter(Boolean).join(' &nbsp;·&nbsp; ');
+    bar.classList.add('is-active');
+    document.getElementById('bookBtn').innerHTML = `Book a commercial conversation with ${p.name.split(/[\s&]/)[0]} <span aria-hidden="true">→</span>`;
+  }
+
+  // ─── RENDER TASKS ───────────────────────────────────────────────
+  const areasEl = document.getElementById('areas');
+  const seeMap = document.getElementById('seeMap');
+  const selHint = document.getElementById('selHint');
+  const tick = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M13 4L6 11.5 3 8.5" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+
+  const order = ['Sales', 'Marketing', 'Operations', 'Admin'];
+  areasEl.innerHTML = order.map(area => `
+    <div class="area">
+      <div class="area-head">${area}</div>
+      <div class="task-grid">
+        ${TASKS.map((t, i) => t.area === area ? `
+          <div class="task" data-i="${i}" role="button" tabindex="0" aria-pressed="false">
+            <div class="task-top">
+              <span class="task-check">${tick}</span>
+              <span><span class="task-name">${t.name}</span><span class="task-how">${t.how}</span></span>
+            </div>
+            <div class="task-hours">
+              <label for="h${i}">Time spent</label>
+              <select id="h${i}" data-h="${i}">${HOUR_OPTS.map((o, j) => `<option value="${o.v}"${j === 2 ? ' selected' : ''}>${o.label}</option>`).join('')}</select>
+            </div>
+          </div>` : '').join('')}
+      </div>
+    </div>`).join('');
+
+  function refreshHint() {
+    const n = Object.keys(selected).length;
+    selHint.textContent = n === 0 ? 'Nothing selected yet' : `${n} task${n > 1 ? 's' : ''} selected`;
+    seeMap.disabled = n === 0;
+  }
+  function toggleTask(card) {
+    const i = +card.dataset.i;
+    if (selected[i] != null) { delete selected[i]; card.classList.remove('is-on'); card.setAttribute('aria-pressed', 'false'); }
+    else { selected[i] = HOUR_OPTS[2].v; card.classList.add('is-on'); card.setAttribute('aria-pressed', 'true'); }
+    refreshHint();
+  }
+  areasEl.querySelectorAll('.task').forEach(card => {
+    card.addEventListener('click', e => { if (e.target.closest('.task-hours')) return; toggleTask(card); });
+    card.addEventListener('keydown', e => { if ((e.key === 'Enter' || e.key === ' ') && !e.target.closest('select')) { e.preventDefault(); toggleTask(card); } });
+  });
+  areasEl.querySelectorAll('select[data-h]').forEach(sel => {
+    sel.addEventListener('change', () => { const i = +sel.dataset.h; if (selected[i] != null) selected[i] = +sel.value; });
+    sel.addEventListener('click', e => e.stopPropagation());
+  });
+  document.getElementById('rate').addEventListener('input', e => {
+    const v = parseFloat(e.target.value); rate = isFinite(v) && v > 0 ? v : 45;
+  });
+
+  // ─── COMPUTE + RENDER ───────────────────────────────────────────
+  const builder = document.getElementById('builder');
+  const results = document.getElementById('results');
+  const totalsSection = document.getElementById('totalsSection');
+  const mapSection = document.getElementById('mapSection');
+  let lastResult = null;
+
+  function compute() {
+    const opps = Object.keys(selected).map(k => {
+      const t = TASKS[+k], hrs = selected[k];
+      const reclaimed = hrs * t.auto;            // hrs/week AI can take
+      const dollars = reclaimed * 52 * rate;     // $/year
+      return { i: +k, area: t.area, name: t.name, how: t.how, effort: t.effort, hours: reclaimed, dollars };
+    });
+    const hoursPerWeek = opps.reduce((a, o) => a + o.hours, 0);
+    const dollarsPerYear = opps.reduce((a, o) => a + o.dollars, 0);
+    const maxD = Math.max(1, ...opps.map(o => o.dollars));
+    // ranked: by $ impact; start-here: high impact per unit effort
+    const ranked = [...opps].sort((a, b) => b.dollars - a.dollars);
+    const startHere = [...opps].sort((a, b) => (b.dollars / b.effort) - (a.dollars / a.effort)).slice(0, Math.min(3, opps.length));
+    const startSet = new Set(startHere.map(o => o.i));
+    return { opps, ranked, startHere, startSet, hoursPerWeek, dollarsPerYear, maxD };
+  }
+
+  function oppRow(o, maxD, isStart) {
+    return `<div class="opp${isStart ? ' is-start' : ''}">
+      <div class="opp-main">
+        <div class="opp-name"><span class="tag">${o.area}</span>${o.name}</div>
+        <div class="opp-how">${o.how}</div>
+        <div class="opp-bar"><span style="width:${Math.max(6, Math.round(o.dollars / maxD * 100))}%"></span></div>
+      </div>
+      <div class="opp-metrics">
+        <div class="opp-dollars">${fmt$(o.dollars)}<span style="font-size:12px;color:var(--muted);font-weight:400;">/yr</span></div>
+        <div class="opp-hours">${o.hours.toFixed(1)} hrs/wk back</div>
+        <span class="eff eff-${o.effort}">${EFFORT_LABEL[o.effort]}</span>
+      </div>
+    </div>`;
+  }
+
+  function renderResults(r) {
+    const days = (r.hoursPerWeek * 52 / 7.6).toFixed(0); // ~workdays/yr
+    totalsSection.innerHTML = `<div class="totals-card">
+      <div class="totals-eyebrow">What's on the table</div>
+      <div class="totals-grid">
+        <div><div class="totals-num"><em>${r.hoursPerWeek.toFixed(0)}</em> hrs</div><div class="totals-lbl">reclaimed every week — about ${days} working days a year handed back to the team.</div></div>
+        <div><div class="totals-num"><em>${fmt$(r.dollarsPerYear)}</em></div><div class="totals-lbl">of time cost freed up each year, at $${Math.round(rate)}/hr.</div></div>
+      </div>
+      <div class="totals-foot">Across ${r.opps.length} automation opportunit${r.opps.length > 1 ? 'ies' : 'y'}. Reclaimed time is capacity to redeploy — onto growth, service and the work only people can do.</div>
+    </div>`;
+
+    const startRows = r.startHere.map(o => oppRow(o, r.maxD, true)).join('');
+    const restRows = r.ranked.filter(o => !r.startSet.has(o.i)).map(o => oppRow(o, r.maxD, false)).join('');
+    mapSection.innerHTML = `<div class="map-card">
+      <div class="lbl">Your map · start here</div>
+      <h3>The highest-leverage moves first</h3>
+      <p>Ranked by value reclaimed against effort to implement — the quick wins that pay back fastest sit up top.</p>
+      ${startRows}
+      ${restRows ? `<div style="margin-top:6px;">${restRows}</div>` : ''}
+    </div>`;
+  }
+
+  function showResults() {
+    const r = compute();
+    lastResult = r;
+    renderResults(r);
+    builder.hidden = true; results.hidden = false;
+    window.scrollTo({ top: document.getElementById('build').offsetTop - 20, behavior: 'smooth' });
+  }
+  seeMap.addEventListener('click', () => { if (Object.keys(selected).length) { syncUrl(); showResults(); } });
+
+  // ─── SHARE / EXPORT ─────────────────────────────────────────────
+  function encodeState() {
+    try { return btoa(JSON.stringify({ r: rate, s: selected })).replace(/=+$/, ''); } catch { return ''; }
+  }
+  function buildShareUrl() {
+    const q = partner ? '?partner=' + encodeURIComponent(partner) : '';
+    const code = encodeState();
+    return location.origin + location.pathname + q + (code ? '#m=' + code : '');
+  }
+  function syncUrl() {
+    history.replaceState(null, '', (partner ? '?partner=' + partner : location.pathname) + '#m=' + encodeState());
+  }
+  const exportStatus = document.getElementById('exportStatus');
+  function flash(msg, cls) {
+    exportStatus.textContent = msg; exportStatus.className = 'am-status ' + (cls || 'ok');
+    clearTimeout(flash._t); flash._t = setTimeout(() => { exportStatus.textContent = ''; exportStatus.className = 'am-status'; }, 3200);
+  }
+  document.getElementById('shareBtn').addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(buildShareUrl()); flash('Link copied to clipboard', 'ok'); }
+    catch { flash('Copy failed — link is in the address bar', 'is-error'); }
+  });
+  document.getElementById('printBtn').addEventListener('click', () => window.print());
+  document.getElementById('redoBtn').addEventListener('click', () => {
+    Object.keys(selected).forEach(k => delete selected[k]);
+    areasEl.querySelectorAll('.task.is-on').forEach(c => { c.classList.remove('is-on'); c.setAttribute('aria-pressed', 'false'); });
+    refreshHint();
+    results.hidden = true; builder.hidden = false;
+    history.replaceState(null, '', partner ? '?partner=' + partner : location.pathname);
+    window.scrollTo({ top: document.getElementById('build').offsetTop - 20, behavior: 'smooth' });
+  });
+
+  // ─── MODAL ──────────────────────────────────────────────────────
+  const modal = document.getElementById('amModal');
+  const form = document.getElementById('amForm');
+  const success = document.getElementById('amSuccess');
+  const submitBtn = document.getElementById('amSubmit');
+  const formStatus = document.getElementById('amFormStatus');
+  const mEyebrow = document.getElementById('amModalEyebrow');
+  const mTitle = document.getElementById('amModalTitle');
+  const mBlurb = document.getElementById('amModalBlurb');
+  let intent = 'email';
+
+  function openModal(which) {
+    intent = which;
+    const p = partner ? PARTNERS[partner] : null;
+    const who = p ? p.name.split(/[\s&]/)[0] : 'a growth partner';
+    if (which === 'book') {
+      mEyebrow.textContent = 'Book a conversation';
+      mTitle.innerHTML = p ? `Thirty minutes with <em>${p.name.split(/[\s&]/)[0]}.</em>` : 'Thirty minutes with a <em>growth partner.</em>';
+      mBlurb.textContent = `We'll bring your automation map to the call. ${p ? p.name.split(/[\s&]/)[0] : 'A growth partner'} will be in touch within 24 hours.`;
+      submitBtn.innerHTML = 'Request my call <span aria-hidden="true">→</span>';
+    } else {
+      mEyebrow.textContent = 'Send my map';
+      mTitle.innerHTML = 'Where should we <em>send it?</em>';
+      mBlurb.textContent = `Drop your details and we'll email your automation map. ${who.charAt(0).toUpperCase() + who.slice(1)} will be in touch within 24 hours.`;
+      submitBtn.innerHTML = 'Send my map <span aria-hidden="true">→</span>';
+    }
+    form.hidden = false; success.hidden = true;
+    modal.hidden = false; modal.setAttribute('aria-hidden', 'false');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => document.getElementById('amFirstname').focus(), 60);
+  }
+  function closeModal() { modal.hidden = true; modal.setAttribute('aria-hidden', 'true'); document.body.style.overflow = ''; }
+  document.getElementById('emailBtn').addEventListener('click', () => openModal('email'));
+  document.getElementById('bookBtn').addEventListener('click', () => openModal('book'));
+  document.querySelectorAll('[data-close-modal]').forEach(b => b.addEventListener('click', closeModal));
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && !modal.hidden) closeModal(); });
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const data = Object.fromEntries(new FormData(form).entries());
+    const firstname = (data.firstname || '').trim(), email = (data.email || '').trim();
+    if (!firstname || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { formStatus.textContent = 'Enter a name and valid email'; formStatus.className = 'am-status is-error'; return; }
+    submitBtn.disabled = true; formStatus.textContent = 'Sending…'; formStatus.className = 'am-status';
+    const r = lastResult || compute();
+    try {
+      const res = await fetch('/api/automation-map', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          firstname, email, company: data.company || '', phone: data.phone || '',
+          intent, rate,
+          hoursPerWeek: +r.hoursPerWeek.toFixed(1), dollarsPerYear: Math.round(r.dollarsPerYear),
+          opportunities: r.ranked.map(o => ({ area: o.area, task: o.name, effort: EFFORT_LABEL[o.effort], hours: +o.hours.toFixed(1), dollars: Math.round(o.dollars) })),
+          startHere: r.startHere.map(o => o.name),
+          partner: partner || '', partnerName: partner && PARTNERS[partner] ? PARTNERS[partner].name : '',
+          shareUrl: buildShareUrl(),
+          sourceTag: document.querySelector('meta[name="zib:source-tag"]')?.content || 'Automation Map',
+        }),
+      });
+      const json = await res.json().catch(() => ({}));
+      if (!res.ok) throw new Error(json.error || `Request failed (${res.status})`);
+      form.hidden = true; success.hidden = false;
+    } catch (err) { formStatus.textContent = err.message || 'Submission failed — try again'; formStatus.className = 'am-status is-error'; submitBtn.disabled = false; }
+  });
+
+  // ─── INIT ───────────────────────────────────────────────────────
+  applyPartner(new URLSearchParams(location.search).get('partner') || '');
+  const m = location.hash.match(/^#m=(.+)$/);
+  if (m) {
+    try {
+      const st = JSON.parse(atob(m[1]));
+      if (st && typeof st.r === 'number') { rate = st.r; document.getElementById('rate').value = st.r; }
+      if (st && st.s) Object.keys(st.s).forEach(k => {
+        const i = +k, hrs = +st.s[k];
+        const card = areasEl.querySelector(`.task[data-i="${i}"]`);
+        if (!card) return;
+        selected[i] = hrs; card.classList.add('is-on'); card.setAttribute('aria-pressed', 'true');
+        const sel = card.querySelector('select[data-h]'); if (sel) sel.value = String(hrs);
+      });
+      if (Object.keys(selected).length) { refreshHint(); showResults(); }
+    } catch {}
+  }
+})();
+</script>
+</body>
+</html>
