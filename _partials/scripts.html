@@ -63,8 +63,19 @@
       setOpen(willOpen);
     });
     if (canHover) {
-      group.addEventListener('mouseenter', () => { closeAllGroups(group); setOpen(true); });
-      group.addEventListener('mouseleave', () => setOpen(false));
+      // Hover-intent: open immediately, but delay closing so the cursor can
+      // cross the gap between the trigger and the panel (and move diagonally
+      // to a far column) without the menu snapping shut.
+      let closeTimer;
+      group.addEventListener('mouseenter', () => {
+        clearTimeout(closeTimer);
+        closeAllGroups(group);
+        setOpen(true);
+      });
+      group.addEventListener('mouseleave', () => {
+        clearTimeout(closeTimer);
+        closeTimer = setTimeout(() => setOpen(false), 260);
+      });
     }
   });
   // Close any open dropdown when clicking outside
