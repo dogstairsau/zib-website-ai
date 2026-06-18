@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<title>Thank you | Zib Digital</title>
+<meta name="description" content="Thanks for getting in touch with Zib Digital. A senior strategist has your details and will be in touch shortly." />
+<meta name="robots" content="noindex, follow" />
+<meta name="zib:source-tag" content="marty-tucker-thank-you" />
+<!-- @include _partials/head.html -->
+<style>
+.ty {
+  min-height: 70vh;
+  display: grid;
+  place-items: center;
+  text-align: center;
+  padding: clamp(96px, 14vw, 180px) 0 clamp(72px, 9vw, 120px);
+}
+.ty-eyebrow {
+  font-family: var(--mono); font-size: 12px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--accent);
+  display: inline-flex; align-items: center; gap: 10px; margin-bottom: clamp(20px, 2.4vw, 28px);
+}
+.ty-eyebrow::before { content: ""; width: 22px; height: 0.5px; background: currentColor; }
+.ty h1 {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(40px, 6vw, 88px); line-height: 1.0; letter-spacing: -0.04em;
+  max-width: 16ch; margin: 0 auto; text-wrap: balance;
+}
+.ty h1 em { font-style: italic; color: var(--accent); font-weight: 400; }
+.ty p {
+  margin: clamp(20px, 2.6vw, 30px) auto 0; max-width: 54ch;
+  font-size: clamp(16px, 1.5vw, 19px); line-height: 1.6; color: var(--muted);
+}
+.ty p a { color: var(--ink); border-bottom: 1px solid var(--rule-2); }
+.ty p a:hover { border-bottom-color: var(--ink); }
+.ty-cta { display: inline-flex; flex-wrap: wrap; gap: 14px; justify-content: center; margin-top: clamp(36px, 4vw, 52px); }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- @include _partials/nav.html -->
+
+<main id="main">
+  <section class="ty">
+    <div class="container">
+      <div class="ty-eyebrow">Message received</div>
+      <h1>Thanks. <em>We'll be in touch.</em></h1>
+      <p>A senior strategist has your details and will reach out within one business day. Prefer to talk now? Call <a href="tel:+61386859290">03 8685 9290</a> or email <a href="mailto:hello@zibdigital.com.au">hello@zibdigital.com.au</a>.</p>
+      <div class="ty-cta">
+        <a class="btn btn-primary" href="/audit">Run a free audit <span class="arr">→</span></a>
+        <a class="btn btn-outline" href="/">Back to home</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- @include _partials/footer.html -->
+<!-- @include _partials/scripts.html -->
+
+</body>
+</html>

@@ -2,7 +2,7 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
   "trailingSlash": false,
-  "buildCommand": "node build.mjs",
+  "buildCommand": "node build.mjs && node migration/sitemap.mjs && cp sitemap.xml dist/sitemap.xml",
   "outputDirectory": "dist",
   "functions": {
     "api/audit.ts": {
@@ -22,6 +22,22 @@
     }
   },
   "redirects": [
+    { "source": "/case-study", "destination": "/case-studies", "permanent": true },
+    { "source": "/casestudy", "destination": "/case-studies", "permanent": true },
+    { "source": "/our-portfolio", "destination": "/case-studies", "permanent": true },
+    { "source": "/web-design", "destination": "/web-graphic-design-melbourne", "permanent": true },
+    { "source": "/contact-us", "destination": "/contact", "permanent": true },
+    { "source": "/team/marty-tucker", "destination": "/marty-tucker", "permanent": true },
+    { "source": "/team/paul-harrison", "destination": "/meet-the-team", "permanent": true },
+    { "source": "/marketing-strategies-2021", "destination": "/blog", "permanent": true },
+    { "source": "/marketing-trends-2022", "destination": "/blog", "permanent": true },
+    { "source": "/aaron-jason", "destination": "/contact", "permanent": true },
+    { "source": "/ange-ethan", "destination": "/contact", "permanent": true },
+    { "source": "/ben-kelly", "destination": "/contact", "permanent": true },
+    { "source": "/mvfc-digital-healthcheck", "destination": "/audit", "permanent": true },
+    { "source": "/search-contacts", "destination": "/", "permanent": true },
+    { "source": "/test-form", "destination": "/", "permanent": true },
+    { "source": "/test-short-code", "destination": "/", "permanent": true },
     { "source": "/dylan-jake", "destination": "/dylan-and-jake", "permanent": true },
     { "source": "/new-final-home-page", "destination": "/", "permanent": true },
     { "source": "/team/matt-jackson", "destination": "/meet-the-team", "permanent": true },
