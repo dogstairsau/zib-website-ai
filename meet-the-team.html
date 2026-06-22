@@ -2051,10 +2051,12 @@ h1.hero-h em {
   object-fit: cover;
   object-position: center top;
   z-index: 1;
+  transform: scale(var(--avatar-zoom, 1));
+  transform-origin: center top;
   transition: transform 500ms var(--ease-out);
 }
 
-.team-card:hover .team-avatar img { transform: scale(1.03); }
+.team-card:hover .team-avatar img { transform: scale(calc(var(--avatar-zoom, 1) * 1.03)); }
 
 .team-name {
   font-family: var(--display);
@@ -2394,7 +2396,7 @@ footer {
       </article>
 
       <article class="team-card">
-        <div class="team-avatar" data-initials="CB">
+        <div class="team-avatar" data-initials="CB" style="--avatar-zoom: 1.2;">
           <img src="/assets/team-chris-burrell.webp" alt="Chris Burrell" loading="lazy" onerror="this.remove()" />
         </div>
         <div class="team-card-body">
