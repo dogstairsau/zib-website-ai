@@ -2098,6 +2098,103 @@ footer {
 </head>
 <body>
 
+<!-- Returning-visitor check runs before paint so the gate never flashes for them -->
+<script>try{if(localStorage.getItem('zib_partner_unlocked')==='1')document.documentElement.classList.add('pg-unlocked');}catch(e){}</script>
+
+<!-- ───────────────────────── PARTNER LEAD GATE ───────────────────────── -->
+<style>
+  html:not(.pg-unlocked), html:not(.pg-unlocked) body { overflow: hidden; }
+  .partner-gate {
+    position: fixed; inset: 0; z-index: 9999;
+    display: flex; align-items: center; justify-content: center; padding: 24px;
+    background: rgba(247, 246, 244, 0.82);
+    backdrop-filter: saturate(140%) blur(18px);
+    -webkit-backdrop-filter: saturate(140%) blur(18px);
+  }
+  html.pg-unlocked .partner-gate { display: none; }
+  .partner-gate-card {
+    width: 100%; max-width: 460px; background: #fff;
+    border: 0.5px solid var(--rule); border-radius: 18px;
+    padding: clamp(28px, 4vw, 44px);
+    box-shadow: 0 40px 120px -40px rgba(0,0,0,0.35);
+    animation: pgIn 420ms cubic-bezier(0.2, 0.7, 0.2, 1) both;
+  }
+  @keyframes pgIn { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: none; } }
+  .pg-eyebrow { font-family: var(--mono, monospace); color: var(--accent); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 14px; }
+  .pg-title { font-family: var(--display); font-weight: 500; font-size: clamp(24px, 3vw, 32px); letter-spacing: -0.02em; line-height: 1.06; color: var(--ink); margin: 0 0 10px; }
+  .pg-sub { color: var(--muted); font-size: 15px; line-height: 1.55; margin: 0 0 22px; }
+  .pg-field { display: block; margin-bottom: 14px; }
+  .pg-field span { display: block; font-family: var(--display); font-size: 13px; color: var(--ink-3); margin-bottom: 6px; }
+  .pg-field input {
+    width: 100%; box-sizing: border-box; padding: 13px 14px;
+    border: 1px solid var(--rule); border-radius: 10px;
+    font-size: 16px; color: var(--ink); background: #fff;
+    transition: border-color 200ms ease;
+  }
+  .pg-field input:focus { outline: none; border-color: var(--ink); }
+  .pg-error { color: #c0392b; font-size: 13px; margin: 0 0 12px; }
+  .pg-submit {
+    width: 100%; padding: 14px; border: 0; border-radius: 999px;
+    background: var(--ink); color: #fff; font-family: var(--display);
+    font-weight: 500; font-size: 15px; cursor: pointer; margin-top: 4px;
+    transition: background 200ms ease, transform 220ms ease;
+  }
+  .pg-submit:hover { background: var(--accent); transform: translateY(-1px); }
+  .pg-submit:disabled { opacity: 0.6; cursor: default; transform: none; }
+  .pg-fine { color: #9a9a9a; font-size: 12px; text-align: center; margin: 14px 0 0; }
+</style>
+
+<div id="partnerGate" class="partner-gate" role="dialog" aria-modal="true" aria-labelledby="pgTitle">
+  <div class="partner-gate-card">
+    <div class="pg-eyebrow">Partner access</div>
+    <h2 id="pgTitle" class="pg-title">Unlock the franchise opportunity</h2>
+    <p class="pg-sub">Pop in your email and phone number to view the full partner page. We'll only use these to follow up about the opportunity.</p>
+    <form id="pgForm" novalidate>
+      <label class="pg-field"><span>Email</span><input type="email" id="pgEmail" name="email" required autocomplete="email" inputmode="email" placeholder="you@company.com.au" /></label>
+      <label class="pg-field"><span>Phone</span><input type="tel" id="pgPhone" name="phone" required autocomplete="tel" inputmode="tel" placeholder="04xx xxx xxx" /></label>
+      <p class="pg-error" id="pgError" role="alert" hidden></p>
+      <button type="submit" class="pg-submit">Unlock the page</button>
+      <p class="pg-fine">No spam — just a follow-up about the franchise opportunity.</p>
+    </form>
+  </div>
+</div>
+
+<script>
+(() => {
+  const html = document.documentElement;
+  if (localStorage.getItem('zib_partner_unlocked') === '1') { html.classList.add('pg-unlocked'); return; }
+  const form = document.getElementById('pgForm');
+  if (!form) return;
+  const emailEl = document.getElementById('pgEmail');
+  const phoneEl = document.getElementById('pgPhone');
+  const errEl = document.getElementById('pgError');
+  const btn = form.querySelector('.pg-submit');
+  const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  const fail = (m) => { errEl.textContent = m; errEl.hidden = false; };
+  setTimeout(() => { try { emailEl.focus(); } catch (e) {} }, 450);
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const email = emailEl.value.trim();
+    const phone = phoneEl.value.trim();
+    if (!emailRe.test(email)) return fail('Please enter a valid email address.');
+    if (phone.replace(/\D/g, '').length < 8) return fail('Please enter a valid phone number.');
+    errEl.hidden = true;
+    btn.disabled = true;
+    btn.textContent = 'Unlocking…';
+    // Best-effort lead capture — never block access on a network hiccup
+    try {
+      await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ firstname: 'Partner', lastname: 'gate lead', email, phone, source: 'Partner page gate' })
+      });
+    } catch (err) { /* swallow — we still grant access */ }
+    try { localStorage.setItem('zib_partner_unlocked', '1'); } catch (e) {}
+    html.classList.add('pg-unlocked');
+  });
+})();
+</script>
+
 <a href="#hero" class="skip-link">Skip to content</a>
 
 <!-- ───────────────────────── HEADER ───────────────────────── -->
