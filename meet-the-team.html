@@ -2016,8 +2016,8 @@ h1.hero-h em {
   transition: border-color 240ms var(--ease), transform 240ms var(--ease);
 }
 .team-card:hover { border-color: var(--rule-2); transform: translateY(-2px); }
-/* No headshots yet — show name + role only on the leadership grid. */
-.team-card .team-avatar { display: none; }
+/* Headshots live — show the avatar (photo where we have one, initials fallback otherwise). */
+.team-card .team-avatar { display: grid; margin-bottom: clamp(12px, 1.4vw, 18px); }
 
 .team-avatar {
   aspect-ratio: 1/1;
