@@ -620,6 +620,54 @@ h1.hero-h em {
 
 @media (max-width: 880px) { .case-grid { grid-template-columns: repeat(2, 1fr); } }
 
+/* Testimonial video carousel */
+.vid-carousel { margin-top: clamp(40px, 5vw, 72px); }
+.vid-carousel-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; margin-bottom: clamp(16px, 2vw, 24px); }
+.vid-carousel-head .eyebrow { margin: 0; }
+.vid-controls { display: flex; gap: 10px; }
+.vid-nav {
+  width: 44px; height: 44px; border-radius: 999px;
+  border: 0.5px solid var(--rule); background: var(--bg); color: var(--ink);
+  font-size: 17px; line-height: 1; cursor: pointer; display: grid; place-items: center;
+  transition: border-color 200ms var(--ease), background 200ms var(--ease), transform 240ms var(--ease-spring), opacity 200ms var(--ease);
+}
+.vid-nav:hover { border-color: var(--ink); transform: translateY(-1px); }
+.vid-nav:disabled { opacity: 0.3; cursor: default; transform: none; }
+.vid-track {
+  display: grid; grid-auto-flow: column;
+  grid-auto-columns: minmax(0, calc((100% - 48px) / 3));
+  gap: 24px; overflow-x: auto; scroll-snap-type: x mandatory;
+  scroll-behavior: smooth; padding-bottom: 6px;
+  -webkit-overflow-scrolling: touch; scrollbar-width: none;
+}
+.vid-track::-webkit-scrollbar { display: none; }
+.vid-card { scroll-snap-align: start; min-width: 0; }
+.vid-frame {
+  position: relative; display: block; width: 100%; aspect-ratio: 16/9;
+  border: 0; padding: 0; background: #000; border-radius: 14px; overflow: hidden;
+  cursor: pointer; box-shadow: 0 30px 80px -45px rgba(0,0,0,0.4);
+}
+.vid-frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; display: block; transition: transform 600ms var(--ease-out); }
+.vid-frame:hover img { transform: scale(1.04); }
+.vid-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; display: block; }
+.vid-play {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  width: 62px; height: 62px; border-radius: 999px; background: var(--accent);
+  display: grid; place-items: center; box-shadow: 0 8px 30px rgba(0,0,0,0.35);
+  transition: transform 260ms var(--ease-spring);
+}
+.vid-play::before { content: ""; width: 0; height: 0; border-style: solid; border-width: 10px 0 10px 17px; border-color: transparent transparent transparent #fff; margin-left: 4px; }
+.vid-frame:hover .vid-play { transform: translate(-50%, -50%) scale(1.08); }
+.vid-meta { margin-top: 14px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.vid-client { font-family: var(--display); font-weight: 500; font-size: 16px; letter-spacing: -0.01em; color: var(--ink); }
+.vid-link { font-size: 13px; color: var(--ink-3); white-space: nowrap; transition: color 200ms var(--ease); }
+.vid-link:hover { color: var(--accent); }
+@media (max-width: 880px) { .vid-track { grid-auto-columns: minmax(0, calc((100% - 24px) / 2)); } }
+@media (max-width: 600px) {
+  .vid-track { grid-auto-columns: 82%; gap: 16px; }
+  .vid-controls { display: none; }
+}
+
 .case-card {
   padding: clamp(28px, 3vw, 44px);
   border: 0.5px solid var(--rule);
@@ -1969,8 +2017,101 @@ footer {
         <div class="case-desc">Increase in qualified Google Ads leads. Funnel rebuilt around container-specific intent, stripping out tyre-kickers before they cost a click.</div>
       </article>
     </div>
+
+    <div class="vid-carousel reveal" aria-label="Client testimonial videos">
+      <div class="vid-carousel-head">
+        <div class="eyebrow mono"><span>In their words</span></div>
+        <div class="vid-controls">
+          <button type="button" class="vid-nav" data-vid-prev aria-label="Previous testimonials">&#8592;</button>
+          <button type="button" class="vid-nav" data-vid-next aria-label="More testimonials">&#8594;</button>
+        </div>
+      </div>
+      <div class="vid-track" id="vidTrack">
+        <article class="vid-card">
+          <button type="button" class="vid-frame" data-yt="xnoih8T91tE" aria-label="Play Amazing Graze Flowers client testimonial">
+            <img src="https://i.ytimg.com/vi/xnoih8T91tE/hqdefault.jpg" alt="Amazing Graze Flowers client testimonial" loading="lazy" width="480" height="270" />
+            <span class="vid-play" aria-hidden="true"></span>
+          </button>
+          <div class="vid-meta">
+            <div class="vid-client">Amazing Graze Flowers</div>
+            <a class="vid-link" href="/casestudy/amazing-graze">Case study &#8594;</a>
+          </div>
+        </article>
+        <article class="vid-card">
+          <button type="button" class="vid-frame" data-yt="PgKmgtxUhVg" aria-label="Play Liberty Financial client testimonial">
+            <img src="https://i.ytimg.com/vi/PgKmgtxUhVg/hqdefault.jpg" alt="Liberty Financial client testimonial" loading="lazy" width="480" height="270" />
+            <span class="vid-play" aria-hidden="true"></span>
+          </button>
+          <div class="vid-meta">
+            <div class="vid-client">Liberty Financial</div>
+            <a class="vid-link" href="/casestudy/liberty-financial">Case study &#8594;</a>
+          </div>
+        </article>
+        <article class="vid-card">
+          <button type="button" class="vid-frame" data-yt="D0WK-uslvfc" aria-label="Play Pro Cut Tree Services client testimonial">
+            <img src="https://i.ytimg.com/vi/D0WK-uslvfc/hqdefault.jpg" alt="Pro Cut Tree Services client testimonial" loading="lazy" width="480" height="270" />
+            <span class="vid-play" aria-hidden="true"></span>
+          </button>
+          <div class="vid-meta">
+            <div class="vid-client">Pro Cut Tree Services</div>
+            <a class="vid-link" href="/casestudy/procut">Case study &#8594;</a>
+          </div>
+        </article>
+        <article class="vid-card">
+          <button type="button" class="vid-frame" data-yt="pVp1JjxMKFA" aria-label="Play The Fruit Box Group client testimonial">
+            <img src="https://i.ytimg.com/vi/pVp1JjxMKFA/hqdefault.jpg" alt="The Fruit Box Group client testimonial" loading="lazy" width="480" height="270" />
+            <span class="vid-play" aria-hidden="true"></span>
+          </button>
+          <div class="vid-meta">
+            <div class="vid-client">The Fruit Box Group</div>
+            <a class="vid-link" href="/casestudy/the-fruit-box-group">Case study &#8594;</a>
+          </div>
+        </article>
+      </div>
+    </div>
   </div>
 </section>
+
+<script>
+(() => {
+  const track = document.getElementById('vidTrack');
+  if (!track) return;
+  // Click-to-load YouTube facade (keeps the home page light until a video is played)
+  track.querySelectorAll('.vid-frame[data-yt]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      if (btn.querySelector('iframe')) return;
+      const id = btn.dataset.yt;
+      const iframe = document.createElement('iframe');
+      iframe.src = 'https://www.youtube.com/embed/' + id + '?autoplay=1&rel=0&modestbranding=1';
+      iframe.title = btn.getAttribute('aria-label') || 'Client testimonial';
+      iframe.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
+      iframe.allowFullscreen = true;
+      btn.innerHTML = '';
+      btn.appendChild(iframe);
+      btn.style.cursor = 'default';
+    });
+  });
+  // Prev / next arrows scroll by one card width
+  const prev = document.querySelector('[data-vid-prev]');
+  const next = document.querySelector('[data-vid-next]');
+  const step = () => {
+    const card = track.querySelector('.vid-card');
+    const gap = parseFloat(getComputedStyle(track).columnGap) || 24;
+    return card ? card.getBoundingClientRect().width + gap : track.clientWidth;
+  };
+  prev && prev.addEventListener('click', () => track.scrollBy({ left: -step(), behavior: 'smooth' }));
+  next && next.addEventListener('click', () => track.scrollBy({ left: step(), behavior: 'smooth' }));
+  const updateNav = () => {
+    if (!prev || !next) return;
+    const max = track.scrollWidth - track.clientWidth - 2;
+    prev.disabled = track.scrollLeft <= 2;
+    next.disabled = track.scrollLeft >= max;
+  };
+  track.addEventListener('scroll', updateNav, { passive: true });
+  window.addEventListener('resize', updateNav);
+  updateNav();
+})();
+</script>
 
 <!-- ───────────────────────── SEARCH DEMAND ────────────────── -->
 <section id="search">
