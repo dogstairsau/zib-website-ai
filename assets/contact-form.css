@@ -130,3 +130,77 @@
 @media (max-width: 720px) {
   .contact-form { grid-template-columns: 1fr; gap: 24px; }
 }
+
+/* ─────────────────────────────────────────────────────────────────────────
+ * Native HubSpot embedded forms (.hs-form), styled to match .contact-form.
+ * HubSpot renders the form inline into [data-hsform] (see _partials/scripts.html),
+ * so these page-level rules apply. Uses the same CSS vars as the custom form.
+ * ───────────────────────────────────────────────────────────────────────── */
+.hs-form-wrap { max-width: 760px; margin: 0 auto; }
+.hs-form-wrap .hs-form { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 2.2vw, 28px) clamp(20px, 2.4vw, 32px); }
+.hs-form-wrap .hs-form fieldset { max-width: none !important; display: contents; }
+.hs-form-wrap .hs-form .hs-form-field { position: relative; display: flex; flex-direction: column; }
+/* Full-width fields: textareas, and any single-column row */
+.hs-form-wrap .hs-form .form-columns-1 .hs-form-field,
+.hs-form-wrap .hs-form .hs-fieldtype-textarea { grid-column: 1 / -1; }
+
+.hs-form-wrap .hs-form label {
+  font-family: var(--display);
+  font-size: 13px;
+  color: var(--muted);
+  margin-bottom: 9px;
+  letter-spacing: 0;
+}
+.hs-form-wrap .hs-form .hs-field-desc { font-size: 12px; color: var(--muted-2); margin-bottom: 6px; }
+
+.hs-form-wrap .hs-form .hs-input:not([type="checkbox"]):not([type="radio"]),
+.hs-form-wrap .hs-form textarea.hs-input,
+.hs-form-wrap .hs-form select.hs-input {
+  width: 100% !important;
+  box-sizing: border-box;
+  font-family: var(--display);
+  font-size: clamp(15px, 1.3vw, 17px);
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  outline: none;
+  border-radius: 14px;
+  padding: 14px 18px;
+  transition: border-color 200ms var(--ease), background 200ms var(--ease), box-shadow 200ms var(--ease);
+}
+.hs-form-wrap .hs-form .hs-input:not([type="checkbox"]):not([type="radio"]) { height: 54px; }
+.hs-form-wrap .hs-form textarea.hs-input { height: auto; min-height: 120px; resize: vertical; line-height: 1.5; }
+.hs-form-wrap .hs-form .hs-input::placeholder { color: var(--muted-2); }
+.hs-form-wrap .hs-form .hs-input:focus { border-color: var(--ink); background: #fff; box-shadow: 0 0 0 4px rgba(0,0,0,0.04); }
+
+/* Submit */
+.hs-form-wrap .hs-form .hs_submit { grid-column: 1 / -1; display: flex; justify-content: center; margin-top: clamp(14px, 1.6vw, 22px); }
+.hs-form-wrap .hs-form .hs-button {
+  min-width: 280px;
+  height: 60px;
+  padding: 0 40px;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  border: 0;
+  cursor: pointer;
+  border-radius: 999px;
+  transition: background 200ms var(--ease), color 200ms var(--ease), transform 200ms var(--ease);
+}
+.hs-form-wrap .hs-form .hs-button:hover { background: var(--ink); color: #fff; transform: translateY(-1px); }
+
+/* Validation + GDPR consent */
+.hs-form-wrap .hs-form .hs-error-msgs { list-style: none; margin: 6px 0 0; padding: 0; }
+.hs-form-wrap .hs-form .hs-error-msg,
+.hs-form-wrap .hs-form label.hs-error-msg { color: var(--accent); font-size: 13px; margin: 0; }
+.hs-form-wrap .hs-form .legal-consent-container { grid-column: 1 / -1; font-size: 13px; color: var(--muted); }
+.hs-form-wrap .hs-form .hs-form-booleancheckbox label { flex-direction: row; align-items: flex-start; gap: 8px; }
+.hs-form-wrap .hs-form .submitted-message { grid-column: 1 / -1; text-align: center; font-family: var(--display); font-size: clamp(15px, 1.4vw, 17px); color: var(--ink); }
+
+@media (max-width: 720px) {
+  .hs-form-wrap .hs-form { grid-template-columns: 1fr; gap: 24px; }
+}

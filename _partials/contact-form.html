@@ -1,42 +1,11 @@
-<!-- Contact form · shared. Styling in assets/contact-form.css, handler in assets/contact-form.js (posts to /api/contact). One per page (uses id="contactForm"). -->
+<!-- Contact form · shared. Native HubSpot form (portal 14539048, form f9587f58
+     "Contact us"). Mounted by the [data-hsform] loader in _partials/scripts.html.
+     Styling in assets/contact-form.css (.hs-form rules). -->
 <section class="contact-section" id="contact">
   <div class="container">
     <h2 class="contact-title reveal">Ready to grow?</h2>
     <p class="contact-sub reveal">Send your details and a senior strategist will be in touch to book your discovery session and map the fastest path to revenue. Prefer to talk now? Call <a href="tel:+61386859290">03 8685 9290</a>.</p>
 
-    <form class="contact-form reveal" id="contactForm" autocomplete="on" data-success-redirect="/thank-you">
-      <input type="hidden" name="partnerName" value="Zib Digital" />
-      <input type="hidden" name="source" value="Website contact form" />
-
-      <div class="contact-field">
-        <label for="cf-firstname">First name *</label>
-        <input type="text" id="cf-firstname" name="firstname" required autocomplete="given-name" />
-      </div>
-      <div class="contact-field">
-        <label for="cf-lastname">Last name *</label>
-        <input type="text" id="cf-lastname" name="lastname" required autocomplete="family-name" />
-      </div>
-
-      <div class="contact-field">
-        <label for="cf-email">Email *</label>
-        <input type="email" id="cf-email" name="email" required autocomplete="email" />
-      </div>
-      <div class="contact-field">
-        <label for="cf-phone">Phone number *</label>
-        <input type="tel" id="cf-phone" name="phone" required autocomplete="tel" />
-      </div>
-
-      <div class="contact-field full">
-        <label for="cf-website">Website</label>
-        <input type="text" id="cf-website" name="website" autocomplete="url" placeholder="yourbusiness.com.au" />
-      </div>
-      <div class="contact-field full">
-        <label for="cf-message">What do you need help with?</label>
-        <textarea id="cf-message" name="message" placeholder="A sentence or two on your goals is plenty."></textarea>
-      </div>
-
-      <button type="submit" class="contact-submit" id="contactSubmit">Send enquiry</button>
-      <div class="contact-status mono" id="contactStatus" role="status" aria-live="polite"></div>
-    </form>
+    <div class="hs-form-wrap reveal" data-hsform="f9587f58-9e5e-46b7-8da6-3068c57be774"></div>
   </div>
 </section>

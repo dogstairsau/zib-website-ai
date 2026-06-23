@@ -248,3 +248,36 @@
   }
 })();
 </script>
+
+<!-- ───────────────────────────────────────────────────────────────────────
+     HubSpot forms loader (portal 14539048, region na1).
+     To embed any HubSpot form on a page, drop a div where it should render:
+         <div data-hsform="FORM_ID"></div>
+     Optionally override region with data-hsregion="eu1".
+     The embed script (js.hsforms.net) is loaded lazily — only on pages that
+     actually contain a [data-hsform] element — so it adds zero weight elsewhere.
+     ─────────────────────────────────────────────────────────────────────── -->
+<script>
+(() => {
+  const mounts = document.querySelectorAll('[data-hsform]');
+  if (!mounts.length) return;
+  const boot = () => {
+    if (!window.hbspt) return;
+    mounts.forEach((el, i) => {
+      if (!el.id) el.id = 'hsform-' + i;
+      window.hbspt.forms.create({
+        portalId: '14539048',
+        region: el.dataset.hsregion || 'na1',
+        formId: el.dataset.hsform,
+        target: '#' + el.id,
+      });
+    });
+  };
+  const s = document.createElement('script');
+  s.src = 'https://js.hsforms.net/forms/embed/v2.js';
+  s.charset = 'utf-8';
+  s.async = true;
+  s.onload = boot;
+  document.head.appendChild(s);
+})();
+</script>

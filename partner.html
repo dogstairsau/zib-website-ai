@@ -4,6 +4,7 @@
 <title>Franchise opportunity · Build a 7-figure business with Zib Digital</title>
 <meta name="description" content="The Zib Digital franchise opportunity. Build a 7-figure digital marketing business backed by a 100+ specialist production team, proven systems, and the Zib brand. Recurring revenue model." />
 <!-- @include _partials/head.html -->
+<link rel="stylesheet" href="/assets/contact-form.css">
 <!-- FAQPage schema, eligible for Google rich results -->
 <script type="application/ld+json">
 {
@@ -2615,11 +2616,17 @@ footer {
     <p class="cta-sub reveal">
       Register your interest and we'll be in touch for a first phone call. No pressure, no pitch, just a conversation about the opportunity and whether the fit is right on both sides. Our team welcome the opportunity to get to know you better.
     </p>
-    <div class="cta-buttons reveal">
-      <a href="mailto:hello@zibdigital.com.au?subject=Zib%20Partner%20Opportunity%20-%20Register%20Interest" class="btn btn-light magnet">
-        Register your interest <span class="arr">→</span>
-      </a>
-      <a href="tel:1300942633" class="btn btn-outline-light">Call 1300 942 633</a>
+    <style>
+      /* Partner-opportunity HubSpot form on the dark CTA section */
+      .cta-section .hs-form-wrap { margin-top: clamp(32px, 4vw, 48px); }
+      .cta-section .hs-form label { color: rgba(255,255,255,0.66); }
+      .cta-section .cta-phone-fallback { margin-top: 22px; font-size: 14px; color: rgba(255,255,255,0.6); }
+      .cta-section .cta-phone-fallback a { color: #fff; border-bottom: 1px solid rgba(255,255,255,0.4); }
+    </style>
+    <div class="cta-form reveal">
+      <!-- HubSpot "Partner opportunity" form (1622d69c) → /partner-opportunity-thankyou/ -->
+      <div class="hs-form-wrap" data-hsform="1622d69c-5de6-48d2-87ed-004cc8ee49a3"></div>
+      <p class="cta-phone-fallback">Prefer to talk now? Call <a href="tel:1300942633">1300 942 633</a>.</p>
     </div>
   </div>
 </section>
