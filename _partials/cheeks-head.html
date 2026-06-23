@@ -1,0 +1,72 @@
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="theme-color" content="#FAF8F5" />
+<link rel="icon" type="image/webp" href="/assets/cheeks-c-mark.webp" />
+<link rel="apple-touch-icon" href="/assets/cheeks-c-mark.webp" />
+<link rel="stylesheet" href="/assets/base.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400;1,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- ─── Cheeks & Co Media brand theme · overrides Zib tokens from base.css ───
+     Palette + element mapping per the Cheeks & Co brand guidelines.
+     Loaded AFTER base.css so these win the cascade. -->
+<style>
+  :root {
+    --bg: #FAF8F5;          /* Warm Cream — page background */
+    --paper: #FFFFFF;       /* clean surfaces / input fields */
+    --dim: #FDF3F6;         /* soft pink wash */
+    --ink: #2C2C2C;         /* Off Black — headings / strong text */
+    --ink-2: #2C2C2C;
+    --ink-3: #444444;       /* Charcoal — body text */
+    --muted: #9C8880;       /* Mauve Gray — captions / dividers */
+    --muted-2: #C9899E;     /* Dusty Rose — secondary / icons */
+    --rule: #EADfe1;
+    --rule-2: #DCC8CF;
+    --accent: #D4618A;      /* Deep Rose — links, CTAs, highlights (accessible on light) */
+    --accent-tint: #FDD9E8; /* Blush — accent fills */
+    --brand-pink: #F9A8C0;  /* Cool Rose Pink — logo / primary brand */
+
+    --display: "Jost", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --body:    "Jost", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  body { color: #444444; font-family: var(--body); }
+  .site-header .brand img { height: 34px; width: auto; }
+  .audit-footer .brand img { height: 30px; width: auto; }
+</style>
+
+<!-- Microsoft Clarity · session recordings + heatmaps · tag wtv7n8ywyl -->
+<script type="text/javascript">
+  (function(){
+    function loadClarity(){
+      (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "wtv7n8ywyl");
+    }
+    if ('requestIdleCallback' in window) requestIdleCallback(loadClarity, { timeout: 4000 });
+    else setTimeout(loadClarity, 2500);
+  })();
+</script>
+
+<!-- Google tag (gtag.js) · G-LQDQEYFP98 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LQDQEYFP98"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-LQDQEYFP98');
+</script>
+
+<!-- Structured data · Cheeks & Co Media -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Cheeks & Co Media",
+  "url": "https://www.cheeksandco.com.au/",
+  "logo": "https://www.cheeksandco.com.au/",
+  "areaServed": "AU"
+}
+</script>
