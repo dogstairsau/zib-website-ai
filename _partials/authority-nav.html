@@ -1,0 +1,40 @@
+<!-- Authority cluster interlink · reusable across the branded/reputation pages.
+     Self-contained (scoped CSS + a tiny script that marks the current page),
+     so a new page in the cluster only has to include this partial and add
+     itself to the list below. Keeps the cluster interlinked for topical authority. -->
+<nav class="authority-nav" aria-label="About Zib Digital">
+  <div class="container">
+    <ul class="authority-nav-list">
+      <li><a href="/about">About</a></li>
+      <li><a href="/why-zib-digital">Why Zib</a></li>
+      <li><a href="/zib-digital-methodology">Methodology</a></li>
+      <li><a href="/zib-digital-results">Results</a></li>
+      <li><a href="/zib-digital-leadership">Leadership</a></li>
+      <li><a href="/meet-the-team">Team</a></li>
+      <li><a href="/reviews">Reviews</a></li>
+    </ul>
+  </div>
+</nav>
+<style>
+  .authority-nav { border-bottom: 0.5px solid var(--rule); background: var(--paper); position: sticky; top: 0; z-index: 40; }
+  .authority-nav-list { display: flex; gap: 0; list-style: none; margin: 0; padding: 0; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+  .authority-nav-list::-webkit-scrollbar { display: none; }
+  .authority-nav-list a {
+    display: inline-block; white-space: nowrap; padding: 16px 20px;
+    font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em; text-transform: uppercase;
+    color: var(--muted); text-decoration: none; border-bottom: 1.5px solid transparent;
+    transition: color .2s, border-color .2s;
+  }
+  .authority-nav-list a:hover { color: var(--ink); }
+  .authority-nav-list a[aria-current="page"] { color: var(--accent); border-bottom-color: var(--accent); }
+  @media (max-width: 720px) { .authority-nav-list a { padding: 14px 14px; font-size: 11px; } }
+</style>
+<script>
+  (function () {
+    var here = location.pathname.replace(/\/$/, "") || "/";
+    document.querySelectorAll(".authority-nav-list a").forEach(function (a) {
+      var href = a.getAttribute("href").replace(/\/$/, "");
+      if (href === here) a.setAttribute("aria-current", "page");
+    });
+  })();
+</script>
