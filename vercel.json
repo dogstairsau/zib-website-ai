@@ -70,9 +70,9 @@
       "permanent": false
     },
     {
-      "source": "/",
+      "source": "/cheeks",
       "has": [{ "type": "host", "value": "(www\\.)?audit\\.cheeksandco\\.com\\.au" }],
-      "destination": "/cheeks",
+      "destination": "/",
       "permanent": false
     },
     {
@@ -80,6 +80,13 @@
       "has": [{ "type": "host", "value": "(www\\.)?ziboutreach\\.com\\.au" }],
       "destination": "https://zibdigital.com.au/:path",
       "permanent": false
+    }
+  ],
+  "rewrites": [
+    {
+      "source": "/",
+      "has": [{ "type": "host", "value": "(www\\.)?audit\\.cheeksandco\\.com\\.au" }],
+      "destination": "/cheeks"
     }
   ],
   "headers": [
