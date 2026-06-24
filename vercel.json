@@ -76,13 +76,6 @@
       "permanent": false
     }
   ],
-  "rewrites": [
-    {
-      "source": "/",
-      "has": [{ "type": "host", "value": "(www\\.)?audit\\.cheeksandco\\.com\\.au" }],
-      "destination": "/cheeks"
-    }
-  ],
   "headers": [
     {
       "source": "/(.*)",
