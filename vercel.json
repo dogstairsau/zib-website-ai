@@ -46,7 +46,6 @@
     { "source": "/get-in-touch", "destination": "/contact", "permanent": true },
     { "source": "/zib-partner-opportunity", "destination": "/partner", "permanent": true },
     { "source": "/partner-opportunity", "destination": "/partner", "permanent": true },
-    { "source": "/about", "destination": "/meet-the-team", "permanent": true },
     { "source": "/email-marketing-melbourne", "destination": "/email-marketing", "permanent": true },
     { "source": "/local-seo-melbourne", "destination": "/seo-melbourne", "permanent": true },
     { "source": "/web-graphic-designers", "destination": "/web-graphic-design-melbourne", "permanent": true },
