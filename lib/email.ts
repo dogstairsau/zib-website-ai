@@ -494,3 +494,153 @@ function renderMetaAdsPackHtml(pack: MetaAdsPack): string {
 </body></html>`;
 }
 
+// ─── Google Ads Lab pack email ──────────────────────────────────────
+// Sent to the prospect (the actual pack) AND the internal team. Same body,
+// different recipients + subject lines. Mirrors the Meta Ads Lab pack.
+
+export type GoogleAdsPack = {
+  url: string;
+  email: string;
+  firstname: string;
+  phone?: string;
+  brand: { name: string; tagline: string; category: string; domain: string };
+  transparencyUrl: string;
+  audit: { title: string; detail: string }[];
+  search: { headlines: string[]; descriptions: string[]; paths: string[] };
+  keywordThemes: { theme: string; examples: string }[];
+  pmax: {
+    businessName: string;
+    shortHeadlines: string[];
+    longHeadlines: string[];
+    descriptions: string[];
+    callouts: string[];
+    sitelinks: { text: string; desc: string }[];
+  };
+};
+
+export async function sendGoogleAdsPack(pack: GoogleAdsPack): Promise<void> {
+  const apiKey = process.env.RESEND_API_KEY;
+  const from = process.env.LEAD_NOTIFY_FROM || "onboarding@resend.dev";
+  const internalTo = process.env.LEAD_NOTIFY_EMAIL;
+
+  if (!apiKey) {
+    console.log("[google-ads pack:stub] no RESEND_API_KEY", { url: pack.url, email: pack.email });
+    return;
+  }
+
+  const html = renderGoogleAdsPackHtml(pack);
+  const brandName = pack.brand?.name || "your brand";
+  const prospectSubject = `Your Google Ads pack — ${brandName}`;
+  const internalSubject = `New Google Ads Lab lead · ${brandName} · ${pack.email}`;
+
+  const sendTo = async (to: string, subject: string, label: string) => {
+    try {
+      const res = await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+        body: JSON.stringify({ from, to, subject, html }),
+        signal: AbortSignal.timeout(10_000),
+      });
+      const body = await res.text().catch(() => "");
+      if (!res.ok) console.warn(`[google-ads pack:${label}] Resend ${res.status}`, body.slice(0, 300));
+    } catch (e) {
+      console.warn(`[google-ads pack:${label}] fetch failed`, (e as Error).message);
+    }
+  };
+
+  const sends: Promise<void>[] = [];
+  if (pack.email) sends.push(sendTo(pack.email, prospectSubject, "prospect"));
+  if (internalTo) sends.push(sendTo(internalTo, internalSubject, "internal"));
+  await Promise.all(sends);
+}
+
+function renderGoogleAdsPackHtml(pack: GoogleAdsPack): string {
+  const safe = (s: string | undefined) => esc(s || "");
+  const chip = (s: string) =>
+    `<span style="display:inline-block;margin:0 6px 6px 0;padding:6px 10px;background:#FAFAF8;border:1px solid #E8E5DD;border-radius:6px;font-size:13px;color:#1A1A1A;">${safe(s)}</span>`;
+
+  const auditBlock = (pack.audit || [])
+    .map(
+      (a) => `
+    <div style="margin:0 0 12px;padding:14px 18px;background:#FAFAF8;border:1px solid #E8E5DD;border-left:4px solid #FF6200;border-radius:8px;">
+      <div style="font-weight:600;font-size:14px;color:#0F0F0F;margin-bottom:4px;">${safe(a.title)}</div>
+      <div style="font-size:13.5px;line-height:1.55;color:#1A1A1A;">${safe(a.detail)}</div>
+    </div>`,
+    )
+    .join("");
+
+  const kwBlock = (pack.keywordThemes || [])
+    .map(
+      (k) => `
+    <tr>
+      <td style="padding:8px 12px 8px 0;font-weight:500;color:#0F0F0F;vertical-align:top;white-space:nowrap;">${safe(k.theme)}</td>
+      <td style="padding:8px 0;color:#6B6B6B;font-size:13.5px;">${safe(k.examples)}</td>
+    </tr>`,
+    )
+    .join("");
+
+  const sitelinkBlock = (pack.pmax?.sitelinks || [])
+    .map(
+      (s) =>
+        `<div style="margin:0 0 8px;"><span style="color:#1A56DB;font-weight:500;">${safe(s.text)}</span> <span style="color:#6B6B6B;font-size:13px;">— ${safe(s.desc)}</span></div>`,
+    )
+    .join("");
+
+  let host = pack.url;
+  try { host = new URL(pack.url).hostname.replace(/^www\./, ""); } catch {}
+
+  return `<!doctype html>
+<html><body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;line-height:1.55;color:#0F0F0F;max-width:720px;margin:0 auto;padding:24px;background:#fff;">
+  <div style="text-align:center;margin-bottom:32px;padding-bottom:24px;border-bottom:2px solid #0F0F0F;">
+    <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#FF6200;font-weight:600;margin-bottom:10px;">Zib Digital · Google Ads Lab</div>
+    <h1 style="font-size:28px;margin:0 0 8px;line-height:1.1;letter-spacing:-0.02em;">Your Google Ads pack, ${safe(pack.firstname) || "ready"}.</h1>
+    <p style="color:#6B6B6B;margin:0;font-size:14px;">Drafted for ${safe(pack.brand?.name || host)} — strategy call within 24h.</p>
+  </div>
+
+  <table style="border-collapse:collapse;width:100%;margin-bottom:24px;font-size:13.5px;">
+    <tr><td style="padding:6px 12px 6px 0;color:#6B6B6B;width:120px;">Brand</td><td style="padding:6px 0;font-weight:500;">${safe(pack.brand?.name)}</td></tr>
+    <tr><td style="padding:6px 12px 6px 0;color:#6B6B6B;">Category</td><td style="padding:6px 0;">${safe(pack.brand?.category)}</td></tr>
+    <tr><td style="padding:6px 12px 6px 0;color:#6B6B6B;">Site</td><td style="padding:6px 0;"><a href="${safe(pack.url)}" style="color:#FF6200;">${safe(pack.url)}</a></td></tr>
+    <tr><td style="padding:6px 12px 6px 0;color:#6B6B6B;">Transparency Center</td><td style="padding:6px 0;"><a href="${safe(pack.transparencyUrl)}" style="color:#FF6200;">See live ads for ${safe(host)} →</a></td></tr>
+  </table>
+
+  <h2 style="font-size:18px;margin:0 0 10px;letter-spacing:-0.01em;">The Google Ads read</h2>
+  ${auditBlock}
+
+  <h2 style="font-size:18px;margin:28px 0 6px;letter-spacing:-0.01em;">Responsive Search Ad</h2>
+  <p style="font-size:13px;color:#6B6B6B;margin:0 0 12px;">${pack.search?.headlines?.length || 0} headlines, ${pack.search?.descriptions?.length || 0} descriptions. Load straight into a Search campaign.</p>
+  <div style="margin-bottom:8px;">${(pack.search?.headlines || []).map(chip).join("")}</div>
+  ${(pack.search?.descriptions || [])
+    .map((d) => `<div style="margin:0 0 6px;font-size:14px;color:#1A1A1A;">• ${safe(d)}</div>`)
+    .join("")}
+  <div style="margin-top:8px;font-size:12px;color:#6B6B6B;">Display path: /${safe(pack.search?.paths?.[0] || "")}/${safe(pack.search?.paths?.[1] || "")}</div>
+
+  <h2 style="font-size:18px;margin:28px 0 8px;letter-spacing:-0.01em;">Keyword themes</h2>
+  <table style="border-collapse:collapse;width:100%;margin-bottom:8px;">${kwBlock}</table>
+
+  <h2 style="font-size:18px;margin:28px 0 8px;letter-spacing:-0.01em;">Performance Max asset group</h2>
+  <p style="font-size:13px;color:#6B6B6B;margin:0 0 8px;font-weight:500;">Short headlines</p>
+  <div style="margin-bottom:10px;">${(pack.pmax?.shortHeadlines || []).map(chip).join("")}</div>
+  <p style="font-size:13px;color:#6B6B6B;margin:0 0 8px;font-weight:500;">Long headlines</p>
+  ${(pack.pmax?.longHeadlines || []).map((h) => `<div style="margin:0 0 6px;font-size:14px;color:#1A1A1A;">• ${safe(h)}</div>`).join("")}
+  <p style="font-size:13px;color:#6B6B6B;margin:16px 0 8px;font-weight:500;">Descriptions</p>
+  ${(pack.pmax?.descriptions || []).map((d) => `<div style="margin:0 0 6px;font-size:14px;color:#1A1A1A;">• ${safe(d)}</div>`).join("")}
+  <p style="font-size:13px;color:#6B6B6B;margin:16px 0 8px;font-weight:500;">Callouts</p>
+  <div style="margin-bottom:10px;">${(pack.pmax?.callouts || []).map(chip).join("")}</div>
+  <p style="font-size:13px;color:#6B6B6B;margin:16px 0 8px;font-weight:500;">Sitelinks</p>
+  ${sitelinkBlock}
+  <p style="font-size:12px;color:#6B6B6B;margin:14px 0 0;">Plus image assets in landscape, square and portrait, previewed on the page. The strategist can hand over the source files on the call.</p>
+
+  <div style="margin-top:36px;padding:24px;background:#0F0F0F;color:#fff;border-radius:12px;text-align:center;">
+    <h3 style="margin:0 0 8px;font-size:18px;letter-spacing:-0.01em;">Want a Premier Partner to load this for you?</h3>
+    <p style="margin:0 0 14px;font-size:14px;color:rgba(255,255,255,0.72);line-height:1.5;">A senior Google Ads strategist will reach out within 24 hours to pressure-test the structure, the keywords and the budget split before anything goes live.</p>
+    <a href="mailto:hello@zibdigital.com.au?subject=Google%20Ads%20Lab%20-%20${encodeURIComponent(pack.brand?.name || host)}" style="display:inline-block;padding:12px 24px;background:#FF6200;color:#fff;text-decoration:none;border-radius:999px;font-weight:500;font-size:14px;">Reply to talk to a strategist →</a>
+  </div>
+
+  <p style="margin-top:36px;font-size:11px;color:#9C9C9C;text-align:center;line-height:1.6;">
+    Zib Digital · Australian digital agency, est. 2009 · Google Premier Partner<br/>
+    This pack was drafted from a one-shot read of ${safe(host)}. Real campaign work involves deeper keyword research, conversion tracking and creative iteration.
+  </p>
+</body></html>`;
+}
+
