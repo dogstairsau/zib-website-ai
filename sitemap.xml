@@ -805,4 +805,29 @@
     <lastmod>2026-06-23</lastmod>
     <priority>0.7</priority>
   </url>
+  <url>
+    <loc>https://zibdigital.com.au/about</loc>
+    <lastmod>2026-06-24</lastmod>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://zibdigital.com.au/why-zib-digital</loc>
+    <lastmod>2026-06-24</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://zibdigital.com.au/zib-digital-methodology</loc>
+    <lastmod>2026-06-24</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://zibdigital.com.au/zib-digital-results</loc>
+    <lastmod>2026-06-24</lastmod>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://zibdigital.com.au/zib-digital-leadership</loc>
+    <lastmod>2026-06-24</lastmod>
+    <priority>0.8</priority>
+  </url>
 </urlset>
