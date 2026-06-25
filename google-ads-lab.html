@@ -18,6 +18,9 @@
 .gal-form:focus-within { border-color: var(--ink); transform: translateY(-1px); }
 .gal-form input { font-family: var(--display); font-size: clamp(15px, 1.2vw, 17px); padding: 14px 18px; color: var(--ink); background: transparent; border: 0; outline: 0; min-width: 0; }
 .gal-form input::placeholder { color: var(--muted-2); }
+.gal-form .url-field { display: flex; align-items: center; min-width: 0; }
+.gal-form .url-prefix { padding-left: 18px; color: var(--muted-2); font-family: var(--display); font-size: clamp(15px, 1.2vw, 17px); white-space: nowrap; user-select: none; }
+.gal-form .url-field input { padding-left: 3px; width: 100%; }
 .gal-form button { font-family: var(--display); font-weight: 500; font-size: 15px; padding: 0 26px; height: 48px; border-radius: 999px; background: var(--ink); color: #fff; border: 0; cursor: pointer; transition: transform 200ms var(--ease), background 200ms var(--ease); white-space: nowrap; }
 .gal-form button:hover { background: var(--accent); transform: translateY(-1px); }
 .gal-form button .arr { display: inline-block; margin-left: 6px; transition: transform 200ms var(--ease); }
@@ -166,7 +169,10 @@
         <strong>Drop your URL.</strong> We check the Google Ads Transparency Center for what you're running, read your site, then build a fresh pack live: a Responsive Search Ad, keyword themes and a Performance Max asset group with images. A senior Premier Partner strategist follows up within 24 hours.
       </p>
       <form id="heroForm" class="gal-form reveal">
-        <input id="heroUrl" type="url" name="url" placeholder="yourwebsite.com.au" autocomplete="url" required />
+        <div class="url-field">
+          <span class="url-prefix" aria-hidden="true">https://</span>
+          <input id="heroUrl" type="text" name="url" inputmode="url" placeholder="yourwebsite.com.au" autocomplete="url" required />
+        </div>
         <button type="submit">Build my Google Ads <span class="arr">→</span></button>
       </form>
       <div class="gal-trust reveal">
@@ -479,7 +485,10 @@
   heroForm.addEventListener('submit', (e) => {
     e.preventDefault();
     if (state.isRunning) return;
-    state.url = heroUrl.value.trim();
+    // The visible "https://" prefix means people type only the domain. Strip any
+    // protocol they paste in and prepend https:// so the submitted URL is valid.
+    const typed = heroUrl.value.trim().replace(/^https?:\/\//i, '');
+    state.url = typed ? 'https://' + typed : '';
     $('galErr')?.remove();
     resetStages(); reveal.hidden = true;
     gateSec.hidden = false;
