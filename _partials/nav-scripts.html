@@ -1,0 +1,108 @@
+<!--
+  Header + primary-nav behaviour: scroll shadow, mobile drawer toggle, dropdown
+  groups (click + hover-intent), and current-item marking.
+
+  This mirrors the nav block at the top of scripts.html. It exists as a
+  standalone partial for pages that DON'T load the full scripts.html — e.g.
+  /audit, which ships its own reveal + count-up observers and must not
+  double-init them. Pages that include scripts.html should NOT also include
+  this (they'd bind the nav twice).
+-->
+<script>
+(() => {
+  // Header scroll shadow
+  const header = document.getElementById('header');
+  if (header) {
+    const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 8);
+    document.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+
+  // Mobile burger toggle, opens/closes the nav drawer
+  const navToggle = document.getElementById('navToggle');
+  const navList = document.getElementById('navList');
+  if (navToggle && navList) {
+    const closeNav = () => {
+      navToggle.setAttribute('aria-expanded', 'false');
+      navList.classList.remove('is-open');
+    };
+    navToggle.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const open = navToggle.getAttribute('aria-expanded') === 'true';
+      navToggle.setAttribute('aria-expanded', String(!open));
+      navList.classList.toggle('is-open', !open);
+    });
+    navList.addEventListener('click', (e) => {
+      if (e.target.tagName === 'A') closeNav();
+    });
+    document.addEventListener('click', (e) => {
+      if (!e.target.closest('#header')) closeNav();
+    });
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeNav();
+    });
+  }
+
+  // Nav dropdown groups — opening is driven by the .is-open class so it never
+  // depends on CSS :hover support. Click toggles everywhere; hover opens on
+  // hover-capable devices.
+  const canHover = window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+  const navGroups = document.querySelectorAll('[data-nav-group]');
+  const closeAllGroups = (except) => {
+    navGroups.forEach((g) => {
+      if (g !== except) {
+        g.classList.remove('is-open');
+        g.querySelector('.nav-group-toggle')?.setAttribute('aria-expanded', 'false');
+      }
+    });
+  };
+  navGroups.forEach((group) => {
+    const trigger = group.querySelector('.nav-group-toggle');
+    if (!trigger) return;
+    const setOpen = (open) => {
+      group.classList.toggle('is-open', open);
+      trigger.setAttribute('aria-expanded', open ? 'true' : 'false');
+    };
+    trigger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const willOpen = !group.classList.contains('is-open');
+      closeAllGroups(group);
+      setOpen(willOpen);
+    });
+    if (canHover) {
+      let closeTimer;
+      group.addEventListener('mouseenter', () => {
+        clearTimeout(closeTimer);
+        closeAllGroups(group);
+        setOpen(true);
+      });
+      group.addEventListener('mouseleave', () => {
+        clearTimeout(closeTimer);
+        closeTimer = setTimeout(() => setOpen(false), 260);
+      });
+    }
+  });
+  document.addEventListener('click', (e) => {
+    document.querySelectorAll('[data-nav-group].is-open').forEach((group) => {
+      if (!group.contains(e.target)) {
+        group.classList.remove('is-open');
+        const t = group.querySelector('.nav-group-toggle');
+        if (t) t.setAttribute('aria-expanded', 'false');
+      }
+    });
+  });
+
+  // Mark current nav item (top-level + sub-menu items + parent group)
+  const here = location.pathname.replace(/index\.html$/, '/');
+  document.querySelectorAll('.nav a:not(.cta)').forEach(a => {
+    try {
+      const linkPath = new URL(a.href, location.origin).pathname.replace(/index\.html$/, '/');
+      if (linkPath === here) {
+        a.setAttribute('aria-current', 'page');
+        const group = a.closest('[data-nav-group]');
+        if (group) group.classList.add('has-current');
+      }
+    } catch {}
+  });
+})();
+</script>
