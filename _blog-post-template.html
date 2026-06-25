@@ -11,6 +11,17 @@
   4. Write the article body inside <article class="post-body">
   5. Add the post entry to the seed array in blog.html
   ─────────────────────────────────────────────────────────────
+  AUTHOR (do this so the post gets a real Person entity, not "Zib Digital"):
+  - Pick an author who has a page at /author/<slug>. If they don't have one yet,
+    copy _author-template.html → author/<slug>.html and fill it in first.
+  - {{AUTHOR_SLUG}}  e.g. chris-knights   (must match the /author/<slug> file)
+  - {{AUTHOR_NAME}}  e.g. Chris Knights
+  - {{AUTHOR_INITIALS}}  e.g. CK
+  - {{AUTHOR_JOB_TITLE}}  e.g. CEO
+  - {{AUTHOR_ROLE_LINE}}  one-line bio shown under the name in the footer
+  - {{PUBLISH_ISO}}  ISO date for schema, e.g. 2026-06-25T09:00:00.000Z
+  - {{SLUG}}  this post's own slug (for mainEntityOfPage)
+  ─────────────────────────────────────────────────────────────
 -->
 <head>
 <title>{{TITLE}} · Zib Digital</title>
@@ -18,6 +29,30 @@
 <meta property="og:title" content="{{TITLE}}" />
 <meta property="og:description" content="{{META_DESCRIPTION}}" />
 <meta property="og:type" content="article" />
+<!-- Article + author entity. Fill the {{AUTHOR_*}}, {{SLUG}} and {{PUBLISH_ISO}}
+     placeholders. The author @id must match the matching /author/<slug> page so
+     every post by this person resolves to one Person entity in the graph. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "{{TITLE}}",
+  "description": "{{META_DESCRIPTION}}",
+  "image": "https://zibdigital.com.au{{IMAGE_FILE}}",
+  "datePublished": "{{PUBLISH_ISO}}",
+  "dateModified": "{{PUBLISH_ISO}}",
+  "author": {
+    "@type": "Person",
+    "@id": "https://zibdigital.com.au/author/{{AUTHOR_SLUG}}#person",
+    "name": "{{AUTHOR_NAME}}",
+    "url": "https://zibdigital.com.au/author/{{AUTHOR_SLUG}}",
+    "jobTitle": "{{AUTHOR_JOB_TITLE}}",
+    "worksFor": { "@id": "https://zibdigital.com.au/#org" }
+  },
+  "publisher": { "@id": "https://zibdigital.com.au/#org" },
+  "mainEntityOfPage": "https://zibdigital.com.au/{{SLUG}}"
+}
+</script>
 <!-- @include _partials/head.html -->
 <style>
 h1, h2, h3, .post-title, .related-h, .cta-title { text-wrap: balance; }
@@ -517,10 +552,10 @@ h1, h2, h3, .post-title, .related-h, .cta-title { text-wrap: balance; }
       {{DECK_OR_EXCERPT}}
     </p>
     <div class="post-meta-row reveal">
-      <div class="author-pill">
+      <a class="author-pill" href="/author/{{AUTHOR_SLUG}}" style="text-decoration:none;color:inherit">
         <span class="author-avatar">{{AUTHOR_INITIALS}}</span>
         <span>{{AUTHOR_NAME}}</span>
-      </div>
+      </a>
       <span class="meta-dot" aria-hidden="true"></span>
       <span>{{PUBLISH_DATE}}</span>
       <span class="meta-dot" aria-hidden="true"></span>
@@ -616,13 +651,13 @@ h1, h2, h3, .post-title, .related-h, .cta-title { text-wrap: balance; }
 
     <!-- AUTHOR + SHARE -->
     <div class="post-foot">
-      <div class="author-block">
+      <a class="author-block" href="/author/{{AUTHOR_SLUG}}" style="text-decoration:none;color:inherit">
         <span class="author-avatar">{{AUTHOR_INITIALS}}</span>
         <div>
           <div class="name">{{AUTHOR_NAME}}</div>
           <div class="role">{{AUTHOR_ROLE_LINE}}</div>
         </div>
-      </div>
+      </a>
       <div class="share-row" aria-label="Share this article">
         <span class="share-label">Share</span>
         <a class="share-btn" id="shareLinkedIn" href="#" target="_blank" rel="noopener" aria-label="Share on LinkedIn">
