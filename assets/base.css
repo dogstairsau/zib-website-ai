@@ -217,6 +217,7 @@ h1, h2, h3, .hero-h, .fork-h, .path-title, .moat-h, .cta-title { text-wrap: bala
   padding: 10px 20px;
   border-radius: 999px;
   font-weight: 500;
+  white-space: nowrap;
   transition: transform 200ms var(--ease);
 }
 .nav-end .cta:hover, .nav a.cta:hover { transform: translateY(-1px); }
@@ -231,6 +232,11 @@ h1, h2, h3, .hero-h, .fork-h, .path-title, .moat-h, .cta-title { text-wrap: bala
 }
 .nav-end .nav-ghost:hover { border-color: var(--ink); transform: translateY(-1px); }
 @media (max-width: 860px) { .nav-end .nav-ghost { display: none; } }
+/* Mobile: shrink the header CTA so it can't overlap the wordmark or wrap. */
+@media (max-width: 600px) {
+  .nav-end { gap: 8px; }
+  .nav-end .cta, .nav a.cta { padding: 8px 13px; font-size: 13px; }
+}
 
 /* Burger toggle — 3 animated bars that morph into an × when open */
 .nav-toggle {
