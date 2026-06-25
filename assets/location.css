@@ -9,8 +9,10 @@ h1, h2, h3, .hero-h, .local-h, .services-h, .stats-h, .faq-h, .cta-title { text-
 
 /* ─── HERO ─────────────────────────────────────────────────── */
 .loc-hero {
-  padding-top: clamp(56px, 9vw, 112px);
-  padding-bottom: clamp(80px, 10vw, 144px);
+  /* Lifted to trim dead space under the header (and the authority sub-nav on
+     the branded pages). Breathing room kept, not removed. */
+  padding-top: clamp(32px, 5vw, 72px);
+  padding-bottom: clamp(64px, 8vw, 112px);
   border-bottom: 0.5px solid var(--rule);
 }
 .loc-hero .eyebrow {
