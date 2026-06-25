@@ -195,15 +195,17 @@ section.tight { padding-top: clamp(60px, 8vh, 96px); padding-bottom: clamp(60px,
 
 /* ─── HERO ───────────────────────────────────────────────────────── */
 .hero {
-  padding-top: clamp(80px, 12vh, 160px);
-  padding-bottom: clamp(80px, 12vh, 140px);
+  /* Lifted: trims the dead space under the fixed header so the headline and
+     logo bar sit higher in the first fold. Keeps breathing room, not zero. */
+  padding-top: clamp(28px, 5vh, 64px);
+  padding-bottom: clamp(44px, 7vh, 96px);
   position: relative;
 }
 
 .hero-marker {
   position: absolute;
   right: var(--pad);
-  top: clamp(120px, 18vh, 220px);
+  top: clamp(40px, 7vh, 110px);
   writing-mode: vertical-rl;
   color: var(--muted);
   letter-spacing: 0.18em;
@@ -220,7 +222,7 @@ section.tight { padding-top: clamp(60px, 8vh, 96px); padding-bottom: clamp(60px,
 }
 
 @media (max-width: 880px) {
-  .hero-grid { grid-template-columns: 1fr; gap: 48px; }
+  .hero-grid { grid-template-columns: 1fr; gap: 36px; }
 }
 
 h1.hero-h {

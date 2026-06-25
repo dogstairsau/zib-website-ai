@@ -1,0 +1,101 @@
+<!doctype html>
+<html lang="en-AU">
+<!--
+  ─── AUTHOR PAGE TEMPLATE ────────────────────────────────────
+  Creates a Person entity for a content author + their hub page.
+  How to use:
+  1. Duplicate into the author/ folder:
+       cp _author-template.html author/<slug>.html
+     (leading `_` makes the build skip this template; the copy in
+      author/ builds to the clean URL /author/<slug>)
+  2. Replace every {{...}} placeholder with real values.
+  3. sameAs: put the person's real LinkedIn (and any public profile)
+     in the schema below. If you have none yet, DELETE the "sameAs"
+     line — never ship a fabricated or placeholder URL.
+  4. As the person publishes, add their articles to the list in the
+     "Latest articles" section (and byline the posts via the blog
+     post template so the author @id matches this page).
+  ─────────────────────────────────────────────────────────────
+-->
+<head>
+<title>{{AUTHOR_NAME}} · {{AUTHOR_JOB_TITLE}} at Zib Digital</title>
+<meta name="description" content="{{AUTHOR_NAME}}, {{AUTHOR_JOB_TITLE}} at Zib Digital. {{AUTHOR_BIO_SHORT}}" />
+<!-- @include _partials/head.html -->
+<link rel="stylesheet" href="/assets/location.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+<!-- @include _partials/nav.html -->
+<main id="main">
+<!-- Canonical Person entity for this author. The @id is referenced by every
+     BlogPosting this person writes, so all their work resolves to one entity. -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "ProfilePage",
+  "url": "https://zibdigital.com.au/author/{{AUTHOR_SLUG}}",
+  "mainEntity": {
+    "@type": "Person",
+    "@id": "https://zibdigital.com.au/author/{{AUTHOR_SLUG}}#person",
+    "name": "{{AUTHOR_NAME}}",
+    "url": "https://zibdigital.com.au/author/{{AUTHOR_SLUG}}",
+    "jobTitle": "{{AUTHOR_JOB_TITLE}}",
+    "worksFor": { "@id": "https://zibdigital.com.au/#org" },
+    "description": "{{AUTHOR_BIO_SHORT}}",
+    "sameAs": ["{{AUTHOR_LINKEDIN}}"]
+  }
+}
+</script>
+
+<section class="loc-hero">
+  <div class="container">
+    <div class="mono eyebrow reveal">{{AUTHOR_JOB_TITLE}} · Zib Digital</div>
+    <h1 class="hero-h reveal">{{AUTHOR_NAME}}</h1>
+    <div class="loc-hero-row">
+      <p class="hero-sub reveal">{{AUTHOR_BIO}}</p>
+      <div class="hero-ctas reveal">
+        <a class="btn btn-primary" href="/audit">Run a free audit <span class="arr">→</span></a>
+        <a class="btn btn-outline" href="/meet-the-team">Meet the team</a>
+      </div>
+    </div>
+    <div class="hero-meta reveal">
+      <span><span class="dot" aria-hidden="true"></span>{{AUTHOR_JOB_TITLE}}</span>
+      <span><span class="dot" aria-hidden="true"></span>Zib Digital, since 2009</span>
+    </div>
+  </div>
+</section>
+
+<section class="loc-proof">
+  <div class="container">
+    <div class="loc-proof-head">
+      <div><div class="mono proof-eyebrow reveal">Latest articles</div>
+      <h2 class="proof-h reveal">Writing by <em>{{AUTHOR_NAME}}.</em></h2></div>
+      <p class="proof-sub reveal">Commercial reads on digital marketing. Add each new piece here as it publishes.</p>
+    </div>
+    <!-- Add one <li> per article this author writes. Example shape:
+    <ul class="seo-points reveal">
+      <li><a href="/your-post-slug" style="color:var(--accent)">Post title</a> — one-line summary.</li>
+    </ul>
+    -->
+    <p class="reveal" style="margin-top:24px;"><a class="loc-link" href="/blog">Browse the Zib Digital blog →</a></p>
+  </div>
+</section>
+
+<section class="cta-section">
+  <div class="container">
+    <div class="mono cta-eyebrow reveal">Work with the team</div>
+    <h2 class="cta-title reveal">Want a senior read on <em>your business?</em></h2>
+    <p class="cta-sub reveal">Drop your URL for a free 30-second audit, or talk to a senior strategist.</p>
+    <div class="cta-buttons reveal">
+      <a class="btn btn-primary" href="/audit">Run the free audit <span class="arr">→</span></a>
+      <a class="btn btn-outline" href="mailto:hello@zibdigital.com.au?subject=Discovery%20call">Book a discovery call</a>
+    </div>
+  </div>
+</section>
+
+<style>.loc-link{display:inline-flex;align-items:center;gap:10px;color:var(--accent);text-decoration:none;font-weight:500;font-size:clamp(16px,1.4vw,19px)}.loc-link:hover{text-decoration:underline}</style>
+</main>
+<!-- @include _partials/footer.html -->
+<!-- @include _partials/scripts.html -->
+</body>
+</html>
