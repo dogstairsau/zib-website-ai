@@ -1808,7 +1808,9 @@ footer {
 }
 
 /* ─── MOTION PRIMITIVES ──────────────────────────────────────────── */
-.word, .reveal {
+/* Hidden state is gated on html.js (set inline in head) so content is never
+   invisible when JS is blocked or fails to run. */
+.js .word, .js .reveal {
   opacity: 0;
   transform: translateY(24px);
   filter: blur(6px);
@@ -1821,6 +1823,27 @@ footer {
 .word.in, .reveal.in { opacity: 1; transform: translateY(0); filter: blur(0); }
 
 .word { display: inline-block; }
+
+/* Hero entrance — pure CSS keyframes, no IntersectionObserver dependency.
+   The hero copy and CTAs paint as soon as CSS is parsed, instead of waiting
+   for the script at the bottom of the page. */
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(24px); filter: blur(6px); }
+  to   { opacity: 1; transform: translateY(0);    filter: blur(0);   }
+}
+
+.enter { animation: rise-in 900ms var(--ease-out) both; }
+.enter.d1 { animation-delay: 120ms; }
+.enter.d2 { animation-delay: 240ms; }
+.enter.d3 { animation-delay: 360ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .enter { animation: none; }
+}
+
+/* The hero eyebrow is the single most-clicked element on the page, so it now
+   goes somewhere. Underline on hover confirms it's interactive. */
+a.eyebrow:hover span { text-decoration: underline; text-underline-offset: 3px; }
 
 /* magnetic hover wrapper for primary CTAs */
 .magnet { transition: transform 320ms var(--ease-spring); will-change: transform; }
@@ -1839,23 +1862,23 @@ footer {
   <div class="hero-marker mono">Est. 2009 · Melbourne</div>
   <div class="container hero-grid">
     <div>
-      <div class="eyebrow mono reveal"><span>The Hybrid Agent Agency</span></div>
+      <a class="eyebrow mono enter" href="#approach"><span>The Hybrid Agent Agency</span></a>
       <h1 class="hero-h" id="heroLine">
         Australia's leading digital marketing agency. <em>Rebuilt for the AI era.</em>
       </h1>
     </div>
     <div>
-      <p class="hero-sub reveal">
+      <p class="hero-sub enter d1">
         <strong>First to digital in 2009. First to hybrid agents today.</strong>
         Most agencies sell activity. We sell the commercial outcome it produces, powered by a human team that gives a shit, and AI tooling that makes every dollar go further.
       </p>
-      <div class="hero-ctas reveal">
+      <div class="hero-ctas enter d2">
         <a href="#cta" class="btn btn-primary magnet">
           Book a commercial conversation <span class="arr">→</span>
         </a>
         <a href="#approach" class="btn btn-ghost">How it works</a>
       </div>
-      <div class="hero-credit mono reveal">
+      <div class="hero-credit mono enter d3">
         <span><strong>Melbourne</strong> · 2009</span>
         <span class="sep">·</span>
         <span><strong>800+</strong> clients</span>

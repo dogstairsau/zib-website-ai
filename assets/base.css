@@ -497,14 +497,17 @@ footer .foot-links {
 }
 
 /* ─── Reveals ─────────────────────────────────────────────────── */
-.reveal {
+/* The hidden starting state only applies when html.js is present (set by an
+   inline script in the head partial), so content stays visible when JS is
+   blocked, disabled, or fails to load. */
+.js .reveal {
   opacity: 0;
   transform: translateY(20px);
   filter: blur(6px);
   transition: opacity 800ms var(--ease), transform 800ms var(--ease), filter 800ms var(--ease);
 }
 .reveal.in { opacity: 1; transform: translateY(0); filter: blur(0); }
-.reveal-stagger > * {
+.js .reveal-stagger > * {
   opacity: 0;
   transform: translateY(16px);
   filter: blur(6px);
