@@ -1,6 +1,9 @@
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
 <meta name="theme-color" content="#FFFFFF" />
+<!-- Marks JS as available so entrance animations can hide content safely.
+     Without this class, .reveal content stays fully visible (no-JS fallback). -->
+<script>document.documentElement.classList.add('js');</script>
 <meta name="google-site-verification" content="pYxeBtzqyS2BXOBl_hjXvC9h8CBxjO-y6iJlEwOPMJg" />
 
 <!-- ───────────────────────────────────────────────────────────────────────
@@ -29,18 +32,24 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
      contact timelines + form attribution stay continuous after migration) -->
 <script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/14539048.js"></script>
 
-<!-- CallRail dynamic number swap · company 501276477 -->
-<script type="text/javascript" src="//cdn.callrail.com/companies/501276477/247ea0051ceca8a20027/12/swap.js"></script>
+<!-- CallRail dynamic number swap · company 501276477.
+     async so a slow CallRail CDN can never block first paint; swap.js runs
+     its number swap once the DOM is ready regardless of load order. -->
+<script type="text/javascript" async src="//cdn.callrail.com/companies/501276477/247ea0051ceca8a20027/12/swap.js"></script>
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
 <link rel="alternate icon" href="/assets/zib-logo.png" />
 <link rel="apple-touch-icon" href="/assets/zib-logo.png" />
-<link rel="preload" href="/assets/fonts/NeueHaasDisplayRoman.ttf" as="font" type="font/ttf" crossorigin>
-<link rel="preload" href="/assets/fonts/NeueHaasDisplayMediu.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="preload" href="/assets/fonts/NeueHaasDisplayRoman.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/NeueHaasDisplayMediu.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/fonts.css">
 <link rel="stylesheet" href="/assets/base.css">
+<!-- JetBrains Mono only (Roboto removed — it sits behind self-hosted Neue Haas
+     in every font stack, so it was downloaded but never rendered). Loaded
+     async: it styles small UI labels, not first-paint content. -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet"></noscript>
 
 <!-- Microsoft Clarity · session recordings + heatmaps · tag wtv7n8ywyl
      Deferred via requestIdleCallback so it doesn't block LCP. -->

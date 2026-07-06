@@ -214,6 +214,46 @@ section.tight { padding-top: clamp(60px, 8vh, 96px); padding-bottom: clamp(60px,
 
 @media (max-width: 1100px) { .hero-marker { display: none; } }
 
+/* Scroll cue — a quiet nudge inside the first fold, where Clarity shows
+   most visitors currently stop. */
+.scroll-cue {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: clamp(24px, 4vh, 44px);
+  color: var(--muted);
+  transition: color 240ms var(--ease);
+}
+
+.scroll-cue:hover { color: var(--accent); }
+
+.scroll-cue .line {
+  position: relative;
+  width: 44px;
+  height: 1px;
+  background: var(--rule);
+  overflow: hidden;
+}
+
+.scroll-cue .line::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  transform: translateX(-100%);
+  animation: cue-sweep 2.4s var(--ease) infinite;
+}
+
+@keyframes cue-sweep {
+  0%   { transform: translateX(-100%); }
+  55%  { transform: translateX(0); }
+  100% { transform: translateX(100%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-cue .line::after { animation: none; transform: translateX(-100%); }
+}
+
 .hero-grid {
   display: grid;
   grid-template-columns: 1.2fr 0.9fr;
@@ -828,6 +868,8 @@ h1.hero-h em {
 }
 
 .search-title em { font-style: italic; font-weight: 400; color: var(--accent); }
+.search-title em a { color: inherit; }
+.search-title em a:hover { text-decoration: underline; text-underline-offset: 4px; }
 
 .search-sub { color: var(--muted); font-size: clamp(15px, 1.4vw, 17px); line-height: 1.6; max-width: 44ch; }
 
@@ -1686,6 +1728,17 @@ h1.hero-h em {
 
 .stat-label { font-size: 14px; color: #FFF6EE; max-width: 220px; line-height: 1.4; }
 
+/* Stats link out to the proof behind them — Clarity showed visitors trying
+   to click the counters, so the numbers now go somewhere. */
+a.stat { display: block; color: inherit; }
+a.stat .stat-label .arr {
+  display: inline-block;
+  margin-left: 6px;
+  transition: transform 280ms var(--ease-spring);
+}
+a.stat:hover .stat-label { text-decoration: underline; text-underline-offset: 3px; }
+a.stat:hover .stat-label .arr { transform: translateX(4px); }
+
 /* ─── CTA (BLACK) ────────────────────────────────────────────────── */
 .cta-section {
   background: var(--ink);
@@ -1808,7 +1861,9 @@ footer {
 }
 
 /* ─── MOTION PRIMITIVES ──────────────────────────────────────────── */
-.word, .reveal {
+/* Hidden state is gated on html.js (set inline in head) so content is never
+   invisible when JS is blocked or fails to run. */
+.js .word, .js .reveal {
   opacity: 0;
   transform: translateY(24px);
   filter: blur(6px);
@@ -1821,6 +1876,27 @@ footer {
 .word.in, .reveal.in { opacity: 1; transform: translateY(0); filter: blur(0); }
 
 .word { display: inline-block; }
+
+/* Hero entrance — pure CSS keyframes, no IntersectionObserver dependency.
+   The hero copy and CTAs paint as soon as CSS is parsed, instead of waiting
+   for the script at the bottom of the page. */
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(24px); filter: blur(6px); }
+  to   { opacity: 1; transform: translateY(0);    filter: blur(0);   }
+}
+
+.enter { animation: rise-in 900ms var(--ease-out) both; }
+.enter.d1 { animation-delay: 120ms; }
+.enter.d2 { animation-delay: 240ms; }
+.enter.d3 { animation-delay: 360ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .enter { animation: none; }
+}
+
+/* The hero eyebrow is the single most-clicked element on the page, so it now
+   goes somewhere. Underline on hover confirms it's interactive. */
+a.eyebrow:hover span { text-decoration: underline; text-underline-offset: 3px; }
 
 /* magnetic hover wrapper for primary CTAs */
 .magnet { transition: transform 320ms var(--ease-spring); will-change: transform; }
@@ -1839,23 +1915,23 @@ footer {
   <div class="hero-marker mono">Est. 2009 · Melbourne</div>
   <div class="container hero-grid">
     <div>
-      <div class="eyebrow mono reveal"><span>The Hybrid Agent Agency</span></div>
+      <a class="eyebrow mono enter" href="#approach"><span>The Hybrid Agent Agency</span></a>
       <h1 class="hero-h" id="heroLine">
         Australia's leading digital marketing agency. <em>Rebuilt for the AI era.</em>
       </h1>
     </div>
     <div>
-      <p class="hero-sub reveal">
+      <p class="hero-sub enter d1">
         <strong>First to digital in 2009. First to hybrid agents today.</strong>
         Most agencies sell activity. We sell the commercial outcome it produces, powered by a human team that gives a shit, and AI tooling that makes every dollar go further.
       </p>
-      <div class="hero-ctas reveal">
+      <div class="hero-ctas enter d2">
         <a href="#cta" class="btn btn-primary magnet">
           Book a commercial conversation <span class="arr">→</span>
         </a>
         <a href="#approach" class="btn btn-ghost">How it works</a>
       </div>
-      <div class="hero-credit mono reveal">
+      <div class="hero-credit mono enter d3">
         <span><strong>Melbourne</strong> · 2009</span>
         <span class="sep">·</span>
         <span><strong>800+</strong> clients</span>
@@ -1865,6 +1941,12 @@ footer {
         <span><strong>4.8<span class="star">★</span></strong> Google</span>
       </div>
     </div>
+  </div>
+  <div class="container">
+    <a class="scroll-cue mono enter d3" href="#approach">
+      <span>Scroll</span>
+      <span class="line" aria-hidden="true"></span>
+    </a>
   </div>
 </section>
 
@@ -2119,7 +2201,7 @@ footer {
     <div class="search-head reveal">
       <div>
         <div class="eyebrow mono"><span>Search demand</span></div>
-        <h2 class="search-title">What Australia is searching for. <em>We're at #1.</em></h2>
+        <h2 class="search-title">What Australia is searching for. <em><a href="/zib-digital-results">We're at #1.</a></em></h2>
       </div>
       <p class="search-sub">
         A live sample of the commercial keywords <strong>Zib itself</strong> ranks for, on zibdigital.com.au. The agency that sells SEO should rank for it. Same operating system runs every client brief.
@@ -2350,22 +2432,22 @@ footer {
   <div class="container">
     <h2 class="stats-lead reveal">Fifteen years. Eight hundred clients. <em>One consistent standard.</em></h2>
     <div class="stats-grid reveal">
-      <div class="stat">
+      <a class="stat" href="/zib-digital-results">
         <div class="stat-value"><span data-count="4151">0</span></div>
-        <div class="stat-label">Keywords Zib ranks on our own domain</div>
-      </div>
-      <div class="stat">
+        <div class="stat-label">Keywords Zib ranks on our own domain<span class="arr">→</span></div>
+      </a>
+      <a class="stat" href="/case-studies">
         <div class="stat-value"><span data-count="800">0</span><span class="suf">+</span></div>
-        <div class="stat-label">Clients, from local trades to ASX brands</div>
-      </div>
-      <div class="stat">
+        <div class="stat-label">Clients, from local trades to ASX brands<span class="arr">→</span></div>
+      </a>
+      <a class="stat" href="/reviews">
         <div class="stat-value"><span data-count="97">0</span><span class="suf">%</span></div>
-        <div class="stat-label">Month-on-month client retention</div>
-      </div>
-      <div class="stat">
+        <div class="stat-label">Month-on-month client retention<span class="arr">→</span></div>
+      </a>
+      <a class="stat" href="/case-studies">
         <div class="stat-value"><span data-count="8">0</span><span class="suf">:1</span></div>
-        <div class="stat-label">Average ROAS for our eCommerce clients</div>
-      </div>
+        <div class="stat-label">Average ROAS for our eCommerce clients<span class="arr">→</span></div>
+      </a>
     </div>
   </div>
 </section>
