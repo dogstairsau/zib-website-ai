@@ -214,6 +214,46 @@ section.tight { padding-top: clamp(60px, 8vh, 96px); padding-bottom: clamp(60px,
 
 @media (max-width: 1100px) { .hero-marker { display: none; } }
 
+/* Scroll cue — a quiet nudge inside the first fold, where Clarity shows
+   most visitors currently stop. */
+.scroll-cue {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: clamp(24px, 4vh, 44px);
+  color: var(--muted);
+  transition: color 240ms var(--ease);
+}
+
+.scroll-cue:hover { color: var(--accent); }
+
+.scroll-cue .line {
+  position: relative;
+  width: 44px;
+  height: 1px;
+  background: var(--rule);
+  overflow: hidden;
+}
+
+.scroll-cue .line::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  transform: translateX(-100%);
+  animation: cue-sweep 2.4s var(--ease) infinite;
+}
+
+@keyframes cue-sweep {
+  0%   { transform: translateX(-100%); }
+  55%  { transform: translateX(0); }
+  100% { transform: translateX(100%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .scroll-cue .line::after { animation: none; transform: translateX(-100%); }
+}
+
 .hero-grid {
   display: grid;
   grid-template-columns: 1.2fr 0.9fr;
@@ -828,6 +868,8 @@ h1.hero-h em {
 }
 
 .search-title em { font-style: italic; font-weight: 400; color: var(--accent); }
+.search-title em a { color: inherit; }
+.search-title em a:hover { text-decoration: underline; text-underline-offset: 4px; }
 
 .search-sub { color: var(--muted); font-size: clamp(15px, 1.4vw, 17px); line-height: 1.6; max-width: 44ch; }
 
@@ -1686,6 +1728,17 @@ h1.hero-h em {
 
 .stat-label { font-size: 14px; color: #FFF6EE; max-width: 220px; line-height: 1.4; }
 
+/* Stats link out to the proof behind them — Clarity showed visitors trying
+   to click the counters, so the numbers now go somewhere. */
+a.stat { display: block; color: inherit; }
+a.stat .stat-label .arr {
+  display: inline-block;
+  margin-left: 6px;
+  transition: transform 280ms var(--ease-spring);
+}
+a.stat:hover .stat-label { text-decoration: underline; text-underline-offset: 3px; }
+a.stat:hover .stat-label .arr { transform: translateX(4px); }
+
 /* ─── CTA (BLACK) ────────────────────────────────────────────────── */
 .cta-section {
   background: var(--ink);
@@ -1888,6 +1941,12 @@ a.eyebrow:hover span { text-decoration: underline; text-underline-offset: 3px; }
         <span><strong>4.8<span class="star">★</span></strong> Google</span>
       </div>
     </div>
+  </div>
+  <div class="container">
+    <a class="scroll-cue mono enter d3" href="#approach">
+      <span>Scroll</span>
+      <span class="line" aria-hidden="true"></span>
+    </a>
   </div>
 </section>
 
@@ -2142,7 +2201,7 @@ a.eyebrow:hover span { text-decoration: underline; text-underline-offset: 3px; }
     <div class="search-head reveal">
       <div>
         <div class="eyebrow mono"><span>Search demand</span></div>
-        <h2 class="search-title">What Australia is searching for. <em>We're at #1.</em></h2>
+        <h2 class="search-title">What Australia is searching for. <em><a href="/zib-digital-results">We're at #1.</a></em></h2>
       </div>
       <p class="search-sub">
         A live sample of the commercial keywords <strong>Zib itself</strong> ranks for, on zibdigital.com.au. The agency that sells SEO should rank for it. Same operating system runs every client brief.
@@ -2373,22 +2432,22 @@ a.eyebrow:hover span { text-decoration: underline; text-underline-offset: 3px; }
   <div class="container">
     <h2 class="stats-lead reveal">Fifteen years. Eight hundred clients. <em>One consistent standard.</em></h2>
     <div class="stats-grid reveal">
-      <div class="stat">
+      <a class="stat" href="/zib-digital-results">
         <div class="stat-value"><span data-count="4151">0</span></div>
-        <div class="stat-label">Keywords Zib ranks on our own domain</div>
-      </div>
-      <div class="stat">
+        <div class="stat-label">Keywords Zib ranks on our own domain<span class="arr">→</span></div>
+      </a>
+      <a class="stat" href="/case-studies">
         <div class="stat-value"><span data-count="800">0</span><span class="suf">+</span></div>
-        <div class="stat-label">Clients, from local trades to ASX brands</div>
-      </div>
-      <div class="stat">
+        <div class="stat-label">Clients, from local trades to ASX brands<span class="arr">→</span></div>
+      </a>
+      <a class="stat" href="/reviews">
         <div class="stat-value"><span data-count="97">0</span><span class="suf">%</span></div>
-        <div class="stat-label">Month-on-month client retention</div>
-      </div>
-      <div class="stat">
+        <div class="stat-label">Month-on-month client retention<span class="arr">→</span></div>
+      </a>
+      <a class="stat" href="/case-studies">
         <div class="stat-value"><span data-count="8">0</span><span class="suf">:1</span></div>
-        <div class="stat-label">Average ROAS for our eCommerce clients</div>
-      </div>
+        <div class="stat-label">Average ROAS for our eCommerce clients<span class="arr">→</span></div>
+      </a>
     </div>
   </div>
 </section>
