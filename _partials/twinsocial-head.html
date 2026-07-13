@@ -9,11 +9,12 @@
 <link rel="stylesheet" href="/assets/base.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;0,900;1,400;1,700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
 <!-- ─── Twin Social brand theme · overrides Zib tokens from base.css ───
      Dark theme per twinsocial.com.au: near-black ground, ice-white type,
-     signature yellow accent, Syne display + Roboto body.
+     signature yellow accent. Roboto everywhere (their headline font, bold
+     uppercase on their site); Syne only for the wordmark, as on their nav.
      Loaded AFTER base.css so these win the cascade. -->
 <style>
   :root {
@@ -35,14 +36,14 @@
     --score-mid:  #FFB020;
     --score-bad:  #FF5C5C;
 
-    --display: "Syne", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --display: "Roboto", system-ui, -apple-system, "Segoe UI", sans-serif;
     --body:    "Roboto", system-ui, -apple-system, "Segoe UI", sans-serif;
   }
   body { background: var(--bg); color: #C7D3DC; font-family: var(--body); }
   .site-header .brand img { height: 34px; width: auto; }
   .audit-footer .brand img { height: 30px; width: auto; }
   .brand .brand-word {
-    font-family: var(--display);
+    font-family: "Syne", var(--display);
     font-weight: 700;
     font-size: 17px;
     letter-spacing: 0.14em;
