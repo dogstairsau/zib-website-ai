@@ -1,0 +1,90 @@
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="theme-color" content="#060A0E" />
+<!-- Marks JS as available so entrance animations can hide content safely.
+     Without this class, .reveal content stays fully visible (no-JS fallback). -->
+<script>document.documentElement.classList.add('js');</script>
+<link rel="icon" type="image/png" href="/assets/twin-favicon.png" />
+<link rel="apple-touch-icon" href="/assets/twin-webicon.png" />
+<link rel="stylesheet" href="/assets/base.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Roboto:ital,wght@0,300;0,400;0,500;0,700;1,400&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<!-- ─── Twin Social brand theme · overrides Zib tokens from base.css ───
+     Dark theme per twinsocial.com.au: near-black ground, ice-white type,
+     signature yellow accent, Syne display + Roboto body.
+     Loaded AFTER base.css so these win the cascade. -->
+<style>
+  :root {
+    --bg: #060A0E;          /* Extra Dark — page background */
+    --paper: #0D131A;       /* raised dark surfaces / cards */
+    --dim: #0A0F15;         /* section wash */
+    --ink: #EFF9FC;         /* Ice White — headings / strong text */
+    --ink-2: #EFF9FC;
+    --ink-3: #C7D3DC;       /* body text */
+    --muted: #758696;       /* Slate — captions / dividers */
+    --muted-2: #5D6C7B;     /* secondary / icons */
+    --rule: rgba(239,249,252,0.10);
+    --rule-2: rgba(239,249,252,0.18);
+    --accent: #FFEA00;      /* Twin Yellow — links, CTAs, highlights */
+    --accent-tint: rgba(255,234,0,0.12);
+
+    /* Score colors brightened for dark ground */
+    --score-good: #2FD08A;
+    --score-mid:  #FFB020;
+    --score-bad:  #FF5C5C;
+
+    --display: "Syne", system-ui, -apple-system, "Segoe UI", sans-serif;
+    --body:    "Roboto", system-ui, -apple-system, "Segoe UI", sans-serif;
+  }
+  body { background: var(--bg); color: #C7D3DC; font-family: var(--body); }
+  .site-header .brand img { height: 34px; width: auto; }
+  .audit-footer .brand img { height: 30px; width: auto; }
+  .brand .brand-word {
+    font-family: var(--display);
+    font-weight: 700;
+    font-size: 17px;
+    letter-spacing: 0.14em;
+    color: var(--ink);
+    align-self: center;
+    margin-left: 10px;
+    white-space: nowrap;
+  }
+</style>
+
+<!-- Microsoft Clarity · session recordings + heatmaps · tag wtv7n8ywyl -->
+<script type="text/javascript">
+  (function(){
+    function loadClarity(){
+      (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+      })(window, document, "clarity", "script", "wtv7n8ywyl");
+    }
+    if ('requestIdleCallback' in window) requestIdleCallback(loadClarity, { timeout: 4000 });
+    else setTimeout(loadClarity, 2500);
+  })();
+</script>
+
+<!-- Google tag (gtag.js) · G-LQDQEYFP98 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-LQDQEYFP98"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-LQDQEYFP98');
+</script>
+
+<!-- Structured data · Twin Social -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Twin Social",
+  "url": "https://www.twinsocial.com.au/",
+  "logo": "https://www.twinsocial.com.au/",
+  "areaServed": "AU"
+}
+</script>
