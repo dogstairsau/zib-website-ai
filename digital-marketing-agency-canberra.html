@@ -6,6 +6,8 @@
 <meta name="zib:source-tag" content="Canberra AU" />
 <!-- @include _partials/head.html -->
 <link rel="stylesheet" href="/assets/location.css">
+<link rel="stylesheet" href="/assets/audit-widget.css">
+<link rel="stylesheet" href="/assets/contact-form.css">
 </head>
 <body>
 
@@ -15,31 +17,20 @@
 
 <main id="main">
 
-<!-- HERO -->
-<section class="loc-hero">
+<!-- HERO + LIVE AUDIT · shared component (matches /seo-canberra) -->
+<section class="loc-hero" id="audit-top">
   <div class="container">
-    <div class="mono eyebrow reveal">Digital marketing · Canberra</div>
-    <h1 class="hero-h reveal">
-      Canberra digital, built around your <em class="word-cycle" data-words="growth, revenue, bottom line, business">growth</em>.
-    </h1>
-
-    <div class="loc-hero-row">
-      <p class="hero-sub reveal">
+    <div class="audit-hero-intro reveal">
+      <div class="eyebrow mono"><span>Digital marketing · Canberra</span></div>
+      <h1 class="hero-h">
+        Canberra digital, built around your <em class="word-cycle" data-words="growth, revenue, bottom line, business">growth</em>.
+      </h1>
+      <p class="audit-hero-sub">
         <strong>A Canberra digital marketing agency that turns traffic into genuine leads.</strong>
-        Senior strategists, AI-augmented execution, and a number on the P&amp;L we put our name next to. Since 2009.
+        Drop your URL below and a senior strategist reads your positioning, technical SEO and commercial opportunities in 30 seconds. Senior strategists, AI-augmented execution, and a number on the P&amp;L we put our name next to. Since 2009.
       </p>
-      <div class="hero-ctas reveal">
-        <a class="btn btn-primary" href="/audit">Run a free audit <span class="arr">→</span></a>
-        <a class="btn btn-outline" href="mailto:hello@zibdigital.com.au?subject=Canberra%20-%20let's%20talk">Talk to a strategist</a>
-      </div>
     </div>
-
-    <div class="hero-meta reveal">
-      <span><span class="dot" aria-hidden="true"></span>Premier Google Partner</span>
-      <span><span class="dot" aria-hidden="true"></span>Meta Business Partner</span>
-      <span><span class="dot" aria-hidden="true"></span>Senior on every account</span>
-      <span><span class="dot" aria-hidden="true"></span>800+ clients since 2009</span>
-    </div>
+    <!-- @include _partials/audit-embed.html -->
   </div>
 </section>
 
@@ -249,11 +240,15 @@
       Thirty minutes with one of our senior strategists. We read your business, flag the one place we'd move first, and give you the unvarnished version. No deck. No upsell. If we're not the fit, we'll tell you that too.
     </p>
     <div class="cta-buttons reveal">
-      <a class="btn btn-primary" href="/audit">Run the free audit <span class="arr">→</span></a>
+      <a class="btn btn-primary" href="#audit-top">Run the free audit <span class="arr">→</span></a>
       <a class="btn btn-outline" href="mailto:hello@zibdigital.com.au?subject=Canberra%20-%20discovery%20call">Book a discovery call</a>
     </div>
   </div>
 </section>
+
+<!-- @include _partials/contact-form.html -->
+<script src="/assets/contact-form.js" defer></script>
+<script src="/assets/audit-widget.js" defer></script>
 
 </main>
 
