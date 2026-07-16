@@ -169,7 +169,7 @@ input, button, textarea, select { font: inherit; color: inherit; }
           <div class="pq-grid">
             <div class="pq-row">
               <div class="field"><label for="business">Business name</label><input type="text" id="business" name="business" required placeholder="Your business" /></div>
-              <div class="field"><label for="website">Website <span class="opt">(if you have one)</span></label><input type="url" id="website" name="website" inputmode="url" placeholder="yourbusiness.com.au" /></div>
+              <div class="field"><label for="website">Website <span class="opt">(if you have one)</span></label><input type="text" id="website" name="website" inputmode="url" placeholder="yourbusiness.com.au" spellcheck="false" autocapitalize="off" autocorrect="off" /></div>
             </div>
             <div class="pq-row">
               <div class="field"><label for="name">Your name</label><input type="text" id="name" name="name" required autocomplete="name" placeholder="Jane Smith" /></div>
@@ -485,8 +485,10 @@ input, button, textarea, select { font: inherit; color: inherit; }
     if (err) { showStep(0); formStatus.textContent = err; return; }
 
     const v = id => document.getElementById(id).value.trim();
+    // Accept naked domains: normalise to https:// when a scheme wasn't typed
+    const site = v('website');
     const payload = {
-      business: v('business'), website: v('website'), name: v('name'),
+      business: v('business'), website: site && !/^https?:\/\//i.test(site) ? 'https://' + site : site, name: v('name'),
       email: v('email'), phone: v('phone'), locations: v('locations'),
       industry: v('industry'), keywords: v('keywords'),
       frustration: v('frustration'), extra: v('extra'),
