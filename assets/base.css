@@ -151,6 +151,17 @@ h1, h2, h3, .hero-h, .fork-h, .path-title, .moat-h, .cta-title { text-wrap: bala
   opacity: 1;
 }
 .nav-group-menu a[aria-current="page"] { color: var(--accent); }
+.nav-menu-label {
+  font-family: var(--mono);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 12px 14px 4px;
+  border-top: 0.5px solid var(--rule);
+  margin-top: 6px;
+}
+.nav-menu-label:first-child { border-top: 0; margin-top: 0; padding-top: 8px; }
 
 /* ─── Mega menu (Services + Locations) ────────────────────────── */
 /* Panel anchors to the header row so it can be wide + centred. */
