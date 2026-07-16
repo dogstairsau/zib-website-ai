@@ -92,10 +92,12 @@ async function findContactIdByEmail(token: string, email: string): Promise<strin
 }
 
 async function attachAuditNote(contactId: string, ctx: AuditContext): Promise<void> {
+  await attachNote(contactId, buildNoteHtml(ctx));
+}
+
+async function attachNote(contactId: string, noteBody: string): Promise<void> {
   const token = process.env.HUBSPOT_PRIVATE_APP_TOKEN;
   if (!token) return;
-
-  const noteBody = buildNoteHtml(ctx);
 
   // associationTypeId 202 = note → contact (HUBSPOT_DEFINED)
   const res = await fetch("https://api.hubapi.com/crm/v3/objects/notes", {
@@ -144,6 +146,72 @@ function buildNoteHtml(ctx: AuditContext): string {
     : "";
 
   return `<p><b>Zib audit context</b> · auto-attached from the audit form</p>${stats}${review}`;
+}
+
+export type QuizLead = {
+  email: string;
+  firstname?: string;
+  /** Winning segment name, present on the completion call. */
+  segment?: string;
+  /** Question/answer pairs collected so far. */
+  answers?: { q: string; a: string }[];
+};
+
+/**
+ * Growth-quiz lead capture. Called twice per prospect: once at the mid-quiz
+ * email gate (creates the contact, so abandoners are still leads) and once on
+ * completion (attaches a note with the full answers + winning segment).
+ */
+export async function captureQuizLead(quiz: QuizLead): Promise<void> {
+  const lead: Lead = {
+    email: quiz.email,
+    firstname: quiz.firstname || "",
+    website: "",
+    source: "Growth quiz",
+  };
+
+  const [hubspotResult] = await Promise.allSettled([pushToHubSpot(lead), notifyQuizSlack(quiz)]);
+
+  if (!quiz.segment) return; // gate stage — contact only
+  if (hubspotResult.status !== "fulfilled") return;
+  const contactId = hubspotResult.value;
+  if (!contactId) return;
+
+  await attachNote(contactId, buildQuizNoteHtml(quiz)).catch((e) =>
+    console.warn("[hubspot:quiz-note]", (e as Error).message),
+  );
+}
+
+function buildQuizNoteHtml(quiz: QuizLead): string {
+  const safe = (s: string | undefined | null) =>
+    String(s ?? "")
+      .replace(/&/g, "&amp;")
+      .replace(/</g, "&lt;")
+      .replace(/>/g, "&gt;");
+
+  const rows = (quiz.answers || [])
+    .map((p) => `<li><b>${safe(p.q)}</b><br/>${safe(p.a)}</li>`)
+    .join("");
+
+  return (
+    `<p><b>Growth quiz result</b> · auto-attached from /growth-quiz</p>` +
+    `<p><b>Segment:</b> ${safe(quiz.segment)}</p>` +
+    (rows ? `<ul>${rows}</ul>` : "")
+  );
+}
+
+async function notifyQuizSlack(quiz: QuizLead): Promise<void> {
+  const url = process.env.SLACK_WEBHOOK_URL;
+  if (!url) return;
+  const label = quiz.segment
+    ? `finished the growth quiz — segment *${quiz.segment}*`
+    : "hit the growth-quiz email gate";
+  await fetch(url, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ text: `:dart: Quiz lead — *${quiz.email}* ${label}` }),
+    signal: AbortSignal.timeout(5_000),
+  }).catch((e) => console.warn("[slack]", e.message));
 }
 
 async function notifySlack(lead: Lead): Promise<void> {

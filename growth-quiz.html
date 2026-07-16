@@ -1,0 +1,455 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<title>What's Holding Your Growth Back? · 2-Minute Quiz | Zib Digital</title>
+<meta name="description" content="8 quick questions, one straight answer. Find the single biggest thing standing between your business and more customers — and the exact next move to fix it." />
+<meta name="zib:source-tag" content="Growth quiz" />
+<!-- @include _partials/head.html -->
+<style>
+/* ── Growth quiz · page-local styles (site tokens from base.css) ───────── */
+.gq-hero { padding: clamp(40px, 6vw, 88px) 0 clamp(20px, 3vw, 36px); }
+.gq-hero .container { max-width: 880px; }
+.gq-eyebrow { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); }
+.gq-h1 { font-family: var(--display); font-weight: 500; font-size: clamp(38px, 6vw, 72px); line-height: 1.0; letter-spacing: -0.03em; color: var(--ink); margin-top: 14px; text-wrap: balance; }
+.gq-h1 em { font-style: italic; color: var(--accent); font-weight: 400; }
+.gq-hero-sub { font-family: var(--display); font-size: clamp(15px, 1.5vw, 18px); line-height: 1.55; color: var(--muted); max-width: 56ch; margin-top: 16px; }
+
+.gq-wrap { padding: clamp(10px, 2vw, 24px) 0 clamp(72px, 9vw, 120px); }
+.gq-wrap .container { max-width: 880px; }
+.gq-panel { background: #fff; border: 0.5px solid var(--rule); border-radius: 20px; padding: clamp(24px, 3.6vw, 44px); }
+
+/* progress */
+.gq-progress { display: flex; align-items: center; gap: 14px; margin-bottom: clamp(20px, 2.6vw, 30px); }
+.gq-progress[hidden] { display: none; }
+.gq-bar { flex: 1; height: 5px; border-radius: 999px; background: var(--rule); overflow: hidden; }
+.gq-bar span { display: block; height: 100%; width: 0; border-radius: 999px; background: var(--accent); transition: width 320ms var(--ease); }
+.gq-progress-label { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
+
+/* screens */
+.gq-screen[hidden] { display: none; }
+.gq-screen { animation: gq-in 320ms var(--ease); }
+@keyframes gq-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .gq-screen { animation: none; } }
+
+.gq-kicker { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+.gq-q { font-family: var(--display); font-weight: 500; font-size: clamp(24px, 3.4vw, 38px); line-height: 1.06; letter-spacing: -0.025em; color: var(--ink); margin: 0 0 8px; text-wrap: balance; }
+.gq-q em { font-style: italic; color: var(--accent); font-weight: 400; }
+.gq-sub { font-family: var(--display); font-size: clamp(14px, 1.4vw, 16px); line-height: 1.55; color: var(--muted); max-width: 56ch; margin: 0 0 clamp(20px, 2.6vw, 28px); }
+
+/* options */
+.gq-options { display: grid; gap: 10px; }
+.gq-opt { display: flex; align-items: center; gap: 14px; width: 100%; padding: 16px 18px; border: 0.5px solid var(--rule-2); border-radius: 14px; background: #fff; font-family: var(--display); font-size: clamp(15px, 1.5vw, 17px); line-height: 1.35; color: var(--ink); cursor: pointer; text-align: left; transition: border-color 160ms var(--ease), background 160ms var(--ease), transform 160ms var(--ease); }
+.gq-opt:hover { border-color: var(--ink); transform: translateX(2px); }
+.gq-opt:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.gq-opt .key { flex: 0 0 auto; width: 26px; height: 26px; border-radius: 8px; border: 0.5px solid var(--rule-2); display: grid; place-items: center; font-family: var(--mono); font-size: 11px; color: var(--muted); transition: inherit; }
+.gq-opt:hover .key { border-color: var(--accent); color: var(--accent); }
+
+/* cover + meta */
+.gq-cover-meta { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 18px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.gq-cover-meta .check { color: var(--accent); margin-right: 6px; }
+
+/* gate fields */
+.gq-fields { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(14px, 2vw, 20px); margin-bottom: 18px; }
+@media (max-width: 560px) { .gq-fields { grid-template-columns: 1fr; } }
+.gq-field { display: flex; flex-direction: column; }
+.gq-field label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 7px; }
+.gq-field input { font-family: var(--display); font-size: 15px; color: var(--ink); border: 0; border-bottom: 1px solid var(--rule-2); outline: 0; background: none; height: 44px; padding: 0 0 8px; transition: border-color 200ms var(--ease); }
+.gq-field input:focus { border-bottom-color: var(--ink); }
+.gq-field input::placeholder { color: var(--muted-2); }
+.gq-privacy { font-family: var(--display); font-size: 12.5px; color: var(--muted-2); margin-top: 14px; }
+.gq-error { font-family: var(--mono); font-size: 12px; color: #c62828; margin-top: 12px; display: none; }
+.gq-error.show { display: block; }
+
+/* actions */
+.gq-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; margin-top: clamp(20px, 2.6vw, 28px); }
+.gq-back { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); background: none; border: 0; cursor: pointer; padding: 6px 0; }
+.gq-back:hover { color: var(--ink); }
+
+/* result */
+.gq-result-name { font-family: var(--display); font-weight: 500; font-size: clamp(34px, 5vw, 58px); line-height: 1.0; letter-spacing: -0.03em; color: var(--ink); margin: 6px 0 10px; }
+.gq-result-name em { font-style: italic; color: var(--accent); font-weight: 400; }
+.gq-result-tag { font-family: var(--display); font-size: clamp(16px, 1.7vw, 20px); color: var(--muted); margin-bottom: clamp(20px, 2.6vw, 28px); }
+.gq-read { border-top: 0.5px solid var(--rule); padding-top: clamp(18px, 2.4vw, 24px); margin-top: 4px; }
+.gq-read h3 { font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin: 0 0 12px; font-weight: 500; }
+.gq-read ul { list-style: none; padding: 0; margin: 0 0 clamp(18px, 2.4vw, 24px); display: grid; gap: 10px; }
+.gq-read li { font-family: var(--display); font-size: clamp(14.5px, 1.5vw, 16.5px); line-height: 1.5; color: var(--ink-3, var(--ink)); padding-left: 22px; position: relative; }
+.gq-read li::before { content: "→"; position: absolute; left: 0; color: var(--accent); }
+.gq-read p { font-family: var(--display); font-size: clamp(14.5px, 1.5vw, 16.5px); line-height: 1.55; color: var(--ink-3, var(--ink)); margin: 0 0 clamp(18px, 2.4vw, 24px); max-width: 60ch; }
+.gq-restart { margin-top: 18px; }
+
+/* trust strip */
+.gq-trust { display: flex; flex-wrap: wrap; gap: 10px 26px; justify-content: center; margin-top: clamp(22px, 3vw, 30px); font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+.gq-trust .dot { display: inline-block; width: 5px; height: 5px; border-radius: 50%; background: var(--accent); margin-right: 8px; vertical-align: 2px; }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- @include _partials/nav.html -->
+
+<main id="main">
+
+<section class="gq-hero">
+  <div class="container">
+    <div class="gq-eyebrow">Free growth diagnostic · 2 minutes</div>
+    <h1 class="gq-h1">What's holding your <em>growth back?</em></h1>
+    <p class="gq-hero-sub">Every business has one constraint doing most of the damage — being invisible on Google, a website that doesn't convert, ad spend with no paper trail, or leads that slip through the cracks. Eight quick questions find yours, and map the next move to fix it.</p>
+  </div>
+</section>
+
+<section class="gq-wrap">
+  <div class="container">
+    <div class="gq-panel" id="gqPanel">
+
+      <div class="gq-progress" id="gqProgress" hidden>
+        <div class="gq-bar"><span id="gqBarFill"></span></div>
+        <span class="gq-progress-label" id="gqProgressLabel">Question 1 of 8</span>
+      </div>
+
+      <!-- COVER -->
+      <div class="gq-screen" data-screen="cover">
+        <div class="gq-kicker">The growth blocker quiz</div>
+        <h2 class="gq-q">Find your <em>#1 growth blocker</em> in two minutes.</h2>
+        <p class="gq-sub">Answer eight quick questions about how customers find you, what your website does with them, and where your marketing dollars go. You'll get a straight answer — one named blocker, and the exact next move — not a 40-page report.</p>
+        <div class="gq-actions">
+          <button type="button" class="btn btn-primary" id="gqStart">Start the quiz <span class="arr">→</span></button>
+        </div>
+        <div class="gq-cover-meta">
+          <span><span class="check">✓</span>8 questions</span>
+          <span><span class="check">✓</span>2 minutes</span>
+          <span><span class="check">✓</span>Free, no strings</span>
+        </div>
+      </div>
+
+      <!-- QUESTIONS + GATE + RESULT are rendered by JS into this mount -->
+      <div id="gqMount"></div>
+
+    </div>
+
+    <div class="gq-trust">
+      <span><span class="dot"></span>Premier Google Partner</span>
+      <span><span class="dot"></span>800+ clients since 2009</span>
+      <span><span class="dot"></span>Senior strategist on every account</span>
+    </div>
+
+    <noscript><p style="text-align:center;margin-top:24px;font-family:var(--display);color:var(--muted);">The quiz needs JavaScript. Prefer not to? <a href="/contact" style="color:var(--accent);">Get in touch directly</a> and a senior strategist will give you the same read.</p></noscript>
+  </div>
+</section>
+
+</main>
+
+<!-- @include _partials/footer.html -->
+<!-- @include _partials/scripts.html -->
+
+<script>
+(() => {
+  // ── Quiz definition ────────────────────────────────────────────────────
+  // Segments: inv = The Invisible (SEO) · leak = The Leaky Bucket (conversion)
+  //           burn = The Cash Burner (paid ads) · eng = The Stalled Engine (systems)
+  const QUESTIONS = [
+    { id: 'q1', kicker: 'First, the basics', text: 'What best describes your business?',
+      opts: [
+        { t: 'B2B or professional services' },
+        { t: 'Local service or trades' },
+        { t: 'Online store / e-commerce' },
+        { t: 'Something else' },
+      ]},
+    { id: 'q2', kicker: 'Where customers come from', text: 'Where do most new customers come from today?',
+      opts: [
+        { t: 'Referrals and word of mouth', seg: { inv: 1 } },
+        { t: 'Google — search or maps' },
+        { t: 'Social media or paid ads' },
+        { t: "Honestly, it's unpredictable", seg: { eng: 1 } },
+      ]},
+    { id: 'q3', kicker: 'Visibility', text: 'When someone Googles what you sell, where do you show up?',
+      opts: [
+        { t: 'Page 1 for the searches that matter' },
+        { t: 'Somewhere past page 1', seg: { inv: 2 } },
+        { t: 'Only when they search our name', seg: { inv: 2 } },
+        { t: 'No idea', seg: { inv: 1 } },
+      ]},
+    { id: 'q4', kicker: 'Your website', text: 'Traffic lands on your website. What happens next?',
+      opts: [
+        { t: 'Enquiries or sales come in steadily' },
+        { t: 'People browse, then leave', seg: { leak: 2 } },
+        { t: 'Not enough traffic to tell', seg: { inv: 1 } },
+        { t: 'The site is overdue for an overhaul', seg: { leak: 2 } },
+      ]},
+    { id: 'q5', kicker: 'Paid ads', text: "What's your experience with paid ads?",
+      opts: [
+        { t: 'Running, and profitable' },
+        { t: 'Running, but the return is fuzzy', seg: { burn: 2 } },
+        { t: 'Tried it, burned money, stopped', seg: { burn: 2 } },
+        { t: 'Never tried them' },
+      ]},
+    { id: 'q6', kicker: 'Follow-up', text: 'What happens to a new lead after it arrives?',
+      opts: [
+        { t: 'CRM, prompt follow-up, every time' },
+        { t: 'A spreadsheet and good intentions', seg: { eng: 2 } },
+        { t: 'We reply when we get a minute', seg: { eng: 2 } },
+        { t: 'Leads are too rare to need a system', seg: { inv: 1 } },
+      ]},
+    { id: 'q7', kicker: 'Budget', text: 'Roughly what do you put into marketing each month?',
+      opts: [
+        { t: 'Under $2k' },
+        { t: '$2k – $5k' },
+        { t: '$5k – $10k' },
+        { t: '$10k+' },
+      ]},
+    { id: 'q8', kicker: 'The one number', text: 'If ONE number doubled in 90 days, which moves your business most?',
+      opts: [
+        { t: 'Visitors who find us', seg: { inv: 2 } },
+        { t: 'Enquiries from the traffic we have', seg: { leak: 2 } },
+        { t: 'Return on our ad spend', seg: { burn: 2 } },
+        { t: 'Repeat and referral revenue', seg: { eng: 2 } },
+      ]},
+  ];
+
+  const SEGMENTS = {
+    inv: {
+      name: 'The Invisible', article: "You're <em>The Invisible.</em>",
+      tag: 'A strong business that search can’t see.',
+      bullets: [
+        'People are searching for what you sell right now — and finding your competitors instead.',
+        'Referrals carry the load, which caps your growth at word-of-mouth speed.',
+        'Even referred buyers Google you before they call. Page 2 might as well be nowhere.',
+      ],
+      move: 'Search visibility is your highest-leverage fix: technical foundations, content mapped to what buyers type, and the authority to rank for it. It compounds — every month of work keeps paying after the work stops.',
+      cta: { href: '/seo-agency', label: 'See how we get businesses found' },
+    },
+    leak: {
+      name: 'The Leaky Bucket', article: "You're <em>The Leaky Bucket.</em>",
+      tag: 'Traffic shows up. Enquiries don’t.',
+      bullets: [
+        'You’re paying for visitors — in dollars or effort — who leave without a trace.',
+        'Small conversion lifts compound: going from 1% to 2% doubles your leads with zero extra traffic.',
+        'Nine times out of ten the fix is message and friction, not a ground-up rebuild.',
+      ],
+      move: 'Conversion-first design is your highest-leverage fix: clearer messaging, fewer steps to enquire, and pages built around what your buyers need to see before they say yes.',
+      cta: { href: '/web-graphic-design-melbourne', label: 'Fix the leak — conversion-first design' },
+    },
+    burn: {
+      name: 'The Cash Burner', article: "You're <em>The Cash Burner.</em>",
+      tag: 'Ad spend without a paper trail.',
+      bullets: [
+        'Money goes out, clicks come in — but nobody can point to the customers it bought.',
+        'Without proper tracking, the platform optimises for clicks, not revenue. You’re training it to waste your budget.',
+        'Run well, paid ads are a dial: put a dollar in, know what comes out, turn it up.',
+      ],
+      move: 'Accountable ad management is your highest-leverage fix: conversion tracking that ties spend to revenue, campaign structure built around buying intent, and reporting in cost-per-lead — not impressions.',
+      cta: { href: '/google-ads', label: 'Make every dollar accountable' },
+    },
+    eng: {
+      name: 'The Stalled Engine', article: "You're <em>The Stalled Engine.</em>",
+      tag: 'The parts work. The system doesn’t.',
+      bullets: [
+        'Leads arrive, then slip through the cracks — slow follow-up quietly kills more deals than any competitor.',
+        'Growth feels unpredictable because your channels run disconnected instead of feeding each other.',
+        'A CRM plus automated follow-up turns effort you’re already spending into a repeatable pipeline.',
+      ],
+      move: 'A joined-up growth system is your highest-leverage fix: every channel planned as one commercial engine, with automation and AI handling the follow-up a human never gets time for.',
+      cta: { href: '/digital-marketing-agency', label: 'Build the growth engine' },
+    },
+  };
+
+  const GATE_AFTER = 1; // gate sits after QUESTIONS[1] (question 2)
+
+  // ── State ──────────────────────────────────────────────────────────────
+  const state = { answers: {}, email: '', firstname: '', gated: false };
+
+  const panel = document.getElementById('gqPanel');
+  const mount = document.getElementById('gqMount');
+  const cover = document.querySelector('[data-screen="cover"]');
+  const progress = document.getElementById('gqProgress');
+  const barFill = document.getElementById('gqBarFill');
+  const progressLabel = document.getElementById('gqProgressLabel');
+
+  // ── Analytics (GA4 + Clarity, both already on the site) ───────────────
+  const track = (name, params) => {
+    try { window.gtag && window.gtag('event', name, params || {}); } catch {}
+    try { window.clarity && window.clarity('event', name); } catch {}
+  };
+
+  const esc = (s) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+
+  const setProgress = (qIndex) => {
+    progress.hidden = false;
+    barFill.style.width = `${Math.round(((qIndex) / QUESTIONS.length) * 100)}%`;
+    progressLabel.textContent = `Question ${qIndex + 1} of ${QUESTIONS.length}`;
+  };
+
+  const scrollToPanel = () => {
+    const top = panel.getBoundingClientRect().top + window.scrollY - 90;
+    if (window.scrollY > top) window.scrollTo({ top, behavior: 'smooth' });
+  };
+
+  // ── Screens ────────────────────────────────────────────────────────────
+  function showQuestion(i) {
+    const q = QUESTIONS[i];
+    setProgress(i);
+    mount.innerHTML = `
+      <div class="gq-screen">
+        <div class="gq-kicker">${esc(q.kicker)}</div>
+        <h2 class="gq-q">${esc(q.text)}</h2>
+        <div class="gq-options">
+          ${q.opts.map((o, j) => `
+            <button type="button" class="gq-opt" data-i="${j}">
+              <span class="key">${String.fromCharCode(65 + j)}</span>
+              <span>${esc(o.t)}</span>
+            </button>`).join('')}
+        </div>
+        <div class="gq-actions">
+          ${i > 0 ? '<button type="button" class="gq-back" data-back>&larr; Back</button>' : ''}
+        </div>
+      </div>`;
+    track('question_viewed', { question_number: i + 1 });
+
+    mount.querySelectorAll('.gq-opt').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        state.answers[q.id] = q.opts[Number(btn.dataset.i)];
+        const next = i + 1;
+        if (next === GATE_AFTER + 1 && !state.gated) return showGate();
+        if (next >= QUESTIONS.length) return showResult();
+        showQuestion(next);
+        scrollToPanel();
+      });
+    });
+    const back = mount.querySelector('[data-back]');
+    if (back) back.addEventListener('click', () => showQuestion(i - 1));
+  }
+
+  function showGate() {
+    progress.hidden = true;
+    mount.innerHTML = `
+      <div class="gq-screen">
+        <div class="gq-kicker">Almost there — 6 questions to go</div>
+        <h2 class="gq-q">Where should we send <em>your result?</em></h2>
+        <p class="gq-sub">Your blocker appears right here on screen the moment you finish — the email is so you can keep it, and so a senior strategist can sanity-check the read if you want a second opinion.</p>
+        <div class="gq-fields">
+          <div class="gq-field">
+            <label for="gqName">First name</label>
+            <input type="text" id="gqName" autocomplete="given-name" placeholder="Your first name" />
+          </div>
+          <div class="gq-field">
+            <label for="gqEmail">Work email</label>
+            <input type="email" id="gqEmail" autocomplete="email" inputmode="email" placeholder="you@business.com.au" />
+          </div>
+        </div>
+        <div class="gq-error" id="gqGateErr"></div>
+        <div class="gq-actions">
+          <button type="button" class="btn btn-primary" id="gqGateGo">See my questions <span class="arr">→</span></button>
+          <button type="button" class="gq-back" data-back>&larr; Back</button>
+        </div>
+        <p class="gq-privacy">No spam, no 47-email sequence. Just your result, and a human if you ask for one.</p>
+      </div>`;
+
+    const emailEl = document.getElementById('gqEmail');
+    const nameEl = document.getElementById('gqName');
+    const err = document.getElementById('gqGateErr');
+    const go = document.getElementById('gqGateGo');
+
+    const submit = async () => {
+      const email = emailEl.value.trim();
+      const firstname = nameEl.value.trim();
+      if (!firstname) { err.textContent = 'Add your first name.'; err.classList.add('show'); nameEl.focus(); return; }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { err.textContent = 'Enter a valid email.'; err.classList.add('show'); emailEl.focus(); return; }
+      err.classList.remove('show');
+      state.email = email; state.firstname = firstname; state.gated = true;
+      track('email_captured');
+      go.disabled = true;
+      // Capture the lead now — even if they bail later, the enquiry exists.
+      try {
+        await Promise.race([
+          fetch('/api/quiz', {
+            method: 'POST', headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ stage: 'gate', email, firstname, answers: answersPayload() }),
+          }),
+          new Promise((r) => setTimeout(r, 6000)),
+        ]);
+      } catch {}
+      showQuestion(GATE_AFTER + 1);
+      scrollToPanel();
+    };
+
+    go.addEventListener('click', submit);
+    emailEl.addEventListener('keydown', (e) => { if (e.key === 'Enter') submit(); });
+    mount.querySelector('[data-back]').addEventListener('click', () => showQuestion(GATE_AFTER));
+  }
+
+  function answersPayload() {
+    return QUESTIONS.filter((q) => state.answers[q.id])
+      .map((q) => ({ q: q.text, a: state.answers[q.id].t }));
+  }
+
+  function computeSegment() {
+    const scores = { inv: 0, leak: 0, burn: 0, eng: 0 };
+    for (const q of QUESTIONS) {
+      const a = state.answers[q.id];
+      if (!a || !a.seg) continue;
+      for (const [k, v] of Object.entries(a.seg)) scores[k] += v;
+    }
+    // The "double one number" answer breaks ties — it names the felt pain.
+    const q8 = state.answers.q8;
+    const q8seg = q8 && q8.seg ? Object.keys(q8.seg)[0] : null;
+    const max = Math.max(...Object.values(scores));
+    const leaders = Object.keys(scores).filter((k) => scores[k] === max);
+    return leaders.includes(q8seg) ? q8seg : leaders[0];
+  }
+
+  function showResult() {
+    const segKey = computeSegment();
+    const seg = SEGMENTS[segKey];
+    progress.hidden = true;
+    mount.innerHTML = `
+      <div class="gq-screen">
+        <div class="gq-kicker">Your result</div>
+        <div class="gq-result-name">${seg.article}</div>
+        <p class="gq-result-tag">${esc(seg.tag)}</p>
+        <div class="gq-read">
+          <h3>What's going on</h3>
+          <ul>${seg.bullets.map((b) => `<li>${b}</li>`).join('')}</ul>
+          <h3>Your next move</h3>
+          <p>${seg.move}</p>
+          <div class="cta-buttons" style="display:flex;gap:14px;flex-wrap:wrap;">
+            <a class="btn btn-primary" href="${seg.cta.href}" data-result-cta>${esc(seg.cta.label)} <span class="arr">→</span></a>
+            <a class="btn btn-outline" href="/audit" data-result-cta-secondary>Run the free 30-second site audit</a>
+          </div>
+          <p class="gq-privacy gq-restart">Prefer to talk it through? Call <a href="tel:+61386859290" style="color:var(--accent);">03 8685 9290</a> — or <button type="button" class="gq-back" id="gqRestart" style="padding:0;text-transform:none;letter-spacing:0;font-size:12.5px;">retake the quiz</button>.</p>
+        </div>
+      </div>`;
+
+    track('quiz_completed', { segment: seg.name });
+    try { window.clarity && window.clarity('set', 'quiz_segment', seg.name); } catch {}
+
+    // Attach the full read to the contact in HubSpot. Fire-and-forget.
+    fetch('/api/quiz', {
+      method: 'POST', headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        stage: 'complete', email: state.email, firstname: state.firstname,
+        segment: seg.name, answers: answersPayload(),
+      }),
+    }).catch(() => {});
+
+    mount.querySelectorAll('[data-result-cta], [data-result-cta-secondary]').forEach((a) => {
+      a.addEventListener('click', () => track('result_cta_clicked', { segment: seg.name, href: a.getAttribute('href') }));
+    });
+    document.getElementById('gqRestart').addEventListener('click', () => {
+      state.answers = {}; // keep email — no need to gate twice
+      cover.hidden = false; mount.innerHTML = ''; progress.hidden = true;
+      scrollToPanel();
+    });
+  }
+
+  // ── Start ──────────────────────────────────────────────────────────────
+  document.getElementById('gqStart').addEventListener('click', () => {
+    cover.hidden = true;
+    track('quiz_started');
+    showQuestion(0);
+    scrollToPanel();
+  });
+})();
+</script>
+
+</body>
+</html>
