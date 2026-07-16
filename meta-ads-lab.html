@@ -569,7 +569,7 @@
       </p>
 
       <form id="heroForm" class="mal-form reveal">
-        <input id="heroUrl" type="url" name="url" placeholder="yourwebsite.com.au" autocomplete="url" required />
+        <input id="heroUrl" type="text" name="url" inputmode="url" placeholder="yourwebsite.com.au" autocomplete="url" spellcheck="false" autocapitalize="off" autocorrect="off" required />
         <button type="submit">Generate my ads <span class="arr">→</span></button>
       </form>
 
@@ -974,7 +974,9 @@
   heroForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     if (state.isRunning) return;
-    state.url = heroUrl.value.trim();
+    // Accept naked domains: strip any typed scheme, then normalise to https://
+    const rawUrl = heroUrl.value.trim().replace(/^https?:\/\//i, '');
+    state.url = rawUrl ? 'https://' + rawUrl : '';
     state.brand = null; state.ads = []; state.variations = []; state.audience = '';
 
     document.getElementById('malErr')?.remove();
