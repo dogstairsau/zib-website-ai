@@ -18,7 +18,7 @@ const HOST = "https://zibdigital.com.au";
 // robots meta is missing.
 const EXCLUDE = new Set([
   "alchemy-construct", "archer-scott-lawyers", "australian-infinity-hospitality-solutions",
-  "Mad-Mex-SEO-GEO-Opportunity", "sandra", "prompt-research", "meta-ads-lab", "roi-calculator",
+  "Mad-Mex-SEO-GEO-Opportunity", "prompt-research", "meta-ads-lab", "roi-calculator",
   "ai-growth-simulator", "zib-os", "ai-readiness", "automation-map", "audit", "ai-partner", "p/matt/apiam-animal-health",
 ]);
 
