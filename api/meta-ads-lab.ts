@@ -100,33 +100,33 @@ async function generateAdImage(
   const prompt = promptParts.join("\n\n");
 
   const model = process.env.OPENAI_IMAGE_MODEL || "gpt-image-2";
-  let res: Response;
-  if (references.length) {
-    // Edits endpoint: accepts the brand's real imagery as input so the
-    // output carries their identity instead of generic AI stock.
-    const form = new FormData();
-    form.append("model", model);
-    form.append("prompt", prompt);
-    form.append("size", size);
-    form.append("quality", quality);
-    form.append("input_fidelity", "high");
-    form.append("n", "1");
-    for (const ref of references) {
-      const ext = ref.image.mime === "image/png" ? "png" : ref.image.mime === "image/webp" ? "webp" : "jpg";
-      form.append(
-        "image[]",
-        new Blob([ref.image.bytes], { type: ref.image.mime }),
-        `${ref.kind}.${ext}`,
-      );
+  const doFetch = (): Promise<Response> => {
+    if (references.length) {
+      // Edits endpoint: accepts the brand's real imagery as input so the
+      // output carries their identity instead of generic AI stock.
+      const form = new FormData();
+      form.append("model", model);
+      form.append("prompt", prompt);
+      form.append("size", size);
+      form.append("quality", quality);
+      form.append("input_fidelity", "high");
+      form.append("n", "1");
+      for (const ref of references) {
+        const ext = ref.image.mime === "image/png" ? "png" : ref.image.mime === "image/webp" ? "webp" : "jpg";
+        form.append(
+          "image[]",
+          new Blob([ref.image.bytes], { type: ref.image.mime }),
+          `${ref.kind}.${ext}`,
+        );
+      }
+      return fetch("https://api.openai.com/v1/images/edits", {
+        method: "POST",
+        headers: { Authorization: `Bearer ${apiKey}` },
+        body: form,
+        signal: AbortSignal.timeout(120_000),
+      });
     }
-    res = await fetch("https://api.openai.com/v1/images/edits", {
-      method: "POST",
-      headers: { Authorization: `Bearer ${apiKey}` },
-      body: form,
-      signal: AbortSignal.timeout(120_000),
-    });
-  } else {
-    res = await fetch("https://api.openai.com/v1/images/generations", {
+    return fetch("https://api.openai.com/v1/images/generations", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${apiKey}`,
@@ -135,15 +135,53 @@ async function generateAdImage(
       body: JSON.stringify({ model, prompt, size, quality, n: 1 }),
       signal: AbortSignal.timeout(120_000),
     });
-  }
-  if (!res.ok) {
+  };
+
+  // Rate limits (429) and transient upstream errors are the main reason
+  // creatives silently fail to load — retry those with backoff instead of
+  // dropping the card's visual.
+  let lastErr: Error | null = null;
+  for (let attempt = 0; attempt < 3; attempt++) {
+    if (attempt > 0) await new Promise((r) => setTimeout(r, 2_500 * attempt + Math.random() * 1_500));
+    let res: Response;
+    try {
+      res = await doFetch();
+    } catch (e: any) {
+      lastErr = new Error(e?.name === "TimeoutError" ? "OpenAI request timed out" : e?.message);
+      continue; // network error / timeout — retryable
+    }
+    if (res.ok) {
+      const data = await res.json();
+      const b64 = data.data?.[0]?.b64_json;
+      if (!b64) throw new Error("No image data");
+      return `data:image/png;base64,${b64}`;
+    }
     const err = await res.json().catch(() => ({}));
-    throw new Error(err.error?.message || `OpenAI ${res.status}`);
+    const msg = err.error?.message || `OpenAI ${res.status}`;
+    if (res.status === 429 || res.status >= 500) {
+      lastErr = new Error(msg);
+      continue; // retryable
+    }
+    throw new Error(msg); // 4xx — let the caller decide on a fallback
   }
-  const data = await res.json();
-  const b64 = data.data?.[0]?.b64_json;
-  if (!b64) throw new Error("No image data");
-  return `data:image/png;base64,${b64}`;
+  throw lastErr || new Error("Image generation failed");
+}
+
+/** Run jobs with bounded concurrency, preserving order of results. */
+async function mapWithConcurrency<T>(
+  items: T[],
+  limit: number,
+  fn: (item: T, i: number) => Promise<void>,
+): Promise<void> {
+  let next = 0;
+  await Promise.all(
+    Array.from({ length: Math.min(limit, items.length) }, async () => {
+      while (next < items.length) {
+        const i = next++;
+        await fn(items[i], i);
+      }
+    }),
+  );
 }
 
 function json(data: unknown, status: number = 200): Response {
@@ -362,8 +400,11 @@ export default async function handler(req: Request): Promise<Response> {
         const heroQuality = process.env.META_ADS_IMAGE_QUALITY || "high";
         const variationQuality = process.env.META_ADS_IMAGE_QUALITY_VARIATION || "medium";
 
-        await Promise.all(
-          allAds.map(async (ad, i) => {
+        // Bounded concurrency: firing all 12 at once trips OpenAI's
+        // images-per-minute limits and most creatives silently fail.
+        // Heroes sit first in allAds, so they render first.
+        const imageConcurrency = Math.max(1, parseInt(process.env.META_ADS_IMAGE_CONCURRENCY || "4", 10) || 4);
+        await mapWithConcurrency(allAds, imageConcurrency, async (ad, i) => {
             const size = SIZE_FOR_FORMAT[ad.format] || "1024x1024";
             if (!apiKey || !ad.image_prompt) return;
             const quality = i < heroAds.length ? heroQuality : variationQuality;
@@ -394,8 +435,7 @@ export default async function handler(req: Request): Promise<Response> {
             } catch (e: any) {
               console.warn(`[image ${i}]`, e?.message);
             }
-          })
-        );
+          });
 
         send("stage", { idx: 3, status: "done" });
 

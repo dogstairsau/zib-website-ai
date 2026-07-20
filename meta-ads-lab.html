@@ -187,6 +187,65 @@
 .mal-stage.is-active .timer { color: var(--accent); }
 .mal-stage.is-done .timer { color: var(--score-good); }
 
+/* ─── WAIT DECK (rotating proof while generating) ───────────────── */
+.mal-wait {
+  margin-top: clamp(40px, 5vw, 64px);
+  opacity: 0; transform: translateY(14px);
+  transition: opacity 480ms var(--ease-out), transform 480ms var(--ease-out);
+}
+.mal-wait.is-on { opacity: 1; transform: none; }
+.mal-wait-head {
+  display: flex; justify-content: space-between; align-items: baseline; gap: 20px;
+  margin-bottom: 18px;
+}
+.mal-wait-link {
+  font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--muted); white-space: nowrap;
+}
+.mal-wait-link:hover { color: var(--accent); }
+.mal-wait-card {
+  border: 1px solid var(--rule);
+  border-radius: 18px;
+  background: #fff;
+  padding: clamp(28px, 3.4vw, 44px);
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+  gap: clamp(24px, 3vw, 48px);
+  align-items: center;
+  transition: opacity 260ms var(--ease);
+}
+.mal-wait-card.is-fading { opacity: 0; }
+@media (max-width: 720px) { .mal-wait-card { grid-template-columns: 1fr; gap: 18px; } }
+.mal-wait-card .w-eyebrow {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--accent); font-weight: 600;
+}
+.mal-wait-card .w-stat {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(34px, 4.4vw, 60px);
+  letter-spacing: -0.03em; line-height: 1;
+  margin-top: 12px;
+}
+.mal-wait-card .w-stat em { font-style: italic; font-weight: 400; color: var(--accent); }
+.mal-wait-card .w-blurb {
+  color: var(--muted); font-size: clamp(15px, 1.25vw, 17.5px); line-height: 1.6;
+}
+.mal-wait-foot {
+  margin-top: 16px;
+  display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap;
+}
+.mal-wait-dots { display: flex; gap: 8px; }
+.mal-wait-dots button {
+  width: 8px; height: 8px; border-radius: 999px; border: 0; padding: 0;
+  background: var(--rule-2); cursor: pointer;
+  transition: background 200ms var(--ease), transform 200ms var(--ease);
+}
+.mal-wait-dots button.is-active { background: var(--accent); transform: scale(1.25); }
+.mal-wait-note {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--muted-2);
+}
+
 /* ─── GATE (form to unlock reveal) ──────────────────────────────── */
 .mal-gate {
   padding: clamp(96px, 11vw, 160px) 0;
@@ -365,6 +424,8 @@
   transition: opacity 480ms var(--ease-out), transform 480ms var(--ease-out), box-shadow 280ms var(--ease);
 }
 .ad-card.is-revealed { opacity: 1; transform: none; }
+/* Cards stay out of the grid until their creative has rendered */
+.ad-card.is-pending { display: none; }
 .ad-card:hover { box-shadow: 0 40px 90px -50px rgba(0,0,0,0.25); }
 
 .ad-shell {
@@ -650,6 +711,19 @@
           <div class="timer">Ready</div>
         </div>
       </div>
+
+      <!-- While-you-wait proof deck — only visible during a run -->
+      <div id="waitDeck" class="mal-wait" hidden>
+        <div class="mal-wait-head">
+          <div class="mono eyebrow">While the system works · Real client results</div>
+          <a class="mal-wait-link mono" href="/case-studies" target="_blank" rel="noopener">All case studies ↗</a>
+        </div>
+        <div id="waitCard" class="mal-wait-card" aria-live="polite"></div>
+        <div class="mal-wait-foot">
+          <div id="waitDots" class="mal-wait-dots"></div>
+          <p class="mal-wait-note">Full pack takes about 90 seconds · lands here + in your inbox</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -662,7 +736,7 @@
           <h2>Here are <em>the 12 concepts.</em></h2>
         </div>
         <p class="meta">
-          First four with visuals. Eight more across retargeting, lookalikes and video hooks. Full pack also lives in your inbox.
+          Each concept lands here as its creative finishes rendering. The full pack also lives in your inbox.
         </p>
       </div>
 
@@ -770,6 +844,7 @@
     assets: { logo: null, colors: [] },
     ads: [], variations: [],
     isRunning: false, isDone: false,
+    imagesGated: false,
   };
 
   let elapsedStart = 0, elapsedTick = null;
@@ -780,6 +855,54 @@
     const safe = escapeHtml(headline);
     const w = escapeHtml(word);
     return safe.replace(new RegExp(`\\b(${w})\\b`, 'i'), '<em>$1</em>');
+  };
+
+  // ── While-you-wait proof deck ────────────────────────────────────
+  const waitDeck = document.getElementById('waitDeck');
+  const waitCard = document.getElementById('waitCard');
+  const waitDots = document.getElementById('waitDots');
+  const WAIT_SLIDES = [
+    { eyebrow: 'Google Ads + Meta · Trades', stat: '$2.8M <em>→</em> $5.3M', blurb: 'Forecast revenue growth for a Brisbane roof restoration business, driven by paid advertising.' },
+    { eyebrow: 'Meta Ads · Manufacturing', stat: '86 leads', blurb: 'For a $400K+ custom trailer. Meta leads up 226% in nine months for a niche Australian manufacturer.' },
+    { eyebrow: 'Meta Ads · Hospitality', stat: '110 leads <em>in 5 months</em>', blurb: '18-cent average CPCs. The golf club is now booked out six months in advance.' },
+    { eyebrow: 'Google Ads · Events', stat: '806 bookings', blurb: 'In nine months, from a standing start. The photo booth brand is now booked by PRADA, Burberry and Garnier.' },
+    { eyebrow: 'Google Ads + Meta · B2B', stat: '2,377 conversions', blurb: 'Up 219% in under 12 months for a national commercial indoor plant hire business.' },
+    { eyebrow: 'Google Ads · Trades', stat: '418 enquiries', blurb: 'Under $45 a lead at an 11.17% conversion rate for a Melbourne pool fencing company.' },
+  ];
+  let waitTimer = null, waitIdx = 0;
+  const waitSlideHtml = (s) =>
+    `<div><div class="w-eyebrow">${s.eyebrow}</div><div class="w-stat">${s.stat}</div></div>
+     <p class="w-blurb">${s.blurb}</p>`;
+  const showWaitSlide = (i, immediate) => {
+    waitIdx = i;
+    waitDots.querySelectorAll('button').forEach((d, j) => d.classList.toggle('is-active', j === i));
+    if (immediate) { waitCard.innerHTML = waitSlideHtml(WAIT_SLIDES[i]); return; }
+    waitCard.classList.add('is-fading');
+    setTimeout(() => {
+      waitCard.innerHTML = waitSlideHtml(WAIT_SLIDES[i]);
+      waitCard.classList.remove('is-fading');
+    }, 270);
+  };
+  const armWaitTimer = () => {
+    if (waitTimer) clearInterval(waitTimer);
+    waitTimer = setInterval(() => showWaitSlide((waitIdx + 1) % WAIT_SLIDES.length), 6000);
+  };
+  const startWaitDeck = () => {
+    if (!waitDeck || !waitDeck.hidden) return;
+    waitDots.innerHTML = WAIT_SLIDES.map((_, i) =>
+      `<button type="button" aria-label="Result ${i + 1}"></button>`).join('');
+    waitDots.querySelectorAll('button').forEach((d, i) =>
+      d.addEventListener('click', () => { showWaitSlide(i); armWaitTimer(); }));
+    showWaitSlide(0, true);
+    waitDeck.hidden = false;
+    requestAnimationFrame(() => waitDeck.classList.add('is-on'));
+    armWaitTimer();
+  };
+  const stopWaitDeck = () => {
+    if (waitTimer) { clearInterval(waitTimer); waitTimer = null; }
+    if (!waitDeck || waitDeck.hidden) return;
+    waitDeck.classList.remove('is-on');
+    setTimeout(() => { waitDeck.hidden = true; }, 500);
   };
 
   const startElapsed = () => {
@@ -868,8 +991,9 @@
       ? `<div class="ad-copy">${escapeHtml(ad.body)}</div>`
       : '';
 
+    const pending = state.imagesGated && !ad.image_url;
     return `
-      <article class="ad-card" data-ad-idx="${i}">
+      <article class="ad-card${pending ? ' is-pending' : ''}" data-ad-idx="${i}">
         <header class="ad-shell">
           ${avatarHtml}
           <div>
@@ -917,15 +1041,31 @@
     fill('stratCadence', s.cadence);
   };
 
-  const revealAds = () => {
+  // Reveal the section the moment the FIRST finished creative exists —
+  // never before, so visitors never see placeholder cards.
+  const ensureRevealVisible = () => {
+    if (!reveal.hidden) return;
     reveal.hidden = false;
-    setTimeout(() => reveal.scrollIntoView({ behavior: 'smooth', block: 'start' }), 400);
-    const cards = adGrid.querySelectorAll('.ad-card');
-    cards.forEach((c, i) => setTimeout(() => c.classList.add('is-revealed'), 240 + i * 100));
+    stopWaitDeck();
+    setTimeout(() => reveal.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300);
+  };
+
+  // End of run: surface any cards whose image never arrived (brand-gradient
+  // fallback) so no concept is lost, and retire the wait deck.
+  const finishReveal = () => {
+    state.imagesGated = false;
+    stopWaitDeck();
+    if (!state.ads.length) return;
+    ensureRevealVisible();
+    adGrid.querySelectorAll('.ad-card.is-pending').forEach((c, i) => setTimeout(() => {
+      c.classList.remove('is-pending');
+      requestAnimationFrame(() => c.classList.add('is-revealed'));
+    }, 240 + i * 120));
   };
 
   const showError = (msg) => {
     stages.forEach(s => { s.classList.remove('is-active', 'is-done'); s.querySelector('.timer').textContent = ''; });
+    stopWaitDeck();
     stopElapsed();
     elapsedT.textContent = 'Failed';
     const head = document.querySelector('.mal-stages h2');
@@ -973,42 +1113,35 @@
       // screen, re-render them with the real logo + palette.
       if (state.ads.length) {
         renderAds();
-        adGrid.querySelectorAll('.ad-card').forEach(c => c.classList.add('is-revealed'));
+        adGrid.querySelectorAll('.ad-card:not(.is-pending)').forEach(c => c.classList.add('is-revealed'));
       }
     } else if (event === 'ads') {
       state.audience = payload.audience;
       state.strategy = payload.strategy || null;
       state.ads = payload.ads || [];
+      // Cards render hidden (is-pending) and stay that way until their
+      // creative arrives — the wait deck keeps the visitor engaged.
       renderAds();
       renderStrategy();
-      // Reveal the section as soon as the 12 cards land (placeholder visuals).
-      // Images stream in via ad-image events while the section is visible.
-      if (reveal.hidden) {
-        reveal.hidden = false;
-        setTimeout(() => {
-          reveal.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          adGrid.querySelectorAll('.ad-card').forEach((c, i) =>
-            setTimeout(() => c.classList.add('is-revealed'), 240 + i * 80)
-          );
-        }, 400);
-      }
     } else if (event === 'ad-image') {
-      // Re-render the specific card so the photo gets the proper backdrop
-      // styling on its text overlay (full re-render is cheaper than DOM surgery).
+      // Swap the finished creative in and pop the card into the grid.
       if (typeof payload.idx === 'number' && payload.image_url && state.ads[payload.idx]) {
         state.ads[payload.idx].image_url = payload.image_url;
         const card = adGrid.querySelector(`[data-ad-idx="${payload.idx}"]`);
         if (card) {
-          const wasRevealed = card.classList.contains('is-revealed');
           const tpl = document.createElement('template');
           tpl.innerHTML = adCardHtml(state.ads[payload.idx], state.brand, payload.idx).trim();
           const next = tpl.content.firstElementChild;
-          if (next && wasRevealed) next.classList.add('is-revealed');
-          if (next) card.replaceWith(next);
+          if (next) {
+            card.replaceWith(next);
+            ensureRevealVisible();
+            setTimeout(() => next.classList.add('is-revealed'), 120);
+          }
         }
       }
     } else if (event === 'done') {
       state.isDone = true;
+      finishReveal();
       stopElapsed();
       gateSec.classList.add('is-ready');
       setTimeout(() => gateSec.scrollIntoView({ behavior: 'smooth', block: 'start' }), 500);
@@ -1026,6 +1159,10 @@
     state.url = rawUrl ? 'https://' + rawUrl : '';
     state.brand = null; state.ads = []; state.variations = []; state.audience = '';
     state.assets = { logo: null, colors: [] };
+    state.imagesGated = false;
+    if (waitTimer) { clearInterval(waitTimer); waitTimer = null; }
+    waitDeck.classList.remove('is-on');
+    waitDeck.hidden = true;
 
     document.getElementById('malErr')?.remove();
     resetStages();
@@ -1070,6 +1207,8 @@
 
     await new Promise(r => setTimeout(r, 500));
     startElapsed();
+    state.imagesGated = true;
+    startWaitDeck();
 
     try {
       const resp = await fetch('/api/meta-ads-lab', {
@@ -1082,14 +1221,9 @@
         throw new Error(err.error || `${resp.status}`);
       }
       await consumeSse(resp);
-      // When generation done, auto-reveal ads
-      reveal.hidden = false;
-      setTimeout(() => {
-        reveal.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        adGrid.querySelectorAll('.ad-card, .ad-more').forEach((c, i) =>
-          setTimeout(() => c.classList.add('is-revealed'), 240 + i * 140)
-        );
-      }, 600);
+      // Safety net: if the stream ended without a done event, surface
+      // whatever finished.
+      finishReveal();
     } catch (err) {
       showError(err?.message || 'Request failed');
       btn.disabled = false;

@@ -12,10 +12,10 @@
       "maxDuration": 30
     },
     "api/meta-ads-lab.ts": {
-      "maxDuration": 90
+      "maxDuration": 300
     },
     "api/google-ads-lab.ts": {
-      "maxDuration": 90
+      "maxDuration": 300
     },
     "api/growth-benchmarks.ts": {
       "maxDuration": 30
