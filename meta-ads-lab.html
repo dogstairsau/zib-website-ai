@@ -187,63 +187,100 @@
 .mal-stage.is-active .timer { color: var(--accent); }
 .mal-stage.is-done .timer { color: var(--score-good); }
 
-/* ─── WAIT DECK (rotating proof while generating) ───────────────── */
-.mal-wait {
+/* ─── WAIT HUB (brand board + quiz while generating) ────────────── */
+.mal-hub {
   margin-top: clamp(40px, 5vw, 64px);
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: clamp(16px, 1.8vw, 24px);
   opacity: 0; transform: translateY(14px);
   transition: opacity 480ms var(--ease-out), transform 480ms var(--ease-out);
 }
-.mal-wait.is-on { opacity: 1; transform: none; }
-.mal-wait-head {
-  display: flex; justify-content: space-between; align-items: baseline; gap: 20px;
-  margin-bottom: 18px;
-}
-.mal-wait-link {
-  font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--muted); white-space: nowrap;
-}
-.mal-wait-link:hover { color: var(--accent); }
-.mal-wait-card {
+.mal-hub[hidden] { display: none; }
+.mal-hub.is-on { opacity: 1; transform: none; }
+@media (max-width: 880px) { .mal-hub { grid-template-columns: 1fr; } }
+.hub-card {
   border: 1px solid var(--rule);
   border-radius: 18px;
   background: #fff;
-  padding: clamp(28px, 3.4vw, 44px);
-  display: grid;
-  grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
-  gap: clamp(24px, 3vw, 48px);
-  align-items: center;
-  transition: opacity 260ms var(--ease);
+  padding: clamp(24px, 2.6vw, 34px);
 }
-.mal-wait-card.is-fading { opacity: 0; }
-@media (max-width: 720px) { .mal-wait-card { grid-template-columns: 1fr; gap: 18px; } }
-.mal-wait-card .w-eyebrow {
-  font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em;
-  text-transform: uppercase; color: var(--accent); font-weight: 600;
+.hub-label {
+  font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--accent); font-weight: 600;
+  display: flex; align-items: center; gap: 8px;
 }
-.mal-wait-card .w-stat {
-  font-family: var(--display); font-weight: 500;
-  font-size: clamp(34px, 4.4vw, 60px);
-  letter-spacing: -0.03em; line-height: 1;
-  margin-top: 12px;
+.hub-label .pulse { width: 7px; height: 7px; border-radius: 999px; background: var(--accent); animation: pulse 1.2s ease-in-out infinite; }
+.hub-brand-head { display: flex; align-items: center; gap: 16px; margin-top: 20px; }
+.hub-logo {
+  width: 52px; height: 52px; border-radius: 999px; flex-shrink: 0;
+  border: 1.5px dashed var(--rule-2);
+  display: grid; place-items: center; overflow: hidden;
+  background: #fff;
+  font-family: var(--display); font-weight: 500; font-size: 22px; color: var(--muted-2);
+  transition: border-color 300ms var(--ease);
 }
-.mal-wait-card .w-stat em { font-style: italic; font-weight: 400; color: var(--accent); }
-.mal-wait-card .w-blurb {
-  color: var(--muted); font-size: clamp(15px, 1.25vw, 17.5px); line-height: 1.6;
+.hub-logo.is-filled { border: 0.5px solid var(--rule-2); }
+.hub-logo img { width: 100%; height: 100%; object-fit: contain; padding: 4px; }
+.hub-name { font-family: var(--display); font-weight: 500; font-size: clamp(19px, 1.7vw, 23px); letter-spacing: -0.015em; }
+.hub-cat { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+.hub-row { margin-top: 16px; font-size: 14.5px; line-height: 1.55; color: var(--ink-2); }
+.hub-row .k { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted-2); display: block; margin-bottom: 4px; }
+.hub-swatches { display: flex; gap: 8px; margin-top: 16px; }
+.hub-swatches .sw {
+  width: 28px; height: 28px; border-radius: 8px;
+  border: 0.5px solid rgba(0,0,0,0.08);
+  transform: scale(0); transition: transform 320ms var(--ease-spring);
 }
-.mal-wait-foot {
-  margin-top: 16px;
-  display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap;
+.hub-swatches .sw.is-in { transform: scale(1); }
+.hub-ticker {
+  margin-top: 20px; padding-top: 16px;
+  border-top: 0.5px solid var(--rule);
+  font-size: 12px; letter-spacing: 0.06em; color: var(--muted);
+  min-height: 20px;
+  transition: opacity 240ms var(--ease);
 }
-.mal-wait-dots { display: flex; gap: 8px; }
-.mal-wait-dots button {
-  width: 8px; height: 8px; border-radius: 999px; border: 0; padding: 0;
-  background: var(--rule-2); cursor: pointer;
-  transition: background 200ms var(--ease), transform 200ms var(--ease);
+.hub-ticker.is-fading { opacity: 0; }
+.hub-ticker em { color: var(--ink); font-style: normal; font-weight: 500; }
+.mal-hub-note {
+  grid-column: 1 / -1;
+  font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--muted-2); text-align: right;
 }
-.mal-wait-dots button.is-active { background: var(--accent); transform: scale(1.25); }
-.mal-wait-note {
-  font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em;
-  text-transform: uppercase; color: var(--muted-2);
+.skel {
+  display: inline-block; width: 140px; height: 14px; border-radius: 6px;
+  background: linear-gradient(90deg, var(--dim) 25%, #efefec 50%, var(--dim) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+}
+@keyframes shimmer { to { background-position: -200% 0; } }
+
+/* quiz */
+.hub-quiz h3 { font-family: var(--display); font-weight: 500; font-size: clamp(19px, 1.7vw, 23px); letter-spacing: -0.015em; margin-top: 18px; }
+.hub-quiz .q-sub { color: var(--muted); font-size: 14px; margin-top: 6px; line-height: 1.5; }
+.q-chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.q-chips button {
+  font-family: var(--display); font-size: 14px; font-weight: 500;
+  padding: 10px 16px; border-radius: 999px;
+  border: 1px solid var(--rule-2); background: #fff; color: var(--ink);
+  cursor: pointer;
+  transition: border-color 180ms var(--ease), background 180ms var(--ease), transform 180ms var(--ease);
+}
+.q-chips button:hover { border-color: var(--ink); transform: translateY(-1px); }
+.q-step { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted-2); margin-top: 18px; }
+.q-done-list { list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 12px; }
+.q-done-list li {
+  display: flex; gap: 12px; align-items: baseline;
+  font-size: 14.5px; color: var(--ink-2); line-height: 1.5;
+  opacity: 0; transform: translateY(6px);
+  transition: opacity 360ms var(--ease-out), transform 360ms var(--ease-out);
+}
+.q-done-list li.is-in { opacity: 1; transform: none; }
+.q-done-list .tick {
+  width: 18px; height: 18px; border-radius: 999px; flex-shrink: 0;
+  background: var(--score-good); color: #fff;
+  display: grid; place-items: center; font-size: 10px; font-weight: 700;
+  transform: translateY(3px);
 }
 
 /* ─── GATE (form to unlock reveal) ──────────────────────────────── */
@@ -712,17 +749,29 @@
         </div>
       </div>
 
-      <!-- While-you-wait proof deck — only visible during a run -->
-      <div id="waitDeck" class="mal-wait" hidden>
-        <div class="mal-wait-head">
-          <div class="mono eyebrow">While the system works · Real client results</div>
-          <a class="mal-wait-link mono" href="/case-studies" target="_blank" rel="noopener">All case studies ↗</a>
+      <!-- Live brand board + micro-quiz — only visible during a run -->
+      <div id="waitHub" class="mal-hub" hidden>
+        <div class="hub-card">
+          <div class="hub-label"><span class="pulse"></span>Live · What the system is finding</div>
+          <div class="hub-brand-head">
+            <div class="hub-logo" id="hubLogo"></div>
+            <div>
+              <div class="hub-name" id="hubName"><span class="skel"></span></div>
+              <div class="hub-cat" id="hubCat"></div>
+            </div>
+          </div>
+          <div class="hub-row" id="hubTagline" hidden><span class="k">Brand essence</span><span class="v"></span></div>
+          <div class="hub-row" id="hubColors" hidden><span class="k">Palette</span>
+            <div class="hub-swatches" id="hubSwatches"></div>
+          </div>
+          <div class="hub-row" id="hubBuyer" hidden><span class="k">Your buyer</span><span class="v"></span></div>
+          <div class="hub-ticker mono" id="hubTicker">Crawling the site…</div>
         </div>
-        <div id="waitCard" class="mal-wait-card" aria-live="polite"></div>
-        <div class="mal-wait-foot">
-          <div id="waitDots" class="mal-wait-dots"></div>
-          <p class="mal-wait-note">Full pack takes about 90 seconds · lands here + in your inbox</p>
+        <div class="hub-card hub-quiz" id="quizCard">
+          <div class="hub-label" style="color:var(--muted);">While it builds · 30 seconds</div>
+          <div id="quizBody"></div>
         </div>
+        <p class="mal-hub-note mono">Full pack takes about 90 seconds · lands here + in your inbox</p>
       </div>
     </div>
   </section>
@@ -840,7 +889,7 @@
   const brandName = document.getElementById('brandName');
 
   const state = {
-    url: '', brand: null, audience: '', strategy: null,
+    url: '', email: '', brand: null, audience: '', strategy: null,
     assets: { logo: null, colors: [] },
     ads: [], variations: [],
     isRunning: false, isDone: false,
@@ -857,52 +906,138 @@
     return safe.replace(new RegExp(`\\b(${w})\\b`, 'i'), '<em>$1</em>');
   };
 
-  // ── While-you-wait proof deck ────────────────────────────────────
-  const waitDeck = document.getElementById('waitDeck');
-  const waitCard = document.getElementById('waitCard');
-  const waitDots = document.getElementById('waitDots');
-  const WAIT_SLIDES = [
-    { eyebrow: 'Google Ads + Meta · Trades', stat: '$2.8M <em>→</em> $5.3M', blurb: 'Forecast revenue growth for a Brisbane roof restoration business, driven by paid advertising.' },
-    { eyebrow: 'Meta Ads · Manufacturing', stat: '86 leads', blurb: 'For a $400K+ custom trailer. Meta leads up 226% in nine months for a niche Australian manufacturer.' },
-    { eyebrow: 'Meta Ads · Hospitality', stat: '110 leads <em>in 5 months</em>', blurb: '18-cent average CPCs. The golf club is now booked out six months in advance.' },
-    { eyebrow: 'Google Ads · Events', stat: '806 bookings', blurb: 'In nine months, from a standing start. The photo booth brand is now booked by PRADA, Burberry and Garnier.' },
-    { eyebrow: 'Google Ads + Meta · B2B', stat: '2,377 conversions', blurb: 'Up 219% in under 12 months for a national commercial indoor plant hire business.' },
-    { eyebrow: 'Google Ads · Trades', stat: '418 enquiries', blurb: 'Under $45 a lead at an 11.17% conversion rate for a Melbourne pool fencing company.' },
+  // ── Live brand board ─────────────────────────────────────────────
+  const waitHub = document.getElementById('waitHub');
+  const hubLogo = document.getElementById('hubLogo');
+  const hubName = document.getElementById('hubName');
+  const hubCat = document.getElementById('hubCat');
+  const hubTagline = document.getElementById('hubTagline');
+  const hubColors = document.getElementById('hubColors');
+  const hubSwatches = document.getElementById('hubSwatches');
+  const hubBuyer = document.getElementById('hubBuyer');
+  const hubTicker = document.getElementById('hubTicker');
+  let tickerTimer = null, tickerIdx = 0, renderedCount = 0;
+
+  const setTicker = (html) => {
+    hubTicker.classList.add('is-fading');
+    setTimeout(() => { hubTicker.innerHTML = html; hubTicker.classList.remove('is-fading'); }, 240);
+  };
+  const hubSetBrand = (brand) => {
+    hubName.textContent = brand.name || 'Your brand';
+    hubCat.textContent = brand.category || '';
+    if (brand.tagline) {
+      hubTagline.hidden = false;
+      hubTagline.querySelector('.v').textContent = brand.tagline;
+    }
+    if (!state.assets.logo && brand.name) {
+      hubLogo.textContent = brand.name.slice(0, 1).toUpperCase();
+    }
+    setTicker('Brand DNA locked. Mapping your buyer…');
+  };
+  const hubSetAssets = (assets) => {
+    if (assets.logo) {
+      hubLogo.innerHTML = `<img src="${escapeHtml(assets.logo)}" alt="">`;
+      hubLogo.classList.add('is-filled');
+    }
+    if (assets.colors && assets.colors.length) {
+      hubColors.hidden = false;
+      hubSwatches.innerHTML = assets.colors.map(c =>
+        `<div class="sw" style="background:${escapeHtml(c)}" title="${escapeHtml(c)}"></div>`).join('');
+      hubSwatches.querySelectorAll('.sw').forEach((s, i) =>
+        setTimeout(() => s.classList.add('is-in'), 150 + i * 140));
+    }
+  };
+  const hubSetAudience = (audience) => {
+    if (!audience) return;
+    hubBuyer.hidden = false;
+    hubBuyer.querySelector('.v').textContent = audience;
+  };
+  // Once concepts exist, rotate their headlines through the ticker with a
+  // live render count — the copy lands ~60s before the creatives do.
+  const startTicker = () => {
+    if (tickerTimer) clearInterval(tickerTimer);
+    tickerIdx = 0;
+    const tick = () => {
+      if (!state.ads.length) return;
+      const ad = state.ads[tickerIdx % state.ads.length];
+      const progress = renderedCount
+        ? `Rendering creatives · ${renderedCount} of ${state.ads.length} done`
+        : `Concept ${(tickerIdx % state.ads.length) + 1} of ${state.ads.length} drafted`;
+      setTicker(`${progress} · <em>“${escapeHtml(ad.headline)}”</em>`);
+      tickerIdx++;
+    };
+    tick();
+    tickerTimer = setInterval(tick, 3800);
+  };
+  const hubReset = () => {
+    if (tickerTimer) { clearInterval(tickerTimer); tickerTimer = null; }
+    renderedCount = 0; tickerIdx = 0;
+    hubLogo.innerHTML = ''; hubLogo.classList.remove('is-filled');
+    hubName.innerHTML = '<span class="skel"></span>';
+    hubCat.textContent = '';
+    hubTagline.hidden = true; hubColors.hidden = true; hubBuyer.hidden = true;
+    hubSwatches.innerHTML = '';
+    hubTicker.innerHTML = 'Crawling the site…';
+  };
+
+  // ── Micro-quiz → pack checklist ──────────────────────────────────
+  const quizBody = document.getElementById('quizBody');
+  const QUIZ = [
+    { key: 'budget', q: 'What do you spend on ads per month?', options: ['Nothing yet', 'Under $1k', '$1k – $3k', '$3k – $10k', '$10k+'] },
+    { key: 'goal', q: 'What matters most right now?', options: ['More leads', 'Cheaper leads', 'New market or launch', 'Beating a competitor'] },
   ];
-  let waitTimer = null, waitIdx = 0;
-  const waitSlideHtml = (s) =>
-    `<div><div class="w-eyebrow">${s.eyebrow}</div><div class="w-stat">${s.stat}</div></div>
-     <p class="w-blurb">${s.blurb}</p>`;
-  const showWaitSlide = (i, immediate) => {
-    waitIdx = i;
-    waitDots.querySelectorAll('button').forEach((d, j) => d.classList.toggle('is-active', j === i));
-    if (immediate) { waitCard.innerHTML = waitSlideHtml(WAIT_SLIDES[i]); return; }
-    waitCard.classList.add('is-fading');
-    setTimeout(() => {
-      waitCard.innerHTML = waitSlideHtml(WAIT_SLIDES[i]);
-      waitCard.classList.remove('is-fading');
-    }, 270);
+  const quizAnswers = {};
+  const renderQuizStep = (step) => {
+    if (step >= QUIZ.length) { submitQuiz(); renderPackChecklist(); return; }
+    const q = QUIZ[step];
+    quizBody.innerHTML = `
+      <h3>${q.q}</h3>
+      <p class="q-sub">Your strategist walks into the call already across it. No forms later.</p>
+      <div class="q-chips">${q.options.map(o => `<button type="button" data-v="${escapeHtml(o)}">${escapeHtml(o)}</button>`).join('')}</div>
+      <div class="q-step">Question ${step + 1} of ${QUIZ.length}</div>`;
+    quizBody.querySelectorAll('.q-chips button').forEach(b =>
+      b.addEventListener('click', () => { quizAnswers[q.key] = b.dataset.v; renderQuizStep(step + 1); }));
   };
-  const armWaitTimer = () => {
-    if (waitTimer) clearInterval(waitTimer);
-    waitTimer = setInterval(() => showWaitSlide((waitIdx + 1) % WAIT_SLIDES.length), 6000);
+  const renderPackChecklist = () => {
+    quizBody.innerHTML = `
+      <h3>Locked in. Here's what's coming.</h3>
+      <ul class="q-done-list">
+        <li><span class="tick">✓</span>12 ad concepts, written for your brand and buyer</li>
+        <li><span class="tick">✓</span>Creatives rendered with your logo, palette and product</li>
+        <li><span class="tick">✓</span>Audience map: who to target and why</li>
+        <li><span class="tick">✓</span>Spend and cadence plan, sized to your budget</li>
+        <li><span class="tick">✓</span>Senior strategist call within 24 hours, already briefed</li>
+      </ul>`;
+    quizBody.querySelectorAll('.q-done-list li').forEach((li, i) =>
+      setTimeout(() => li.classList.add('is-in'), 200 + i * 220));
   };
-  const startWaitDeck = () => {
-    if (!waitDeck || !waitDeck.hidden) return;
-    waitDots.innerHTML = WAIT_SLIDES.map((_, i) =>
-      `<button type="button" aria-label="Result ${i + 1}"></button>`).join('');
-    waitDots.querySelectorAll('button').forEach((d, i) =>
-      d.addEventListener('click', () => { showWaitSlide(i); armWaitTimer(); }));
-    showWaitSlide(0, true);
-    waitDeck.hidden = false;
-    requestAnimationFrame(() => waitDeck.classList.add('is-on'));
-    armWaitTimer();
+  const submitQuiz = () => {
+    // Fire and forget — the pack checklist shows regardless.
+    fetch('/api/lab-quiz', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: state.email || '',
+        url: state.url,
+        budget: quizAnswers.budget || '',
+        goal: quizAnswers.goal || '',
+        lab: 'Meta Ads Lab',
+      }),
+    }).catch(() => {});
   };
-  const stopWaitDeck = () => {
-    if (waitTimer) { clearInterval(waitTimer); waitTimer = null; }
-    if (!waitDeck || waitDeck.hidden) return;
-    waitDeck.classList.remove('is-on');
-    setTimeout(() => { waitDeck.hidden = true; }, 500);
+
+  const startWaitHub = () => {
+    if (!waitHub || !waitHub.hidden) return;
+    hubReset();
+    renderQuizStep(0);
+    waitHub.hidden = false;
+    requestAnimationFrame(() => waitHub.classList.add('is-on'));
+  };
+  const stopWaitHub = () => {
+    if (tickerTimer) { clearInterval(tickerTimer); tickerTimer = null; }
+    if (!waitHub || waitHub.hidden) return;
+    waitHub.classList.remove('is-on');
+    setTimeout(() => { waitHub.hidden = true; }, 500);
   };
 
   const startElapsed = () => {
@@ -1046,7 +1181,7 @@
   const ensureRevealVisible = () => {
     if (!reveal.hidden) return;
     reveal.hidden = false;
-    stopWaitDeck();
+    stopWaitHub();
     setTimeout(() => reveal.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300);
   };
 
@@ -1054,7 +1189,7 @@
   // fallback) so no concept is lost, and retire the wait deck.
   const finishReveal = () => {
     state.imagesGated = false;
-    stopWaitDeck();
+    stopWaitHub();
     if (!state.ads.length) return;
     ensureRevealVisible();
     adGrid.querySelectorAll('.ad-card.is-pending').forEach((c, i) => setTimeout(() => {
@@ -1065,7 +1200,7 @@
 
   const showError = (msg) => {
     stages.forEach(s => { s.classList.remove('is-active', 'is-done'); s.querySelector('.timer').textContent = ''; });
-    stopWaitDeck();
+    stopWaitHub();
     stopElapsed();
     elapsedT.textContent = 'Failed';
     const head = document.querySelector('.mal-stages h2');
@@ -1104,11 +1239,13 @@
       state.brand = payload;
       if (brandLbl) brandLbl.textContent = payload.name || 'your brand';
       if (brandName) brandName.textContent = payload.name || 'your brand';
+      hubSetBrand(payload);
     } else if (event === 'brand-assets') {
       state.assets = {
         logo: payload.logo || null,
         colors: Array.isArray(payload.colors) ? payload.colors : [],
       };
+      hubSetAssets(state.assets);
       // Normally arrives before the ads render; if cards are already on
       // screen, re-render them with the real logo + palette.
       if (state.ads.length) {
@@ -1120,9 +1257,11 @@
       state.strategy = payload.strategy || null;
       state.ads = payload.ads || [];
       // Cards render hidden (is-pending) and stay that way until their
-      // creative arrives — the wait deck keeps the visitor engaged.
+      // creative arrives — the brand board + quiz keep the visitor engaged.
       renderAds();
       renderStrategy();
+      hubSetAudience(payload.audience);
+      startTicker();
     } else if (event === 'ad-image') {
       // Swap the finished creative in and pop the card into the grid.
       if (typeof payload.idx === 'number' && payload.image_url && state.ads[payload.idx]) {
@@ -1136,6 +1275,12 @@
             card.replaceWith(next);
             ensureRevealVisible();
             setTimeout(() => next.classList.add('is-revealed'), 120);
+          }
+          // Live render progress on the final stage card
+          renderedCount++;
+          const s3 = stages[3];
+          if (s3 && !state.isDone) {
+            s3.querySelector('.timer').textContent = `${renderedCount} of ${state.ads.length} rendered`;
           }
         }
       }
@@ -1160,9 +1305,9 @@
     state.brand = null; state.ads = []; state.variations = []; state.audience = '';
     state.assets = { logo: null, colors: [] };
     state.imagesGated = false;
-    if (waitTimer) { clearInterval(waitTimer); waitTimer = null; }
-    waitDeck.classList.remove('is-on');
-    waitDeck.hidden = true;
+    if (tickerTimer) { clearInterval(tickerTimer); tickerTimer = null; }
+    waitHub.classList.remove('is-on');
+    waitHub.hidden = true;
 
     document.getElementById('malErr')?.remove();
     resetStages();
@@ -1188,9 +1333,10 @@
     btn.textContent = 'Generating…';
 
     const fd = new FormData(gateForm);
+    state.email = (fd.get('email') || '').toString().trim();
     const payload = {
       url: state.url,
-      email: (fd.get('email') || '').toString().trim(),
+      email: state.email,
       firstname: (fd.get('name') || '').toString().trim(),
       phone: (fd.get('phone') || '').toString().trim(),
       sourceTag: document.querySelector('meta[name="zib:source-tag"]')?.content || '',
@@ -1208,7 +1354,7 @@
     await new Promise(r => setTimeout(r, 500));
     startElapsed();
     state.imagesGated = true;
-    startWaitDeck();
+    startWaitHub();
 
     try {
       const resp = await fetch('/api/meta-ads-lab', {
