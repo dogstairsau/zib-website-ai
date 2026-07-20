@@ -73,7 +73,7 @@ async function generateImage(
     method: "POST",
     headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
     body: JSON.stringify({
-      model: process.env.OPENAI_IMAGE_MODEL || "gpt-image-1",
+      model: process.env.OPENAI_IMAGE_MODEL || "gpt-image-2",
       prompt,
       size,
       quality: process.env.META_ADS_IMAGE_QUALITY || "low",
