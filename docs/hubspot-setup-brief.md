@@ -26,8 +26,11 @@ When `HUBSPOT_PRIVATE_APP_TOKEN` is set, every lab run does this:
      note your strategists should read before the 24h call.
 3. Optionally pings Slack (`SLACK_WEBHOOK_URL`) on each new lead.
 
-Until the token is set, all of this silently no-ops (logs `[hubspot:stub]` in
-Vercel function logs) — which is the current state.
+Until the token is set, the HubSpot side silently no-ops (logs
+`[hubspot:stub]` in Vercel function logs). **The quiz answers are not lost in
+the meantime**: `/api/lab-quiz` also emails them to `LEAD_NOTIFY_EMAIL` via
+Resend ("<lab> quiz · <site> · <email>"), so strategists are briefed today.
+HubSpot setup upgrades that from an inbox email to a note on the CRM record.
 
 ## Task 1 — HubSpot portal setup
 

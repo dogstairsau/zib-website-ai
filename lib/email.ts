@@ -77,6 +77,59 @@ export async function sendLeadEmail(payload: LeadEmail): Promise<void> {
   }
 }
 
+export type LabQuizEmail = {
+  email: string;
+  url: string;
+  lab: string;
+  answers: { q: string; a: string }[];
+};
+
+/**
+ * Internal notification with the ads-lab quiz answers (budget + goal),
+ * sent to LEAD_NOTIFY_EMAIL so the strategist is briefed for the 24h call
+ * even before HubSpot is connected.
+ */
+export async function sendLabQuizEmail(p: LabQuizEmail): Promise<void> {
+  const apiKey = process.env.RESEND_API_KEY;
+  const from = process.env.LEAD_NOTIFY_FROM || "onboarding@resend.dev";
+  const to = process.env.LEAD_NOTIFY_EMAIL;
+  if (!apiKey || !to) {
+    console.log("[email:lab-quiz stub]", { email: p.email, answers: p.answers });
+    return;
+  }
+
+  let host = "";
+  try { host = new URL(p.url).hostname; } catch { host = p.url; }
+
+  const rows = p.answers.map((x) =>
+    `<tr><td style="padding:6px 12px 6px 0;color:#6B6B6B;width:220px;">${esc(x.q)}</td><td style="padding:6px 0;font-weight:600;">${esc(x.a)}</td></tr>`).join("");
+  const html = `<!doctype html>
+<html><body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;line-height:1.55;color:#0F0F0F;max-width:680px;margin:0 auto;padding:24px;">
+  <h1 style="font-size:22px;margin:0 0 4px;">${esc(p.lab)} · quiz answers</h1>
+  <p style="color:#6B6B6B;margin:0 0 24px;">Answered while their pack generated. Read before the 24h call.</p>
+  <table style="border-collapse:collapse;width:100%;margin-bottom:24px;font-size:14px;">
+    <tr><td style="padding:6px 12px 6px 0;color:#6B6B6B;width:220px;">Prospect</td><td style="padding:6px 0;"><a href="mailto:${esc(p.email)}">${esc(p.email)}</a></td></tr>
+    <tr><td style="padding:6px 12px 6px 0;color:#6B6B6B;">Site</td><td style="padding:6px 0;"><a href="${esc(p.url)}">${esc(host)}</a></td></tr>
+    ${rows}
+  </table>
+</body></html>`;
+
+  try {
+    const res = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ from, to, subject: `${p.lab} quiz · ${host} · ${p.email}`, html }),
+      signal: AbortSignal.timeout(10_000),
+    });
+    if (!res.ok) {
+      const body = await res.text().catch(() => "");
+      console.warn("[email:lab-quiz] Resend error:", res.status, body.slice(0, 200));
+    }
+  } catch (e) {
+    console.warn("[email:lab-quiz] fetch failed:", (e as Error).message);
+  }
+}
+
 function renderHtml(p: LeadEmail, host: string): string {
   const safe = (s: string | undefined) => esc(s || "");
   const a = p.audit || {};
