@@ -51,6 +51,13 @@ export async function generateBrandedImage(
   const prompt = promptParts.join("\n\n");
 
   const model = process.env.OPENAI_IMAGE_MODEL || "gpt-image-2";
+  // Referenced edits calls are much slower than plain generations. Give
+  // them fewer attempts and let a timeout bubble straight to the caller's
+  // plain-generation fallback — a request that timed out once will almost
+  // certainly time out again, and retrying it starves the whole run.
+  const referenced = references.length > 0;
+  const maxAttempts = referenced ? 2 : 3;
+  const timeoutMs = referenced ? 100_000 : 90_000;
   const doFetch = (): Promise<Response> => {
     if (references.length) {
       const form = new FormData();
@@ -72,7 +79,7 @@ export async function generateBrandedImage(
         method: "POST",
         headers: { Authorization: `Bearer ${apiKey}` },
         body: form,
-        signal: AbortSignal.timeout(120_000),
+        signal: AbortSignal.timeout(timeoutMs),
       });
     }
     return fetch("https://api.openai.com/v1/images/generations", {
@@ -82,19 +89,21 @@ export async function generateBrandedImage(
         "Content-Type": "application/json",
       },
       body: JSON.stringify({ model, prompt, size, quality, n: 1 }),
-      signal: AbortSignal.timeout(120_000),
+      signal: AbortSignal.timeout(timeoutMs),
     });
   };
 
   let lastErr: Error | null = null;
-  for (let attempt = 0; attempt < 3; attempt++) {
+  for (let attempt = 0; attempt < maxAttempts; attempt++) {
     if (attempt > 0) await new Promise((r) => setTimeout(r, 2_500 * attempt + Math.random() * 1_500));
     let res: Response;
     try {
       res = await doFetch();
     } catch (e: any) {
-      lastErr = new Error(e?.name === "TimeoutError" ? "OpenAI request timed out" : e?.message);
-      continue; // network error / timeout — retryable
+      const isTimeout = e?.name === "TimeoutError" || e?.name === "AbortError";
+      if (isTimeout && referenced) throw new Error("OpenAI edits request timed out");
+      lastErr = new Error(isTimeout ? "OpenAI request timed out" : e?.message);
+      continue; // network error / plain-path timeout — retryable
     }
     if (res.ok) {
       const data = await res.json();

@@ -107,6 +107,11 @@ export default async function handler(req: Request): Promise<Response> {
       const enc = new TextEncoder();
       const send = (event: string, data: unknown) =>
         controller.enqueue(enc.encode(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`));
+      // Keep-alive: image generation can run minutes between events, and a
+      // silent SSE stream risks being dropped by intermediaries.
+      const heartbeat = setInterval(() => {
+        try { send("ping", { t: Date.now() }); } catch { /* stream closed */ }
+      }, 15_000);
 
       const phone = (body.phone || "").trim();
       const notes = (body.notes || "").trim();
@@ -128,8 +133,10 @@ export default async function handler(req: Request): Promise<Response> {
         const assetRefs = extractBrandAssetRefs(site.rawHtml, site.url);
         const assetsPromise = (async () => {
           const [logo, ogImage, cssColors] = await Promise.all([
-            assetRefs.logoUrl ? fetchImageAsset(assetRefs.logoUrl) : null,
-            assetRefs.ogImageUrl ? fetchImageAsset(assetRefs.ogImageUrl) : null,
+            // Size caps keep the edits-endpoint uploads fast — an oversized
+            // og:image makes every referenced render slow enough to time out.
+            assetRefs.logoUrl ? fetchImageAsset(assetRefs.logoUrl, 1_000_000) : null,
+            assetRefs.ogImageUrl ? fetchImageAsset(assetRefs.ogImageUrl, 1_200_000) : null,
             assetRefs.colors.length
               ? Promise.resolve([] as string[])
               : fetchColorsFromStylesheets(extractStylesheetUrls(site.rawHtml, site.url)),
@@ -308,6 +315,7 @@ export default async function handler(req: Request): Promise<Response> {
         send("error", { message: err?.message || "Generation failed" });
         await hubspotPromise.catch(() => {});
       } finally {
+        clearInterval(heartbeat);
         controller.close();
       }
     },
