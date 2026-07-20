@@ -8,11 +8,13 @@ import { isSafeFetchUrl } from "../lib/safeUrl";
 import {
   extractBrandAssetRefs,
   extractStylesheetUrls,
+  isOpenAiUsableMime,
+} from "../lib/brandAssets";
+import {
   fetchColorsFromStylesheets,
   fetchImageAsset,
-  isOpenAiUsableMime,
   type FetchedImage,
-} from "../lib/brandAssets";
+} from "../lib/brandAssetFetch";
 
 export const config = { runtime: "edge" };
 
