@@ -6,6 +6,20 @@ import { guard } from "../lib/rateLimit";
 import { GOOGLE_ADS_SYSTEM_PROMPT, googleAdsUserPrompt } from "../lib/prompts/google-ads";
 import { isSafeFetchUrl } from "../lib/safeUrl";
 import { auditTransparency, transparencyUrl } from "../lib/adsTransparency";
+import {
+  extractBrandAssetRefs,
+  extractStylesheetUrls,
+  isOpenAiUsableMime,
+} from "../lib/brandAssets";
+import {
+  fetchColorsFromStylesheets,
+  fetchImageAsset,
+} from "../lib/brandAssetFetch";
+import {
+  generateBrandedImageWithFallback,
+  mapWithConcurrency,
+  type BrandReference,
+} from "../lib/adImage";
 
 export const config = { runtime: "edge" };
 
@@ -55,41 +69,6 @@ function clamp(s: string, max: number): string {
   const cut = t.slice(0, max);
   const sp = cut.lastIndexOf(" ");
   return (sp > max * 0.6 ? cut.slice(0, sp) : cut).trim();
-}
-
-async function generateImage(
-  brand: string,
-  imagePrompt: string,
-  size: string,
-  apiKey: string,
-): Promise<string | null> {
-  const prompt = [
-    `Editorial photograph for ${brand}.`,
-    imagePrompt,
-    `Style: editorial, magazine-quality, restrained. NOT stock-photo. NO TEXT, NO LOGOS, NO TYPOGRAPHY of any kind. Pure photographic composition.`,
-  ].join("\n\n");
-
-  const res = await fetch("https://api.openai.com/v1/images/generations", {
-    method: "POST",
-    headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
-    body: JSON.stringify({
-      model: process.env.OPENAI_IMAGE_MODEL || "gpt-image-2",
-      prompt,
-      size,
-      quality: process.env.META_ADS_IMAGE_QUALITY || "high",
-      n: 1,
-    }),
-    // High-quality renders can exceed the old 60s budget.
-    signal: AbortSignal.timeout(120_000),
-  });
-  if (!res.ok) {
-    const err = await res.json().catch(() => ({}));
-    throw new Error(err.error?.message || `OpenAI ${res.status}`);
-  }
-  const data = await res.json();
-  const b64 = data.data?.[0]?.b64_json;
-  if (!b64) throw new Error("No image data");
-  return `data:image/png;base64,${b64}`;
 }
 
 function json(data: unknown, status = 200): Response {
@@ -143,6 +122,21 @@ export default async function handler(req: Request): Promise<Response> {
         // Transparency Center using the brand name from the site.
         send("stage", { idx: 0, status: "active", message: "Reading the site + Transparency Center…" });
         const site = await fetchSiteContent(url);
+
+        // Brand assets: logo + og:image + palette, fetched in parallel with
+        // the Claude call. Best-effort — never blocks or fails the run.
+        const assetRefs = extractBrandAssetRefs(site.rawHtml, site.url);
+        const assetsPromise = (async () => {
+          const [logo, ogImage, cssColors] = await Promise.all([
+            assetRefs.logoUrl ? fetchImageAsset(assetRefs.logoUrl) : null,
+            assetRefs.ogImageUrl ? fetchImageAsset(assetRefs.ogImageUrl) : null,
+            assetRefs.colors.length
+              ? Promise.resolve([] as string[])
+              : fetchColorsFromStylesheets(extractStylesheetUrls(site.rawHtml, site.url)),
+          ]);
+          return { logo, ogImage, colors: assetRefs.colors.length ? assetRefs.colors : cssColors };
+        })();
+
         const transparency = await auditTransparency({ url, title: site.title, h1: site.h1 }).catch(() => ({
           url: transparencyUrl(url),
           advertiser: null,
@@ -223,6 +217,22 @@ export default async function handler(req: Request): Promise<Response> {
         const images = (px.images || []).slice(0, 4);
 
         send("brand", parsed.brand);
+
+        const assets = await assetsPromise;
+        const logoForClient =
+          assets.logo && assets.logo.dataUri.length < 300_000
+            ? assets.logo.dataUri
+            : assetRefs.logoUrl?.startsWith("https://")
+              ? assetRefs.logoUrl
+              : null;
+        send("brand-assets", { logo: logoForClient, colors: assets.colors });
+        console.log("[google-ads-lab] brand assets", {
+          logoUrl: assetRefs.logoUrl,
+          logoFetched: !!assets.logo,
+          ogFetched: !!assets.ogImage,
+          colors: assets.colors,
+        });
+
         send("stage", { idx: 1, status: "done" });
 
         // Stage 2 — assemble the pack (beat for UX)
@@ -246,18 +256,28 @@ export default async function handler(req: Request): Promise<Response> {
         // Stage 3 — render the PMAX image assets
         send("stage", { idx: 3, status: "active", message: "Generating image assets…" });
         const apiKey = process.env.OPENAI_API_KEY;
-        await Promise.all(
-          images.map(async (img, i) => {
-            if (!apiKey || !img.image_prompt) return;
-            const size = SIZE_FOR_RATIO[img.ratio] || "1024x1024";
-            try {
-              const image_url = await generateImage(parsed.brand.name, img.image_prompt, size, apiKey);
-              send("pmax-image", { idx: i, image_url });
-            } catch (e: any) {
-              console.warn(`[google-ads image ${i}]`, e?.message);
-            }
-          }),
-        );
+        const references: BrandReference[] = [];
+        if (assets.logo && isOpenAiUsableMime(assets.logo.mime)) {
+          references.push({ image: assets.logo, kind: "logo" });
+        }
+        if (assets.ogImage && isOpenAiUsableMime(assets.ogImage.mime)) {
+          references.push({ image: assets.ogImage, kind: "site" });
+        }
+        const quality = process.env.META_ADS_IMAGE_QUALITY || "high";
+        await mapWithConcurrency(images, 3, async (img, i) => {
+          if (!apiKey || !img.image_prompt) return;
+          const size = SIZE_FOR_RATIO[img.ratio] || "1024x1024";
+          try {
+            const image_url = await generateBrandedImageWithFallback(
+              parsed.brand.name, img.image_prompt, size, apiKey,
+              { quality, references, colors: assets.colors },
+              `google-ads image ${i}`,
+            );
+            send("pmax-image", { idx: i, image_url });
+          } catch (e: any) {
+            console.warn(`[google-ads image ${i}]`, e?.message);
+          }
+        });
         send("stage", { idx: 3, status: "done" });
 
         // Email pack to prospect + internal team
