@@ -5,6 +5,16 @@ import { sendMetaAdsPack, type MetaAdsPackAd } from "../lib/email";
 import { guard } from "../lib/rateLimit";
 import { META_ADS_SYSTEM_PROMPT, metaAdsUserPrompt } from "../lib/prompts/meta-ads";
 import { isSafeFetchUrl } from "../lib/safeUrl";
+import {
+  extractBrandAssetRefs,
+  extractStylesheetUrls,
+  isOpenAiUsableMime,
+} from "../lib/brandAssets";
+import {
+  fetchColorsFromStylesheets,
+  fetchImageAsset,
+  type FetchedImage,
+} from "../lib/brandAssetFetch";
 
 export const config = { runtime: "edge" };
 
@@ -55,33 +65,77 @@ const SIZE_FOR_FORMAT: Record<string, string> = {
   "9:16 · Reel": "1024x1536",
 };
 
+type BrandReference = { image: FetchedImage; kind: "logo" | "site" };
+
 async function generateAdImage(
   brand: string,
   imagePrompt: string,
   size: string,
   apiKey: string,
+  opts: { quality: string; references: BrandReference[]; colors: string[] },
 ): Promise<string | null> {
-  const prompt = [
+  const { quality, references, colors } = opts;
+  const hasLogo = references.some((r) => r.kind === "logo");
+
+  const promptParts = [
     `Editorial photograph for ${brand}.`,
     imagePrompt,
-    `Style: editorial, magazine-quality, restrained. NOT stock-photo. NO TEXT, NO LOGOS, NO TYPOGRAPHY of any kind. Pure photographic composition.`,
-  ].join("\n\n");
+  ];
+  if (colors.length) {
+    promptParts.push(
+      `Colour world: anchor the scene in the brand's palette (${colors.join(", ")}) through props, surfaces, wardrobe and lighting — naturally, not as flat colour fills.`,
+    );
+  }
+  if (references.length) {
+    promptParts.push(
+      `The attached reference image(s) show the brand's real ${hasLogo ? "logo and " : ""}visual identity. Match their product, packaging, materials and colour treatment so the photo unmistakably belongs to this brand.` +
+        (hasLogo
+          ? ` The logo may appear naturally in-scene (on product, packaging or signage), small and photorealistic — reproduce it faithfully, never distorted.`
+          : ""),
+    );
+  }
+  promptParts.push(
+    `Style: editorial, magazine-quality, restrained. NOT stock-photo. No overlaid text, no typography, no watermarks${hasLogo ? " (the brand's own logo on product or signage is the only exception)" : ", no logos"}. Pure photographic composition.`,
+  );
+  const prompt = promptParts.join("\n\n");
 
-  const res = await fetch("https://api.openai.com/v1/images/generations", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      model: process.env.OPENAI_IMAGE_MODEL || "gpt-image-2",
-      prompt,
-      size,
-      quality: process.env.META_ADS_IMAGE_QUALITY || "low",
-      n: 1,
-    }),
-    signal: AbortSignal.timeout(60_000),
-  });
+  const model = process.env.OPENAI_IMAGE_MODEL || "gpt-image-2";
+  let res: Response;
+  if (references.length) {
+    // Edits endpoint: accepts the brand's real imagery as input so the
+    // output carries their identity instead of generic AI stock.
+    const form = new FormData();
+    form.append("model", model);
+    form.append("prompt", prompt);
+    form.append("size", size);
+    form.append("quality", quality);
+    form.append("input_fidelity", "high");
+    form.append("n", "1");
+    for (const ref of references) {
+      const ext = ref.image.mime === "image/png" ? "png" : ref.image.mime === "image/webp" ? "webp" : "jpg";
+      form.append(
+        "image[]",
+        new Blob([ref.image.bytes], { type: ref.image.mime }),
+        `${ref.kind}.${ext}`,
+      );
+    }
+    res = await fetch("https://api.openai.com/v1/images/edits", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${apiKey}` },
+      body: form,
+      signal: AbortSignal.timeout(120_000),
+    });
+  } else {
+    res = await fetch("https://api.openai.com/v1/images/generations", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ model, prompt, size, quality, n: 1 }),
+      signal: AbortSignal.timeout(120_000),
+    });
+  }
   if (!res.ok) {
     const err = await res.json().catch(() => ({}));
     throw new Error(err.error?.message || `OpenAI ${res.status}`);
@@ -145,6 +199,26 @@ export default async function handler(req: Request): Promise<Response> {
         // Stage 0 — fetch
         send("stage", { idx: 0, status: "active", message: "Reading the site…" });
         const site = await fetchSiteContent(url);
+
+        // Brand assets: logo + og:image + palette from the crawled HTML.
+        // Fetched in parallel with the Claude call (which is the long pole);
+        // best-effort, never blocks or fails the run.
+        const assetRefs = extractBrandAssetRefs(site.rawHtml, site.url);
+        const assetsPromise = (async () => {
+          const [logo, ogImage, cssColors] = await Promise.all([
+            assetRefs.logoUrl ? fetchImageAsset(assetRefs.logoUrl) : null,
+            assetRefs.ogImageUrl ? fetchImageAsset(assetRefs.ogImageUrl) : null,
+            // Colour fallback: many sites keep all styling in external CSS.
+            assetRefs.colors.length
+              ? Promise.resolve([] as string[])
+              : fetchColorsFromStylesheets(extractStylesheetUrls(site.rawHtml, site.url)),
+          ]);
+          return {
+            logo,
+            ogImage,
+            colors: assetRefs.colors.length ? assetRefs.colors : cssColors,
+          };
+        })();
         send("stage", { idx: 0, status: "done" });
 
         // Stage 1 — audience analysis (begins, Claude runs)
@@ -164,6 +238,7 @@ export default async function handler(req: Request): Promise<Response> {
               h1: site.h1,
               h2s: site.h2s,
               bodyText: site.bodyText,
+              brandColors: assetRefs.colors,
             }),
           }],
         });
@@ -211,6 +286,27 @@ export default async function handler(req: Request): Promise<Response> {
         }
 
         send("brand", parsed.brand);
+
+        // Brand assets resolved by now (fetched in parallel with Claude).
+        // The frontend uses these to put the real logo + palette on the
+        // ad cards; image gen uses them as reference inputs.
+        const assets = await assetsPromise;
+        const logoForClient =
+          assets.logo && assets.logo.dataUri.length < 300_000
+            ? assets.logo.dataUri
+            : assetRefs.logoUrl?.startsWith("https://")
+              ? assetRefs.logoUrl
+              : null;
+        send("brand-assets", { logo: logoForClient, colors: assets.colors });
+        console.log("[meta-ads-lab] brand assets", {
+          logoUrl: assetRefs.logoUrl,
+          logoFetched: !!assets.logo,
+          logoMime: assets.logo?.mime,
+          ogImageUrl: assetRefs.ogImageUrl,
+          ogFetched: !!assets.ogImage,
+          colors: assets.colors,
+        });
+
         send("stage", { idx: 1, status: "done" });
 
         // Stage 2 — draft (already done by Claude, beat for UX)
@@ -250,12 +346,47 @@ export default async function handler(req: Request): Promise<Response> {
 
         const apiKey = process.env.OPENAI_API_KEY;
         const rendered: RenderedAd[] = [...placeholderAds];
+
+        // Reference images for the edits endpoint (png/jpeg/webp only —
+        // SVG logos still reach the frontend but can't go to OpenAI).
+        const references: BrandReference[] = [];
+        if (assets.logo && isOpenAiUsableMime(assets.logo.mime)) {
+          references.push({ image: assets.logo, kind: "logo" });
+        }
+        if (assets.ogImage && isOpenAiUsableMime(assets.ogImage.mime)) {
+          references.push({ image: assets.ogImage, kind: "site" });
+        }
+
+        // Heroes render at high quality, variations at medium. Both
+        // env-overridable; heroes reuse the historical var name.
+        const heroQuality = process.env.META_ADS_IMAGE_QUALITY || "high";
+        const variationQuality = process.env.META_ADS_IMAGE_QUALITY_VARIATION || "medium";
+
         await Promise.all(
           allAds.map(async (ad, i) => {
             const size = SIZE_FOR_FORMAT[ad.format] || "1024x1024";
             if (!apiKey || !ad.image_prompt) return;
+            const quality = i < heroAds.length ? heroQuality : variationQuality;
             try {
-              const image_url = await generateAdImage(parsed.brand.name, ad.image_prompt, size, apiKey);
+              let image_url: string | null = null;
+              try {
+                image_url = await generateAdImage(parsed.brand.name, ad.image_prompt, size, apiKey, {
+                  quality,
+                  references,
+                  colors: assets.colors,
+                });
+              } catch (e: any) {
+                // Reference-driven edit failed (bad brand image, param
+                // rejected) — fall back to plain generation rather than
+                // shipping a card with no visual.
+                if (!references.length) throw e;
+                console.warn(`[image ${i}] edit with references failed, retrying plain:`, e?.message);
+                image_url = await generateAdImage(parsed.brand.name, ad.image_prompt, size, apiKey, {
+                  quality,
+                  references: [],
+                  colors: assets.colors,
+                });
+              }
               rendered[i] = { ...rendered[i], image_url };
               // Stream each image as it finishes so the frontend can drop
               // it onto the right card without waiting for the slowest one.

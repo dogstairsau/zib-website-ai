@@ -104,7 +104,9 @@ IMAGE PROMPTS (all 12 ads) — critical:
 - Editorial, magazine-quality, not stock.
 - Concrete subjects and scenes. "A close-up of a barista's hands pouring milk into espresso, morning light on a warm timber bar" — not "vibrant coffee scene".
 - Match the brand's category.
-- NO TEXT, NO TYPOGRAPHY, NO LOGOS in the image.
+- The renderer may receive the brand's real logo and site imagery as reference inputs. Describe scenes where the brand's actual product, packaging, vehicle or signage can naturally star (in hand, on a bench, on site) so the references have somewhere to land.
+- If brand colours are provided, work them into the scene through props, surfaces and wardrobe, not flat colour fills.
+- NO overlaid text or typography in the image. The brand's own logo on product/packaging/signage is fine; no other logos.
 - Specify lighting and composition.
 
 If the site is thin, lean on category convention. Never make up specific claims (waitlist numbers, customer counts) that aren't supported by the site content.`;
@@ -116,14 +118,18 @@ export function metaAdsUserPrompt(opts: {
   h1: string;
   h2s: string[];
   bodyText: string;
+  brandColors?: string[];
 }): string {
+  const colorLine = opts.brandColors?.length
+    ? `\nBrand colours extracted from the site: ${opts.brandColors.join(", ")}`
+    : "";
   return `Generate the 12 ads (4 hero + 8 variations) for this brand.
 
 URL: ${opts.url}
 Title: ${opts.title}
 Meta description: ${opts.description}
 H1: ${opts.h1}
-H2s: ${opts.h2s.slice(0, 8).join(" | ")}
+H2s: ${opts.h2s.slice(0, 8).join(" | ")}${colorLine}
 
 Body excerpt:
 ${opts.bodyText.slice(0, 2400)}
