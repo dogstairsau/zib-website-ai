@@ -81,6 +81,11 @@ test("extractStylesheetUrls resolves relative hrefs, caps at max", () => {
   ]);
 });
 
+test("rankCssColors skips WordPress default block palette", () => {
+  const css = `--wp--preset--color--vivid-cyan-blue:#0693e3;--wp--preset--color--vivid-green-cyan:#00d084;.brand{color:#00d5d5}`;
+  assert.deepEqual(rankCssColors(css), ["#00d5d5"]);
+});
+
 test("rankCssColors orders by frequency and filters greys", () => {
   const css = `.a{color:#ff6200}.b{color:#ff6200}.c{color:#1f3a47}.d{color:#eeeeee}`;
   assert.deepEqual(rankCssColors(css), ["#ff6200", "#1f3a47"]);

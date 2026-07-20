@@ -100,12 +100,27 @@ export function isUsableBrandColor(hex: string): boolean {
   return true;
 }
 
+// WordPress emits its default Gutenberg block palette as inline CSS on
+// every page, whether the brand uses those colours or not. Mining them as
+// "brand colours" poisons the palette for most WP sites — skip them.
+const WP_PRESET_COLORS = new Set([
+  "#f78da7", // pale pink
+  "#cf2e2e", // vivid red
+  "#ff6900", // luminous vivid orange
+  "#fcb900", // luminous vivid amber
+  "#7bdcb5", // light green cyan
+  "#00d084", // vivid green cyan
+  "#8ed1fc", // pale cyan blue
+  "#0693e3", // vivid cyan blue
+  "#9b51e0", // vivid purple
+]);
+
 /** Most-used usable hexes in a blob of CSS, most frequent first. */
 export function rankCssColors(css: string): string[] {
   const counts = new Map<string, number>();
   for (const m of css.matchAll(/#([0-9a-fA-F]{6}|[0-9a-fA-F]{3})\b/g)) {
     const norm = "#" + expandHex(m[1].toLowerCase());
-    if (!isUsableBrandColor(norm)) continue;
+    if (!isUsableBrandColor(norm) || WP_PRESET_COLORS.has(norm)) continue;
     counts.set(norm, (counts.get(norm) || 0) + 1);
   }
   return [...counts.entries()].sort((a, b) => b[1] - a[1]).map(([hex]) => hex);
