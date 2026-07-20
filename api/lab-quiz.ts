@@ -6,6 +6,7 @@
 
 import { isValidEmail } from "../lib/site";
 import { captureLabQuiz } from "../lib/hubspot";
+import { submitHubSpotForm } from "../lib/hubspotForms";
 import { sendLabQuizEmail } from "../lib/email";
 import { guard } from "../lib/rateLimit";
 
@@ -60,10 +61,18 @@ export default async function handler(req: Request): Promise<Response> {
     lab: clip(body.lab) || "Ads Lab",
     answers,
   };
-  // Resend notification works today; the HubSpot note lights up whenever
-  // HUBSPOT_PRIVATE_APP_TOKEN lands. Both best-effort.
+  // Three best-effort paths: Resend notification works today; the Forms
+  // submission lights up with HUBSPOT_PORTAL_ID + form GUIDs (routed to the
+  // lab's own form); the private-app note with HUBSPOT_PRIVATE_APP_TOKEN.
   await Promise.all([
     sendLabQuizEmail(quiz).catch((e) => console.warn("[lab-quiz email]", e?.message)),
+    submitHubSpotForm(quiz.lab, {
+      email,
+      website: quiz.url,
+      lead_source: quiz.lab,
+      monthly_ad_spend: clip(body.budget),
+      primary_goal: clip(body.goal),
+    }).catch((e) => console.warn("[lab-quiz form]", e?.message)),
     captureLabQuiz(quiz).catch((e) => console.warn("[lab-quiz hubspot]", e?.message)),
   ]);
 
