@@ -848,7 +848,6 @@
     const visualStyle = ad.image_url ? `background: #000 center/cover no-repeat url('${ad.image_url}');` : brandGradient;
     const isStory = (ad.format || '').includes('9:16');
     const isLinen = !ad.image_url && !brandGradient && fallback === 'linen';
-    const ctaStyle = brandColor ? ` style="background:${brandColor}; color:${textOn(brandColor)}"` : '';
     const logo = state.assets.logo;
     const avatarHtml = logo
       ? `<div class="avatar has-logo"><img src="${escapeHtml(logo)}" alt="" loading="lazy" onerror="this.parentNode.classList.remove('has-logo'); this.remove();"></div>`
@@ -885,7 +884,7 @@
         </div>
         <div class="ad-cta-bar">
           <span class="label">${escapeHtml(brand?.domain || '')}</span>
-          <span class="cta-btn"${ctaStyle}>${escapeHtml(ad.cta || 'Learn more')}</span>
+          <span class="cta-btn">${escapeHtml(ad.cta || 'Learn more')}</span>
         </div>
         <div class="ad-meta-row">
           <span class="ad-tag angle">${escapeHtml(ad.angle || '')}</span>
