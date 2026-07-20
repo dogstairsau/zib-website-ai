@@ -6,6 +6,7 @@
 
 import { isValidEmail } from "../lib/site";
 import { captureLabQuiz } from "../lib/hubspot";
+import { sendLabQuizEmail } from "../lib/email";
 import { guard } from "../lib/rateLimit";
 
 export const config = { runtime: "edge" };
@@ -53,12 +54,18 @@ export default async function handler(req: Request): Promise<Response> {
   if (body.goal) answers.push({ q: "What matters most right now", a: clip(body.goal) });
   if (!answers.length) return json({ error: "No answers" }, 400);
 
-  await captureLabQuiz({
+  const quiz = {
     email,
     url: clip(body.url, 300),
     lab: clip(body.lab) || "Ads Lab",
     answers,
-  }).catch((e) => console.warn("[lab-quiz]", e?.message));
+  };
+  // Resend notification works today; the HubSpot note lights up whenever
+  // HUBSPOT_PRIVATE_APP_TOKEN lands. Both best-effort.
+  await Promise.all([
+    sendLabQuizEmail(quiz).catch((e) => console.warn("[lab-quiz email]", e?.message)),
+    captureLabQuiz(quiz).catch((e) => console.warn("[lab-quiz hubspot]", e?.message)),
+  ]);
 
   return json({ ok: true });
 }
