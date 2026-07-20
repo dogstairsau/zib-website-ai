@@ -270,7 +270,7 @@ export default async function handler(req: Request): Promise<Response> {
         if (assets.ogImage && isOpenAiUsableMime(assets.ogImage.mime)) {
           references.push({ image: assets.ogImage, kind: "site" });
         }
-        const quality = process.env.META_ADS_IMAGE_QUALITY || "high";
+        const quality = process.env.META_ADS_IMAGE_QUALITY || "medium";
         await mapWithConcurrency(images, 3, async (img, i) => {
           if (!apiKey || !img.image_prompt) return;
           const size = SIZE_FOR_RATIO[img.ratio] || "1024x1024";

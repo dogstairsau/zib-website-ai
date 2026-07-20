@@ -289,7 +289,7 @@ export default async function handler(req: Request): Promise<Response> {
 
         // Heroes render at high quality, variations at medium. Both
         // env-overridable; heroes reuse the historical var name.
-        const heroQuality = process.env.META_ADS_IMAGE_QUALITY || "high";
+        const heroQuality = process.env.META_ADS_IMAGE_QUALITY || "medium";
         const variationQuality = process.env.META_ADS_IMAGE_QUALITY_VARIATION || "medium";
 
         // Bounded concurrency: firing all 12 at once trips OpenAI's
