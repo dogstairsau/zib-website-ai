@@ -7,10 +7,13 @@
  * when they open the contact in HubSpot — e.g. just before a meeting.
  */
 
+import { submitHubSpotForm } from "./hubspotForms";
+
 export type Lead = {
   email: string;
   firstname?: string;
   company?: string;
+  phone?: string;
   website: string;
   source?: string;
 };
@@ -25,7 +28,19 @@ export type AuditContext = {
 };
 
 export async function captureLead(lead: Lead, auditContext?: AuditContext): Promise<void> {
-  const [hubspotResult] = await Promise.allSettled([pushToHubSpot(lead), notifySlack(lead)]);
+  const [hubspotResult] = await Promise.allSettled([
+    pushToHubSpot(lead),
+    notifySlack(lead),
+    // Forms path: no token needed, native workflow triggers. Routed per
+    // tool by the source string; no-op until the form env vars are set.
+    submitHubSpotForm(lead.source || "Zib website", {
+      email: lead.email,
+      firstname: lead.firstname,
+      phone: lead.phone,
+      website: lead.website,
+      lead_source: lead.source,
+    }),
+  ]);
 
   if (!auditContext) return;
   if (hubspotResult.status !== "fulfilled") return;
@@ -55,6 +70,7 @@ async function pushToHubSpot(lead: Lead): Promise<string | null> {
         email: lead.email,
         firstname: lead.firstname || "",
         company: lead.company || "",
+        ...(lead.phone ? { phone: lead.phone } : {}),
         website: lead.website,
         lifecyclestage: "lead",
         hs_lead_status: "NEW",
@@ -170,7 +186,15 @@ export async function captureQuizLead(quiz: QuizLead): Promise<void> {
     source: "Growth quiz",
   };
 
-  const [hubspotResult] = await Promise.allSettled([pushToHubSpot(lead), notifyQuizSlack(quiz)]);
+  const [hubspotResult] = await Promise.allSettled([
+    pushToHubSpot(lead),
+    notifyQuizSlack(quiz),
+    submitHubSpotForm("Growth quiz", {
+      email: quiz.email,
+      firstname: quiz.firstname,
+      lead_source: "Growth quiz",
+    }),
+  ]);
 
   if (!quiz.segment) return; // gate stage — contact only
   if (hubspotResult.status !== "fulfilled") return;

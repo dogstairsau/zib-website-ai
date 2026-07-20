@@ -118,7 +118,7 @@ export default async function handler(req: Request): Promise<Response> {
       const sourceTag = (body.sourceTag || "").trim();
       const source = sourceTag ? `Google Ads Lab · ${sourceTag}` : "Google Ads Lab";
       const hubspotPromise = captureLead(
-        { email, firstname, company: "", website: url, source },
+        { email, firstname, company: "", phone: phone || undefined, website: url, source },
         { url, strategistText: notes ? `Notes from prospect:\n${notes}` : "" },
       ).catch((e) => console.warn("[google-ads lead]", e?.message));
 
