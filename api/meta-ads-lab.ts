@@ -13,8 +13,12 @@ import {
 import {
   fetchColorsFromStylesheets,
   fetchImageAsset,
-  type FetchedImage,
 } from "../lib/brandAssetFetch";
+import {
+  generateBrandedImageWithFallback,
+  mapWithConcurrency,
+  type BrandReference,
+} from "../lib/adImage";
 
 export const config = { runtime: "edge" };
 
@@ -64,125 +68,6 @@ const SIZE_FOR_FORMAT: Record<string, string> = {
   "4:5 · Carousel": "1024x1024",
   "9:16 · Reel": "1024x1536",
 };
-
-type BrandReference = { image: FetchedImage; kind: "logo" | "site" };
-
-async function generateAdImage(
-  brand: string,
-  imagePrompt: string,
-  size: string,
-  apiKey: string,
-  opts: { quality: string; references: BrandReference[]; colors: string[] },
-): Promise<string | null> {
-  const { quality, references, colors } = opts;
-  const hasLogo = references.some((r) => r.kind === "logo");
-
-  const promptParts = [
-    `Editorial photograph for ${brand}.`,
-    imagePrompt,
-  ];
-  if (colors.length) {
-    promptParts.push(
-      `Colour world: anchor the scene in the brand's palette (${colors.join(", ")}) through props, surfaces, wardrobe and lighting — naturally, not as flat colour fills.`,
-    );
-  }
-  if (references.length) {
-    promptParts.push(
-      `The attached reference image(s) show the brand's real ${hasLogo ? "logo and " : ""}visual identity. Match their product, packaging, materials and colour treatment so the photo unmistakably belongs to this brand.` +
-        (hasLogo
-          ? ` The logo may appear naturally in-scene (on product, packaging or signage), small and photorealistic — reproduce it faithfully, never distorted.`
-          : ""),
-    );
-  }
-  promptParts.push(
-    `Style: editorial, magazine-quality, restrained. NOT stock-photo. No overlaid text, no typography, no watermarks${hasLogo ? " (the brand's own logo on product or signage is the only exception)" : ", no logos"}. Pure photographic composition.`,
-  );
-  const prompt = promptParts.join("\n\n");
-
-  const model = process.env.OPENAI_IMAGE_MODEL || "gpt-image-2";
-  const doFetch = (): Promise<Response> => {
-    if (references.length) {
-      // Edits endpoint: accepts the brand's real imagery as input so the
-      // output carries their identity instead of generic AI stock.
-      const form = new FormData();
-      form.append("model", model);
-      form.append("prompt", prompt);
-      form.append("size", size);
-      form.append("quality", quality);
-      form.append("input_fidelity", "high");
-      form.append("n", "1");
-      for (const ref of references) {
-        const ext = ref.image.mime === "image/png" ? "png" : ref.image.mime === "image/webp" ? "webp" : "jpg";
-        form.append(
-          "image[]",
-          new Blob([ref.image.bytes], { type: ref.image.mime }),
-          `${ref.kind}.${ext}`,
-        );
-      }
-      return fetch("https://api.openai.com/v1/images/edits", {
-        method: "POST",
-        headers: { Authorization: `Bearer ${apiKey}` },
-        body: form,
-        signal: AbortSignal.timeout(120_000),
-      });
-    }
-    return fetch("https://api.openai.com/v1/images/generations", {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${apiKey}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ model, prompt, size, quality, n: 1 }),
-      signal: AbortSignal.timeout(120_000),
-    });
-  };
-
-  // Rate limits (429) and transient upstream errors are the main reason
-  // creatives silently fail to load — retry those with backoff instead of
-  // dropping the card's visual.
-  let lastErr: Error | null = null;
-  for (let attempt = 0; attempt < 3; attempt++) {
-    if (attempt > 0) await new Promise((r) => setTimeout(r, 2_500 * attempt + Math.random() * 1_500));
-    let res: Response;
-    try {
-      res = await doFetch();
-    } catch (e: any) {
-      lastErr = new Error(e?.name === "TimeoutError" ? "OpenAI request timed out" : e?.message);
-      continue; // network error / timeout — retryable
-    }
-    if (res.ok) {
-      const data = await res.json();
-      const b64 = data.data?.[0]?.b64_json;
-      if (!b64) throw new Error("No image data");
-      return `data:image/png;base64,${b64}`;
-    }
-    const err = await res.json().catch(() => ({}));
-    const msg = err.error?.message || `OpenAI ${res.status}`;
-    if (res.status === 429 || res.status >= 500) {
-      lastErr = new Error(msg);
-      continue; // retryable
-    }
-    throw new Error(msg); // 4xx — let the caller decide on a fallback
-  }
-  throw lastErr || new Error("Image generation failed");
-}
-
-/** Run jobs with bounded concurrency, preserving order of results. */
-async function mapWithConcurrency<T>(
-  items: T[],
-  limit: number,
-  fn: (item: T, i: number) => Promise<void>,
-): Promise<void> {
-  let next = 0;
-  await Promise.all(
-    Array.from({ length: Math.min(limit, items.length) }, async () => {
-      while (next < items.length) {
-        const i = next++;
-        await fn(items[i], i);
-      }
-    }),
-  );
-}
 
 function json(data: unknown, status: number = 200): Response {
   return new Response(JSON.stringify(data), {
@@ -409,25 +294,11 @@ export default async function handler(req: Request): Promise<Response> {
             if (!apiKey || !ad.image_prompt) return;
             const quality = i < heroAds.length ? heroQuality : variationQuality;
             try {
-              let image_url: string | null = null;
-              try {
-                image_url = await generateAdImage(parsed.brand.name, ad.image_prompt, size, apiKey, {
-                  quality,
-                  references,
-                  colors: assets.colors,
-                });
-              } catch (e: any) {
-                // Reference-driven edit failed (bad brand image, param
-                // rejected) — fall back to plain generation rather than
-                // shipping a card with no visual.
-                if (!references.length) throw e;
-                console.warn(`[image ${i}] edit with references failed, retrying plain:`, e?.message);
-                image_url = await generateAdImage(parsed.brand.name, ad.image_prompt, size, apiKey, {
-                  quality,
-                  references: [],
-                  colors: assets.colors,
-                });
-              }
+              const image_url = await generateBrandedImageWithFallback(
+                parsed.brand.name, ad.image_prompt, size, apiKey,
+                { quality, references, colors: assets.colors },
+                `meta-ads image ${i}`,
+              );
               rendered[i] = { ...rendered[i], image_url };
               // Stream each image as it finishes so the frontend can drop
               // it onto the right card without waiting for the slowest one.

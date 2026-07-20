@@ -214,6 +214,46 @@ async function notifyQuizSlack(quiz: QuizLead): Promise<void> {
   }).catch((e) => console.warn("[slack]", e.message));
 }
 
+export type LabQuiz = {
+  email: string;
+  url: string;
+  lab: string;
+  answers: { q: string; a: string }[];
+};
+
+/**
+ * Ads-lab micro-quiz capture: attaches budget/goal answers as a note on the
+ * contact the lab's lead capture already created, so the strategist walks
+ * into the 24h call briefed. Best-effort — creates the contact if the lead
+ * capture hasn't landed yet.
+ */
+export async function captureLabQuiz(quiz: LabQuiz): Promise<void> {
+  const token = process.env.HUBSPOT_PRIVATE_APP_TOKEN;
+  if (!token) {
+    console.log("[hubspot:lab-quiz stub]", quiz);
+    return;
+  }
+  let contactId = await findContactIdByEmail(token, quiz.email);
+  if (!contactId) {
+    contactId = await pushToHubSpot({
+      email: quiz.email,
+      website: quiz.url,
+      source: `${quiz.lab} quiz`,
+    }).catch(() => null);
+  }
+  if (!contactId) return;
+
+  const safe = (s: string) =>
+    String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  const rows = quiz.answers.map((p) => `<li><b>${safe(p.q)}</b><br/>${safe(p.a)}</li>`).join("");
+  const note =
+    `<p><b>${safe(quiz.lab)} quiz</b> · answered while their pack generated</p>` +
+    `<p><b>Site:</b> ${safe(quiz.url)}</p><ul>${rows}</ul>`;
+  await attachNote(contactId, note).catch((e) =>
+    console.warn("[hubspot:lab-quiz-note]", (e as Error).message),
+  );
+}
+
 async function notifySlack(lead: Lead): Promise<void> {
   const url = process.env.SLACK_WEBHOOK_URL;
   if (!url) return;
