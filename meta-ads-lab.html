@@ -374,6 +374,13 @@
   font-size: 13px;
 }
 .ad-shell .avatar { width: 32px; height: 32px; border-radius: 999px; background: linear-gradient(135deg, var(--accent), #ffb066); flex-shrink: 0; }
+.ad-shell .avatar.has-logo {
+  background: #fff;
+  border: 0.5px solid var(--rule-2);
+  display: grid; place-items: center;
+  overflow: hidden;
+}
+.ad-shell .avatar.has-logo img { width: 100%; height: 100%; object-fit: contain; padding: 3px; }
 .ad-shell .name { font-weight: 500; color: var(--ink); }
 .ad-shell .sponsored { color: var(--muted); font-size: 11px; }
 .ad-shell .platform {
@@ -760,6 +767,7 @@
 
   const state = {
     url: '', brand: null, audience: '', strategy: null,
+    assets: { logo: null, colors: [] },
     ads: [], variations: [],
     isRunning: false, isDone: false,
   };
@@ -806,16 +814,45 @@
     s.querySelector('.timer').textContent = `${elapsedSec}s · done`;
   };
 
+  // ── Brand colour helpers ─────────────────────────────────────────
+  const hexRgb = (hex) => {
+    const h = (hex || '').replace('#', '');
+    if (!/^[0-9a-f]{6}$/i.test(h)) return null;
+    return [parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16)];
+  };
+  const textOn = (hex) => {
+    const rgb = hexRgb(hex);
+    if (!rgb) return '#fff';
+    const [r, g, b] = rgb;
+    return (0.299 * r + 0.587 * g + 0.114 * b) > 150 ? '#111' : '#fff';
+  };
+  const shade = (hex, pct) => {
+    const rgb = hexRgb(hex);
+    if (!rgb) return hex;
+    const f = (c) => Math.max(0, Math.min(255, Math.round(c + (pct / 100) * (pct > 0 ? 255 - c : c))));
+    return '#' + rgb.map(f).map((c) => c.toString(16).padStart(2, '0')).join('');
+  };
+
   const FALLBACK_COLORS = ['amber', 'bay', 'linen', 'ink'];
   const adCardHtml = (ad, brand, i) => {
     const formatClass = (ad.format || '').includes('9:16') ? 'story' : '';
     const carouselClass = (ad.format || '').includes('Carousel') ? 'carousel' : '';
     const fallback = FALLBACK_COLORS[i % FALLBACK_COLORS.length];
-    const visualClasses = ['ad-visual', formatClass, carouselClass, !ad.image_url ? fallback : ''].filter(Boolean).join(' ');
-    const visualStyle = ad.image_url ? `background: #000 center/cover no-repeat url('${ad.image_url}');` : '';
-    const overlayStyle = ad.image_url && (ad.format || '').includes('9:16') ? '' : '';
+    const brandColor = (state.assets.colors && state.assets.colors[0]) || null;
+    // Placeholder gradient in the client's palette when we have it,
+    // house palette otherwise.
+    const brandGradient = brandColor && !ad.image_url
+      ? `background: linear-gradient(140deg, ${shade(brandColor, -65)} 0%, ${brandColor} 100%); color: ${textOn(brandColor)};`
+      : '';
+    const visualClasses = ['ad-visual', formatClass, carouselClass, !ad.image_url && !brandGradient ? fallback : ''].filter(Boolean).join(' ');
+    const visualStyle = ad.image_url ? `background: #000 center/cover no-repeat url('${ad.image_url}');` : brandGradient;
     const isStory = (ad.format || '').includes('9:16');
-    const isLinen = !ad.image_url && fallback === 'linen';
+    const isLinen = !ad.image_url && !brandGradient && fallback === 'linen';
+    const ctaStyle = brandColor ? ` style="background:${brandColor}; color:${textOn(brandColor)}"` : '';
+    const logo = state.assets.logo;
+    const avatarHtml = logo
+      ? `<div class="avatar has-logo"><img src="${escapeHtml(logo)}" alt="" loading="lazy" onerror="this.parentNode.classList.remove('has-logo'); this.remove();"></div>`
+      : `<div class="avatar"></div>`;
 
     const visualContent = isStory
       ? `<div class="v-stack" style="background: linear-gradient(180deg, transparent, rgba(0,0,0,0.65) 70%);">
@@ -835,7 +872,7 @@
     return `
       <article class="ad-card" data-ad-idx="${i}">
         <header class="ad-shell">
-          <div class="avatar"></div>
+          ${avatarHtml}
           <div>
             <div class="name">${escapeHtml(brand?.name || 'Your brand')}</div>
             <div class="sponsored">Sponsored</div>
@@ -848,7 +885,7 @@
         </div>
         <div class="ad-cta-bar">
           <span class="label">${escapeHtml(brand?.domain || '')}</span>
-          <span class="cta-btn">${escapeHtml(ad.cta || 'Learn more')}</span>
+          <span class="cta-btn"${ctaStyle}>${escapeHtml(ad.cta || 'Learn more')}</span>
         </div>
         <div class="ad-meta-row">
           <span class="ad-tag angle">${escapeHtml(ad.angle || '')}</span>
@@ -928,6 +965,17 @@
       state.brand = payload;
       if (brandLbl) brandLbl.textContent = payload.name || 'your brand';
       if (brandName) brandName.textContent = payload.name || 'your brand';
+    } else if (event === 'brand-assets') {
+      state.assets = {
+        logo: payload.logo || null,
+        colors: Array.isArray(payload.colors) ? payload.colors : [],
+      };
+      // Normally arrives before the ads render; if cards are already on
+      // screen, re-render them with the real logo + palette.
+      if (state.ads.length) {
+        renderAds();
+        adGrid.querySelectorAll('.ad-card').forEach(c => c.classList.add('is-revealed'));
+      }
     } else if (event === 'ads') {
       state.audience = payload.audience;
       state.strategy = payload.strategy || null;
@@ -978,6 +1026,7 @@
     const rawUrl = heroUrl.value.trim().replace(/^https?:\/\//i, '');
     state.url = rawUrl ? 'https://' + rawUrl : '';
     state.brand = null; state.ads = []; state.variations = []; state.audience = '';
+    state.assets = { logo: null, colors: [] };
 
     document.getElementById('malErr')?.remove();
     resetStages();
