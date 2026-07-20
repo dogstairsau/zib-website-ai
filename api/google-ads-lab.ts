@@ -6,6 +6,7 @@ import { guard } from "../lib/rateLimit";
 import { GOOGLE_ADS_SYSTEM_PROMPT, googleAdsUserPrompt } from "../lib/prompts/google-ads";
 import { isSafeFetchUrl } from "../lib/safeUrl";
 import { auditTransparency, transparencyUrl } from "../lib/adsTransparency";
+import { submitHubSpotForm } from "../lib/hubspotForms";
 import {
   extractBrandAssetRefs,
   extractStylesheetUrls,
@@ -308,7 +309,25 @@ export default async function handler(req: Request): Promise<Response> {
           },
         }).catch((e) => console.warn("[google-ads pack email]", e?.message));
 
-        await Promise.all([hubspotPromise, emailPromise]);
+        // The generated pack, as text, onto the HubSpot contact record.
+        const packDigest = [
+          `AUDIT:\n${(parsed.audit || []).map((a) => `- ${a.title}: ${a.detail}`).join("\n")}`,
+          `RSA HEADLINES: ${s.headlines.join(" | ")}`,
+          `RSA DESCRIPTIONS: ${s.descriptions.join(" | ")}`,
+          `KEYWORD THEMES: ${(parsed.keywordThemes || []).map((k) => k.theme).join(" | ")}`,
+          `PMAX SHORT: ${px.shortHeadlines.join(" | ")}`,
+          `PMAX LONG: ${px.longHeadlines.join(" | ")}`,
+          `PMAX DESCRIPTIONS: ${px.descriptions.join(" | ")}`,
+          `CALLOUTS: ${px.callouts.join(" | ")}`,
+        ].join("\n\n").slice(0, 30_000);
+        const packFormPromise = submitHubSpotForm(source, {
+          email,
+          website: url,
+          lead_source: source,
+          ads_pack_summary: packDigest,
+        }).catch((e) => console.warn("[google-ads pack form]", e?.message));
+
+        await Promise.all([hubspotPromise, emailPromise, packFormPromise]);
         send("done", {});
       } catch (err: any) {
         console.warn("[google-ads-lab]", err?.message, err?.stack);

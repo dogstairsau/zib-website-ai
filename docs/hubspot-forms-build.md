@@ -20,6 +20,7 @@ type **Contact** selected. For each property below, click **Create property**:
 | 1 | Lead source (website) | `lead_source` | Contact information | Single-line text |
 | 2 | Monthly ad spend | `monthly_ad_spend` | Contact information | Single-line text |
 | 3 | Primary goal | `primary_goal` | Contact information | Single-line text |
+| 4 | Ads pack summary | `ads_pack_summary` | Contact information | Multi-line text |
 
 Notes:
 - HubSpot auto-generates the internal name from the label — **check it and
@@ -44,6 +45,7 @@ not pop-up). For **each** of the five forms below:
    - Lead source (website) (NOT required)
    - Monthly ad spend (NOT required)
    - Primary goal (NOT required)
+   - Ads pack summary (NOT required — receives the generated ad copy as text)
 3. In the form's **Options** tab: turn OFF any "Pre-populate fields with
    known values" and leave "Always create contact for new email address" ON
    (default). No follow-up email. No redirect needed.

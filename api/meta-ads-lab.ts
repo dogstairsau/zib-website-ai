@@ -5,6 +5,7 @@ import { sendMetaAdsPack, type MetaAdsPackAd } from "../lib/email";
 import { guard } from "../lib/rateLimit";
 import { META_ADS_SYSTEM_PROMPT, metaAdsUserPrompt } from "../lib/prompts/meta-ads";
 import { isSafeFetchUrl } from "../lib/safeUrl";
+import { submitHubSpotForm } from "../lib/hubspotForms";
 import {
   extractBrandAssetRefs,
   extractStylesheetUrls,
@@ -340,9 +341,22 @@ export default async function handler(req: Request): Promise<Response> {
           variationAds: variationAds.map(stripForEmail),
         }).catch((e) => console.warn("[meta-ads pack email]", e?.message));
 
+        // The generated pack, as text, onto the HubSpot contact record —
+        // strategists see the full copy deck before the 24h call. Needs the
+        // ads_pack_summary property + form field; fails open otherwise.
+        const packDigest = allAds.map((ad, i) =>
+          `${i + 1}. [${ad.angle} · ${ad.format} · ${ad.audience}] ${ad.headline}\n${ad.body} (CTA: ${ad.cta})`
+        ).join("\n\n").slice(0, 30_000);
+        const packFormPromise = submitHubSpotForm(source, {
+          email,
+          website: url,
+          lead_source: source,
+          ads_pack_summary: packDigest,
+        }).catch((e) => console.warn("[meta-ads pack form]", e?.message));
+
         // Ensure lead capture + pack email finish before the response closes
         // (edge runtime kills in-flight promises when the stream ends).
-        await Promise.all([hubspotPromise, emailPromise]);
+        await Promise.all([hubspotPromise, emailPromise, packFormPromise]);
         send("done", {});
       } catch (err: any) {
         console.warn("[meta-ads-lab]", err?.message, err?.stack);
