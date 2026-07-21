@@ -51,8 +51,8 @@ submit straight to HubSpot and need **no** token — already live once deployed.
 Tags live in `_partials/head.html` (GTM ×2, HubSpot pixel, CallRail) + `_partials/nav.html`
 (GTM noscript). After deploy:
 - [ ] Run **Google Tag Assistant** + **Meta Pixel Helper** to confirm Meta Pixel
-      (`1417344755743451`), Hotjar, and old GA4 (`G-ZFY5YFEP68`) fire via the GTM
-      containers. Hardcode only any tag GTM does NOT carry.
+      (`275858389552736`, carried by GTM-TB6Q2RM), Hotjar, and old GA4 (`G-ZFY5YFEP68`)
+      fire via the GTM containers. Hardcode only any tag GTM does NOT carry.
 - [ ] Existing GA4 `G-LQDQEYFP98` + Microsoft Clarity already present (both GA4
       properties run during transition — by design).
 

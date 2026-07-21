@@ -33,7 +33,7 @@ Single source of truth for the cutover from the old WordPress site
 Tags live in `_partials/head.html` (GTM ×2, HubSpot, CallRail, Clarity, GA4) +
 `_partials/nav.html` (GTM noscript). After the flip:
 
-- [ ] **Meta Pixel Helper** → confirm Pixel `1417344755743451` fires a PageView via GTM-TB6Q2RM. If it does NOT fire, ask to hardcode the base pixel + `<noscript>` fallback.
+- [ ] **Meta Pixel Helper** → confirm Pixel `275858389552736` ("Zib Digital's Pixel") fires a PageView via GTM-TB6Q2RM. If it does NOT fire, ask to hardcode the base pixel + `<noscript>` fallback.
 - [ ] **Google Tag Assistant** → confirm GTM-M9RNXQCV + GTM-TB6Q2RM, GA4 `G-LQDQEYFP98`, and old GA4 `G-ZFY5YFEP68` fire.
 - [ ] Confirm **Microsoft Clarity** (`wtv7n8ywyl`) is recording. _(Clarity replaces Hotjar — Hotjar intentionally not carried over.)_
 - [ ] Confirm **HubSpot** (`14539048`) + **CallRail** (`501276477`) load.
