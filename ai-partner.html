@@ -131,67 +131,108 @@ footer a:hover { color: var(--accent); }
 .hero-meta span { display: inline-flex; align-items: center; gap: 8px; }
 .hero-meta .dot { width: 5px; height: 5px; background: var(--accent); border-radius: 50%; }
 
-/* ─── AGENT UI MOCK ─── */
-.agent-ui {
-  background: var(--ink);
+/* ─── AGENT CHAT MOCK ─── */
+.agent-chat {
+  background: #fff;
+  border: 0.5px solid var(--rule);
   border-radius: 16px;
-  padding: 0;
-  font-family: var(--mono);
-  color: #fff;
-  box-shadow: 0 30px 80px -20px rgba(0,0,0,0.35), 0 8px 24px -8px rgba(0,0,0,0.2);
+  box-shadow: 0 30px 80px -20px rgba(0,0,0,0.22), 0 8px 24px -8px rgba(0,0,0,0.1);
   overflow: hidden;
-  position: relative;
+  display: flex;
+  flex-direction: column;
 }
-.agent-ui-bar {
-  display: flex; align-items: center; gap: 8px;
+.agent-chat-bar {
+  display: flex; align-items: center; gap: 12px;
   padding: 14px 18px;
-  background: rgba(255,255,255,0.04);
-  border-bottom: 0.5px solid rgba(255,255,255,0.08);
+  background: var(--dim);
+  border-bottom: 0.5px solid var(--rule);
 }
-.agent-ui-bar .lights { display: flex; gap: 6px; }
-.agent-ui-bar .lights span { width: 11px; height: 11px; border-radius: 50%; background: rgba(255,255,255,0.18); }
-.agent-ui-bar .lights span:first-child { background: #FF5F56; }
-.agent-ui-bar .lights span:nth-child(2) { background: #FFBD2E; }
-.agent-ui-bar .lights span:nth-child(3) { background: #27C93F; }
-.agent-ui-bar .path { flex: 1; text-align: center; font-size: 11px; color: rgba(255,255,255,0.5); letter-spacing: 0.08em; }
-.agent-ui-body { padding: clamp(20px, 2.5vw, 28px); }
-.agent-ui-row {
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 12px 0;
-  border-bottom: 0.5px solid rgba(255,255,255,0.06);
-  font-size: 12px;
-  letter-spacing: 0.04em;
+.agent-chat-bar .avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--ink); color: #fff;
+  display: grid; place-items: center;
+  font-family: var(--mono); font-size: 12px; letter-spacing: 0.04em;
+  flex-shrink: 0;
 }
-.agent-ui-row:last-child { border-bottom: 0; }
-.agent-ui-row .label { color: rgba(255,255,255,0.5); text-transform: uppercase; font-size: 10px; letter-spacing: 0.16em; }
-.agent-ui-row .val { color: #fff; }
-.agent-ui-row .val .live { color: var(--score-good); }
-.agent-ui-row .val .accent { color: var(--accent); }
-.agent-ui-row .val .pulse {
-  display: inline-block; width: 6px; height: 6px; border-radius: 50%;
-  background: var(--score-good); margin-right: 6px;
+.agent-chat-bar .name { font-size: 14px; font-weight: 500; color: var(--ink); line-height: 1.2; }
+.agent-chat-bar .state {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--muted); display: inline-flex; align-items: center; gap: 6px; margin-top: 3px;
+}
+.agent-chat-bar .state .pulse {
+  width: 6px; height: 6px; border-radius: 50%; background: var(--score-good);
   animation: livepulse 1.6s ease-in-out infinite;
+}
+.agent-chat-bar .ver {
+  margin-left: auto;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--muted); border: 0.5px solid var(--rule-2); border-radius: 99px; padding: 5px 12px;
 }
 @keyframes livepulse { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
 
-.agent-ui-stream {
-  margin-top: 18px;
-  padding: 16px;
-  background: rgba(255,255,255,0.03);
-  border-radius: 8px;
-  font-size: 12px;
-  line-height: 1.7;
-  color: rgba(255,255,255,0.85);
-  border: 0.5px solid rgba(255,255,255,0.06);
+.agent-chat-body {
+  padding: clamp(18px, 2.5vw, 26px);
+  display: flex; flex-direction: column; gap: 14px;
 }
-.agent-ui-stream .ts { color: rgba(255,255,255,0.4); margin-right: 10px; }
-.agent-ui-stream .tag { color: var(--accent); font-weight: 500; }
-.agent-ui-stream .ok { color: var(--score-good); }
-.agent-ui-stream .typing::after {
-  content: "▋"; display: inline-block; margin-left: 2px;
-  color: var(--accent); animation: blink 1s steps(2, end) infinite;
+.chat-msg {
+  max-width: 84%;
+  padding: 12px 16px;
+  border-radius: 16px;
+  font-size: 13.5px;
+  line-height: 1.55;
 }
-@keyframes blink { 50% { opacity: 0; } }
+.chat-msg.agent {
+  background: var(--dim);
+  color: var(--ink);
+  border-bottom-left-radius: 4px;
+  align-self: flex-start;
+}
+.chat-msg.user {
+  background: var(--accent);
+  color: #fff;
+  border-bottom-right-radius: 4px;
+  align-self: flex-end;
+}
+.chat-msg .ts {
+  display: block; margin-top: 6px;
+  font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.1em;
+  color: var(--muted-2);
+}
+.chat-msg.user .ts { color: rgba(255,255,255,0.75); }
+.chat-typing {
+  align-self: flex-start;
+  background: var(--dim);
+  border-radius: 16px; border-bottom-left-radius: 4px;
+  padding: 14px 16px;
+  display: inline-flex; gap: 5px;
+}
+.chat-typing span {
+  width: 6px; height: 6px; border-radius: 50%; background: var(--muted-2);
+  animation: typebounce 1.2s ease-in-out infinite;
+}
+.chat-typing span:nth-child(2) { animation-delay: 0.15s; }
+.chat-typing span:nth-child(3) { animation-delay: 0.3s; }
+@keyframes typebounce { 0%,60%,100% { transform: translateY(0); opacity: 0.5; } 30% { transform: translateY(-3px); opacity: 1; } }
+
+.agent-chat-input {
+  display: flex; align-items: center; gap: 10px;
+  padding: 14px 18px;
+  border-top: 0.5px solid var(--rule);
+}
+.agent-chat-input .field {
+  flex: 1;
+  border: 0.5px solid var(--rule-2);
+  border-radius: 99px;
+  padding: 10px 18px;
+  font-size: 13px;
+  color: var(--muted-2);
+}
+.agent-chat-input .send {
+  background: var(--ink); color: #fff;
+  border-radius: 99px;
+  padding: 10px 20px;
+  font-size: 13px; font-weight: 500;
+}
 
 /* ─── LOGOS ─── */
 .logos {
@@ -247,25 +288,33 @@ footer a:hover { color: var(--accent); }
         </div>
       </div>
 
-      <div class="agent-ui reveal" aria-hidden="true">
-        <div class="agent-ui-bar">
-          <div class="lights"><span></span><span></span><span></span></div>
-          <div class="path">agents.zib / content-agent</div>
-        </div>
-        <div class="agent-ui-body">
-          <div class="agent-ui-row"><span class="label">Agent</span><span class="val">Content Agent · v2.4</span></div>
-          <div class="agent-ui-row"><span class="label">Status</span><span class="val"><span class="pulse"></span><span class="live">Running</span></span></div>
-          <div class="agent-ui-row"><span class="label">Last run</span><span class="val">2 min ago</span></div>
-          <div class="agent-ui-row"><span class="label">This month</span><span class="val"><span class="accent">42</span> drafts · <span class="accent">18</span> published</span></div>
-          <div class="agent-ui-row"><span class="label">Owner</span><span class="val">your-team@your-co</span></div>
-          <div class="agent-ui-stream">
-            <div><span class="ts">10:42:01</span><span class="tag">[brief]</span> Fetching topic from CMS queue…</div>
-            <div><span class="ts">10:42:03</span><span class="tag">[research]</span> 7 sources analysed</div>
-            <div><span class="ts">10:42:18</span><span class="tag">[draft]</span> 1,420 words · brand voice ✓</div>
-            <div><span class="ts">10:42:22</span><span class="tag">[seo]</span> Schema added · meta written</div>
-            <div><span class="ts">10:42:24</span><span class="tag">[publish]</span> <span class="ok">Pushed to staging</span></div>
-            <div><span class="ts">10:42:25</span><span class="typing">Awaiting your review</span></div>
+      <div class="agent-chat reveal" aria-hidden="true">
+        <div class="agent-chat-bar">
+          <div class="avatar">CA</div>
+          <div>
+            <div class="name">Content Agent</div>
+            <div class="state"><span class="pulse"></span>Live · your workspace</div>
           </div>
+          <div class="ver">v2.4</div>
+        </div>
+        <div class="agent-chat-body">
+          <div class="chat-msg agent">
+            Morning — this week's draft is ready. 7 sources analysed, 1,420 words in your brand voice, schema and meta already written.
+            <span class="ts">10:42</span>
+          </div>
+          <div class="chat-msg user">
+            Great — push it to staging and line up next week's topics.
+            <span class="ts">10:42</span>
+          </div>
+          <div class="chat-msg agent">
+            Pushed to staging, awaiting your review. That's 42 drafts and 18 published this month. I've queued 5 new topics — want to run through them at Thursday's check-in?
+            <span class="ts">10:42</span>
+          </div>
+          <div class="chat-typing"><span></span><span></span><span></span></div>
+        </div>
+        <div class="agent-chat-input">
+          <div class="field">Message your agent…</div>
+          <div class="send">Send</div>
         </div>
       </div>
     </div>
