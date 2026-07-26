@@ -13,7 +13,7 @@ import { join, extname } from "node:path";
 import { fileURLToPath } from "node:url";
 import Anthropic from "@anthropic-ai/sdk";
 import { fetchSupporting, crawlSite, buildAudit } from "./lib/seoChecks.mjs";
-import { expand } from "./build.mjs";
+import { expand, renderBlogGrid } from "./build.mjs";
 
 const ROOT = fileURLToPath(new URL(".", import.meta.url));
 const PORT = Number(process.env.PORT) || 3000;
@@ -722,7 +722,9 @@ async function serveStatic(req, res) {
     const ext = extname(filePath);
     if (ext === ".html") {
       const raw = await readFile(join(ROOT, filePath), "utf8");
-      const expanded = await expand(raw);
+      // renderBlogGrid must run here too: the blog index is server-rendered at
+      // build time, so without it the dev grid comes back empty.
+      const expanded = renderBlogGrid(await expand(raw));
       res.writeHead(200, { "Content-Type": MIME[".html"] }).end(expanded);
       return;
     }

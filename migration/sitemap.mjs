@@ -16,10 +16,14 @@ const HOST = "https://zibdigital.com.au";
 
 // Private client pitches / drafts that must never be indexed even if the
 // robots meta is missing.
+//
+// The public tool pages (/audit, /roi-calculator, /ai-growth-simulator,
+// /ai-readiness, /automation-map, /meta-ads-lab, /zib-os) were previously
+// excluded here. They are strong linkable assets and belong in the sitemap —
+// they are now included. Only genuine private pitches stay on this list.
 const EXCLUDE = new Set([
   "alchemy-construct", "archer-scott-lawyers", "australian-infinity-hospitality-solutions",
-  "Mad-Mex-SEO-GEO-Opportunity", "prompt-research", "meta-ads-lab", "roi-calculator",
-  "ai-growth-simulator", "zib-os", "ai-readiness", "automation-map", "audit", "p/matt/apiam-animal-health",
+  "Mad-Mex-SEO-GEO-Opportunity", "prompt-research", "p/matt/apiam-animal-health",
 ]);
 
 async function walk(dir) {

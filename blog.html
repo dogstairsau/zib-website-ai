@@ -114,6 +114,10 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
   gap: clamp(16px, 1.8vw, 22px);
   transition: transform 320ms var(--ease);
 }
+/* `display: flex` above beats the hidden attribute's UA `display: none`, so
+   filtering needs this explicit rule to actually hide a card. */
+.post-card[hidden] { display: none; }
+.empty-state[hidden] { display: none; }
 
 .post-card:hover { transform: translateY(-4px); }
 
@@ -314,13 +318,16 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
 <section class="blog-filters" aria-label="Filter articles by category">
   <div class="container">
     <div class="filter-row" id="filterRow">
+      <!-- data-filter must match the `cat` values in allPosts exactly. The
+           "digital"/"paid" chips previously used short names that matched no
+           post, and a "Websites" chip pointed at a category with no posts, so
+           all three rendered the empty state. -->
       <button class="filter-chip" data-filter="all" aria-pressed="true">All articles</button>
-      <button class="filter-chip" data-filter="digital" aria-pressed="false">Digital marketing</button>
-      <button class="filter-chip" data-filter="paid" aria-pressed="false">Paid advertising</button>
+      <button class="filter-chip" data-filter="digital-marketing" aria-pressed="false">Digital marketing</button>
+      <button class="filter-chip" data-filter="paid-advertising" aria-pressed="false">Paid advertising</button>
       <button class="filter-chip" data-filter="seo" aria-pressed="false">SEO</button>
       <button class="filter-chip" data-filter="social" aria-pressed="false">Social media</button>
       <button class="filter-chip" data-filter="strategy" aria-pressed="false">Strategy</button>
-      <button class="filter-chip" data-filter="websites" aria-pressed="false">Websites</button>
       <span class="filter-count" id="filterCount"></span>
     </div>
   </div>
@@ -330,6 +337,7 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
 <section class="blog-grid-wrap">
   <div class="container">
     <div class="blog-grid reveal-stagger" id="postGrid"></div>
+    <div class="empty-state" id="emptyState" hidden>No articles in that category yet, check back soon.</div>
     <div class="load-more-row">
       <button class="load-more" id="loadMore" hidden>
         Load more articles <span class="arr" aria-hidden="true">↓</span>
@@ -435,6 +443,16 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
       "catLabel": "Digital marketing",
       "date": "22 July 2025",
       "author": "Zib Digital",
+      "published": true
+    },
+    {
+      "slug": "blog-ai-agents-marketing-real-talk",
+      "title": "AI agents in marketing: real talk after twelve months of shipping",
+      "img": "",
+      "cat": "strategy",
+      "catLabel": "Strategy",
+      "date": "21 Jul 2025",
+      "author": "Chelsea Teelow",
       "published": true
     },
     {
@@ -1079,46 +1097,31 @@ h1, h2, h3, .blog-h, .cta-title { text-wrap: balance; }
     }
   ];
 
-  const posts = allPosts.filter(p => p.published);
-
   const PAGE_SIZE = 6;
   const grid = document.getElementById('postGrid');
   const loadMoreBtn = document.getElementById('loadMore');
   const filterRow = document.getElementById('filterRow');
   const filterCount = document.getElementById('filterCount');
+  const emptyState = document.getElementById('emptyState');
 
   let activeFilter = 'all';
   let visibleCount = PAGE_SIZE;
 
-  const escape = (s) => String(s).replace(/[&<>"']/g, (c) => ({
-    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-  })[c]);
-
-  const cardHtml = (p) => `
-    <a class="post-card" href="/${escape(p.slug)}">
-      <div class="post-thumb${p.img ? ' has-img' : ''}" data-cat="${escape(p.cat)}" aria-hidden="true">
-        ${p.img ? `<img class="post-thumb-img" src="${escape(p.img)}" alt="" loading="lazy">` : `<div class="post-thumb-mark">${escape(p.title.split(':')[0])}</div>`}
-      </div>
-      <div class="post-cat">${escape(p.catLabel)}</div>
-      <h2 class="post-title">${escape(p.title)}</h2>
-      <div class="post-meta">${escape(p.date)} · ${escape(p.author)}</div>
-    </a>
-  `.trim();
-
-  const filtered = () => activeFilter === 'all' ? posts : posts.filter(p => p.cat === activeFilter);
+  // Cards are server-rendered by renderBlogGrid() in build.mjs, from the same
+  // allPosts array declared above. We show and hide those nodes rather than
+  // rebuilding innerHTML, so every post URL stays a real anchor element in the
+  // DOM — crawlable in the raw HTML, still present after JS runs, and fully
+  // usable with no JS at all (nothing is hidden until this script runs).
+  const cards = Array.from(grid.querySelectorAll('.post-card'));
 
   const render = () => {
-    const list = filtered();
-    if (!list.length) {
-      grid.innerHTML = '<div class="empty-state">No articles in that category yet, check back soon.</div>';
-      loadMoreBtn.hidden = true;
-      filterCount.textContent = '0 articles';
-      return;
-    }
-    const slice = list.slice(0, visibleCount);
-    grid.innerHTML = slice.map(cardHtml).join('');
-    loadMoreBtn.hidden = list.length <= visibleCount;
-    filterCount.textContent = `${list.length} article${list.length === 1 ? '' : 's'}`;
+    const matching = cards.filter(c => activeFilter === 'all' || c.dataset.cat === activeFilter);
+    cards.forEach(c => { c.hidden = true; });
+    matching.slice(0, visibleCount).forEach(c => { c.hidden = false; });
+
+    emptyState.hidden = matching.length > 0;
+    loadMoreBtn.hidden = matching.length <= visibleCount;
+    filterCount.textContent = `${matching.length} article${matching.length === 1 ? '' : 's'}`;
   };
 
   filterRow.addEventListener('click', (e) => {
