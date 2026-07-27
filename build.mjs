@@ -458,11 +458,39 @@ function addCaseStudyProof(html, relPath) {
   const pool = CASE_STUDIES.filter((c) => re.test(c.tag));
   if (pool.length < 2) return html;
 
-  // Deterministic rotation from the slug so each page starts at a different
-  // point in the pool — spreads links across the whole set, not the first three.
+  // Location-aware selection: a city page should cite same-city work before
+  // anything else — "418 enquiries for a Melbourne pool fencing company" on
+  // /seo-melbourne is proof; the same study on /seo-adelaide is trivia. The 13
+  // newer study cards carry "Service · Industry · Location" tags; match the
+  // page's city against that, then the state, then national work. Rotation
+  // still spreads the remainder so sibling pages don't all cite the same set.
+  const CITY_MATCH = {
+    melbourne: /Melbourne/i,
+    sydney: /Sydney/i,
+    brisbane: /Brisbane|QLD/i,
+    "gold-coast": /Gold Coast|QLD/i,
+    adelaide: /Adelaide|South Australia/i,
+    canberra: /Canberra|ACT/i,
+    geelong: /Geelong|Melbourne/i, // nearest market with citable work
+    perth: /Perth|WA/i,
+  };
+  const cityKey = Object.keys(CITY_MATCH).find((c) => slug.includes(c));
+  const cityRe = cityKey ? CITY_MATCH[cityKey] : null;
+  // Vertical pages match on industry before geography — an ecommerce result is
+  // better proof on /shopify-seo than a same-city service business.
+  const industryRe = /shopify|ecommerce|woocommerce/.test(slug) ? /Ecommerce/i : null;
+
   let seed = 0;
   for (const ch of slug) seed = (seed * 31 + ch.charCodeAt(0)) >>> 0;
-  const picked = Array.from({ length: Math.min(3, pool.length) }, (_, i) => pool[(seed + i) % pool.length]);
+  const rotate = (arr) => arr.map((_, i) => arr[(seed + i) % arr.length]);
+
+  const taken = new Set();
+  const take = (re) => (re ? pool.filter((c) => !taken.has(c) && re.test(c.tag) && taken.add(c)) : []);
+  const industry = take(industryRe);
+  const local = take(cityRe);
+  const national = take(/National|Australia/i);
+  const rest = pool.filter((c) => !taken.has(c));
+  const picked = [...industry, ...local, ...rotate(national), ...rotate(rest)].slice(0, 3);
 
   const cards = picked
     .map(
