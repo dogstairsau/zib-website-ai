@@ -630,3 +630,98 @@ a.feat-card { text-decoration: none; color: inherit; }
 .feat-num { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; color: var(--muted-2); font-weight: 600; }
 .feat-name { font-family: var(--display); font-size: clamp(22px, 2vw, 28px); font-weight: 500; letter-spacing: -0.02em; margin-top: 12px; }
 .feat-desc { color: var(--muted); font-size: 15px; line-height: 1.55; margin-top: 14px; }
+
+/* ── Related reading · appended to blog posts by addRelatedPosts() in build.mjs.
+   Each post previously had exactly one inbound internal link (its card on
+   /blog); this clusters posts within their own category so they link to each
+   other editorially. Lives here rather than inline so 71 posts share one copy. */
+.post-related { border-top: 0.5px solid var(--rule); padding: clamp(48px, 6vw, 80px) 0; }
+.post-related .container { max-width: 720px; }
+.post-related h2 {
+  font-family: var(--mono); font-size: 12px; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted-2);
+}
+.post-related ul { list-style: none; margin: clamp(20px, 3vw, 28px) 0 0; padding: 0; }
+.post-related li { border-top: 0.5px solid var(--rule); padding: 18px 0; }
+.post-related li:first-child { border-top: 0; }
+.post-related li a {
+  display: block; font-family: var(--display); font-weight: 500;
+  font-size: clamp(17px, 1.7vw, 21px); line-height: 1.3; letter-spacing: -0.02em;
+  color: var(--ink); text-decoration: none; text-wrap: balance;
+}
+.post-related li a:hover { color: var(--accent); }
+.post-related-meta {
+  display: block; margin-top: 7px; font-family: var(--mono);
+  font-size: 12px; letter-spacing: 0.04em; color: var(--muted-2);
+}
+.post-related-all {
+  display: inline-block; margin-top: clamp(24px, 3vw, 32px);
+  font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--accent); text-decoration: none;
+}
+.post-related-all:hover { color: var(--ink); }
+
+/* ── Related services · hub → specialist cross-links, added by
+   addRelatedServices() in build.mjs. Gives the narrow specialism pages
+   editorial inbound links they never got from blog copy, and signals the
+   hub/specialist hierarchy to a crawler. */
+.svc-related { border-top: 0.5px solid var(--rule); padding: clamp(48px, 6vw, 88px) 0; }
+.svc-related h2 {
+  font-family: var(--mono); font-size: 12px; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted-2);
+}
+.svc-related-grid {
+  display: grid; gap: clamp(14px, 1.6vw, 20px);
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  margin-top: clamp(20px, 3vw, 28px);
+}
+.svc-related-card {
+  display: block; padding: clamp(20px, 2.2vw, 26px);
+  border: 0.5px solid var(--rule); border-radius: 14px;
+  text-decoration: none; color: inherit; background: #fff;
+  transition: transform 240ms var(--ease), border-color 240ms var(--ease);
+}
+.svc-related-card:hover { transform: translateY(-3px); border-color: var(--ink); }
+.svc-related-name {
+  display: block; font-family: var(--display); font-weight: 500;
+  font-size: clamp(17px, 1.6vw, 20px); letter-spacing: -0.02em; color: var(--ink);
+}
+.svc-related-desc {
+  display: block; margin-top: 8px; font-size: 14px;
+  line-height: 1.5; color: var(--muted);
+}
+
+/* ── Proof · case studies cited from the service pages they prove, added by
+   addCaseStudyProof() in build.mjs. Selection rotates per page so sibling city
+   pages cite different studies rather than all pointing at the same three. */
+.svc-proof { border-top: 0.5px solid var(--rule); padding: clamp(48px, 6vw, 88px) 0; }
+.svc-proof h2 {
+  font-family: var(--mono); font-size: 12px; font-weight: 600;
+  letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted-2);
+}
+.svc-proof-grid {
+  display: grid; gap: clamp(14px, 1.6vw, 20px);
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  margin-top: clamp(20px, 3vw, 28px);
+}
+.svc-proof-card {
+  display: block; padding: clamp(20px, 2.2vw, 26px);
+  border: 0.5px solid var(--rule); border-radius: 14px;
+  text-decoration: none; color: inherit; background: #fff;
+  transition: transform 240ms var(--ease), border-color 240ms var(--ease);
+}
+.svc-proof-card:hover { transform: translateY(-3px); border-color: var(--ink); }
+.svc-proof-result {
+  display: block; font-family: var(--display); font-weight: 500;
+  font-size: clamp(19px, 1.8vw, 24px); letter-spacing: -0.02em; color: var(--ink);
+}
+.svc-proof-tag {
+  display: block; margin-top: 9px; font-family: var(--mono);
+  font-size: 11px; letter-spacing: 0.06em; color: var(--muted-2);
+}
+.svc-proof-all {
+  display: inline-block; margin-top: clamp(24px, 3vw, 32px);
+  font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--accent); text-decoration: none;
+}
+.svc-proof-all:hover { color: var(--ink); }

@@ -202,7 +202,26 @@ function renderBlogGrid(html) {
  *   - one link per phrase, MAX_LINKS per page, and never a duplicate of a
  *     target the page already links to
  */
+// Ordered by need, not by importance: the first match in a paragraph wins, so
+// pages that currently receive no editorial links at all sit at the top. The
+// broad service terms at the bottom already have plenty of inbound links and
+// only pick up whatever is left.
 const LINK_TARGETS = [
+  // Commercial pages that had zero body-inbound links.
+  ["Shopify SEO", "/shopify-seo"],
+  ["Instagram advertising", "/instagram-marketing-melbourne"],
+  ["Instagram marketing", "/instagram-marketing-melbourne"],
+  ["LinkedIn advertising", "/linkedin-marketing-agency-melbourne"],
+  ["LinkedIn marketing", "/linkedin-marketing-agency-melbourne"],
+  ["Facebook advertising", "/facebook-marketing-melbourne"],
+  ["Facebook marketing", "/facebook-marketing-melbourne"],
+  ["ecommerce SEO", "/ecommerce-seo-melbourne"],
+  ["real estate marketing", "/real-estate-digital-marketing"],
+  ["website development", "/website-development"],
+  // Worst click-through ratio on the site — 65,694 impressions, 6 clicks.
+  ["Google Ads management", "/google-ads-management-agency-melbourne"],
+  ["Google Ads agency", "/google-ads-management-agency-melbourne"],
+  // Broad service terms, already well linked.
   ["search engine optimisation", "/seo-agency"],
   ["SEO agency", "/seo-agency"],
   ["SEO services", "/seo-agency"],
@@ -212,9 +231,69 @@ const LINK_TARGETS = [
   ["email marketing", "/email-marketing"],
   ["digital marketing agency", "/digital-marketing-agency"],
   ["web design", "/web-graphic-design-melbourne"],
-  ["website development", "/website-development"],
 ];
-const MAX_LINKS = 4;
+const MAX_LINKS = 5;
+
+/**
+ * Blog post metadata, read once from the blog index's allPosts array so the
+ * related-posts blocks and the index grid never drift apart.
+ */
+let POSTS = [];
+async function loadPosts() {
+  try {
+    const html = await readFile(join(ROOT, "blog.html"), "utf8");
+    const m = html.match(/const allPosts = (\[[\s\S]*?\n  \]);/);
+    POSTS = m ? JSON.parse(m[1]).filter((p) => p.published) : [];
+  } catch {
+    POSTS = [];
+  }
+}
+
+/**
+ * Append a "Related reading" block to each blog post.
+ *
+ * Before this, a post's only inbound internal link was the card on /blog — 71
+ * posts sitting on one link each, with no topical clustering at all. Same
+ * category first, topped up with the most recent posts, so every post both
+ * gives and receives editorial links within its own subject area.
+ */
+function addRelatedPosts(html, relPath) {
+  if (!/"@type":\s*"BlogPosting"/.test(html)) return html;
+  if (/class="post-related"/.test(html)) return html;
+  if (!POSTS.length) return html;
+
+  const slug = relPath.replace(/\\/g, "/").replace(/\.html$/, "");
+  const self = POSTS.find((p) => p.slug === slug);
+  if (!self) return html;
+
+  const others = POSTS.filter((p) => p.slug !== slug);
+  const picked = [
+    ...others.filter((p) => p.cat === self.cat),
+    ...others.filter((p) => p.cat !== self.cat),
+  ].slice(0, 3);
+  if (picked.length < 2) return html;
+
+  const items = picked
+    .map(
+      (p) =>
+        `<li><a href="/${attrEsc(p.slug)}">${attrEsc(p.title)}</a>` +
+        `<span class="post-related-meta">${attrEsc(p.catLabel)} · ${attrEsc(p.date)}</span></li>`
+    )
+    .join("\n        ");
+
+  const block =
+    `<section class="post-related">\n` +
+    `  <div class="container">\n` +
+    `    <h2>Related reading</h2>\n` +
+    `    <ul>\n        ${items}\n    </ul>\n` +
+    `    <a class="post-related-all" href="/blog">All field notes <span aria-hidden="true">→</span></a>\n` +
+    `  </div>\n</section>\n`;
+
+  if (/<section class="post-cta">/.test(html)) {
+    return html.replace(/<section class="post-cta">/, `${block}<section class="post-cta">`);
+  }
+  return html.replace(/<\/main>/i, `${block}</main>`);
+}
 
 function addContextualLinks(html) {
   if (!/"@type":\s*"BlogPosting"/.test(html)) return html;
@@ -260,6 +339,147 @@ function addContextualLinks(html) {
     if (!touched) return full;
     return full.replace(inner, parts.join(""));
   });
+}
+
+/**
+ * Cross-link service hubs to their specialist pages.
+ *
+ * Blog copy alone never mentions the narrow specialisms often enough to reach
+ * them — /shopify-seo, /ecommerce-seo-melbourne and /real-estate-digital-marketing
+ * still had zero editorial inbound links after the contextual pass. These are
+ * curated hub → specialist links with descriptive anchors, which is also how a
+ * crawler learns the hierarchy: hub owns the head term, specialists own the
+ * long tail beneath it.
+ */
+const RELATED_SERVICES = {
+  "seo-agency": [
+    ["/shopify-seo", "Shopify SEO", "Collection and product search demand for Shopify stores."],
+    ["/ecommerce-seo-melbourne", "Ecommerce SEO", "Category-level search for online retailers."],
+    ["/seo-melbourne", "SEO Melbourne", "Our home market, and the one we prove ourselves in."],
+  ],
+  "seo-melbourne": [
+    ["/ecommerce-seo-melbourne", "Ecommerce SEO Melbourne", "Search for Melbourne online retailers."],
+    ["/shopify-seo", "Shopify SEO", "Built around collection and product search demand."],
+    ["/digital-marketing-agency-melbourne", "Digital marketing Melbourne", "Every channel as one commercial system."],
+  ],
+  "social-media-marketing": [
+    ["/instagram-marketing-melbourne", "Instagram advertising", "Managed against cost per acquisition, not reach."],
+    ["/facebook-marketing-melbourne", "Facebook advertising", "Meta campaigns measured on pipeline."],
+    ["/linkedin-marketing-agency-melbourne", "LinkedIn marketing", "B2B demand generation for considered buyers."],
+  ],
+  "google-ads": [
+    ["/google-ads-management-agency-melbourne", "Google Ads management Melbourne", "Local PPC managed on return, not clicks."],
+    ["/google-shopping-agency-melbourne", "Google Shopping", "Feed and campaign management for retailers."],
+  ],
+  "digital-marketing-agency": [
+    ["/real-estate-digital-marketing", "Real estate marketing", "Listings, agents and vendor lead generation."],
+    ["/website-development", "Website development", "Sites built to convert the traffic you earn."],
+    ["/web-graphic-design-melbourne", "Web design Melbourne", "Design measured on enquiries, not awards."],
+  ],
+  "website-development": [
+    ["/web-graphic-design-melbourne", "Web design Melbourne", "The design layer on top of the build."],
+    ["/shopify-developer-melbourne", "Shopify developers", "Ecommerce builds on Shopify."],
+  ],
+  "content-marketing": [
+    ["/content-marketing-agency-melbourne", "Content marketing Melbourne", "Local content mapped to commercial search."],
+  ],
+};
+
+function addRelatedServices(html, relPath) {
+  const slug = relPath.replace(/\\/g, "/").replace(/\.html$/, "");
+  const items = RELATED_SERVICES[slug];
+  if (!items || /class="svc-related"/.test(html)) return html;
+
+  const cards = items
+    .map(
+      ([href, label, blurb]) =>
+        `<a class="svc-related-card" href="${href}">` +
+        `<span class="svc-related-name">${attrEsc(label)}</span>` +
+        `<span class="svc-related-desc">${attrEsc(blurb)}</span></a>`
+    )
+    .join("\n        ");
+
+  const block =
+    `<section class="svc-related">\n  <div class="container">\n` +
+    `    <h2>Related services</h2>\n    <div class="svc-related-grid">\n        ${cards}\n    </div>\n` +
+    `  </div>\n</section>\n`;
+
+  return /<\/main>/i.test(html) ? html.replace(/<\/main>/i, `${block}</main>`) : html;
+}
+
+/**
+ * Link matching case studies from the service pages they prove.
+ *
+ * Case studies averaged 1.5 editorial inbound links each — effectively just
+ * their card on /case-studies — so the proof assets carried no weight and the
+ * service pages never pointed at their own evidence. Cards are read from
+ * /case-studies at build time (single source of truth) and matched on the
+ * service prefix in their tag.
+ *
+ * The selection ROTATES by page so sibling city pages cite different case
+ * studies. Linking the same three from all fifteen SEO pages would just rebuild
+ * the flat footer pattern this is meant to fix.
+ */
+let CASE_STUDIES = [];
+async function loadCaseStudies() {
+  try {
+    const html = await readFile(join(ROOT, "case-studies.html"), "utf8");
+    CASE_STUDIES = [
+      ...html.matchAll(
+        /<a class="ch-card" href="(\/casestudy\/[^"]+)">\s*<div class="ch-tag mono">([^<]*)<\/div>\s*<h2>([^<]*)<\/h2>/g
+      ),
+    ].map((m) => ({
+      href: m[1],
+      tag: m[2].trim(),
+      // 20 of the 33 cards lead with "<Client> Digital Marketing Case Study"
+      // rather than a result. Strip that boilerplate so the anchor reads as the
+      // client name; the 13 cards that do carry a metric are left untouched.
+      result: m[3].trim().replace(/\s*Digital Marketing Case Study\s*$/i, "").replace(/\s*Case Study\s*$/i, ""),
+    }));
+  } catch {
+    CASE_STUDIES = [];
+  }
+}
+
+/** Which case-study service tag a given page should cite, if any. */
+function serviceFor(slug) {
+  if (/^seo-|^ecommerce-seo|^shopify-seo/.test(slug)) return /SEO/i;
+  if (/google-ads|google-shopping/.test(slug)) return /Google Ads|Google Business/i;
+  if (/^social-media|instagram|facebook|linkedin/.test(slug)) return /Social media|Meta/i;
+  if (/web-graphic|website-development|shopify-developer/.test(slug)) return /Web & design/i;
+  return null;
+}
+
+function addCaseStudyProof(html, relPath) {
+  const slug = relPath.replace(/\\/g, "/").replace(/\.html$/, "");
+  const re = serviceFor(slug);
+  if (!re || !CASE_STUDIES.length || /class="svc-proof"/.test(html)) return html;
+
+  const pool = CASE_STUDIES.filter((c) => re.test(c.tag));
+  if (pool.length < 2) return html;
+
+  // Deterministic rotation from the slug so each page starts at a different
+  // point in the pool — spreads links across the whole set, not the first three.
+  let seed = 0;
+  for (const ch of slug) seed = (seed * 31 + ch.charCodeAt(0)) >>> 0;
+  const picked = Array.from({ length: Math.min(3, pool.length) }, (_, i) => pool[(seed + i) % pool.length]);
+
+  const cards = picked
+    .map(
+      (c) =>
+        `<a class="svc-proof-card" href="${c.href}">` +
+        `<span class="svc-proof-result">${attrEsc(c.result)}</span>` +
+        `<span class="svc-proof-tag">${attrEsc(c.tag)}</span></a>`
+    )
+    .join("\n        ");
+
+  const block =
+    `<section class="svc-proof">\n  <div class="container">\n` +
+    `    <h2>Proof</h2>\n    <div class="svc-proof-grid">\n        ${cards}\n    </div>\n` +
+    `    <a class="svc-proof-all" href="/case-studies">All case studies <span aria-hidden="true">→</span></a>\n` +
+    `  </div>\n</section>\n`;
+
+  return /<\/main>/i.test(html) ? html.replace(/<\/main>/i, `${block}</main>`) : html;
 }
 
 /**
@@ -362,7 +582,11 @@ async function processHtmlTree(srcDir, destDir, counter) {
     const html = await readFile(join(srcDir, entry.name), "utf8");
     const expanded = await expand(html);
     const rel = join(destDir, entry.name).slice(OUT.length + 1);
-    const withHead = bustAssetCache(injectHead(addContextualLinks(renderBlogGrid(expanded)), rel));
+    const linked = addCaseStudyProof(
+      addRelatedServices(addRelatedPosts(addContextualLinks(renderBlogGrid(expanded)), rel), rel),
+      rel
+    );
+    const withHead = bustAssetCache(injectHead(linked, rel));
     await writeFile(join(destDir, entry.name), withHead, "utf8");
     counter.count++;
     console.log(`  ✓ ${rel}`);
@@ -376,6 +600,10 @@ async function build() {
 
   // Hash shared assets up front so every page can reference a versioned URL.
   await computeAssetVersions();
+
+  // Blog + case-study metadata for the related/proof blocks.
+  await loadPosts();
+  await loadCaseStudies();
 
   // Copy static asset folders
   await copyDir(join(ROOT, "assets"), join(OUT, "assets"));
