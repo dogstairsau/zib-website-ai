@@ -110,7 +110,7 @@ Source files (Screaming Frog + WordPress export, 2026-06-09):
 |---|---|---|
 | `/team/brandon-wood/` | Brandon Wood | Old Zib staff — keep? |
 | `/team/matt-jackson/` | Matthew Jackson | |
-| `/starsha-green/` | Starsha Green | |
+| `/starsha-green/` | Starsha Green | ✅ Rebuilt as a full partner page (`starsha-green.html`), portrait recovered via Wayback + upscaled |
 | `/contact-zibdigital/` | Contact Zib Digital | New site uses `mailto:` + `/audit` — need a real contact page? |
 | `/get-in-touch/` | Get a Quote | Map to `/audit` or a quote page? |
 | `/new-final-home-page/` | Duplicate home | 301 → `/` |
