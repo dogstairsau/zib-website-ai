@@ -3096,6 +3096,11 @@ footer {
           throw new Error(j.error || `Request failed (${res.status})`);
         }
 
+        // Lead captured — the server accepted it and is pushing it to HubSpot.
+        // This is the conversion point; there's no thank-you page because the
+        // audit streams into this same view.
+        window.zibLead && window.zibLead({ tool: 'Website Audit', url, email });
+
         // Show result shell + scroll so stages are visible
         resultEl.classList.add('is-shown');
         resUrl.textContent = url;
@@ -3288,5 +3293,9 @@ footer {
 })();
 </script>
 <!-- @include _partials/nav-scripts.html -->
+
+<!-- Conversion tracking — window.zibLead(). This page uses nav-scripts.html
+     rather than the shared scripts.html, so it loads the helper itself. -->
+<script src="/assets/conversion.js" defer></script>
 </body>
 </html>

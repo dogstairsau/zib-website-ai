@@ -708,6 +708,12 @@
     try {
       const resp = await fetch('/api/google-ads-lab', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
       if (!resp.ok) { const err = await resp.json().catch(() => ({})); throw new Error(err.error || `${resp.status}`); }
+
+      // Lead captured — the server accepted it and is pushing it to HubSpot.
+      // This is the conversion point; the pack streams into this same view, so
+      // there's no thank-you page load for the pixel to fire on.
+      window.zibLead && window.zibLead({ tool: 'Google Ads Lab', url: payload.url, email: payload.email });
+
       await consumeSse(resp);
     } catch (err) {
       showError(err?.message || 'Request failed');
