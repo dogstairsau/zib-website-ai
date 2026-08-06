@@ -1,0 +1,2059 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+/* Motion gate. Every animated rule in this document is scoped to html.mo,
+   which is added here — before first paint, so nothing flashes — and only
+   when the visitor has not asked their OS for reduced motion.
+
+   The scroll-reveal rules start elements at opacity 0, so a failure to
+   reach the motion script at the end of <body> would leave the report
+   blank. Two backstops prevent that: the motion script strips the class
+   itself if it throws, and the timer below strips it if the script never
+   ran at all (10s — long enough that a slow font stylesheet, which blocks
+   the parser and therefore that script, doesn't trip it on a normal load).
+   Stripping reverts the page to the plain static document. */
+(function(){
+  var d = document.documentElement;
+  window.__moOff = function(){
+    d.className = d.className.replace(/(^|\s)mo(\s|$)/, ' ');
+  };
+  try{
+    if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  }catch(e){ return; }
+  d.className += ' mo';
+  setTimeout(function(){ if(!window.__moBooted) window.__moOff(); }, 10000);
+})();
+</script>
+<title>SEO Audit &amp; Growth Strategy — Boothalicious Photo Booths</title>
+<meta name="description" content="A 12-month SEO audit, technical performance review and growth strategy for Boothalicious Photo Booths — August 2025 to August 2026.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600&family=JetBrains+Mono:wght@400;500;700&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   BOOTHALICIOUS — BRAND TOKENS (per Brand Guidelines v1.0)
+   Red #FF1D43 · Blush #FFD3DB · Ink #14100F · Paper #FAF7F6
+   Poppins (display) · Archivo (body) · JetBrains Mono (labels)
+   Flat colour only. No gradients. No tints of the red.
+   ============================================================ */
+:root{
+  --red:#FF1D43;
+  --blush:#FFD3DB;
+  --blush-deep:#FF9FB0;
+  --ink:#14100F;
+  --paper:#FAF7F6;
+  --white:#FFFFFF;
+  --line:#E8E2E1;
+  --line-soft:#F0EBEA;
+  --muted:#6B615F;
+  --red-dark:#C4102E;      /* for small text only where red is needed legibly */
+
+  --f-display:'Poppins',Helvetica,sans-serif;
+  --f-body:'Archivo',Helvetica,sans-serif;
+  --f-mono:'JetBrains Mono',ui-monospace,monospace;
+
+  --max:1120px;
+  --gut:clamp(20px,5vw,64px);
+  --nav-h:60px;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 24px);-webkit-text-size-adjust:100%}
+body{
+  background:var(--white);
+  color:var(--ink);
+  font-family:var(--f-body);
+  font-size:17px;
+  line-height:1.6;
+  font-weight:400;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ---------- type scale ---------- */
+.eyebrow{
+  font-family:var(--f-mono);
+  font-size:12px;
+  font-weight:500;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+h1,h2,h3,h4{font-family:var(--f-display);font-weight:600;letter-spacing:-.02em;line-height:1.12;
+  text-wrap:balance;-webkit-hyphens:none;hyphens:none}
+h1{font-weight:700;letter-spacing:-.035em}
+h2{font-size:clamp(28px,3.7vw,38px);margin-bottom:12px}
+h3{font-size:clamp(20px,2.2vw,24px);margin-bottom:10px;letter-spacing:-.02em}
+h4{font-size:17px;font-family:var(--f-display);font-weight:600;letter-spacing:-.01em;margin-bottom:8px}
+p{margin-bottom:16px;max-width:72ch;text-wrap:pretty}
+p:last-child{margin-bottom:0}
+strong{font-weight:600}
+a{color:var(--red-dark);text-underline-offset:2px}
+a:hover{color:var(--red)}
+
+/* ---------- layout ---------- */
+.wrap{max-width:var(--max);margin:0 auto;padding-left:var(--gut);padding-right:var(--gut)}
+section{padding:clamp(38px,4.8vw,58px) 0;border-top:1px solid var(--line)}
+section:first-of-type{border-top:0}
+.sec-head{margin-bottom:clamp(20px,2.6vw,30px)}
+.sec-head .eyebrow{display:block;margin-bottom:12px}
+.lede{font-size:clamp(18px,2vw,20px);line-height:1.55;color:var(--ink);max-width:66ch}
+.sub{color:var(--muted);font-size:15.5px}
+.block{margin-top:clamp(26px,3vw,36px)}
+.block:first-child{margin-top:0}
+.block > .eyebrow{display:block;margin-bottom:10px}
+
+/* ---------- header ---------- */
+.masthead{background:var(--red);color:var(--white);padding:clamp(44px,6vw,72px) 0 clamp(32px,4.5vw,48px)}
+.masthead .eyebrow{color:var(--blush)}
+.wordmark{
+  font-family:var(--f-display);font-weight:700;
+  font-size:clamp(44px,9vw,86px);letter-spacing:-.045em;
+  line-height:.95;color:var(--white);margin:18px 0 4px
+}
+.masthead h1{
+  font-size:clamp(26px,4.6vw,44px);
+  color:var(--white);max-width:16ch;margin-top:22px;line-height:1.08
+}
+.masthead .kicker{
+  font-family:var(--f-mono);font-size:12px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--blush);margin-top:6px
+}
+.meta-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:1px;background:rgba(255,255,255,.28);
+  margin-top:clamp(36px,5vw,56px);border:1px solid rgba(255,255,255,.28)
+}
+.meta-grid div{background:var(--red);padding:16px 18px}
+.meta-grid dt{
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;
+  text-transform:uppercase;color:var(--blush);margin-bottom:5px
+}
+.meta-grid dd{font-size:15px;line-height:1.45;color:var(--white);font-weight:500}
+.meta-grid dd a{color:var(--white)}
+
+/* ---------- sticky nav ---------- */
+.nav{
+  position:sticky;top:0;z-index:60;background:var(--white);
+  border-bottom:1px solid var(--line);height:var(--nav-h)
+}
+.nav-inner{
+  max-width:var(--max);margin:0 auto;padding:0 var(--gut);
+  height:var(--nav-h);display:flex;align-items:center;gap:8px
+}
+.nav-brand{
+  font-family:var(--f-display);font-weight:700;font-size:19px;
+  letter-spacing:-.04em;color:var(--red);flex:0 0 auto;
+  text-decoration:none;padding-right:14px;border-right:1px solid var(--line);
+  margin-right:6px
+}
+.nav-scroll{
+  display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;
+  -ms-overflow-style:none;flex:1 1 auto
+}
+.nav-scroll::-webkit-scrollbar{display:none}
+.nav a.nl{
+  font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;
+  text-transform:uppercase;color:var(--muted);text-decoration:none;
+  padding:7px 10px;white-space:nowrap;border-radius:3px;flex:0 0 auto
+}
+.nav a.nl:hover{color:var(--ink);background:var(--line-soft)}
+.nav a.nl[aria-current="true"]{color:var(--red);background:var(--blush)}
+
+/* ---------- stat tiles ---------- */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.tile{background:var(--white);padding:20px 18px 18px}
+.tile .lab{font-family:var(--f-mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:10px;line-height:1.35}
+.tile .val{font-family:var(--f-display);font-weight:700;font-size:clamp(30px,4.4vw,40px);letter-spacing:-.035em;line-height:1;color:var(--ink)}
+.tile .val.neg{color:var(--red)}
+.tile .delta{font-family:var(--f-mono);font-size:12px;letter-spacing:.03em;color:var(--muted);margin-top:9px;display:block}
+
+/* ---------- tables ---------- */
+.tbl-scroll{overflow-x:auto;border:1px solid var(--line);margin-top:18px;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:520px;background:var(--white)}
+caption{text-align:left;font-family:var(--f-mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);padding:12px 16px;border-bottom:1px solid var(--line);background:var(--paper)}
+th,td{text-align:left;padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+thead th{
+  font-family:var(--f-mono);font-size:11px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--muted);font-weight:500;background:var(--paper);border-bottom:1px solid var(--line);
+  position:sticky;top:0;white-space:nowrap
+}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--paper)}
+td.num,th.num{text-align:right;font-family:var(--f-mono);font-size:13.5px;white-space:nowrap}
+td.key{font-weight:500}
+tfoot td{background:var(--paper);font-weight:600;border-top:1px solid var(--line);border-bottom:0}
+code{font-family:var(--f-mono);font-size:13px;background:var(--paper);padding:2px 6px;border:1px solid var(--line);border-radius:3px;white-space:nowrap}
+
+/* ---------- pills / status ---------- */
+.pill{
+  display:inline-flex;align-items:center;gap:5px;font-family:var(--f-mono);
+  font-size:11px;letter-spacing:.06em;text-transform:uppercase;font-weight:500;
+  padding:3px 8px;border-radius:3px;white-space:nowrap;border:1px solid transparent
+}
+.pill.bad{background:var(--red);color:var(--white)}
+.pill.warn{background:var(--blush);color:#8A0B23;border-color:var(--blush-deep)}
+.pill.ok{background:var(--ink);color:var(--white)}
+.pill.flat{background:var(--paper);color:var(--muted);border-color:var(--line)}
+
+/* ---------- callouts ---------- */
+.callout{border:1px solid var(--line);border-left:4px solid var(--red);background:var(--paper);padding:16px 20px;margin-top:20px}
+.callout .eyebrow{display:block;margin-bottom:9px;color:var(--red-dark)}
+.callout.quiet{border-left-color:var(--ink)}
+.callout.quiet .eyebrow{color:var(--muted)}
+.callout p{font-size:16px;max-width:70ch}
+
+/* ---------- charts ---------- */
+.chart{margin-top:18px;border:1px solid var(--line);padding:18px}
+.chart-title{font-family:var(--f-display);font-weight:600;font-size:16px;letter-spacing:-.01em;margin-bottom:3px}
+.chart-note{font-family:var(--f-mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.legend{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:18px}
+.legend span{display:inline-flex;align-items:center;gap:7px;font-family:var(--f-mono);font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted)}
+.swatch{width:11px;height:11px;border-radius:2px;flex:0 0 auto;border:1px solid rgba(20,16,15,.14)}
+
+.bars{display:flex;flex-direction:column;gap:14px}
+.bar-row{display:grid;grid-template-columns:minmax(96px,168px) 1fr;gap:14px;align-items:center}
+.bar-lab{font-size:13.5px;line-height:1.3;color:var(--ink)}
+.bar-lab small{display:block;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-top:2px}
+.bar-track{position:relative;height:22px;background:var(--line-soft);border-radius:3px;overflow:visible}
+.bar-fill{height:100%;border-radius:0 4px 4px 0;background:var(--red);position:relative;min-width:2px;transition:width .5s ease}
+.bar-fill.prev{background:var(--blush);border:1px solid var(--blush-deep)}
+.bar-fill.dark{background:var(--ink)}
+.bar-val{
+  position:absolute;left:calc(100% + 8px);top:50%;transform:translateY(-50%);
+  font-family:var(--f-mono);font-size:12px;color:var(--ink);white-space:nowrap;font-weight:500
+}
+.bar-val.inside{left:auto;right:8px;color:var(--white)}
+.pairs{display:flex;flex-direction:column;gap:5px}
+.pair-track{position:relative;height:15px;background:var(--line-soft);border-radius:3px}
+
+/* threshold marker */
+.thresh{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--ink);z-index:2}
+.thresh::after{
+  content:attr(data-lab);position:absolute;top:-17px;left:50%;transform:translateX(-50%);
+  font-family:var(--f-mono);font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;
+  color:var(--ink);white-space:nowrap;background:var(--white);padding:0 4px
+}
+
+/* gauges */
+.gauges{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:22px}
+.gauge{text-align:center}
+.gauge svg{display:block;margin:0 auto 10px}
+.gauge .gnum{font-family:var(--f-display);font-weight:700;font-size:30px;letter-spacing:-.03em;fill:var(--ink)}
+.gauge .glab{font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);line-height:1.45}
+.gauge .gname{font-family:var(--f-display);font-weight:600;font-size:14.5px;margin-bottom:2px}
+
+/* ---------- lists ---------- */
+ul.plain,ol.plain{margin:0 0 16px 0;padding-left:0;list-style:none;max-width:72ch}
+ul.plain li{position:relative;padding-left:20px;margin-bottom:7px;font-size:16px;line-height:1.5}
+ul.plain li::before{content:"";position:absolute;left:0;top:.62em;width:7px;height:2px;background:var(--red)}
+ol.steps{counter-reset:s;list-style:none;padding:0;margin:0;max-width:72ch}
+ol.steps li{counter-increment:s;position:relative;padding-left:44px;margin-bottom:13px;font-size:16.5px;line-height:1.5}
+ol.steps li::before{
+  content:counter(s);position:absolute;left:0;top:-1px;width:29px;height:29px;
+  display:flex;align-items:center;justify-content:center;background:var(--red);color:var(--white);
+  font-family:var(--f-mono);font-size:13px;font-weight:700;border-radius:3px
+}
+ol.steps li strong{display:block;font-family:var(--f-display);font-weight:600;font-size:17px;letter-spacing:-.01em;margin-bottom:2px}
+
+/* checklist */
+.check{list-style:none;padding:0;margin:0}
+.check li{position:relative;padding-left:30px;margin-bottom:11px;font-size:15.5px;line-height:1.5}
+.check li::before{
+  content:"";position:absolute;left:0;top:.28em;width:16px;height:16px;
+  border:1.5px solid var(--line);border-radius:3px;background:var(--white)
+}
+.check li.key::before{border-color:var(--red);background:var(--blush)}
+.check li em{font-style:normal;font-family:var(--f-mono);font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--red-dark);display:block;margin-top:3px}
+
+/* ---------- phase cards ---------- */
+.phases{display:grid;gap:1px;background:var(--line);border:1px solid var(--line)}
+.phase{background:var(--white);padding:22px}
+.phase-hd{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.phase-num{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--white);background:var(--red);padding:4px 9px;border-radius:3px}
+.phase h3{margin-bottom:0}
+.phase .why{color:var(--muted);font-size:15px;margin:8px 0 18px;max-width:70ch}
+
+/* ---------- architecture tree ---------- */
+.tree{
+  font-family:var(--f-mono);font-size:13px;line-height:1.85;
+  background:var(--ink);color:#EDE7E6;padding:24px;overflow-x:auto;
+  border-radius:3px;margin-top:18px;white-space:pre
+}
+.tree b{color:var(--white);font-weight:500}
+.tree i{font-style:normal;color:var(--blush)}
+.tree u{text-decoration:none;color:#9E938F}
+
+/* ---------- two col ---------- */
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(24px,3.4vw,40px)}
+.card{border:1px solid var(--line);padding:22px}
+.card h4{margin-bottom:8px}
+.card p{font-size:15.5px;color:var(--muted)}
+.card p strong{color:var(--ink)}
+
+/* ---------- outlook ---------- */
+.outlook{background:var(--ink);color:var(--paper);padding:clamp(36px,4.5vw,56px) 0}
+.outlook h2{color:var(--white)}
+.outlook .eyebrow{color:var(--blush)}
+.outlook p{color:#D8D0CE}
+.outlook strong{color:var(--white)}
+.outlook .bar-track{background:rgba(255,255,255,.12)}
+.outlook .bar-lab{color:var(--paper)}
+.outlook .bar-lab small{color:#9E938F}
+.outlook .bar-val{color:var(--white)}
+.outlook .chart{border-color:rgba(255,255,255,.18)}
+.outlook .chart-title{color:var(--white)}
+.outlook .legend span{color:#9E938F}
+
+/* ---------- next steps ---------- */
+.cta{background:var(--blush);padding:clamp(36px,4.5vw,56px) 0}
+.cta h2{color:var(--ink)}
+.cta .eyebrow{color:#8A0B23}
+
+/* ---------- footer ---------- */
+.foot{background:var(--red);color:var(--white);padding:36px 0}
+.foot-inner{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center}
+.foot .fm{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--blush)}
+.foot .fw{font-family:var(--f-display);font-weight:700;font-size:23px;letter-spacing:-.04em}
+.foot a{color:var(--white)}
+
+
+/* ---------- widow / orphan control ---------- */
+.lede,.chart-title,.chart-note,.sp-name,.sp-sub,.eyebrow,
+.tile .lab,.tile .delta,.gname,.glab,.bar-lab,.bar-lab small,
+.phase .why,.card p,.callout p,.more>summary,.ap>summary,
+caption,th,.pill,.foot .fm{text-wrap:balance}
+ul.plain li,ol.steps li,.check li,td{text-wrap:pretty}
+.masthead h1{text-wrap:balance;max-width:17ch}
+
+
+/* ---------- inline "show more" ---------- */
+.more{margin-top:16px;border:1px solid var(--line);background:var(--white)}
+.more>summary{cursor:pointer;list-style:none;padding:12px 16px;display:flex;align-items:center;gap:10px;
+  font-family:var(--f-mono);font-size:11.5px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+.more>summary::-webkit-details-marker{display:none}
+.more>summary::after{content:"+";margin-left:auto;font-size:17px;color:var(--red);line-height:1}
+.more[open]>summary::after{content:"\2013"}
+.more[open]>summary{border-bottom:1px solid var(--line);background:var(--paper);color:var(--ink)}
+.more>summary:hover{background:var(--paper);color:var(--ink)}
+.more .tbl-scroll{margin:0;border:0;border-bottom:1px solid var(--line-soft)}
+.more .tbl-scroll:last-child{border-bottom:0}
+.more .cols{gap:24px}
+
+/* ---------- scatter small multiples ---------- */
+.scatter-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.sp{border:1px solid var(--line-soft);padding:12px 12px 4px;margin:0;min-width:0}
+.sp figcaption{margin-bottom:2px;padding:0 2px}
+.sp-name{display:block;font-family:var(--f-display);font-weight:600;font-size:15px;letter-spacing:-.01em}
+.sp-sub{display:block;font-family:var(--f-mono);font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--muted);margin-top:3px}
+.sp svg{width:100%;height:auto;display:block}
+.sp circle{cursor:pointer;transition:r .12s ease}
+.sp circle:hover{r:8.5}
+text.sp-ax{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:8.5px;letter-spacing:.05em;fill:#6B615F}
+text.sp-lab{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:8.5px;fill:#14100F;font-weight:500}
+text.sp-zone{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:7.5px;letter-spacing:.08em;fill:#8A0B23}
+
+/* ---------- appendix details ---------- */
+.ap{border:1px solid var(--line);border-top:0;background:var(--white)}
+.ap:first-of-type{border-top:1px solid var(--line)}
+.ap > summary{list-style:none;cursor:pointer;padding:15px 20px;display:flex;align-items:center;gap:14px;
+  font-family:var(--f-display);font-weight:600;font-size:16.5px;letter-spacing:-.01em;background:var(--white)}
+.ap > summary::-webkit-details-marker{display:none}
+.ap > summary::after{content:"+";margin-left:auto;font-family:var(--f-mono);font-size:19px;color:var(--red);line-height:1;flex:0 0 auto}
+.ap[open] > summary::after{content:"\2013"}
+.ap[open] > summary{background:var(--paper);border-bottom:1px solid var(--line)}
+.ap > summary:hover{background:var(--paper)}
+.ap .ap-n{font-family:var(--f-mono);font-size:11px;letter-spacing:.07em;color:var(--white);
+  background:var(--ink);padding:4px 8px;border-radius:3px;flex:0 0 auto}
+.ap-body{padding:18px 20px 22px}
+.ap-body > p{font-size:15.5px}
+.ap-body .tbl-scroll{margin-top:16px}
+.ap-body ul.plain li{font-size:15.5px}
+@media print{ .ap > summary::after,.more > summary::after{display:none} }
+
+/* ---------- misc ---------- */
+.totop{
+  position:fixed;right:18px;bottom:18px;z-index:70;background:var(--ink);color:var(--white);
+  width:42px;height:42px;border-radius:50%;border:0;cursor:pointer;display:none;
+  align-items:center;justify-content:center;font-size:17px;line-height:1
+}
+.totop.on{display:flex}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:-999px;top:0;background:var(--ink);color:#fff;padding:10px 16px;z-index:100}
+.skip:focus{left:8px;top:8px}
+:focus-visible{outline:2px solid var(--red);outline-offset:2px}
+
+/* ============================================================
+   MOTION
+   All of it is scoped to html.mo (set by the gate script in
+   <head>). No class = no hidden initial states, no transitions —
+   reduced-motion visitors and anyone whose JS fails get the
+   finished document exactly as it was before this block existed.
+   Only opacity / transform / width / r animate, and every reveal
+   fires once.
+   ============================================================ */
+@keyframes moRise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes moDrop{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+
+/* ---- masthead: plays on load, not on scroll ---- */
+html.mo .masthead .eyebrow,
+html.mo .masthead .wordmark,
+html.mo .masthead .kicker,
+html.mo .masthead h1,
+html.mo .masthead .meta-grid{animation:moRise .85s cubic-bezier(.22,.7,.25,1) both}
+html.mo .masthead .wordmark{animation-delay:.07s}
+html.mo .masthead .kicker{animation-delay:.14s}
+html.mo .masthead h1{animation-delay:.2s}
+html.mo .masthead .meta-grid{animation-delay:.3s}
+
+/* ---- scroll reveal ----
+   This selector list is mirrored exactly in the motion script; if you
+   add a rule here, add it there too or the element stays invisible. */
+html.mo .sec-head,
+html.mo section > .wrap > *:not(.block):not(.sec-head),
+html.mo .block > *:not(.tiles):not(.phases):not(.cols):not(.gauges):not(.scatter-grid):not(.steps),
+html.mo .tiles > .tile,
+html.mo .phases > .phase,
+html.mo .cols > .card,
+html.mo .gauges > .gauge,
+html.mo .scatter-grid > .sp,
+html.mo .steps > li{
+  opacity:0;transform:translateY(15px);
+  transition:opacity .6s cubic-bezier(.22,.7,.25,1) var(--mo-d,0ms),
+             transform .6s cubic-bezier(.22,.7,.25,1) var(--mo-d,0ms)
+}
+/* !important on purpose: the hidden rule above carries six :not() classes,
+   which outweighs a plain .mo-in selector and would strand revealed
+   elements at opacity 0. */
+html.mo .mo-in{opacity:1!important;transform:none!important}
+
+/* ---- bar charts grow from the baseline ---- */
+html.mo .bar-fill{width:0!important;min-width:0;
+  transition:width .95s cubic-bezier(.22,.7,.25,1) var(--mo-d,0ms)}
+html.mo .bar-fill.mo-bar-in{width:var(--mo-w)!important;min-width:2px}
+html.mo .bar-fill .bar-val{opacity:0;
+  transition:opacity .45s ease calc(var(--mo-d,0ms) + 460ms)}
+html.mo .bar-fill.mo-bar-in .bar-val{opacity:1}
+
+/* ---- Lighthouse gauges draw their arc ---- */
+html.mo .gauge svg circle + circle{
+  transition:stroke-dashoffset 1.15s cubic-bezier(.22,.7,.25,1) var(--mo-d,0ms)}
+
+/* ---- scatter dots pop in, labels and gridlines follow ---- */
+html.mo .sp svg circle{r:0;transition:r .55s cubic-bezier(.34,1.3,.5,1) var(--mo-d,0ms)}
+html.mo .sp.mo-in svg circle{r:6}
+html.mo .sp.mo-in svg circle:hover{r:8.5;transition:r .12s ease}
+html.mo .sp svg text,html.mo .sp svg line{opacity:0;
+  transition:opacity .5s ease calc(var(--mo-d,0ms) + 240ms)}
+html.mo .sp.mo-in svg text,html.mo .sp.mo-in svg line{opacity:1}
+
+/* ---- sticky nav: read-progress rule + elevation once it detaches ---- */
+html.mo .mo-prog{
+  position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--red);
+  transform:scaleX(0);transform-origin:0 50%;pointer-events:none;z-index:2}
+html.mo .nav{transition:box-shadow .28s ease}
+html.mo .nav.mo-stuck{box-shadow:0 2px 16px rgba(20,16,15,.10)}
+html.mo .nav a.nl{transition:background-color .22s ease,color .22s ease}
+
+/* ---- disclosure panels ---- */
+html.mo .ap[open] > .ap-body,
+html.mo .more[open] > *:not(summary){animation:moDrop .42s cubic-bezier(.22,.7,.25,1) both}
+html.mo .ap > summary,html.mo .more > summary{transition:background-color .2s ease,color .2s ease}
+
+/* ---- back-to-top ---- */
+html.mo .totop{
+  display:flex;opacity:0;visibility:hidden;transform:translateY(10px) scale(.85);
+  transition:opacity .3s ease,transform .3s cubic-bezier(.34,1.3,.5,1),visibility .3s,background-color .2s ease}
+html.mo .totop.on{opacity:1;visibility:visible;transform:none}
+html.mo .totop:hover{background:var(--red)}
+
+@media (hover:hover) and (pointer:fine){
+  html.mo .card{transition:transform .28s cubic-bezier(.22,.7,.25,1),box-shadow .28s ease}
+  html.mo .card:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(20,16,15,.08)}
+}
+
+/* ---- horizontal-scroll hint ----
+   Not gated on .mo: this is a mobile affordance, not decoration, so
+   reduced-motion visitors get it too. Injected by the script only for
+   blocks that actually overflow on a narrow screen. */
+.mo-hint{
+  display:none;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--muted);margin-top:7px;transition:opacity .3s ease}
+.mo-hint.on{display:block}
+.mo-hint.done{opacity:0}
+.more .mo-hint,.ap .mo-hint{padding:0 16px 12px;margin-top:5px}
+@media print{.mo-hint{display:none!important}}
+
+@media (max-width:640px){
+  body{font-size:16px}
+  .bar-row{grid-template-columns:1fr;gap:7px}
+  .bar-track,.pairs{margin-right:78px}
+  .bar-track{height:20px}
+  .bar-val{font-size:11.5px}
+  .nav-brand{font-size:17px;padding-right:10px}
+  table{font-size:14px}
+  th,td{padding:9px 12px}
+  .gauges{gap:16px}
+  .tree{font-size:11.5px;padding:18px}
+  .scatter-grid{grid-template-columns:1fr;gap:14px}
+  .sp-name{font-size:14px}
+  .tiles>.tile:last-child:nth-child(odd){grid-column:1/-1}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{transition:none!important;animation:none!important}
+}
+@media print{
+  .nav,.totop,.skip{display:none!important}
+  body{font-size:11pt}
+  section{page-break-inside:avoid;border-top:1px solid #ccc}
+  .masthead,.outlook,.foot,.cta{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .tbl-scroll{overflow:visible}
+  table{min-width:0}
+  a[href^="http"]::after{content:" (" attr(href) ")";font-size:8pt;color:#666}
+}
+</style>
+</head>
+<body data-palette="#FF1D43,#FFD3DB,#14100F">
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- ══════════════════ MASTHEAD ══════════════════ -->
+<header class="masthead" id="top">
+  <div class="wrap">
+    <span class="eyebrow">SEO Audit &amp; Growth Strategy</span>
+    <div class="wordmark">Boothalicious.</div>
+    <div class="kicker">Melbourne · Sydney · Tasmania — 15 years</div>
+    <h1>Where the search traffic went, and how to get it back.</h1>
+    <dl class="meta-grid">
+      <div><dt>Domain</dt><dd><a href="https://www.boothalicious.com.au" rel="noopener noreferrer" target="_blank">boothalicious.com.au</a></dd></div>
+      <div><dt>Audit period</dt><dd>Aug 2025 – Aug 2026<br><span style="opacity:.8">12 months</span></dd></div>
+      <div><dt>Prepared</dt><dd>6 August 2026</dd></div>
+      <div><dt>Data sources</dt><dd>Ahrefs (AU) · Google PageSpeed Insights / Lighthouse 13.4.1 · Screaming Frog</dd></div>
+      <div><dt>Objective</dt><dd>Increase wedding &amp; corporate lead volume</dd></div>
+    </dl>
+  </div>
+</header>
+
+<!-- ══════════════════ NAV ══════════════════ -->
+<nav class="nav" aria-label="Report sections">
+  <div class="nav-inner">
+    <a class="nav-brand" href="#top">B.</a>
+    <div class="nav-scroll">
+      <a class="nl" href="#summary">Summary</a>
+      <a class="nl" href="#audit">1 · Audit</a>
+      <a class="nl" href="#speed">2 · Speed</a>
+      <a class="nl" href="#growth">3 · Growth</a>
+      <a class="nl" href="#roadmap">4 · Roadmap</a>
+      <a class="nl" href="#beyond">5 · Beyond SEO</a>
+      <a class="nl" href="#outlook">6 · Outlook</a>
+      <a class="nl" href="#appendix">Appendix</a>
+    </div>
+  </div>
+</nav>
+
+<main id="main">
+
+<!-- ══════════════════ EXECUTIVE SUMMARY ══════════════════ -->
+<section id="summary">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Executive summary</span>
+      <h2>The site has gone backwards, and the cause is fixable.</h2>
+    </div>
+
+    <p class="lede">Over the past 12 months organic traffic fell <strong>59%</strong>, organic keywords collapsed <strong>92%</strong>, and the site now ranks for essentially nothing outside its own brand name.</p>
+
+    <p>The cause is not a competitive or algorithmic squeeze. Three key commercial pages were removed or broken, and the site simultaneously accumulated a large volume of spam backlinks. Layered on top is a serious performance problem: the homepage scores <strong>37 / 100</strong> on mobile Lighthouse with a Largest Contentful Paint of <strong>27.7 seconds</strong>, driven by an <strong>~8 MB</strong> page weight.</p>
+
+    <p>The opportunity is real and winnable. The Australian photo booth market is small and the incumbents are not strong. The combined wedding, corporate and 360 / glam booth keyword clusters represent roughly <strong>3,000–4,000 monthly Australian searches</strong> at low-to-moderate difficulty.</p>
+
+    <div class="block">
+      <span class="eyebrow">The three highest-leverage actions</span>
+      <ol class="steps">
+        <li><strong>Repair what's broken</strong>Restore the deleted service and location pages, and resolve the 404s that are currently breaking internal links.</li>
+        <li><strong>Cut the page weight</strong>Fix Core Web Vitals. Nothing new will rank while mobile takes 27.7 seconds to render its main content.</li>
+        <li><strong>Build the money pages</strong>Dedicated wedding and corporate hubs — and evaluate adding a 360 / glam booth to the fleet.</li>
+      </ol>
+    </div>
+
+    <div class="block">
+      <span class="eyebrow">Scope note</span>
+      <p class="sub" style="max-width:70ch">This audit covers organic search and site health. It is a separate discipline to the Google Ads programme, which continues to run and is reported on separately — paid traffic actually grew over this period (7 → 30 monthly visits).</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ PART 1 — AUDIT ══════════════════ -->
+<section id="audit">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Part 1 — 12-month SEO audit</span>
+      <h2>What the numbers say.</h2>
+      <p class="lede">Ahrefs Site Explorer, Australian data, August 2025 compared to August 2026.</p>
+    </div>
+
+    <!-- 1.1 HEADLINE METRICS -->
+    <div class="block">
+      <span class="eyebrow">1.1 — Headline metrics</span>
+      <h3>The year at a glance</h3>
+
+      <div class="tiles" style="margin-top:20px">
+        <div class="tile"><span class="lab">Organic traffic<br>monthly</span><span class="val neg">101</span><span class="delta">▼ 148 · −59%</span></div>
+        <div class="tile"><span class="lab">Organic keywords</span><span class="val neg">12</span><span class="delta">▼ 134 · −92%</span></div>
+        <div class="tile"><span class="lab">Top 3 rankings</span><span class="val neg">1</span><span class="delta">▼ 4 · from 5</span></div>
+        <div class="tile"><span class="lab">Domain rating</span><span class="val neg">7</span><span class="delta">▼ 4 · from 11</span></div>
+        <div class="tile"><span class="lab">Referring domains</span><span class="val">411</span><span class="delta">▲ 378 · 94% nofollow</span></div>
+      </div>
+
+      <div class="chart">
+        <div class="chart-title">Aug 2025 vs Aug 2026 — every core metric</div>
+        <div class="chart-note">Each metric scaled to its own maximum · values labelled</div>
+        <div class="legend">
+          <span><i class="swatch" style="background:#FFD3DB;border-color:#FF9FB0"></i> Aug 2025</span>
+          <span><i class="swatch" style="background:#FF1D43"></i> Aug 2026</span>
+        </div>
+        <div class="bars">
+          <div class="bar-row"><div class="bar-lab">Organic traffic<small>monthly visits</small></div><div class="pairs">
+            <div class="pair-track"><div class="bar-fill prev" style="width:100%;height:100%"><span class="bar-val inside" style="color:#8A0B23">249</span></div></div>
+            <div class="pair-track"><div class="bar-fill" style="width:40.6%;height:100%"><span class="bar-val">101</span></div></div></div></div>
+          <div class="bar-row"><div class="bar-lab">Organic keywords<small>ranking terms</small></div><div class="pairs">
+            <div class="pair-track"><div class="bar-fill prev" style="width:100%;height:100%"><span class="bar-val inside" style="color:#8A0B23">146</span></div></div>
+            <div class="pair-track"><div class="bar-fill" style="width:8.2%;height:100%"><span class="bar-val">12</span></div></div></div></div>
+          <div class="bar-row"><div class="bar-lab">Top 3 rankings</div><div class="pairs">
+            <div class="pair-track"><div class="bar-fill prev" style="width:100%;height:100%"><span class="bar-val inside" style="color:#8A0B23">5</span></div></div>
+            <div class="pair-track"><div class="bar-fill" style="width:20%;height:100%"><span class="bar-val">1</span></div></div></div></div>
+          <div class="bar-row"><div class="bar-lab">Organic traffic value<small>per month</small></div><div class="pairs">
+            <div class="pair-track"><div class="bar-fill prev" style="width:100%;height:100%"><span class="bar-val inside" style="color:#8A0B23">$235</span></div></div>
+            <div class="pair-track"><div class="bar-fill" style="width:43%;height:100%"><span class="bar-val">$101</span></div></div></div></div>
+          <div class="bar-row"><div class="bar-lab">Domain Rating</div><div class="pairs">
+            <div class="pair-track"><div class="bar-fill prev" style="width:100%;height:100%"><span class="bar-val inside" style="color:#8A0B23">11</span></div></div>
+            <div class="pair-track"><div class="bar-fill" style="width:63.6%;height:100%"><span class="bar-val">7</span></div></div></div></div>
+          <div class="bar-row"><div class="bar-lab">Referring domains<small>the one line going up</small></div><div class="pairs">
+            <div class="pair-track"><div class="bar-fill prev" style="width:8%;height:100%"><span class="bar-val">33</span></div></div>
+            <div class="pair-track"><div class="bar-fill" style="width:100%;height:100%"><span class="bar-val inside">411</span></div></div></div></div>
+          <div class="bar-row"><div class="bar-lab">Backlinks</div><div class="pairs">
+            <div class="pair-track"><div class="bar-fill prev" style="width:43.9%;height:100%"><span class="bar-val">335</span></div></div>
+            <div class="pair-track"><div class="bar-fill" style="width:100%;height:100%"><span class="bar-val inside">763</span></div></div></div></div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <span class="eyebrow">Key signal</span>
+        <p>Referring domains up 378 while Domain Rating and rankings fell sharply. That combination is the signature of a low-quality link influx plus a damaging site restructure — not competitive pressure.</p>
+      </div>
+
+      <details class="more">
+        <summary>Full metric table — 11 metrics, exact figures</summary>
+        <div class="tbl-scroll">
+          <table>
+            <thead><tr><th>Metric</th><th class="num">Aug 2025</th><th class="num">Aug 2026</th><th class="num">Change</th></tr></thead>
+            <tbody>
+              <tr><td class="key">Organic traffic (monthly)</td><td class="num">~249</td><td class="num">101</td><td class="num">−148 (−59%)</td></tr>
+              <tr><td class="key">Organic keywords</td><td class="num">146</td><td class="num">12</td><td class="num">−134 (−92%)</td></tr>
+              <tr><td class="key">Top 3 rankings</td><td class="num">5</td><td class="num">1</td><td class="num">−4</td></tr>
+              <tr><td class="key">Organic traffic value</td><td class="num">$235</td><td class="num">$101</td><td class="num">−$134</td></tr>
+              <tr><td class="key">Domain Rating (DR)</td><td class="num">11</td><td class="num">7</td><td class="num">−4</td></tr>
+              <tr><td class="key">URL Rating (UR)</td><td class="num">8</td><td class="num">7</td><td class="num">−1</td></tr>
+              <tr><td class="key">Ahrefs Rank</td><td class="num">~21.5M</td><td class="num">23,268,226</td><td class="num">−1,749,090</td></tr>
+              <tr><td class="key">Referring domains</td><td class="num">33</td><td class="num">411</td><td class="num">+378</td></tr>
+              <tr><td class="key">Backlinks</td><td class="num">335</td><td class="num">763</td><td class="num">+428</td></tr>
+              <tr><td class="key">Paid keywords</td><td class="num">1</td><td class="num">2</td><td class="num">+1</td></tr>
+              <tr><td class="key">Paid traffic</td><td class="num">7</td><td class="num">30</td><td class="num">+23</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="sub" style="padding:14px 16px;margin:0">Traffic by location: 100% Australia (101 visits, −144). Paid: 2 keywords, 3 ads, ~$19 / month — negligible at this spend, and not compensating for the organic decline.</p>
+      </details>
+    </div>
+
+    <!-- 1.2 INTENT -->
+    <div class="block">
+      <span class="eyebrow">1.2 — Traffic by intent</span>
+      <h3>The site has stopped acquiring new customers</h3>
+
+      <div class="chart">
+        <div class="chart-title">Where the monthly traffic comes from</div>
+        <div class="chart-note">Both rows share the same scale</div>
+        <div class="legend">
+          <span><i class="swatch" style="background:#14100F"></i> Branded</span>
+          <span><i class="swatch" style="background:#FF1D43"></i> Non-branded</span>
+        </div>
+        <div class="bars">
+          <div class="bar-row">
+            <div class="bar-lab">Aug 2025<small>247 visits</small></div>
+            <div class="bar-track" style="height:30px;display:flex;gap:2px;background:none">
+              <div class="bar-fill dark" style="width:33.2%;border-radius:4px"><span class="bar-val inside">82</span></div>
+              <div class="bar-fill" style="width:66.8%;border-radius:4px"><span class="bar-val inside">165</span></div>
+            </div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-lab">Aug 2026<small>100 visits</small></div>
+            <div class="bar-track" style="height:30px;display:flex;gap:2px;background:none">
+              <div class="bar-fill dark" style="width:31.6%;border-radius:4px"><span class="bar-val inside">78</span></div>
+              <div class="bar-fill" style="width:8.9%;border-radius:4px"><span class="bar-val">22</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p style="margin-top:20px"><strong>Non-branded traffic fell from 165 to 22 — an 87% drop.</strong> Branded traffic now accounts for 78 of 101 monthly visits. The site is only found by people who already know the name. Every commercial-intent visit lost in the past year (−148) is a lost lead opportunity, and commercial intent is precisely where wedding and corporate enquiries originate.</p>
+
+      <details class="more">
+        <summary>Full intent breakdown — keywords and traffic by type</summary>
+        <div class="tbl-scroll">
+          <table>
+            <thead><tr><th>Intent</th><th class="num">Keywords</th><th class="num">Change</th><th class="num">Traffic</th><th class="num">Change</th></tr></thead>
+            <tbody>
+              <tr><td class="key">Branded</td><td class="num">4</td><td class="num">−18</td><td class="num">78</td><td class="num">−4</td></tr>
+              <tr><td class="key">Non-branded</td><td class="num">8</td><td class="num">−116</td><td class="num">22</td><td class="num">−143</td></tr>
+              <tr><td class="key">Informational</td><td class="num">11</td><td class="num">−117</td><td class="num">97</td><td class="num">−116</td></tr>
+              <tr><td class="key">Commercial</td><td class="num">12</td><td class="num">−128</td><td class="num">100</td><td class="num">−148</td></tr>
+              <tr><td class="key">Transactional</td><td class="num">11</td><td class="num">−120</td><td class="num">100</td><td class="num">−147</td></tr>
+              <tr><td class="key">Local</td><td class="num">11</td><td class="num">−112</td><td class="num">100</td><td class="num">−143</td></tr>
+              <tr><td class="key">Non-local</td><td class="num">1</td><td class="num">—</td><td class="num">0</td><td class="num">—</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
+    </div>
+
+    <!-- 1.3 LOST PAGES -->
+    <div class="block">
+      <span class="eyebrow">1.3 — Root cause</span>
+      <h3>The pages that carried the rankings are gone</h3>
+      <p>Of 20 crawled URLs, only 15 return <code>200</code> and 4 return <code>404</code>. One in five of the crawlable site is broken.</p>
+
+      <div class="tbl-scroll">
+        <table>
+          <caption>Missing and broken URLs</caption>
+          <thead><tr><th>URL</th><th>Status</th><th>Previously ranked for</th></tr></thead>
+          <tbody>
+            <tr><td><code>/enclosed-booth</code></td><td><span class="pill bad">404</span></td><td>"enclosed photo booth" (#10)</td></tr>
+            <tr><td><code>/open-booth</code></td><td><span class="pill bad">Lost</span></td><td>"photo booth hire melbourne" variants (#3)</td></tr>
+            <tr><td><code>/locations</code></td><td><span class="pill warn">200, rankings lost</span></td><td>Local / city terms</td></tr>
+            <tr><td><code>/sydney-photo-booth-hire</code></td><td><span class="pill bad">404</span></td><td>Sydney terms — live since 2017, still holds an external editorial backlink</td></tr>
+            <tr><td><code>/photo-booth-types/</code></td><td><span class="pill bad">404</span></td><td>—</td></tr>
+            <tr><td><code>/booth-hire-locations/melbourne/</code></td><td><span class="pill bad">404</span></td><td>—</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 1.4 KEYWORDS LOST -->
+    <div class="block">
+      <span class="eyebrow">1.4 — Keywords lost</span>
+      <h3>17 commercial terms, 5,360 monthly searches, gone</h3>
+
+      <div class="chart">
+        <div class="chart-title">Biggest losses by search volume</div>
+        <div class="chart-note">AU monthly volume · all marked Lost unless noted</div>
+        <div class="bars">
+          <div class="bar-row"><div class="bar-lab">photo booth</div><div class="bar-track"><div class="bar-fill" style="width:100%"><span class="bar-val inside">1,800</span></div></div></div>
+          <div class="bar-row"><div class="bar-lab">photo booth melbourne</div><div class="bar-track"><div class="bar-fill" style="width:34.4%"><span class="bar-val">620</span></div></div></div>
+          <div class="bar-row"><div class="bar-lab">photo booth hire melbourne<small>demoted #6 → #18, not lost</small></div><div class="bar-track"><div class="bar-fill dark" style="width:27.8%"><span class="bar-val">500</span></div></div></div>
+          <div class="bar-row"><div class="bar-lab">photobooth melbourne</div><div class="bar-track"><div class="bar-fill" style="width:25%"><span class="bar-val">450</span></div></div></div>
+          <div class="bar-row"><div class="bar-lab">party photo booth hire</div><div class="bar-track"><div class="bar-fill" style="width:25%"><span class="bar-val">450</span></div></div></div>
+          <div class="bar-row"><div class="bar-lab">photo booths</div><div class="bar-track"><div class="bar-fill" style="width:23.3%"><span class="bar-val">420</span></div></div></div>
+        </div>
+        <p class="sub" style="margin-top:16px;font-size:14px">Plus <strong>12 more lost terms</strong> at 200 down to 20 searches each — 1,620 combined.</p>
+      </div>
+
+      <div class="callout quiet">
+        <span class="eyebrow">What remains</span>
+        <p>"boothalicious" (49 of 101 visits), "photobooth" (#13), "photobooth photos" (#5), "photobooth pictures" (#7), "photo booth hire melbourne" (#18). Four of those five are the brand name or near-misses for it.</p>
+      </div>
+
+      <details class="more">
+        <summary>All 18 lost and demoted keywords</summary>
+        <div class="tbl-scroll">
+          <table>
+            <thead><tr><th>Keyword</th><th class="num">AU volume</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td class="key">photo booth</td><td class="num">1,800</td><td><span class="pill bad">Lost</span></td></tr>
+              <tr><td class="key">photo booth melbourne</td><td class="num">620</td><td><span class="pill bad">Lost</span></td></tr>
+              <tr><td class="key">photo booth hire melbourne</td><td class="num">500</td><td><span class="pill warn">#18 — was #6</span></td></tr>
+              <tr><td class="key">photobooth melbourne</td><td class="num">450</td><td><span class="pill bad">Lost</span></td></tr>
+              <tr><td class="key">party photo booth hire</td><td class="num">450</td><td><span class="pill bad">Lost</span></td></tr>
+              <tr><td class="key">photo booths</td><td class="num">420</td><td><span class="pill bad">Lost</span></td></tr>
+              <tr><td class="key">photobooth hire melbourne</td><td class="num">200</td><td><span class="pill bad">Lost</span></td></tr>
+              <tr><td class="key">photo booth rental</td><td class="num">200</td><td><span class="pill bad">Lost</span></td></tr>
+              <tr><td class="key">photo both</td><td class="num">200</td><td><span class="pill bad">Lost</span></td></tr>
+              <tr><td class="key">melbourne photo booth</td><td class="num">150</td><td><span class="pill bad">Lost</span></td></tr>
+              <tr><td class="key">wedding photobooth</td><td class="num">150</td><td><span class="pill bad">Lost</span></td></tr>
+              <tr><td class="key">wedding photo booths</td><td class="num">150</td><td><span class="pill bad">Lost</span></td></tr>
+              <tr><td class="key">photo booth wedding</td><td class="num">150</td><td><span class="pill bad">Lost</span></td></tr>
+              <tr><td class="key">mobile photo booth hire</td><td class="num">150</td><td><span class="pill bad">Lost</span></td></tr>
+              <tr><td class="key">photo booth for wedding</td><td class="num">100</td><td><span class="pill bad">Lost</span></td></tr>
+              <tr><td class="key">photo booths melbourne</td><td class="num">100</td><td><span class="pill bad">Lost</span></td></tr>
+              <tr><td class="key">enclosed photo booth</td><td class="num">50</td><td><span class="pill bad">Lost</span></td></tr>
+              <tr><td class="key">wedding photo booth melbourne</td><td class="num">20</td><td><span class="pill bad">Lost</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
+    </div>
+
+    <!-- 1.5 PAGE PERFORMANCE -->
+    <div class="block">
+      <span class="eyebrow">1.5 — Page performance</span>
+      <h3>In Google's eyes this is a one-page website</h3>
+      <p>Only 6 pages carry any organic traffic at all, and the homepage does <strong>93% of it</strong> — 65 of 70 visits. The other five pages earn one visit each per month.</p>
+
+      <details class="more">
+        <summary>Organic traffic by page — all six</summary>
+        <div style="padding:18px">
+          <div class="bars">
+            <div class="bar-row"><div class="bar-lab"><code>/</code><small>homepage</small></div><div class="bar-track"><div class="bar-fill" style="width:100%"><span class="bar-val inside">65 · 92.9%</span></div></div></div>
+            <div class="bar-row"><div class="bar-lab"><code>/our-booths</code></div><div class="bar-track"><div class="bar-fill" style="width:1.54%"><span class="bar-val">1</span></div></div></div>
+            <div class="bar-row"><div class="bar-lab"><code>/faq</code></div><div class="bar-track"><div class="bar-fill" style="width:1.54%"><span class="bar-val">1</span></div></div></div>
+            <div class="bar-row"><div class="bar-lab"><code>/branded-booth</code></div><div class="bar-track"><div class="bar-fill" style="width:1.54%"><span class="bar-val">1</span></div></div></div>
+            <div class="bar-row"><div class="bar-lab"><code>/booknow</code></div><div class="bar-track"><div class="bar-fill" style="width:1.54%"><span class="bar-val">1</span></div></div></div>
+            <div class="bar-row"><div class="bar-lab"><code>/pricing</code></div><div class="bar-track"><div class="bar-fill" style="width:1.54%"><span class="bar-val">1</span></div></div></div>
+          </div>
+        </div>
+      </details>
+    </div>
+
+    <!-- 1.6 BACKLINKS -->
+    <div class="block">
+      <span class="eyebrow">1.6 — Backlink profile</span>
+      <h3>Spam accumulation</h3>
+
+      <div class="tiles" style="margin-top:20px">
+        <div class="tile"><span class="lab">Referring domains</span><span class="val">411</span><span class="delta">23 followed · 5.6%</span></div>
+        <div class="tile"><span class="lab">Backlinks</span><span class="val">763</span><span class="delta">48 followed · 6.3%</span></div>
+        <div class="tile"><span class="lab">Nofollow share</span><span class="val neg">94.4%</span><span class="delta">388 of 411 domains</span></div>
+        <div class="tile"><span class="lab">Growth in 12 mths</span><span class="val neg">+378</span><span class="delta">most first seen Feb–Aug 2026</span></div>
+      </div>
+
+      <p style="margin-top:24px"><strong>Nearly six in ten links use the bare domain as anchor text.</strong> A further one in ten is SEO-vendor sales copy — link-broker pitch text scraped onto directory pages that happens to name the domain. These are scraper and link-farm listings using boothalicious.com.au as filler content, not genuine citations.</p>
+
+      <details class="more">
+        <summary>Anchor text profile — 117 anchors</summary>
+        <div class="tbl-scroll">
+        <table>
+          <thead><tr><th>Anchor</th><th class="num">Ref. domains</th><th class="num">Share</th></tr></thead>
+          <tbody>
+            <tr><td class="key">boothalicious.com.au (naked URL)</td><td class="num">241</td><td class="num">57.7%</td></tr>
+            <tr><td class="key">SEO-agency sales copy<br><span class="sub">"Scale boothalicious.com.au with high-quality backlinks, guest posts…"</span></td><td class="num">40</td><td class="num">9.6%</td></tr>
+            <tr><td class="key">"Boothalicious" (brand)</td><td class="num">15</td><td class="num">3.6%</td></tr>
+            <tr><td class="key">Remainder — long tail, 114 anchors</td><td class="num">~50</td><td class="num">~29%</td></tr>
+          </tbody>
+        </table>
+        </div>
+      </details>
+
+      <div class="callout">
+        <span class="eyebrow">Action required</span>
+        <p>Confirm internally whether anyone purchased links. If not, this is passive spam accumulation — common, and usually ignored by Google. Monitor rather than panic; <strong>disavow only</strong> if the pattern accelerates or a manual action appears in Search Console.</p>
+      </div>
+
+      <details class="more">
+        <summary>SPAM-flagged domains, and the legitimate links worth keeping</summary>
+        <p style="padding:16px;margin:0;font-size:15px">rankboostly.shop · buyseobacklinks.shop · pbnseolinks.shop · linkrankboost.shop · authoritybacklinks.shop · ranklinkx.shop · backlinkshop.site · backlinksplace.site · atomizelink.icu · trafficspike.shop · buybacklinks.agency · rankyour.website · rank-top.click · seorankflow.shop · premiumseolinks.shop · toplinkranker.shop · linkrankseo.shop · quero.party · byteshort.xyz · optimizeflow.top<br><br><strong>Legitimate links worth keeping:</strong> pixieset.com (DR 92) · humanitix.com (DR 90) · rocknrollbride.com (DR 72) · dlook.com.au (DR 71) · hellomay.com.au (DR 69) · aislesociety.com (DR 64) · duuet.com.au (DR 37)<br><br><span class="sub">SPAM domains nearly all first seen February to August 2026, some as recent as 2–5 August. One broken backlink group: coopdorstl.com → <code>/sydney-photo-booth-hire</code> (404), anchor "Sydney photo booth hire" — pointing at exactly the URL slug worth rebuilding.</span></p>
+      </details>
+    </div>
+
+    <!-- 1.7 TECHNICAL -->
+    <div class="block">
+      <span class="eyebrow">1.7 — Technical, on-page &amp; AI visibility</span>
+      <h3>Duplicates, orphans and thin titles</h3>
+
+      <div class="cols" style="margin-top:20px">
+        <div>
+          <div class="tbl-scroll" style="margin-top:0">
+            <table style="min-width:0">
+              <caption>Duplicate / orphaned pages</caption>
+              <thead><tr><th>URL</th><th>Issue</th></tr></thead>
+              <tbody>
+                <tr><td><code>/home</code></td><td>Duplicates the homepage</td></tr>
+                <tr><td><code>/info</code></td><td>Titled "Services 2"</td></tr>
+                <tr><td><code>/poh</code></td><td>Duplicates <code>/booknow</code></td></tr>
+                <tr><td><code>/form</code></td><td>Orphaned</td></tr>
+                <tr><td><code>/cart</code></td><td>Orphaned</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        <div>
+          <h4>On-page</h4>
+          <ul class="plain">
+            <li>Homepage title is just "Boothalicious Photo Booths" — no service or location qualifier</li>
+            <li>Every subpage uses the same "[Page] — Boothalicious Photo Booths" pattern</li>
+            <li>No LocalBusiness or Review schema, despite a 4.9-star, 54-review Google profile</li>
+            <li>The homepage links to "Enclosed Booth" — which is a 404</li>
+            <li><code>/locations</code> claims three locations but only lists two</li>
+            <li>No blog or informational content of any kind</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout quiet">
+        <span class="eyebrow">AI search visibility</span>
+        <p><strong>Zero citations</strong> across AI Overviews, AI Mode, ChatGPT, Gemini, Perplexity and Copilot — 0 responses, 0 pages, every platform. Expected with 12 ranking keywords and no substantive content: there is nothing for AI systems to cite. This resolves as a by-product of the content programme in §3.4, not as a separate workstream.</p>
+      </div>
+    </div>
+
+    <!-- 1.8 COMPETITIVE -->
+    <div class="block">
+      <span class="eyebrow">1.8 — Competitive landscape</span>
+      <h3>The incumbents are not strong</h3>
+      <div class="tbl-scroll">
+        <table>
+          <caption>Ranking keywords — AU organic competitors</caption>
+          <thead><tr><th>Domain</th><th class="num">Their keywords</th><th class="num">Shared with Boothalicious</th></tr></thead>
+          <tbody>
+            <tr><td class="key">inthebooth.com.au</td><td class="num">270</td><td class="num">6</td></tr>
+            <tr><td class="key">photoboothfinder.com.au</td><td class="num">131</td><td class="num">5</td></tr>
+            <tr><td class="key">adeptphotobooths.com.au</td><td class="num">76</td><td class="num">1</td></tr>
+            <tr><td class="key">rewindbooths.com.au</td><td class="num">48</td><td class="num">2</td></tr>
+            <tr><td class="key">boothbaby.au</td><td class="num">2</td><td class="num">1</td></tr>
+            <tr style="background:#FFD3DB"><td class="key"><strong>boothalicious.com.au</strong></td><td class="num"><strong>12</strong></td><td class="num">—</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p style="margin-top:14px">Overlap is only 1–6 terms. These are winnable positions for a brand with 15 years of trading and a 4.9-star review profile.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ PART 2 — SPEED ══════════════════ -->
+<section id="speed">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Part 2 — Lighthouse &amp; PageSpeed audit</span>
+      <h2>An 8 MB homepage.</h2>
+      <p class="lede">Run 6 August 2026. Mobile emulated on a Moto G Power over slow 4G; desktop on custom throttling. Lighthouse 13.4.1.</p>
+    </div>
+
+    <!-- 2.1 SCORES -->
+    <div class="block">
+      <span class="eyebrow">2.1 — Scores</span>
+      <h3>Performance is the outlier</h3>
+
+      <div class="chart">
+        <div class="chart-title">Homepage — mobile</div>
+        <div class="chart-note">Lighthouse category scores, 0–100</div>
+        <div class="gauges">
+          <div class="gauge">
+            <svg width="104" height="104" viewBox="0 0 104 104" role="img" aria-label="Performance score 37 out of 100">
+              <circle cx="52" cy="52" r="44" fill="none" stroke="#F0EBEA" stroke-width="10"/>
+              <circle cx="52" cy="52" r="44" fill="none" stroke="#FF1D43" stroke-width="10" stroke-linecap="round" stroke-dasharray="102.3 276.5" transform="rotate(-90 52 52)"/>
+              <text class="gnum" x="52" y="62" text-anchor="middle">37</text>
+            </svg>
+            <div class="gname">Performance</div><div class="glab">Fail</div>
+          </div>
+          <div class="gauge">
+            <svg width="104" height="104" viewBox="0 0 104 104" role="img" aria-label="Accessibility score 88 out of 100">
+              <circle cx="52" cy="52" r="44" fill="none" stroke="#F0EBEA" stroke-width="10"/>
+              <circle cx="52" cy="52" r="44" fill="none" stroke="#14100F" stroke-width="10" stroke-linecap="round" stroke-dasharray="243.4 276.5" transform="rotate(-90 52 52)"/>
+              <text class="gnum" x="52" y="62" text-anchor="middle">88</text>
+            </svg>
+            <div class="gname">Accessibility</div><div class="glab">Gaps</div>
+          </div>
+          <div class="gauge">
+            <svg width="104" height="104" viewBox="0 0 104 104" role="img" aria-label="Best practices score 73 out of 100">
+              <circle cx="52" cy="52" r="44" fill="none" stroke="#F0EBEA" stroke-width="10"/>
+              <circle cx="52" cy="52" r="44" fill="none" stroke="#14100F" stroke-width="10" stroke-linecap="round" stroke-dasharray="201.9 276.5" transform="rotate(-90 52 52)"/>
+              <text class="gnum" x="52" y="62" text-anchor="middle">73</text>
+            </svg>
+            <div class="gname">Best practices</div><div class="glab">Homepage embeds</div>
+          </div>
+          <div class="gauge">
+            <svg width="104" height="104" viewBox="0 0 104 104" role="img" aria-label="SEO score 100 out of 100">
+              <circle cx="52" cy="52" r="44" fill="none" stroke="#F0EBEA" stroke-width="10"/>
+              <circle cx="52" cy="52" r="44" fill="none" stroke="#14100F" stroke-width="10" stroke-linecap="round" stroke-dasharray="276.5 276.5" transform="rotate(-90 52 52)"/>
+              <text class="gnum" x="52" y="62" text-anchor="middle">100</text>
+            </svg>
+            <div class="gname">SEO</div><div class="glab">Hygiene only</div>
+          </div>
+        </div>
+        <p class="sub" style="margin-top:20px;font-size:14px">Desktop scores are near-identical: 38 / 85 / 73 / 100. <code>/pricing</code> mobile: 38 / 89 / 100 / 100.</p>
+      </div>
+
+      <div class="callout">
+        <span class="eyebrow">Two things to understand about these scores</span>
+        <p><strong>CrUX field data returns "No Data" on every URL tested.</strong> Google isn't collecting enough real-world visits to report Core Web Vitals — itself a symptom of the traffic collapse. Everything here is lab data.</p>
+        <p style="margin-top:12px"><strong>SEO scoring 100 is not a measure of SEO performance.</strong> It only means basic technical hygiene — title, meta description, crawlability, viewport — is in order.</p>
+      </div>
+    </div>
+
+    <!-- 2.2 CWV -->
+    <div class="block">
+      <span class="eyebrow">2.2 — Core Web Vitals (lab)</span>
+      <h3>27.7 seconds to paint the main content</h3>
+
+      <div class="chart">
+        <div class="chart-title">Largest Contentful Paint vs Google's "Good" threshold</div>
+        <div class="chart-note">Seconds · lower is better · threshold 2.5 s</div>
+        <div class="bars">
+          <div class="bar-row"><div class="bar-lab">Homepage<small>mobile</small></div>
+            <div class="bar-track" style="overflow:visible"><div class="thresh" data-lab="2.5s good" style="left:9%"></div><div class="bar-fill" style="width:100%"><span class="bar-val inside">27.7 s</span></div></div></div>
+          <div class="bar-row"><div class="bar-lab"><code>/pricing</code><small>mobile</small></div>
+            <div class="bar-track" style="overflow:visible"><div class="thresh" style="left:9%"></div><div class="bar-fill" style="width:56%"><span class="bar-val inside">15.5 s</span></div></div></div>
+          <div class="bar-row"><div class="bar-lab">Homepage<small>desktop</small></div>
+            <div class="bar-track" style="overflow:visible"><div class="thresh" style="left:9%"></div><div class="bar-fill" style="width:21.7%"><span class="bar-val">6.0 s</span></div></div></div>
+        </div>
+      </div>
+
+      <p style="margin-top:20px">First Contentful Paint is a reasonable 4.1 s, so the page <em>shell</em> renders quickly — then the browser sits waiting on enormous media. Cumulative Layout Shift passes at 0. Total Blocking Time (880 ms) and Speed Index (21.2 s) both fail.</p>
+
+      <details class="more">
+        <summary>Full Core Web Vitals table — all three URLs</summary>
+        <div class="tbl-scroll">
+          <table>
+            <thead><tr><th>Metric</th><th class="num">Home mobile</th><th class="num">Home desktop</th><th class="num">/pricing mobile</th><th class="num">"Good"</th></tr></thead>
+            <tbody>
+              <tr><td class="key">Largest Contentful Paint</td><td class="num"><strong>27.7 s</strong></td><td class="num">6.0 s</td><td class="num">15.5 s</td><td class="num">≤ 2.5 s</td></tr>
+              <tr><td class="key">First Contentful Paint</td><td class="num">4.1 s</td><td class="num">0.8 s</td><td class="num">5.4 s</td><td class="num">≤ 1.8 s</td></tr>
+              <tr><td class="key">Total Blocking Time</td><td class="num">880 ms</td><td class="num">1,070 ms</td><td class="num">730 ms</td><td class="num">≤ 200 ms</td></tr>
+              <tr><td class="key">Cumulative Layout Shift</td><td class="num">0 <span class="pill ok">Pass</span></td><td class="num">0.045 <span class="pill ok">Pass</span></td><td class="num">0 <span class="pill ok">Pass</span></td><td class="num">≤ 0.1</td></tr>
+              <tr><td class="key">Speed Index</td><td class="num">21.2 s</td><td class="num">4.0 s</td><td class="num">11.2 s</td><td class="num">≤ 3.4 s</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
+    </div>
+
+    <!-- 2.3 OPPORTUNITIES -->
+    <div class="block">
+      <span class="eyebrow">2.3 — Where the weight is</span>
+      <h3>Print-resolution photography, shipped to phones</h3>
+
+      <div class="chart">
+        <div class="chart-title">Estimated savings — homepage, mobile</div>
+        <div class="chart-note">KiB recoverable per issue · total page weight 7,917 KiB</div>
+        <div class="bars">
+          <div class="bar-row"><div class="bar-lab">Improve image delivery</div><div class="bar-track"><div class="bar-fill" style="width:100%"><span class="bar-val inside">3,446 KiB</span></div></div></div>
+          <div class="bar-row"><div class="bar-lab">Reduce unused JavaScript</div><div class="bar-track"><div class="bar-fill" style="width:32.7%"><span class="bar-val">1,126 KiB</span></div></div></div>
+          <div class="bar-row"><div class="bar-lab">Efficient cache lifetimes</div><div class="bar-track"><div class="bar-fill" style="width:11.7%"><span class="bar-val">402 KiB</span></div></div></div>
+          <div class="bar-row"><div class="bar-lab">Reduce unused CSS</div><div class="bar-track"><div class="bar-fill" style="width:4.8%"><span class="bar-val">165 KiB</span></div></div></div>
+          <div class="bar-row"><div class="bar-lab">Legacy JavaScript<small>polyfills</small></div><div class="bar-track"><div class="bar-fill" style="width:4%"><span class="bar-val">137 KiB</span></div></div></div>
+          <div class="bar-row"><div class="bar-lab">Minify JavaScript</div><div class="bar-track"><div class="bar-fill" style="width:3.7%"><span class="bar-val">126 KiB</span></div></div></div>
+        </div>
+        <p class="sub" style="margin-top:18px;font-size:14px">Time-based opportunities, shown separately: render-blocking requests <strong>1,660 ms</strong> · font display <strong>300 ms</strong>.</p>
+      </div>
+
+      <p style="margin-top:24px">The homepage hero slider serves Squarespace CDN images at <strong>2,500 × 3,320 px</strong> into a display box of <strong>634 × 843 px</strong> — roughly <strong>15× more pixel data</strong> than the layout can use. Three slides alone transfer 2,142 KiB, of which 2,004 KiB is waste.</p>
+
+      <div class="tiles" style="margin-top:24px">
+        <div class="tile"><span class="lab">Total page weight</span><span class="val neg">7,917<span style="font-size:.5em"> KiB</span></span><span class="delta">desktop 7,886</span></div>
+        <div class="tile"><span class="lab">Main-thread work</span><span class="val">7.0<span style="font-size:.5em">s</span></span><span class="delta">desktop 5.0 s</span></div>
+        <div class="tile"><span class="lab">JS execution</span><span class="val">3.6<span style="font-size:.5em">s</span></span><span class="delta">desktop 2.7 s</span></div>
+        <div class="tile"><span class="lab">Long tasks</span><span class="val">18</span><span class="delta">desktop 19</span></div>
+        <div class="tile"><span class="lab">Animated elements</span><span class="val neg">186</span><span class="delta">all non-composited</span></div>
+      </div>
+
+      <div class="callout">
+        <span class="eyebrow">The good news</span>
+        <p>This single issue accounts for the bulk of the 27.7-second mobile LCP, and it requires <strong>no developer</strong> — only the Squarespace image manager. Re-upload the source files at roughly 1,200–1,600 px wide, let Squarespace generate responsive <code>srcset</code> variants, and reduce the slide count.</p>
+      </div>
+
+      <details class="more">
+        <summary>Hero slider asset breakdown</summary>
+        <div class="tbl-scroll">
+          <table>
+            <thead><tr><th>Asset</th><th class="num">Transferred</th><th class="num">Wasted</th></tr></thead>
+            <tbody>
+              <tr><td class="key">Slide 1 — <code>open-booth-1.jpg</code></td><td class="num">810.1 KiB</td><td class="num">757.9 KiB</td></tr>
+              <tr><td class="key">Slide 3 — <code>enclosed-….jpg</code></td><td class="num">713.5 KiB</td><td class="num">667.6 KiB</td></tr>
+              <tr><td class="key">Slide 4 — <code>carohero-6.jpg</code></td><td class="num">618.0 KiB</td><td class="num">578.2 KiB</td></tr>
+            </tbody>
+            <tfoot><tr><td>Across three slides</td><td class="num">2,141.6 KiB</td><td class="num">2,003.7 KiB</td></tr></tfoot>
+          </table>
+        </div>
+      </details>
+    </div>
+
+    <!-- 2.4 A11Y + FIX ORDER -->
+    <div class="block">
+      <span class="eyebrow">2.4 — Accessibility, best practices &amp; agentic browsing</span>
+      <h3>Gaps, not a rewrite</h3>
+      <p>Accessibility scores 88 / 85 with <strong>24 audits passing</strong> — these are gaps, not a rebuild. Best practices fails only on the homepage (73 vs 100 on <code>/pricing</code>), pointing at the Instagram and reviews embeds rather than the Squarespace template. Agentic browsing fails on a malformed accessibility tree — the same structure AI assistants read.</p>
+
+      <details class="more">
+        <summary>Full detail — accessibility, best practices, agentic browsing</summary>
+      <div class="cols" style="padding:18px">
+        <div class="card">
+          <h4>Accessibility <span class="pill flat">88 / 85</span></h4>
+          <p>Insufficient colour contrast — a known constraint of the pink-on-pink palette. <code>&lt;iframe&gt;</code> with no title. Links with no discernible name. Heading order not sequentially descending — <strong>also an SEO issue</strong>, as it weakens topical signals. 24 audits pass, so these are gaps rather than a rebuild.</p>
+        </div>
+        <div class="card">
+          <h4>Best practices <span class="pill flat">73</span></h4>
+          <p>One third-party cookie. Browser console errors. Issues flagged in DevTools. <code>/pricing</code> scores <strong>100</strong> here, so the failures are tied to homepage-specific embeds — most likely the Instagram feed and Google reviews widget, not the Squarespace template.</p>
+        </div>
+        <div class="card">
+          <h4>Agentic browsing <span class="pill flat">1 / 2</span></h4>
+          <p>Fails on <strong>"Accessibility tree is not well-formed."</strong> This is the same structure AI assistants use to read and act on a page — consistent with the zero AI citations in Part 1, and increasingly relevant as agents mediate discovery and booking.</p>
+        </div>
+      </div>
+      </details>
+    </div>
+
+    <!-- 2.5 FIX PRIORITY -->
+    <div class="block">
+      <span class="eyebrow">2.5 — Fix priority</span>
+      <h3>In this order</h3>
+      <ol class="steps">
+        <li><strong>Resize hero and gallery imagery</strong>WebP / AVIF, responsive sizes. Should strip 3–4 MB and move LCP from 27.7 s into single digits on its own.</li>
+        <li><strong>Reduce JavaScript</strong>Audit third-party embeds — the Instagram feed is expensive and sits below the fold. Defer and lazy-load non-critical scripts; remove legacy polyfills.</li>
+        <li><strong>Reduce animation load</strong>Cut the animated element count, or move animations to <code>transform</code> / <code>opacity</code> so they run on the compositor.</li>
+        <li><strong>Quick wins</strong><code>font-display: swap</code>, cache headers, explicit image <code>width</code> / <code>height</code>, colour contrast, iframe titles, link names, heading order.</li>
+      </ol>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ PART 3 — GROWTH ══════════════════ -->
+<section id="growth">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Part 3 — Growth strategy</span>
+      <h2>Wedding &amp; commercial leads.</h2>
+      <p class="lede">Boothalicious currently ranks for <strong>zero</strong> wedding keywords and <strong>zero</strong> corporate keywords. This is a build, not an optimisation exercise.</p>
+    </div>
+
+    <!-- 3.1 -->
+    <div class="block">
+      <span class="eyebrow">3.1 — Starting position</span>
+      <h3>20 URLs versus 97</h3>
+      <p>In The Booth pulls ~3,000 AU organic visits a month from 97 pages, and their formula is entirely visible — location hubs, event-type pages, one URL per booth format, separate indexable pricing, venue partner pages and planning guides. <strong>Boothalicious has 20 URLs, 4 of which 404.</strong> That structural difference is the entire explanation for the traffic gap.</p>
+
+      <div class="chart">
+        <div class="chart-title">Addressable volume by cluster</div>
+        <div class="chart-note">Total AU monthly searches · Ahrefs Keywords Explorer</div>
+        <div class="bars">
+          <div class="bar-row"><div class="bar-lab">360 / glam booth<small>922 keywords · KD 0&ndash;27</small></div><div class="bar-track"><div class="bar-fill" style="width:100%"><span class="bar-val inside">2,600</span></div></div></div>
+          <div class="bar-row"><div class="bar-lab">Wedding<small>65 keywords · KD 26&ndash;58</small></div><div class="bar-track"><div class="bar-fill" style="width:34.6%"><span class="bar-val">900</span></div></div></div>
+          <div class="bar-row"><div class="bar-lab">Corporate<small>87 keywords · KD 0&ndash;49</small></div><div class="bar-track"><div class="bar-fill" style="width:32.7%"><span class="bar-val">850</span></div></div></div>
+        </div>
+        <p class="sub" style="margin-top:18px;font-size:14px">Content gap vs inthebooth.com.au + adeptphotobooths.com.au: <strong>302 keywords</strong> they rank for and Boothalicious does not.</p>
+      </div>
+    </div>
+
+    <!-- 3.2 OPPORTUNITY MAP -->
+    <div class="block">
+      <span class="eyebrow">3.2 — The opportunity map</span>
+      <h3>Everything worth targeting, on one screen</h3>
+      <p>Each dot is a keyword. Up means more searches; left means less competition. <strong>The pink zone is the sweet spot</strong> — high volume, low difficulty. Hover any dot for its exact figures.</p>
+
+      <div class="chart">
+        <div class="chart-title">Search volume vs keyword difficulty — AU</div>
+        <div class="chart-note">Same axes on all four panels · vertical = monthly searches · horizontal = difficulty (0&ndash;60)</div>
+        <div class="legend">
+          <span><i class="swatch" style="background:#FF1D43"></i> In the sweet spot</span>
+          <span><i class="swatch" style="background:#14100F;opacity:.62"></i> Harder or lower volume</span>
+          <span><i class="swatch" style="background:#FFD3DB;border-color:#FF9FB0"></i> KD &le; 25 &amp; 150+ searches</span>
+        </div>
+        <div class="scatter-grid">
+<figure class="sp"><figcaption><span class="sp-name">360 / glam / roaming</span><span class="sp-sub">922 keywords · 2,600 searches/mo</span></figcaption>
+<svg viewBox="0 0 320 246" role="img" aria-label="360 / glam / roaming cluster: search volume versus keyword difficulty">
+<rect x="44.0" y="18.0" width="109.2" height="136.9" fill="#FFD3DB" opacity=".45"/>
+<text x="149.2" y="31.0" text-anchor="end" class="sp-zone">EASY &amp; HIGH VOLUME</text>
+<line x1="44" y1="141.2" x2="306" y2="141.2" stroke="#F0EBEA" stroke-width="1"/>
+<text x="37" y="144.7" text-anchor="end" class="sp-ax">200</text>
+<line x1="44" y1="86.5" x2="306" y2="86.5" stroke="#F0EBEA" stroke-width="1"/>
+<text x="37" y="90.0" text-anchor="end" class="sp-ax">400</text>
+<line x1="44" y1="31.7" x2="306" y2="31.7" stroke="#F0EBEA" stroke-width="1"/>
+<text x="37" y="35.2" text-anchor="end" class="sp-ax">600</text>
+<text x="44.0" y="212" text-anchor="middle" class="sp-ax">0</text>
+<text x="131.3" y="212" text-anchor="middle" class="sp-ax">20</text>
+<text x="218.7" y="212" text-anchor="middle" class="sp-ax">40</text>
+<text x="306.0" y="212" text-anchor="middle" class="sp-ax">60</text>
+<line x1="44" y1="18" x2="44" y2="196" stroke="#E8E2E1" stroke-width="1"/>
+<line x1="44" y1="196" x2="306" y2="196" stroke="#E8E2E1" stroke-width="1"/>
+<circle cx="65.8" cy="59.1" r="6" fill="#FF1D43" opacity="1" stroke="#fff" stroke-width="2"><title>360 photo booth — 500/mo, KD 5</title></circle>
+<circle cx="100.8" cy="127.5" r="6" fill="#FF1D43" opacity="1" stroke="#fff" stroke-width="2"><title>glambot — 250/mo, KD 13</title></circle>
+<circle cx="127.0" cy="127.5" r="6" fill="#FF1D43" opacity="1" stroke="#fff" stroke-width="2"><title>360 photo booth hire — 250/mo, KD 19</title></circle>
+<circle cx="161.9" cy="141.2" r="6" fill="#14100F" opacity=".62" stroke="#fff" stroke-width="2"><title>360 photo booth sydney — 200/mo, KD 27</title></circle>
+<circle cx="153.2" cy="141.2" r="6" fill="#FF1D43" opacity="1" stroke="#fff" stroke-width="2"><title>360 photo booth hire sydney — 200/mo, KD 25</title></circle>
+<circle cx="57.1" cy="154.9" r="6" fill="#FF1D43" opacity="1" stroke="#fff" stroke-width="2"><title>360 photobooth — 150/mo, KD 3</title></circle>
+<circle cx="148.8" cy="154.9" r="6" fill="#FF1D43" opacity="1" stroke="#fff" stroke-width="2"><title>360 photo booth hire melbourne — 150/mo, KD 24</title></circle>
+<circle cx="44.0" cy="154.9" r="6" fill="#FF1D43" opacity="1" stroke="#fff" stroke-width="2"><title>glam photo booth — 150/mo, KD 0</title></circle>
+<circle cx="44.0" cy="154.9" r="6" fill="#FF1D43" opacity="1" stroke="#fff" stroke-width="2"><title>roaming photo booth — 150/mo, KD 0</title></circle>
+<circle cx="44.0" cy="154.9" r="6" fill="#FF1D43" opacity="1" stroke="#fff" stroke-width="2"><title>green screen photo booth — 150/mo, KD 0</title></circle>
+<circle cx="61.5" cy="154.9" r="6" fill="#FF1D43" opacity="1" stroke="#fff" stroke-width="2"><title>vintage photobooth — 150/mo, KD 4</title></circle>
+<circle cx="44.0" cy="168.6" r="6" fill="#14100F" opacity=".62" stroke="#fff" stroke-width="2"><title>360 photo booth hire price — 100/mo, KD 0</title></circle>
+<text x="76.8" y="62.6" text-anchor="start" class="sp-lab" paint-order="stroke" stroke="#FFFFFF" stroke-width="3.5" stroke-linejoin="round">360 photo booth</text>
+<text x="111.8" y="148.5" text-anchor="start" class="sp-lab" paint-order="stroke" stroke="#FFFFFF" stroke-width="3.5" stroke-linejoin="round">glambot</text>
+<text x="175" y="242" text-anchor="middle" class="sp-ax">KEYWORD DIFFICULTY →</text>
+</svg></figure>
+<figure class="sp"><figcaption><span class="sp-name">Core &amp; city</span><span class="sp-sub">the base layer</span></figcaption>
+<svg viewBox="0 0 320 246" role="img" aria-label="Core &amp; city cluster: search volume versus keyword difficulty">
+<rect x="44.0" y="18.0" width="109.2" height="136.9" fill="#FFD3DB" opacity=".45"/>
+<text x="149.2" y="31.0" text-anchor="end" class="sp-zone">EASY &amp; HIGH VOLUME</text>
+<line x1="44" y1="141.2" x2="306" y2="141.2" stroke="#F0EBEA" stroke-width="1"/>
+<text x="37" y="144.7" text-anchor="end" class="sp-ax">200</text>
+<line x1="44" y1="86.5" x2="306" y2="86.5" stroke="#F0EBEA" stroke-width="1"/>
+<text x="37" y="90.0" text-anchor="end" class="sp-ax">400</text>
+<line x1="44" y1="31.7" x2="306" y2="31.7" stroke="#F0EBEA" stroke-width="1"/>
+<text x="37" y="35.2" text-anchor="end" class="sp-ax">600</text>
+<text x="44.0" y="212" text-anchor="middle" class="sp-ax">0</text>
+<text x="131.3" y="212" text-anchor="middle" class="sp-ax">20</text>
+<text x="218.7" y="212" text-anchor="middle" class="sp-ax">40</text>
+<text x="306.0" y="212" text-anchor="middle" class="sp-ax">60</text>
+<line x1="44" y1="18" x2="44" y2="196" stroke="#E8E2E1" stroke-width="1"/>
+<line x1="44" y1="196" x2="306" y2="196" stroke="#E8E2E1" stroke-width="1"/>
+<circle cx="297.3" cy="72.8" r="6" fill="#14100F" opacity=".62" stroke="#fff" stroke-width="2"><title>photo booth hire — 450/mo, KD 58</title></circle>
+<circle cx="306.0" cy="100.2" r="6" fill="#14100F" opacity=".62" stroke="#fff" stroke-width="2"><title>photobooth hire — 350/mo, KD 60</title></circle>
+<circle cx="100.8" cy="113.8" r="6" fill="#FF1D43" opacity="1" stroke="#fff" stroke-width="2"><title>sydney photo booth — 300/mo, KD 13</title></circle>
+<circle cx="44.0" cy="113.8" r="6" fill="#FF1D43" opacity="1" stroke="#fff" stroke-width="2"><title>photobooth sydney — 300/mo, KD 0</title></circle>
+<circle cx="175.0" cy="113.8" r="6" fill="#14100F" opacity=".62" stroke="#fff" stroke-width="2"><title>photo booths — 300/mo, KD 30</title></circle>
+<circle cx="44.0" cy="141.2" r="6" fill="#FF1D43" opacity="1" stroke="#fff" stroke-width="2"><title>photo booth near me — 200/mo, KD 0</title></circle>
+<circle cx="236.1" cy="154.9" r="6" fill="#14100F" opacity=".62" stroke="#fff" stroke-width="2"><title>hire photo booth — 150/mo, KD 44</title></circle>
+<circle cx="205.6" cy="154.9" r="6" fill="#14100F" opacity=".62" stroke="#fff" stroke-width="2"><title>photo booth rental — 150/mo, KD 37</title></circle>
+<text x="111.8" y="117.3" text-anchor="start" class="sp-lab" paint-order="stroke" stroke="#FFFFFF" stroke-width="3.5" stroke-linejoin="round">sydney photo booth</text>
+<text x="55.0" y="134.8" text-anchor="start" class="sp-lab" paint-order="stroke" stroke="#FFFFFF" stroke-width="3.5" stroke-linejoin="round">photobooth sydney</text>
+<text x="175" y="242" text-anchor="middle" class="sp-ax">KEYWORD DIFFICULTY →</text>
+</svg></figure>
+<figure class="sp"><figcaption><span class="sp-name">Wedding</span><span class="sp-sub">65 keywords · 900 searches/mo</span></figcaption>
+<svg viewBox="0 0 320 246" role="img" aria-label="Wedding cluster: search volume versus keyword difficulty">
+<rect x="44.0" y="18.0" width="109.2" height="136.9" fill="#FFD3DB" opacity=".45"/>
+<text x="149.2" y="31.0" text-anchor="end" class="sp-zone">EASY &amp; HIGH VOLUME</text>
+<line x1="44" y1="141.2" x2="306" y2="141.2" stroke="#F0EBEA" stroke-width="1"/>
+<text x="37" y="144.7" text-anchor="end" class="sp-ax">200</text>
+<line x1="44" y1="86.5" x2="306" y2="86.5" stroke="#F0EBEA" stroke-width="1"/>
+<text x="37" y="90.0" text-anchor="end" class="sp-ax">400</text>
+<line x1="44" y1="31.7" x2="306" y2="31.7" stroke="#F0EBEA" stroke-width="1"/>
+<text x="37" y="35.2" text-anchor="end" class="sp-ax">600</text>
+<text x="44.0" y="212" text-anchor="middle" class="sp-ax">0</text>
+<text x="131.3" y="212" text-anchor="middle" class="sp-ax">20</text>
+<text x="218.7" y="212" text-anchor="middle" class="sp-ax">40</text>
+<text x="306.0" y="212" text-anchor="middle" class="sp-ax">60</text>
+<line x1="44" y1="18" x2="44" y2="196" stroke="#E8E2E1" stroke-width="1"/>
+<line x1="44" y1="196" x2="306" y2="196" stroke="#E8E2E1" stroke-width="1"/>
+<circle cx="157.5" cy="86.5" r="6" fill="#14100F" opacity=".62" stroke="#fff" stroke-width="2"><title>wedding photo booth — 400/mo, KD 26</title></circle>
+<circle cx="161.9" cy="113.8" r="6" fill="#14100F" opacity=".62" stroke="#fff" stroke-width="2"><title>wedding photo booth hire — 300/mo, KD 27</title></circle>
+<circle cx="157.5" cy="154.9" r="6" fill="#14100F" opacity=".62" stroke="#fff" stroke-width="2"><title>wedding photo booth hire sydney — 150/mo, KD 26</title></circle>
+<circle cx="214.3" cy="168.6" r="6" fill="#14100F" opacity=".62" stroke="#fff" stroke-width="2"><title>wedding photobooth hire — 100/mo, KD 39</title></circle>
+<circle cx="240.5" cy="187.8" r="6" fill="#14100F" opacity=".62" stroke="#fff" stroke-width="2"><title>photo booth wedding hire — 30/mo, KD 45</title></circle>
+<circle cx="297.3" cy="193.3" r="6" fill="#14100F" opacity=".62" stroke="#fff" stroke-width="2"><title>wedding photo booth hire melbourne — 10/mo, KD 58</title></circle>
+<text x="168.5" y="90.0" text-anchor="start" class="sp-lab" paint-order="stroke" stroke="#FFFFFF" stroke-width="3.5" stroke-linejoin="round">wedding photo booth</text>
+<text x="172.9" y="134.8" text-anchor="start" class="sp-lab" paint-order="stroke" stroke="#FFFFFF" stroke-width="3.5" stroke-linejoin="round">wedding photo booth hire</text>
+<text x="175" y="242" text-anchor="middle" class="sp-ax">KEYWORD DIFFICULTY →</text>
+</svg></figure>
+<figure class="sp"><figcaption><span class="sp-name">Corporate</span><span class="sp-sub">87 keywords · 850 searches/mo · highest CPC</span></figcaption>
+<svg viewBox="0 0 320 246" role="img" aria-label="Corporate cluster: search volume versus keyword difficulty">
+<rect x="44.0" y="18.0" width="109.2" height="136.9" fill="#FFD3DB" opacity=".45"/>
+<text x="149.2" y="31.0" text-anchor="end" class="sp-zone">EASY &amp; HIGH VOLUME</text>
+<line x1="44" y1="141.2" x2="306" y2="141.2" stroke="#F0EBEA" stroke-width="1"/>
+<text x="37" y="144.7" text-anchor="end" class="sp-ax">200</text>
+<line x1="44" y1="86.5" x2="306" y2="86.5" stroke="#F0EBEA" stroke-width="1"/>
+<text x="37" y="90.0" text-anchor="end" class="sp-ax">400</text>
+<line x1="44" y1="31.7" x2="306" y2="31.7" stroke="#F0EBEA" stroke-width="1"/>
+<text x="37" y="35.2" text-anchor="end" class="sp-ax">600</text>
+<text x="44.0" y="212" text-anchor="middle" class="sp-ax">0</text>
+<text x="131.3" y="212" text-anchor="middle" class="sp-ax">20</text>
+<text x="218.7" y="212" text-anchor="middle" class="sp-ax">40</text>
+<text x="306.0" y="212" text-anchor="middle" class="sp-ax">60</text>
+<line x1="44" y1="18" x2="44" y2="196" stroke="#E8E2E1" stroke-width="1"/>
+<line x1="44" y1="196" x2="306" y2="196" stroke="#E8E2E1" stroke-width="1"/>
+<circle cx="240.5" cy="127.5" r="6" fill="#14100F" opacity=".62" stroke="#fff" stroke-width="2"><title>corporate photo booth hire — 250/mo, KD 45</title></circle>
+<circle cx="258.0" cy="168.6" r="6" fill="#14100F" opacity=".62" stroke="#fff" stroke-width="2"><title>event photo booth — 100/mo, KD 49</title></circle>
+<circle cx="44.0" cy="190.5" r="6" fill="#14100F" opacity=".62" stroke="#fff" stroke-width="2"><title>corporate photo booth — 20/mo, KD 0</title></circle>
+<text x="229.5" y="131.0" text-anchor="end" class="sp-lab" paint-order="stroke" stroke="#FFFFFF" stroke-width="3.5" stroke-linejoin="round">corporate photo booth hire</text>
+<text x="247.0" y="189.6" text-anchor="end" class="sp-lab" paint-order="stroke" stroke="#FFFFFF" stroke-width="3.5" stroke-linejoin="round">event photo booth</text>
+<text x="175" y="242" text-anchor="middle" class="sp-ax">KEYWORD DIFFICULTY →</text>
+</svg></figure>
+        </div>
+      </div>
+
+      <div class="cols" style="margin-top:28px">
+        <div class="card">
+          <h4>360 / glam is the standout <span class="pill bad">Act on this</span></h4>
+          <p>Almost the entire cluster sits in the sweet spot — <strong>more addressable volume than wedding and corporate combined, at a fraction of the difficulty.</strong> Five terms sit at KD 0&ndash;5. Adept Photo Booths is currently harvesting it unopposed.</p>
+        </div>
+        <div class="card">
+          <h4>Wedding is a straight-line build</h4>
+          <p>Clustered at KD 26&ndash;27 — moderate, not hard. In The Booth ranks <strong>#1&ndash;2</strong> from a single URL with <strong>zero referring domains</strong> pointing at it, earning ~158 visits a month. Beatable with better content and better photography.</p>
+        </div>
+        <div class="card">
+          <h4>Corporate is small but rich</h4>
+          <p>Lower volume and higher difficulty, but roughly <strong>3&times; the value per click</strong> ($3.00 vs $1.10 CPC). Both competitors already rank here &mdash; In The Booth #3, Adept #2 &mdash; proving room on page one with no dominant incumbent.</p>
+        </div>
+        <div class="card">
+          <h4>Core terms split in two</h4>
+          <p>The head terms &mdash; "photo booth hire", "photobooth hire" &mdash; sit at KD 58&ndash;60 and are a long game. But "photobooth sydney" (300, KD&nbsp;0) and "photo booth near me" (200, KD&nbsp;0) are free wins sitting untouched.</p>
+        </div>
+      </div>
+
+      <div class="callout">
+        <span class="eyebrow">Decision point</span>
+        <p>If adding a 360 or glam booth is commercially viable, it is likely the single highest-leverage decision available &mdash; and 360 booths skew heavily to both weddings and brand activations, exactly the two target audiences. If not, the existing vintage booth deserves a proper page: "vintage photobooth" is 150 searches a month at KD 4, and In The Booth ranks #9 with a weak page.</p>
+      </div>
+
+      <div class="callout quiet">
+        <span class="eyebrow">Unused asset</span>
+        <p>The existing <code>/branded-booth</code> product is exactly what sells into brand activations, product launches, store openings and trade shows. The homepage lists all of these event types as body copy rather than as pages that can rank.</p>
+      </div>
+
+      <details class="more">
+        <summary>All keyword data — wedding, corporate, 360 / glam, core &amp; city</summary>
+        <div class="tbl-scroll">
+          <table>
+            <caption>Wedding cluster</caption>
+            <thead><tr><th>Keyword</th><th class="num">Volume</th><th class="num">KD</th><th class="num">CPC</th></tr></thead>
+            <tbody>
+              <tr><td class="key">wedding photo booth</td><td class="num">400</td><td class="num">26</td><td class="num">$0.98</td></tr>
+              <tr><td class="key">wedding photo booth hire</td><td class="num">250&ndash;300</td><td class="num">27</td><td class="num">$1.05&ndash;1.10</td></tr>
+              <tr><td class="key">wedding photobooth</td><td class="num">150</td><td class="num">&mdash;</td><td class="num">&mdash;</td></tr>
+              <tr><td class="key">wedding photo booth hire sydney</td><td class="num">150</td><td class="num">26</td><td class="num">$2.50</td></tr>
+              <tr><td class="key">wedding photo booths</td><td class="num">150</td><td class="num">&mdash;</td><td class="num">&mdash;</td></tr>
+              <tr><td class="key">photo booth wedding</td><td class="num">150</td><td class="num">&mdash;</td><td class="num">&mdash;</td></tr>
+              <tr><td class="key">wedding photobooth hire</td><td class="num">100</td><td class="num">39</td><td class="num">$0.75</td></tr>
+              <tr><td class="key">photo booth for wedding</td><td class="num">100</td><td class="num">&mdash;</td><td class="num">&mdash;</td></tr>
+              <tr><td class="key">360 wedding photo booth</td><td class="num">90</td><td class="num">&mdash;</td><td class="num">&mdash;</td></tr>
+              <tr><td class="key">hire photo booth for wedding</td><td class="num">50</td><td class="num">&mdash;</td><td class="num">&mdash;</td></tr>
+              <tr><td class="key">hire photo booth wedding</td><td class="num">40</td><td class="num">&mdash;</td><td class="num">&mdash;</td></tr>
+              <tr><td class="key">wedding photo booth hire packages</td><td class="num">30</td><td class="num">&mdash;</td><td class="num">&mdash;</td></tr>
+              <tr><td class="key">photo booth hire melbourne wedding</td><td class="num">30</td><td class="num">&mdash;</td><td class="num">&mdash;</td></tr>
+              <tr><td class="key">photo booth wedding hire</td><td class="num">30</td><td class="num">45</td><td class="num">$0.80</td></tr>
+              <tr><td class="key">wedding photo booth melbourne</td><td class="num">20</td><td class="num">&mdash;</td><td class="num">&mdash;</td></tr>
+              <tr><td class="key">wedding photo booth hire melbourne</td><td class="num">10</td><td class="num">58</td><td class="num">$1.10</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="tbl-scroll">
+          <table>
+            <caption>Corporate cluster</caption>
+            <thead><tr><th>Keyword</th><th class="num">Volume</th><th class="num">KD</th><th class="num">CPC</th></tr></thead>
+            <tbody>
+              <tr><td class="key">corporate photo booth hire</td><td class="num">200&ndash;250</td><td class="num">45</td><td class="num"><strong>$2.91&ndash;3.00</strong></td></tr>
+              <tr><td class="key">corporate photo booth sydney</td><td class="num">100</td><td class="num">&mdash;</td><td class="num">&mdash;</td></tr>
+              <tr><td class="key">event photo booth</td><td class="num">100</td><td class="num">49</td><td class="num">$1.01</td></tr>
+              <tr><td class="key">photo booth corporate event</td><td class="num">70</td><td class="num">&mdash;</td><td class="num">&mdash;</td></tr>
+              <tr><td class="key">corporate 360 photo booth hire</td><td class="num">60</td><td class="num">&mdash;</td><td class="num">&mdash;</td></tr>
+              <tr><td class="key">corporate event photo booth rentals</td><td class="num">50</td><td class="num">&mdash;</td><td class="num">&mdash;</td></tr>
+              <tr><td class="key">corporate ai photo booth hire</td><td class="num">30</td><td class="num">&mdash;</td><td class="num">&mdash;</td></tr>
+              <tr><td class="key">corporate event photo booth</td><td class="num">30</td><td class="num">&mdash;</td><td class="num">&mdash;</td></tr>
+              <tr><td class="key">corporate photo booth rental</td><td class="num">30</td><td class="num">&mdash;</td><td class="num">&mdash;</td></tr>
+              <tr><td class="key">photo booth for corporate events</td><td class="num">30</td><td class="num">&mdash;</td><td class="num">&mdash;</td></tr>
+              <tr><td class="key">corporate photo booth</td><td class="num">20</td><td class="num"><strong>0</strong></td><td class="num">$1.30</td></tr>
+              <tr><td class="key">corporate photo booth melbourne</td><td class="num">10</td><td class="num">&mdash;</td><td class="num">&mdash;</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="tbl-scroll">
+          <table>
+            <caption>360 / glam / roaming cluster</caption>
+            <thead><tr><th>Keyword</th><th class="num">Volume</th><th class="num">KD</th></tr></thead>
+            <tbody>
+              <tr><td class="key">360 photo booth</td><td class="num">500</td><td class="num"><strong>5</strong></td></tr>
+              <tr><td class="key">glambot</td><td class="num">250</td><td class="num">13</td></tr>
+              <tr><td class="key">360 photo booth hire</td><td class="num">200&ndash;250</td><td class="num">19</td></tr>
+              <tr><td class="key">360 photo booth sydney</td><td class="num">200</td><td class="num">27</td></tr>
+              <tr><td class="key">360 photo booth hire sydney</td><td class="num">200</td><td class="num">25</td></tr>
+              <tr><td class="key">360 photobooth</td><td class="num">150</td><td class="num"><strong>3</strong></td></tr>
+              <tr><td class="key">360 photo booth hire melbourne</td><td class="num">150</td><td class="num">24</td></tr>
+              <tr><td class="key">glam photo booth</td><td class="num">150</td><td class="num"><strong>0</strong></td></tr>
+              <tr><td class="key">roaming photo booth</td><td class="num">150</td><td class="num"><strong>0</strong></td></tr>
+              <tr><td class="key">green screen photo booth</td><td class="num">150</td><td class="num"><strong>0</strong></td></tr>
+              <tr><td class="key">vintage photobooth</td><td class="num">150</td><td class="num"><strong>4</strong></td></tr>
+              <tr><td class="key">360 photo booth hire price</td><td class="num">100</td><td class="num"><strong>0</strong></td></tr>
+              <tr><td class="key">corporate 360 photo booth hire</td><td class="num">60</td><td class="num">&mdash;</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="tbl-scroll">
+          <table>
+            <caption>Core &amp; city terms</caption>
+            <thead><tr><th>Keyword</th><th class="num">Volume</th><th class="num">KD</th></tr></thead>
+            <tbody>
+              <tr><td class="key">photo booth melbourne</td><td class="num">620</td><td class="num">&mdash;</td></tr>
+              <tr><td class="key">photo booth hire melbourne</td><td class="num">500</td><td class="num">&mdash;</td></tr>
+              <tr><td class="key">photobooth melbourne</td><td class="num">450</td><td class="num">&mdash;</td></tr>
+              <tr><td class="key">party photo booth hire</td><td class="num">450</td><td class="num">&mdash;</td></tr>
+              <tr><td class="key">photo booth hire</td><td class="num">450</td><td class="num">58</td></tr>
+              <tr><td class="key">photobooth hire</td><td class="num">350</td><td class="num">60</td></tr>
+              <tr><td class="key">sydney photo booth</td><td class="num">300</td><td class="num">13</td></tr>
+              <tr><td class="key">photobooth sydney</td><td class="num">300</td><td class="num"><strong>0</strong></td></tr>
+              <tr><td class="key">photo booths</td><td class="num">300</td><td class="num">30</td></tr>
+              <tr><td class="key">photo booth near me</td><td class="num">200</td><td class="num"><strong>0</strong></td></tr>
+              <tr><td class="key">hire photo booth</td><td class="num">150</td><td class="num">44</td></tr>
+              <tr><td class="key">photo booth rental</td><td class="num">150</td><td class="num">37</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </details>
+    </div>
+
+    <!-- 3.3 ARCHITECTURE -->
+    <div class="block">
+      <span class="eyebrow">3.3 &mdash; Recommended architecture</span>
+      <h3>The structure that actually ranks</h3>
+      <p>Modelled on In The Booth's working structure &mdash; their Adelaide location page alone earns 528 visits a month; Darwin 279.</p>
+
+      <div class="tree" role="img" aria-label="Recommended site architecture: events, locations, booths, venues and guides sections">/
+&#9500;&#9472;&#9472; <b>/events/</b>
+&#9474;   &#9500;&#9472;&#9472; /events/wedding-photo-booth-hire/
+&#9474;   &#9500;&#9472;&#9472; /events/corporate-photo-booth-hire/
+&#9474;   &#9500;&#9472;&#9472; /events/brand-activations/
+&#9474;   &#9500;&#9472;&#9472; /events/engagement-parties/
+&#9474;   &#9500;&#9472;&#9472; /events/birthday-parties/
+&#9474;   &#9492;&#9472;&#9472; /events/school-formals/
+&#9474;
+&#9500;&#9472;&#9472; <b>/locations/</b>
+&#9474;   &#9500;&#9472;&#9472; /locations/photo-booth-hire-melbourne/
+&#9474;   &#9492;&#9472;&#9472; /locations/photo-booth-hire-sydney/
+&#9474;
+&#9500;&#9472;&#9472; <b>/booths/</b>
+&#9474;   &#9500;&#9472;&#9472; /booths/open-booth/          <i>&#8592; restore</i>
+&#9474;   &#9500;&#9472;&#9472; /booths/enclosed-booth/      <i>&#8592; restore (404)</i>
+&#9474;   &#9500;&#9472;&#9472; /booths/branded-booth/
+&#9474;   &#9500;&#9472;&#9472; /booths/vintage-booth/
+&#9474;   &#9492;&#9472;&#9472; /booths/360-booth/           <i>&#8592; new, if viable</i>
+&#9474;
+&#9500;&#9472;&#9472; <b>/venues/</b>                          <u>venue partner pages</u>
+&#9474;   &#9492;&#9472;&#9472; /venues/[venue-name]/
+&#9474;
+&#9492;&#9472;&#9472; <b>/guides/</b>                          <u>wedding planning content</u></div>
+
+      <div class="cols" style="margin-top:28px">
+        <div>
+          <h4>Rules</h4>
+          <ul class="plain">
+            <li>Every wedding and corporate page gets its own enquiry form &mdash; not a link back to a generic <code>/booknow</code></li>
+            <li>One strong <em>national</em> wedding page, not a dozen thin city-wedding pages &mdash; Melbourne-specific wedding terms are too thin to support them</li>
+            <li>Fix <code>/locations</code> &mdash; it claims 3 locations and lists 2</li>
+            <li>Resolve the <code>/enclosed-booth</code> 404 before anything else</li>
+            <li>Consolidate <code>/home</code>, <code>/info</code>, <code>/poh</code> via canonical or redirect</li>
+          </ul>
+        </div>
+        <div>
+          <h4>Venue partner tactic</h4>
+          <p style="font-size:16px">In The Booth runs <code>/partners/[venue-name]</code> pages for individual reception venues &mdash; Bracknell Lodge, Eatons Hill Hotel, Crown Perth, The Star Gold Coast &mdash; and ranks for venue-name searches. This intercepts couples researching a specific venue and builds genuine local relevance.</p>
+          <p style="font-size:16px">A 15-year Melbourne and Sydney operator almost certainly already has photography from dozens of venues.</p>
+        </div>
+      </div>
+
+      <details class="more">
+        <summary>Recommended 301 redirect map</summary>
+        <div class="tbl-scroll">
+          <table>
+            <thead><tr><th>Broken URL</th><th>301 target</th></tr></thead>
+            <tbody>
+              <tr><td><code>/enclosed-booth</code></td><td><code>/our-booths/enclosed-booth</code> <span class="pill warn">rebuild</span></td></tr>
+              <tr><td><code>/photo-booth-types/</code></td><td><code>/our-booths</code></td></tr>
+              <tr><td><code>/sydney-photo-booth-hire</code></td><td><code>/photo-booth-hire-sydney</code> <span class="pill warn">rebuild</span></td></tr>
+              <tr><td><code>/booth-hire-locations/melbourne/</code></td><td><code>/photo-booth-hire-melbourne</code> <span class="pill warn">rebuild</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="sub" style="padding:14px 16px;margin:0">Redirects are a stopgap. For the two city URLs the correct fix is to rebuild them as full location pages, then point the old slugs at them.</p>
+      </details>
+    </div>
+
+    <!-- 3.4 CONTENT -->
+    <div class="block">
+      <span class="eyebrow">3.4 &mdash; Content programme</span>
+      <h3>None of this sells a photo booth. That's the point.</h3>
+      <p>In The Booth's booth pages rank partly because the site has wedding topical authority. Their informational pages build the relevance signals that let commercial pages rank &mdash; and they catch couples 6&ndash;12 months before booking.</p>
+
+      <div class="tbl-scroll">
+        <table>
+          <caption>In The Booth &mdash; top informational pages</caption>
+          <thead><tr><th>Page</th><th class="num">Traffic</th><th>Top keyword</th><th class="num">Volume</th><th class="num">KD</th></tr></thead>
+          <tbody>
+            <tr><td><code>/21st-birthday-party/</code></td><td class="num">95</td><td>21st birthday themes</td><td class="num">350</td><td class="num">1</td></tr>
+            <tr><td><code>/seating-chart-ideas/</code></td><td class="num">93</td><td>what is a seating chart</td><td class="num">2,400</td><td class="num">4</td></tr>
+            <tr><td><code>/bonbonniere-ideas/</code></td><td class="num">14</td><td>bonbonniere ideas</td><td class="num">300</td><td class="num">0</td></tr>
+            <tr><td><code>/photo-wall-ideas/</code></td><td class="num">6</td><td>event photo wall</td><td class="num">20</td><td class="num">&mdash;</td></tr>
+            <tr><td><code>/bridal-table-ideas/</code></td><td class="num">3</td><td>bridal table ideas</td><td class="num">40</td><td class="num">0</td></tr>
+            <tr><td><code>/sparkler-exit/</code></td><td class="num">2</td><td>sparkler exit</td><td class="num">20</td><td class="num">&mdash;</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout">
+        <span class="eyebrow">Target</span>
+        <p>Boothalicious has no blog at all &mdash; which is why informational keywords fell from 128 to 11. <strong>8&ndash;12 planning guides in the first six months.</strong> Keyword difficulty on these is effectively zero.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════════════ PART 4 — ROADMAP ══════════════════ -->
+<section id="roadmap">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Part 4 — Prioritised roadmap</span>
+      <h2>What to do, in what order.</h2>
+    </div>
+
+    <div class="phases">
+
+      <div class="phase">
+        <div class="phase-hd"><span class="phase-num">Days 1–30</span><h3>Repair &amp; foundation</h3></div>
+        <p class="why">Nothing new will rank while a 27-second mobile load and a broken URL set are in place.</p>
+        <ul class="check">
+          <li class="key">Restore <code>/enclosed-booth</code> and <code>/open-booth</code><em>Blocks everything else</em></li>
+          <li class="key">301 redirect <code>/sydney-photo-booth-hire</code>, <code>/photo-booth-types/</code> and <code>/booth-hire-locations/melbourne/</code> to their closest live equivalents</li>
+          <li class="key">Resize hero and gallery images to WebP / AVIF at responsive sizes — target sub-2 MB page weight<em>Squarespace image manager, no developer needed</em></li>
+          <li>Fix the <code>/locations</code> page — it claims 3 locations and lists 2</li>
+          <li>Rewrite the homepage title to lead with a commercial term plus city</li>
+          <li>Unique title and meta description on every page</li>
+          <li>Consolidate duplicate pages — <code>/home</code>, <code>/info</code>, <code>/poh</code>, <code>/form</code>, <code>/cart</code></li>
+          <li>Cross-check drop timing in Google Search Console and Analytics to confirm exactly when the pages were removed</li>
+        </ul>
+      </div>
+
+      <div class="phase">
+        <div class="phase-hd"><span class="phase-num">Days 30–90</span><h3>The money pages</h3></div>
+        <p class="why">Build the two pages that convert the audiences the business actually wants.</p>
+        <ul class="check">
+          <li class="key">Full wedding photo booth hire page — national, capturing Melbourne and Sydney</li>
+          <li class="key">Corporate and brand activation page</li>
+          <li>Melbourne and Sydney variants of each</li>
+          <li>Dedicated enquiry forms per segment — packages and availability for weddings; proposal, branding and invoicing for corporate</li>
+          <li>LocalBusiness + Review schema, surfacing the 4.9 / 54-review rating</li>
+          <li>Reduce the JavaScript payload; defer the Instagram feed</li>
+          <li class="key">Decision point: commercial viability of adding a 360 or glam booth — if yes, launch the page in this window</li>
+          <li>Google Business Profile programme — monthly review generation, wedding and corporate mentions in review text, regular event photo posts, separate Melbourne and Sydney profiles if legitimate</li>
+        </ul>
+      </div>
+
+      <div class="phase">
+        <div class="phase-hd"><span class="phase-num">Months 4–6</span><h3>Depth</h3></div>
+        <p class="why">Build the topical authority that makes the commercial pages rank.</p>
+        <ul class="check">
+          <li>Individual booth-type pages — open, enclosed, branded, vintage, 360</li>
+          <li>Venue partner pages for the best Melbourne and Sydney reception venues</li>
+          <li class="key">First wave of wedding planning content — 8 to 12 guides</li>
+          <li>Link building targeting AU wedding publications — Hello May, Rock n Roll Bride and Aisle Society already link, proving the outreach path works</li>
+          <li>Accessibility fixes — contrast, iframe titles, link names, heading order</li>
+          <li>Backlink audit — keep genuine wedding-industry links, monitor spam</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ PART 5 — BEYOND SEO ══════════════════ -->
+<section id="beyond">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Part 5 — Beyond SEO</span>
+      <h2>Two things that aren't rankings.</h2>
+    </div>
+
+    <div class="cols">
+      <div class="card">
+        <h4>Google Business Profile</h4>
+        <p>For "photo booth hire melbourne" and "photo booth near me" — 200 searches a month at KD 0 — the local pack sits <strong>above</strong> organic results. A <strong>4.9 rating across 54 reviews</strong> is a strong asset that should be actively worked, not left to accumulate on its own.</p>
+      </div>
+      <div class="card">
+        <h4>Conversion path separation</h4>
+        <p>The site currently sends every visitor down the same "Book Now" path. A bride comparing three suppliers and a marketing manager pricing a product launch have <strong>completely different buying processes</strong>. Separating those paths will likely lift lead volume more in the short term than any ranking gain.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ PART 6 — OUTLOOK ══════════════════ -->
+<section id="outlook" class="outlook" style="border-top:0">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Part 6 — Realistic outlook</span>
+      <h2>What "fixed" looks like.</h2>
+    </div>
+
+    <p class="lede" style="color:#D8D0CE;max-width:68ch">The market is small and the numbers will never be enormous. But the combined wedding, corporate and 360 / glam clusters represent roughly <strong>3,000–4,000 monthly Australian searches</strong> at low-to-moderate difficulty.</p>
+
+    <div class="chart">
+      <div class="chart-title">Monthly organic traffic — today vs a realistic target</div>
+      <div class="chart-note">Capturing ~⅓ of the addressable clusters at typical click-through rates</div>
+      <div class="bars">
+        <div class="bar-row">
+          <div class="bar-lab">Aug 2025<small>before the decline</small></div>
+          <div class="bar-track"><div class="bar-fill prev" style="width:20.8%"><span class="bar-val">249</span></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-lab">Aug 2026<small>today · 78% branded</small></div>
+          <div class="bar-track"><div class="bar-fill prev" style="width:8.4%"><span class="bar-val">101</span></div></div>
+        </div>
+        <div class="bar-row">
+          <div class="bar-lab">Target<small>mostly non-branded</small></div>
+          <div class="bar-track"><div class="bar-fill" style="width:100%"><span class="bar-val inside">800 – 1,200</span></div></div>
+        </div>
+      </div>
+    </div>
+
+    <p style="margin-top:28px;max-width:68ch">Capturing even a third of that volume at typical click-through rates would take the site from <strong>101 visits a month to somewhere in the 800–1,200 range</strong> — and unlike today's traffic, almost all of it would be non-branded people actively looking to book.</p>
+  </div>
+</section>
+
+<!-- ══════════════════ NEXT STEPS ══════════════════ -->
+<section class="cta" style="border-top:0">
+  <div class="wrap">
+    <div class="sec-head" style="margin-bottom:24px">
+      <span class="eyebrow">Next steps</span>
+      <h2>Start with the 404s.</h2>
+    </div>
+    <p style="max-width:64ch;font-size:17.5px">Three actions in the first 30 days account for most of the recoverable ground: restore the two booth pages, redirect the remaining 404s, and re-upload the hero images at a sensible size. None of them require a redesign, and the image fix needs no developer at all.</p>
+    <p style="max-width:64ch;font-size:17.5px;margin-top:16px">Happy to walk through this section by section and scope out that first 30 days.</p>
+    <!-- ▼▼ ADD CONTACT DETAILS HERE ▼▼ -->
+    <!--
+    <p style="margin-top:24px">
+      <a href="mailto:michael@websiteinaweek.studio" style="display:inline-block;background:#FF1D43;color:#fff;font-family:'Poppins',sans-serif;font-weight:600;font-size:16px;letter-spacing:.02em;text-transform:uppercase;padding:15px 30px;text-decoration:none;border-radius:3px">Book a walkthrough</a>
+    </p>
+    -->
+  </div>
+</section>
+
+<!-- ══════════════════ APPENDIX ══════════════════ -->
+<section id="appendix">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Appendix</span>
+      <h2>Raw data &amp; method.</h2>
+      <p class="lede">The crawl output and the caveats. Everything else lives inline in the sections above.</p>
+    </div>
+
+    <!-- A.1 -->
+    <details class="ap">
+      <summary><span class="ap-n">A.1</span> Crawled pages — all 20 URLs</summary>
+      <div class="ap-body">
+        <div class="tiles" style="margin-bottom:20px">
+          <div class="tile"><span class="lab">200 OK</span><span class="val">15</span><span class="delta">75%</span></div>
+          <div class="tile"><span class="lab">301 redirect</span><span class="val">1</span><span class="delta">5%</span></div>
+          <div class="tile"><span class="lab">404 not found</span><span class="val neg">4</span><span class="delta">20%</span></div>
+        </div>
+        <div class="tbl-scroll" style="margin-top:0">
+          <table>
+            <thead><tr><th>URL</th><th>Status</th></tr></thead>
+            <tbody>
+              <tr><td><code>/</code></td><td><span class="pill ok">200</span></td></tr>
+              <tr><td><code>/home</code></td><td><span class="pill ok">200</span></td></tr>
+              <tr><td><code>/our-booths</code></td><td><span class="pill ok">200</span></td></tr>
+              <tr><td><code>/open-booth</code></td><td><span class="pill ok">200</span></td></tr>
+              <tr><td><code>/branded-booth</code></td><td><span class="pill ok">200</span></td></tr>
+              <tr><td><code>/vintage-booth</code></td><td><span class="pill ok">200</span></td></tr>
+              <tr><td><code>/enclosed-booth</code></td><td><span class="pill bad">404</span></td></tr>
+              <tr><td><code>/photo-booth-types/</code></td><td><span class="pill bad">404</span></td></tr>
+              <tr><td><code>/sydney-photo-booth-hire</code></td><td><span class="pill bad">404</span></td></tr>
+              <tr><td><code>/booth-hire-locations/melbourne/</code></td><td><span class="pill bad">404</span></td></tr>
+              <tr><td><code>/locations</code></td><td><span class="pill ok">200</span></td></tr>
+              <tr><td><code>/pricing</code></td><td><span class="pill ok">200</span></td></tr>
+              <tr><td><code>/booknow</code></td><td><span class="pill ok">200</span></td></tr>
+              <tr><td><code>/faq</code></td><td><span class="pill ok">200</span></td></tr>
+              <tr><td><code>/form</code></td><td><span class="pill ok">200</span></td></tr>
+              <tr><td><code>/info</code></td><td><span class="pill ok">200</span></td></tr>
+              <tr><td><code>/poh</code></td><td><span class="pill ok">200</span></td></tr>
+              <tr><td><code>/cart</code></td><td><span class="pill ok">200</span></td></tr>
+              <tr><td><code>/privacy-policy</code></td><td><span class="pill ok">200</span></td></tr>
+              <tr><td><code>http://www.boothalicious.com.au/</code></td><td><span class="pill flat">301</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="margin-top:14px">A 20% hard-404 rate on a 20-page site is severe. Three of the four 404s — <code>/enclosed-booth</code>, <code>/sydney-photo-booth-hire</code>, <code>/booth-hire-locations/melbourne/</code> — previously ranked and still receive internal or external links. These must be 301-redirected or rebuilt before anything else in this document is actioned.</p>
+      </div>
+    </details>
+
+    <!-- A.2 -->
+    <details class="ap">
+      <summary><span class="ap-n">A.2</span> Full crawl issue register — 26 issue types</summary>
+      <div class="ap-body">
+        <div class="callout" style="margin-top:0;margin-bottom:20px">
+          <span class="eyebrow">Flagged — not covered elsewhere in this report</span>
+          <p><strong>One URL carries a <code>noindex</code> directive.</strong> The crawl found a robots meta tag or X-Robots-Tag instructing search engines not to index a page. Verify this is intentional — if it sits on a page that should rank, it is a single-line fix with immediate effect.</p>
+        </div>
+        <div class="tbl-scroll" style="margin-top:0">
+          <table>
+            <caption>Screaming Frog crawl · sorted by priority</caption>
+            <thead><tr><th>Issue</th><th>Type</th><th>Priority</th><th class="num">URLs</th><th class="num">% of total</th></tr></thead>
+            <tbody>
+              <tr><td class="key">Directives: Noindex</td><td>Warning</td><td><span class="pill bad">High</span></td><td class="num">1</td><td class="num">9.09%</td></tr>
+              <tr><td class="key">Response Codes: Internal Client Error (4xx)</td><td>Issue</td><td><span class="pill bad">High</span></td><td class="num">1</td><td class="num">0.46%</td></tr>
+              <tr><td class="key">Images: Over 100 kB</td><td>Opportunity</td><td><span class="pill warn">Medium</span></td><td class="num">90</td><td class="num">87.38%</td></tr>
+              <tr><td class="key">Content: Low Content Pages</td><td>Opportunity</td><td><span class="pill warn">Medium</span></td><td class="num">6</td><td class="num">54.55%</td></tr>
+              <tr><td class="key">H1: Multiple</td><td>Warning</td><td><span class="pill warn">Medium</span></td><td class="num">4</td><td class="num">36.36%</td></tr>
+              <tr><td class="key">H1: Missing</td><td>Issue</td><td><span class="pill warn">Medium</span></td><td class="num">4</td><td class="num">36.36%</td></tr>
+              <tr><td class="key">Page Titles: Below 30 Characters</td><td>Opportunity</td><td><span class="pill warn">Medium</span></td><td class="num">1</td><td class="num">9.09%</td></tr>
+              <tr><td class="key">Images: Missing Alt Text</td><td>Issue</td><td><span class="pill flat">Low</span></td><td class="num">72</td><td class="num">69.90%</td></tr>
+              <tr><td class="key">Security: Unsafe Cross-Origin Links</td><td>Warning</td><td><span class="pill flat">Low</span></td><td class="num">11</td><td class="num">91.67%</td></tr>
+              <tr><td class="key">Security: Protocol-Relative Resource Links</td><td>Warning</td><td><span class="pill flat">Low</span></td><td class="num">11</td><td class="num">91.67%</td></tr>
+              <tr><td class="key">Security: Missing Secure Referrer-Policy Header</td><td>Warning</td><td><span class="pill flat">Low</span></td><td class="num">11</td><td class="num">91.67%</td></tr>
+              <tr><td class="key">Security: Missing Content-Security-Policy Header</td><td>Warning</td><td><span class="pill flat">Low</span></td><td class="num">11</td><td class="num">91.67%</td></tr>
+              <tr><td class="key">Images: Missing Size Attributes</td><td>Opportunity</td><td><span class="pill flat">Low</span></td><td class="num">11</td><td class="num">10.68%</td></tr>
+              <tr><td class="key">Images: Alt Text Over 100 Characters</td><td>Opportunity</td><td><span class="pill flat">Low</span></td><td class="num">11</td><td class="num">10.68%</td></tr>
+              <tr><td class="key">Meta Description: Over 985 Pixels</td><td>Opportunity</td><td><span class="pill flat">Low</span></td><td class="num">9</td><td class="num">81.82%</td></tr>
+              <tr><td class="key">Meta Description: Over 155 Characters</td><td>Opportunity</td><td><span class="pill flat">Low</span></td><td class="num">9</td><td class="num">81.82%</td></tr>
+              <tr><td class="key">Links: Internal Outlinks With No Anchor Text</td><td>Opportunity</td><td><span class="pill flat">Low</span></td><td class="num">5</td><td class="num">45.45%</td></tr>
+              <tr><td class="key">H1: Duplicate</td><td>Opportunity</td><td><span class="pill flat">Low</span></td><td class="num">4</td><td class="num">36.36%</td></tr>
+              <tr><td class="key">H2: Non-Sequential</td><td>Warning</td><td><span class="pill flat">Low</span></td><td class="num">4</td><td class="num">36.36%</td></tr>
+              <tr><td class="key">H2: Multiple</td><td>Warning</td><td><span class="pill flat">Low</span></td><td class="num">3</td><td class="num">27.27%</td></tr>
+              <tr><td class="key">H2: Duplicate</td><td>Opportunity</td><td><span class="pill flat">Low</span></td><td class="num">2</td><td class="num">18.18%</td></tr>
+              <tr><td class="key">H1: Non-Sequential</td><td>Warning</td><td><span class="pill flat">Low</span></td><td class="num">1</td><td class="num">9.09%</td></tr>
+              <tr><td class="key">H2: Missing</td><td>Warning</td><td><span class="pill flat">Low</span></td><td class="num">1</td><td class="num">9.09%</td></tr>
+              <tr><td class="key">Meta Description: Missing</td><td>Opportunity</td><td><span class="pill flat">Low</span></td><td class="num">1</td><td class="num">9.09%</td></tr>
+              <tr><td class="key">Links: Pages With High External Outlinks</td><td>Warning</td><td><span class="pill flat">Low</span></td><td class="num">1</td><td class="num">9.09%</td></tr>
+              <tr><td class="key">Security: Missing X-Frame-Options Header</td><td>Warning</td><td><span class="pill flat">Low</span></td><td class="num">1</td><td class="num">8.33%</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p style="margin-top:14px"><strong>The two that matter most.</strong> <strong>90 images over 100 kB</strong> (87% of all images crawled) is the same problem Lighthouse flags as a 3,446 KiB saving — the single technical fix with the largest return. <strong>72 images missing alt text</strong> (70%) is both an accessibility failure and a lost relevance signal, since alt text is one of the few ways a photography-heavy page tells Google what it is about.</p>
+      </div>
+    </details>
+
+    <!-- A.3 -->
+    <details class="ap">
+      <summary><span class="ap-n">A.3</span> Competitor blueprint — In The Booth</summary>
+      <div class="ap-body">
+        <p>97 ranking pages, ~3K monthly AU organic traffic, 270 keywords. The architecture recommended in §3.3 is modelled on this:</p>
+        <ul class="plain">
+          <li><strong>Location hubs</strong> — a dedicated page per capital city and major region, each with local copy, local pricing and local social proof</li>
+          <li><strong>Event-type pages</strong> — weddings, corporate, parties, formals, brand activations, each targeting its own keyword cluster</li>
+          <li><strong>Product / booth-type pages</strong> — one URL per booth format rather than a single combined page</li>
+          <li><strong>Inclusions &amp; pricing pages</strong> — separate, indexable, and linked from every location page</li>
+          <li><strong>Partner / venue pages</strong> — relationships with venues turned into indexable, link-attracting assets</li>
+          <li><strong>Guides and planning content</strong> — capturing top-of-funnel wedding and event-planning searches</li>
+        </ul>
+      </div>
+    </details>
+
+    <!-- METHODOLOGY -->
+    <div class="block" style="margin-top:48px">
+      <span class="eyebrow">Methodology &amp; caveats</span>
+      <h3>How this was put together, and what it can't tell you</h3>
+
+      <p><strong>Data sources.</strong> Ahrefs Site Explorer and Keywords Explorer (AU market, subdomains mode, <em>Changes: Last year</em>); Google PageSpeed Insights running Lighthouse 13.4.1; a Screaming Frog crawl; and direct inspection of boothalicious.com.au. <strong>Audit window:</strong> 6 August 2025 – 6 August 2026, compiled 6 August 2026.</p>
+
+      <div class="cols" style="margin-top:28px">
+        <div class="card">
+          <h4>1 — Ahrefs traffic figures are modelled estimates</h4>
+          <p>Not measured sessions. Directional conclusions — the scale and shape of the decline — are reliable; absolute numbers are not. Cross-check against Google Search Console and GA4 to pin down exactly <em>when</em> it happened. If the timeline aligns with the 378 new referring domains, or with a site migration or Squarespace template change, that materially changes the diagnosis.</p>
+        </div>
+        <div class="card">
+          <h4>2 — Confirm the link history before disavowing</h4>
+          <p>The backlink pattern is consistent with purchased or automated links, but equally consistent with passive scraper-directory accumulation, which is harmless and best ignored. Ask directly whether any link-building service was engaged in the past 18 months. <strong>Do not file a disavow on the basis of this report alone.</strong></p>
+        </div>
+        <div class="card">
+          <h4>3 — Lighthouse figures are lab data</h4>
+          <p>CrUX field data is unavailable because traffic is below Google's reporting threshold, so real-world experience may differ. The magnitude of the image-weight problem is unambiguous regardless.</p>
+        </div>
+        <div class="card">
+          <h4>4 — The content gap registered 2 of 3 competitors</h4>
+          <p>rewindbooths.com.au was dropped by the tool; the 302-keyword figure reflects inthebooth.com.au and adeptphotobooths.com.au only. <strong>The true gap is likely larger.</strong></p>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+</main>
+
+<!-- ══════════════════ FOOTER ══════════════════ -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-inner">
+      <div>
+        <div class="fw">Boothalicious.</div>
+        <div class="fm" style="margin-top:6px">SEO Audit &amp; Growth Strategy · 6 August 2026</div>
+      </div>
+      <div class="fm" style="text-align:right">
+        Melbourne · Sydney · Tasmania<br>
+        <a href="https://www.boothalicious.com.au">boothalicious.com.au</a> · 0458 180 888
+      </div>
+    </div>
+  </div>
+</footer>
+
+<button class="totop" id="totop" aria-label="Back to top">↑</button>
+
+<script>
+(function(){
+  var links = Array.prototype.slice.call(document.querySelectorAll('.nav a.nl'));
+  var map = {}, targets = [];
+  links.forEach(function(a){
+    var id = a.getAttribute('href').slice(1), el = document.getElementById(id);
+    if(el){ map[id] = a; targets.push(el); }
+  });
+  function setCurrent(id){
+    links.forEach(function(a){ a.removeAttribute('aria-current'); });
+    if(map[id]){
+      map[id].setAttribute('aria-current','true');
+      var sc = document.querySelector('.nav-scroll');
+      if(sc && sc.scrollWidth > sc.clientWidth){
+        var r = map[id].getBoundingClientRect(), s = sc.getBoundingClientRect();
+        if(r.left < s.left || r.right > s.right){ sc.scrollTo({left: map[id].offsetLeft - 16, behavior:'smooth'}); }
+      }
+    }
+  }
+  var btn = document.getElementById('totop'), ticking = false;
+  function onScroll(){
+    if(ticking) return;
+    ticking = true;
+    requestAnimationFrame(function(){
+      if(window.scrollY > 700){ btn.classList.add('on'); } else { btn.classList.remove('on'); }
+      var cur = null;
+      for(var i=0;i<targets.length;i++){ if(targets[i].getBoundingClientRect().top <= 140) cur = targets[i].id; }
+      if(cur) setCurrent(cur);
+      ticking = false;
+    });
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+  btn.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
+
+  // ---- widow control ----
+  // text-wrap:balance handles headings in modern browsers. This is the belt-and-braces
+  // pass: it walks the element's trailing text ACROSS inline tags (<strong>, <code>,
+  // <span>) and converts the last few spaces to non-breaking spaces, so a line never
+  // ends on a lone word. Width-independent, so it never needs recalculating on resize.
+  (function bindWidows(){
+    var SEL = 'h1,h2,h3,h4,p,li,.chart-title,.chart-note,.sp-name,.sp-sub,caption,' +
+              '.tile .lab,.tile .delta,.bar-lab,.gname,.glab,.more>summary,.ap>summary,.phase .why';
+    var MIN_TAIL = 12;   // keep binding until the protected tail is at least this long
+    var MAX_TAIL = 26;   // ...but never longer than this, or narrow screens overflow
+    var MAX_WORDS = 3;
+
+    document.querySelectorAll(SEL).forEach(function(el){
+      if(el.dataset.nw) return;
+      el.dataset.nw = '1';
+
+      // every text node, in document order
+      var nodes = [], w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null), n;
+      while((n = w.nextNode())) nodes.push(n);
+      if(!nodes.length) return;
+
+      // combined text + a map from global index -> [node, offset]
+      var text = '', map = [];
+      nodes.forEach(function(node){
+        for(var i=0;i<node.textContent.length;i++){ map.push([node,i]); }
+        text += node.textContent;
+      });
+      var endIdx = text.replace(/\s+$/,'').length;   // ignore trailing whitespace
+      if(endIdx < 2) return;
+
+      var bound = 0, words = 0, i = endIdx - 1;
+      while(i > 0 && words < MAX_WORDS){
+        var ch = text[i];
+        if(/\s/.test(ch)){
+          if(!/\S/.test(text.slice(i+1, endIdx))) { i--; continue; }  // trailing space
+          var tailLen = endIdx - i - 1;
+          if(tailLen >= MIN_TAIL) break;
+          // look ahead: would binding the next word push us past the cap?
+          var prevSpace = text.slice(0, i).search(/\s\S*$/);
+          var wouldBe = endIdx - (prevSpace < 0 ? 0 : prevSpace) - 1;
+          if(wouldBe > MAX_TAIL && bound > 0) break;
+          if(endIdx - i - 1 > MAX_TAIL) break;
+          var m = map[i];
+          m[0].textContent = m[0].textContent.slice(0, m[1]) + ' ' + m[0].textContent.slice(m[1] + 1);
+          bound++; words++;
+        }
+        i--;
+      }
+    });
+  })();
+
+  var opened = [];
+  window.addEventListener('beforeprint', function(){
+    opened = [];
+    document.querySelectorAll('details').forEach(function(d){ if(!d.open){ opened.push(d); d.open = true; } });
+  });
+  window.addEventListener('afterprint', function(){
+    opened.forEach(function(d){ d.open = false; }); opened = [];
+  });
+})();
+</script>
+
+<script>
+/* ============================================================
+   MOTION
+   Two independent parts:
+   1. the horizontal-scroll hints, which run for everyone, because
+      knowing a table scrolls sideways is not decoration; and
+   2. everything else, which runs only when html.mo is present —
+      i.e. the visitor has not asked for reduced motion.
+   Setting __moBooted tells the gate script in <head> that this
+   file parsed; if it throws before that line, the gate strips the
+   class after 2.5s and the whole document reverts to static.
+   ============================================================ */
+try{
+(function(){
+  var root = document.documentElement;
+
+  /* ---- horizontal-scroll hints (mobile) ------------------------------ */
+  var narrow = window.matchMedia('(max-width:640px)');
+  function hints(){
+    document.querySelectorAll('.tbl-scroll,.tree').forEach(function(el){
+      var hint = el.nextElementSibling;
+      if(!hint || !hint.classList.contains('mo-hint')){
+        hint = document.createElement('div');
+        hint.className = 'mo-hint';
+        hint.setAttribute('aria-hidden', 'true');
+        hint.textContent = 'Scroll →';
+        el.parentNode.insertBefore(hint, el.nextSibling);
+        el.addEventListener('scroll', function(){
+          hint.classList.add('done');
+        }, { passive: true, once: true });
+      }
+      hint.classList.toggle('on', narrow.matches && el.scrollWidth > el.clientWidth + 4);
+    });
+  }
+  hints();
+  window.addEventListener('resize', hints, { passive: true });
+
+  window.__moBooted = 1;
+  if(!root.classList.contains('mo')) return;
+
+  var EASE = 'cubic-bezier(.22,.7,.25,1)';
+
+  /* ---- stagger children of the grouped blocks ------------------------ */
+  document.querySelectorAll('.tiles,.phases,.cols,.gauges,.scatter-grid,.steps').forEach(function(g){
+    Array.prototype.forEach.call(g.children, function(c, i){
+      c.style.setProperty('--mo-d', Math.min(i, 6) * 70 + 'ms');
+    });
+  });
+
+  /* ---- number roll-up -------------------------------------------------
+     Animates the FIRST text node only, so markup like
+     `7,917<span> KiB</span>` keeps its unit. Restores the original
+     string verbatim on the last frame — no reformatting drift. */
+  function rollUp(node){
+    var raw = node.nodeValue;
+    var m = raw.match(/^(\s*[^\d]*)([\d.,]+)([\s\S]*)$/);
+    if(!m) return;
+    var target = parseFloat(m[2].replace(/,/g, ''));
+    if(isNaN(target)) return;
+    var comma = m[2].indexOf(',') > -1;
+    var decs = (m[2].split('.')[1] || '').length;
+    var pre = m[1], post = m[3], t0 = null, dur = 1100;
+    function frame(ts){
+      if(t0 === null) t0 = ts;
+      var p = Math.min(1, (ts - t0) / dur);
+      if(p < 1){
+        var v = (target * (1 - Math.pow(1 - p, 3))).toFixed(decs);
+        node.nodeValue = pre + (comma ? v.replace(/\B(?=(\d{3})+(?!\d))/g, ',') : v) + post;
+        requestAnimationFrame(frame);
+      } else {
+        node.nodeValue = raw;
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+  function firstText(el){
+    for(var n = el && el.firstChild; n; n = n.nextSibling){
+      if(n.nodeType === 3 && /\d/.test(n.nodeValue)) return n;
+    }
+    return null;
+  }
+
+  /* ---- Lighthouse gauges: park each arc at zero length --------------- */
+  document.querySelectorAll('.gauge svg').forEach(function(svg){
+    var arc = svg.querySelectorAll('circle')[1];
+    if(!arc) return;
+    var len = parseFloat((arc.getAttribute('stroke-dasharray') || '').split(/[\s,]+/)[0]);
+    if(isNaN(len)) return;
+    arc.style.strokeDashoffset = len;
+  });
+
+  /* ---- scroll reveal --------------------------------------------------
+     Mirrors the selector list in the stylesheet. */
+  var REVEAL = [
+    '.sec-head',
+    'section > .wrap > *:not(.block):not(.sec-head)',
+    '.block > *:not(.tiles):not(.phases):not(.cols):not(.gauges):not(.scatter-grid):not(.steps)',
+    '.tiles > .tile',
+    '.phases > .phase',
+    '.cols > .card',
+    '.gauges > .gauge',
+    '.scatter-grid > .sp',
+    '.steps > li'
+  ].join(',');
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting) return;
+      var el = e.target;
+      io.unobserve(el);
+      el.classList.add('mo-in');
+
+      if(el.classList.contains('gauge')){
+        var arc = el.querySelectorAll('circle')[1];
+        if(arc) arc.style.strokeDashoffset = 0;
+        var num = el.querySelector('.gnum');
+        if(num && firstText(num)) rollUp(firstText(num));
+      }
+      if(el.classList.contains('tile')){
+        var t = firstText(el.querySelector('.val')); if(t) rollUp(t);
+      }
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.01 });
+
+  document.querySelectorAll(REVEAL).forEach(function(el){ io.observe(el); });
+
+  /* ---- bars ----------------------------------------------------------
+     The target width lives in each fill's inline style; the stylesheet
+     overrides it to 0 until the chart scrolls in, then hands it back
+     through --mo-w, staggered a row at a time. */
+  var groups = [];
+  document.querySelectorAll('.bar-fill').forEach(function(f){
+    f.style.setProperty('--mo-w', f.style.width || '100%');
+    var g = f.closest('.chart') || f.closest('.block') || f.parentElement;
+    var rec = null;
+    for(var i = 0; i < groups.length; i++){ if(groups[i].el === g){ rec = groups[i]; break; } }
+    if(!rec){ rec = { el: g, fills: [] }; groups.push(rec); }
+    rec.fills.push(f);
+  });
+
+  var barIo = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting) return;
+      barIo.unobserve(e.target);
+      var rec = null;
+      for(var i = 0; i < groups.length; i++){ if(groups[i].el === e.target){ rec = groups[i]; break; } }
+      if(!rec) return;
+      var rows = [];
+      rec.fills.forEach(function(f){
+        var row = f.closest('.bar-row') || f.parentElement;
+        var idx = rows.indexOf(row);
+        if(idx < 0){ idx = rows.length; rows.push(row); }
+        f.style.setProperty('--mo-d', Math.min(idx, 9) * 80 + 'ms');
+        f.classList.add('mo-bar-in');
+      });
+    });
+  }, { threshold: 0.12 });
+  groups.forEach(function(rec){ barIo.observe(rec.el); });
+
+  /* ---- read-progress rule + nav elevation ---------------------------- */
+  var nav = document.querySelector('.nav');
+  var masthead = document.querySelector('.masthead');
+  var prog = null;
+  if(nav){
+    prog = document.createElement('div');
+    prog.className = 'mo-prog';
+    prog.setAttribute('aria-hidden', 'true');
+    nav.appendChild(prog);
+  }
+  var pending = false;
+  function onScroll(){
+    if(pending) return;
+    pending = true;
+    requestAnimationFrame(function(){
+      var span = document.documentElement.scrollHeight - window.innerHeight;
+      if(prog) prog.style.transform = 'scaleX(' + (span > 0 ? Math.min(1, window.scrollY / span) : 0) + ')';
+      if(nav && masthead) nav.classList.toggle('mo-stuck', window.scrollY > masthead.offsetHeight * 0.6);
+      pending = false;
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+  onScroll();
+})();
+}catch(e){
+  /* Anything unexpected: drop back to the static document rather than
+     leaving reveal-hidden content stranded at opacity 0. */
+  if(window.__moOff) window.__moOff();
+}
+</script>
+</body>
+</html>
