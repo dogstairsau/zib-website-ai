@@ -58,12 +58,13 @@ body{
   text-transform:uppercase;
   color:var(--muted);
 }
-h1,h2,h3,h4{font-family:var(--f-display);font-weight:600;letter-spacing:-.02em;line-height:1.12}
+h1,h2,h3,h4{font-family:var(--f-display);font-weight:600;letter-spacing:-.02em;line-height:1.12;
+  text-wrap:balance;-webkit-hyphens:none;hyphens:none}
 h1{font-weight:700;letter-spacing:-.035em}
 h2{font-size:clamp(28px,3.7vw,38px);margin-bottom:12px}
 h3{font-size:clamp(20px,2.2vw,24px);margin-bottom:10px;letter-spacing:-.02em}
 h4{font-size:17px;font-family:var(--f-display);font-weight:600;letter-spacing:-.01em;margin-bottom:8px}
-p{margin-bottom:16px;max-width:72ch}
+p{margin-bottom:16px;max-width:72ch;text-wrap:pretty}
 p:last-child{margin-bottom:0}
 strong{font-weight:600}
 a{color:var(--red-dark);text-underline-offset:2px}
@@ -294,6 +295,15 @@ ol.steps li strong{display:block;font-family:var(--f-display);font-weight:600;fo
 .foot .fm{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;color:var(--blush)}
 .foot .fw{font-family:var(--f-display);font-weight:700;font-size:23px;letter-spacing:-.04em}
 .foot a{color:var(--white)}
+
+
+/* ---------- widow / orphan control ---------- */
+.lede,.chart-title,.chart-note,.sp-name,.sp-sub,.eyebrow,
+.tile .lab,.tile .delta,.gname,.glab,.bar-lab,.bar-lab small,
+.phase .why,.card p,.callout p,.more>summary,.ap>summary,
+caption,th,.pill,.foot .fm{text-wrap:balance}
+ul.plain li,ol.steps li,.check li,td{text-wrap:pretty}
+.masthead h1{text-wrap:balance;max-width:17ch}
 
 
 /* ---------- inline "show more" ---------- */
@@ -910,7 +920,7 @@ text.sp-zone{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:7.5px
         <div class="tile"><span class="lab">Main-thread work</span><span class="val">7.0<span style="font-size:.5em">s</span></span><span class="delta">desktop 5.0 s</span></div>
         <div class="tile"><span class="lab">JS execution</span><span class="val">3.6<span style="font-size:.5em">s</span></span><span class="delta">desktop 2.7 s</span></div>
         <div class="tile"><span class="lab">Long tasks</span><span class="val">18</span><span class="delta">desktop 19</span></div>
-        <div class="tile"><span class="lab">Non-composited animations</span><span class="val neg">186</span><span class="delta">animated elements</span></div>
+        <div class="tile"><span class="lab">Animated elements</span><span class="val neg">186</span><span class="delta">all non-composited</span></div>
       </div>
 
       <div class="callout">
@@ -1667,6 +1677,57 @@ text.sp-zone{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:7.5px
   window.addEventListener('scroll', onScroll, {passive:true});
   onScroll();
   btn.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
+
+  // ---- widow control ----
+  // text-wrap:balance handles headings in modern browsers. This is the belt-and-braces
+  // pass: it walks the element's trailing text ACROSS inline tags (<strong>, <code>,
+  // <span>) and converts the last few spaces to non-breaking spaces, so a line never
+  // ends on a lone word. Width-independent, so it never needs recalculating on resize.
+  (function bindWidows(){
+    var SEL = 'h1,h2,h3,h4,p,li,.chart-title,.chart-note,.sp-name,.sp-sub,caption,' +
+              '.tile .lab,.tile .delta,.bar-lab,.gname,.glab,.more>summary,.ap>summary,.phase .why';
+    var MIN_TAIL = 12;   // keep binding until the protected tail is at least this long
+    var MAX_TAIL = 26;   // ...but never longer than this, or narrow screens overflow
+    var MAX_WORDS = 3;
+
+    document.querySelectorAll(SEL).forEach(function(el){
+      if(el.dataset.nw) return;
+      el.dataset.nw = '1';
+
+      // every text node, in document order
+      var nodes = [], w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null), n;
+      while((n = w.nextNode())) nodes.push(n);
+      if(!nodes.length) return;
+
+      // combined text + a map from global index -> [node, offset]
+      var text = '', map = [];
+      nodes.forEach(function(node){
+        for(var i=0;i<node.textContent.length;i++){ map.push([node,i]); }
+        text += node.textContent;
+      });
+      var endIdx = text.replace(/\s+$/,'').length;   // ignore trailing whitespace
+      if(endIdx < 2) return;
+
+      var bound = 0, words = 0, i = endIdx - 1;
+      while(i > 0 && words < MAX_WORDS){
+        var ch = text[i];
+        if(/\s/.test(ch)){
+          if(!/\S/.test(text.slice(i+1, endIdx))) { i--; continue; }  // trailing space
+          var tailLen = endIdx - i - 1;
+          if(tailLen >= MIN_TAIL) break;
+          // look ahead: would binding the next word push us past the cap?
+          var prevSpace = text.slice(0, i).search(/\s\S*$/);
+          var wouldBe = endIdx - (prevSpace < 0 ? 0 : prevSpace) - 1;
+          if(wouldBe > MAX_TAIL && bound > 0) break;
+          if(endIdx - i - 1 > MAX_TAIL) break;
+          var m = map[i];
+          m[0].textContent = m[0].textContent.slice(0, m[1]) + ' ' + m[0].textContent.slice(m[1] + 1);
+          bound++; words++;
+        }
+        i--;
+      }
+    });
+  })();
 
   var opened = [];
   window.addEventListener('beforeprint', function(){
