@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<title>Submit a referral | Zib Digital</title>
+<meta name="description" content="Know a business that needs SEO, Google Ads, social or a better website? Introduce them to Zib Digital. We'll look after them, and we'll tell you exactly what happened." />
+<meta name="zib:source-tag" content="Referral page" />
+<!-- @include _partials/head.html -->
+<link rel="stylesheet" href="/assets/contact-form.css">
+<style>
+/* ─── Hero ─────────────────────────────────────────────────────── */
+.ref-hero {
+  padding: clamp(128px, 16vw, 200px) 0 clamp(56px, 7vw, 96px);
+  background: var(--paper);
+  border-bottom: 0.5px solid var(--rule);
+}
+.ref-eyebrow {
+  font-family: var(--mono); font-size: 12px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--accent);
+  display: inline-flex; align-items: center; gap: 10px;
+  margin-bottom: clamp(20px, 2.4vw, 30px);
+}
+.ref-eyebrow::before { content: ""; width: 22px; height: 0.5px; background: currentColor; }
+.ref-hero h1 {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(44px, 7.4vw, 104px); line-height: 0.96; letter-spacing: -0.045em;
+  max-width: 15ch;
+}
+.ref-hero h1 em { font-style: italic; color: var(--accent); font-weight: 400; }
+.ref-lede {
+  margin-top: clamp(24px, 3vw, 36px);
+  max-width: 58ch;
+  font-size: clamp(17px, 1.7vw, 21px); line-height: 1.55; color: var(--ink-3);
+}
+.ref-lede strong { font-weight: 500; }
+.ref-hero-cta { display: inline-flex; flex-wrap: wrap; gap: 14px; margin-top: clamp(32px, 4vw, 44px); }
+
+/* ─── Steps ────────────────────────────────────────────────────── */
+.ref-steps { padding: clamp(72px, 9vw, 128px) 0; }
+.ref-h2 {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(30px, 4vw, 54px); line-height: 1.04; letter-spacing: -0.035em;
+  max-width: 20ch;
+}
+.ref-h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
+.ref-step-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: clamp(20px, 2.4vw, 32px);
+  margin-top: clamp(40px, 5vw, 64px);
+}
+.ref-step {
+  border: 0.5px solid var(--rule);
+  border-radius: 20px;
+  padding: clamp(24px, 2.6vw, 36px);
+  background: #fff;
+  display: flex; flex-direction: column; gap: 12px;
+  transition: border-color 240ms var(--ease), transform 240ms var(--ease);
+}
+.ref-step:hover { border-color: var(--rule-2); transform: translateY(-2px); }
+.ref-step .num {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em;
+  color: var(--accent); text-transform: uppercase;
+}
+.ref-step h3 {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(19px, 1.8vw, 23px); line-height: 1.2; letter-spacing: -0.02em;
+}
+.ref-step p { color: var(--muted); font-size: 15.5px; line-height: 1.6; }
+
+/* ─── What we can help with ────────────────────────────────────── */
+.ref-fit {
+  padding: clamp(72px, 9vw, 120px) 0;
+  background: var(--dim);
+  border-top: 0.5px solid var(--rule);
+  border-bottom: 0.5px solid var(--rule);
+}
+.ref-fit-lede { margin-top: 18px; max-width: 62ch; color: var(--muted); font-size: clamp(16px, 1.5vw, 18px); }
+.ref-chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: clamp(32px, 4vw, 44px); }
+.ref-chip {
+  border: 1px solid var(--rule-2); border-radius: 999px;
+  padding: 10px 18px; background: #fff;
+  font-size: 15px; color: var(--ink-3);
+}
+.ref-fit-note {
+  margin-top: clamp(28px, 3vw, 36px);
+  font-size: 15.5px; color: var(--muted); max-width: 60ch;
+}
+.ref-fit-note strong { color: var(--ink); font-weight: 500; }
+
+/* ─── Form ─────────────────────────────────────────────────────── */
+.ref-form-section { padding: clamp(80px, 10vw, 140px) 0 clamp(64px, 8vw, 112px); }
+.ref-form-section .container { max-width: 1100px; }
+.ref-form-head { text-align: center; }
+.ref-form-head h2 {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(36px, 5.4vw, 72px); line-height: 1.0; letter-spacing: -0.04em;
+  text-wrap: balance;
+}
+.ref-form-head h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
+.ref-form-head p {
+  margin: clamp(20px, 2.4vw, 28px) auto clamp(40px, 5vw, 60px);
+  max-width: 56ch; font-size: clamp(16px, 1.5vw, 18px); line-height: 1.6; color: var(--muted);
+}
+
+/* Two-part labelling above the embedded HubSpot form. HubSpot renders its own
+   fieldset groups, so these are page-level headings that sit above the mount. */
+.ref-form-legend {
+  display: flex; align-items: center; gap: 14px;
+  max-width: 760px; margin: 0 auto clamp(20px, 2.4vw, 28px);
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--muted);
+}
+.ref-form-legend::after { content: ""; flex: 1; height: 0.5px; background: var(--rule); }
+
+/* Fallback while the HubSpot embed loads (or if it's blocked by an ad blocker). */
+.ref-form-fallback {
+  max-width: 760px; margin: 0 auto; text-align: center;
+  font-size: 15px; color: var(--muted);
+}
+.ref-form-fallback a { color: var(--accent); border-bottom: 1px solid var(--accent); }
+.hs-form-wrap:not(:empty) + .ref-form-fallback { display: none; }
+
+/* ─── Reassurance ──────────────────────────────────────────────── */
+.ref-promise {
+  border-top: 0.5px solid var(--rule);
+  padding: clamp(56px, 7vw, 96px) 0 clamp(72px, 9vw, 120px);
+  background: var(--paper);
+}
+.ref-promise-grid {
+  display: grid; grid-template-columns: repeat(3, 1fr);
+  gap: clamp(24px, 3vw, 44px);
+}
+.ref-promise h4 {
+  font-family: var(--display); font-weight: 500; font-size: 17px;
+  letter-spacing: -0.01em; margin-bottom: 8px;
+}
+.ref-promise p { color: var(--muted); font-size: 15px; line-height: 1.6; }
+.ref-promise p a { color: var(--ink); border-bottom: 1px solid var(--rule-2); }
+.ref-promise p a:hover { border-bottom-color: var(--ink); }
+
+@media (max-width: 900px) {
+  .ref-step-grid, .ref-promise-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- @include _partials/nav.html -->
+
+<main id="main">
+
+  <section class="ref-hero">
+    <div class="container">
+      <div class="ref-eyebrow reveal">Client referrals</div>
+      <h1 class="reveal">Our best clients <em>come from you.</em></h1>
+      <p class="ref-lede reveal">If you know a business owner who needs <strong>SEO</strong>, <strong>Google Ads</strong>, <strong>social</strong> or a <strong>better website</strong>, introduce them below. We'll treat them the way we treat you — and we'll tell you exactly what happened.</p>
+      <div class="ref-hero-cta reveal">
+        <a class="btn btn-primary" href="#refer">Submit a referral <span class="arr">→</span></a>
+        <a class="btn btn-outline" href="tel:+61386859290">03 8685 9290</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="ref-steps">
+    <div class="container">
+      <h2 class="ref-h2 reveal">Three steps. <em>No awkward handover.</em></h2>
+      <div class="ref-step-grid reveal-stagger">
+        <div class="ref-step">
+          <span class="num">01 — You introduce</span>
+          <h3>Send us their details</h3>
+          <p>Name, email, and roughly what they're struggling with. Thirty seconds, and you're done.</p>
+        </div>
+        <div class="ref-step">
+          <span class="num">02 — We reach out</span>
+          <h3>One call, no pressure</h3>
+          <p>A senior strategist calls them within one business day, looks at what they've got, and tells them the truth about it — whether or not there's a job in it for us.</p>
+        </div>
+        <div class="ref-step">
+          <span class="num">03 — You hear back</span>
+          <h3>We close the loop with you</h3>
+          <p>You find out how the conversation went. No chasing, no wondering whether the intro landed.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="ref-fit">
+    <div class="container">
+      <h2 class="ref-h2 reveal">Who we're a <em>good fit</em> for.</h2>
+      <p class="ref-fit-lede reveal">Australian businesses doing real revenue who want commercial outcomes, not activity reports. Typically these conversations start with:</p>
+      <div class="ref-chips reveal">
+        <span class="ref-chip">SEO</span>
+        <span class="ref-chip">Google Ads</span>
+        <span class="ref-chip">Paid social</span>
+        <span class="ref-chip">Social media management</span>
+        <span class="ref-chip">Website design &amp; build</span>
+        <span class="ref-chip">eCommerce &amp; Shopify</span>
+        <span class="ref-chip">Content marketing</span>
+        <span class="ref-chip">Email marketing</span>
+        <span class="ref-chip">AI &amp; automation</span>
+      </div>
+      <p class="ref-fit-note reveal"><strong>Not sure which one they need?</strong> Refer them anyway. Working that out is the first conversation, and it's free.</p>
+    </div>
+  </section>
+
+  <section class="ref-form-section" id="refer">
+    <div class="container">
+      <div class="ref-form-head">
+        <h2 class="reveal">Make the <em>introduction.</em></h2>
+        <p class="reveal">Tell us who they are and who we should thank. Everything but the essentials is optional — if all you have is a name and an email, that's enough.</p>
+      </div>
+
+      <div class="ref-form-legend reveal">Who you're introducing · and who we thank</div>
+
+      <!-- Native HubSpot form (portal 14539048). Mounted by the [data-hsform]
+           loader in _partials/scripts.html; styled by assets/contact-form.css.
+           Form: "Submit a referral" — see docs/REFERRAL-HUBSPOT-BRIEF.md for the
+           field spec. Replace the id below with the real HubSpot form GUID. -->
+      <div class="hs-form-wrap reveal" data-hsform="REPLACE_WITH_HUBSPOT_FORM_ID" id="referralForm"></div>
+
+      <p class="ref-form-fallback">Form not loading? Email the intro straight to <a href="mailto:hello@zibdigital.com.au">hello@zibdigital.com.au</a> or call <a href="tel:+61386859290">03 8685 9290</a>.</p>
+    </div>
+  </section>
+
+  <section class="ref-promise">
+    <div class="container">
+      <div class="ref-promise-grid reveal-stagger">
+        <div>
+          <h4>We won't cold-call them</h4>
+          <p>One call and one email. If they're not interested, that's the end of it — no drip sequence, no follow-up loop.</p>
+        </div>
+        <div>
+          <h4>Your name, your call</h4>
+          <p>We only mention who introduced them if you tell us it's fine to. Otherwise the intro stays between us.</p>
+        </div>
+        <div>
+          <h4>Their details stay with us</h4>
+          <p>Held in our CRM for this introduction only, never sold or shared. See our <a href="/privacy-policy">privacy policy</a>.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- @include _partials/footer.html -->
+<!-- @include _partials/scripts.html -->
+
+<!-- ───────────────────────────────────────────────────────────────────────
+     Campaign attribution for the referral form.
+
+     Email banners link here with ?utm_source=…&utm_medium=…&utm_campaign=…
+     (and optionally ?ref=<name>). HubSpot's own analytics record the source,
+     but that lives on the contact — not on the submission — so we also copy
+     the params into hidden fields on the form itself. That way every referral
+     submission carries the campaign that produced it, and reporting works even
+     if the contact later has a different "original source".
+
+     Requires matching hidden fields on the HubSpot form:
+       utm_source · utm_medium · utm_campaign · referral_source_page
+     Missing fields are skipped silently, so this is safe before they exist.
+     ─────────────────────────────────────────────────────────────────────── -->
+<script>
+(() => {
+  const mount = document.getElementById('referralForm');
+  if (!mount) return;
+
+  const params = new URLSearchParams(location.search);
+  const values = {
+    utm_source: params.get('utm_source') || '',
+    utm_medium: params.get('utm_medium') || '',
+    utm_campaign: params.get('utm_campaign') || '',
+    // Full landing URL, so an intro can be traced back to the exact banner
+    // even when someone adds params we haven't mapped to a field.
+    referral_source_page: location.href.slice(0, 250),
+  };
+
+  const fill = () => {
+    const form = mount.querySelector('form');
+    if (!form) return false;
+    for (const [name, value] of Object.entries(values)) {
+      if (!value) continue;
+      const input = form.querySelector(`input[name="${name}"]`);
+      if (!input || input.value) continue;
+      input.value = value;
+      // HubSpot reads values off its own state, not the DOM, so nudge it.
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+      input.dispatchEvent(new Event('change', { bubbles: true }));
+    }
+    return true;
+  };
+
+  // HubSpot posts a message when the embed finishes rendering.
+  window.addEventListener('message', (e) => {
+    if (e.data?.type === 'hsFormCallback' && e.data.eventName === 'onFormReady') fill();
+  });
+
+  // Fallback for the inline (non-iframe) render, which may not post a message:
+  // watch the mount until the form appears, then stop.
+  const observer = new MutationObserver(() => { if (fill()) observer.disconnect(); });
+  observer.observe(mount, { childList: true, subtree: true });
+  setTimeout(() => observer.disconnect(), 15000);
+})();
+</script>
+
+</body>
+</html>
