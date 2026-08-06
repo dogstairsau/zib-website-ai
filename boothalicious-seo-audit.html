@@ -3,6 +3,30 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+/* Motion gate. Every animated rule in this document is scoped to html.mo,
+   which is added here — before first paint, so nothing flashes — and only
+   when the visitor has not asked their OS for reduced motion.
+
+   The scroll-reveal rules start elements at opacity 0, so a failure to
+   reach the motion script at the end of <body> would leave the report
+   blank. Two backstops prevent that: the motion script strips the class
+   itself if it throws, and the timer below strips it if the script never
+   ran at all (10s — long enough that a slow font stylesheet, which blocks
+   the parser and therefore that script, doesn't trip it on a normal load).
+   Stripping reverts the page to the plain static document. */
+(function(){
+  var d = document.documentElement;
+  window.__moOff = function(){
+    d.className = d.className.replace(/(^|\s)mo(\s|$)/, ' ');
+  };
+  try{
+    if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  }catch(e){ return; }
+  d.className += ' mo';
+  setTimeout(function(){ if(!window.__moBooted) window.__moOff(); }, 10000);
+})();
+</script>
 <title>SEO Audit &amp; Growth Strategy — Boothalicious Photo Booths</title>
 <meta name="description" content="A 12-month SEO audit, technical performance review and growth strategy for Boothalicious Photo Booths — August 2025 to August 2026.">
 <meta name="robots" content="noindex, nofollow">
@@ -361,6 +385,107 @@ text.sp-zone{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:7.5px
 .skip{position:absolute;left:-999px;top:0;background:var(--ink);color:#fff;padding:10px 16px;z-index:100}
 .skip:focus{left:8px;top:8px}
 :focus-visible{outline:2px solid var(--red);outline-offset:2px}
+
+/* ============================================================
+   MOTION
+   All of it is scoped to html.mo (set by the gate script in
+   <head>). No class = no hidden initial states, no transitions —
+   reduced-motion visitors and anyone whose JS fails get the
+   finished document exactly as it was before this block existed.
+   Only opacity / transform / width / r animate, and every reveal
+   fires once.
+   ============================================================ */
+@keyframes moRise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes moDrop{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+
+/* ---- masthead: plays on load, not on scroll ---- */
+html.mo .masthead .eyebrow,
+html.mo .masthead .wordmark,
+html.mo .masthead .kicker,
+html.mo .masthead h1,
+html.mo .masthead .meta-grid{animation:moRise .85s cubic-bezier(.22,.7,.25,1) both}
+html.mo .masthead .wordmark{animation-delay:.07s}
+html.mo .masthead .kicker{animation-delay:.14s}
+html.mo .masthead h1{animation-delay:.2s}
+html.mo .masthead .meta-grid{animation-delay:.3s}
+
+/* ---- scroll reveal ----
+   This selector list is mirrored exactly in the motion script; if you
+   add a rule here, add it there too or the element stays invisible. */
+html.mo .sec-head,
+html.mo section > .wrap > *:not(.block):not(.sec-head),
+html.mo .block > *:not(.tiles):not(.phases):not(.cols):not(.gauges):not(.scatter-grid):not(.steps),
+html.mo .tiles > .tile,
+html.mo .phases > .phase,
+html.mo .cols > .card,
+html.mo .gauges > .gauge,
+html.mo .scatter-grid > .sp,
+html.mo .steps > li{
+  opacity:0;transform:translateY(15px);
+  transition:opacity .6s cubic-bezier(.22,.7,.25,1) var(--mo-d,0ms),
+             transform .6s cubic-bezier(.22,.7,.25,1) var(--mo-d,0ms)
+}
+/* !important on purpose: the hidden rule above carries six :not() classes,
+   which outweighs a plain .mo-in selector and would strand revealed
+   elements at opacity 0. */
+html.mo .mo-in{opacity:1!important;transform:none!important}
+
+/* ---- bar charts grow from the baseline ---- */
+html.mo .bar-fill{width:0!important;min-width:0;
+  transition:width .95s cubic-bezier(.22,.7,.25,1) var(--mo-d,0ms)}
+html.mo .bar-fill.mo-bar-in{width:var(--mo-w)!important;min-width:2px}
+html.mo .bar-fill .bar-val{opacity:0;
+  transition:opacity .45s ease calc(var(--mo-d,0ms) + 460ms)}
+html.mo .bar-fill.mo-bar-in .bar-val{opacity:1}
+
+/* ---- Lighthouse gauges draw their arc ---- */
+html.mo .gauge svg circle + circle{
+  transition:stroke-dashoffset 1.15s cubic-bezier(.22,.7,.25,1) var(--mo-d,0ms)}
+
+/* ---- scatter dots pop in, labels and gridlines follow ---- */
+html.mo .sp svg circle{r:0;transition:r .55s cubic-bezier(.34,1.3,.5,1) var(--mo-d,0ms)}
+html.mo .sp.mo-in svg circle{r:6}
+html.mo .sp.mo-in svg circle:hover{r:8.5;transition:r .12s ease}
+html.mo .sp svg text,html.mo .sp svg line{opacity:0;
+  transition:opacity .5s ease calc(var(--mo-d,0ms) + 240ms)}
+html.mo .sp.mo-in svg text,html.mo .sp.mo-in svg line{opacity:1}
+
+/* ---- sticky nav: read-progress rule + elevation once it detaches ---- */
+html.mo .mo-prog{
+  position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--red);
+  transform:scaleX(0);transform-origin:0 50%;pointer-events:none;z-index:2}
+html.mo .nav{transition:box-shadow .28s ease}
+html.mo .nav.mo-stuck{box-shadow:0 2px 16px rgba(20,16,15,.10)}
+html.mo .nav a.nl{transition:background-color .22s ease,color .22s ease}
+
+/* ---- disclosure panels ---- */
+html.mo .ap[open] > .ap-body,
+html.mo .more[open] > *:not(summary){animation:moDrop .42s cubic-bezier(.22,.7,.25,1) both}
+html.mo .ap > summary,html.mo .more > summary{transition:background-color .2s ease,color .2s ease}
+
+/* ---- back-to-top ---- */
+html.mo .totop{
+  display:flex;opacity:0;visibility:hidden;transform:translateY(10px) scale(.85);
+  transition:opacity .3s ease,transform .3s cubic-bezier(.34,1.3,.5,1),visibility .3s,background-color .2s ease}
+html.mo .totop.on{opacity:1;visibility:visible;transform:none}
+html.mo .totop:hover{background:var(--red)}
+
+@media (hover:hover) and (pointer:fine){
+  html.mo .card{transition:transform .28s cubic-bezier(.22,.7,.25,1),box-shadow .28s ease}
+  html.mo .card:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(20,16,15,.08)}
+}
+
+/* ---- horizontal-scroll hint ----
+   Not gated on .mo: this is a mobile affordance, not decoration, so
+   reduced-motion visitors get it too. Injected by the script only for
+   blocks that actually overflow on a narrow screen. */
+.mo-hint{
+  display:none;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.07em;
+  text-transform:uppercase;color:var(--muted);margin-top:7px;transition:opacity .3s ease}
+.mo-hint.on{display:block}
+.mo-hint.done{opacity:0}
+.more .mo-hint,.ap .mo-hint{padding:0 16px 12px;margin-top:5px}
+@media print{.mo-hint{display:none!important}}
 
 @media (max-width:640px){
   body{font-size:16px}
@@ -1738,6 +1863,197 @@ text.sp-zone{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:7.5px
     opened.forEach(function(d){ d.open = false; }); opened = [];
   });
 })();
+</script>
+
+<script>
+/* ============================================================
+   MOTION
+   Two independent parts:
+   1. the horizontal-scroll hints, which run for everyone, because
+      knowing a table scrolls sideways is not decoration; and
+   2. everything else, which runs only when html.mo is present —
+      i.e. the visitor has not asked for reduced motion.
+   Setting __moBooted tells the gate script in <head> that this
+   file parsed; if it throws before that line, the gate strips the
+   class after 2.5s and the whole document reverts to static.
+   ============================================================ */
+try{
+(function(){
+  var root = document.documentElement;
+
+  /* ---- horizontal-scroll hints (mobile) ------------------------------ */
+  var narrow = window.matchMedia('(max-width:640px)');
+  function hints(){
+    document.querySelectorAll('.tbl-scroll,.tree').forEach(function(el){
+      var hint = el.nextElementSibling;
+      if(!hint || !hint.classList.contains('mo-hint')){
+        hint = document.createElement('div');
+        hint.className = 'mo-hint';
+        hint.setAttribute('aria-hidden', 'true');
+        hint.textContent = 'Scroll →';
+        el.parentNode.insertBefore(hint, el.nextSibling);
+        el.addEventListener('scroll', function(){
+          hint.classList.add('done');
+        }, { passive: true, once: true });
+      }
+      hint.classList.toggle('on', narrow.matches && el.scrollWidth > el.clientWidth + 4);
+    });
+  }
+  hints();
+  window.addEventListener('resize', hints, { passive: true });
+
+  window.__moBooted = 1;
+  if(!root.classList.contains('mo')) return;
+
+  var EASE = 'cubic-bezier(.22,.7,.25,1)';
+
+  /* ---- stagger children of the grouped blocks ------------------------ */
+  document.querySelectorAll('.tiles,.phases,.cols,.gauges,.scatter-grid,.steps').forEach(function(g){
+    Array.prototype.forEach.call(g.children, function(c, i){
+      c.style.setProperty('--mo-d', Math.min(i, 6) * 70 + 'ms');
+    });
+  });
+
+  /* ---- number roll-up -------------------------------------------------
+     Animates the FIRST text node only, so markup like
+     `7,917<span> KiB</span>` keeps its unit. Restores the original
+     string verbatim on the last frame — no reformatting drift. */
+  function rollUp(node){
+    var raw = node.nodeValue;
+    var m = raw.match(/^(\s*[^\d]*)([\d.,]+)([\s\S]*)$/);
+    if(!m) return;
+    var target = parseFloat(m[2].replace(/,/g, ''));
+    if(isNaN(target)) return;
+    var comma = m[2].indexOf(',') > -1;
+    var decs = (m[2].split('.')[1] || '').length;
+    var pre = m[1], post = m[3], t0 = null, dur = 1100;
+    function frame(ts){
+      if(t0 === null) t0 = ts;
+      var p = Math.min(1, (ts - t0) / dur);
+      if(p < 1){
+        var v = (target * (1 - Math.pow(1 - p, 3))).toFixed(decs);
+        node.nodeValue = pre + (comma ? v.replace(/\B(?=(\d{3})+(?!\d))/g, ',') : v) + post;
+        requestAnimationFrame(frame);
+      } else {
+        node.nodeValue = raw;
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+  function firstText(el){
+    for(var n = el && el.firstChild; n; n = n.nextSibling){
+      if(n.nodeType === 3 && /\d/.test(n.nodeValue)) return n;
+    }
+    return null;
+  }
+
+  /* ---- Lighthouse gauges: park each arc at zero length --------------- */
+  document.querySelectorAll('.gauge svg').forEach(function(svg){
+    var arc = svg.querySelectorAll('circle')[1];
+    if(!arc) return;
+    var len = parseFloat((arc.getAttribute('stroke-dasharray') || '').split(/[\s,]+/)[0]);
+    if(isNaN(len)) return;
+    arc.style.strokeDashoffset = len;
+  });
+
+  /* ---- scroll reveal --------------------------------------------------
+     Mirrors the selector list in the stylesheet. */
+  var REVEAL = [
+    '.sec-head',
+    'section > .wrap > *:not(.block):not(.sec-head)',
+    '.block > *:not(.tiles):not(.phases):not(.cols):not(.gauges):not(.scatter-grid):not(.steps)',
+    '.tiles > .tile',
+    '.phases > .phase',
+    '.cols > .card',
+    '.gauges > .gauge',
+    '.scatter-grid > .sp',
+    '.steps > li'
+  ].join(',');
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting) return;
+      var el = e.target;
+      io.unobserve(el);
+      el.classList.add('mo-in');
+
+      if(el.classList.contains('gauge')){
+        var arc = el.querySelectorAll('circle')[1];
+        if(arc) arc.style.strokeDashoffset = 0;
+        var num = el.querySelector('.gnum');
+        if(num && firstText(num)) rollUp(firstText(num));
+      }
+      if(el.classList.contains('tile')){
+        var t = firstText(el.querySelector('.val')); if(t) rollUp(t);
+      }
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.01 });
+
+  document.querySelectorAll(REVEAL).forEach(function(el){ io.observe(el); });
+
+  /* ---- bars ----------------------------------------------------------
+     The target width lives in each fill's inline style; the stylesheet
+     overrides it to 0 until the chart scrolls in, then hands it back
+     through --mo-w, staggered a row at a time. */
+  var groups = [];
+  document.querySelectorAll('.bar-fill').forEach(function(f){
+    f.style.setProperty('--mo-w', f.style.width || '100%');
+    var g = f.closest('.chart') || f.closest('.block') || f.parentElement;
+    var rec = null;
+    for(var i = 0; i < groups.length; i++){ if(groups[i].el === g){ rec = groups[i]; break; } }
+    if(!rec){ rec = { el: g, fills: [] }; groups.push(rec); }
+    rec.fills.push(f);
+  });
+
+  var barIo = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting) return;
+      barIo.unobserve(e.target);
+      var rec = null;
+      for(var i = 0; i < groups.length; i++){ if(groups[i].el === e.target){ rec = groups[i]; break; } }
+      if(!rec) return;
+      var rows = [];
+      rec.fills.forEach(function(f){
+        var row = f.closest('.bar-row') || f.parentElement;
+        var idx = rows.indexOf(row);
+        if(idx < 0){ idx = rows.length; rows.push(row); }
+        f.style.setProperty('--mo-d', Math.min(idx, 9) * 80 + 'ms');
+        f.classList.add('mo-bar-in');
+      });
+    });
+  }, { threshold: 0.12 });
+  groups.forEach(function(rec){ barIo.observe(rec.el); });
+
+  /* ---- read-progress rule + nav elevation ---------------------------- */
+  var nav = document.querySelector('.nav');
+  var masthead = document.querySelector('.masthead');
+  var prog = null;
+  if(nav){
+    prog = document.createElement('div');
+    prog.className = 'mo-prog';
+    prog.setAttribute('aria-hidden', 'true');
+    nav.appendChild(prog);
+  }
+  var pending = false;
+  function onScroll(){
+    if(pending) return;
+    pending = true;
+    requestAnimationFrame(function(){
+      var span = document.documentElement.scrollHeight - window.innerHeight;
+      if(prog) prog.style.transform = 'scaleX(' + (span > 0 ? Math.min(1, window.scrollY / span) : 0) + ')';
+      if(nav && masthead) nav.classList.toggle('mo-stuck', window.scrollY > masthead.offsetHeight * 0.6);
+      pending = false;
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+  onScroll();
+})();
+}catch(e){
+  /* Anything unexpected: drop back to the static document rather than
+     leaving reveal-hidden content stranded at opacity 0. */
+  if(window.__moOff) window.__moOff();
+}
 </script>
 </body>
 </html>
