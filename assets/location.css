@@ -289,6 +289,13 @@ h1, h2, h3, .hero-h, .local-h, .services-h, .stats-h, .faq-h, .cta-title { text-
 }
 @media (max-width: 1080px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 480px) { .stats-grid { grid-template-columns: 1fr 1fr; } }
+/* Three-up bands. Opt-in rather than a change to the base rule, because some
+   pages still carry four stats — three cells in a four-column grid would leave
+   a gap on the right. Stays three across until it's genuinely too narrow, then
+   goes single-column so the odd count never orphans a cell on its own row. */
+.stats-grid.is-3 { grid-template-columns: repeat(3, 1fr); }
+@media (max-width: 1080px) { .stats-grid.is-3 { grid-template-columns: repeat(3, 1fr); } }
+@media (max-width: 640px)  { .stats-grid.is-3 { grid-template-columns: 1fr; } }
 .stat-cell { border-top: 1px solid rgba(255,255,255,0.18); padding-top: 24px; }
 .stat-value { font-family: var(--display); font-weight: 500; font-size: clamp(48px, 6vw, 88px); line-height: 1; letter-spacing: -0.04em; font-variant-numeric: tabular-nums; }
 .stat-value .suf { color: var(--accent); font-weight: 400; }

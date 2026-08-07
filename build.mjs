@@ -25,7 +25,13 @@ const OG_IMAGE = `${HOST}/assets/og-default.png`;
 // CDN can keep serving a stale copy after a deploy — which silently breaks
 // newer CSS (e.g. the mobile nav dropdown rules). We append ?v=<content-hash>
 // so any change to the file produces a fresh URL.
-const VERSIONED_ASSETS = ["assets/base.css", "assets/fonts.css", "assets/partners.js", "assets/conversion.js"];
+// location.css / orange-stats.css carry the stat-band grid rules, which must
+// change in lockstep with the markup — a cached copy renders three stats in a
+// four-column grid, leaving a hole. Version them for the same reason as base.css.
+const VERSIONED_ASSETS = [
+  "assets/base.css", "assets/fonts.css", "assets/partners.js", "assets/conversion.js",
+  "assets/location.css", "assets/orange-stats.css",
+];
 const ASSET_VERSIONS = new Map(); // "/assets/base.css" -> "?v=abcd1234"
 
 async function computeAssetVersions() {

@@ -21,17 +21,20 @@
   color: #fff;
 }
 .ob-lead em { font-style: italic; font-weight: 400; color: rgba(255,255,255,0.78); }
+/* Three stats, not four — the "100+ specialists" figure was removed. */
 .ob-grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   gap: 0;
   border-top: 0.5px solid rgba(255,255,255,0.32);
   padding-top: 40px;
 }
-@media (max-width: 880px) { .ob-grid { grid-template-columns: repeat(2, 1fr); gap: 32px; } }
+/* An odd count can't split evenly into two columns, so go straight to one
+   rather than stranding the third stat on its own row. */
+@media (max-width: 720px) { .ob-grid { grid-template-columns: 1fr; gap: 32px; } }
 .ob-stat { padding-left: 28px; border-left: 0.5px solid rgba(255,255,255,0.32); }
 .ob-stat:first-child { border-left: 0; padding-left: 0; }
-@media (max-width: 880px) { .ob-stat:nth-child(3) { border-left: 0; padding-left: 0; } }
+@media (max-width: 720px) { .ob-stat { border-left: 0; padding-left: 0; } }
 .ob-value {
   font-family: var(--display);
   font-weight: 500;
