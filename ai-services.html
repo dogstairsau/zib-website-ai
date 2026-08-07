@@ -6,6 +6,7 @@
 <!-- @include _partials/head.html -->
 <link rel="stylesheet" href="/assets/orange-stats.css">
 <link rel="stylesheet" href="/assets/ai-sections.css">
+<link rel="stylesheet" href="/assets/contact-form.css">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -594,6 +595,27 @@ h1, h2, h3, .hero-h, .fork-h, .path-title, .moat-h, .cta-title { text-wrap: bala
 
 .cta-buttons { margin-top: 44px; display: inline-flex; gap: 14px; flex-wrap: wrap; justify-content: center; }
 
+/* Lead form at the foot of the page — the page runs paid traffic, so the
+   conversion has to be on the page, not behind a mailto. Fields and buttons
+   come from contact-form.css; these rules only handle the surround. */
+.cta-form-wrap { margin-top: clamp(44px, 5vw, 64px); text-align: left; }
+.cta-form-wrap .contact-form { margin-left: auto; margin-right: auto; }
+.cta-reassure {
+  margin-top: 20px;
+  font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--muted-2); text-align: center;
+}
+.cta-alt {
+  margin-top: 26px; text-align: center;
+  font-size: 15px; color: var(--muted);
+}
+.cta-alt a { color: var(--ink); border-bottom: 1px solid var(--rule-2); }
+.cta-alt a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+
+/* Hero buttons — the hero had no call to action at all, which is expensive on
+   an ad landing page. */
+.hero-ctas { margin-top: clamp(32px, 3.6vw, 44px); display: flex; gap: 14px; flex-wrap: wrap; }
+
 .btn {
   display: inline-flex;
   align-items: center;
@@ -673,6 +695,10 @@ footer ul li a:hover { color: var(--accent); }
       <strong>Zib Digital is an AI marketing agency built on a sixteen-year playbook.</strong>
       Two ways to work with us on AI marketing services: we run the agents for you, or we build an AI marketing agent inside your business and check in while you learn. Either way, you get AI digital marketing augmented by senior human judgement.
     </p>
+    <div class="hero-ctas reveal">
+      <a class="btn btn-primary" href="#talk">Talk to a strategist <span class="arr">→</span></a>
+      <a class="btn btn-outline" href="#paths">See the two paths</a>
+    </div>
     <div class="hero-meta reveal">
       <span><span class="dot" aria-hidden="true"></span>Since 2009</span>
       <span><span class="dot" aria-hidden="true"></span>Four offices</span>
@@ -683,7 +709,7 @@ footer ul li a:hover { color: var(--accent); }
 </section>
 
 <!-- FORK -->
-<section class="fork">
+<section class="fork" id="paths">
   <div class="container">
     <div class="fork-head reveal">
       <div class="mono fork-eyebrow">Choose your path</div>
@@ -777,7 +803,7 @@ footer ul li a:hover { color: var(--accent); }
           </div>
         </div>
 
-        <a class="deep-cta" href="mailto:michael.glasser@zibdigital.com.au?subject=Managed%20AI%20-%20let's%20talk">Talk to a strategist about managed AI <span class="arr">→</span></a>
+        <a class="deep-cta" href="#talk">Talk to a strategist about managed AI <span class="arr">→</span></a>
       </div>
     </div>
 
@@ -824,7 +850,7 @@ footer ul li a:hover { color: var(--accent); }
           </div>
         </div>
 
-        <a class="deep-cta" href="mailto:michael.glasser@zibdigital.com.au?subject=AI%20partner%20-%20let's%20talk">Talk to a strategist about the AI partner model <span class="arr">→</span></a>
+        <a class="deep-cta" href="#talk">Talk to a strategist about the AI partner model <span class="arr">→</span></a>
       </div>
     </div>
 
@@ -986,7 +1012,7 @@ footer ul li a:hover { color: var(--accent); }
       </div>
     </div>
     <div class="fit-foot reveal">
-      Not sure? <a href="mailto:michael.glasser@zibdigital.com.au?subject=AI%20services%20-%20fit%20call">Book a 15-min fit call</a> · we'll tell you straight which path fits.
+      Not sure? <a href="#talk">Book a 15-min fit call</a> · we'll tell you straight which path fits.
     </div>
   </div>
 </section>
@@ -1062,8 +1088,8 @@ footer ul li a:hover { color: var(--accent); }
 <!-- PROOF · orange band (shared component) -->
 <!-- @include _partials/orange-stats.html -->
 
-<!-- CTA -->
-<section class="cta-section">
+<!-- CTA · lead form (primary conversion for paid traffic) -->
+<section class="cta-section" id="talk">
   <div class="container">
     <div class="mono cta-eyebrow reveal">Talk to a senior strategist</div>
     <h2 class="cta-title reveal">
@@ -1072,18 +1098,52 @@ footer ul li a:hover { color: var(--accent); }
     <p class="cta-sub reveal">
       Thirty minutes with one of us. We read your business, flag the one place AI would move the needle first, and tell you honestly which path fits. No deck, no pitch.
     </p>
-    <div class="cta-buttons reveal">
-      <a class="btn btn-primary" href="mailto:michael.glasser@zibdigital.com.au">
-        Book a conversation <span class="arr">→</span>
-      </a>
-      <a class="btn btn-outline" href="/audit">
-        Run the free audit first
-      </a>
+
+    <div class="cta-form-wrap reveal">
+      <form class="contact-form" id="contactForm" autocomplete="on" data-success-redirect="/ai-services-thank-you">
+        <input type="hidden" name="partnerName" value="Zib Digital" />
+        <input type="hidden" name="source" value="AI services page" />
+        <div class="contact-field">
+          <label for="cf-firstname">First name *</label>
+          <input type="text" id="cf-firstname" name="firstname" required autocomplete="given-name" />
+        </div>
+        <div class="contact-field">
+          <label for="cf-lastname">Last name *</label>
+          <input type="text" id="cf-lastname" name="lastname" required autocomplete="family-name" />
+        </div>
+        <div class="contact-field">
+          <label for="cf-email">Work email *</label>
+          <input type="email" id="cf-email" name="email" required autocomplete="email" />
+        </div>
+        <div class="contact-field">
+          <label for="cf-phone">Mobile *</label>
+          <input type="tel" id="cf-phone" name="phone" required autocomplete="tel" />
+        </div>
+        <div class="contact-field">
+          <label for="cf-company">Company</label>
+          <input type="text" id="cf-company" name="company" autocomplete="organization" />
+        </div>
+        <div class="contact-field">
+          <label for="cf-website">Website</label>
+          <input type="text" id="cf-website" name="website" placeholder="yourbusiness.com.au" autocomplete="url" />
+        </div>
+        <div class="contact-field full">
+          <label for="cf-message">What would you want AI to take off your plate?</label>
+          <textarea id="cf-message" name="message" placeholder="e.g. We're leaking leads after hours, and nobody has time to chase quotes. Not sure whether we want it run for us or built in-house."></textarea>
+        </div>
+        <button type="submit" class="contact-submit" id="contactSubmit">Book a conversation</button>
+        <div class="contact-status mono" id="contactStatus" role="status" aria-live="polite"></div>
+      </form>
+      <div class="cta-reassure">No lock-in · No obligation · We reply within one business day</div>
+      <p class="cta-alt">
+        Rather start with proof? <a href="/audit">Run the free AI audit</a> · or call <a href="tel:+61386859290">03 8685 9290</a>.
+      </p>
     </div>
   </div>
 </section>
 
 <!-- @include _partials/footer.html -->
 <!-- @include _partials/scripts.html -->
+<script src="/assets/contact-form.js" defer></script>
 </body>
 </html>

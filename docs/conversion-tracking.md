@@ -134,6 +134,31 @@ If the pixel event doesn't appear but `zib_lead` does, the pixel isn't loading
 
 ---
 
+## The AI services page is different
+
+`/ai-services` runs paid traffic, so its form is a plain page form posting to
+`/api/contact` — not a streaming tool. It **does** redirect, to
+`/ai-services-thank-you`, which is a real page load the pixel already sees.
+
+That gives a URL-based conversion with no extra work:
+
+- **Meta:** Events Manager → Custom Conversions → URL **contains**
+  `ai-services-thank-you` → category Lead.
+- **Google Ads:** a destination-URL conversion on the same path.
+
+The page has its own thank-you URL rather than sharing `/thank-you` precisely
+so this conversion counts AI services leads only, and ad optimisation isn't
+trained on traffic from other forms.
+
+`zibLead` is deliberately **not** called on this form — the page load is the
+signal. Don't add both.
+
+⚠️ Leads from this form arrive as an **email** (via Resend to
+`LEAD_NOTIFY_EMAIL`), not in HubSpot — `/api/contact` doesn't push to the CRM.
+Same as the `/ai-for-trades` landing page. If these leads need to land in
+HubSpot for nurture or reporting, the fix is either wiring `captureLead` into
+`api/contact.ts` or swapping the markup for a HubSpot embedded form.
+
 ## Not covered
 
 - **`cheeks.html` and `jacqui.html`** carry their own copies of the audit code
