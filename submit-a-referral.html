@@ -111,6 +111,23 @@
 }
 .ref-form-legend::after { content: ""; flex: 1; height: 0.5px; background: var(--rule); }
 
+/* Two-column pairing for the HubSpot form.
+   HubSpot's legacy editor only pairs fields by drag-and-drop, and it put every
+   field in its own form-columns-1 row — which contact-form.css spans full
+   width. Seventeen full-width inputs stacked vertically reads as a wall and
+   tanks completion, so the pairing is done here instead. Keeping it in CSS
+   also means the layout is in version control rather than in a form builder.
+   The ID selector is what wins over the shared .hs-form-wrap rules. */
+#referralForm .hs-form .form-columns-1 .hs-form-field { grid-column: span 1; }
+
+/* Prose and long-answer fields still want the whole row. Same specificity as
+   the rule above, declared after it, so these win. */
+#referralForm .hs-form .form-columns-1 .hs-fieldtype-textarea,
+#referralForm .hs-form .form-columns-1 .hs-fieldtype-booleancheckbox,
+#referralForm .hs-form .form-columns-1 .hs_referral_notes,
+#referralForm .hs-form .form-columns-1 .hs_referral_intro_consent,
+#referralForm .hs-form .form-columns-1 .hs_referral_permission { grid-column: 1 / -1; }
+
 /* Fallback while the HubSpot embed loads (or if it's blocked by an ad blocker). */
 .ref-form-fallback {
   max-width: 760px; margin: 0 auto; text-align: center;
@@ -215,9 +232,9 @@
 
       <!-- Native HubSpot form (portal 14539048). Mounted by the [data-hsform]
            loader in _partials/scripts.html; styled by assets/contact-form.css.
-           Form: "Submit a referral" — see docs/REFERRAL-HUBSPOT-BRIEF.md for the
-           field spec. Replace the id below with the real HubSpot form GUID. -->
-      <div class="hs-form-wrap reveal" data-hsform="REPLACE_WITH_HUBSPOT_FORM_ID" id="referralForm"></div>
+           Form: "Submit a referral" — see docs/referral-hubspot-brief.md for the
+           field spec. -->
+      <div class="hs-form-wrap reveal" data-hsform="0753df88-565c-4a45-8c7b-c81c9e26e47a" id="referralForm"></div>
 
       <p class="ref-form-fallback">Form not loading? Email the intro straight to <a href="mailto:michael.glasser@zibdigital.com.au">michael.glasser@zibdigital.com.au</a> or call <a href="tel:+61386859290">03 8685 9290</a>.</p>
     </div>

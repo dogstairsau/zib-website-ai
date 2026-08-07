@@ -193,6 +193,17 @@
 }
 .hs-form-wrap .hs-form .hs-button:hover { background: var(--ink); color: #fff; transform: translateY(-1px); }
 
+/* Rich-text blocks (help text, small print) always span the full row — they're
+   prose, not a field, and reading them in a half-width column is worse. */
+.hs-form-wrap .hs-form .hs-richtext {
+  grid-column: 1 / -1;
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+.hs-form-wrap .hs-form .hs-richtext p { margin: 0; }
+.hs-form-wrap .hs-form .hs-richtext a { color: var(--accent); border-bottom: 1px solid var(--accent); }
+
 /* Validation + GDPR consent */
 .hs-form-wrap .hs-form .hs-error-msgs { list-style: none; margin: 6px 0 0; padding: 0; }
 .hs-form-wrap .hs-form .hs-error-msg,
