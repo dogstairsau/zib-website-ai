@@ -144,6 +144,11 @@
 .hs-form-wrap .hs-form .form-columns-1 .hs-form-field,
 .hs-form-wrap .hs-form .hs-fieldtype-textarea { grid-column: 1 / -1; }
 
+/* HubSpot injects its own stylesheet at render time, after this file. Its
+   label rule has the same specificity as a plain `.hs-form-wrap .hs-form
+   label`, so load order was handing HubSpot the tie and labels came out in its
+   default navy. The extra class puts ours ahead on specificity instead. */
+.hs-form-wrap .hs-form .hs-form-field label,
 .hs-form-wrap .hs-form label {
   font-family: var(--display);
   font-size: 13px;

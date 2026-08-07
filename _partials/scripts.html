@@ -270,10 +270,15 @@
   // form with one left unedited and it renders on the live page. Strip blocks
   // matching the default string and nothing else, so a slip in the form builder
   // can't put placeholder text in front of a customer. Real copy is untouched.
-  const HS_PLACEHOLDER = 'This is a rich text area, you can add whatever copy you like';
+  // Match on the opening phrase rather than the whole sentence: HubSpot's
+  // default copy varies slightly by editor version and can pick up &nbsp; or
+  // trailing whitespace. No real marketing copy starts "This is a rich text
+  // area", so this can't eat legitimate content.
+  const HS_PLACEHOLDER = /^this is a rich text area/i;
   const stripPlaceholders = () => {
     document.querySelectorAll('.hs-richtext').forEach((el) => {
-      if (el.textContent.trim().replace(/\s+/g, ' ') === HS_PLACEHOLDER) el.remove();
+      const text = el.textContent.replace(/ /g, ' ').trim();
+      if (HS_PLACEHOLDER.test(text)) el.remove();
     });
   };
 
@@ -281,6 +286,14 @@
     if (!window.hbspt) return;
     mounts.forEach((el, i) => {
       if (!el.id) el.id = 'hsform-' + i;
+      // onFormReady alone isn't enough — it can fire before HubSpot has
+      // finished injecting rich-text blocks, and it doesn't fire at all on
+      // some embed versions. Watch the mount as well, and stop once the form
+      // has settled so we're not observing forever.
+      const observer = new MutationObserver(stripPlaceholders);
+      observer.observe(el, { childList: true, subtree: true });
+      setTimeout(() => observer.disconnect(), 20000);
+
       window.hbspt.forms.create({
         portalId: '14539048',
         region: el.dataset.hsregion || 'na1',
