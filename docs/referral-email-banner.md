@@ -40,7 +40,7 @@ flexbox, no web fonts — so it survives Outlook, Gmail and Apple Mail.
           <td style="padding:34px 36px 36px 36px;font-family:'Helvetica Neue',Helvetica,Arial,sans-serif;">
             <p style="margin:0 0 14px 0;font-size:11px;line-height:1.2;letter-spacing:0.14em;text-transform:uppercase;color:#FF6200;font-weight:600;">Client referrals</p>
             <p style="margin:0 0 14px 0;font-size:28px;line-height:1.15;letter-spacing:-0.02em;color:#FFFFFF;font-weight:600;">Our best clients come from you.</p>
-            <p style="margin:0 0 26px 0;font-size:15px;line-height:1.55;color:#C9C9C9;">If you know a business that needs <strong style="color:#FFFFFF;font-weight:600;">SEO</strong>, <strong style="color:#FFFFFF;font-weight:600;">Google Ads</strong>, <strong style="color:#FFFFFF;font-weight:600;">social</strong> or a <strong style="color:#FFFFFF;font-weight:600;">better website</strong>, introduce them below. We'll look after them, and we'll tell you how it went.</p>
+            <p style="margin:0 0 26px 0;font-size:15px;line-height:1.55;color:#C9C9C9;">If you know a business that needs <strong style="color:#FFFFFF;font-weight:600;">SEO</strong>, <strong style="color:#FFFFFF;font-weight:600;">Google Ads</strong>, <strong style="color:#FFFFFF;font-weight:600;">social</strong> or a <strong style="color:#FFFFFF;font-weight:600;">marketing agent</strong>, introduce them below. We'll look after them, and we'll tell you how it went.</p>
             <table role="presentation" cellpadding="0" cellspacing="0" border="0" style="border-collapse:collapse;">
               <tr>
                 <td align="center" bgcolor="#FF6200" style="border-radius:999px;">

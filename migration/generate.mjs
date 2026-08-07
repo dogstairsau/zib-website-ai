@@ -274,7 +274,7 @@ function locationPage({ slug, service, city, sf, wp, copy }) {
       <p class="hero-sub reveal"><strong>${esc(hub.label)} in ${esc(city)}, built around your commercial number.</strong> Human first, commercially driven, AI enhanced: senior strategists own the thinking, AI handles the scale.</p>
       <div class="hero-ctas reveal">
         <a class="btn btn-primary" href="/audit">Run a free audit <span class="arr">→</span></a>
-        <a class="btn btn-outline" href="mailto:hello@zibdigital.com.au?subject=${encodeURIComponent(hub.label + " " + city)}">Talk to a strategist</a>
+        <a class="btn btn-outline" href="mailto:michael.glasser@zibdigital.com.au?subject=${encodeURIComponent(hub.label + " " + city)}">Talk to a strategist</a>
       </div>
     </div>
     <div class="hero-meta reveal">
@@ -352,7 +352,7 @@ ${isSeo ? "<!-- @include _partials/aeo-geo.html -->\n" : ""}
     <p class="cta-sub reveal">Thirty minutes with a senior strategist on your ${city} ${hub.label}. We read your business, flag where we'd move first, and give you the unvarnished version.</p>
     <div class="cta-buttons reveal">
       <a class="btn btn-primary" href="/audit">Run the free audit <span class="arr">→</span></a>
-      <a class="btn btn-outline" href="mailto:hello@zibdigital.com.au?subject=${encodeURIComponent(hub.label + " " + city + " - discovery call")}">Book a discovery call</a>
+      <a class="btn btn-outline" href="mailto:michael.glasser@zibdigital.com.au?subject=${encodeURIComponent(hub.label + " " + city + " - discovery call")}">Book a discovery call</a>
     </div>
   </div>
 </section>
@@ -394,7 +394,7 @@ function servicePage({ slug, label, city, hub, sf, wp, copy }) {
       <p class="hero-sub reveal"><strong>${esc(label)}${city ? " in " + esc(city) : ""}, built around your commercial number.</strong> Human first, commercially driven, AI enhanced: senior strategists own the thinking, AI handles the scale.</p>
       <div class="hero-ctas reveal">
         <a class="btn btn-primary" href="/audit">Run a free audit <span class="arr">→</span></a>
-        <a class="btn btn-outline" href="mailto:hello@zibdigital.com.au?subject=${encodeURIComponent(label + (city ? " " + city : ""))}">Talk to a strategist</a>
+        <a class="btn btn-outline" href="mailto:michael.glasser@zibdigital.com.au?subject=${encodeURIComponent(label + (city ? " " + city : ""))}">Talk to a strategist</a>
       </div>
     </div>
     <div class="hero-meta reveal">

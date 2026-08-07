@@ -537,7 +537,7 @@ function renderMetaAdsPackHtml(pack: MetaAdsPack): string {
   <div style="margin-top:36px;padding:24px;background:#0F0F0F;color:#fff;border-radius:12px;text-align:center;">
     <h3 style="margin:0 0 8px;font-size:18px;letter-spacing:-0.01em;">Want a second pair of eyes on this?</h3>
     <p style="margin:0 0 14px;font-size:14px;color:rgba(255,255,255,0.72);line-height:1.5;">A senior Meta strategist will reach out within 24 hours to walk through the brief, sharpen the angles and answer any questions on targeting.</p>
-    <a href="mailto:hello@zibdigital.com.au?subject=Meta%20Ads%20Lab%20-%20${encodeURIComponent(pack.brand?.name || pack.url)}" style="display:inline-block;padding:12px 24px;background:#FF6200;color:#fff;text-decoration:none;border-radius:999px;font-weight:500;font-size:14px;">Reply to talk to a strategist →</a>
+    <a href="mailto:michael.glasser@zibdigital.com.au?subject=Meta%20Ads%20Lab%20-%20${encodeURIComponent(pack.brand?.name || pack.url)}" style="display:inline-block;padding:12px 24px;background:#FF6200;color:#fff;text-decoration:none;border-radius:999px;font-weight:500;font-size:14px;">Reply to talk to a strategist →</a>
   </div>
 
   <p style="margin-top:36px;font-size:11px;color:#9C9C9C;text-align:center;line-height:1.6;">
@@ -687,7 +687,7 @@ function renderGoogleAdsPackHtml(pack: GoogleAdsPack): string {
   <div style="margin-top:36px;padding:24px;background:#0F0F0F;color:#fff;border-radius:12px;text-align:center;">
     <h3 style="margin:0 0 8px;font-size:18px;letter-spacing:-0.01em;">Want a Premier Partner to load this for you?</h3>
     <p style="margin:0 0 14px;font-size:14px;color:rgba(255,255,255,0.72);line-height:1.5;">A senior Google Ads strategist will reach out within 24 hours to pressure-test the structure, the keywords and the budget split before anything goes live.</p>
-    <a href="mailto:hello@zibdigital.com.au?subject=Google%20Ads%20Lab%20-%20${encodeURIComponent(pack.brand?.name || host)}" style="display:inline-block;padding:12px 24px;background:#FF6200;color:#fff;text-decoration:none;border-radius:999px;font-weight:500;font-size:14px;">Reply to talk to a strategist →</a>
+    <a href="mailto:michael.glasser@zibdigital.com.au?subject=Google%20Ads%20Lab%20-%20${encodeURIComponent(pack.brand?.name || host)}" style="display:inline-block;padding:12px 24px;background:#FF6200;color:#fff;text-decoration:none;border-radius:999px;font-weight:500;font-size:14px;">Reply to talk to a strategist →</a>
   </div>
 
   <p style="margin-top:36px;font-size:11px;color:#9C9C9C;text-align:center;line-height:1.6;">
