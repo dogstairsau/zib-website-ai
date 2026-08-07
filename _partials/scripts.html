@@ -266,6 +266,17 @@
 (() => {
   const mounts = document.querySelectorAll('[data-hsform]');
   if (!mounts.length) return;
+  // HubSpot's rich-text module ships with this exact default copy. Publish a
+  // form with one left unedited and it renders on the live page. Strip blocks
+  // matching the default string and nothing else, so a slip in the form builder
+  // can't put placeholder text in front of a customer. Real copy is untouched.
+  const HS_PLACEHOLDER = 'This is a rich text area, you can add whatever copy you like';
+  const stripPlaceholders = () => {
+    document.querySelectorAll('.hs-richtext').forEach((el) => {
+      if (el.textContent.trim().replace(/\s+/g, ' ') === HS_PLACEHOLDER) el.remove();
+    });
+  };
+
   const boot = () => {
     if (!window.hbspt) return;
     mounts.forEach((el, i) => {
@@ -275,6 +286,7 @@
         region: el.dataset.hsregion || 'na1',
         formId: el.dataset.hsform,
         target: '#' + el.id,
+        onFormReady: stripPlaceholders,
       });
     });
   };

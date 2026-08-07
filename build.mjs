@@ -31,6 +31,9 @@ const OG_IMAGE = `${HOST}/assets/og-default.png`;
 const VERSIONED_ASSETS = [
   "assets/base.css", "assets/fonts.css", "assets/partners.js", "assets/conversion.js",
   "assets/location.css", "assets/orange-stats.css",
+  // Styles the HubSpot embeds, which render after page load — a stale copy
+  // shows HubSpot's own defaults instead of ours, on a live lead form.
+  "assets/contact-form.css",
 ];
 const ASSET_VERSIONS = new Map(); // "/assets/base.css" -> "?v=abcd1234"
 
