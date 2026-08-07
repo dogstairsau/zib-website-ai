@@ -34,6 +34,10 @@ const VERSIONED_ASSETS = [
   // Styles the HubSpot embeds, which render after page load — a stale copy
   // shows HubSpot's own defaults instead of ours, on a live lead form.
   "assets/contact-form.css",
+  // Proposal tracking. A stale copy keeps posting an old payload shape to
+  // /api/proposal-view, so engagement on a live proposal quietly stops
+  // matching what the endpoint expects.
+  "assets/proposal-track.js",
 ];
 const ASSET_VERSIONS = new Map(); // "/assets/base.css" -> "?v=abcd1234"
 

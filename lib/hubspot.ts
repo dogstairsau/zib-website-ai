@@ -94,7 +94,7 @@ async function pushToHubSpot(lead: Lead): Promise<string | null> {
   throw new Error(`HubSpot ${res.status}: ${body.slice(0, 200)}`);
 }
 
-async function findContactIdByEmail(token: string, email: string): Promise<string | null> {
+export async function findContactIdByEmail(token: string, email: string): Promise<string | null> {
   const res = await fetch(
     `https://api.hubapi.com/crm/v3/objects/contacts/${encodeURIComponent(email)}?idProperty=email`,
     {
@@ -111,7 +111,7 @@ async function attachAuditNote(contactId: string, ctx: AuditContext): Promise<vo
   await attachNote(contactId, buildNoteHtml(ctx));
 }
 
-async function attachNote(contactId: string, noteBody: string): Promise<void> {
+export async function attachNote(contactId: string, noteBody: string): Promise<void> {
   const token = process.env.HUBSPOT_PRIVATE_APP_TOKEN;
   if (!token) return;
 

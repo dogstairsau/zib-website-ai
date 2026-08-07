@@ -248,6 +248,167 @@ function esc(s: string): string {
     .replace(/"/g, "&quot;");
 }
 
+// ─── Proposal engagement alert ──────────────────────────────────────
+// Sent to LEAD_NOTIFY_EMAIL when a tokened recipient finishes reading a
+// proposal / audit page. One email per reading session, not per event.
+
+export type ProposalViewEmail = {
+  name: string;
+  company: string;
+  context?: string;
+  recipientEmail?: string;
+  pageTitle: string;
+  pageUrl: string;
+  /** Nth view by this recipient, all-time. 1 = first ever open. */
+  viewNumber: number;
+  /** Seconds the page was actually visible this session. */
+  sessionSeconds: number;
+  /** Per-section visible time, already sorted longest-first. */
+  sections: { label: string; seconds: number }[];
+  /** Labels of accordions/details the reader deliberately expanded. */
+  expanded: string[];
+  /** Deepest section reached this session. */
+  furthest: string;
+  device: string;
+  /** ISO timestamp of this recipient's first-ever open. */
+  firstSeen?: string;
+};
+
+export async function sendProposalViewEmail(p: ProposalViewEmail): Promise<void> {
+  const apiKey = process.env.RESEND_API_KEY;
+  const from = process.env.LEAD_NOTIFY_FROM || "onboarding@resend.dev";
+  const to = process.env.PROPOSAL_NOTIFY_EMAIL || process.env.LEAD_NOTIFY_EMAIL;
+
+  if (!apiKey || !to) {
+    console.log("[proposal:stub]", {
+      name: p.name,
+      company: p.company,
+      viewNumber: p.viewNumber,
+      seconds: p.sessionSeconds,
+    });
+    return;
+  }
+
+  const ord = ordinal(p.viewNumber);
+  const subject =
+    p.viewNumber === 1
+      ? `${p.name} (${p.company}) opened the proposal`
+      : `${p.name} (${p.company}) is back — ${ord} view`;
+
+  try {
+    const res = await fetch("https://api.resend.com/emails", {
+      method: "POST",
+      headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
+      body: JSON.stringify({ from, to, subject, html: renderProposalViewHtml(p) }),
+      signal: AbortSignal.timeout(10_000),
+    });
+    if (!res.ok) {
+      const body = await res.text().catch(() => "");
+      console.warn("[proposal] Resend error:", res.status, body.slice(0, 200));
+    }
+  } catch (e) {
+    console.warn("[proposal] fetch failed:", (e as Error).message);
+  }
+}
+
+function renderProposalViewHtml(p: ProposalViewEmail): string {
+  const safe = (s: string | undefined) => esc(s || "");
+  const returning = p.viewNumber > 1;
+
+  // Dwell bars are relative to the reader's own longest section — the useful
+  // question is "what held them most", not "how does this compare to anyone else".
+  const maxSecs = Math.max(1, ...p.sections.map((s) => s.seconds));
+  const bars = p.sections
+    .filter((s) => s.seconds >= 2) // sub-2s is scroll-past, not reading
+    .map((s) => {
+      const pct = Math.max(3, Math.round((s.seconds / maxSecs) * 100));
+      return `
+      <tr>
+        <td style="padding:5px 12px 5px 0;font-size:13.5px;color:#1A1A1A;width:200px;vertical-align:middle;">${safe(s.label)}</td>
+        <td style="padding:5px 0;vertical-align:middle;">
+          <div style="background:#EFEDE6;border-radius:3px;height:18px;position:relative;">
+            <div style="background:#FF6200;width:${pct}%;height:18px;border-radius:3px;"></div>
+          </div>
+        </td>
+        <td style="padding:5px 0 5px 12px;font-size:12.5px;color:#6B6B6B;white-space:nowrap;vertical-align:middle;width:60px;text-align:right;">${fmtSecs(s.seconds)}</td>
+      </tr>`;
+    })
+    .join("");
+
+  const topSection = p.sections.find((s) => s.seconds >= 2);
+
+  return `<!doctype html>
+<html><body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;line-height:1.55;color:#0F0F0F;max-width:680px;margin:0 auto;padding:24px;background:#fff;">
+  <div style="font-size:11px;letter-spacing:0.14em;text-transform:uppercase;color:#FF6200;font-weight:600;margin-bottom:8px;">Zib Digital · Proposal engagement</div>
+  <h1 style="font-size:23px;margin:0 0 4px;line-height:1.2;">${safe(p.name)} · ${safe(p.company)}</h1>
+  <p style="color:#6B6B6B;margin:0 0 20px;font-size:14px;">${safe(p.pageTitle)}</p>
+
+  ${
+    returning
+      ? `<div style="margin:0 0 22px;padding:14px 18px;background:#FFF6E5;border:1px solid #FFD79A;border-left:4px solid #FF9D00;border-radius:8px;">
+    <div style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#A86200;margin-bottom:6px;">Returning reader · ${ordinal(p.viewNumber)} view</div>
+    <div style="font-size:13.5px;line-height:1.5;color:#1A1A1A;">Repeat opens are the strongest signal you get — it usually means they're showing someone else. Worth a call today rather than tomorrow.</div>
+  </div>`
+      : `<div style="margin:0 0 22px;padding:14px 18px;background:#F0FAF5;border:1px solid #B9E4CE;border-left:4px solid #0BAB6E;border-radius:8px;">
+    <div style="font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:#07764C;margin-bottom:6px;">First open</div>
+    <div style="font-size:13.5px;line-height:1.5;color:#1A1A1A;">They've just read it for the first time. Everything below is what they actually looked at.</div>
+  </div>`
+  }
+
+  <table style="border-collapse:collapse;width:100%;margin-bottom:24px;font-size:14px;">
+    <tr><td style="padding:6px 12px 6px 0;color:#6B6B6B;width:150px;">Time on page</td><td style="padding:6px 0;font-weight:600;">${fmtSecs(p.sessionSeconds)}</td></tr>
+    <tr><td style="padding:6px 12px 6px 0;color:#6B6B6B;">Total views</td><td style="padding:6px 0;">${p.viewNumber}</td></tr>
+    ${topSection ? `<tr><td style="padding:6px 12px 6px 0;color:#6B6B6B;">Longest on</td><td style="padding:6px 0;font-weight:600;">${safe(topSection.label)}</td></tr>` : ""}
+    <tr><td style="padding:6px 12px 6px 0;color:#6B6B6B;">Read as far as</td><td style="padding:6px 0;">${safe(p.furthest) || "—"}</td></tr>
+    <tr><td style="padding:6px 12px 6px 0;color:#6B6B6B;">Device</td><td style="padding:6px 0;">${safe(p.device)}</td></tr>
+    ${p.context ? `<tr><td style="padding:6px 12px 6px 0;color:#6B6B6B;">Who they are</td><td style="padding:6px 0;">${safe(p.context)}</td></tr>` : ""}
+    ${p.recipientEmail ? `<tr><td style="padding:6px 12px 6px 0;color:#6B6B6B;">Email</td><td style="padding:6px 0;"><a href="mailto:${safe(p.recipientEmail)}" style="color:#FF6200;">${safe(p.recipientEmail)}</a></td></tr>` : ""}
+    ${p.firstSeen ? `<tr><td style="padding:6px 12px 6px 0;color:#6B6B6B;">First opened</td><td style="padding:6px 0;">${safe(p.firstSeen)}</td></tr>` : ""}
+  </table>
+
+  ${
+    bars
+      ? `<h2 style="font-size:16px;margin:0 0 4px;">Where the time went</h2>
+  <p style="font-size:12.5px;color:#9C9C9C;margin:0 0 12px;">Seconds each section was actually on screen. Sections under 2s are omitted as scroll-past.</p>
+  <table style="border-collapse:collapse;width:100%;margin-bottom:24px;">${bars}</table>`
+      : `<p style="font-size:13px;color:#9C9C9C;margin:0 0 24px;">Too brief to attribute to any section — they opened it and left.</p>`
+  }
+
+  ${
+    p.expanded.length
+      ? `<h2 style="font-size:16px;margin:0 0 4px;">Deliberately expanded</h2>
+  <p style="font-size:12.5px;color:#9C9C9C;margin:0 0 10px;">These take a click, so they're real interest rather than a scroll accident.</p>
+  <ul style="margin:0 0 24px;padding-left:18px;font-size:14px;color:#1A1A1A;">
+    ${p.expanded.map((x) => `<li style="margin-bottom:4px;">${safe(x)}</li>`).join("")}
+  </ul>`
+      : ""
+  }
+
+  <div style="margin-top:8px;padding-top:20px;border-top:1px solid #E8E5DD;">
+    <a href="${safe(p.pageUrl)}" style="color:#FF6200;font-size:13.5px;">Open the page they saw →</a>
+  </div>
+
+  <p style="margin-top:28px;font-size:11px;color:#9C9C9C;line-height:1.6;">
+    One email per reading session, not per event. Timings measure when the section was visible on screen, which is a proxy for attention, not proof of it — someone can leave a tab open. Treat it as a prompt to call, not as fact.
+  </p>
+</body></html>`;
+}
+
+function fmtSecs(s: number): string {
+  const n = Math.max(0, Math.round(s));
+  if (n < 60) return `${n}s`;
+  const m = Math.floor(n / 60);
+  const rem = n % 60;
+  return rem ? `${m}m ${rem}s` : `${m}m`;
+}
+
+function ordinal(n: number): string {
+  const mod100 = n % 100;
+  if (mod100 >= 11 && mod100 <= 13) return `${n}th`;
+  const suffix = { 1: "st", 2: "nd", 3: "rd" }[n % 10] || "th";
+  return `${n}${suffix}`;
+}
+
 // ─── Pre-discovery qualifier email (/start) ─────────────────────────
 // Internal notification to the partner. Carries the prospect's answers, the
 // indicative teaser they saw, and the behind-the-scenes qualification (RAG,
