@@ -342,6 +342,11 @@
         throw new Error(j.error || `Request failed (${res.status})`);
       }
 
+      // Lead captured — the server accepted it and is pushing it to HubSpot.
+      // This is the conversion point; there's no thank-you page because the
+      // audit streams into this same view.
+      window.zibLead && window.zibLead({ tool: 'Website Audit', url, email });
+
       resultEl.classList.add('is-shown');
       resUrl.textContent = url;
       stagesEl.scrollIntoView({ behavior: 'smooth', block: 'start' });

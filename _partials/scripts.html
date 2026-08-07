@@ -249,6 +249,11 @@
 })();
 </script>
 
+<!-- Conversion tracking — window.zibLead(), called by every tool that captures
+     a lead (audit widget, /audit, both ad labs). Sitewide because the audit
+     widget is embedded on 20+ pages. See docs/conversion-tracking.md. -->
+<script src="/assets/conversion.js" defer></script>
+
 <!-- ───────────────────────────────────────────────────────────────────────
      HubSpot forms loader (portal 14539048, region na1).
      To embed any HubSpot form on a page, drop a div where it should render:
