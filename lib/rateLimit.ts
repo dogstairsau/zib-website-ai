@@ -4,8 +4,13 @@
  * the user has provisioned a KV store. Once KV is connected, this
  * blocks abusive bursts on the audit + blog endpoints.
  *
- * Enable: Vercel dashboard → Storage → Create → KV → connect to project.
- * That auto-injects KV_REST_API_URL and KV_REST_API_TOKEN.
+ * Enable: Vercel dashboard → Storage → Marketplace Database Providers →
+ * Upstash → Redis → connect to this project, then redeploy. That injects
+ * KV_REST_API_URL and KV_REST_API_TOKEN.
+ *
+ * (Vercel's own KV product was retired in Dec 2024 and existing stores
+ * were migrated to Upstash, so there is no "KV" option in the dashboard
+ * any more. The env vars kept the KV_* names for compatibility.)
  */
 
 type RateResult = { allowed: boolean; retryAfter: number };
