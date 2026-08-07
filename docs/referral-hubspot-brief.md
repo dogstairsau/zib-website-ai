@@ -176,8 +176,8 @@ In the form's **Options** tab:
    another page** → `https://zibdigital.com.au/referral-thank-you`
 2. **Send follow-up email**: ON. One email to the referrer, subject
    *"Thanks for the introduction"*, body along the lines of: we've got
-   {{ referral_first_name }}'s details, a strategist will reach out within one
-   business day, and we'll let you know how it goes.
+   {{ referral_first_name }}'s details, one of our growth team or partners will
+   reach out within one business day, and we'll let you know how it goes.
 3. **Send form notifications to**: the sales inbox / relevant owners. Notify on
    every submission — these are hot leads and should not wait for a report.
 4. **Pre-populate fields with known values**: OFF. Critical — with it on, a
