@@ -208,6 +208,32 @@
 }
 .b-form input:focus, .b-form textarea:focus { outline: 0; border-color: var(--ink); }
 .b-form textarea { resize: vertical; min-height: 72px; }
+.proof-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.proof-grid .span2 { grid-column: span 2; }
+@media (max-width: 880px) {
+  .proof-grid { grid-template-columns: repeat(2, 1fr); }
+  .proof-grid .span2 { grid-column: span 2; }
+}
+@media (max-width: 520px) {
+  .proof-grid { grid-template-columns: 1fr; }
+  .proof-grid .span2 { grid-column: span 1; }
+}
+.proof-grid label {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--muted); display: block; margin-bottom: 5px;
+}
+.proof-grid input, .proof-grid textarea {
+  font-family: var(--display); font-size: 15px;
+  padding: 12px 14px;
+  background: var(--paper);
+  border: 1px solid var(--rule-2);
+  border-radius: 12px;
+  color: var(--ink); width: 100%;
+  transition: border-color 200ms var(--ease);
+}
+.proof-grid input:focus, .proof-grid textarea:focus { outline: 0; border-color: var(--ink); }
+.proof-grid textarea { resize: vertical; min-height: 84px; line-height: 1.5; }
+
 .builder-cta { margin-top: clamp(28px, 3.4vw, 44px); display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
 .builder-cta button {
   font-family: var(--display); font-weight: 500; font-size: 16px;
@@ -732,6 +758,48 @@
         </div>
       </div>
 
+      <div class="b-card reveal" style="margin-top:clamp(20px,2.4vw,32px);">
+        <div class="b-label">Proof &amp; offer <span class="opt">All optional, all powerful</span></div>
+        <h3>The facts that make an ad sell.</h3>
+        <p class="hint">
+          Ratings, prices and guarantees are what separate an ad from a nice-looking post. These only ever appear on a creative if you supply them here, so nothing is invented. Leave anything blank and the layouts close up around it.
+        </p>
+        <div class="proof-grid">
+          <div>
+            <label for="pfRating">Star rating</label>
+            <input id="pfRating" type="number" min="1" max="5" step="0.1" placeholder="4.8" />
+          </div>
+          <div>
+            <label for="pfReviews">Review count</label>
+            <input id="pfReviews" type="text" placeholder="2,400+ reviews" maxlength="40" />
+          </div>
+          <div>
+            <label for="pfOffer">Offer</label>
+            <input id="pfOffer" type="text" placeholder="30% off" maxlength="24" />
+          </div>
+          <div>
+            <label for="pfOfferDetail">Offer detail</label>
+            <input id="pfOfferDetail" type="text" placeholder="First order, ends Sunday" maxlength="48" />
+          </div>
+          <div>
+            <label for="pfPrice">Price</label>
+            <input id="pfPrice" type="text" placeholder="$49" maxlength="16" />
+          </div>
+          <div>
+            <label for="pfWas">Usual price</label>
+            <input id="pfWas" type="text" placeholder="$70" maxlength="16" />
+          </div>
+          <div class="span2">
+            <label for="pfBenefits">Key benefits · one per line, up to four</label>
+            <textarea id="pfBenefits" placeholder="Roasted to order, never warehoused&#10;Free delivery over $50&#10;Skip or cancel any time" maxlength="280"></textarea>
+          </div>
+          <div class="span2">
+            <label for="pfGripe">What do people complain about with the alternatives?</label>
+            <input id="pfGripe" type="text" placeholder="Stale supermarket beans with no roast date" maxlength="90" />
+          </div>
+        </div>
+      </div>
+
       <div class="builder-cta reveal">
         <button type="button" id="builderNext">Continue <span class="arr">→</span></button>
         <span class="err" id="builderErr"></span>
@@ -928,6 +996,7 @@
     fonts: { head: null, body: null }, // { family, label, file }
     runId: '',
     assetUrls: [],
+    proof: null,       // ratings / offer / benefits, all optional
     brand: null, audience: '', strategy: null,
     ads: [],           // concepts from the API
     canvases: [],      // rendered canvas per ad
@@ -1154,6 +1223,27 @@
   wireFontSlot('headFontSlot', 'headFontInput', 'head');
   wireFontSlot('bodyFontSlot', 'bodyFontInput', 'body');
 
+  // ── Proof & offer ────────────────────────────────────────────────
+  // Read once at submit and reused for rendering. Everything is optional;
+  // a blank field means that device never appears on a creative, which is
+  // how we keep the model from inventing ratings or prices.
+  const readProof = () => {
+    const val = (id) => $(id).value.trim();
+    const rating = parseFloat(val('pfRating'));
+    const proof = {
+      rating: Number.isFinite(rating) && rating > 0 ? Math.min(5, rating) : null,
+      reviews: val('pfReviews'),
+      offer: val('pfOffer'),
+      offerDetail: val('pfOfferDetail'),
+      price: val('pfPrice'),
+      was: val('pfWas'),
+      benefits: val('pfBenefits').split('\n').map(s => s.trim()).filter(Boolean).slice(0, 4),
+      gripe: val('pfGripe'),
+    };
+    state.proof = proof;
+    return proof;
+  };
+
   // ── Builder: continue → gate ─────────────────────────────────────
   const builderErr = $('builderErr');
   const setBuilderErr = (msg) => { builderErr.textContent = msg; };
@@ -1255,18 +1345,32 @@
   // Deterministic layout engine: 5 templates × 3 formats, drawn at
   // Meta-native sizes with the uploaded photos, palette and fonts.
   // ─────────────────────────────────────────────────────────────────
+  // 4:5 takes ~31% more vertical screen than 1:1 and reads about a point
+  // higher on CTR; 9:16 higher still. 1:1 stays for carousel and Marketplace.
+  // Reel is its own entry rather than a flag because its safe area is so much
+  // tighter that it needs a genuinely different layout, not a resized one.
   const FORMAT_SIZE = {
     '1:1 · Feed': [1080, 1080],
     '4:5 · Feed': [1080, 1350],
     '9:16 · Story': [1080, 1920],
+    '9:16 · Reel': [1080, 1920],
   };
-  const isStory = (f) => f === '9:16 · Story';
-  // Meta story UI chrome: keep text out of the top ~14% and bottom ~17%.
-  const SAFE_TOP = 270, SAFE_BOTTOM = 330;
-  // The y every template anchors its CTA to. Feed formats get a normal
-  // margin; stories clear Meta's bottom chrome. Without this the CTA flows
-  // from the text above it and strands a third of a story frame empty.
-  const bottomLine = (H, story) => H - (story ? SAFE_BOTTOM : 86);
+  const isStory = (f) => (f || '').startsWith('9:16');
+  const isReel = (f) => (f || '').includes('Reel');
+  // Meta's 9:16 chrome, held as fractions of height rather than pixel
+  // constants: Meta moved the reference canvas from 1080x1920 to 1440x2560
+  // in 2026 but left these percentages untouched, so fractions outlive the
+  // canvas. Reels reserve far more at the base for the engagement rail
+  // (like / comment / share / follow), which never goes away.
+  const SAFE = { top: 0.14, storyBottom: 0.20, reelBottom: 0.35 };
+  const SAFE_TOP = Math.round(1920 * SAFE.top); // 270px on a 1080x1920 frame
+  /**
+   * The y every template anchors its CTA to. Feed formats get an aesthetic
+   * margin; 9:16 clears the platform UI. Without this the CTA flows up from
+   * the text above it and strands a third of a story frame empty.
+   */
+  const bottomLine = (H, story, reel) =>
+    story ? H - Math.round(H * (reel ? SAFE.reelBottom : SAFE.storyBottom)) : H - 86;
 
   const fontStr = (px, fam, { weight = 500, italic = false } = {}) =>
     `${italic ? 'italic ' : ''}${weight} ${px}px "${fam}", sans-serif`;
@@ -1422,98 +1526,694 @@
     ctx.restore();
   };
 
-  // ── Templates ────────────────────────────────────────────────────
-  // Each receives (ctx, W, H, a): a = { img, logoImg, primary, accent,
-  // headFam, bodyFam, kicker, headline, visualWord, cta, brandName }
+  // ── Direct-response primitives ───────────────────────────────────
+  // The devices that separate an ad from a poster: proof marks, offer
+  // stamps, comparison rows, benefit callouts. Every one of these draws
+  // only when the brand actually supplied the underlying fact — nothing
+  // here invents a rating, a price or a review count.
 
-  const tplOverlay = (ctx, W, H, a) => {
-    coverDraw(ctx, a.img, 0, 0, W, H);
-    const story = H > 1600;
-    const grad = ctx.createLinearGradient(0, H * 0.42, 0, H);
-    grad.addColorStop(0, 'rgba(0,0,0,0)');
-    grad.addColorStop(1, 'rgba(0,0,0,0.78)');
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, H * 0.42, W, H * 0.58);
-    if (a.logoImg) drawLogoChip(ctx, a.logoImg, 118, story ? SAFE_TOP + 90 : 118, 62);
-
-    const M = 76, maxW = W - M * 2;
-    const hl = layoutHeadline(ctx, a.headline, a.visualWord, a.headFam, maxW, 3, Math.round(W * 0.082), 46);
-    const ctaH = 30 * 2.3;
-    let y = bottomLine(H, story) - ctaH;
-    drawCtaPill(ctx, a.cta, a.bodyFam, M, y, { bg: a.accent, fg: textOn(a.accent) });
-    y -= 44 + headlineHeight(hl);
-    drawHeadline(ctx, hl, a.headFam, M, y, '#FFFFFF');
-    if (a.kicker) drawKicker(ctx, a.kicker, a.bodyFam, 27, M, y - 62, 'rgba(255,255,255,0.85)');
+  /** Five-pointed star path centred on (cx, cy). */
+  const starPath = (ctx, cx, cy, r) => {
+    ctx.beginPath();
+    for (let i = 0; i < 10; i++) {
+      const rad = i % 2 ? r * 0.42 : r;
+      const ang = (Math.PI / 5) * i - Math.PI / 2;
+      const px = cx + Math.cos(ang) * rad, py = cy + Math.sin(ang) * rad;
+      i ? ctx.lineTo(px, py) : ctx.moveTo(px, py);
+    }
+    ctx.closePath();
   };
 
-  const tplSplit = (ctx, W, H, a) => {
+  /** Star row with partial fill on the last star. Returns width drawn. */
+  const drawStars = (ctx, x, y, size, rating, color) => {
+    const gap = size * 2.34;
+    for (let i = 0; i < 5; i++) {
+      const cx = x + size + i * gap;
+      const fill = Math.max(0, Math.min(1, rating - i));
+      ctx.save();
+      starPath(ctx, cx, y + size, size);
+      ctx.strokeStyle = color;
+      ctx.lineWidth = Math.max(1.5, size * 0.1);
+      ctx.stroke();
+      if (fill > 0) {
+        ctx.clip();
+        ctx.fillStyle = color;
+        ctx.fillRect(cx - size, y, size * 2 * fill, size * 2);
+      }
+      ctx.restore();
+    }
+    return size + 4 * gap + size;
+  };
+
+  /**
+   * Rating lockup: stars plus the count, e.g. "★★★★★ 2,400+ reviews".
+   * Returns the height consumed.
+   */
+  const drawRating = (ctx, x, y, a, { size = 22, color, textColor }) => {
+    if (!a.rating || !a.rating.stars) return 0;
+    const w = drawStars(ctx, x, y, size, Number(a.rating.stars), color);
+    if (a.rating.count) {
+      ctx.font = fontStr(Math.round(size * 1.5), a.bodyFam, { weight: 500 });
+      ctx.fillStyle = textColor;
+      ctx.textBaseline = 'middle';
+      ctx.fillText(a.rating.count, x + w + size * 1.1, y + size);
+      ctx.textBaseline = 'alphabetic';
+    }
+    return size * 2;
+  };
+
+  /**
+   * Offer stamp: the loudest object on an offer ad. Slight rotation and a
+   * hard edge so it reads as a sticker rather than another text block.
+   */
+  const drawOfferStamp = (ctx, cx, cy, a, { bg, fg, scale = 1 }) => {
+    if (!a.offer || !a.offer.value) return;
+    const value = String(a.offer.value).toUpperCase();
+    const detail = a.offer.detail ? String(a.offer.detail) : '';
+    ctx.save();
+    ctx.translate(cx, cy);
+    ctx.rotate(-0.075);
+    let px = Math.round(72 * scale);
+    ctx.font = fontStr(px, a.headFam, { weight: 500 });
+    let tw = ctx.measureText(value).width;
+    const maxW = 460 * scale;
+    if (tw > maxW) { px = Math.round(px * maxW / tw); ctx.font = fontStr(px, a.headFam, { weight: 500 }); tw = ctx.measureText(value).width; }
+    const detailPx = Math.round(px * 0.3);
+    let dw = 0;
+    if (detail) {
+      ctx.font = fontStr(detailPx, a.bodyFam, { weight: 500 });
+      dw = ctx.measureText(detail).width;
+    }
+    const padX = px * 0.42, padY = px * 0.34;
+    const boxW = Math.max(tw, dw) + padX * 2;
+    const boxH = px + (detail ? detailPx * 1.9 : 0) + padY * 2;
+    roundRectPath(ctx, -boxW / 2, -boxH / 2, boxW, boxH, px * 0.16);
+    ctx.fillStyle = bg;
+    ctx.shadowColor = 'rgba(0,0,0,0.28)';
+    ctx.shadowBlur = 30;
+    ctx.shadowOffsetY = 8;
+    ctx.fill();
+    ctx.shadowColor = 'transparent';
+    ctx.shadowBlur = 0; ctx.shadowOffsetY = 0;
+    ctx.fillStyle = fg;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'alphabetic';
+    ctx.font = fontStr(px, a.headFam, { weight: 500 });
+    ctx.fillText(value, 0, -boxH / 2 + padY + px * 0.86);
+    if (detail) {
+      ctx.font = fontStr(detailPx, a.bodyFam, { weight: 500 });
+      ctx.globalAlpha = 0.88;
+      ctx.fillText(detail, 0, boxH / 2 - padY - detailPx * 0.25);
+      ctx.globalAlpha = 1;
+    }
+    ctx.textAlign = 'left';
+    ctx.restore();
+  };
+
+  /** Price lockup: was-price struck through, now-price large. */
+  const drawPrice = (ctx, x, y, a, { color, mutedColor, px = 60 }) => {
+    if (!a.offer || !a.offer.price) return 0;
+    ctx.textBaseline = 'alphabetic';
+    ctx.font = fontStr(px, a.headFam, { weight: 500 });
+    ctx.fillStyle = color;
+    ctx.fillText(a.offer.price, x, y + px * 0.86);
+    let w = ctx.measureText(a.offer.price).width;
+    if (a.offer.was) {
+      const wasPx = Math.round(px * 0.46);
+      ctx.font = fontStr(wasPx, a.bodyFam, { weight: 400 });
+      ctx.fillStyle = mutedColor;
+      const wx = x + w + px * 0.28;
+      ctx.fillText(a.offer.was, wx, y + px * 0.86);
+      const ww = ctx.measureText(a.offer.was).width;
+      ctx.strokeStyle = mutedColor;
+      ctx.lineWidth = Math.max(2, wasPx * 0.07);
+      ctx.beginPath();
+      ctx.moveTo(wx - 2, y + px * 0.86 - wasPx * 0.3);
+      ctx.lineTo(wx + ww + 2, y + px * 0.86 - wasPx * 0.3);
+      ctx.stroke();
+      w += px * 0.28 + ww;
+    }
+    return px * 1.2;
+  };
+
+  /**
+   * Tick or cross in a filled disc — the comparison-table workhorse.
+   * glyphColor must contrast with the disc: a white tick on a white disc is
+   * an invisible tick, which silently turns the table into blank circles.
+   */
+  const drawMark = (ctx, cx, cy, r, kind, color, glyphColor) => {
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.fillStyle = color;
+    ctx.globalAlpha = kind === 'tick' ? 1 : 0.16;
+    ctx.fill();
+    ctx.globalAlpha = 1;
+    ctx.strokeStyle = kind === 'tick' ? (glyphColor || textOn(color)) : color;
+    ctx.lineWidth = Math.max(2.4, r * 0.22);
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    if (kind === 'tick') {
+      ctx.moveTo(cx - r * 0.42, cy + r * 0.02);
+      ctx.lineTo(cx - r * 0.1, cy + r * 0.36);
+      ctx.lineTo(cx + r * 0.45, cy - r * 0.34);
+    } else {
+      ctx.moveTo(cx - r * 0.3, cy - r * 0.3);
+      ctx.lineTo(cx + r * 0.3, cy + r * 0.3);
+      ctx.moveTo(cx + r * 0.3, cy - r * 0.3);
+      ctx.lineTo(cx - r * 0.3, cy + r * 0.3);
+    }
+    ctx.stroke();
+    ctx.restore();
+  };
+
+  /** Ticked benefit list. Returns height consumed. */
+  const drawBenefits = (ctx, x, y, items, a, { color, textColor, px = 34, gap = 22, maxW = 9999 }) => {
+    let cy = y;
+    for (const item of items.slice(0, 4)) {
+      const r = px * 0.5;
+      drawMark(ctx, x + r, cy + r, r, 'tick', color);
+      ctx.font = fontStr(px, a.bodyFam, { weight: 400 });
+      ctx.fillStyle = textColor;
+      ctx.textBaseline = 'middle';
+      // Single line only: a wrapped benefit row destroys the tick alignment.
+      let text = String(item);
+      const room = maxW - (r * 2 + px * 0.6);
+      while (text.length > 4 && ctx.measureText(text).width > room) text = text.slice(0, -2);
+      if (text !== String(item)) text = text.replace(/[\s,.:;-]+$/, '') + '…';
+      ctx.fillText(text, x + r * 2 + px * 0.6, cy + r + px * 0.02);
+      ctx.textBaseline = 'alphabetic';
+      cy += px + gap;
+    }
+    return cy - y;
+  };
+
+  /** Pill label used for outcome markers ("Week 2") and column headers. */
+  const drawPill = (ctx, x, y, text, a, { bg, fg, px = 26, align = 'left' }) => {
+    ctx.font = fontStr(px, a.bodyFam, { weight: 500 });
+    const tw = ctx.measureText(text).width;
+    const padX = px * 0.7, h = px * 2;
+    const bx = align === 'center' ? x - (tw + padX * 2) / 2 : x;
+    roundRectPath(ctx, bx, y, tw + padX * 2, h, h / 2);
+    ctx.fillStyle = bg;
+    ctx.fill();
+    ctx.fillStyle = fg;
+    ctx.textBaseline = 'middle';
+    ctx.fillText(text, bx + padX, y + h / 2 + px * 0.05);
+    ctx.textBaseline = 'alphabetic';
+    return h;
+  };
+
+  /** Circular crop of a photo — the face on a testimonial. */
+  const drawAvatar = (ctx, img, cx, cy, r, ringColor) => {
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.clip();
+    coverDraw(ctx, img, cx - r, cy - r, r * 2, r * 2, 0.36);
+    ctx.restore();
+    if (ringColor) {
+      ctx.strokeStyle = ringColor;
+      ctx.lineWidth = Math.max(2, r * 0.08);
+      ctx.beginPath();
+      ctx.arc(cx, cy, r, 0, Math.PI * 2);
+      ctx.stroke();
+    }
+  };
+
+  /** Hand-drawn-feel marker sweep behind a word. */
+  const drawHighlightBar = (ctx, x, y, w, h, color) => {
+    ctx.save();
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.moveTo(x, y + h * 0.08);
+    ctx.lineTo(x + w, y);
+    ctx.lineTo(x + w, y + h * 0.92);
+    ctx.lineTo(x, y + h);
+    ctx.closePath();
+    ctx.fill();
+    ctx.restore();
+  };
+
+  // ── Templates ────────────────────────────────────────────────────
+  // Nine direct-response layouts, each built around ONE dominant device:
+  // an offer stamp, a star rating, a tick/cross grid, a pair of outcome
+  // shots. The fastest way to make a static ad fail is visual democracy,
+  // where product, headline, badge and logo all shout at once and the eye
+  // settles on none of them, so every layout below picks a winner and
+  // makes everything else support it.
+  //
+  // Each receives (ctx, W, H, a) where a carries the brand kit, the copy
+  // and the optional proof block. Proof devices draw only when the brand
+  // supplied the underlying fact.
+
+  /** Near-white ground, faintly tinted toward the brand so it reads owned. */
+  const paperFor = (a) => shade(a.primary, 93);
+  const has = (v) => !!(v && String(v).trim());
+
+  /**
+   * Headline block + CTA anchored to the bottom safe line, the pattern
+   * most of these layouts close with. Returns the y the block starts at.
+   */
+  const drawClose = (ctx, W, H, a, o) => {
     const story = H > 1600;
-    // Stories give the photo more room: the copy panel only has to hold a
-    // rule, a kicker and a headline, and stretching it leaves dead colour.
-    const photoH = Math.round(H * (story ? 0.66 : 0.6));
+    const ctaH = 30 * 2.3;
+    const ctaY = bottomLine(H, story, a.reel) - ctaH;
+    drawCtaPill(ctx, a.cta, a.bodyFam, o.M, ctaY, { bg: o.ctaBg, fg: o.ctaFg, outline: o.outline });
+    const hl = layoutHeadline(ctx, a.headline, a.visualWord, a.headFam, o.maxW, o.maxLines || 3, o.startPx, o.minPx || 44);
+    let y = ctaY - 42 - headlineHeight(hl);
+    if (has(a.subhead) && o.subColor) {
+      y -= 52;
+      drawBodyText(ctx, a.subhead, a.bodyFam, 30, o.M, ctaY - 30 - 46, o.maxW, 2, o.subColor);
+    }
+    drawHeadline(ctx, hl, a.headFam, o.M, y, o.color);
+    return y;
+  };
+
+  /* 1 ── Lifestyle hero. The one brand-led layout: photo does the work,
+     copy stays out of its way. Carries a rating strip when there is one. */
+  const tplOverlay = (ctx, W, H, a) => {
+    const story = H > 1600;
+    coverDraw(ctx, a.img, 0, 0, W, H);
+    const grad = ctx.createLinearGradient(0, H * 0.38, 0, H);
+    grad.addColorStop(0, 'rgba(0,0,0,0)');
+    grad.addColorStop(1, 'rgba(0,0,0,0.8)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, H * 0.38, W, H * 0.62);
+    if (a.logoImg) drawLogoChip(ctx, a.logoImg, 118, story ? SAFE_TOP + 90 : 118, 62);
+
+    const M = 76;
+    const top = drawClose(ctx, W, H, a, {
+      M, maxW: W - M * 2, color: '#FFFFFF',
+      ctaBg: a.accent, ctaFg: textOn(a.accent),
+      startPx: Math.round(W * 0.082), maxLines: 3,
+    });
+    let y = top - 62;
+    if (a.rating && a.rating.stars) {
+      drawRating(ctx, M, y - 34, a, { size: 22, color: '#FFC24A', textColor: 'rgba(255,255,255,0.92)' });
+      y -= 76;
+    }
+    if (has(a.kicker)) drawKicker(ctx, a.kicker, a.bodyFam, 27, M, y, 'rgba(255,255,255,0.85)');
+  };
+
+  /* 2 ── Offer stack. Product up top, brand panel below carrying the
+     ticked benefits and the price, with the offer stamped over the seam.
+     The conversion workhorse for promos and retargeting. */
+  const tplOffer = (ctx, W, H, a) => {
+    const story = H > 1600;
+    const photoH = Math.round(H * (story ? 0.46 : 0.5));
     coverDraw(ctx, a.img, 0, 0, W, photoH);
     ctx.fillStyle = a.primary;
     ctx.fillRect(0, photoH, W, H - photoH);
     const on = textOn(a.primary);
+    const dim = on === '#FFFFFF' ? 'rgba(255,255,255,0.78)' : 'rgba(20,20,20,0.66)';
     const M = 76, maxW = W - M * 2;
     const ctaH = 30 * 2.3;
-    const ctaY = bottomLine(H, story) - ctaH;
+    const ctaY = bottomLine(H, story, a.reel) - ctaH;
 
-    const hl = layoutHeadline(ctx, a.headline, a.visualWord, a.headFam, maxW, 3, Math.round(W * 0.076), 44);
-    const kickH = a.kicker ? 26 * 1.5 : 0;
-    const blockH = 8 + 44 + kickH + headlineHeight(hl);
-    // Centre the copy block in the panel above the anchored CTA.
-    let y = photoH + Math.max(58, (ctaY - 48 - photoH - blockH) / 2);
-
-    ctx.fillStyle = a.accent !== a.primary ? a.accent : on;
-    ctx.fillRect(M, y, 120, 8);
-    y += 44;
-    if (a.kicker) y += drawKicker(ctx, a.kicker, a.bodyFam, 26, M, y, on === '#FFFFFF' ? 'rgba(255,255,255,0.75)' : 'rgba(20,20,20,0.65)');
+    let y = photoH + 62;
+    const hl = layoutHeadline(ctx, a.headline, a.visualWord, a.headFam, maxW, 2, Math.round(W * 0.072), 42);
     drawHeadline(ctx, hl, a.headFam, M, y, on);
+    y += headlineHeight(hl) + 34;
 
+    const benefits = (a.benefits || []).slice(0, 3);
+    if (benefits.length) {
+      y += drawBenefits(ctx, M, y, benefits, a, {
+        color: a.accent !== a.primary ? a.accent : (on === '#FFFFFF' ? '#FFFFFF' : '#141414'),
+        textColor: on, px: 32, gap: 18, maxW,
+      }) + 12;
+    }
+    if (a.offer && a.offer.price) {
+      drawPrice(ctx, M, Math.min(y, ctaY - 96), a, { color: on, mutedColor: dim, px: 58 });
+    }
     const ctaBg = on === '#FFFFFF' ? '#FFFFFF' : '#141414';
     drawCtaPill(ctx, a.cta, a.bodyFam, M, ctaY, { bg: ctaBg, fg: ctaBg === '#FFFFFF' ? '#141414' : '#FFFFFF' });
-    if (a.logoImg) drawLogoChip(ctx, a.logoImg, W - 128, photoH - 96, 58);
+
+    if (a.offer && a.offer.value) {
+      drawOfferStamp(ctx, W - 250, photoH - 30, a, { bg: a.accent, fg: textOn(a.accent), scale: story ? 1 : 0.92 });
+    }
+    if (a.logoImg) drawLogoChip(ctx, a.logoImg, 118, story ? SAFE_TOP + 70 : 108, 56);
   };
 
-  const tplBanner = (ctx, W, H, a) => {
+  /* 3 ── Review card. Stars are the hero; the headline IS the review.
+     Only ever drawn when the brand gave us a real rating. */
+  const tplRating = (ctx, W, H, a) => {
     const story = H > 1600;
-    const bandY = story ? SAFE_TOP - 40 : 0;
-    const M = 76;
-    const maxW = W - M * 2 - (a.logoImg ? 150 : 0);
-    const hl = layoutHeadline(ctx, a.headline, a.visualWord, a.headFam, maxW, 2, Math.round(W * 0.066), 40);
-    const kickH = a.kicker ? 26 * 1.5 + 6 : 0;
-    // Band hugs its content instead of taking a fixed slab of the frame —
-    // a two-line headline in a 30%-tall band leaves half of it empty.
-    const bandH = Math.max(Math.round(H * 0.16), 56 + kickH + headlineHeight(hl) + 56);
+    const paper = paperFor(a);
+    ctx.fillStyle = paper;
+    ctx.fillRect(0, 0, W, H);
+    const M = 84, maxW = W - M * 2;
+    const ink = '#17140F';
+    const dim = 'rgba(23,20,15,0.6)';
+    const ctaH = 30 * 2.3;
+    const ctaY = bottomLine(H, story, a.reel) - ctaH;
 
-    coverDraw(ctx, a.img, 0, 0, W, H);
-    if (story) {
-      ctx.fillStyle = 'rgba(0,0,0,0.18)';
-      ctx.fillRect(0, 0, W, H);
-    }
-    ctx.fillStyle = a.primary;
-    ctx.fillRect(0, bandY, W, bandH);
-    const on = textOn(a.primary);
-    let y = bandY + 56;
-    if (a.kicker) {
-      const kickColor = on === '#FFFFFF' ? 'rgba(255,255,255,0.8)' : 'rgba(20,20,20,0.65)';
-      y += drawKicker(ctx, a.kicker, a.bodyFam, 26, M, y, kickColor) + 6;
-    }
-    drawHeadline(ctx, hl, a.headFam, M, y, on);
-    // Chip, not a bare draw: a logo without transparency reads as a white
-    // rectangle punched into the brand-colour band.
-    if (a.logoImg) drawLogoChip(ctx, a.logoImg, W - M - 56, bandY + bandH / 2, 56);
+    let y = story ? SAFE_TOP + 40 : 96;
+    if (a.logoImg) drawLogoChip(ctx, a.logoImg, W - M - 52, y + 22, 52);
 
-    const gradTop = H - Math.round(H * 0.28);
-    const grad = ctx.createLinearGradient(0, gradTop, 0, H);
-    grad.addColorStop(0, 'rgba(0,0,0,0)');
-    grad.addColorStop(1, 'rgba(0,0,0,0.62)');
-    ctx.fillStyle = grad;
-    ctx.fillRect(0, gradTop, W, H - gradTop);
-    drawCtaPill(ctx, a.cta, a.bodyFam, M, bottomLine(H, story) - 30 * 2.3, { bg: '#FFFFFF', fg: '#141414' });
+    const stars = a.rating && a.rating.stars ? Number(a.rating.stars) : 5;
+    // A pale brand accent makes the rating vanish, and the rating is the
+    // whole point of this layout, so fall back to review-star amber.
+    drawStars(ctx, M, y, 30, stars, luma(a.accent) > 190 ? '#F5A623' : a.accent);
+    y += 96;
+    if (a.rating && a.rating.count) {
+      ctx.font = fontStr(28, a.bodyFam, { weight: 500 });
+      ctx.fillStyle = dim;
+      ctx.textBaseline = 'alphabetic';
+      ctx.fillText(a.rating.count, M, y);
+      y += 46;
+    }
+
+    const hl = layoutHeadline(ctx, `“${a.headline}”`, a.visualWord, a.headFam, maxW, 4, Math.round(W * 0.078), 44);
+    drawHeadline(ctx, hl, a.headFam, M, y, ink);
+    y += headlineHeight(hl) + 30;
+
+    // Attribution: avatar borrowed from a brand photo keeps it human
+    // without pretending to be a specific customer's headshot.
+    if (has(a.attribution)) {
+      drawAvatar(ctx, a.imgB || a.img, M + 32, y + 32, 32, a.primary);
+      ctx.font = fontStr(27, a.bodyFam, { weight: 500 });
+      ctx.fillStyle = dim;
+      ctx.textBaseline = 'middle';
+      ctx.fillText(a.attribution, M + 82, y + 34);
+      ctx.textBaseline = 'alphabetic';
+      y += 92;
+    }
+
+    const photoTop = y + 10;
+    const photoH = Math.max(200, ctaY - 46 - photoTop);
+    if (photoH >= 200) {
+      ctx.save();
+      roundRectPath(ctx, M, photoTop, maxW, photoH, 18);
+      ctx.clip();
+      coverDraw(ctx, a.img, M, photoTop, maxW, photoH);
+      ctx.restore();
+    }
+    drawCtaPill(ctx, a.cta, a.bodyFam, M, ctaY, { bg: a.primary, fg: textOn(a.primary), outline: luma(a.primary) > 226 });
   };
 
+  /* 4 ── Comparison. Two columns of ticks and crosses. The single most
+     legible way to say "we do this, they don't" without a paragraph. */
+  const tplVersus = (ctx, W, H, a) => {
+    const story = H > 1600;
+    const paper = paperFor(a);
+    ctx.fillStyle = paper;
+    ctx.fillRect(0, 0, W, H);
+    const ink = '#17140F';
+    const M = 72, maxW = W - M * 2;
+    const ctaH = 30 * 2.3;
+    const ctaY = bottomLine(H, story, a.reel) - ctaH;
+
+    let y = story ? SAFE_TOP + 30 : 84;
+    if (has(a.kicker)) y += drawKicker(ctx, a.kicker, a.bodyFam, 26, M, y, a.primary) + 8;
+    // Leave the logo chip its corner rather than running the headline under it.
+    const hl = layoutHeadline(ctx, a.headline, a.visualWord, a.headFam, maxW - (a.logoImg ? 120 : 0), 2, Math.round(W * 0.07), 42);
+    drawHeadline(ctx, hl, a.headFam, M, y, ink);
+    y += headlineHeight(hl) + 40;
+
+    // Chart layout: one label column on the left, then a mark column per
+    // side. Repeating the label under both marks reads as two lists rather
+    // than one comparison.
+    const rows = (a.versus && a.versus.rows ? a.versus.rows : []).slice(0, 4);
+    const rowH = 76, headH = 58;
+    const markW = 128;
+    const labelW = maxW - markW * 2;
+    const themX = M + labelW, usX = M + labelW + markW;
+    const tableH = headH + rows.length * rowH;
+
+    // The winning column is the only thing wearing brand colour.
+    ctx.fillStyle = a.primary;
+    roundRectPath(ctx, usX, y - 10, markW, tableH + 20, 14);
+    ctx.fill();
+
+    // Column headers must fit their own column: a brand name wider than the
+    // mark column runs straight into the one beside it.
+    const fitHeader = (text, color, cx) => {
+      let px = 23;
+      ctx.font = fontStr(px, a.bodyFam, { weight: 500 });
+      let t = String(text);
+      while (px > 15 && ctx.measureText(t).width > markW - 14) {
+        px -= 1;
+        ctx.font = fontStr(px, a.bodyFam, { weight: 500 });
+      }
+      while (t.length > 3 && ctx.measureText(t).width > markW - 14) t = t.slice(0, -1);
+      ctx.fillStyle = color;
+      ctx.fillText(t, cx, y + headH / 2);
+    };
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    fitHeader(a.versus && a.versus.them ? a.versus.them : 'The usual', 'rgba(23,20,15,0.5)', themX + markW / 2);
+    fitHeader(a.versus && a.versus.us ? a.versus.us : a.brandName, textOn(a.primary), usX + markW / 2);
+    ctx.textAlign = 'left';
+    ctx.textBaseline = 'alphabetic';
+
+    let ry = y + headH;
+    rows.forEach((row, i) => {
+      if (i) {
+        ctx.strokeStyle = 'rgba(23,20,15,0.12)';
+        ctx.lineWidth = 1;
+        ctx.beginPath();
+        ctx.moveTo(M, ry);
+        ctx.lineTo(themX, ry);
+        ctx.stroke();
+      }
+      ctx.font = fontStr(27, a.bodyFam, { weight: 400 });
+      ctx.fillStyle = ink;
+      ctx.textBaseline = 'middle';
+      let label = String(row.label || '').slice(0, 34);
+      while (label.length > 4 && ctx.measureText(label).width > labelW - 24) label = label.slice(0, -2);
+      ctx.fillText(label, M, ry + rowH / 2);
+      ctx.textBaseline = 'alphabetic';
+      drawMark(ctx, themX + markW / 2, ry + rowH / 2, 20, 'cross', '#C0392B');
+      drawMark(ctx, usX + markW / 2, ry + rowH / 2, 20, 'tick', textOn(a.primary), a.primary);
+      ry += rowH;
+    });
+    ry += 10;
+
+    const photoTop = ry + 30;
+    const photoH = Math.max(0, ctaY - 46 - photoTop);
+    if (photoH >= 190) {
+      ctx.save();
+      roundRectPath(ctx, M, photoTop, maxW, photoH, 16);
+      ctx.clip();
+      coverDraw(ctx, a.img, M, photoTop, maxW, photoH);
+      ctx.restore();
+    }
+    drawCtaPill(ctx, a.cta, a.bodyFam, M, ctaY, { bg: a.primary, fg: textOn(a.primary), outline: luma(a.primary) > 226 });
+    if (a.logoImg) drawLogoChip(ctx, a.logoImg, W - M - 46, (story ? SAFE_TOP + 30 : 84) + 20, 46);
+  };
+
+  /* 5 ── Two-state. Paired shots with neutral time labels. Deliberately
+     never the words before/after, which Meta routinely rejects. */
+  const tplOutcome = (ctx, W, H, a) => {
+    const story = H > 1600;
+    const paper = paperFor(a);
+    ctx.fillStyle = paper;
+    ctx.fillRect(0, 0, W, H);
+    const ink = '#17140F';
+    const M = 60;
+    const ctaH = 30 * 2.3;
+    const ctaY = bottomLine(H, story, a.reel) - ctaH;
+
+    let y = story ? SAFE_TOP + 20 : 70;
+    if (has(a.kicker)) y += drawKicker(ctx, a.kicker, a.bodyFam, 26, M, y, a.primary) + 6;
+    const hl = layoutHeadline(ctx, a.headline, a.visualWord, a.headFam, W - M * 2, 2, Math.round(W * 0.07), 40);
+    drawHeadline(ctx, hl, a.headFam, M, y, ink);
+    y += headlineHeight(hl) + 28;
+
+    const panelH = Math.max(240, ctaY - 44 - y);
+    const gap = 12;
+    const second = a.imgB || a.img;
+    const labels = a.outcome && a.outcome.labels && a.outcome.labels.length === 2
+      ? a.outcome.labels : ['Day 1', 'Week 4'];
+    // Stories stack; square and portrait sit side by side.
+    const boxes = story
+      ? [[M, y, W - M * 2, (panelH - gap) / 2], [M, y + (panelH - gap) / 2 + gap, W - M * 2, (panelH - gap) / 2]]
+      : [[M, y, (W - M * 2 - gap) / 2, panelH], [M + (W - M * 2 - gap) / 2 + gap, y, (W - M * 2 - gap) / 2, panelH]];
+
+    [a.img, second].forEach((img, i) => {
+      const [bx, by, bw, bh] = boxes[i];
+      ctx.save();
+      roundRectPath(ctx, bx, by, bw, bh, 16);
+      ctx.clip();
+      coverDraw(ctx, img, bx, by, bw, bh);
+      if (i === 0) {
+        // Cool the first frame slightly so the pair reads as a progression.
+        ctx.fillStyle = 'rgba(28,32,46,0.22)';
+        ctx.fillRect(bx, by, bw, bh);
+      }
+      ctx.restore();
+      drawPill(ctx, bx + 18, by + bh - 62, labels[i], a, {
+        bg: i === 0 ? 'rgba(255,255,255,0.92)' : a.primary,
+        fg: i === 0 ? '#17140F' : textOn(a.primary),
+        px: 24,
+      });
+    });
+
+    drawCtaPill(ctx, a.cta, a.bodyFam, M, ctaY, { bg: a.primary, fg: textOn(a.primary), outline: luma(a.primary) > 226 });
+    if (a.logoImg) drawLogoChip(ctx, a.logoImg, W - M - 44, (story ? SAFE_TOP + 20 : 70) + 18, 44);
+  };
+
+  /* 6 ── Annotated product. Benefits pinned to the photo with leader
+     lines, which outperforms the same words set as a paragraph. */
+  const tplCallouts = (ctx, W, H, a) => {
+    const story = H > 1600;
+    coverDraw(ctx, a.img, 0, 0, W, H);
+    ctx.fillStyle = 'rgba(10,10,12,0.42)';
+    ctx.fillRect(0, 0, W, H);
+    const grad = ctx.createLinearGradient(0, 0, 0, H);
+    grad.addColorStop(0, 'rgba(0,0,0,0.55)');
+    grad.addColorStop(0.42, 'rgba(0,0,0,0.05)');
+    grad.addColorStop(1, 'rgba(0,0,0,0.72)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, 0, W, H);
+
+    const M = 72, maxW = W - M * 2;
+    let y = story ? SAFE_TOP + 24 : 76;
+    if (a.logoImg) drawLogoChip(ctx, a.logoImg, W - M - 48, y + 24, 48);
+    const hl = layoutHeadline(ctx, a.headline, a.visualWord, a.headFam, maxW - 130, 2, Math.round(W * 0.068), 40);
+    drawHeadline(ctx, hl, a.headFam, M, y, '#FFFFFF');
+    y += headlineHeight(hl) + 46;
+
+    // Callout pins march down the middle of the frame, alternating sides
+    // so they read as annotations rather than a list.
+    const items = (a.benefits || []).slice(0, 3);
+    const zoneTop = y + 20;
+    const zoneH = Math.max(180, bottomLine(H, story, a.reel) - 150 - zoneTop);
+    items.forEach((item, i) => {
+      const cy = zoneTop + zoneH * ((i + 0.5) / Math.max(1, items.length));
+      const right = i % 2 === 1;
+      const dotX = right ? W * 0.66 : W * 0.34;
+      ctx.strokeStyle = a.accent;
+      ctx.lineWidth = 2.5;
+      ctx.beginPath();
+      ctx.arc(dotX, cy, 8, 0, Math.PI * 2);
+      ctx.fillStyle = a.accent;
+      ctx.fill();
+      const endX = right ? W - M : M;
+      ctx.beginPath();
+      ctx.moveTo(dotX, cy);
+      ctx.lineTo(right ? dotX + 46 : dotX - 46, cy - 30);
+      ctx.lineTo(endX, cy - 30);
+      ctx.stroke();
+      ctx.font = fontStr(30, a.bodyFam, { weight: 500 });
+      ctx.fillStyle = '#FFFFFF';
+      ctx.textAlign = right ? 'right' : 'left';
+      ctx.textBaseline = 'alphabetic';
+      let text = String(item);
+      while (text.length > 6 && ctx.measureText(text).width > maxW * 0.52) text = text.slice(0, -2);
+      if (text !== String(item)) text = text.replace(/[\s,.:;-]+$/, '') + '…';
+      ctx.fillText(text, endX, cy - 44);
+      ctx.textAlign = 'left';
+    });
+
+    drawCtaPill(ctx, a.cta, a.bodyFam, M, bottomLine(H, story, a.reel) - 30 * 2.3, { bg: a.accent, fg: textOn(a.accent) });
+  };
+
+  /* 7 ── Advertorial. Reads like an article rather than an ad, which is
+     why it survives the scroll on cold traffic. */
+  const tplEditorial = (ctx, W, H, a) => {
+    const story = H > 1600;
+    ctx.fillStyle = '#FBFAF8';
+    ctx.fillRect(0, 0, W, H);
+    const ink = '#17140F';
+    const dim = 'rgba(23,20,15,0.62)';
+    const M = 76, maxW = W - M * 2;
+    const ctaH = 30 * 2.3;
+    const ctaY = bottomLine(H, story, a.reel) - ctaH;
+
+    let y = story ? SAFE_TOP + 26 : 78;
+    ctx.fillStyle = a.primary;
+    ctx.fillRect(M, y, maxW, 5);
+    y += 26;
+    ctx.font = fontStr(24, a.bodyFam, { weight: 500 });
+    try { ctx.letterSpacing = '3px'; } catch { /* older engines */ }
+    ctx.fillStyle = a.primary;
+    ctx.textBaseline = 'alphabetic';
+    ctx.fillText((has(a.kicker) ? a.kicker : 'The guide').toUpperCase(), M, y + 22);
+    try { ctx.letterSpacing = '0px'; } catch { /* older engines */ }
+    y += 54;
+
+    const hl = layoutHeadline(ctx, a.headline, a.visualWord, a.headFam, maxW, 3, Math.round(W * 0.076), 42);
+    drawHeadline(ctx, hl, a.headFam, M, y, ink);
+    y += headlineHeight(hl) + 24;
+
+    if (has(a.subhead)) y += drawBodyText(ctx, a.subhead, a.bodyFam, 29, M, y, maxW, 3, dim) + 20;
+
+    const photoTop = y + 6;
+    const photoH = Math.max(0, ctaY - 52 - photoTop);
+    if (photoH >= 200) {
+      ctx.save();
+      roundRectPath(ctx, M, photoTop, maxW, photoH, 4);
+      ctx.clip();
+      coverDraw(ctx, a.img, M, photoTop, maxW, photoH);
+      ctx.restore();
+    }
+    drawCtaPill(ctx, a.cta, a.bodyFam, M, ctaY, { bg: ink, fg: '#FBFAF8' });
+    if (a.logoImg) drawLogoChip(ctx, a.logoImg, W - M - 44, (story ? SAFE_TOP + 26 : 78) + 46, 44);
+  };
+
+  /* 8 ── Problem to solution. Tonal contrast does the arguing: the gripe
+     sits in a cold, dark frame, the answer in full brand colour. */
+  const tplProblem = (ctx, W, H, a) => {
+    const story = H > 1600;
+    const splitY = Math.round(H * (story ? 0.5 : 0.52));
+    ctx.save();
+    coverDraw(ctx, a.img, 0, 0, W, splitY);
+    ctx.restore();
+    ctx.fillStyle = 'rgba(14,18,28,0.68)';
+    ctx.fillRect(0, 0, W, splitY);
+    ctx.fillStyle = a.primary;
+    ctx.fillRect(0, splitY, W, H - splitY);
+    const on = textOn(a.primary);
+    const M = 76, maxW = W - M * 2;
+    const ctaH = 30 * 2.3;
+    const ctaY = bottomLine(H, story, a.reel) - ctaH;
+
+    // The complaint, set quiet and cool.
+    let py = story ? SAFE_TOP + 60 : 100;
+    ctx.font = fontStr(26, a.bodyFam, { weight: 500 });
+    try { ctx.letterSpacing = '3px'; } catch { /* older engines */ }
+    ctx.fillStyle = 'rgba(255,255,255,0.62)';
+    ctx.textBaseline = 'alphabetic';
+    ctx.fillText('THE USUAL STORY', M, py);
+    try { ctx.letterSpacing = '0px'; } catch { /* older engines */ }
+    py += 30;
+    const gripe = has(a.gripe) ? a.gripe : a.subhead || '';
+    if (gripe) {
+      const gl = layoutHeadline(ctx, gripe, '', a.headFam, maxW, 3, Math.round(W * 0.058), 34);
+      drawHeadline(ctx, gl, a.headFam, M, py, 'rgba(255,255,255,0.9)');
+    }
+
+    // The answer, in full colour, with a wedge marking the turn.
+    ctx.fillStyle = a.primary;
+    ctx.beginPath();
+    ctx.moveTo(W / 2 - 46, splitY);
+    ctx.lineTo(W / 2 + 46, splitY);
+    ctx.lineTo(W / 2, splitY - 40);
+    ctx.closePath();
+    ctx.fill();
+
+    let y = splitY + 66;
+    if (has(a.kicker)) y += drawKicker(ctx, a.kicker, a.bodyFam, 26, M, y, on === '#FFFFFF' ? 'rgba(255,255,255,0.8)' : 'rgba(20,20,20,0.65)') + 6;
+    const hl = layoutHeadline(ctx, a.headline, a.visualWord, a.headFam, maxW, 3, Math.round(W * 0.075), 42);
+    drawHeadline(ctx, hl, a.headFam, M, y, on);
+    y += headlineHeight(hl) + 26;
+
+    const benefits = (a.benefits || []).slice(0, 2);
+    if (benefits.length && y < ctaY - 120) {
+      drawBenefits(ctx, M, y, benefits, a, {
+        color: on === '#FFFFFF' ? '#FFFFFF' : '#141414',
+        textColor: on, px: 30, gap: 14, maxW,
+      });
+    }
+    const ctaBg = on === '#FFFFFF' ? '#FFFFFF' : '#141414';
+    drawCtaPill(ctx, a.cta, a.bodyFam, M, ctaY, { bg: ctaBg, fg: ctaBg === '#FFFFFF' ? '#141414' : '#FFFFFF' });
+    if (a.logoImg) drawLogoChip(ctx, a.logoImg, W - M - 48, (story ? SAFE_TOP + 40 : 90) - 10, 48);
+  };
+
+  /* 9 ── Founder voice. A spoken line, attributed, with the face or the
+     work beneath it. Drops CPM on cold traffic. */
   const tplQuote = (ctx, W, H, a) => {
     const story = H > 1600;
     ctx.fillStyle = a.primary;
@@ -1522,14 +2222,12 @@
     const dim = on === '#FFFFFF' ? 'rgba(255,255,255,0.75)' : 'rgba(20,20,20,0.65)';
     const M = 84, maxW = W - M * 2;
     const ctaH = 30 * 2.3;
-    const ctaY = bottomLine(H, story) - ctaH;
+    const ctaY = bottomLine(H, story, a.reel) - ctaH;
 
     const top = story ? SAFE_TOP + 30 : 90;
     const quoteH = Math.round(W * 0.17);
     const hl = layoutHeadline(ctx, a.headline, a.visualWord, a.headFam, maxW, 4, Math.round(W * 0.085), 50);
-    const attribH = 66;
-    // Whatever the copy doesn't use goes to the photo, so a short quote in a
-    // 9:16 frame gets a big image instead of a field of flat colour.
+    const attribH = 86;
     const photoH = Math.max(0, Math.round(ctaY - 56 - (top + quoteH + headlineHeight(hl) + attribH + 48)));
 
     let y = top;
@@ -1541,88 +2239,187 @@
     ctx.globalAlpha = 1;
     y += quoteH;
     drawHeadline(ctx, hl, a.headFam, M, y, on);
-    y += headlineHeight(hl) + 34;
-    ctx.font = fontStr(30, a.bodyFam, { weight: 400 });
+    y += headlineHeight(hl) + 30;
+
+    drawAvatar(ctx, a.imgB || a.img, M + 30, y + 30, 30, on === '#FFFFFF' ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.3)');
+    ctx.font = fontStr(28, a.bodyFam, { weight: 500 });
     ctx.fillStyle = dim;
+    ctx.textBaseline = 'middle';
+    ctx.fillText(has(a.attribution) ? a.attribution : a.brandName, M + 78, y + 32);
     ctx.textBaseline = 'alphabetic';
-    ctx.fillText(`— ${a.brandName}`, M, y + 26);
     y += attribH;
 
     if (photoH >= 200) {
-      const px = M, pw = maxW, py = y + 24;
+      const py = y + 20;
       ctx.save();
       ctx.shadowColor = 'rgba(0,0,0,0.28)';
       ctx.shadowBlur = 44;
-      roundRectPath(ctx, px, py, pw, photoH, 22);
+      roundRectPath(ctx, M, py, maxW, photoH, 20);
       ctx.fillStyle = '#fff';
       ctx.fill();
       ctx.restore();
       ctx.save();
-      roundRectPath(ctx, px + 10, py + 10, pw - 20, photoH - 20, 14);
+      roundRectPath(ctx, M + 9, py + 9, maxW - 18, photoH - 18, 13);
       ctx.clip();
-      coverDraw(ctx, a.img, px + 10, py + 10, pw - 20, photoH - 20);
+      coverDraw(ctx, a.img, M + 9, py + 9, maxW - 18, photoH - 18);
       ctx.restore();
     }
-
     drawCtaPill(ctx, a.cta, a.bodyFam, M, ctaY, {
       bg: on === '#FFFFFF' ? '#FFFFFF' : '#141414',
       fg: on === '#FFFFFF' ? '#141414' : '#FFFFFF',
     });
-    if (a.logoImg) drawLogoChip(ctx, a.logoImg, W - M - 56, top + 60, 56);
+    if (a.logoImg) drawLogoChip(ctx, a.logoImg, W - M - 50, top + 54, 50);
   };
 
-  const tplFrame = (ctx, W, H, a) => {
+  /* 10 ── Stat. One number, enormous. When a brand has a real figure this
+     beats any amount of adjectives: the statistic is the whole creative. */
+  const tplStat = (ctx, W, H, a) => {
     const story = H > 1600;
-    ctx.fillStyle = '#F7F5F0';
+    ctx.fillStyle = a.primary;
     ctx.fillRect(0, 0, W, H);
-    const M = 84;
-    let y = story ? SAFE_TOP + 40 : 92;
-    ctx.font = fontStr(26, a.bodyFam, { weight: 500 });
-    ctx.fillStyle = '#141414';
-    try { ctx.letterSpacing = '3px'; } catch { /* older engines */ }
-    ctx.fillText(a.brandName.toUpperCase(), M, y);
-    try { ctx.letterSpacing = '0px'; } catch { /* older engines */ }
-    if (a.logoImg) drawLogoChip(ctx, a.logoImg, W - M - 46, y - 10, 46);
-    y += 52;
-    const pw = W - M * 2;
-    const ctaH = 30 * 2.3;
-    const ctaY = bottomLine(H, story) - ctaH;
-    const hl = layoutHeadline(ctx, a.headline, a.visualWord, a.headFam, pw, story ? 3 : 2, Math.round(W * 0.065), 40);
-    const kickH = a.kicker ? 25 * 1.5 + 8 : 0;
-    // The mat sizes the photo to whatever the caption block leaves, so the
-    // gallery proportions hold across 1:1, 4:5 and 9:16 alike.
-    const ph = Math.max(320, Math.round(ctaY - 46 - (y + 16) - (64 + kickH + headlineHeight(hl) + 42)));
-    ctx.strokeStyle = a.primary;
-    ctx.lineWidth = 4;
-    ctx.strokeRect(M - 16, y - 16, pw + 32, ph + 32);
-    coverDraw(ctx, a.img, M, y, pw, ph);
-    y += ph + 64;
-    if (a.kicker) y += drawKicker(ctx, a.kicker, a.bodyFam, 25, M, y, a.primary) + 8;
-    drawHeadline(ctx, hl, a.headFam, M, y, '#141414');
-    drawCtaPill(ctx, a.cta, a.bodyFam, M, ctaY, { bg: a.primary, fg: textOn(a.primary), outline: luma(a.primary) > 220 });
+    const on = textOn(a.primary);
+    const dim = on === '#FFFFFF' ? 'rgba(255,255,255,0.72)' : 'rgba(20,20,20,0.6)';
+    const M = 80, maxW = W - M * 2;
+    const ctaY = bottomLine(H, story, a.reel) - 30 * 2.3;
+
+    // A photo band sits behind the base so the frame is not pure flat colour.
+    const bandTop = Math.round(H * (story ? 0.6 : 0.58));
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(0, bandTop, W, H - bandTop);
+    ctx.clip();
+    coverDraw(ctx, a.img, 0, bandTop, W, H - bandTop);
+    const g = ctx.createLinearGradient(0, bandTop, 0, H);
+    g.addColorStop(0, a.primary);
+    g.addColorStop(0.55, 'rgba(0,0,0,0.25)');
+    g.addColorStop(1, 'rgba(0,0,0,0.7)');
+    ctx.fillStyle = g;
+    ctx.fillRect(0, bandTop, W, H - bandTop);
+    ctx.restore();
+
+    let y = story ? SAFE_TOP + 50 : 110;
+    // The numeral runs nearly full width, so the logo sits down by the CTA
+    // rather than in the corner the number wants.
+    if (a.logoImg) drawLogoChip(ctx, a.logoImg, W - M - 44, ctaY + 34, 44);
+    // The figure: whatever concrete number the brand gave us.
+    const stat = has(a.stat) ? a.stat : (a.rating && a.rating.count ? a.rating.count : '');
+    if (stat) {
+      let px = Math.round(W * 0.34);
+      ctx.font = fontStr(px, a.headFam, { weight: 500 });
+      while (ctx.measureText(stat).width > maxW && px > 60) {
+        px -= 8;
+        ctx.font = fontStr(px, a.headFam, { weight: 500 });
+      }
+      ctx.fillStyle = a.accent !== a.primary ? a.accent : on;
+      ctx.textBaseline = 'alphabetic';
+      ctx.fillText(stat, M, y + px * 0.82);
+      y += px * 0.95;
+    }
+    const hl = layoutHeadline(ctx, a.headline, a.visualWord, a.headFam, maxW, 3, Math.round(W * 0.066), 40);
+    drawHeadline(ctx, hl, a.headFam, M, y, on);
+    y += headlineHeight(hl) + 18;
+    if (has(a.subhead)) drawBodyText(ctx, a.subhead, a.bodyFam, 28, M, y, maxW, 2, dim);
+
+    const ctaBg = on === '#FFFFFF' ? '#FFFFFF' : '#141414';
+    drawCtaPill(ctx, a.cta, a.bodyFam, M, ctaY, { bg: ctaBg, fg: ctaBg === '#FFFFFF' ? '#141414' : '#FFFFFF' });
   };
 
-  const TEMPLATES = { overlay: tplOverlay, split: tplSplit, banner: tplBanner, quote: tplQuote, frame: tplFrame };
+  /* 11 ── Numbered reasons. A mini landing page in one frame: scannable
+     rows that read as information rather than persuasion. */
+  const tplListicle = (ctx, W, H, a) => {
+    const story = H > 1600;
+    const paper = paperFor(a);
+    ctx.fillStyle = paper;
+    ctx.fillRect(0, 0, W, H);
+    const ink = '#17140F';
+    const dim = 'rgba(23,20,15,0.6)';
+    const M = 78, maxW = W - M * 2;
+    const ctaY = bottomLine(H, story, a.reel) - 30 * 2.3;
+
+    let y = story ? SAFE_TOP + 34 : 88;
+    if (a.logoImg) drawLogoChip(ctx, a.logoImg, W - M - 44, y + 16, 44);
+    const hl = layoutHeadline(ctx, a.headline, a.visualWord, a.headFam, maxW - 110, 2, Math.round(W * 0.072), 42);
+    drawHeadline(ctx, hl, a.headFam, M, y, ink);
+    y += headlineHeight(hl) + 40;
+
+    const items = (a.benefits || []).slice(0, story ? 4 : 3);
+    items.forEach((item, i) => {
+      const numPx = 46;
+      ctx.font = fontStr(numPx, a.headFam, { weight: 500 });
+      ctx.fillStyle = a.primary;
+      ctx.textBaseline = 'alphabetic';
+      ctx.fillText(String(i + 1).padStart(2, '0'), M, y + numPx * 0.84);
+      ctx.font = fontStr(31, a.bodyFam, { weight: 400 });
+      ctx.fillStyle = ink;
+      let text = String(item);
+      const room = maxW - 96;
+      while (text.length > 6 && ctx.measureText(text).width > room) text = text.slice(0, -2);
+      if (text !== String(item)) text = text.replace(/[\s,.:;-]+$/, '') + '…';
+      ctx.fillText(text, M + 96, y + numPx * 0.72);
+      ctx.strokeStyle = 'rgba(23,20,15,0.12)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(M, y + numPx + 22);
+      ctx.lineTo(W - M, y + numPx + 22);
+      ctx.stroke();
+      y += numPx + 46;
+    });
+
+    const photoTop = y + 12;
+    const photoH = Math.max(0, ctaY - 46 - photoTop);
+    if (photoH >= 190) {
+      ctx.save();
+      roundRectPath(ctx, M, photoTop, maxW, photoH, 16);
+      ctx.clip();
+      coverDraw(ctx, a.img, M, photoTop, maxW, photoH);
+      ctx.restore();
+    }
+    drawCtaPill(ctx, a.cta, a.bodyFam, M, ctaY, { bg: a.primary, fg: textOn(a.primary), outline: luma(a.primary) > 226 });
+  };
+
+  const TEMPLATES = {
+    overlay: tplOverlay, offer: tplOffer, rating: tplRating, versus: tplVersus,
+    outcome: tplOutcome, callouts: tplCallouts, editorial: tplEditorial,
+    problem: tplProblem, quote: tplQuote, stat: tplStat, listicle: tplListicle,
+  };
 
   const renderAdCanvas = (ad) => {
     const [W, H] = FORMAT_SIZE[ad.format] || FORMAT_SIZE['1:1 · Feed'];
     const canvas = document.createElement('canvas');
     canvas.width = W; canvas.height = H;
     const ctx = canvas.getContext('2d');
-    const photo = state.photos[ad.image_index] || state.photos[0];
+    const n = state.photos.length;
+    const photo = state.photos[ad.image_index % n] || state.photos[0];
+    // Second slot for the paired-image layouts; never the same shot twice.
+    const bIdx = Number.isInteger(ad.image_index_b) ? ad.image_index_b % n : (ad.image_index + 1) % n;
+    const photoB = state.photos[bIdx === ad.image_index % n ? (bIdx + 1) % n : bIdx] || photo;
     const primary = state.colors[0] || '#141414';
+    const p = state.proof || {};
     const a = {
       img: photo.img,
+      imgB: photoB.img,
       logoImg: state.logo ? state.logo.img : null,
       primary,
       accent: state.colors[1] || primary,
       headFam: state.fonts.head.family,
       bodyFam: (state.fonts.body || state.fonts.head).family,
+      reel: isReel(ad.format),
       kicker: ad.kicker || '',
       headline: ad.headline,
+      subhead: ad.subhead || '',
       visualWord: ad.visual_word || '',
       cta: ad.cta || 'Learn more',
       brandName: (state.brand && state.brand.name) || $('bizName').value.trim(),
+      // Proof devices draw only from what the brand actually supplied, so a
+      // blank field means the element simply never appears.
+      rating: p.rating ? { stars: p.rating, count: p.reviews || '' } : null,
+      offer: (p.offer || p.price) ? { value: p.offer || '', detail: p.offerDetail || '', price: p.price || '', was: p.was || '' } : null,
+      benefits: Array.isArray(ad.benefits) && ad.benefits.length ? ad.benefits : (p.benefits || []),
+      versus: ad.versus || null,
+      outcome: ad.outcome || null,
+      attribution: ad.attribution || '',
+      stat: ad.stat || '',
+      gripe: p.gripe || '',
     };
     (TEMPLATES[ad.template] || tplOverlay)(ctx, W, H, a);
     return canvas;
@@ -1995,6 +2792,7 @@
           website: $('bizWebsite').value.trim().replace(/^https?:\/\//i, '') ? 'https://' + $('bizWebsite').value.trim().replace(/^https?:\/\//i, '') : '',
           audienceHint: $('bizAudience').value.trim(),
         },
+        proof: readProof(),
         colors: state.colors,
         headingFont: state.fonts.head ? state.fonts.head.label : '',
         bodyFont: state.fonts.body ? state.fonts.body.label : '',

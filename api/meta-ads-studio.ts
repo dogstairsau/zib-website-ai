@@ -27,6 +27,16 @@ type Body = {
   colors?: string[];
   headingFont?: string;
   bodyFont?: string;
+  proof?: {
+    rating?: number | null;
+    reviews?: string;
+    offer?: string;
+    offerDetail?: string;
+    price?: string;
+    was?: string;
+    benefits?: string[];
+    gripe?: string;
+  };
   photos?: string[]; // data URIs, downscaled client-side for analysis
   hasLogo?: boolean;
   assetUrls?: string[]; // where the original kit landed in Blob storage
@@ -37,6 +47,7 @@ type Body = {
   sourceTag?: string;
 };
 
+type VersusRow = { label: string };
 type StudioAd = {
   platform: string;
   format: StudioFormat;
@@ -44,11 +55,18 @@ type StudioAd = {
   audience: string;
   template: StudioTemplate;
   image_index: number;
+  image_index_b?: number;
   kicker: string;
   headline: string;
+  subhead?: string;
   body: string;
   cta: string;
   visual_word?: string;
+  benefits?: string[];
+  versus?: { us: string; them: string; rows: VersusRow[] } | null;
+  outcome?: { labels: string[] } | null;
+  attribution?: string;
+  stat?: string;
 };
 
 type StrategyItem = { title: string; detail: string };
@@ -133,6 +151,24 @@ export default async function handler(req: Request): Promise<Response> {
     .slice(0, 4);
   const headingFont = (body.headingFont || "").trim().slice(0, 60);
   const bodyFont = (body.bodyFont || "").trim().slice(0, 60);
+  // Proof is the difference between an ad and a poster, and it is the one
+  // thing the model is forbidden to invent — so it is sanitised here and
+  // stated explicitly (including what is absent) in the user turn.
+  const rawProof = body.proof || {};
+  const ratingNum = Number(rawProof.rating);
+  const proof = {
+    rating: Number.isFinite(ratingNum) && ratingNum > 0 ? Math.min(5, Math.round(ratingNum * 10) / 10) : null,
+    reviews: String(rawProof.reviews || "").trim().slice(0, 40),
+    offer: String(rawProof.offer || "").trim().slice(0, 24),
+    offerDetail: String(rawProof.offerDetail || "").trim().slice(0, 48),
+    price: String(rawProof.price || "").trim().slice(0, 16),
+    was: String(rawProof.was || "").trim().slice(0, 16),
+    benefits: Array.isArray(rawProof.benefits)
+      ? rawProof.benefits.filter((s): s is string => typeof s === "string" && !!s.trim()).slice(0, 4).map((s) => s.trim().slice(0, 60))
+      : [],
+    gripe: String(rawProof.gripe || "").trim().slice(0, 90),
+  };
+
   const runId = /^[a-zA-Z0-9-]{8,64}$/.test(body.runId || "") ? (body.runId as string) : "";
   const assetUrls = (body.assetUrls || [])
     .filter((u): u is string => typeof u === "string" && u.startsWith("https://"))
@@ -187,6 +223,7 @@ export default async function handler(req: Request): Promise<Response> {
           photoCount: photos.length,
           hasLogo: !!body.hasLogo,
           notes: notes || undefined,
+          proof,
         });
 
         type ContentPart = Anthropic.TextBlockParam | Anthropic.ImageBlockParam;
@@ -255,28 +292,75 @@ export default async function handler(req: Request): Promise<Response> {
         send("stage", { idx: 2, status: "active", message: "Writing 12 ads…" });
         await new Promise((r) => setTimeout(r, 900));
 
-        // Clamp everything the canvas compositor trusts.
+        // Clamp everything the canvas compositor trusts. A malformed model
+        // response should degrade to a plainer creative, never break a render.
         const formats = new Set<string>(STUDIO_FORMATS);
         const templates = new Set<string>(STUDIO_TEMPLATES);
+        const idx = (v: unknown, fallback: number) =>
+          Number.isInteger(v) && (v as number) >= 0 && (v as number) < photos.length ? (v as number) : fallback;
+        const strList = (v: unknown, max: number, len: number) =>
+          Array.isArray(v) ? v.filter((s) => typeof s === "string" && s.trim()).slice(0, max).map((s) => s.trim().slice(0, len)) : [];
+        // Meta rejects literal before/after labelling on paired imagery, so
+        // the words never reach a canvas even if the model reaches for them.
+        const BANNED_LABEL = /^\s*(before|after)\s*$/i;
+
         const ads: StudioAd[] = (parsed.ads || [])
           .slice(0, 12)
-          .map((ad, i) => ({
-            platform: String(ad.platform || "Instagram · Feed").slice(0, 40),
-            format: (formats.has(ad.format) ? ad.format : "1:1 · Feed") as StudioFormat,
-            angle: String(ad.angle || "Brand").slice(0, 30),
-            audience: String(ad.audience || "Cold · broad interest").slice(0, 40),
-            template: (templates.has(ad.template) ? ad.template : "overlay") as StudioTemplate,
-            image_index:
-              Number.isInteger(ad.image_index) && ad.image_index >= 0 && ad.image_index < photos.length
-                ? ad.image_index
-                : i % photos.length,
-            kicker: String(ad.kicker || "").slice(0, 28),
-            headline: String(ad.headline || "").slice(0, 60),
-            body: String(ad.body || "").slice(0, 200),
-            cta: String(ad.cta || "Learn more").slice(0, 22),
-            visual_word: String(ad.visual_word || "").slice(0, 24),
-          }))
-          .filter((ad) => ad.headline);
+          .map((ad, i) => {
+            const template = (templates.has(ad.template) ? ad.template : "overlay") as StudioTemplate;
+            const imageIndex = idx(ad.image_index, i % photos.length);
+            const labels = strList(ad.outcome?.labels, 2, 18).filter((l) => !BANNED_LABEL.test(l));
+            const rows = Array.isArray(ad.versus?.rows)
+              ? ad.versus!.rows
+                  .filter((r) => r && typeof r.label === "string" && r.label.trim())
+                  .slice(0, 4)
+                  .map((r) => ({ label: r.label.trim().slice(0, 34) }))
+              : [];
+            return {
+              platform: String(ad.platform || "Instagram · Feed").slice(0, 40),
+              format: (formats.has(ad.format) ? ad.format : "1:1 · Feed") as StudioFormat,
+              angle: String(ad.angle || "Brand").slice(0, 30),
+              audience: String(ad.audience || "Cold · broad interest").slice(0, 40),
+              template,
+              image_index: imageIndex,
+              // The paired layout is pointless with the same shot twice.
+              image_index_b: photos.length > 1
+                ? (() => {
+                    const b = idx(ad.image_index_b, (imageIndex + 1) % photos.length);
+                    return b === imageIndex ? (imageIndex + 1) % photos.length : b;
+                  })()
+                : imageIndex,
+              kicker: String(ad.kicker || "").slice(0, 28),
+              headline: String(ad.headline || "").slice(0, 60),
+              subhead: String(ad.subhead || "").slice(0, 110),
+              body: String(ad.body || "").slice(0, 200),
+              cta: String(ad.cta || "Learn more").slice(0, 22),
+              visual_word: String(ad.visual_word || "").slice(0, 24),
+              benefits: strList(ad.benefits, 4, 46),
+              versus: rows.length
+                ? {
+                    us: String(ad.versus?.us || name).slice(0, 20),
+                    them: String(ad.versus?.them || "The usual").slice(0, 20),
+                    rows,
+                  }
+                : null,
+              outcome: labels.length === 2 ? { labels } : null,
+              attribution: String(ad.attribution || "").slice(0, 40),
+              stat: String(ad.stat || "").slice(0, 16),
+            };
+          })
+          .filter((ad) => ad.headline)
+          // Templates that would draw an empty frame without their payload
+          // fall back to the photo-led layout rather than shipping a blank.
+          .map((ad) => {
+            const starved =
+              (ad.template === "versus" && !ad.versus) ||
+              (ad.template === "outcome" && !ad.outcome) ||
+              (ad.template === "stat" && !ad.stat) ||
+              (ad.template === "rating" && !proof.rating) ||
+              ((ad.template === "callouts" || ad.template === "listicle") && (ad.benefits?.length || 0) < 2);
+            return starved ? { ...ad, template: "overlay" as StudioTemplate } : ad;
+          });
         if (ads.length < 4) throw new Error("The model returned too few usable ads");
 
         send("ads", {
