@@ -1,0 +1,2036 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<title>Meta Ads Studio · Zib Digital</title>
+<meta name="description" content="Upload 4-5 photos, your brand colours and your fonts. The Studio designs 12 finished Meta ads with your real assets — download and post them today." />
+<meta name="robots" content="noindex, nofollow" />
+<meta name="zib:source-tag" content="Meta Ads Studio concept" />
+<!-- @include _partials/head.html -->
+<style>
+/* ─── HERO ──────────────────────────────────────────────────────── */
+.mas-hero {
+  padding-top: clamp(56px, 8vw, 96px);
+  padding-bottom: clamp(72px, 9vw, 120px);
+  background: var(--paper);
+  border-bottom: 0.5px solid var(--rule);
+  position: relative;
+  overflow: hidden;
+}
+.mas-hero::before {
+  content: "";
+  position: absolute;
+  inset: -1px 0 0 0;
+  background:
+    radial-gradient(60% 80% at 88% 0%, rgba(255, 98, 0, 0.10), transparent 60%),
+    radial-gradient(50% 80% at 8% 100%, rgba(255, 98, 0, 0.06), transparent 60%);
+  pointer-events: none;
+}
+.mas-hero .container { position: relative; }
+.mas-hero h1 {
+  font-family: var(--display);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  font-size: clamp(40px, 6.4vw, 92px);
+  line-height: 0.98;
+  max-width: 16ch;
+  margin-top: 14px;
+}
+.mas-hero h1 em { font-style: italic; color: var(--accent); font-weight: 400; }
+.mas-hero .sub {
+  margin-top: clamp(22px, 2.4vw, 30px);
+  max-width: 60ch;
+  color: var(--muted);
+  font-size: clamp(16px, 1.3vw, 19px);
+  line-height: 1.55;
+}
+.mas-hero .sub strong { color: var(--ink); font-weight: 500; }
+.mas-hero .start-btn {
+  margin-top: clamp(32px, 4vw, 48px);
+  display: inline-block;
+  font-family: var(--display); font-weight: 500; font-size: 16px;
+  padding: 16px 30px; border-radius: 999px;
+  background: var(--ink); color: #fff; border: 0; cursor: pointer;
+  transition: transform 200ms var(--ease), background 200ms var(--ease);
+}
+.mas-hero .start-btn:hover { background: var(--accent); transform: translateY(-1px); }
+.mas-hero .start-btn .arr { display: inline-block; margin-left: 6px; transition: transform 200ms var(--ease); }
+.mas-hero .start-btn:hover .arr { transform: translateX(3px); }
+.mas-trust {
+  margin-top: 22px;
+  display: flex; flex-wrap: wrap; gap: 8px 22px;
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--muted);
+}
+.mas-trust .dot { width: 6px; height: 6px; border-radius: 999px; background: var(--accent); display: inline-block; margin-right: 8px; vertical-align: middle; }
+
+/* ─── BUILDER ───────────────────────────────────────────────────── */
+.mas-builder { padding: clamp(96px, 11vw, 160px) 0; border-bottom: 0.5px solid var(--rule); }
+.mas-builder .head { max-width: 60ch; margin-bottom: clamp(40px, 5vw, 64px); }
+.mas-builder h2 {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(34px, 4.2vw, 60px);
+  letter-spacing: -0.025em; line-height: 1.02;
+  margin-top: 14px;
+}
+.mas-builder h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
+.builder-grid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: clamp(20px, 2.4vw, 32px);
+  align-items: start;
+}
+@media (max-width: 960px) { .builder-grid { grid-template-columns: 1fr; } }
+.b-card {
+  border: 1px solid var(--rule);
+  border-radius: 18px;
+  background: #fff;
+  padding: clamp(24px, 2.6vw, 34px);
+}
+.b-card + .b-card { margin-top: clamp(20px, 2.4vw, 32px); }
+.b-label {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em;
+  color: var(--accent); font-weight: 600; text-transform: uppercase;
+  display: flex; align-items: center; justify-content: space-between; gap: 12px;
+}
+.b-label .opt { color: var(--muted-2); font-weight: 400; }
+.b-card h3 {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(20px, 1.8vw, 24px); letter-spacing: -0.018em;
+  margin: 12px 0 6px;
+}
+.b-card .hint { color: var(--muted); font-size: 14px; line-height: 1.55; margin-bottom: 18px; }
+
+/* dropzones */
+.dz {
+  border: 1.5px dashed var(--rule-2);
+  border-radius: 14px;
+  padding: 28px 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 200ms var(--ease), background 200ms var(--ease);
+  color: var(--muted);
+  font-size: 14px; line-height: 1.5;
+}
+.dz:hover, .dz.is-over { border-color: var(--accent); background: var(--accent-tint, rgba(255,98,0,0.05)); }
+.dz strong { color: var(--ink); font-weight: 500; display: block; margin-bottom: 4px; }
+.dz .mono-note { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted-2); display: block; margin-top: 8px; }
+.photo-grid {
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  gap: 10px; margin-top: 14px;
+}
+.photo-grid:empty { display: none; }
+.photo-thumb {
+  position: relative; aspect-ratio: 1/1; border-radius: 10px; overflow: hidden;
+  border: 0.5px solid var(--rule-2); background: var(--dim);
+}
+.photo-thumb img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.photo-thumb .rm {
+  position: absolute; top: 6px; right: 6px;
+  width: 22px; height: 22px; border-radius: 999px; border: 0;
+  background: rgba(0,0,0,0.6); color: #fff; font-size: 12px; line-height: 1;
+  cursor: pointer; display: grid; place-items: center;
+}
+.photo-thumb .idx {
+  position: absolute; left: 6px; bottom: 6px;
+  font-family: var(--mono); font-size: 9px; letter-spacing: 0.08em;
+  background: rgba(0,0,0,0.55); color: #fff; padding: 2px 6px; border-radius: 999px;
+}
+.logo-slot { display: flex; align-items: center; gap: 14px; margin-top: 4px; }
+.logo-slot .dz { flex: 1; padding: 18px 16px; }
+.logo-slot .logo-preview {
+  width: 72px; height: 72px; border-radius: 14px; flex-shrink: 0;
+  border: 0.5px solid var(--rule-2); background: #fff;
+  display: none; place-items: center; overflow: hidden; position: relative;
+}
+.logo-slot .logo-preview.is-on { display: grid; }
+.logo-slot .logo-preview img { width: 100%; height: 100%; object-fit: contain; padding: 8px; }
+.logo-slot .logo-preview .rm {
+  position: absolute; top: 2px; right: 2px;
+  width: 18px; height: 18px; border-radius: 999px; border: 0;
+  background: rgba(0,0,0,0.6); color: #fff; font-size: 10px; cursor: pointer;
+}
+
+/* colours */
+.swatch-row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.swatch {
+  position: relative; width: 44px; height: 44px; border-radius: 12px;
+  border: 0.5px solid rgba(0,0,0,0.12); overflow: hidden;
+}
+.swatch input[type=color] {
+  position: absolute; inset: -6px; width: calc(100% + 12px); height: calc(100% + 12px);
+  border: 0; padding: 0; cursor: pointer; background: transparent;
+}
+.swatch .rm {
+  position: absolute; top: 0; right: 0; width: 16px; height: 16px;
+  border: 0; border-radius: 0 0 0 8px; background: rgba(0,0,0,0.45); color: #fff;
+  font-size: 9px; line-height: 1; cursor: pointer; display: none;
+}
+.swatch:hover .rm { display: block; }
+.swatch-add {
+  width: 44px; height: 44px; border-radius: 12px;
+  border: 1.5px dashed var(--rule-2); background: transparent; color: var(--muted);
+  font-size: 18px; cursor: pointer;
+  transition: border-color 200ms var(--ease), color 200ms var(--ease);
+}
+.swatch-add:hover { border-color: var(--accent); color: var(--accent); }
+.swatch-note { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted-2); margin-top: 10px; }
+
+/* fonts */
+.font-slots { display: grid; gap: 12px; }
+.font-slot {
+  display: flex; align-items: center; gap: 14px;
+  border: 1.5px dashed var(--rule-2); border-radius: 14px;
+  padding: 14px 18px; cursor: pointer;
+  transition: border-color 200ms var(--ease), background 200ms var(--ease);
+}
+.font-slot:hover, .font-slot.is-over { border-color: var(--accent); background: rgba(255,98,0,0.05); }
+.font-slot.is-loaded { border-style: solid; border-color: var(--rule-2); }
+.font-slot .f-role {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--muted-2); width: 72px; flex-shrink: 0;
+}
+.font-slot .f-preview { font-size: 22px; line-height: 1.1; color: var(--ink); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.font-slot .f-name { font-family: var(--mono); font-size: 10px; letter-spacing: 0.08em; color: var(--muted); margin-top: 3px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.font-slot .f-empty { color: var(--muted); font-size: 14px; }
+.font-slot .f-empty strong { color: var(--ink); font-weight: 500; }
+
+/* business fields */
+.b-form { display: grid; gap: 12px; }
+.b-form label { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.b-form input, .b-form textarea {
+  font-family: var(--display); font-size: 15px;
+  padding: 13px 16px;
+  background: var(--paper);
+  border: 1px solid var(--rule-2);
+  border-radius: 12px;
+  color: var(--ink); width: 100%;
+  transition: border-color 200ms var(--ease);
+}
+.b-form input:focus, .b-form textarea:focus { outline: 0; border-color: var(--ink); }
+.b-form textarea { resize: vertical; min-height: 72px; }
+.builder-cta { margin-top: clamp(28px, 3.4vw, 44px); display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+.builder-cta button {
+  font-family: var(--display); font-weight: 500; font-size: 16px;
+  padding: 16px 30px; border-radius: 999px;
+  background: var(--ink); color: #fff; border: 0; cursor: pointer;
+  transition: transform 200ms var(--ease), background 200ms var(--ease);
+}
+.builder-cta button:hover { background: var(--accent); transform: translateY(-1px); }
+.builder-cta .err { color: var(--score-bad, #C0392B); font-size: 14px; }
+.builder-cta .privacy { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted-2); }
+
+/* ─── GATE ──────────────────────────────────────────────────────── */
+.mas-gate {
+  padding: clamp(96px, 11vw, 160px) 0;
+  background: var(--ink);
+  color: #fff;
+  position: relative;
+  isolation: isolate;
+}
+.mas-gate::after {
+  content: "";
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='240' height='240'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 0.5 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  opacity: 0.04; mix-blend-mode: overlay;
+  pointer-events: none; z-index: 0;
+}
+.mas-gate .container { position: relative; z-index: 1; }
+.mas-gate .eyebrow { color: var(--accent); }
+.mas-gate h2 {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(36px, 5vw, 72px);
+  letter-spacing: -0.025em; line-height: 1.02;
+  margin-top: 14px; max-width: 22ch;
+}
+.mas-gate h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
+.gate-card {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 22px;
+  padding: clamp(28px, 3vw, 40px);
+}
+.gate-form { display: grid; gap: 12px; }
+.gate-form input {
+  font-family: var(--display); font-size: 15px;
+  padding: 14px 16px;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.14);
+  border-radius: 12px;
+  color: #fff; width: 100%;
+  transition: border-color 200ms var(--ease), background 200ms var(--ease);
+}
+.gate-form input::placeholder { color: rgba(255,255,255,0.4); }
+.gate-form input:focus { outline: 0; border-color: var(--accent); background: rgba(255,255,255,0.08); }
+.gate-form .submit {
+  margin-top: 6px;
+  padding: 16px 24px;
+  background: var(--accent);
+  color: #fff;
+  font-family: var(--display); font-weight: 500; font-size: 16px;
+  border: 0; border-radius: 999px;
+  cursor: pointer;
+  transition: transform 200ms var(--ease), background 200ms var(--ease);
+}
+.gate-form .submit:hover { transform: translateY(-1px); background: #ff7a26; }
+.gate-form .submit[disabled] { opacity: 0.6; cursor: not-allowed; transform: none; }
+.gate-card .fineprint {
+  margin-top: 16px;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.4); text-transform: uppercase;
+}
+
+/* ─── STAGES + WAIT HUB ─────────────────────────────────────────── */
+.mas-stages { padding: clamp(96px, 11vw, 160px) 0; border-bottom: 0.5px solid var(--rule); }
+.mas-stages .head { margin-bottom: clamp(48px, 6vw, 72px); display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; }
+.mas-stages .head > div:first-child { max-width: 60ch; }
+.mas-stages h2 {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(34px, 4.2vw, 60px);
+  letter-spacing: -0.025em; line-height: 1.02;
+  margin-top: 14px;
+}
+.mas-stages h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
+.mas-elapsed {
+  font-family: var(--mono); font-size: 12px; letter-spacing: 0.12em;
+  color: var(--muted); text-transform: uppercase;
+  opacity: 0; transition: opacity 240ms var(--ease);
+  display: inline-flex; align-items: center; gap: 8px;
+}
+.mas-elapsed.is-on { opacity: 1; }
+.mas-elapsed .pulse { width: 8px; height: 8px; border-radius: 999px; background: var(--accent); animation: pulse 1.2s ease-in-out infinite; }
+.mas-elapsed.is-done .pulse { background: var(--score-good); animation: none; }
+@keyframes pulse { 0%, 100% { opacity: 0.4; } 50% { opacity: 1; } }
+.mas-stage-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(14px, 1.6vw, 20px);
+}
+@media (max-width: 1080px) { .mas-stage-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .mas-stage-grid { grid-template-columns: 1fr; } }
+.mas-stage {
+  position: relative;
+  padding: clamp(24px, 2.4vw, 32px);
+  border: 1px solid var(--rule);
+  border-radius: 18px;
+  background: #fff;
+  transition: transform 280ms var(--ease), border-color 280ms var(--ease), box-shadow 280ms var(--ease);
+}
+.mas-stage:hover { transform: translateY(-3px); border-color: var(--ink); }
+.mas-stage.is-active {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 4px rgba(255, 98, 0, 0.10), 0 24px 60px -36px rgba(255, 98, 0, 0.5);
+}
+.mas-stage .num {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em;
+  color: var(--muted-2); font-weight: 600;
+}
+.mas-stage.is-active .num, .mas-stage.is-done .num { color: var(--accent); }
+.mas-stage .indicator {
+  position: absolute; top: 22px; right: 22px;
+  width: 22px; height: 22px; border-radius: 999px;
+  display: grid; place-items: center;
+  border: 1.5px solid var(--rule-2);
+  transition: background 240ms var(--ease), border-color 240ms var(--ease);
+  font-size: 12px; font-weight: 700; color: transparent;
+}
+.mas-stage.is-active .indicator {
+  border-color: var(--accent);
+  border-top-color: transparent;
+  animation: spin 0.8s linear infinite;
+}
+.mas-stage.is-done .indicator {
+  background: var(--score-good);
+  border-color: var(--score-good);
+  color: #fff;
+  animation: none;
+}
+.mas-stage.is-done .indicator::after { content: "✓"; }
+@keyframes spin { to { transform: rotate(360deg); } }
+.mas-stage h3 {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(20px, 1.8vw, 24px); letter-spacing: -0.018em;
+  margin: 14px 0 10px;
+}
+.mas-stage p { color: var(--muted); font-size: 14.5px; line-height: 1.6; }
+.mas-stage .timer {
+  margin-top: 18px;
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em;
+  color: var(--muted-2);
+  transition: color 240ms var(--ease);
+}
+.mas-stage.is-active .timer { color: var(--accent); }
+.mas-stage.is-done .timer { color: var(--score-good); }
+
+.mas-hub {
+  margin-top: clamp(40px, 5vw, 64px);
+  display: grid;
+  grid-template-columns: 1.15fr 1fr;
+  gap: clamp(16px, 1.8vw, 24px);
+  opacity: 0; transform: translateY(14px);
+  transition: opacity 480ms var(--ease-out), transform 480ms var(--ease-out);
+}
+.mas-hub[hidden] { display: none; }
+.mas-hub.is-on { opacity: 1; transform: none; }
+@media (max-width: 880px) { .mas-hub { grid-template-columns: 1fr; } }
+.hub-card {
+  border: 1px solid var(--rule);
+  border-radius: 18px;
+  background: #fff;
+  padding: clamp(24px, 2.6vw, 34px);
+}
+.hub-label {
+  font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--accent); font-weight: 600;
+  display: flex; align-items: center; gap: 8px;
+}
+.hub-label .pulse { width: 7px; height: 7px; border-radius: 999px; background: var(--accent); animation: pulse 1.2s ease-in-out infinite; }
+.hub-brand-head { display: flex; align-items: center; gap: 16px; margin-top: 20px; }
+.hub-logo {
+  width: 52px; height: 52px; border-radius: 999px; flex-shrink: 0;
+  border: 1.5px dashed var(--rule-2);
+  display: grid; place-items: center; overflow: hidden;
+  background: #fff;
+  font-family: var(--display); font-weight: 500; font-size: 22px; color: var(--muted-2);
+}
+.hub-logo.is-filled { border: 0.5px solid var(--rule-2); }
+.hub-logo img { width: 100%; height: 100%; object-fit: contain; padding: 4px; }
+.hub-name { font-family: var(--display); font-weight: 500; font-size: clamp(19px, 1.7vw, 23px); letter-spacing: -0.015em; }
+.hub-cat { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+.hub-row { margin-top: 16px; font-size: 14.5px; line-height: 1.55; color: var(--ink-2); }
+.hub-row .k { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted-2); display: block; margin-bottom: 4px; }
+.hub-swatches { display: flex; gap: 8px; margin-top: 6px; }
+.hub-swatches .sw { width: 28px; height: 28px; border-radius: 8px; border: 0.5px solid rgba(0,0,0,0.08); }
+.hub-ticker {
+  margin-top: 20px; padding-top: 16px;
+  border-top: 0.5px solid var(--rule);
+  font-size: 12px; letter-spacing: 0.06em; color: var(--muted);
+  min-height: 20px;
+  transition: opacity 240ms var(--ease);
+}
+.hub-ticker.is-fading { opacity: 0; }
+.hub-ticker em { color: var(--ink); font-style: normal; font-weight: 500; }
+.skel {
+  display: inline-block; width: 140px; height: 14px; border-radius: 6px;
+  background: linear-gradient(90deg, var(--dim) 25%, #efefec 50%, var(--dim) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.4s linear infinite;
+}
+@keyframes shimmer { to { background-position: -200% 0; } }
+.hub-check h3 { font-family: var(--display); font-weight: 500; font-size: clamp(19px, 1.7vw, 23px); letter-spacing: -0.015em; margin-top: 18px; }
+.q-done-list { list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 12px; }
+.q-done-list li {
+  display: flex; gap: 12px; align-items: baseline;
+  font-size: 14.5px; color: var(--ink-2); line-height: 1.5;
+}
+.q-done-list .tick {
+  width: 18px; height: 18px; border-radius: 999px; flex-shrink: 0;
+  background: var(--score-good); color: #fff;
+  display: grid; place-items: center; font-size: 10px; font-weight: 700;
+  transform: translateY(3px);
+}
+.mas-hub-note {
+  grid-column: 1 / -1;
+  font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--muted-2); text-align: right;
+}
+
+/* ─── REVEAL ────────────────────────────────────────────────────── */
+.mas-reveal {
+  padding: clamp(96px, 11vw, 160px) 0;
+  background: var(--paper);
+  border-bottom: 0.5px solid var(--rule);
+}
+.mas-reveal[hidden] { display: none; }
+.mas-reveal .head { display: flex; justify-content: space-between; align-items: end; gap: 40px; flex-wrap: wrap; margin-bottom: clamp(48px, 6vw, 72px); }
+.mas-reveal h2 {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(34px, 4.2vw, 60px);
+  letter-spacing: -0.025em; line-height: 1.02;
+  margin-top: 14px; max-width: 22ch;
+}
+.mas-reveal h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
+.dl-all {
+  font-family: var(--display); font-weight: 500; font-size: 15px;
+  padding: 14px 26px; border-radius: 999px;
+  background: var(--ink); color: #fff; border: 0; cursor: pointer;
+  transition: transform 200ms var(--ease), background 200ms var(--ease);
+}
+.dl-all:hover { background: var(--accent); transform: translateY(-1px); }
+.dl-all[disabled] { opacity: 0.5; cursor: not-allowed; transform: none; }
+.mas-ad-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: clamp(16px, 1.8vw, 24px);
+  align-items: start;
+}
+@media (max-width: 1080px) { .mas-ad-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .mas-ad-grid { grid-template-columns: 1fr; } }
+.ad-card {
+  background: #fff;
+  border: 1px solid var(--rule);
+  border-radius: 18px;
+  overflow: hidden;
+  display: flex; flex-direction: column;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 480ms var(--ease-out), transform 480ms var(--ease-out), box-shadow 280ms var(--ease);
+}
+.ad-card.is-revealed { opacity: 1; transform: none; }
+.ad-card:hover { box-shadow: 0 40px 90px -50px rgba(0,0,0,0.25); }
+.ad-shell {
+  padding: 12px 14px 10px;
+  display: flex; align-items: center; gap: 10px;
+  border-bottom: 0.5px solid var(--rule);
+  font-size: 13px;
+}
+.ad-shell .avatar { width: 32px; height: 32px; border-radius: 999px; background: linear-gradient(135deg, var(--accent), #ffb066); flex-shrink: 0; }
+.ad-shell .avatar.has-logo {
+  background: #fff;
+  border: 0.5px solid var(--rule-2);
+  display: grid; place-items: center;
+  overflow: hidden;
+}
+.ad-shell .avatar.has-logo img { width: 100%; height: 100%; object-fit: contain; padding: 3px; }
+.ad-shell .name { font-weight: 500; color: var(--ink); }
+.ad-shell .sponsored { color: var(--muted); font-size: 11px; }
+.ad-shell .platform {
+  margin-left: auto;
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em;
+  color: var(--muted-2); text-transform: uppercase;
+}
+.ad-copy {
+  padding: 10px 14px 12px;
+  font-size: 13.5px; line-height: 1.45; color: var(--ink-2);
+}
+.ad-canvas-wrap { position: relative; background: var(--dim); }
+.ad-canvas-wrap canvas { display: block; width: 100%; height: auto; }
+.ad-cta-bar {
+  padding: 10px 14px;
+  display: flex; align-items: center; justify-content: space-between;
+  border-top: 0.5px solid var(--rule);
+  background: #FAFAF8;
+  font-size: 12px;
+}
+.ad-cta-bar .label { color: var(--muted); }
+.ad-cta-bar .cta-btn {
+  font-family: var(--display); font-weight: 500; font-size: 12px;
+  padding: 6px 12px; border-radius: 6px;
+  background: var(--ink); color: #fff;
+}
+.ad-meta-row {
+  display: flex; gap: 8px; flex-wrap: wrap; align-items: center;
+  padding: 12px 14px;
+  border-top: 0.5px solid var(--rule);
+}
+.ad-tag {
+  font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--muted);
+  padding: 4px 8px; border-radius: 999px;
+  background: var(--dim);
+}
+.ad-tag.angle { background: var(--accent-tint); color: #B83B00; }
+.ad-dl {
+  margin-left: auto;
+  font-family: var(--display); font-weight: 500; font-size: 12px;
+  padding: 6px 14px; border-radius: 999px;
+  background: transparent; color: var(--ink);
+  border: 1px solid var(--rule-2); cursor: pointer;
+  transition: background 180ms var(--ease), color 180ms var(--ease), border-color 180ms var(--ease);
+}
+.ad-dl:hover { background: var(--ink); color: #fff; border-color: var(--ink); }
+
+/* ─── STRATEGY ──────────────────────────────────────────────────── */
+.mas-strategy { padding: clamp(96px, 11vw, 160px) 0; border-bottom: 0.5px solid var(--rule); }
+.mas-strategy[hidden] { display: none; }
+.mas-strategy .head { max-width: 60ch; margin-bottom: clamp(48px, 6vw, 72px); }
+.mas-strategy h2 {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(34px, 4.2vw, 60px);
+  letter-spacing: -0.025em; line-height: 1.02;
+  margin-top: 14px;
+}
+.mas-strategy h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
+.strat-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(20px, 2vw, 28px);
+}
+@media (max-width: 880px) { .strat-grid { grid-template-columns: 1fr; } }
+.strat-card {
+  padding: clamp(28px, 3vw, 36px);
+  border: 1px solid var(--rule);
+  border-radius: 18px;
+  background: #fff;
+}
+.strat-card .label {
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em;
+  color: var(--accent); font-weight: 600; text-transform: uppercase;
+}
+.strat-card h3 {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(22px, 2vw, 28px);
+  letter-spacing: -0.018em; margin: 14px 0 20px;
+}
+.strat-list { list-style: none; padding: 0; margin: 0; display: grid; gap: 16px; }
+.strat-list li {
+  font-size: 14.5px; line-height: 1.55; color: var(--ink-2);
+  padding-left: 24px; position: relative;
+}
+.strat-list li::before {
+  content: ""; position: absolute; left: 0; top: 8px;
+  width: 12px; height: 1px; background: var(--accent);
+}
+.strat-list li strong { display: block; color: var(--ink); font-weight: 500; margin-bottom: 3px; }
+
+/* ─── FAQ ───────────────────────────────────────────────────────── */
+.mas-faq { padding: clamp(96px, 11vw, 160px) 0; border-bottom: 0.5px solid var(--rule); }
+.mas-faq .head { max-width: 60ch; margin-bottom: clamp(48px, 6vw, 72px); }
+.mas-faq h2 {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(34px, 4.2vw, 60px);
+  letter-spacing: -0.025em; line-height: 1.02;
+  margin-top: 14px;
+}
+.faq-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: clamp(24px, 3vw, 40px);
+}
+@media (max-width: 880px) { .faq-grid { grid-template-columns: 1fr; } }
+.faq-item { border-top: 1px solid var(--rule); padding: 24px 0; }
+.faq-item h3 {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(18px, 1.5vw, 21px); letter-spacing: -0.015em;
+  margin-bottom: 10px;
+}
+.faq-item p { color: var(--muted); font-size: 15px; line-height: 1.6; }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+<!-- @include _partials/nav.html -->
+<div class="header-spacer"></div>
+
+<main id="main">
+
+  <!-- ─── HERO ────────────────────────────── -->
+  <section class="mas-hero">
+    <div class="container">
+      <div class="mono eyebrow reveal">Meta Ads Studio · Built from your brand kit</div>
+      <h1 class="reveal">
+        Your photos. Your fonts. <em>Finished ads.</em>
+      </h1>
+      <p class="sub reveal">
+        <strong>Upload 4-5 photos, your colours and your fonts.</strong> The Studio designs 12 Meta ads with your real assets — composited in your browser, downloadable as ready-to-post PNGs for feed and stories.
+      </p>
+      <button class="start-btn reveal" id="startBtn" type="button">Start with your photos <span class="arr">→</span></button>
+      <div class="mas-trust reveal">
+        <span><span class="dot"></span>Meta Business Partner</span>
+        <span><span class="dot"></span>Rendered with your exact brand assets</span>
+        <span><span class="dot"></span>Yours to post, no strings</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── BUILDER ─────────────────────────── -->
+  <section id="builder" class="mas-builder">
+    <div class="container">
+      <div class="head reveal">
+        <div class="mono eyebrow">Step 1 of 2 · The brand kit</div>
+        <h2>Give the Studio <em>the real thing.</em></h2>
+      </div>
+
+      <div class="builder-grid">
+        <div>
+          <div class="b-card reveal">
+            <div class="b-label">Photos <span class="opt">3–6 required</span></div>
+            <h3>Product &amp; brand photos.</h3>
+            <p class="hint">Real shots of your product, your work, your space or your people. These become the ads — the better the photos, the better the pack.</p>
+            <div class="dz" id="photoDz">
+              <strong>Drop 4–5 photos here</strong>
+              or click to browse
+              <span class="mono-note">JPG · PNG · WebP</span>
+            </div>
+            <input type="file" id="photoInput" accept="image/jpeg,image/png,image/webp" multiple hidden />
+            <div class="photo-grid" id="photoGrid"></div>
+          </div>
+
+          <div class="b-card reveal">
+            <div class="b-label">Logo <span class="opt">Optional, recommended</span></div>
+            <h3>Your logo.</h3>
+            <p class="hint">Composited onto every creative. A PNG with a transparent background works best.</p>
+            <div class="logo-slot">
+              <div class="dz" id="logoDz">
+                <strong>Drop your logo here</strong>
+                <span class="mono-note">PNG · SVG · JPG</span>
+              </div>
+              <div class="logo-preview" id="logoPreview">
+                <img id="logoPreviewImg" alt="Logo preview" />
+                <button type="button" class="rm" id="logoRm" aria-label="Remove logo">×</button>
+              </div>
+            </div>
+            <input type="file" id="logoInput" accept="image/png,image/jpeg,image/webp,image/svg+xml" hidden />
+          </div>
+
+          <div class="b-card reveal">
+            <div class="b-label">Fonts <span class="opt">Headline required</span></div>
+            <h3>Your brand fonts.</h3>
+            <p class="hint">Upload the font files you're licensed to use — headlines render in your actual typeface, not a lookalike. Body font is optional and falls back to the headline font.</p>
+            <div class="font-slots">
+              <div class="font-slot" id="headFontSlot" tabindex="0" role="button" aria-label="Upload headline font">
+                <span class="f-role">Headline</span>
+                <div class="f-empty"><strong>Drop a font file</strong> · TTF, OTF, WOFF or WOFF2</div>
+              </div>
+              <input type="file" id="headFontInput" accept=".ttf,.otf,.woff,.woff2" hidden />
+              <div class="font-slot" id="bodyFontSlot" tabindex="0" role="button" aria-label="Upload body font">
+                <span class="f-role">Body</span>
+                <div class="f-empty"><strong>Optional</strong> · uses your headline font if empty</div>
+              </div>
+              <input type="file" id="bodyFontInput" accept=".ttf,.otf,.woff,.woff2" hidden />
+            </div>
+          </div>
+        </div>
+
+        <div>
+          <div class="b-card reveal">
+            <div class="b-label">Colours</div>
+            <h3>Brand palette.</h3>
+            <p class="hint">Auto-picked from your logo or first photo — tap a swatch to correct it. The first colour drives panels and buttons.</p>
+            <div class="swatch-row" id="swatchRow">
+              <button type="button" class="swatch-add" id="swatchAdd" aria-label="Add colour">+</button>
+            </div>
+            <div class="swatch-note">First = primary · Second = accent</div>
+          </div>
+
+          <div class="b-card reveal">
+            <div class="b-label">The business</div>
+            <h3>What we're selling.</h3>
+            <div class="b-form">
+              <div>
+                <label for="bizName">Brand name *</label>
+                <input id="bizName" type="text" placeholder="Acme Coffee Co" maxlength="80" />
+              </div>
+              <div>
+                <label for="bizAbout">What do you sell? *</label>
+                <textarea id="bizAbout" placeholder="Specialty coffee roasted in Melbourne, sold online and wholesale to cafes." maxlength="400"></textarea>
+              </div>
+              <div>
+                <label for="bizOffer">Current offer or promo</label>
+                <input id="bizOffer" type="text" placeholder="Free shipping over $50, 20% off first order…" maxlength="200" />
+              </div>
+              <div>
+                <label for="bizAudience">Who's the customer?</label>
+                <input id="bizAudience" type="text" placeholder="Home baristas 25-45, inner-city" maxlength="200" />
+              </div>
+              <div>
+                <label for="bizWebsite">Website</label>
+                <input id="bizWebsite" type="text" inputmode="url" placeholder="yourbrand.com.au" maxlength="120" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="builder-cta reveal">
+        <button type="button" id="builderNext">Continue <span class="arr">→</span></button>
+        <span class="err" id="builderErr"></span>
+        <span class="privacy">Creatives render in your browser · kit stored securely for your strategist</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── GATE ────────────────────────────── -->
+  <section id="gate" class="mas-gate" hidden>
+    <div class="container">
+      <div class="mono eyebrow">Step 2 of 2</div>
+      <h2>Where do we send <em>the pack?</em></h2>
+      <p style="max-width:54ch;color:rgba(255,255,255,0.72);font-size:clamp(15px,1.2vw,17px);line-height:1.55;margin-top:18px;">
+        The 12 creatives render right here and download instantly. The matching copy deck lands in your inbox, and a senior strategist follows up within 24 hours.
+      </p>
+      <div id="gateCard" class="gate-card" style="margin-top:clamp(40px,5vw,56px);max-width:560px;">
+        <form id="gateForm" class="gate-form">
+          <input type="text" name="name" placeholder="Your name" autocomplete="name" required />
+          <input type="email" name="email" placeholder="Email · the copy deck lands here" autocomplete="email" required />
+          <input type="tel" name="phone" placeholder="Phone · optional, for the strategy call" autocomplete="tel" />
+          <button type="submit" class="submit">Build my ads <span class="arr">→</span></button>
+        </form>
+        <div class="fineprint">No spam. No newsletter. The ads are yours either way.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── STAGES ──────────────────────────── -->
+  <section id="flow" class="mas-stages">
+    <div class="container">
+      <div class="head reveal">
+        <div>
+          <div class="mono eyebrow">Live · Right now</div>
+          <h2>The AI designs. <em>Your assets star.</em></h2>
+        </div>
+        <div id="elapsed" class="mas-elapsed"><span class="pulse"></span><span class="t">0.0s</span></div>
+      </div>
+      <div class="mas-stage-grid">
+        <div class="mas-stage" data-stage="0">
+          <div class="num">01</div>
+          <div class="indicator" aria-hidden="true"></div>
+          <h3>Reads your kit.</h3>
+          <p>Photos, logo, palette and fonts land in the Studio. Nothing is scraped or guessed — it's your real brand kit.</p>
+          <div class="timer">Ready</div>
+        </div>
+        <div class="mas-stage" data-stage="1">
+          <div class="num">02</div>
+          <div class="indicator" aria-hidden="true"></div>
+          <h3>Studies your photos.</h3>
+          <p>Looks at every shot, reads what it shows, and casts the right photo for each angle — hero shots for offers, detail shots for stories.</p>
+          <div class="timer">Ready</div>
+        </div>
+        <div class="mas-stage" data-stage="2">
+          <div class="num">03</div>
+          <div class="indicator" aria-hidden="true"></div>
+          <h3>Writes the ads.</h3>
+          <p>Twelve concepts across feed and stories. Headlines, body copy, CTAs — matched to your business model and buyer.</p>
+          <div class="timer">Ready</div>
+        </div>
+        <div class="mas-stage" data-stage="3">
+          <div class="num">04</div>
+          <div class="indicator" aria-hidden="true"></div>
+          <h3>Renders with your assets.</h3>
+          <p>Every creative is composited in your browser with your photos, your colours and your exact fonts. Download and post.</p>
+          <div class="timer">Ready</div>
+        </div>
+      </div>
+
+      <div id="waitHub" class="mas-hub" hidden>
+        <div class="hub-card">
+          <div class="hub-label"><span class="pulse"></span>Live · Your brand kit in the Studio</div>
+          <div class="hub-brand-head">
+            <div class="hub-logo" id="hubLogo"></div>
+            <div>
+              <div class="hub-name" id="hubName"><span class="skel"></span></div>
+              <div class="hub-cat" id="hubCat"></div>
+            </div>
+          </div>
+          <div class="hub-row" id="hubTagline" hidden><span class="k">Brand essence</span><span class="v"></span></div>
+          <div class="hub-row" id="hubColors" hidden><span class="k">Palette</span>
+            <div class="hub-swatches" id="hubSwatches"></div>
+          </div>
+          <div class="hub-row" id="hubBuyer" hidden><span class="k">Your buyer</span><span class="v"></span></div>
+          <div class="hub-ticker mono" id="hubTicker">Opening the kit…</div>
+        </div>
+        <div class="hub-card hub-check">
+          <div class="hub-label" style="color:var(--muted);">What's coming</div>
+          <h3>Built while you watch.</h3>
+          <ul class="q-done-list">
+            <li><span class="tick">✓</span>12 finished creatives with your photos, colours and fonts</li>
+            <li><span class="tick">✓</span>Feed and story formats, sized for Meta</li>
+            <li><span class="tick">✓</span>PNG downloads, single or the full pack</li>
+            <li><span class="tick">✓</span>Copy deck + audience map in your inbox</li>
+            <li><span class="tick">✓</span>Senior strategist call within 24 hours</li>
+          </ul>
+        </div>
+        <p class="mas-hub-note mono">About 60 seconds · creatives render in your browser</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── REVEAL ──────────────────────────── -->
+  <section id="revealSec" class="mas-reveal" hidden>
+    <div class="container">
+      <div class="head">
+        <div>
+          <div class="mono eyebrow">Rendered with the brand kit of <span id="brandLabel">your brand</span></div>
+          <h2>Here are <em>your 12 ads.</em></h2>
+        </div>
+        <button type="button" class="dl-all" id="dlAll" disabled>Download all (.zip)</button>
+      </div>
+      <div id="adGrid" class="mas-ad-grid"></div>
+    </div>
+  </section>
+
+  <!-- ─── STRATEGY ────────────────────────── -->
+  <section class="mas-strategy" id="strategySec" hidden>
+    <div class="container">
+      <div class="head">
+        <div class="mono eyebrow">The thinking behind the ads</div>
+        <h2>You also get the <em>brief,</em> not just the assets.</h2>
+      </div>
+      <div class="strat-grid">
+        <div class="strat-card">
+          <div class="label">Audiences</div>
+          <h3>Who we're talking to.</h3>
+          <ul class="strat-list" id="stratAudiences"></ul>
+        </div>
+        <div class="strat-card">
+          <div class="label">Angles</div>
+          <h3>What we're saying.</h3>
+          <ul class="strat-list" id="stratAngles"></ul>
+        </div>
+        <div class="strat-card">
+          <div class="label">Spend &amp; cadence</div>
+          <h3>How we'd run it.</h3>
+          <ul class="strat-list" id="stratCadence"></ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── FAQ ─────────────────────────────── -->
+  <section class="mas-faq">
+    <div class="container">
+      <div class="head reveal">
+        <div class="mono eyebrow">Common questions</div>
+        <h2>Things people ask <em>before they upload.</em></h2>
+      </div>
+      <div class="faq-grid">
+        <div class="faq-item reveal">
+          <h3>Are these actually finished ads?</h3>
+          <p>Yes. Each creative is composited at Meta's native sizes (1080×1080, 1080×1350, 1080×1920) with your photos, colours, logo and fonts, then downloads as a PNG you can load straight into Ads Manager or post organically.</p>
+        </div>
+        <div class="faq-item reveal">
+          <h3>Why do I upload my own fonts?</h3>
+          <p>Because your brand's typeface is licensed to you, not to us. You upload the files you already own, the creatives render with the real thing, and no font ever gets re-hosted or substituted.</p>
+        </div>
+        <div class="faq-item reveal">
+          <h3>What happens to my photos?</h3>
+          <p>The creatives are rendered in your browser. A copy of your kit is stored securely so the strategist who calls you has the same assets in front of them — it's never shared or reused elsewhere.</p>
+        </div>
+        <div class="faq-item reveal">
+          <h3>Who owns the ads?</h3>
+          <p>You do. They're built from your own assets. Run them, hand them to another agency, post them organically — no strings.</p>
+        </div>
+        <div class="faq-item reveal">
+          <h3>What if my photos aren't professional?</h3>
+          <p>Phone photos work if they're sharp and well-lit. The layouts do the design heavy lifting — a clean product shot on a bench beats a blurry studio attempt every time.</p>
+        </div>
+        <div class="faq-item reveal">
+          <h3>Will you try to sell me something?</h3>
+          <p>A senior strategist will walk you through the pack and show you what running it properly would cost. If you want help, great. If not, you've still got 12 ads.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- @include _partials/footer.html -->
+<!-- @include _partials/scripts.html -->
+
+<script>
+(() => {
+  'use strict';
+
+  // ── State ────────────────────────────────────────────────────────
+  const state = {
+    photos: [],        // { file, img, name }
+    logo: null,        // { file, img }
+    colors: [],        // hex strings, first = primary
+    fonts: { head: null, body: null }, // { family, label, file }
+    runId: '',
+    assetUrls: [],
+    brand: null, audience: '', strategy: null,
+    ads: [],           // concepts from the API
+    canvases: [],      // rendered canvas per ad
+    isRunning: false, isDone: false, renderDone: false,
+  };
+  const MAX_PHOTOS = 6, MIN_PHOTOS = 3;
+  let fontSeq = 0;
+
+  const $ = (id) => document.getElementById(id);
+  const escapeHtml = (s) => String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+  // ── Colour helpers ───────────────────────────────────────────────
+  const hexRgb = (hex) => {
+    const h = (hex || '').replace('#', '');
+    if (!/^[0-9a-f]{6}$/i.test(h)) return null;
+    return [parseInt(h.slice(0, 2), 16), parseInt(h.slice(2, 4), 16), parseInt(h.slice(4, 6), 16)];
+  };
+  const luma = (hex) => {
+    const rgb = hexRgb(hex);
+    if (!rgb) return 0;
+    return 0.299 * rgb[0] + 0.587 * rgb[1] + 0.114 * rgb[2];
+  };
+  const textOn = (hex) => luma(hex) > 150 ? '#141414' : '#FFFFFF';
+  const rgbHex = (r, g, b) => '#' + [r, g, b].map(c => Math.max(0, Math.min(255, Math.round(c))).toString(16).padStart(2, '0')).join('');
+  const shade = (hex, pct) => {
+    const rgb = hexRgb(hex);
+    if (!rgb) return hex;
+    return rgbHex(...rgb.map(c => c + (pct / 100) * (pct > 0 ? 255 - c : c)));
+  };
+
+  // ── Image ingestion ──────────────────────────────────────────────
+  const loadImageFromFile = (file) => new Promise((res, rej) => {
+    const url = URL.createObjectURL(file);
+    const img = new Image();
+    img.onload = () => res(img);
+    img.onerror = () => { URL.revokeObjectURL(url); rej(new Error('unreadable image')); };
+    img.src = url;
+  });
+
+  /** Downscaled JPEG data URI for analysis / storage fallback. */
+  const scaledDataUri = (img, maxDim, quality, mime = 'image/jpeg') => {
+    const scale = Math.min(1, maxDim / Math.max(img.naturalWidth, img.naturalHeight));
+    const w = Math.max(1, Math.round(img.naturalWidth * scale));
+    const h = Math.max(1, Math.round(img.naturalHeight * scale));
+    const c = document.createElement('canvas');
+    c.width = w; c.height = h;
+    const ctx = c.getContext('2d');
+    if (mime === 'image/jpeg') { ctx.fillStyle = '#fff'; ctx.fillRect(0, 0, w, h); }
+    ctx.drawImage(img, 0, 0, w, h);
+    return c.toDataURL(mime, quality);
+  };
+
+  // ── Palette extraction ───────────────────────────────────────────
+  const extractPalette = (img, count = 3) => {
+    const c = document.createElement('canvas');
+    const S = 64;
+    c.width = S; c.height = S;
+    const ctx = c.getContext('2d', { willReadFrequently: true });
+    ctx.drawImage(img, 0, 0, S, S);
+    let data;
+    try { data = ctx.getImageData(0, 0, S, S).data; } catch { return []; }
+    const buckets = new Map();
+    for (let i = 0; i < data.length; i += 4) {
+      const a = data[i + 3];
+      if (a < 200) continue;
+      const r = data[i], g = data[i + 1], b = data[i + 2];
+      const mx = Math.max(r, g, b), mn = Math.min(r, g, b);
+      const sat = mx === 0 ? 0 : (mx - mn) / mx;
+      const lum = 0.299 * r + 0.587 * g + 0.114 * b;
+      if (lum > 242 || lum < 14) continue;         // near white / black
+      const key = ((r >> 4) << 8) | ((g >> 4) << 4) | (b >> 4);
+      const e = buckets.get(key) || { r: 0, g: 0, b: 0, n: 0, score: 0 };
+      e.r += r; e.g += g; e.b += b; e.n++;
+      e.score += 1 + sat * 3;                       // saturated colours win
+      buckets.set(key, e);
+    }
+    const sorted = [...buckets.values()].sort((a, b) => b.score - a.score);
+    const picked = [];
+    for (const e of sorted) {
+      const hex = rgbHex(e.r / e.n, e.g / e.n, e.b / e.n);
+      const rgb = hexRgb(hex);
+      const far = picked.every(p => {
+        const q = hexRgb(p);
+        return Math.abs(q[0] - rgb[0]) + Math.abs(q[1] - rgb[1]) + Math.abs(q[2] - rgb[2]) > 120;
+      });
+      if (far) picked.push(hex.toUpperCase());
+      if (picked.length >= count) break;
+    }
+    return picked;
+  };
+
+  // ── Builder: photos ──────────────────────────────────────────────
+  const photoDz = $('photoDz'), photoInput = $('photoInput'), photoGrid = $('photoGrid');
+
+  const renderPhotoGrid = () => {
+    photoGrid.innerHTML = state.photos.map((p, i) => `
+      <div class="photo-thumb">
+        <img src="${p.img.src}" alt="Photo ${i + 1}" />
+        <span class="idx">${i + 1}</span>
+        <button type="button" class="rm" data-i="${i}" aria-label="Remove photo ${i + 1}">×</button>
+      </div>`).join('');
+    photoGrid.querySelectorAll('.rm').forEach(b => b.addEventListener('click', () => {
+      const removed = state.photos.splice(Number(b.dataset.i), 1)[0];
+      if (removed) URL.revokeObjectURL(removed.img.src);
+      renderPhotoGrid();
+    }));
+  };
+
+  const addPhotos = async (files) => {
+    for (const file of files) {
+      if (state.photos.length >= MAX_PHOTOS) break;
+      if (!/^image\/(jpeg|png|webp)$/.test(file.type)) continue;
+      try {
+        const img = await loadImageFromFile(file);
+        state.photos.push({ file, img, name: file.name });
+      } catch { /* skip unreadable */ }
+    }
+    renderPhotoGrid();
+    if (!state.colors.length && !state.logo && state.photos.length) {
+      setColors(extractPalette(state.photos[0].img));
+    }
+    setBuilderErr('');
+  };
+
+  const wireDropzone = (dz, input, onFiles) => {
+    dz.addEventListener('click', () => input.click());
+    dz.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); input.click(); } });
+    input.addEventListener('change', () => { onFiles([...input.files]); input.value = ''; });
+    dz.addEventListener('dragover', (e) => { e.preventDefault(); dz.classList.add('is-over'); });
+    dz.addEventListener('dragleave', () => dz.classList.remove('is-over'));
+    dz.addEventListener('drop', (e) => {
+      e.preventDefault(); dz.classList.remove('is-over');
+      onFiles([...e.dataTransfer.files]);
+    });
+  };
+  wireDropzone(photoDz, photoInput, addPhotos);
+
+  // ── Builder: logo ────────────────────────────────────────────────
+  const logoDz = $('logoDz'), logoInput = $('logoInput');
+  const logoPreview = $('logoPreview'), logoPreviewImg = $('logoPreviewImg');
+  wireDropzone(logoDz, logoInput, async (files) => {
+    const file = files[0];
+    if (!file || !/^image\/(png|jpeg|webp|svg\+xml)$/.test(file.type)) return;
+    try {
+      const img = await loadImageFromFile(file);
+      state.logo = { file, img };
+      logoPreviewImg.src = img.src;
+      logoPreview.classList.add('is-on');
+      if (file.type !== 'image/svg+xml') {
+        const fromLogo = extractPalette(img);
+        if (fromLogo.length) setColors(fromLogo);
+      }
+    } catch { /* ignore */ }
+  });
+  $('logoRm').addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (state.logo) URL.revokeObjectURL(state.logo.img.src);
+    state.logo = null;
+    logoPreview.classList.remove('is-on');
+  });
+
+  // ── Builder: colours ─────────────────────────────────────────────
+  const swatchRow = $('swatchRow'), swatchAdd = $('swatchAdd');
+  const renderSwatches = () => {
+    swatchRow.querySelectorAll('.swatch').forEach(el => el.remove());
+    state.colors.forEach((hex, i) => {
+      const el = document.createElement('div');
+      el.className = 'swatch';
+      el.style.background = hex;
+      el.innerHTML = `<input type="color" value="${hex}" aria-label="Brand colour ${i + 1}" /><button type="button" class="rm" aria-label="Remove colour">×</button>`;
+      el.querySelector('input').addEventListener('input', (e) => {
+        state.colors[i] = e.target.value.toUpperCase();
+        el.style.background = state.colors[i];
+      });
+      el.querySelector('.rm').addEventListener('click', () => {
+        state.colors.splice(i, 1);
+        renderSwatches();
+      });
+      swatchRow.insertBefore(el, swatchAdd);
+    });
+    swatchAdd.style.display = state.colors.length >= 4 ? 'none' : '';
+  };
+  const setColors = (colors) => { state.colors = colors.slice(0, 4); renderSwatches(); };
+  swatchAdd.addEventListener('click', () => {
+    state.colors.push(state.colors.length ? shade(state.colors[0], 30) : '#FF6200');
+    renderSwatches();
+  });
+  renderSwatches();
+
+  // ── Builder: fonts ───────────────────────────────────────────────
+  const fontMime = (name) => {
+    if (/\.woff2$/i.test(name)) return 'font/woff2';
+    if (/\.woff$/i.test(name)) return 'font/woff';
+    if (/\.otf$/i.test(name)) return 'font/otf';
+    return 'font/ttf';
+  };
+  const wireFontSlot = (slotId, inputId, role) => {
+    const slot = $(slotId), input = $(inputId);
+    const onFiles = async (files) => {
+      const file = files[0];
+      if (!file || !/\.(ttf|otf|woff2?)$/i.test(file.name)) return;
+      try {
+        const family = `Studio${role === 'head' ? 'Head' : 'Body'}${++fontSeq}`;
+        const face = new FontFace(family, await file.arrayBuffer());
+        await face.load();
+        document.fonts.add(face);
+        const label = file.name.replace(/\.(ttf|otf|woff2?)$/i, '').replace(/[-_]/g, ' ');
+        state.fonts[role] = { family, label, file };
+        slot.classList.add('is-loaded');
+        slot.querySelector('.f-empty, .f-loaded-box')?.remove();
+        const box = document.createElement('div');
+        box.className = 'f-loaded-box';
+        box.style.minWidth = '0';
+        const sample = $('bizName').value.trim() || 'Aa Bb · Your brand, set right';
+        box.innerHTML = `<div class="f-preview" style="font-family:'${family}'">${escapeHtml(sample)}</div><div class="f-name">${escapeHtml(file.name)}</div>`;
+        slot.appendChild(box);
+        setBuilderErr('');
+      } catch {
+        setBuilderErr('That font file couldn\'t be read. Try the TTF or OTF version.');
+      }
+    };
+    wireDropzone(slot, input, onFiles);
+  };
+  wireFontSlot('headFontSlot', 'headFontInput', 'head');
+  wireFontSlot('bodyFontSlot', 'bodyFontInput', 'body');
+
+  // ── Builder: continue → gate ─────────────────────────────────────
+  const builderErr = $('builderErr');
+  const setBuilderErr = (msg) => { builderErr.textContent = msg; };
+  const gateSec = $('gate'), gateForm = $('gateForm');
+
+  $('startBtn').addEventListener('click', () =>
+    $('builder').scrollIntoView({ behavior: 'smooth', block: 'start' }));
+
+  $('builderNext').addEventListener('click', () => {
+    if (state.photos.length < MIN_PHOTOS) return setBuilderErr(`Add at least ${MIN_PHOTOS} photos (${state.photos.length} so far).`);
+    if (!$('bizName').value.trim()) return setBuilderErr('Enter the brand name.');
+    if (!$('bizAbout').value.trim()) return setBuilderErr('Tell us what the brand sells.');
+    if (!state.fonts.head) return setBuilderErr('Upload your headline font file — the ads render with your real typeface.');
+    if (!state.colors.length) state.colors = ['#141414'];
+    setBuilderErr('');
+    gateSec.hidden = false;
+    requestAnimationFrame(() => gateSec.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+    setTimeout(() => gateForm.querySelector('input[name=name]')?.focus(), 600);
+  });
+
+  // ── Wait hub ─────────────────────────────────────────────────────
+  const waitHub = $('waitHub'), hubLogo = $('hubLogo'), hubName = $('hubName'),
+    hubCat = $('hubCat'), hubTagline = $('hubTagline'), hubColors = $('hubColors'),
+    hubSwatches = $('hubSwatches'), hubBuyer = $('hubBuyer'), hubTicker = $('hubTicker');
+  let tickerTimer = null, tickerItems = [], tickerIdx = 0;
+
+  const setTicker = (html) => {
+    hubTicker.classList.add('is-fading');
+    setTimeout(() => { hubTicker.innerHTML = html; hubTicker.classList.remove('is-fading'); }, 240);
+  };
+  const startTickerLoop = () => {
+    if (tickerTimer) clearInterval(tickerTimer);
+    const tick = () => {
+      if (!tickerItems.length) return;
+      setTicker(tickerItems[tickerIdx % tickerItems.length]);
+      tickerIdx++;
+    };
+    tick();
+    tickerTimer = setInterval(tick, 3600);
+  };
+  const startWaitHub = () => {
+    hubName.textContent = $('bizName').value.trim() || 'Your brand';
+    hubCat.textContent = '';
+    if (state.logo) {
+      hubLogo.innerHTML = `<img src="${state.logo.img.src}" alt="">`;
+      hubLogo.classList.add('is-filled');
+    } else {
+      hubLogo.textContent = (hubName.textContent || 'B').slice(0, 1).toUpperCase();
+    }
+    hubColors.hidden = !state.colors.length;
+    hubSwatches.innerHTML = state.colors.map(c => `<div class="sw" style="background:${escapeHtml(c)}" title="${escapeHtml(c)}"></div>`).join('');
+    hubTagline.hidden = true; hubBuyer.hidden = true;
+    hubTicker.textContent = 'Opening the kit…';
+    waitHub.hidden = false;
+    requestAnimationFrame(() => waitHub.classList.add('is-on'));
+  };
+  const stopWaitHub = () => {
+    if (tickerTimer) { clearInterval(tickerTimer); tickerTimer = null; }
+    if (waitHub.hidden) return;
+    waitHub.classList.remove('is-on');
+    setTimeout(() => { waitHub.hidden = true; }, 500);
+  };
+
+  // ── Stages + elapsed ─────────────────────────────────────────────
+  const stages = [...document.querySelectorAll('.mas-stage')];
+  const elapsed = $('elapsed'), elapsedT = elapsed.querySelector('.t');
+  let elapsedStart = 0, elapsedTick = null;
+  const startElapsed = () => {
+    elapsedStart = Date.now();
+    elapsed.classList.add('is-on');
+    elapsed.classList.remove('is-done');
+    elapsedTick = setInterval(() => {
+      elapsedT.textContent = ((Date.now() - elapsedStart) / 1000).toFixed(1) + 's';
+    }, 50);
+  };
+  const stopElapsed = () => {
+    if (elapsedTick) { clearInterval(elapsedTick); elapsedTick = null; }
+    elapsed.classList.add('is-done');
+  };
+  const resetStages = () => stages.forEach(s => {
+    s.classList.remove('is-active', 'is-done');
+    s.querySelector('.timer').textContent = 'Queued';
+  });
+  const stageActive = (i, msg) => {
+    const s = stages[i]; if (!s) return;
+    s.classList.remove('is-done');
+    s.classList.add('is-active');
+    s.querySelector('.timer').textContent = msg || 'Running…';
+  };
+  const stageDone = (i) => {
+    const s = stages[i]; if (!s) return;
+    s.classList.remove('is-active');
+    s.classList.add('is-done');
+    s.querySelector('.timer').textContent = `${((Date.now() - elapsedStart) / 1000).toFixed(1)}s · done`;
+  };
+
+  // ─────────────────────────────────────────────────────────────────
+  // CANVAS COMPOSITOR
+  // Deterministic layout engine: 5 templates × 3 formats, drawn at
+  // Meta-native sizes with the uploaded photos, palette and fonts.
+  // ─────────────────────────────────────────────────────────────────
+  const FORMAT_SIZE = {
+    '1:1 · Feed': [1080, 1080],
+    '4:5 · Feed': [1080, 1350],
+    '9:16 · Story': [1080, 1920],
+  };
+  const isStory = (f) => f === '9:16 · Story';
+  // Meta story UI chrome: keep text out of the top ~14% and bottom ~17%.
+  const SAFE_TOP = 270, SAFE_BOTTOM = 330;
+  // The y every template anchors its CTA to. Feed formats get a normal
+  // margin; stories clear Meta's bottom chrome. Without this the CTA flows
+  // from the text above it and strands a third of a story frame empty.
+  const bottomLine = (H, story) => H - (story ? SAFE_BOTTOM : 86);
+
+  const fontStr = (px, fam, { weight = 500, italic = false } = {}) =>
+    `${italic ? 'italic ' : ''}${weight} ${px}px "${fam}", sans-serif`;
+
+  const roundRectPath = (ctx, x, y, w, h, r) => {
+    r = Math.min(r, w / 2, h / 2);
+    ctx.beginPath();
+    ctx.moveTo(x + r, y);
+    ctx.arcTo(x + w, y, x + w, y + h, r);
+    ctx.arcTo(x + w, y + h, x, y + h, r);
+    ctx.arcTo(x, y + h, x, y, r);
+    ctx.arcTo(x, y, x + w, y, r);
+    ctx.closePath();
+  };
+
+  /** Cover-crop draw with a slight top bias (faces/products sit high). */
+  const coverDraw = (ctx, img, x, y, w, h, focusY = 0.42) => {
+    const iw = img.naturalWidth, ih = img.naturalHeight;
+    const scale = Math.max(w / iw, h / ih);
+    const sw = w / scale, sh = h / scale;
+    const sx = (iw - sw) / 2;
+    const sy = Math.max(0, Math.min(ih - sh, ih * focusY - sh / 2));
+    ctx.drawImage(img, sx, sy, sw, sh, x, y, w, h);
+  };
+
+  /** Greedy wrap of styled tokens; returns null if any single word overflows. */
+  const wrapTokens = (ctx, tokens, maxW, spaceW) => {
+    const lines = [];
+    let line = [], lineW = 0;
+    for (const tok of tokens) {
+      const w = ctx.measureText(tok.t).width;
+      if (w > maxW) return null;
+      const need = line.length ? lineW + spaceW + w : w;
+      if (need > maxW && line.length) {
+        lines.push(line);
+        line = [tok]; lineW = w;
+      } else {
+        line.push(tok); lineW = need;
+      }
+    }
+    if (line.length) lines.push(line);
+    return lines;
+  };
+
+  /**
+   * Fit a headline into a box: walks the size down until the wrapped lines
+   * fit maxLines. Tokens carry an italic flag for the visual_word.
+   */
+  const layoutHeadline = (ctx, text, visualWord, fam, maxW, maxLines, startPx, minPx) => {
+    const vw = (visualWord || '').toLowerCase().replace(/[^\w']/g, '');
+    const tokens = String(text).split(/\s+/).filter(Boolean).map(t => ({
+      t, it: !!vw && t.toLowerCase().replace(/[^\w']/g, '') === vw,
+    }));
+    for (let px = startPx; px >= minPx; px -= 4) {
+      ctx.font = fontStr(px, fam);
+      const spaceW = ctx.measureText(' ').width;
+      const lines = wrapTokens(ctx, tokens, maxW, spaceW);
+      if (lines && lines.length <= maxLines) return { px, lines, lineH: px * 1.08 };
+    }
+    ctx.font = fontStr(minPx, fam);
+    const spaceW = ctx.measureText(' ').width;
+    const lines = wrapTokens(ctx, tokens, maxW, spaceW) || [tokens];
+    return { px: minPx, lines, lineH: minPx * 1.08 };
+  };
+
+  const headlineHeight = (l) => l.lines.length * l.lineH;
+
+  const drawHeadline = (ctx, layout, fam, x, yTop, color) => {
+    ctx.fillStyle = color;
+    ctx.textBaseline = 'alphabetic';
+    let y = yTop + layout.px * 0.88;
+    for (const line of layout.lines) {
+      let cx = x;
+      ctx.font = fontStr(layout.px, fam);
+      const spaceW = ctx.measureText(' ').width;
+      for (const tok of line) {
+        ctx.font = fontStr(layout.px, fam, { italic: tok.it, weight: tok.it ? 400 : 500 });
+        ctx.fillText(tok.t, cx, y);
+        cx += ctx.measureText(tok.t).width + spaceW;
+      }
+      y += layout.lineH;
+    }
+  };
+
+  /** Simple single-style wrap for small body text. Returns drawn height. */
+  const drawBodyText = (ctx, text, fam, px, x, yTop, maxW, maxLines, color) => {
+    ctx.font = fontStr(px, fam, { weight: 400 });
+    ctx.fillStyle = color;
+    ctx.textBaseline = 'alphabetic';
+    const words = String(text).split(/\s+/).filter(Boolean);
+    const spaceW = ctx.measureText(' ').width;
+    let line = '', lines = [];
+    for (const w of words) {
+      const cand = line ? line + ' ' + w : w;
+      if (ctx.measureText(cand).width > maxW && line) {
+        lines.push(line); line = w;
+        if (lines.length === maxLines) break;
+      } else line = cand;
+    }
+    if (line && lines.length < maxLines) lines.push(line);
+    let y = yTop + px * 0.85;
+    for (const l of lines) { ctx.fillText(l, x, y); y += px * 1.35; }
+    return lines.length * px * 1.35;
+  };
+
+  const drawKicker = (ctx, text, fam, px, x, y, color) => {
+    if (!text) return 0;
+    ctx.font = fontStr(px, fam, { weight: 500 });
+    try { ctx.letterSpacing = `${Math.round(px * 0.14)}px`; } catch { /* older engines */ }
+    ctx.fillStyle = color;
+    ctx.textBaseline = 'alphabetic';
+    ctx.fillText(String(text).toUpperCase(), x, y + px * 0.85);
+    try { ctx.letterSpacing = '0px'; } catch { /* older engines */ }
+    return px * 1.5;
+  };
+
+  const drawCtaPill = (ctx, text, fam, x, y, { bg, fg, px = 30, outline = false } = {}) => {
+    ctx.font = fontStr(px, fam, { weight: 500 });
+    const tw = ctx.measureText(text).width;
+    const padX = px * 1.15, h = px * 2.3;
+    roundRectPath(ctx, x, y, tw + padX * 2, h, h / 2);
+    if (outline) {
+      ctx.strokeStyle = bg; ctx.lineWidth = 3; ctx.stroke();
+      ctx.fillStyle = bg;
+    } else {
+      ctx.fillStyle = bg; ctx.fill();
+      ctx.fillStyle = fg;
+    }
+    ctx.textBaseline = 'middle';
+    ctx.fillText(text, x + padX, y + h / 2 + px * 0.06);
+    ctx.textBaseline = 'alphabetic';
+    return h;
+  };
+
+  /** White chip with the logo contained — safe on any background. */
+  const drawLogoChip = (ctx, logoImg, cx, cy, r) => {
+    ctx.save();
+    ctx.shadowColor = 'rgba(0,0,0,0.25)';
+    ctx.shadowBlur = 18;
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.fillStyle = '#fff';
+    ctx.fill();
+    ctx.restore();
+    ctx.save();
+    ctx.beginPath();
+    ctx.arc(cx, cy, r, 0, Math.PI * 2);
+    ctx.clip();
+    const box = r * 1.3;
+    const iw = logoImg.naturalWidth || 1, ih = logoImg.naturalHeight || 1;
+    const s = Math.min(box / iw, box / ih);
+    ctx.drawImage(logoImg, cx - (iw * s) / 2, cy - (ih * s) / 2, iw * s, ih * s);
+    ctx.restore();
+  };
+
+  // ── Templates ────────────────────────────────────────────────────
+  // Each receives (ctx, W, H, a): a = { img, logoImg, primary, accent,
+  // headFam, bodyFam, kicker, headline, visualWord, cta, brandName }
+
+  const tplOverlay = (ctx, W, H, a) => {
+    coverDraw(ctx, a.img, 0, 0, W, H);
+    const story = H > 1600;
+    const grad = ctx.createLinearGradient(0, H * 0.42, 0, H);
+    grad.addColorStop(0, 'rgba(0,0,0,0)');
+    grad.addColorStop(1, 'rgba(0,0,0,0.78)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, H * 0.42, W, H * 0.58);
+    if (a.logoImg) drawLogoChip(ctx, a.logoImg, 118, story ? SAFE_TOP + 90 : 118, 62);
+
+    const M = 76, maxW = W - M * 2;
+    const hl = layoutHeadline(ctx, a.headline, a.visualWord, a.headFam, maxW, 3, Math.round(W * 0.082), 46);
+    const ctaH = 30 * 2.3;
+    let y = bottomLine(H, story) - ctaH;
+    drawCtaPill(ctx, a.cta, a.bodyFam, M, y, { bg: a.accent, fg: textOn(a.accent) });
+    y -= 44 + headlineHeight(hl);
+    drawHeadline(ctx, hl, a.headFam, M, y, '#FFFFFF');
+    if (a.kicker) drawKicker(ctx, a.kicker, a.bodyFam, 27, M, y - 62, 'rgba(255,255,255,0.85)');
+  };
+
+  const tplSplit = (ctx, W, H, a) => {
+    const story = H > 1600;
+    // Stories give the photo more room: the copy panel only has to hold a
+    // rule, a kicker and a headline, and stretching it leaves dead colour.
+    const photoH = Math.round(H * (story ? 0.66 : 0.6));
+    coverDraw(ctx, a.img, 0, 0, W, photoH);
+    ctx.fillStyle = a.primary;
+    ctx.fillRect(0, photoH, W, H - photoH);
+    const on = textOn(a.primary);
+    const M = 76, maxW = W - M * 2;
+    const ctaH = 30 * 2.3;
+    const ctaY = bottomLine(H, story) - ctaH;
+
+    const hl = layoutHeadline(ctx, a.headline, a.visualWord, a.headFam, maxW, 3, Math.round(W * 0.076), 44);
+    const kickH = a.kicker ? 26 * 1.5 : 0;
+    const blockH = 8 + 44 + kickH + headlineHeight(hl);
+    // Centre the copy block in the panel above the anchored CTA.
+    let y = photoH + Math.max(58, (ctaY - 48 - photoH - blockH) / 2);
+
+    ctx.fillStyle = a.accent !== a.primary ? a.accent : on;
+    ctx.fillRect(M, y, 120, 8);
+    y += 44;
+    if (a.kicker) y += drawKicker(ctx, a.kicker, a.bodyFam, 26, M, y, on === '#FFFFFF' ? 'rgba(255,255,255,0.75)' : 'rgba(20,20,20,0.65)');
+    drawHeadline(ctx, hl, a.headFam, M, y, on);
+
+    const ctaBg = on === '#FFFFFF' ? '#FFFFFF' : '#141414';
+    drawCtaPill(ctx, a.cta, a.bodyFam, M, ctaY, { bg: ctaBg, fg: ctaBg === '#FFFFFF' ? '#141414' : '#FFFFFF' });
+    if (a.logoImg) drawLogoChip(ctx, a.logoImg, W - 128, photoH - 96, 58);
+  };
+
+  const tplBanner = (ctx, W, H, a) => {
+    const story = H > 1600;
+    const bandY = story ? SAFE_TOP - 40 : 0;
+    const M = 76;
+    const maxW = W - M * 2 - (a.logoImg ? 150 : 0);
+    const hl = layoutHeadline(ctx, a.headline, a.visualWord, a.headFam, maxW, 2, Math.round(W * 0.066), 40);
+    const kickH = a.kicker ? 26 * 1.5 + 6 : 0;
+    // Band hugs its content instead of taking a fixed slab of the frame —
+    // a two-line headline in a 30%-tall band leaves half of it empty.
+    const bandH = Math.max(Math.round(H * 0.16), 56 + kickH + headlineHeight(hl) + 56);
+
+    coverDraw(ctx, a.img, 0, 0, W, H);
+    if (story) {
+      ctx.fillStyle = 'rgba(0,0,0,0.18)';
+      ctx.fillRect(0, 0, W, H);
+    }
+    ctx.fillStyle = a.primary;
+    ctx.fillRect(0, bandY, W, bandH);
+    const on = textOn(a.primary);
+    let y = bandY + 56;
+    if (a.kicker) {
+      const kickColor = on === '#FFFFFF' ? 'rgba(255,255,255,0.8)' : 'rgba(20,20,20,0.65)';
+      y += drawKicker(ctx, a.kicker, a.bodyFam, 26, M, y, kickColor) + 6;
+    }
+    drawHeadline(ctx, hl, a.headFam, M, y, on);
+    // Chip, not a bare draw: a logo without transparency reads as a white
+    // rectangle punched into the brand-colour band.
+    if (a.logoImg) drawLogoChip(ctx, a.logoImg, W - M - 56, bandY + bandH / 2, 56);
+
+    const gradTop = H - Math.round(H * 0.28);
+    const grad = ctx.createLinearGradient(0, gradTop, 0, H);
+    grad.addColorStop(0, 'rgba(0,0,0,0)');
+    grad.addColorStop(1, 'rgba(0,0,0,0.62)');
+    ctx.fillStyle = grad;
+    ctx.fillRect(0, gradTop, W, H - gradTop);
+    drawCtaPill(ctx, a.cta, a.bodyFam, M, bottomLine(H, story) - 30 * 2.3, { bg: '#FFFFFF', fg: '#141414' });
+  };
+
+  const tplQuote = (ctx, W, H, a) => {
+    const story = H > 1600;
+    ctx.fillStyle = a.primary;
+    ctx.fillRect(0, 0, W, H);
+    const on = textOn(a.primary);
+    const dim = on === '#FFFFFF' ? 'rgba(255,255,255,0.75)' : 'rgba(20,20,20,0.65)';
+    const M = 84, maxW = W - M * 2;
+    const ctaH = 30 * 2.3;
+    const ctaY = bottomLine(H, story) - ctaH;
+
+    const top = story ? SAFE_TOP + 30 : 90;
+    const quoteH = Math.round(W * 0.17);
+    const hl = layoutHeadline(ctx, a.headline, a.visualWord, a.headFam, maxW, 4, Math.round(W * 0.085), 50);
+    const attribH = 66;
+    // Whatever the copy doesn't use goes to the photo, so a short quote in a
+    // 9:16 frame gets a big image instead of a field of flat colour.
+    const photoH = Math.max(0, Math.round(ctaY - 56 - (top + quoteH + headlineHeight(hl) + attribH + 48)));
+
+    let y = top;
+    ctx.font = fontStr(Math.round(W * 0.22), a.headFam, { weight: 500 });
+    ctx.fillStyle = a.accent !== a.primary ? a.accent : dim;
+    ctx.globalAlpha = a.accent !== a.primary ? 1 : 0.5;
+    ctx.textBaseline = 'alphabetic';
+    ctx.fillText('“', M - 14, y + W * 0.15);
+    ctx.globalAlpha = 1;
+    y += quoteH;
+    drawHeadline(ctx, hl, a.headFam, M, y, on);
+    y += headlineHeight(hl) + 34;
+    ctx.font = fontStr(30, a.bodyFam, { weight: 400 });
+    ctx.fillStyle = dim;
+    ctx.textBaseline = 'alphabetic';
+    ctx.fillText(`— ${a.brandName}`, M, y + 26);
+    y += attribH;
+
+    if (photoH >= 200) {
+      const px = M, pw = maxW, py = y + 24;
+      ctx.save();
+      ctx.shadowColor = 'rgba(0,0,0,0.28)';
+      ctx.shadowBlur = 44;
+      roundRectPath(ctx, px, py, pw, photoH, 22);
+      ctx.fillStyle = '#fff';
+      ctx.fill();
+      ctx.restore();
+      ctx.save();
+      roundRectPath(ctx, px + 10, py + 10, pw - 20, photoH - 20, 14);
+      ctx.clip();
+      coverDraw(ctx, a.img, px + 10, py + 10, pw - 20, photoH - 20);
+      ctx.restore();
+    }
+
+    drawCtaPill(ctx, a.cta, a.bodyFam, M, ctaY, {
+      bg: on === '#FFFFFF' ? '#FFFFFF' : '#141414',
+      fg: on === '#FFFFFF' ? '#141414' : '#FFFFFF',
+    });
+    if (a.logoImg) drawLogoChip(ctx, a.logoImg, W - M - 56, top + 60, 56);
+  };
+
+  const tplFrame = (ctx, W, H, a) => {
+    const story = H > 1600;
+    ctx.fillStyle = '#F7F5F0';
+    ctx.fillRect(0, 0, W, H);
+    const M = 84;
+    let y = story ? SAFE_TOP + 40 : 92;
+    ctx.font = fontStr(26, a.bodyFam, { weight: 500 });
+    ctx.fillStyle = '#141414';
+    try { ctx.letterSpacing = '3px'; } catch { /* older engines */ }
+    ctx.fillText(a.brandName.toUpperCase(), M, y);
+    try { ctx.letterSpacing = '0px'; } catch { /* older engines */ }
+    if (a.logoImg) drawLogoChip(ctx, a.logoImg, W - M - 46, y - 10, 46);
+    y += 52;
+    const pw = W - M * 2;
+    const ctaH = 30 * 2.3;
+    const ctaY = bottomLine(H, story) - ctaH;
+    const hl = layoutHeadline(ctx, a.headline, a.visualWord, a.headFam, pw, story ? 3 : 2, Math.round(W * 0.065), 40);
+    const kickH = a.kicker ? 25 * 1.5 + 8 : 0;
+    // The mat sizes the photo to whatever the caption block leaves, so the
+    // gallery proportions hold across 1:1, 4:5 and 9:16 alike.
+    const ph = Math.max(320, Math.round(ctaY - 46 - (y + 16) - (64 + kickH + headlineHeight(hl) + 42)));
+    ctx.strokeStyle = a.primary;
+    ctx.lineWidth = 4;
+    ctx.strokeRect(M - 16, y - 16, pw + 32, ph + 32);
+    coverDraw(ctx, a.img, M, y, pw, ph);
+    y += ph + 64;
+    if (a.kicker) y += drawKicker(ctx, a.kicker, a.bodyFam, 25, M, y, a.primary) + 8;
+    drawHeadline(ctx, hl, a.headFam, M, y, '#141414');
+    drawCtaPill(ctx, a.cta, a.bodyFam, M, ctaY, { bg: a.primary, fg: textOn(a.primary), outline: luma(a.primary) > 220 });
+  };
+
+  const TEMPLATES = { overlay: tplOverlay, split: tplSplit, banner: tplBanner, quote: tplQuote, frame: tplFrame };
+
+  const renderAdCanvas = (ad) => {
+    const [W, H] = FORMAT_SIZE[ad.format] || FORMAT_SIZE['1:1 · Feed'];
+    const canvas = document.createElement('canvas');
+    canvas.width = W; canvas.height = H;
+    const ctx = canvas.getContext('2d');
+    const photo = state.photos[ad.image_index] || state.photos[0];
+    const primary = state.colors[0] || '#141414';
+    const a = {
+      img: photo.img,
+      logoImg: state.logo ? state.logo.img : null,
+      primary,
+      accent: state.colors[1] || primary,
+      headFam: state.fonts.head.family,
+      bodyFam: (state.fonts.body || state.fonts.head).family,
+      kicker: ad.kicker || '',
+      headline: ad.headline,
+      visualWord: ad.visual_word || '',
+      cta: ad.cta || 'Learn more',
+      brandName: (state.brand && state.brand.name) || $('bizName').value.trim(),
+    };
+    (TEMPLATES[ad.template] || tplOverlay)(ctx, W, H, a);
+    return canvas;
+  };
+
+  // ── Reveal grid ──────────────────────────────────────────────────
+  const revealSec = $('revealSec'), adGrid = $('adGrid'), brandLabel = $('brandLabel'), dlAll = $('dlAll');
+
+  const slug = (s) => String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '') || 'ad';
+  const fileNameFor = (ad, i) =>
+    `${String(i + 1).padStart(2, '0')}-${slug(ad.angle)}-${isStory(ad.format) ? 'story-1080x1920' : ad.format.startsWith('4:5') ? 'feed-1080x1350' : 'feed-1080x1080'}.png`;
+
+  const adCardHtml = (ad, i) => {
+    const logo = state.logo ? state.logo.img.src : null;
+    const avatarHtml = logo
+      ? `<div class="avatar has-logo"><img src="${logo}" alt=""></div>`
+      : `<div class="avatar"></div>`;
+    const name = (state.brand && state.brand.name) || 'Your brand';
+    return `
+      <article class="ad-card" data-ad-idx="${i}">
+        <header class="ad-shell">
+          ${avatarHtml}
+          <div>
+            <div class="name">${escapeHtml(name)}</div>
+            <div class="sponsored">Sponsored</div>
+          </div>
+          <span class="platform">${escapeHtml(ad.platform || '')}</span>
+        </header>
+        <div class="ad-copy">${escapeHtml(ad.body)}</div>
+        <div class="ad-canvas-wrap"></div>
+        <div class="ad-cta-bar">
+          <span class="label">${escapeHtml((state.brand && state.brand.domain) || '')}</span>
+          <span class="cta-btn">${escapeHtml(ad.cta || 'Learn more')}</span>
+        </div>
+        <div class="ad-meta-row">
+          <span class="ad-tag angle">${escapeHtml(ad.angle || '')}</span>
+          <span class="ad-tag">${escapeHtml(ad.format || '')}</span>
+          <span class="ad-tag">${escapeHtml(ad.audience || '')}</span>
+          <button type="button" class="ad-dl" data-i="${i}">Download PNG</button>
+        </div>
+      </article>`;
+  };
+
+  const canvasBlob = (canvas) => new Promise(res => canvas.toBlob(res, 'image/png'));
+
+  const downloadBlob = (blob, name) => {
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = name;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+  };
+
+  const renderAllAds = async () => {
+    adGrid.innerHTML = state.ads.map((ad, i) => adCardHtml(ad, i)).join('');
+    brandLabel.textContent = (state.brand && state.brand.name) || 'your brand';
+    revealSec.hidden = false;
+    stopWaitHub();
+    setTimeout(() => revealSec.scrollIntoView({ behavior: 'smooth', block: 'start' }), 300);
+
+    // Ensure the uploaded fonts are ready before first draw.
+    try { await document.fonts.ready; } catch { /* draw anyway */ }
+
+    state.canvases = [];
+    const cards = [...adGrid.querySelectorAll('.ad-card')];
+    for (let i = 0; i < state.ads.length; i++) {
+      await new Promise(r => requestAnimationFrame(r));
+      let canvas;
+      try {
+        canvas = renderAdCanvas(state.ads[i]);
+      } catch (e) {
+        console.warn('render failed', i, e);
+        canvas = document.createElement('canvas');
+        canvas.width = 1080; canvas.height = 1080;
+        const cx = canvas.getContext('2d');
+        cx.fillStyle = state.colors[0] || '#141414';
+        cx.fillRect(0, 0, 1080, 1080);
+      }
+      state.canvases[i] = canvas;
+      const wrap = cards[i].querySelector('.ad-canvas-wrap');
+      wrap.innerHTML = '';
+      wrap.appendChild(canvas);
+      setTimeout(() => cards[i].classList.add('is-revealed'), 60);
+      const s3 = stages[3];
+      if (s3) s3.querySelector('.timer').textContent = `${i + 1} of ${state.ads.length} rendered`;
+    }
+    state.renderDone = true;
+    stageDone(3);
+    stopElapsed();
+    dlAll.disabled = false;
+
+    adGrid.querySelectorAll('.ad-dl').forEach(b => b.addEventListener('click', async () => {
+      const i = Number(b.dataset.i);
+      const blob = await canvasBlob(state.canvases[i]);
+      if (blob) downloadBlob(blob, fileNameFor(state.ads[i], i));
+    }));
+
+    storeFinals().catch(() => {});
+  };
+
+  // ── Zip (store-only, dependency-free) ────────────────────────────
+  const CRC_TABLE = (() => {
+    const t = new Uint32Array(256);
+    for (let n = 0; n < 256; n++) {
+      let c = n;
+      for (let k = 0; k < 8; k++) c = c & 1 ? 0xEDB88320 ^ (c >>> 1) : c >>> 1;
+      t[n] = c >>> 0;
+    }
+    return t;
+  })();
+  const crc32 = (buf) => {
+    let c = 0xFFFFFFFF;
+    for (let i = 0; i < buf.length; i++) c = CRC_TABLE[(c ^ buf[i]) & 0xFF] ^ (c >>> 8);
+    return (c ^ 0xFFFFFFFF) >>> 0;
+  };
+  const buildZip = (files) => {
+    // files: [{ name, data: Uint8Array }]
+    const enc = new TextEncoder();
+    const chunks = [], central = [];
+    let offset = 0;
+    for (const f of files) {
+      const nameB = enc.encode(f.name);
+      const crc = crc32(f.data);
+      const local = new DataView(new ArrayBuffer(30));
+      local.setUint32(0, 0x04034b50, true);
+      local.setUint16(4, 20, true);
+      local.setUint32(14, crc, true);
+      local.setUint32(18, f.data.length, true);
+      local.setUint32(22, f.data.length, true);
+      local.setUint16(26, nameB.length, true);
+      chunks.push(new Uint8Array(local.buffer), nameB, f.data);
+      const cd = new DataView(new ArrayBuffer(46));
+      cd.setUint32(0, 0x02014b50, true);
+      cd.setUint16(4, 20, true);
+      cd.setUint16(6, 20, true);
+      cd.setUint32(16, crc, true);
+      cd.setUint32(20, f.data.length, true);
+      cd.setUint32(24, f.data.length, true);
+      cd.setUint16(28, nameB.length, true);
+      cd.setUint32(42, offset, true);
+      central.push(new Uint8Array(cd.buffer), nameB);
+      offset += 30 + nameB.length + f.data.length;
+    }
+    let cdSize = 0;
+    for (const c of central) cdSize += c.length;
+    const end = new DataView(new ArrayBuffer(22));
+    end.setUint32(0, 0x06054b50, true);
+    end.setUint16(8, files.length, true);
+    end.setUint16(10, files.length, true);
+    end.setUint32(12, cdSize, true);
+    end.setUint32(16, offset, true);
+    return new Blob([...chunks, ...central, new Uint8Array(end.buffer)], { type: 'application/zip' });
+  };
+
+  dlAll.addEventListener('click', async () => {
+    if (!state.renderDone) return;
+    dlAll.disabled = true;
+    dlAll.textContent = 'Packing…';
+    try {
+      const files = [];
+      for (let i = 0; i < state.canvases.length; i++) {
+        const blob = await canvasBlob(state.canvases[i]);
+        if (blob) files.push({ name: fileNameFor(state.ads[i], i), data: new Uint8Array(await blob.arrayBuffer()) });
+      }
+      const brandSlug = slug((state.brand && state.brand.name) || 'brand');
+      downloadBlob(buildZip(files), `meta-ads-${brandSlug}.zip`);
+    } finally {
+      dlAll.disabled = false;
+      dlAll.textContent = 'Download all (.zip)';
+    }
+  });
+
+  // ── Asset storage (kit + finals → Vercel Blob via the API) ───────
+  const storeAsset = async (name, body, contentType) => {
+    try {
+      const res = await fetch(`/api/studio-assets?run=${encodeURIComponent(state.runId)}&name=${encodeURIComponent(name)}`, {
+        method: 'POST',
+        headers: { 'Content-Type': contentType },
+        body,
+      });
+      if (!res.ok) return null;
+      const data = await res.json().catch(() => ({}));
+      return data.url || null;
+    } catch { return null; }
+  };
+
+  const storageCopyBlob = (img) => new Promise(res => {
+    // Originals over ~3.5MB get downscaled so the upload clears the edge cap.
+    const c = document.createElement('canvas');
+    const scale = Math.min(1, 2000 / Math.max(img.naturalWidth, img.naturalHeight));
+    c.width = Math.max(1, Math.round(img.naturalWidth * scale));
+    c.height = Math.max(1, Math.round(img.naturalHeight * scale));
+    const ctx = c.getContext('2d');
+    ctx.fillStyle = '#fff';
+    ctx.fillRect(0, 0, c.width, c.height);
+    ctx.drawImage(img, 0, 0, c.width, c.height);
+    c.toBlob(res, 'image/jpeg', 0.88);
+  });
+
+  const storeKit = async () => {
+    const jobs = [];
+    state.photos.forEach((p, i) => {
+      const ext = p.file.type === 'image/png' ? 'png' : p.file.type === 'image/webp' ? 'webp' : 'jpg';
+      if (p.file.size <= 3_500_000) {
+        jobs.push(storeAsset(`photo-${i + 1}.${ext}`, p.file, p.file.type));
+      } else {
+        jobs.push(storageCopyBlob(p.img).then(b => b && storeAsset(`photo-${i + 1}.jpg`, b, 'image/jpeg')));
+      }
+    });
+    if (state.logo && state.logo.file.size <= 3_500_000) {
+      const t = state.logo.file.type;
+      const ext = t === 'image/svg+xml' ? 'svg' : t === 'image/png' ? 'png' : t === 'image/webp' ? 'webp' : 'jpg';
+      jobs.push(storeAsset(`logo.${ext}`, state.logo.file, t));
+    }
+    for (const role of ['head', 'body']) {
+      const f = state.fonts[role];
+      if (f && f.file.size <= 3_500_000) {
+        jobs.push(storeAsset(`font-${role}-${f.file.name.replace(/[^\w.-]+/g, '_')}`, f.file, fontMime(f.file.name)));
+      }
+    }
+    const urls = await Promise.all(jobs);
+    return urls.filter(Boolean);
+  };
+
+  const storeFinals = async () => {
+    if (!state.runId) return;
+    for (let i = 0; i < state.canvases.length; i++) {
+      const blob = await canvasBlob(state.canvases[i]);
+      if (blob && blob.size <= 3_900_000) await storeAsset(fileNameFor(state.ads[i], i), blob, 'image/png');
+    }
+    const deck = { brand: state.brand, audience: state.audience, strategy: state.strategy, ads: state.ads };
+    await storeAsset('concepts.json', new Blob([JSON.stringify(deck, null, 2)], { type: 'application/json' }), 'application/json');
+  };
+
+  // ── Strategy render ──────────────────────────────────────────────
+  const renderStrategy = () => {
+    const s = state.strategy;
+    if (!s) return;
+    const itemHtml = (it) => `<li><strong>${escapeHtml(it.title || '')}</strong>${escapeHtml(it.detail || '')}</li>`;
+    const fill = (id, items) => {
+      const el = $(id);
+      if (el && Array.isArray(items) && items.length) el.innerHTML = items.map(itemHtml).join('');
+    };
+    fill('stratAudiences', s.audiences);
+    fill('stratAngles', s.angles);
+    fill('stratCadence', s.cadence);
+    $('strategySec').hidden = false;
+  };
+
+  // ── Error surface ────────────────────────────────────────────────
+  const showError = (msg) => {
+    stages.forEach(s => { s.classList.remove('is-active', 'is-done'); s.querySelector('.timer').textContent = ''; });
+    stopWaitHub();
+    stopElapsed();
+    elapsedT.textContent = 'Failed';
+    document.getElementById('masErr')?.remove();
+    const head = document.querySelector('.mas-stages h2');
+    if (head) head.insertAdjacentHTML('afterend',
+      `<p id="masErr" style="margin-top:14px; color:var(--score-bad); font-size:15px;">Something went wrong: ${escapeHtml(msg)}.</p>`);
+  };
+
+  // ── SSE consumer ─────────────────────────────────────────────────
+  const consumeSse = async (resp) => {
+    const reader = resp.body.getReader();
+    const dec = new TextDecoder();
+    let buf = '';
+    while (true) {
+      const { value, done } = await reader.read();
+      if (done) break;
+      buf += dec.decode(value, { stream: true });
+      let idx;
+      while ((idx = buf.indexOf('\n\n')) !== -1) {
+        const chunk = buf.slice(0, idx); buf = buf.slice(idx + 2);
+        let eventName = 'message', data = '';
+        for (const line of chunk.split('\n')) {
+          if (line.startsWith('event:')) eventName = line.slice(6).trim();
+          else if (line.startsWith('data:')) data += line.slice(5).trim();
+        }
+        let payload = {};
+        try { payload = data ? JSON.parse(data) : {}; } catch {}
+        handleEvent(eventName, payload);
+      }
+    }
+  };
+
+  const handleEvent = (event, payload) => {
+    if (event === 'stage') {
+      if (payload.status === 'active') stageActive(payload.idx, payload.message);
+      if (payload.status === 'done') stageDone(payload.idx);
+      // Stage 3 (render) completion is owned by the client.
+    } else if (event === 'brand') {
+      state.brand = payload;
+      hubName.textContent = payload.name || 'Your brand';
+      hubCat.textContent = payload.category || '';
+      if (payload.tagline) {
+        hubTagline.hidden = false;
+        hubTagline.querySelector('.v').textContent = payload.tagline;
+      }
+      setTicker('Brand read locked. Casting your photos…');
+    } else if (event === 'image-read') {
+      const items = payload.items || [];
+      tickerItems = items.map(it =>
+        `Photo ${(it.index ?? 0) + 1} · <em>${escapeHtml(it.subject || '')}</em> — ${escapeHtml(it.best_use || '')}`);
+      tickerIdx = 0;
+      startTickerLoop();
+    } else if (event === 'ads') {
+      state.audience = payload.audience || '';
+      state.strategy = payload.strategy || null;
+      state.ads = payload.ads || [];
+      if (payload.audience) {
+        hubBuyer.hidden = false;
+        hubBuyer.querySelector('.v').textContent = payload.audience;
+      }
+      renderStrategy();
+      renderAllAds().catch(e => showError(e.message || 'Rendering failed'));
+    } else if (event === 'done') {
+      state.isDone = true;
+    } else if (event === 'error') {
+      showError(payload.message || 'unknown');
+    }
+  };
+
+  // ── Run ──────────────────────────────────────────────────────────
+  gateForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    if (state.isRunning) return;
+    state.isRunning = true; state.isDone = false; state.renderDone = false;
+    state.runId = (crypto.randomUUID ? crypto.randomUUID() : `run-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`);
+
+    const btn = gateForm.querySelector('.submit');
+    btn.disabled = true;
+    btn.textContent = 'Building…';
+
+    const fd = new FormData(gateForm);
+    document.getElementById('masErr')?.remove();
+    resetStages();
+    adGrid.innerHTML = '';
+    revealSec.hidden = true;
+    dlAll.disabled = true;
+
+    gateSec.style.transition = 'opacity 320ms ease';
+    gateSec.style.opacity = '0';
+    setTimeout(() => {
+      gateSec.hidden = true;
+      gateSec.style.opacity = '';
+      $('flow').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 320);
+
+    await new Promise(r => setTimeout(r, 500));
+    startElapsed();
+    startWaitHub();
+    stageActive(0, 'Uploading the kit…');
+
+    try {
+      // Kit into storage first so the run's asset links ride along with the
+      // lead. Best-effort: a storage failure never blocks generation.
+      state.assetUrls = await storeKit();
+
+      // Analysis copies: small enough that 6 photos clear the edge body cap.
+      const analysisPhotos = state.photos.map(p => scaledDataUri(p.img, 1000, 0.8));
+
+      const payload = {
+        runId: state.runId,
+        business: {
+          name: $('bizName').value.trim(),
+          about: $('bizAbout').value.trim(),
+          offer: $('bizOffer').value.trim(),
+          website: $('bizWebsite').value.trim().replace(/^https?:\/\//i, '') ? 'https://' + $('bizWebsite').value.trim().replace(/^https?:\/\//i, '') : '',
+          audienceHint: $('bizAudience').value.trim(),
+        },
+        colors: state.colors,
+        headingFont: state.fonts.head ? state.fonts.head.label : '',
+        bodyFont: state.fonts.body ? state.fonts.body.label : '',
+        photos: analysisPhotos,
+        hasLogo: !!state.logo,
+        assetUrls: state.assetUrls,
+        email: (fd.get('email') || '').toString().trim(),
+        firstname: (fd.get('name') || '').toString().trim(),
+        phone: (fd.get('phone') || '').toString().trim(),
+        sourceTag: document.querySelector('meta[name="zib:source-tag"]')?.content || '',
+      };
+
+      const resp = await fetch('/api/meta-ads-studio', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
+      if (!resp.ok) {
+        const err = await resp.json().catch(() => ({}));
+        throw new Error(err.error || `${resp.status}`);
+      }
+
+      window.zibLead && window.zibLead({ tool: 'Meta Ads Studio', url: payload.business.website, email: payload.email });
+
+      await consumeSse(resp);
+      if (!state.ads.length) throw new Error('No ads were generated');
+    } catch (err) {
+      showError(err?.message || 'Request failed');
+      btn.disabled = false;
+      btn.innerHTML = 'Build my ads <span class="arr">→</span>';
+      gateSec.hidden = false;
+    } finally {
+      state.isRunning = false;
+    }
+  });
+})();
+</script>
+</body>
+</html>

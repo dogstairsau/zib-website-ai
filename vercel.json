@@ -14,6 +14,12 @@
     "api/meta-ads-lab.ts": {
       "maxDuration": 300
     },
+    "api/meta-ads-studio.ts": {
+      "maxDuration": 180
+    },
+    "api/studio-assets.ts": {
+      "maxDuration": 60
+    },
     "api/google-ads-lab.ts": {
       "maxDuration": 300
     },
