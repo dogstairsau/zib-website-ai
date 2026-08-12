@@ -34,16 +34,22 @@
   background-size: cover;
   background-repeat: no-repeat;
 }
-/* 16:9 cover: the iframe is sized off the larger of viewport width/height so
-   the frame always fills the hero without letterboxing, then centred. */
+/* 16:9 cover, deliberately oversized by 1.4x and centred.
+   YouTube gives no supported way to remove the title strip, the channel avatar
+   or the end-screen cards from an embed — modestbranding and showinfo no longer
+   do it. Overscaling pushes that chrome outside the hero's overflow:hidden box,
+   so only the footage itself is ever visible. pointer-events:none does the rest:
+   no hover means the title bar never animates in, and no click can navigate a
+   visitor off to youtube.com. The cost is a ~17% crop on each edge, which is
+   fine for a background but worth knowing when the video is framed tightly. */
 .sm-hero-frame iframe {
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 100vw;
-  height: 56.25vw;
-  min-height: 100%;
-  min-width: 177.78vh;
+  width: 140vw;
+  height: 78.75vw;   /* 140 × 9/16 */
+  min-height: 140%;
+  min-width: 248.9vh; /* 177.78 × 1.4 */
   transform: translate(-50%, -50%);
   border: 0;
   pointer-events: none;
@@ -51,8 +57,16 @@
   transition: opacity 900ms var(--ease);
 }
 .sm-hero-frame.is-playing iframe { opacity: 1; }
-/* With sound on, the embed takes its own controls back. */
-.sm-hero-frame.is-live iframe { pointer-events: auto; }
+/* Sound mode is the one state where YouTube's own controls are wanted, so the
+   overscale is dropped and the player fits inside the hero where its controls
+   are reachable. */
+.sm-hero-frame.is-live iframe {
+  pointer-events: auto;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  min-width: 0; min-height: 0;
+  transform: none;
+}
 
 .sm-hero-scrim {
   position: absolute;
@@ -169,6 +183,14 @@
   padding: clamp(38px, 4.2vw, 56px) clamp(18px, 2vw, 28px) clamp(28px, 3vw, 38px) 0;
   border-bottom: 0.5px solid var(--rule);
   border-right: 0.5px solid var(--rule);
+  /* Grid rows are as tall as their tallest cell, so a two-line blurb next to a
+     four-line one used to leave a 61px gap above the rule where its neighbour
+     left 39px — the ragged bottom edge is what reads as broken spacing, not the
+     gap itself. Column layout with the blurb pushed down bottom-aligns every
+     cell, so both rules get identical clearance and the slack collects in the
+     one place nobody reads as an error: under the heading. */
+  display: flex;
+  flex-direction: column;
 }
 .sm-suburb:nth-child(3n) { border-right: 0; padding-right: 0; }
 @media (max-width: 900px) {
@@ -180,7 +202,7 @@
 
 .sm-suburb-name { font-family: var(--display); font-size: clamp(19px, 1.9vw, 24px); font-weight: 500; letter-spacing: -0.02em; line-height: 1.1; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
 .sm-suburb-pc { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.12em; color: var(--accent); font-weight: 600; }
-.sm-suburb p { margin-top: 14px; color: var(--muted); font-size: 14.5px; line-height: 1.55; }
+.sm-suburb p { margin-top: auto; padding-top: 14px; color: var(--muted); font-size: 14.5px; line-height: 1.55; }
 .sm-suburb-note {
   margin-top: clamp(36px, 4vw, 52px);
   color: var(--muted);
@@ -312,8 +334,8 @@
      (and on mobile, and under prefers-reduced-motion) the poster still carries
      the hero on its own. -->
 <section class="loc-hero sm-hero" id="hero"
-         data-yt="557XuzvV0JM"
-         data-poster="https://i.ytimg.com/vi/557XuzvV0JM/maxresdefault.jpg">
+         data-yt="QmvCW3u_5g4"
+         data-poster="https://i.ytimg.com/vi/QmvCW3u_5g4/maxresdefault.jpg">
   <div class="sm-hero-bg" aria-hidden="true">
     <div class="sm-hero-frame" id="heroFrame"></div>
     <div class="sm-hero-scrim"></div>
@@ -327,8 +349,8 @@
 
     <div class="loc-hero-row">
       <p class="hero-sub reveal">
-        <strong>Zib Digital's head office sits at Level 7, 34 Eastern Rd, South Melbourne — Albert Park out the window, the Market four blocks up Coventry Street.</strong>
-        We've been the digital agency in South Melbourne since 2009: SEO, website design, Google Ads and paid social, sold by the number it moves rather than the report it generates.
+        <strong>Zib Digital's head office is now at Level 7, 34 Eastern Rd, South Melbourne — Albert Park out the window, the Market four blocks up Coventry Street.</strong>
+        We've run commercial digital since 2009, most of it from Richmond, and we've just moved the whole team here. SEO, website design, Google Ads and paid social, sold by the number it moves rather than the report it generates.
       </p>
       <div class="hero-ctas reveal">
         <a class="btn btn-primary" href="/audit">Run a free audit <span class="arr">→</span></a>
@@ -353,12 +375,12 @@
 {
   "@context": "https://schema.org",
   "@type": "VideoObject",
-  "name": "Zib Digital - South Melbourne Marketing Agency",
+  "name": "Zib Digital - The South Melbourne Digital Marketing Agency",
   "description": "Inside Zib Digital's head office at Level 7, 34 Eastern Rd, South Melbourne VIC 3205 — the team and the floor behind the SEO, website design, Google Ads and paid social work we run for businesses across the inner south.",
-  "thumbnailUrl": "https://i.ytimg.com/vi/557XuzvV0JM/maxresdefault.jpg",
+  "thumbnailUrl": "https://i.ytimg.com/vi/QmvCW3u_5g4/maxresdefault.jpg",
   "uploadDate": "2026-08-12",
-  "contentUrl": "https://www.youtube.com/watch?v=557XuzvV0JM",
-  "embedUrl": "https://www.youtube.com/embed/557XuzvV0JM",
+  "contentUrl": "https://www.youtube.com/watch?v=QmvCW3u_5g4",
+  "embedUrl": "https://www.youtube.com/embed/QmvCW3u_5g4",
   "publisher": { "@id": "https://zibdigital.com.au/#org" },
   "contentLocation": { "@id": "https://zibdigital.com.au/digital-marketing-agency-south-melbourne#localbusiness" }
 }
@@ -442,7 +464,7 @@
     <div class="sm-suburb-grid reveal-stagger">
       <div class="sm-suburb">
         <div class="sm-suburb-name">South Melbourne <span class="sm-suburb-pc mono">3205</span></div>
-        <p>Our own postcode. Showrooms and wholesalers along Cecil and Coventry, creative studios in the warehouse conversions, and the Market traders who've outlasted every retail trend since 1867.</p>
+        <p>Our new postcode, and the one we work hardest in. Showrooms and wholesalers along Cecil and Coventry, creative studios in the warehouse conversions, and the Market traders who've outlasted every retail trend since 1867.</p>
       </div>
       <div class="sm-suburb">
         <div class="sm-suburb-name">South Yarra <span class="sm-suburb-pc mono">3141</span></div>
@@ -490,7 +512,7 @@
       </div>
       <div class="sm-suburb">
         <div class="sm-suburb-name">Richmond &amp; Cremorne <span class="sm-suburb-pc mono">3121</span></div>
-        <p>Tech, SaaS and scale-ups across the river. Sophisticated buyers who'll audit our reporting as hard as we audit their funnel.</p>
+        <p>Our old neighbourhood — we ran the agency from here before the move, and half the team still knows which coffee is worth the walk. Tech, SaaS and scale-ups, with buyers who'll audit our reporting as hard as we audit their funnel.</p>
       </div>
       <div class="sm-suburb">
         <div class="sm-suburb-name">Windsor <span class="sm-suburb-pc mono">3181</span></div>
@@ -617,7 +639,7 @@
   <div class="container">
     <div class="mono stats-eyebrow reveal">On the record since 2009</div>
     <h2 class="stats-h reveal">
-      Sixteen years, <em>one postcode.</em>
+      Sixteen years of work. <em>A new front door.</em>
     </h2>
 
     <div class="stats-grid reveal-stagger">
@@ -770,12 +792,16 @@
 })();
 
 // Hero office video.
-// Autoplay is only allowed while muted, so the background loop starts silent
-// and "Watch with sound" reloads the embed unmuted with controls — that click
-// is the user gesture the browser wants. The iframe is injected after load
-// rather than shipped in the markup so it can't compete with the hero text for
-// bandwidth, and is skipped entirely on small screens (mobile data) and under
-// prefers-reduced-motion, where the poster still carries the hero.
+// The loop autoplays muted, because muted is the only state in which a browser
+// will start a video by itself. Sound is then turned on through the YouTube
+// IFrame API — player.unMute() on the already-playing embed — rather than by
+// swapping in an unmuted iframe: a fresh iframe with autoplay=1&mute=0 is
+// judged by the autoplay policy on its own merits and gets blocked, which
+// looks exactly like "the button did nothing".
+// The iframe is injected after load rather than shipped in the markup so it
+// can't compete with the hero text for bandwidth, and is skipped on small
+// screens, under prefers-reduced-motion and on save-data connections, where
+// the poster carries the hero on its own.
 (() => {
   const hero = document.getElementById('hero');
   const frame = document.getElementById('heroFrame');
@@ -791,10 +817,19 @@
     return;
   }
 
+  const label = soundBtn && soundBtn.querySelector('.sm-sound-label');
+  const setLabel = (text) => { if (label) label.textContent = text; };
+
+  // rel=0 keeps end-screen suggestions to this channel, iv_load_policy=3 drops
+  // annotations, disablekb and fs remove the keyboard and fullscreen
+  // affordances. The title strip and avatar have no parameter that removes
+  // them — they're cropped out by the 1.4x overscale in CSS.
   const src = (opts) =>
     'https://www.youtube.com/embed/' + encodeURIComponent(id) +
-    '?autoplay=1&playsinline=1&rel=0&modestbranding=1&iv_load_policy=3' +
+    '?autoplay=1&playsinline=1&rel=0&modestbranding=1&iv_load_policy=3&color=white' +
+    '&enablejsapi=1&origin=' + encodeURIComponent(location.origin) +
     `&mute=${opts.muted ? 1 : 0}&controls=${opts.controls ? 1 : 0}` +
+    (opts.controls ? '' : '&disablekb=1&fs=0') +
     (opts.loop ? `&loop=1&playlist=${encodeURIComponent(id)}` : '');
 
   const mount = (opts) => {
@@ -805,31 +840,85 @@
     iframe.allowFullscreen = true;
     iframe.setAttribute('tabindex', opts.controls ? '0' : '-1');
     frame.replaceChildren(iframe);
-    // Fade in only once YouTube has actually painted, so the poster never
-    // flashes to black mid-connection.
+    // Fade in only once YouTube has painted, so the poster never flashes to
+    // black mid-connection.
     iframe.addEventListener('load', () => frame.classList.add('is-playing'));
     return iframe;
   };
 
+  // Load the IFrame API once, and resolve when YT is ready. Chained off any
+  // existing onYouTubeIframeAPIReady so this can't clobber another embed.
+  let apiPromise = null;
+  const loadApi = () => {
+    if (apiPromise) return apiPromise;
+    apiPromise = new Promise((resolve, reject) => {
+      if (window.YT && window.YT.Player) return resolve(window.YT);
+      const prev = window.onYouTubeIframeAPIReady;
+      window.onYouTubeIframeAPIReady = () => {
+        if (typeof prev === 'function') prev();
+        resolve(window.YT);
+      };
+      const s = document.createElement('script');
+      s.src = 'https://www.youtube.com/iframe_api';
+      s.async = true;
+      s.onerror = reject;
+      document.head.appendChild(s);
+    });
+    return apiPromise;
+  };
+
+  let player = null;
+  let muted = true;
+
+  const attachPlayer = (iframe) =>
+    loadApi().then((YT) => new Promise((resolve) => {
+      const p = new YT.Player(iframe, { events: { onReady: () => resolve(p) } });
+    }));
+
   const smallScreen = window.matchMedia('(max-width: 880px)').matches;
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const saveData = navigator.connection && navigator.connection.saveData;
+  const backgroundOk = !smallScreen && !reduced && !saveData;
 
-  if (!smallScreen && !reduced && !saveData) {
-    const start = () => mount({ muted: true, controls: false, loop: true });
+  if (backgroundOk) {
+    const start = () => {
+      const iframe = mount({ muted: true, controls: false, loop: true });
+      attachPlayer(iframe).then((p) => { player = p; }).catch(() => {});
+    };
     if ('requestIdleCallback' in window) requestIdleCallback(start, { timeout: 2500 });
     else setTimeout(start, 900);
   }
 
-  if (soundBtn) {
-    soundBtn.addEventListener('click', () => {
-      mount({ muted: false, controls: true, loop: false });
-      frame.classList.add('is-live');
-      const label = soundBtn.querySelector('.sm-sound-label');
-      if (label) label.textContent = 'Playing with sound';
-      soundBtn.disabled = true;
-    }, { once: true });
-  }
+  if (!soundBtn) return;
+
+  soundBtn.addEventListener('click', () => {
+    // Background loop already running: just toggle its audio.
+    if (player && typeof player.unMute === 'function') {
+      if (muted) {
+        player.unMute();
+        player.setVolume(100);
+        muted = false;
+        setLabel('Mute');
+        soundBtn.setAttribute('aria-pressed', 'true');
+      } else {
+        player.mute();
+        muted = true;
+        setLabel('Watch with sound');
+        soundBtn.setAttribute('aria-pressed', 'false');
+      }
+      return;
+    }
+
+    // No background loop (mobile, reduced motion, save-data) or the API never
+    // arrived: mount the player unmuted with its own controls. This click is
+    // the user gesture, so a fresh unmuted embed is permitted here.
+    const iframe = mount({ muted: false, controls: true, loop: false });
+    frame.classList.add('is-live');
+    muted = false;
+    setLabel('Playing');
+    soundBtn.disabled = true;
+    attachPlayer(iframe).then((p) => { player = p; }).catch(() => {});
+  });
 })();
 </script>
 
