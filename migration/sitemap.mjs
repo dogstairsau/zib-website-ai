@@ -20,7 +20,7 @@ const EXCLUDE = new Set([
   "alchemy-construct", "archer-scott-lawyers", "australian-infinity-hospitality-solutions",
   "Mad-Mex-SEO-GEO-Opportunity", "prompt-research", "meta-ads-lab", "roi-calculator",
   "ai-growth-simulator", "zib-os", "ai-readiness", "automation-map", "audit", "p/matt/apiam-animal-health",
-  "boothalicious-seo-audit",
+  "boothalicious-seo-audit", "project-better-seo-audit",
 ]);
 
 async function walk(dir) {
