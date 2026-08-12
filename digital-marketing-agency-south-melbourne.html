@@ -57,16 +57,6 @@
   transition: opacity 900ms var(--ease);
 }
 .sm-hero-frame.is-playing iframe { opacity: 1; }
-/* Sound mode is the one state where YouTube's own controls are wanted, so the
-   overscale is dropped and the player fits inside the hero where its controls
-   are reachable. */
-.sm-hero-frame.is-live iframe {
-  pointer-events: auto;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  min-width: 0; min-height: 0;
-  transform: none;
-}
 
 .sm-hero-scrim {
   position: absolute;
@@ -91,20 +81,6 @@
 .sm-hero .btn-outline { border-color: rgba(255,255,255,0.38); color: #fff; }
 .sm-hero .btn-outline:hover { border-color: #fff; background: transparent; color: #fff; }
 
-.sm-sound { cursor: pointer; display: inline-flex; align-items: center; gap: 11px; }
-.sm-sound-ico {
-  width: 9px; height: 9px;
-  border-radius: 50%;
-  background: var(--accent);
-  box-shadow: 0 0 0 0 rgba(255,106,0,0.55);
-  animation: smPulse 2.4s var(--ease) infinite;
-}
-@keyframes smPulse {
-  0%   { box-shadow: 0 0 0 0 rgba(255,106,0,0.5); }
-  70%  { box-shadow: 0 0 0 9px rgba(255,106,0,0); }
-  100% { box-shadow: 0 0 0 0 rgba(255,106,0,0); }
-}
-@media (prefers-reduced-motion: reduce) { .sm-sound-ico { animation: none; } }
 
 /* ─── MAP + VISIT CARD ────────────────────────────────────── */
 .sm-visit {
@@ -354,9 +330,7 @@
       </p>
       <div class="hero-ctas reveal">
         <a class="btn btn-primary" href="/audit">Run a free audit <span class="arr">→</span></a>
-        <button type="button" class="btn btn-outline sm-sound" id="heroSound">
-          <span class="sm-sound-ico" aria-hidden="true"></span><span class="sm-sound-label">Watch with sound</span>
-        </button>
+        <a class="btn btn-outline" href="#visit">Visit the office</a>
       </div>
     </div>
 
@@ -791,134 +765,54 @@
   });
 })();
 
-// Hero office video.
-// The loop autoplays muted, because muted is the only state in which a browser
-// will start a video by itself. Sound is then turned on through the YouTube
-// IFrame API — player.unMute() on the already-playing embed — rather than by
-// swapping in an unmuted iframe: a fresh iframe with autoplay=1&mute=0 is
-// judged by the autoplay policy on its own merits and gets blocked, which
-// looks exactly like "the button did nothing".
+// Hero office video: a silent, looping background.
+// The clip has no audio track, so there is no sound control — the loop is
+// decoration behind the headline, and muted autoplay is the only state a
+// browser will start on its own anyway.
 // The iframe is injected after load rather than shipped in the markup so it
-// can't compete with the hero text for bandwidth, and is skipped on small
-// screens, under prefers-reduced-motion and on save-data connections, where
-// the poster carries the hero on its own.
+// can't compete with the hero text for bandwidth, and is skipped entirely on
+// small screens, under prefers-reduced-motion and on save-data connections,
+// where the poster carries the hero on its own.
 (() => {
   const hero = document.getElementById('hero');
   const frame = document.getElementById('heroFrame');
-  const soundBtn = document.getElementById('heroSound');
   if (!hero || !frame) return;
 
   const id = (hero.dataset.yt || '').trim();
   const poster = (hero.dataset.poster || '').trim();
   if (poster) frame.style.backgroundImage = `url("${poster}")`;
-
-  if (!id) {
-    if (soundBtn) soundBtn.remove();
-    return;
-  }
-
-  const label = soundBtn && soundBtn.querySelector('.sm-sound-label');
-  const setLabel = (text) => { if (label) label.textContent = text; };
-
-  // rel=0 keeps end-screen suggestions to this channel, iv_load_policy=3 drops
-  // annotations, disablekb and fs remove the keyboard and fullscreen
-  // affordances. The title strip and avatar have no parameter that removes
-  // them — they're cropped out by the 1.4x overscale in CSS.
-  const src = (opts) =>
-    'https://www.youtube.com/embed/' + encodeURIComponent(id) +
-    '?autoplay=1&playsinline=1&rel=0&modestbranding=1&iv_load_policy=3&color=white' +
-    '&enablejsapi=1&origin=' + encodeURIComponent(location.origin) +
-    `&mute=${opts.muted ? 1 : 0}&controls=${opts.controls ? 1 : 0}` +
-    (opts.controls ? '' : '&disablekb=1&fs=0') +
-    (opts.loop ? `&loop=1&playlist=${encodeURIComponent(id)}` : '');
-
-  const mount = (opts) => {
-    const iframe = document.createElement('iframe');
-    iframe.src = src(opts);
-    iframe.title = 'Zib Digital — South Melbourne office';
-    iframe.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share';
-    iframe.allowFullscreen = true;
-    iframe.setAttribute('tabindex', opts.controls ? '0' : '-1');
-    frame.replaceChildren(iframe);
-    // Fade in only once YouTube has painted, so the poster never flashes to
-    // black mid-connection.
-    iframe.addEventListener('load', () => frame.classList.add('is-playing'));
-    return iframe;
-  };
-
-  // Load the IFrame API once, and resolve when YT is ready. Chained off any
-  // existing onYouTubeIframeAPIReady so this can't clobber another embed.
-  let apiPromise = null;
-  const loadApi = () => {
-    if (apiPromise) return apiPromise;
-    apiPromise = new Promise((resolve, reject) => {
-      if (window.YT && window.YT.Player) return resolve(window.YT);
-      const prev = window.onYouTubeIframeAPIReady;
-      window.onYouTubeIframeAPIReady = () => {
-        if (typeof prev === 'function') prev();
-        resolve(window.YT);
-      };
-      const s = document.createElement('script');
-      s.src = 'https://www.youtube.com/iframe_api';
-      s.async = true;
-      s.onerror = reject;
-      document.head.appendChild(s);
-    });
-    return apiPromise;
-  };
-
-  let player = null;
-  let muted = true;
-
-  const attachPlayer = (iframe) =>
-    loadApi().then((YT) => new Promise((resolve) => {
-      const p = new YT.Player(iframe, { events: { onReady: () => resolve(p) } });
-    }));
+  if (!id) return;
 
   const smallScreen = window.matchMedia('(max-width: 880px)').matches;
   const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const saveData = navigator.connection && navigator.connection.saveData;
-  const backgroundOk = !smallScreen && !reduced && !saveData;
+  if (smallScreen || reduced || saveData) return;
 
-  if (backgroundOk) {
-    const start = () => {
-      const iframe = mount({ muted: true, controls: false, loop: true });
-      attachPlayer(iframe).then((p) => { player = p; }).catch(() => {});
-    };
-    if ('requestIdleCallback' in window) requestIdleCallback(start, { timeout: 2500 });
-    else setTimeout(start, 900);
-  }
+  // rel=0 keeps end-screen suggestions to this channel, iv_load_policy=3 drops
+  // annotations, disablekb and fs remove the keyboard and fullscreen
+  // affordances. The title strip and channel avatar have no parameter that
+  // removes them — they're cropped out by the 1.4x overscale in CSS.
+  const src =
+    'https://www.youtube.com/embed/' + encodeURIComponent(id) +
+    '?autoplay=1&mute=1&controls=0&playsinline=1&rel=0&modestbranding=1' +
+    '&iv_load_policy=3&disablekb=1&fs=0&color=white' +
+    `&loop=1&playlist=${encodeURIComponent(id)}`;
 
-  if (!soundBtn) return;
+  const start = () => {
+    const iframe = document.createElement('iframe');
+    iframe.src = src;
+    iframe.title = 'Zib Digital — South Melbourne office';
+    iframe.allow = 'autoplay; encrypted-media; picture-in-picture';
+    iframe.setAttribute('tabindex', '-1');
+    iframe.setAttribute('aria-hidden', 'true');
+    frame.replaceChildren(iframe);
+    // Fade in only once YouTube has painted, so the poster never flashes to
+    // black mid-connection.
+    iframe.addEventListener('load', () => frame.classList.add('is-playing'));
+  };
 
-  soundBtn.addEventListener('click', () => {
-    // Background loop already running: just toggle its audio.
-    if (player && typeof player.unMute === 'function') {
-      if (muted) {
-        player.unMute();
-        player.setVolume(100);
-        muted = false;
-        setLabel('Mute');
-        soundBtn.setAttribute('aria-pressed', 'true');
-      } else {
-        player.mute();
-        muted = true;
-        setLabel('Watch with sound');
-        soundBtn.setAttribute('aria-pressed', 'false');
-      }
-      return;
-    }
-
-    // No background loop (mobile, reduced motion, save-data) or the API never
-    // arrived: mount the player unmuted with its own controls. This click is
-    // the user gesture, so a fresh unmuted embed is permitted here.
-    const iframe = mount({ muted: false, controls: true, loop: false });
-    frame.classList.add('is-live');
-    muted = false;
-    setLabel('Playing');
-    soundBtn.disabled = true;
-    attachPlayer(iframe).then((p) => { player = p; }).catch(() => {});
-  });
+  if ('requestIdleCallback' in window) requestIdleCallback(start, { timeout: 2500 });
+  else setTimeout(start, 900);
 })();
 </script>
 
