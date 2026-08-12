@@ -394,10 +394,17 @@
     .mobile-bar{display:grid}
     /* The desktop scrim runs left-to-right, which on a narrow viewport buries
        the photo entirely. Fade downward instead so the fence line still reads. */
-    .hero__bg::after{background:linear-gradient(180deg,rgba(0,0,0,.93) 0%,rgba(0,0,0,.9) 55%,rgba(0,0,0,.62) 100%)}
-    .hero .wrap{padding-block:40px 52px}
-    /* Third utility item is a nice-to-have; it costs a whole line above the fold. */
-    .utility .wrap span:nth-child(3){display:none}
+    .hero__bg::after{background:linear-gradient(180deg,rgba(0,0,0,.88) 0%,rgba(0,0,0,.84) 55%,rgba(0,0,0,.55) 100%)}
+    .hero .wrap{padding-block:28px 44px}
+    /* The utility bar wrapped to two lines and pushed the headline and the
+       hero copy off the fold. Every claim in it repeats in the trust band
+       immediately below the hero, so on a phone it is pure cost. */
+    .utility{display:none}
+    .stripe{height:7px}
+    /* Keep the eyebrow to a single line rather than breaking before the dot. */
+    .hero .eyebrow{font-size:13px; letter-spacing:.1em}
+    .hero__sub{font-size:16.5px; line-height:1.55; margin-top:18px}
+    .ticks{margin-top:22px}
     .head-cta .btn{display:none}
     .head-phone{font-size:26px}
     .brand img{width:150px}
