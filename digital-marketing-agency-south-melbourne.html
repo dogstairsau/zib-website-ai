@@ -2,109 +2,95 @@
 <html lang="en-AU">
 <head>
 <title>Digital Marketing Agency South Melbourne | Zib Digital, 34 Eastern Rd</title>
-<meta name="description" content="Zib Digital is a digital marketing agency in South Melbourne VIC 3205. SEO, Google Ads, paid social and web for businesses in 3205 and the surrounding bayside and inner-south suburbs. Head office at Level 7, 34 Eastern Rd — come in for a coffee." />
+<meta name="description" content="Zib Digital is a digital marketing agency in South Melbourne VIC 3205. SEO, website design, Google Ads and social media marketing for businesses in 3205 and the surrounding inner-south and bayside suburbs. Head office at Level 7, 34 Eastern Rd — come in for a coffee." />
 <meta name="zib:source-tag" content="South Melbourne location" />
 <!-- @include _partials/head.html -->
 <link rel="stylesheet" href="/assets/location.css">
 <style>
-/* ─── OFFICE VIDEO ────────────────────────────────────────────
-   Dark band directly under the hero. The video is loaded only on
-   click (facade pattern, same as the home page carousel) so the
-   embed never costs us LCP on a page whose job is local intent. */
-.sm-video {
-  background: var(--ink);
-  color: #fff;
-  padding-top: clamp(64px, 8vw, 112px);
-  padding-bottom: clamp(64px, 8vw, 112px);
-}
-.sm-video-head {
-  display: grid;
-  grid-template-columns: 1.2fr 1fr;
-  gap: clamp(24px, 4vw, 64px);
-  align-items: end;
-  margin-bottom: clamp(36px, 4.5vw, 56px);
-}
-@media (max-width: 880px) { .sm-video-head { grid-template-columns: 1fr; align-items: start; } }
-.sm-video .eyebrow { color: var(--accent); margin-bottom: 18px; }
-.sm-video .eyebrow::before { content: ""; display: inline-block; width: 22px; height: 0.5px; background: currentColor; margin-right: 10px; vertical-align: middle; }
-.sm-video h2 {
-  font-family: var(--display);
-  font-weight: 500;
-  font-size: clamp(32px, 4.4vw, 64px);
-  line-height: 1.02;
-  letter-spacing: -0.035em;
-  max-width: 18ch;
-}
-.sm-video h2 em { color: var(--accent); font-style: italic; font-weight: 400; }
-.sm-video-head p { color: rgba(255,255,255,0.72); font-size: clamp(15px, 1.4vw, 18px); line-height: 1.55; max-width: 46ch; }
-
-.sm-stage {
+/* ─── HERO · autoplaying office video ─────────────────────────
+   The video sits behind the headline as a muted, looping background.
+   Autoplay is only permitted while muted, so the hero starts silent and
+   offers a "Watch with sound" control that reloads the embed unmuted with
+   controls — that click is the user gesture browsers require.
+   The poster (YouTube's own still) paints immediately and stays visible
+   underneath, so the hero never renders as an empty black box while the
+   embed connects, and remains the whole hero on mobile / reduced motion. */
+.sm-hero {
   position: relative;
-  border-radius: 22px;
-  overflow: hidden;
-  background: #101010;
-  border: 1px solid rgba(255,255,255,0.14);
-  aspect-ratio: 16 / 9;
+  isolation: isolate;
+  background: #0b0b0b;
+  border-bottom: 0;
+  min-height: clamp(560px, 78vh, 860px);
+  display: flex;
+  align-items: center;
+  color: #fff;
 }
-.sm-stage iframe, .sm-stage video { width: 100%; height: 100%; display: block; border: 0; object-fit: cover; }
+.sm-hero-bg { position: absolute; inset: 0; overflow: hidden; z-index: 0; }
 
-/* Poster: brand-built, so the section is never waiting on an image file.
-   Replaced wholesale the moment the embed loads. */
-.sm-poster {
+.sm-hero-frame {
   position: absolute;
   inset: 0;
-  width: 100%;
-  display: grid;
-  place-items: center;
-  gap: 22px;
-  cursor: pointer;
-  color: #fff;
-  text-align: center;
-  padding: 24px;
-  background:
-    radial-gradient(120% 90% at 50% 0%, rgba(255,106,0,0.20) 0%, rgba(255,106,0,0) 62%),
-    linear-gradient(160deg, #1b1b1b 0%, #0d0d0d 100%);
-  transition: background 400ms var(--ease);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
 }
-.sm-poster:hover { background: radial-gradient(120% 90% at 50% 0%, rgba(255,106,0,0.30) 0%, rgba(255,106,0,0) 62%), linear-gradient(160deg, #1f1f1f 0%, #0d0d0d 100%); }
-.sm-poster img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0.55; }
-.sm-poster-inner { position: relative; display: grid; justify-items: center; gap: 18px; }
-.sm-play {
-  width: 76px; height: 76px;
+/* 16:9 cover: the iframe is sized off the larger of viewport width/height so
+   the frame always fills the hero without letterboxing, then centred. */
+.sm-hero-frame iframe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100vw;
+  height: 56.25vw;
+  min-height: 100%;
+  min-width: 177.78vh;
+  transform: translate(-50%, -50%);
+  border: 0;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 900ms var(--ease);
+}
+.sm-hero-frame.is-playing iframe { opacity: 1; }
+/* With sound on, the embed takes its own controls back. */
+.sm-hero-frame.is-live iframe { pointer-events: auto; }
+
+.sm-hero-scrim {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(100deg, rgba(8,8,8,0.94) 0%, rgba(8,8,8,0.78) 42%, rgba(8,8,8,0.34) 72%, rgba(8,8,8,0.18) 100%),
+    linear-gradient(to top, rgba(8,8,8,0.72) 0%, rgba(8,8,8,0) 42%);
+}
+@media (max-width: 880px) {
+  .sm-hero-scrim { background: linear-gradient(to top, rgba(8,8,8,0.94) 18%, rgba(8,8,8,0.72) 58%, rgba(8,8,8,0.5) 100%); }
+}
+
+.sm-hero-content { position: relative; z-index: 1; }
+.sm-hero .eyebrow { color: #fff; opacity: 0.92; }
+.sm-hero .eyebrow::before { background: var(--accent); }
+.sm-hero .hero-h { color: #fff; }
+.sm-hero .hero-sub { color: rgba(255,255,255,0.78); }
+.sm-hero .hero-sub strong { color: #fff; }
+.sm-hero .hero-meta { color: rgba(255,255,255,0.62); }
+.sm-hero .btn-primary { background: var(--accent); color: #fff; }
+.sm-hero .btn-primary:hover { background: #ff7a24; }
+.sm-hero .btn-outline { border-color: rgba(255,255,255,0.38); color: #fff; }
+.sm-hero .btn-outline:hover { border-color: #fff; background: transparent; color: #fff; }
+
+.sm-sound { cursor: pointer; display: inline-flex; align-items: center; gap: 11px; }
+.sm-sound-ico {
+  width: 9px; height: 9px;
   border-radius: 50%;
   background: var(--accent);
-  display: grid;
-  place-items: center;
-  transition: transform 320ms var(--ease);
+  box-shadow: 0 0 0 0 rgba(255,106,0,0.55);
+  animation: smPulse 2.4s var(--ease) infinite;
 }
-.sm-poster:hover .sm-play { transform: scale(1.06); }
-.sm-play::after {
-  content: "";
-  width: 0; height: 0;
-  border-left: 18px solid #fff;
-  border-top: 11px solid transparent;
-  border-bottom: 11px solid transparent;
-  margin-left: 5px;
+@keyframes smPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(255,106,0,0.5); }
+  70%  { box-shadow: 0 0 0 9px rgba(255,106,0,0); }
+  100% { box-shadow: 0 0 0 0 rgba(255,106,0,0); }
 }
-.sm-poster-label { font-family: var(--display); font-size: clamp(19px, 2vw, 28px); font-weight: 500; letter-spacing: -0.02em; }
-.sm-poster-sub { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,255,255,0.62); }
-/* No embed configured yet: the block still reads as a considered office card
-   rather than a dead play button. Toggled by the script at the foot of the page. */
-.sm-stage.is-placeholder { cursor: default; }
-.sm-stage.is-placeholder .sm-play { display: none; }
-
-.sm-video-caption {
-  margin-top: clamp(20px, 2.4vw, 28px);
-  display: flex;
-  flex-wrap: wrap;
-  gap: clamp(16px, 3vw, 36px);
-  font-family: var(--mono);
-  font-size: 11px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.6);
-}
-.sm-video-caption .dot { display: inline-block; width: 4px; height: 4px; background: var(--accent); border-radius: 50%; margin-right: 10px; vertical-align: middle; transform: translateY(-1px); }
+@media (prefers-reduced-motion: reduce) { .sm-sound-ico { animation: none; } }
 
 /* ─── MAP + VISIT CARD ────────────────────────────────────── */
 .sm-visit {
@@ -176,8 +162,11 @@
 @media (max-width: 900px) { .sm-suburb-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 600px) { .sm-suburb-grid { grid-template-columns: 1fr; } }
 
+/* Top padding runs deliberately larger than the bottom: the heading's cap
+   height sits high in its line box, so equal padding reads as the title
+   crowding the rule above it while the paragraph looks loose below. */
 .sm-suburb {
-  padding: clamp(22px, 2.6vw, 30px) clamp(18px, 2vw, 28px) clamp(22px, 2.6vw, 30px) 0;
+  padding: clamp(38px, 4.2vw, 56px) clamp(18px, 2vw, 28px) clamp(28px, 3vw, 38px) 0;
   border-bottom: 0.5px solid var(--rule);
   border-right: 0.5px solid var(--rule);
 }
@@ -189,9 +178,9 @@
 }
 @media (max-width: 600px) { .sm-suburb, .sm-suburb:nth-child(3n) { border-right: 0; padding-right: 0; } }
 
-.sm-suburb-name { font-family: var(--display); font-size: clamp(19px, 1.9vw, 24px); font-weight: 500; letter-spacing: -0.02em; display: flex; align-items: baseline; gap: 10px; }
+.sm-suburb-name { font-family: var(--display); font-size: clamp(19px, 1.9vw, 24px); font-weight: 500; letter-spacing: -0.02em; line-height: 1.1; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
 .sm-suburb-pc { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.12em; color: var(--accent); font-weight: 600; }
-.sm-suburb p { margin-top: 10px; color: var(--muted); font-size: 14.5px; line-height: 1.55; }
+.sm-suburb p { margin-top: 14px; color: var(--muted); font-size: 14.5px; line-height: 1.55; }
 .sm-suburb-note {
   margin-top: clamp(36px, 4vw, 52px);
   color: var(--muted);
@@ -316,9 +305,21 @@
 }
 </script>
 
-<!-- HERO -->
-<section class="loc-hero">
-  <div class="container">
+<!-- HERO · office video plays behind the headline.
+     The iframe is injected by JS after first paint, never in the markup: an
+     autoplaying YouTube embed in the HTML would compete with the LCP text for
+     bandwidth on the one screen that has to appear instantly. Until it arrives
+     (and on mobile, and under prefers-reduced-motion) the poster still carries
+     the hero on its own. -->
+<section class="loc-hero sm-hero" id="hero"
+         data-yt="557XuzvV0JM"
+         data-poster="https://i.ytimg.com/vi/557XuzvV0JM/maxresdefault.jpg">
+  <div class="sm-hero-bg" aria-hidden="true">
+    <div class="sm-hero-frame" id="heroFrame"></div>
+    <div class="sm-hero-scrim"></div>
+  </div>
+
+  <div class="container sm-hero-content">
     <div class="mono eyebrow reveal">Digital marketing · South Melbourne 3205</div>
     <h1 class="hero-h reveal">
       A South Melbourne agency you can <em class="word-cycle" data-words="walk into, sit down with, look in the eye, hold to a number">walk into</em>.
@@ -327,11 +328,13 @@
     <div class="loc-hero-row">
       <p class="hero-sub reveal">
         <strong>Zib Digital's head office sits at Level 7, 34 Eastern Rd, South Melbourne — Albert Park out the window, the Market four blocks up Coventry Street.</strong>
-        We've run commercial digital from this postcode since 2009: SEO, Google Ads, paid social and web, sold by the number it moves, not the report it generates.
+        We've been the digital agency in South Melbourne since 2009: SEO, website design, Google Ads and paid social, sold by the number it moves rather than the report it generates.
       </p>
       <div class="hero-ctas reveal">
         <a class="btn btn-primary" href="/audit">Run a free audit <span class="arr">→</span></a>
-        <a class="btn btn-outline" href="#visit">Visit the office</a>
+        <button type="button" class="btn btn-outline sm-sound" id="heroSound">
+          <span class="sm-sound-ico" aria-hidden="true"></span><span class="sm-sound-label">Watch with sound</span>
+        </button>
       </div>
     </div>
 
@@ -344,62 +347,22 @@
   </div>
 </section>
 
-<!-- OFFICE VIDEO ─────────────────────────────────────────────
-     TO GO LIVE: set data-yt to the YouTube ID on .sm-stage
-     (e.g. data-yt="dQw4w9WgXcQ"), or data-mp4 to a self-hosted
-     file (e.g. data-mp4="/assets/zib-south-melbourne-office.mp4").
-     Set data-poster to a still frame to sit behind the play button.
-     Leave them empty and the block renders as a static office card —
-     no broken embed, no dead play button.
-     Then uncomment the VideoObject schema block below it. -->
-<section class="sm-video">
-  <div class="container">
-    <div class="sm-video-head">
-      <div class="reveal">
-        <div class="mono eyebrow">Inside the office</div>
-        <h2>Seventh floor, <em>Eastern Road.</em></h2>
-      </div>
-      <p class="reveal">
-        Ninety seconds inside the room where the work actually happens. No stock footage, no agency showreel — just the floor, the people on it, and the view of Albert Park we're unreasonably proud of.
-      </p>
-    </div>
-
-    <div class="sm-stage reveal" id="officeVideo" data-yt="" data-mp4="" data-poster="">
-      <button type="button" class="sm-poster" id="officeVideoBtn" aria-label="Play the Zib Digital South Melbourne office video">
-        <span class="sm-poster-inner">
-          <span class="sm-play" aria-hidden="true"></span>
-          <span class="sm-poster-label">Inside Zib Digital, South Melbourne</span>
-          <span class="sm-poster-sub mono">Level 7 · 34 Eastern Rd · VIC 3205</span>
-        </span>
-      </button>
-    </div>
-
-    <div class="sm-video-caption reveal">
-      <span><span class="dot" aria-hidden="true"></span>Filmed on site, 34 Eastern Rd</span>
-      <span><span class="dot" aria-hidden="true"></span>Senior strategists, in the room</span>
-      <span><span class="dot" aria-hidden="true"></span>Coffee's on us</span>
-    </div>
-  </div>
-</section>
-
-<!-- Uncomment once the office video is live and the URLs below are real.
-     VideoObject earns video rich results on a page Google already reads as local.
+<!-- VideoObject on the office video. Duration is deliberately absent rather than
+     guessed — add it if you want the runtime shown in a video rich result. -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "VideoObject",
-  "name": "Inside Zib Digital's South Melbourne office",
-  "description": "A walkthrough of Zib Digital's head office at Level 7, 34 Eastern Rd, South Melbourne VIC 3205.",
-  "thumbnailUrl": "https://zibdigital.com.au/assets/REPLACE-office-still.jpg",
-  "uploadDate": "REPLACE-YYYY-MM-DD",
-  "duration": "PT1M30S",
-  "contentUrl": "REPLACE-video-url",
-  "embedUrl": "REPLACE-embed-url",
+  "name": "Zib Digital - South Melbourne Marketing Agency",
+  "description": "Inside Zib Digital's head office at Level 7, 34 Eastern Rd, South Melbourne VIC 3205 — the team and the floor behind the SEO, website design, Google Ads and paid social work we run for businesses across the inner south.",
+  "thumbnailUrl": "https://i.ytimg.com/vi/557XuzvV0JM/maxresdefault.jpg",
+  "uploadDate": "2026-08-12",
+  "contentUrl": "https://www.youtube.com/watch?v=557XuzvV0JM",
+  "embedUrl": "https://www.youtube.com/embed/557XuzvV0JM",
   "publisher": { "@id": "https://zibdigital.com.au/#org" },
   "contentLocation": { "@id": "https://zibdigital.com.au/digital-marketing-agency-south-melbourne#localbusiness" }
 }
 </script>
--->
 
 <!-- MAP + VISIT -->
 <section class="sm-visit" id="visit">
@@ -471,26 +434,35 @@
       </h2>
     </div>
 
+    <!-- Ordered by the Ahrefs suburb-variant volumes (Aug 2026), own postcode
+         first. Richmond, Windsor and Brighton sit last deliberately: all three
+         have larger overseas namesakes (Brighton UK, Windsor Ontario, Richmond
+         Virginia) plus other Australian ones, so their reported volume isn't
+         Melbourne-specific and shouldn't buy them a top slot. -->
     <div class="sm-suburb-grid reveal-stagger">
       <div class="sm-suburb">
         <div class="sm-suburb-name">South Melbourne <span class="sm-suburb-pc mono">3205</span></div>
         <p>Our own postcode. Showrooms and wholesalers along Cecil and Coventry, creative studios in the warehouse conversions, and the Market traders who've outlasted every retail trend since 1867.</p>
       </div>
       <div class="sm-suburb">
-        <div class="sm-suburb-name">Albert Park <span class="sm-suburb-pc mono">3206</span></div>
-        <p>Bridport Street hospitality, boutique health and allied health practices, and service businesses whose customers all search with "near me" attached.</p>
+        <div class="sm-suburb-name">South Yarra <span class="sm-suburb-pc mono">3141</span></div>
+        <p>Chapel Street retail, fashion eCommerce and premium services. Brand-led categories where website design, paid social and Shopify SEO have to work as one.</p>
       </div>
       <div class="sm-suburb">
-        <div class="sm-suburb-name">Middle Park <span class="sm-suburb-pc mono">3206</span></div>
-        <p>Small, high-value local trade. Armstrong Street cafés, design practices and consultants where one extra client a month changes the year.</p>
-      </div>
-      <div class="sm-suburb">
-        <div class="sm-suburb-name">Port Melbourne <span class="sm-suburb-pc mono">3207</span></div>
-        <p>Bay Street retail plus the logistics, trades and light industrial operators behind it — the businesses whose leads live in Google Ads and Maps, not Instagram.</p>
+        <div class="sm-suburb-name">St Kilda <span class="sm-suburb-pc mono">3182</span></div>
+        <p>Hospitality, wellness and local services with sharp seasonality — the campaigns that live or die on how fast you can turn spend up and down.</p>
       </div>
       <div class="sm-suburb">
         <div class="sm-suburb-name">Southbank <span class="sm-suburb-pc mono">3006</span></div>
         <p>Professional services, property and hospitality operating out of the towers. High-value, long-consideration buying cycles that reward search over social.</p>
+      </div>
+      <div class="sm-suburb">
+        <div class="sm-suburb-name">Albert Park <span class="sm-suburb-pc mono">3206</span></div>
+        <p>Bridport Street hospitality, boutique health and allied health practices, and service businesses whose customers all search with "near me" attached.</p>
+      </div>
+      <div class="sm-suburb">
+        <div class="sm-suburb-name">Port Melbourne <span class="sm-suburb-pc mono">3207</span></div>
+        <p>Bay Street retail plus the logistics, trades and light industrial operators behind it — the businesses whose leads live in Google Ads and Maps, not Instagram.</p>
       </div>
       <div class="sm-suburb">
         <div class="sm-suburb-name">Melbourne CBD <span class="sm-suburb-pc mono">3000</span></div>
@@ -501,24 +473,32 @@
         <p>Corporate head offices and national brands running multi-location campaigns that need one system, not seven agency relationships.</p>
       </div>
       <div class="sm-suburb">
-        <div class="sm-suburb-name">South Yarra <span class="sm-suburb-pc mono">3141</span></div>
-        <p>Chapel Street retail, fashion eCommerce and premium services. Brand-led categories where paid social and Shopify SEO have to work together.</p>
+        <div class="sm-suburb-name">Toorak <span class="sm-suburb-pc mono">3142</span></div>
+        <p>Premium trades, property and health services where the brief is fewer, better leads — not a bigger pipeline of tyre-kickers.</p>
       </div>
       <div class="sm-suburb">
-        <div class="sm-suburb-name">Prahran &amp; Windsor <span class="sm-suburb-pc mono">3181</span></div>
-        <p>Independent retail, hospitality and studios. Small budgets that need every dollar accounted for, which suits how we report.</p>
+        <div class="sm-suburb-name">Elwood <span class="sm-suburb-pc mono">3184</span></div>
+        <p>Ormond Road independents and home-based operators who compete on reputation. Local SEO and reviews do more here than any amount of paid reach.</p>
       </div>
       <div class="sm-suburb">
-        <div class="sm-suburb-name">St Kilda &amp; Elwood <span class="sm-suburb-pc mono">3182 · 3184</span></div>
-        <p>Hospitality, wellness and local services with sharp seasonality — the campaigns that live or die on how fast you can turn spend up and down.</p>
+        <div class="sm-suburb-name">Prahran <span class="sm-suburb-pc mono">3181</span></div>
+        <p>Independent retail, hospitality and studios around the Market and Greville Street. Small budgets that need every dollar accounted for, which suits how we report.</p>
+      </div>
+      <div class="sm-suburb">
+        <div class="sm-suburb-name">Middle Park <span class="sm-suburb-pc mono">3206</span></div>
+        <p>Small, high-value local trade. Armstrong Street cafés, design practices and consultants where one extra client a month changes the year.</p>
       </div>
       <div class="sm-suburb">
         <div class="sm-suburb-name">Richmond &amp; Cremorne <span class="sm-suburb-pc mono">3121</span></div>
         <p>Tech, SaaS and scale-ups across the river. Sophisticated buyers who'll audit our reporting as hard as we audit their funnel.</p>
       </div>
       <div class="sm-suburb">
-        <div class="sm-suburb-name">Toorak &amp; Brighton <span class="sm-suburb-pc mono">3142 · 3186</span></div>
-        <p>Premium trades, property, and health services where the brief is fewer, better leads — not a bigger pipeline of tyre-kickers.</p>
+        <div class="sm-suburb-name">Windsor <span class="sm-suburb-pc mono">3181</span></div>
+        <p>The High Street end: hospitality, beauty and specialist retail trading on foot traffic that a maps listing either captures or quietly loses.</p>
+      </div>
+      <div class="sm-suburb">
+        <div class="sm-suburb-name">Brighton <span class="sm-suburb-pc mono">3186</span></div>
+        <p>Church Street retail, property and premium home services, where the buyer researches for weeks before they call anyone.</p>
       </div>
     </div>
 
@@ -593,7 +573,7 @@
     <div class="services-head reveal">
       <div class="mono services-eyebrow">What we run from 3205</div>
       <h2 class="services-h">
-        Every channel that matters. <em>Only the ones that move your number.</em>
+        SEO, website design and paid media, <em>run as one system.</em>
       </h2>
     </div>
 
@@ -604,22 +584,22 @@
         <span class="service-desc">Technical fixes, content programs, Google Business Profile and map pack work — the mix weighted to whether your customers are down the street or across the country.</span>
         <span class="service-arrow">→</span>
       </a>
-      <a class="service-row" href="/google-ads-management-agency-melbourne">
+      <a class="service-row" href="/web-graphic-design-melbourne">
         <span class="service-num mono">02</span>
+        <span class="service-name">Website design &amp; development</span>
+        <span class="service-desc">The most-searched thing in this postcode, and the one most agencies treat as an afterthought. Conversion-first design and build: fast, indexable, and structured so a search engine reads your address, hours and services without guessing.</span>
+        <span class="service-arrow">→</span>
+      </a>
+      <a class="service-row" href="/google-ads-management-agency-melbourne">
+        <span class="service-num mono">03</span>
         <span class="service-name">Google Ads</span>
         <span class="service-desc">Premier Google Partner. Radius targeting, call tracking and location extensions that put your address in the ad — optimised daily by our agent stack, reviewed weekly by a human.</span>
         <span class="service-arrow">→</span>
       </a>
       <a class="service-row" href="/social-media-marketing-agency-melbourne">
-        <span class="service-num mono">03</span>
-        <span class="service-name">Paid social &amp; Meta</span>
-        <span class="service-desc">Meta Business Partner. Suburb-level audiences, creative iterated in hours, and reporting in cost per acquisition rather than reach.</span>
-        <span class="service-arrow">→</span>
-      </a>
-      <a class="service-row" href="/web-graphic-design-melbourne">
         <span class="service-num mono">04</span>
-        <span class="service-name">Web &amp; UX</span>
-        <span class="service-desc">Conversion-first design and build. Fast, indexable, and structured so a local search engine can read your address, hours and services without guessing.</span>
+        <span class="service-name">Social media marketing</span>
+        <span class="service-desc">Meta Business Partner. Suburb-level audiences, creative iterated in hours, and reporting in cost per acquisition rather than reach.</span>
         <span class="service-arrow">→</span>
       </a>
       <a class="service-row" href="/ai-services">
@@ -671,23 +651,46 @@
       </h2>
     </div>
 
+    <!-- Questions 1, 2 and 4 are worded to match the People Also Ask box that
+         renders live on "digital marketing agency south melbourne"; 3 and 5 come
+         from the national questions report ("what to ask…" 90/mo, "how to choose…"
+         150/mo), localised. build.mjs turns this markup into FAQPage schema, so
+         the query wording carries into the structured data for free. -->
     <div class="faq-list" id="faqList">
       <div class="faq-item">
         <button class="faq-q" aria-expanded="false">
-          <span>Where exactly is your South Melbourne office?</span>
+          <span>What is the average fee for a digital marketing agency?</span>
           <span class="icon" aria-hidden="true">+</span>
         </button>
         <div class="faq-a">
-          <p>Level 7, 34 Eastern Rd, South Melbourne VIC 3205 — opposite Albert Park, one block east of Clarendon Street and a short walk from South Melbourne Market. We're open Monday to Friday, 9:00am to 5:30pm, and you're welcome to come in rather than take another video call.</p>
+          <p>In Melbourne, most agency retainers land between $2,000 and $15,000 a month depending on how many channels you're running and how much media sits on top. Ours is no different — and the honest answer is that we start adding real commercial value at around $5–8k a month across media and retainer combined. Below that you're usually better served running it yourself with our free audit as the roadmap, and we'll tell you that on the first call rather than take the money.</p>
         </div>
       </div>
       <div class="faq-item">
         <button class="faq-q" aria-expanded="false">
-          <span>Do you only work with businesses in South Melbourne?</span>
+          <span>Is it worth it to hire a digital marketing agency?</span>
           <span class="icon" aria-hidden="true">+</span>
         </button>
         <div class="faq-a">
-          <p>No. This is our head office, and we work with clients across Australia. But there's a real advantage in being local: we can sit in your business, look at how customers actually find you, and be in the room when something needs deciding. We work regularly across Albert Park, Middle Park, Port Melbourne, Southbank, the CBD, South Yarra, Prahran, St Kilda, Richmond and the bayside suburbs.</p>
+          <p>Only if the maths works. An agency is worth it when the cost of the retainer is smaller than the margin on the extra revenue it produces, and when the work needs skills you'd otherwise have to hire three people to cover — search, paid media, creative and analytics. It isn't worth it if you're buying activity you can't tie to a number, which is why we report in leads, sales, ROAS and CAC rather than impressions. If we can't see a path to paying for ourselves, we'll say so.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span>What should I ask a digital marketing agency in South Melbourne before signing?</span>
+          <span class="icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a">
+          <p>Five questions worth asking anyone, us included. Who specifically does the work, and are they senior? What happens to my account if that person leaves? What's the notice period, and is there a clawback? Can you show me a client in my category with numbers rather than logos? And what would you tell me not to spend money on? The last one is the tell — an agency that can't name something it wouldn't sell you is selling you everything.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" aria-expanded="false">
+          <span>Which digital marketing agency in Melbourne is the best?</span>
+          <span class="icon" aria-hidden="true">+</span>
+        </button>
+        <div class="faq-a">
+          <p>There's no single best one, and any agency claiming the title is telling you something about its marketing rather than its work. The useful question is which agency is best for your business: a national eCommerce brand and a South Melbourne trades business need almost opposite things. Look for relevant category experience, senior people who stay on the account, reporting you can hand to an accountant, and a contract you can leave. We're a Premier Google Partner and Meta Business Partner rating 4.8 from 90+ reviews, and we've been doing this since 2009 — but judge us on the audit, not the badges.</p>
         </div>
       </div>
       <div class="faq-item">
@@ -701,20 +704,20 @@
       </div>
       <div class="faq-item">
         <button class="faq-q" aria-expanded="false">
-          <span>What does it cost to work with you?</span>
+          <span>Where exactly is your South Melbourne office?</span>
           <span class="icon" aria-hidden="true">+</span>
         </button>
         <div class="faq-a">
-          <p>Honest answer: we start adding real commercial value at around $5–8k a month across media and retainer combined. Below that you're usually better served running it yourself with our free audit as the roadmap — and we'll tell you that on the first call rather than take the money.</p>
+          <p>Level 7, 34 Eastern Rd, South Melbourne VIC 3205 — opposite Albert Park, one block east of Clarendon Street and a short walk from South Melbourne Market. We're open Monday to Friday, 9:00am to 5:30pm. Book ahead and we'll have the coffee ready and a strategist free; we're on level 7, so it's not a walk-past. Email <a href="mailto:michael.glasser@zibdigital.com.au?subject=South%20Melbourne%20-%20office%20visit" style="color:var(--accent);text-decoration:underline;">michael.glasser@zibdigital.com.au</a> or call 1300 942 633.</p>
         </div>
       </div>
       <div class="faq-item">
         <button class="faq-q" aria-expanded="false">
-          <span>Can I just drop in?</span>
+          <span>Do you only work with businesses in South Melbourne?</span>
           <span class="icon" aria-hidden="true">+</span>
         </button>
         <div class="faq-a">
-          <p>Book ahead and we'll have the coffee ready and a strategist free — we're on level 7, so it's not a walk-past. Email <a href="mailto:michael.glasser@zibdigital.com.au?subject=South%20Melbourne%20-%20office%20visit" style="color:var(--accent);text-decoration:underline;">michael.glasser@zibdigital.com.au</a> or call 1300 942 633 and we'll find a time.</p>
+          <p>No. This is our head office, and we work with clients across Australia. But there's a real advantage in being local: we can sit in your business, look at how customers actually find you, and be in the room when something needs deciding. We work regularly across South Yarra, St Kilda, Southbank, Albert Park, Port Melbourne, the CBD, Docklands, Prahran, Richmond and the bayside suburbs.</p>
         </div>
       </div>
       <div class="faq-item">
@@ -766,52 +769,67 @@
   });
 })();
 
-// Office video: click-to-load facade.
-// Supports a YouTube ID (data-yt) or a self-hosted file (data-mp4). With
-// neither set, the poster stays put as a static card and the play affordance
-// is removed, so an unfinished edit never ships as a dead button.
+// Hero office video.
+// Autoplay is only allowed while muted, so the background loop starts silent
+// and "Watch with sound" reloads the embed unmuted with controls — that click
+// is the user gesture the browser wants. The iframe is injected after load
+// rather than shipped in the markup so it can't compete with the hero text for
+// bandwidth, and is skipped entirely on small screens (mobile data) and under
+// prefers-reduced-motion, where the poster still carries the hero.
 (() => {
-  const stage = document.getElementById('officeVideo');
-  const btn = document.getElementById('officeVideoBtn');
-  if (!stage || !btn) return;
+  const hero = document.getElementById('hero');
+  const frame = document.getElementById('heroFrame');
+  const soundBtn = document.getElementById('heroSound');
+  if (!hero || !frame) return;
 
-  const yt = (stage.dataset.yt || '').trim();
-  const mp4 = (stage.dataset.mp4 || '').trim();
-  const poster = (stage.dataset.poster || '').trim();
+  const id = (hero.dataset.yt || '').trim();
+  const poster = (hero.dataset.poster || '').trim();
+  if (poster) frame.style.backgroundImage = `url("${poster}")`;
 
-  if (!yt && !mp4) {
-    stage.classList.add('is-placeholder');
-    btn.disabled = true;
-    btn.removeAttribute('aria-label');
+  if (!id) {
+    if (soundBtn) soundBtn.remove();
     return;
   }
 
-  if (poster) {
-    const img = document.createElement('img');
-    img.src = poster;
-    img.alt = '';
-    img.loading = 'lazy';
-    btn.prepend(img);
+  const src = (opts) =>
+    'https://www.youtube.com/embed/' + encodeURIComponent(id) +
+    '?autoplay=1&playsinline=1&rel=0&modestbranding=1&iv_load_policy=3' +
+    `&mute=${opts.muted ? 1 : 0}&controls=${opts.controls ? 1 : 0}` +
+    (opts.loop ? `&loop=1&playlist=${encodeURIComponent(id)}` : '');
+
+  const mount = (opts) => {
+    const iframe = document.createElement('iframe');
+    iframe.src = src(opts);
+    iframe.title = 'Zib Digital — South Melbourne office';
+    iframe.allow = 'accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture; web-share';
+    iframe.allowFullscreen = true;
+    iframe.setAttribute('tabindex', opts.controls ? '0' : '-1');
+    frame.replaceChildren(iframe);
+    // Fade in only once YouTube has actually painted, so the poster never
+    // flashes to black mid-connection.
+    iframe.addEventListener('load', () => frame.classList.add('is-playing'));
+    return iframe;
+  };
+
+  const smallScreen = window.matchMedia('(max-width: 880px)').matches;
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const saveData = navigator.connection && navigator.connection.saveData;
+
+  if (!smallScreen && !reduced && !saveData) {
+    const start = () => mount({ muted: true, controls: false, loop: true });
+    if ('requestIdleCallback' in window) requestIdleCallback(start, { timeout: 2500 });
+    else setTimeout(start, 900);
   }
 
-  btn.addEventListener('click', () => {
-    let el;
-    if (yt) {
-      el = document.createElement('iframe');
-      el.src = 'https://www.youtube.com/embed/' + encodeURIComponent(yt) + '?autoplay=1&rel=0&modestbranding=1&playsinline=1';
-      el.title = 'Inside Zib Digital, South Melbourne';
-      el.allow = 'accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share';
-      el.allowFullscreen = true;
-    } else {
-      el = document.createElement('video');
-      el.src = mp4;
-      el.controls = true;
-      el.autoplay = true;
-      el.playsInline = true;
-      if (poster) el.poster = poster;
-    }
-    btn.replaceWith(el);
-  }, { once: true });
+  if (soundBtn) {
+    soundBtn.addEventListener('click', () => {
+      mount({ muted: false, controls: true, loop: false });
+      frame.classList.add('is-live');
+      const label = soundBtn.querySelector('.sm-sound-label');
+      if (label) label.textContent = 'Playing with sound';
+      soundBtn.disabled = true;
+    }, { once: true });
+  }
 })();
 </script>
 

@@ -111,7 +111,64 @@ Steps 1–3 as the copy brief rather than the business case.
 
 ---
 
-## 4. Optional follow-up prompt (once data is in)
+## 4. What the data came back with (13 Aug 2026) and what we changed
+
+Run complete. The load-bearing findings, and the edits they produced:
+
+**Primary keyword unchanged.** `digital marketing agency south melbourne` (30/mo,
+KD 56) stays as title/H1 target. It's the only term in the set with a crawled
+SERP, so difficulty and competitors are observable rather than modelled. The
+higher-volume suburb terms (150s) all returned KD/CPC/Traffic Potential as N/A —
+Ahrefs has never crawled those SERPs — and their internal ordering inverts normal
+head-vs-modifier behaviour, so they're not safe to build an H1 on. Justify this
+page on local-pack relevance and as the GBP/citation landing target, not volume.
+
+**Web outranks SEO in this postcode.** The website cluster (website design 150,
+web design 80, website development 60, plus variants) totals ~320/mo against ~190
+for SEO and ~100 for anything containing "digital marketing". So: services H2 now
+reads "SEO, website design and paid media", and Website design & development moved
+from position 04 to 02 in the services list.
+
+**Suburb grid reordered** to the Step 2 volumes, with Richmond, Windsor and
+Brighton demoted to the end — all three have larger overseas namesakes (Brighton
+UK, Windsor Ontario, Richmond Virginia) plus other Australian ones, so their
+reported volume isn't Melbourne-specific. St Kilda, Elwood, Prahran, Windsor,
+Toorak and Brighton were split out of their combined cells so the ordering could
+follow demand.
+
+**No sibling suburb pages.** Strongest candidate (South Yarra, 250 combined) rests
+on a 150 that first appeared in Dec 2024 and is 5x the South Melbourne equivalent
+— not a credible market signal. Every page-one competitor ranks a homepage;
+fragmenting into thin suburb pages is the doorway pattern. Concentrate authority
+here.
+
+**FAQ rebuilt from real queries.** The "south melbourne" questions report is
+entirely market hours and dim sims — nothing commercial at any volume. So the FAQ
+now uses the live PAA box on the target SERP verbatim ("What is the average fee
+for a digital marketing agency?", "Is it worth it to hire a digital marketing
+agency?", "Which digital marketing agency in Melbourne is the best?") plus two
+localised from the national questions report. `build.mjs` carries that wording
+into FAQPage schema automatically.
+
+**Competitive read.** Nobody on page one has a dedicated suburb page. Position 1
+(synq.com.au) holds it at DR 1.2 with 16 followed referring domains and 5 organic
+visits a month. The quoted ~108 referring domains to rank is inflated by
+directories that aren't competing for suburb intent. Organic position is winnable
+inside 6 months.
+
+**The thing this page can't do.** Position 1 on that SERP is the map pack, and no
+amount of page content gets you into it. That's Google Business Profile category
+and proximity work, review velocity and citation consistency. If the goal is calls
+from 3205, sequence the GBP work first — this page is the landing target for it,
+not a substitute.
+
+**Still worth doing:** cross-check the shortlist against Search Console. Existing
+impressions for `digital marketing south melbourne` or the website-design cluster
+outweigh every modelled figure in Steps 1–3.
+
+---
+
+## 5. Optional follow-up prompt (once data is in)
 
 > Here's the Ahrefs data from the brief. Rewrite the `<title>`, meta description
 > and H1 of `/digital-marketing-agency-south-melbourne` around the primary keyword
