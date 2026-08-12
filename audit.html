@@ -1182,6 +1182,108 @@ h1.hero-h em {
   .stage-item .detail { grid-column: 1 / -1; padding-left: 28px; margin-top: -4px; }
 }
 
+/* ─── WAIT-TIME QUALIFYING QUIZ · shown while the audit streams ──── */
+.audit-quiz {
+  display: none;
+  margin-top: 18px;
+  border: 1px solid var(--rule);
+  border-radius: 18px;
+  background: #fff;
+  padding: clamp(22px, 2.4vw, 30px);
+}
+
+.audit-quiz.is-shown { display: block; animation: quiz-in 480ms var(--ease-out); }
+
+@keyframes quiz-in { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+.audit-quiz .aq-label {
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.audit-quiz .aq-label .dot {
+  width: 7px; height: 7px;
+  border-radius: 999px;
+  background: var(--accent);
+  animation: stage-pulse 1.2s ease-in-out infinite;
+}
+
+.audit-quiz .aq-sub {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.55;
+  margin-top: 10px;
+  max-width: 56ch;
+}
+
+.audit-quiz .aq-q {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(18px, 1.6vw, 22px);
+  letter-spacing: -0.015em;
+  margin-top: 18px;
+}
+
+.aq-chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 16px; }
+
+.aq-chips button {
+  font-family: var(--display);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--rule-2);
+  background: #fff;
+  color: var(--ink);
+  cursor: pointer;
+  transition: border-color 180ms var(--ease), transform 180ms var(--ease);
+}
+
+.aq-chips button:hover { border-color: var(--ink); transform: translateY(-1px); }
+
+.aq-step {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+  margin-top: 16px;
+}
+
+.aq-done {
+  display: flex;
+  gap: 12px;
+  align-items: baseline;
+  margin-top: 18px;
+  font-size: 14.5px;
+  color: var(--ink-2);
+  line-height: 1.55;
+}
+
+.aq-done .tick {
+  width: 18px; height: 18px;
+  border-radius: 999px;
+  flex-shrink: 0;
+  background: var(--score-good);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-size: 10px;
+  font-weight: 700;
+  transform: translateY(3px);
+}
+
+/* Call-expectation note under the audit form */
+.audit-call-note { margin-top: 14px; font-size: 13.5px; color: var(--muted); line-height: 1.5; }
+.audit-call-note strong { color: var(--ink-2); font-weight: 500; }
+
 .audit-result { display: none; margin-top: 56px; }
 
 .audit-result.is-shown { display: block; }
@@ -2874,6 +2976,95 @@ footer {
     strategist: 'think',
   };
 
+  /* ─── Wait-time qualifying quiz · runs while the audit streams ──────
+     Same pattern as the ads-lab micro-quiz: the visitor is captive for
+     30–60s watching the stages, so four tap-to-answer questions land in
+     the lead email + HubSpot note and the Growth team calls briefed. */
+  const QUIZ_QUESTIONS = [
+    { key: 'marketing', q: 'Who looks after your marketing right now?', options: ['An agency', 'In-house team', 'I do it myself', 'No one right now'] },
+    { key: 'budget', q: 'Roughly what do you spend on marketing each month?', options: ['Nothing yet', 'Under $1k', '$1k – $3k', '$3k – $10k', '$10k+'] },
+    { key: 'timeline', q: 'How soon are you looking to get help?', options: ['ASAP', 'Next 1–3 months', 'Later this year', 'Just researching'] },
+    { key: 'callTime', q: 'When suits you for that call?', options: ['Morning', 'Midday', 'Afternoon', 'SMS me first'] },
+  ];
+  const quizAnswers = {};
+  let quizSent = false;
+  let quizDone = false;
+
+  // Injected from JS (not the shared partial) so this stays /audit-only.
+  stagesEl.insertAdjacentHTML('afterend', `
+    <div class="audit-quiz" id="auditQuiz">
+      <div class="aq-label"><span class="dot" aria-hidden="true"></span>While it runs · 4 quick taps</div>
+      <p class="aq-sub">Someone from our Growth team will call to walk you through the results. These four taps mean they arrive across your situation, not reading from a script.</p>
+      <div id="auditQuizBody"></div>
+    </div>`);
+  const quizEl = document.getElementById('auditQuiz');
+  const quizBody = document.getElementById('auditQuizBody');
+
+  const sendQuizAnswers = (useBeacon) => {
+    if (quizSent || !Object.keys(quizAnswers).length) return;
+    quizSent = true;
+    const rawUrl = urlInput.value.trim().replace(/^https?:\/\//i, '');
+    const payload = JSON.stringify({
+      email: emailInput.value.trim(),
+      url: rawUrl ? 'https://' + rawUrl : '',
+      ...quizAnswers,
+    });
+    if (useBeacon && navigator.sendBeacon) {
+      navigator.sendBeacon('/api/audit-quiz', new Blob([payload], { type: 'application/json' }));
+    } else {
+      fetch('/api/audit-quiz', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: payload,
+        keepalive: true,
+      }).catch(() => {});
+    }
+  };
+
+  const renderQuizStep = (step) => {
+    if (step >= QUIZ_QUESTIONS.length) {
+      quizDone = true;
+      sendQuizAnswers(false);
+      const whenMap = { 'Morning': ' in the morning', 'Midday': ' around midday', 'Afternoon': ' in the afternoon' };
+      const when = whenMap[quizAnswers.callTime] || '';
+      quizBody.innerHTML = `
+        <div class="aq-done"><span class="tick">✓</span><span>Locked in. The Growth team will have this in front of them when they call${when}.</span></div>`;
+      return;
+    }
+    const q = QUIZ_QUESTIONS[step];
+    quizBody.innerHTML = `
+      <h3 class="aq-q">${q.q}</h3>
+      <div class="aq-chips">${q.options.map(o => `<button type="button" data-v="${o}">${o}</button>`).join('')}</div>
+      <div class="aq-step">Question ${step + 1} of ${QUIZ_QUESTIONS.length}</div>`;
+    quizBody.querySelectorAll('.aq-chips button').forEach(b =>
+      b.addEventListener('click', () => {
+        quizAnswers[q.key] = b.dataset.v;
+        // A pagehide flush may have fired a partial send — new answers re-arm it
+        quizSent = false;
+        renderQuizStep(step + 1);
+      }));
+  };
+
+  const quizShow = () => {
+    if (quizDone) { quizEl.classList.add('is-shown'); return; }
+    renderQuizStep(Object.keys(quizAnswers).length ? QUIZ_QUESTIONS.findIndex(q => !(q.key in quizAnswers)) : 0);
+    quizEl.classList.add('is-shown');
+  };
+
+  // Partial answers still brief the caller — flush on page-leave if the
+  // visitor bailed mid-quiz.
+  window.addEventListener('pagehide', () => { if (!quizSent) sendQuizAnswers(true); });
+
+  // Set the call expectation before they submit a phone number, so the
+  // Growth team's call isn't a cold interruption from an unknown number.
+  const auditMeta = document.querySelector('.audit-meta');
+  if (auditMeta) {
+    const note = document.createElement('p');
+    note.className = 'audit-call-note';
+    note.innerHTML = '<strong>Someone from our Growth team will call to walk you through the results.</strong>';
+    auditMeta.after(note);
+  }
+
   // Tiny streaming-safe markdown → HTML for ##, **, *, -, 1.
   const mdToHtml = (md) => {
     let s = escapeHtml(md);
@@ -3100,6 +3291,9 @@ footer {
         // This is the conversion point; there's no thank-you page because the
         // audit streams into this same view.
         window.zibLead && window.zibLead({ tool: 'Website Audit', url, email });
+
+        // The visitor is captive for the next 30–60s — qualify while they wait
+        quizShow();
 
         // Show result shell + scroll so stages are visible
         resultEl.classList.add('is-shown');

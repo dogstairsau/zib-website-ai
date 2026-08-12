@@ -741,7 +741,21 @@ async function serveStatic(req, res) {
 // ──────────────────────────────────────────────────────────────────
 // Server
 // ──────────────────────────────────────────────────────────────────
+// /api/audit-quiz — wait-time qualifying quiz. Local stub: logs the answers;
+// the HubSpot note + notification email run in the deployed edge function.
+async function handleAuditQuiz(req, res) {
+  if (req.method !== "POST") {
+    res.writeHead(405, { "Content-Type": "application/json" }).end('{"error":"Method not allowed"}');
+    return;
+  }
+  let body = "";
+  for await (const chunk of req) body += chunk;
+  try { console.log("[audit-quiz]", JSON.parse(body)); } catch { console.log("[audit-quiz] unparseable body"); }
+  res.writeHead(200, { "Content-Type": "application/json" }).end('{"ok":true}');
+}
+
 const server = createServer(async (req, res) => {
+  if (req.url?.startsWith("/api/audit-quiz")) return handleAuditQuiz(req, res);
   if (req.url?.startsWith("/api/audit")) return handleAudit(req, res);
   if (req.url?.startsWith("/api/blog")) return handleBlog(req, res);
   return serveStatic(req, res);

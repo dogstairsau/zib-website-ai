@@ -271,7 +271,7 @@ export async function captureLabQuiz(quiz: LabQuiz): Promise<void> {
     String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   const rows = quiz.answers.map((p) => `<li><b>${safe(p.q)}</b><br/>${safe(p.a)}</li>`).join("");
   const note =
-    `<p><b>${safe(quiz.lab)} quiz</b> · answered while their pack generated</p>` +
+    `<p><b>${safe(quiz.lab)} quiz</b> · answered while their results generated</p>` +
     `<p><b>Site:</b> ${safe(quiz.url)}</p><ul>${rows}</ul>`;
   await attachNote(contactId, note).catch((e) =>
     console.warn("[hubspot:lab-quiz-note]", (e as Error).message),
