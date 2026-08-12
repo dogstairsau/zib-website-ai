@@ -54,6 +54,15 @@
   }
   img{max-width:100%; display:block}
   a{color:inherit}
+  /* Orphan control. Headings and other short display text get `balance`, which
+     evens the line lengths and stops a single word being stranded on the last
+     line. Running text gets `pretty`, which only guards the final line so long
+     paragraphs keep an even rag. Anything that sets type over more than one
+     line needs one or the other — a lone word on the last line reads as a
+     mistake at these display sizes. */
+  h1,h2,h3,h4,
+  .eyebrow,.faq summary,.btn,.rate__price small,.trust__item h3,.step__n{text-wrap:balance}
+  li,td,th,blockquote,figcaption,.disclosure,.foot-bar span,.utility .wrap span{text-wrap:pretty}
   h1,h2,h3,h4{font-family:var(--head); font-weight:400; margin:0; text-transform:uppercase; line-height:0.92; letter-spacing:0.015em}
   p{margin:0 0 1em; text-wrap:pretty}
   .wrap{max-width:var(--wrap); margin:0 auto; padding:0 24px}
@@ -152,11 +161,27 @@
 
   /* ---------- Trust band ---------- */
   .trust{background:var(--yellow); color:var(--black)}
-  .trust .wrap{display:grid; grid-template-columns:repeat(4,1fr); gap:2px 34px; padding-block:26px}
-  .trust__item{display:flex; gap:14px; align-items:flex-start}
-  .trust__item svg{width:26px; height:26px; flex:none; fill:var(--black); margin-top:3px}
-  .trust__item h3{font-size:22px; letter-spacing:.04em}
-  .trust__item p{margin:3px 0 0; font-size:14px; line-height:1.45; color:#1c1c1a}
+  .trust .wrap{display:grid; grid-template-columns:repeat(4,1fr); gap:26px 34px; padding-block:34px}
+  .trust__item{display:flex; flex-direction:column; align-items:center; text-align:center; gap:9px}
+  .trust__item svg{width:30px; height:30px; flex:none; fill:var(--black)}
+  .trust__item h3{font-size:23px; letter-spacing:.04em}
+  .trust__item p{margin:0; font-size:14px; line-height:1.45; color:#1c1c1a; max-width:30ch}
+
+  /* ---------- Client logo bar ---------- */
+  .logos{background:var(--paper); border-bottom:1px solid #DEDEDA}
+  .logos .wrap{padding-block:44px}
+  .logos__head{text-align:center; margin-bottom:30px}
+  .logos__head h2{font-size:clamp(26px,2.9vw,36px)}
+  .logos__head p{margin:10px 0 0; font-size:15px; color:var(--gravel)}
+  .logo-row{display:grid; grid-template-columns:repeat(6,1fr); gap:20px; align-items:center}
+  .logo-slot{
+    display:flex; flex-direction:column; align-items:center; justify-content:center; gap:9px;
+    padding:20px 12px; color:var(--gravel); opacity:.62; transition:opacity .18s ease, color .18s ease;
+  }
+  .logo-slot:hover{opacity:1; color:var(--black)}
+  .logo-slot svg{width:46px; height:46px; fill:currentColor}
+  .logo-slot span{font-family:var(--head); font-size:15px; letter-spacing:.13em; text-align:center; line-height:1.15}
+  .logos__note{margin:26px 0 0; text-align:center; font-size:12.5px; color:var(--steel); letter-spacing:.06em}
 
   /* ---------- Generic section ---------- */
   section{scroll-margin-top:96px}
@@ -170,26 +195,62 @@
   .sec--dark .sec-head p,.sec--bitumen .sec-head p{color:#C6C6C1}
   .sec--dark .lede,.sec--bitumen .lede{color:#C6C6C1}
 
+  /* Three header treatments, one per content type, so the page has a rhythm
+     instead of repeating the same left-aligned stack a dozen times.
+     — rail: numbered left rail, lifted from the brand kit's own "01 / Logo"
+       section device. Used for the list-style sections.
+     — centre: the two decision moments (rates, testimonials) and the close.
+     — split: sections whose heading already sits in a two-column layout. */
+  .rail-head{display:grid; grid-template-columns:190px 1fr; gap:0 48px; margin-bottom:52px; align-items:start}
+  .rail-head__label{
+    font-family:var(--head); font-size:22px; letter-spacing:.14em; color:var(--yellow);
+    padding-top:9px; border-top:3px solid var(--yellow);
+  }
+  .sec:not(.sec--dark):not(.sec--bitumen) .rail-head__label{color:var(--black); border-top-color:var(--black)}
+  .rail-head h2{font-size:clamp(38px,4.6vw,60px); max-width:20ch}
+  .rail-head p{margin:18px 0 0; max-width:56ch}
+  .sec--dark .rail-head p,.sec--bitumen .rail-head p{color:#C6C6C1}
+
+  .sec-head--center{max-width:none; text-align:center; margin-bottom:52px}
+  .sec-head--center h2{margin-inline:auto; max-width:22ch}
+  .sec-head--center p{margin-inline:auto; max-width:60ch}
+
   /* ---------- Steps ---------- */
-  .steps{display:grid; grid-template-columns:repeat(3,1fr); gap:26px}
-  .step{border-top:4px solid var(--yellow); padding-top:22px}
-  .step__n{font-family:var(--head); font-size:15px; letter-spacing:.2em; color:var(--yellow)}
-  .step h3{font-size:30px; margin:10px 0 10px}
+  /* Oversized outlined numerals carry the sequence, so the three columns read
+     as an ordered process rather than three interchangeable cards. */
+  .steps{display:grid; grid-template-columns:repeat(3,1fr); gap:26px 34px}
+  .step{border-top:1px solid rgba(255,243,1,.35); padding-top:18px}
+  .step__n{
+    font-family:var(--head); font-size:76px; line-height:.8; letter-spacing:.02em;
+    color:transparent; -webkit-text-stroke:1.5px var(--yellow); display:block; margin-bottom:14px;
+  }
+  .step h3{font-size:30px; margin:0 0 10px}
   .step p{margin:0; font-size:16px; color:#C6C6C1}
+  /* Drop the middle column to break the flat three-across line. */
+  .steps .step:nth-child(2){margin-top:38px}
 
   /* ---------- Specs ---------- */
-  .specs{display:grid; grid-template-columns:1fr 1.05fr; gap:clamp(32px,5vw,64px); align-items:center}
+  /* Image sits left here and right in the bracing section below, so the two
+     photo sections don't stack into an identical shape. */
+  .specs{display:grid; grid-template-columns:1.05fr 1fr; gap:clamp(32px,5vw,64px); align-items:center}
+  .specs > figure{order:-1}
+  .areas > :first-child{order:2}
   .spec-table{width:100%; border-collapse:collapse; margin-top:8px}
   .spec-table th,.spec-table td{text-align:left; padding:14px 0; border-bottom:1px solid #D8D8D3; font-size:16px; vertical-align:top}
   .spec-table th{font-family:var(--head); font-size:19px; letter-spacing:.06em; font-weight:400; width:44%; padding-right:18px}
   .spec-table td{color:var(--gravel)}
   .badge{display:inline-flex; align-items:center; gap:9px; background:var(--black); color:var(--yellow); font-family:var(--head); font-size:17px; letter-spacing:.09em; padding:9px 15px 7px; margin-bottom:18px}
+  /* Fixed ratios stop the photo floating in a half-empty column next to a tall
+     spec table — portrait beside the specs, landscape beside the bracing copy. */
   .figure{position:relative}
   .figure img{width:100%; height:100%; object-fit:cover}
+  .specs > figure{aspect-ratio:4/5}
+  .feature > figure{aspect-ratio:5/4}
   .figure figcaption{position:absolute; left:0; bottom:0; background:var(--black); color:var(--paper); font-size:12.5px; letter-spacing:.12em; text-transform:uppercase; padding:11px 16px}
 
   /* ---------- Use cases ---------- */
-  .uses{display:grid; grid-template-columns:repeat(3,1fr); gap:20px}
+  .uses{display:grid; grid-template-columns:repeat(3,1fr); gap:20px; align-items:start}
+  .uses .use:nth-child(3n+2){margin-top:34px}
   .use{background:var(--bitumen); border:1px solid var(--line); padding:28px 26px 26px; display:flex; flex-direction:column; gap:10px}
   .use svg{width:30px; height:30px; fill:var(--yellow)}
   .use h3{font-size:25px; color:var(--paper); margin-top:4px}
@@ -221,13 +282,14 @@
   .fineprint{margin:22px 0 0; font-size:13px; color:var(--gravel); line-height:1.6; max-width:88ch}
 
   /* ---------- Areas ---------- */
-  .areas{display:grid; grid-template-columns:1fr 1.15fr; gap:clamp(30px,5vw,60px); align-items:center}
+  .areas{display:grid; grid-template-columns:1.15fr 1fr; gap:clamp(30px,5vw,60px); align-items:center}
   .council-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line)}
   .council-grid span{background:var(--black); color:var(--paper); padding:16px 18px; font-family:var(--head); font-size:19px; letter-spacing:.06em}
   .council-grid span:hover{background:var(--yellow); color:var(--black)}
 
   /* ---------- Testimonials ---------- */
-  .quotes{display:grid; grid-template-columns:1fr 1fr; gap:24px}
+  .quotes{display:grid; grid-template-columns:1fr 1fr; gap:24px; align-items:start}
+  .quotes .quotebox:nth-child(2){margin-top:46px}
   .quotebox{background:#fff; border:1px solid #DCDCD7; padding:32px 30px; display:flex; flex-direction:column}
   .stars{display:flex; gap:3px; margin-bottom:16px}
   .stars svg{width:19px; height:19px; fill:#1A1A18}
@@ -262,13 +324,14 @@
   .close-cta{position:relative; background:var(--black); color:var(--paper); overflow:hidden}
   .close-cta__bg{position:absolute; inset:0}
   .close-cta__bg img{width:100%; height:100%; object-fit:cover; object-position:center 60%}
-  .close-cta__bg::after{content:""; position:absolute; inset:0; background:linear-gradient(90deg,rgba(0,0,0,.95) 0%,rgba(0,0,0,.85) 45%,rgba(0,0,0,.55) 100%)}
-  .close-cta .wrap{position:relative; z-index:2; padding-block:clamp(60px,7vw,96px); max-width:900px; margin-inline:0; padding-inline:24px}
-  .close-cta-outer{max-width:var(--wrap); margin:0 auto}
-  .close-cta h2{font-size:clamp(40px,5.4vw,72px); color:var(--paper); max-width:16ch}
+  /* The one fully centred moment on the page — it reads as an end-stop after a
+     run of asymmetric sections. */
+  .close-cta__bg::after{content:""; position:absolute; inset:0; background:linear-gradient(180deg,rgba(0,0,0,.82) 0%,rgba(0,0,0,.9) 100%)}
+  .close-cta .wrap{position:relative; z-index:2; padding-block:clamp(66px,7.5vw,104px); text-align:center}
+  .close-cta h2{font-size:clamp(40px,5.4vw,72px); color:var(--paper); max-width:17ch; margin-inline:auto}
   .close-cta h2 em{font-style:normal; color:var(--yellow)}
-  .close-cta p{margin:20px 0 0; font-size:18px; color:#C6C6C1; max-width:52ch}
-  .close-cta__actions{display:flex; gap:14px; flex-wrap:wrap; margin-top:32px}
+  .close-cta p{margin:20px auto 0; font-size:18px; color:#C6C6C1; max-width:52ch}
+  .close-cta__actions{display:flex; gap:14px; flex-wrap:wrap; margin-top:34px; justify-content:center}
 
   /* ---------- Footer ---------- */
   .site-foot{background:var(--bitumen); color:var(--steel); font-size:14.5px}
@@ -305,10 +368,17 @@
     .trust .wrap{grid-template-columns:1fr 1fr; gap:24px 34px}
     .head-nav{display:none}
     .included ul{grid-template-columns:repeat(2,1fr)}
+    .rail-head{grid-template-columns:150px 1fr; gap:0 32px}
+    .logo-row{grid-template-columns:repeat(3,1fr)}
   }
   @media (max-width:900px){
     .steps,.uses,.rates,.gear,.quotes{grid-template-columns:1fr}
     .specs,.feature,.areas{grid-template-columns:1fr}
+    /* Stagger and column re-ordering only make sense once there are columns. */
+    .steps .step:nth-child(2),.uses .use:nth-child(3n+2),.quotes .quotebox:nth-child(2){margin-top:0}
+    .specs > figure,.areas > :first-child{order:0}
+    .rail-head{grid-template-columns:1fr; gap:20px}
+    .rail-head__label{display:inline-block; padding-top:8px}
     .gear,.council-grid{border:none; background:transparent; gap:12px}
     .gear div{border:1px solid var(--line)}
     .council-grid{grid-template-columns:repeat(2,1fr); gap:8px}
@@ -329,7 +399,10 @@
     .brand img{width:150px}
     .site-head .wrap{padding-block:11px}
     .utility .wrap{font-size:11px; gap:6px 16px}
-    .trust .wrap{grid-template-columns:1fr}
+    .trust .wrap{grid-template-columns:1fr 1fr; gap:22px 16px}
+    .trust__item p{display:none}
+    .logo-row{grid-template-columns:repeat(2,1fr); gap:8px}
+    .logo-slot{padding:14px 8px}
     .quote{max-width:none}
     .foot-contact{text-align:left}
     .hero__actions .btn,.close-cta__actions .btn{flex:1 1 100%}
@@ -386,7 +459,7 @@
   <div class="wrap">
     <div>
       <div class="eyebrow">Temporary fencing hire · Melbourne &amp; Victoria</div>
-      <h1>Temp fencing on site <em>by tomorrow.</em></h1>
+      <h1>Temp fencing on site <em>by&nbsp;tomorrow.</em></h1>
       <p class="hero__sub">AS4687-compliant panels, feet, clamps and bracing — delivered, installed and collected by the crew that owns the gear. Tell us the site and we'll have a price back to you within the hour.</p>
       <ul class="ticks">
         <li>2.5m × 1.8m anti-climb panels — hired by the metre, not the guesswork</li>
@@ -408,7 +481,7 @@
     <div class="quote" id="quote">
       <div class="quote__head">
         <h2>Free quote — within the hour</h2>
-        <p>Five details is all we need. No obligation, no sales calls afterwards — just a price and an availability date.</p>
+        <p>Five details is all we need — and you'll get a price and an availability date back, not a runaround.</p>
       </div>
       <form id="quote-form" novalidate>
         <div class="field">
@@ -482,13 +555,52 @@
   </div>
 </section>
 
+<!-- Client logo bar -->
+<section class="logos" aria-label="Clients">
+  <div class="wrap">
+    <div class="logos__head">
+      <h2>Hired by the people who can't afford it to go wrong.</h2>
+      <p>Councils, builders, event organisers and traffic management crews across Victoria.</p>
+    </div>
+    <div class="logo-row">
+      <div class="logo-slot">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 3 6.5V11c0 5.3 3.8 10.2 9 11.5 5.2-1.3 9-6.2 9-11.5V6.5L12 2zm0 3.2 6 3v2.8c0 3.9-2.6 7.6-6 8.7-3.4-1.1-6-4.8-6-8.7V8.2l6-3z"/></svg>
+        <span>Local<br>Councils</span>
+      </div>
+      <div class="logo-slot">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 2 8v8l10 6 10-6V8L12 2zm0 2.6 7.5 4.5v5.8L12 19.4 4.5 14.9V9.1L12 4.6z"/><circle cx="12" cy="12" r="2.6"/></svg>
+        <span>Festivals<br>&amp; Events</span>
+      </div>
+      <div class="logo-slot">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21V9.5L12 3l9 6.5V21h-7.5v-6h-3v6H3zm2-2h3.5v-6h7v6H19V10.5L12 5.5 5 10.5V19z"/></svg>
+        <span>Builders<br>&amp; Trades</span>
+      </div>
+      <div class="logo-slot">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 17h4.2a3 3 0 0 0 5.6 0h.4a3 3 0 0 0 5.6 0H22v-4l-3-4h-3V5H2v12zm14-6h2l1.6 2.2H16V11zM8.5 19a1.4 1.4 0 1 1 0-2.8 1.4 1.4 0 0 1 0 2.8zm6 0a1.4 1.4 0 1 1 0-2.8 1.4 1.4 0 0 1 0 2.8z"/></svg>
+        <span>Civil<br>Contractors</span>
+      </div>
+      <div class="logo-slot">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 1.5 8.5 12 14l8.5-4.5V15h2V8.5L12 3zM5 13.4V17c0 1.9 3.1 3.4 7 3.4s7-1.5 7-3.4v-3.6l-7 3.7-7-3.7z"/></svg>
+        <span>Schools<br>&amp; Clubs</span>
+      </div>
+      <div class="logo-slot">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M13.4 2.7a1.5 1.5 0 0 0-2.8 0L4.8 19H2v2h20v-2h-2.8L13.4 2.7zM12 6.3l1.6 4.5h-3.2L12 6.3zM9.7 12.8h4.6l1.4 4H8.3l1.4-4z"/></svg>
+        <span>Traffic<br>Management</span>
+      </div>
+    </div>
+    <p class="logos__note">Placeholder marks — client logos to be supplied by Professional Hire.</p>
+  </div>
+</section>
+
 <!-- How it works -->
 <section class="sec sec--dark">
   <div class="wrap">
-    <div class="sec-head">
-      <div class="eyebrow">How it works</div>
-      <h2>Call before lunch. Fenced by tomorrow.</h2>
-      <p class="lede">No account application, no minimum contract, no waiting three days for a rep to call you back.</p>
+    <div class="rail-head">
+      <div class="rail-head__label">01 / Process</div>
+      <div>
+        <h2>Call before lunch. Fenced by tomorrow.</h2>
+        <p class="lede">No account application, no minimum contract, no waiting three days for a rep to call you back.</p>
+      </div>
     </div>
     <div class="steps">
       <div class="step">
@@ -565,9 +677,12 @@
 <!-- Use cases -->
 <section class="sec sec--dark">
   <div class="wrap">
-    <div class="sec-head">
-      <div class="eyebrow">Who we fence</div>
-      <h2>If it needs a perimeter, we've fenced one like it.</h2>
+    <div class="rail-head">
+      <div class="rail-head__label">02 / Sites</div>
+      <div>
+        <h2>If it needs a perimeter, we've fenced one like it.</h2>
+        <p class="lede">Six kinds of job, one phone number. The gear and the crew are the same either way.</p>
+      </div>
     </div>
     <div class="uses">
       <div class="use">
@@ -607,7 +722,7 @@
 <!-- Rates -->
 <section class="sec" id="rates">
   <div class="wrap">
-    <div class="sec-head">
+    <div class="sec-head sec-head--center">
       <div class="eyebrow eyebrow--dark">Hire rates</div>
       <h2>A number on the page, not "call for pricing".</h2>
       <p class="lede">Three typical jobs, so you know roughly where you'll land before you pick up the phone. Every quote is fixed in writing before we load a truck.</p>
@@ -694,7 +809,7 @@
 <!-- Testimonials -->
 <section class="sec">
   <div class="wrap">
-    <div class="sec-head">
+    <div class="sec-head sec-head--center">
       <div class="eyebrow eyebrow--dark">Hear from our clients</div>
       <h2>The gear turns up. The crew turns up.</h2>
     </div>
@@ -728,10 +843,12 @@
 <!-- Cross-sell -->
 <section class="sec sec--bitumen">
   <div class="wrap">
-    <div class="sec-head">
-      <div class="eyebrow">One delivery, one invoice</div>
-      <h2>Everything else the site needs, on the same order.</h2>
-      <p class="lede">Add it to your fencing quote and it lands on the same truck, on the same day.</p>
+    <div class="rail-head">
+      <div class="rail-head__label">03 / Also hire</div>
+      <div>
+        <h2>Everything else the site needs, on the same order.</h2>
+        <p class="lede">Add it to your fencing quote and it lands on the same truck, on the same day.</p>
+      </div>
     </div>
     <div class="gear">
       <div><h3>Portable toilets</h3><p>Standard and accessible units for sites and events, serviced on schedule.</p></div>
@@ -747,9 +864,12 @@
 <!-- FAQ -->
 <section class="sec" id="faq">
   <div class="wrap">
-    <div class="sec-head">
-      <div class="eyebrow eyebrow--dark">Straight answers</div>
-      <h2>The questions we get asked every week.</h2>
+    <div class="rail-head">
+      <div class="rail-head__label">04 / Answers</div>
+      <div>
+        <h2>The questions we get asked every week.</h2>
+        <p class="lede">If yours isn't here, call and ask — the answer takes about a minute.</p>
+      </div>
     </div>
     <div class="faq">
       <details open>
@@ -793,10 +913,9 @@
   <div class="close-cta__bg">
     <img src="/assets/professional-hire/event-barriers.webp" alt="Crowd control barriers set up along the edge of a community event in a park" width="1600" height="1073" loading="lazy">
   </div>
-  <div class="close-cta-outer">
-    <div class="wrap">
+  <div class="wrap">
       <div class="eyebrow">Ready when you are</div>
-      <h2>Get a price on your fence <em>within the hour.</em></h2>
+      <h2>Get a price on your fence <em>within&nbsp;the&nbsp;hour.</em></h2>
       <p>Tell us the suburb and the perimeter — or just call and talk it through. Someone who knows the gear will answer, at any hour, on any day.</p>
       <div class="close-cta__actions">
         <a class="btn btn--primary" href="tel:+61448403436">
@@ -805,7 +924,6 @@
         </a>
         <a class="btn btn--ghost" href="#quote">Request a quote online</a>
       </div>
-    </div>
   </div>
 </section>
 </main>
@@ -845,6 +963,23 @@
 </nav>
 
 <script>
+  // Orphan control, belt to the CSS braces. `text-wrap: balance/pretty` does
+  // most of this, but it is advisory — the browser gives up on long blocks and
+  // support still varies. Binding the last two words of every text block with a
+  // non-breaking space guarantees no single word is ever stranded on its own
+  // line, and it keeps holding if the copy is edited later.
+  (function () {
+    var SEL = 'h1,h2,h3,h4,p,li,td,th,blockquote,summary,figcaption,cite,.eyebrow,.rail-head__label';
+    document.querySelectorAll(SEL).forEach(function (el) {
+      if (el.querySelector(SEL)) return;           // containers, not text blocks
+      var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT), node, last = null;
+      while ((node = walker.nextNode())) { if (node.nodeValue.trim()) last = node; }
+      if (!last) return;
+      var m = last.nodeValue.replace(/\s+$/, '').match(/^([\s\S]*\S)[ \t\n]+(\S+)$/);
+      if (m) last.nodeValue = m[1] + '\u00A0' + m[2];
+    });
+  })();
+
   // Concept form: no backend. Confirm inline so the flow can be demonstrated
   // end to end, and mark where the live build would fire its conversion.
   (function () {
