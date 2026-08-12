@@ -106,7 +106,7 @@ export async function sendLabQuizEmail(p: LabQuizEmail): Promise<void> {
   const html = `<!doctype html>
 <html><body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;line-height:1.55;color:#0F0F0F;max-width:680px;margin:0 auto;padding:24px;">
   <h1 style="font-size:22px;margin:0 0 4px;">${esc(p.lab)} · quiz answers</h1>
-  <p style="color:#6B6B6B;margin:0 0 24px;">Answered while their pack generated. Read before the 24h call.</p>
+  <p style="color:#6B6B6B;margin:0 0 24px;">Answered while their results generated. Read before the follow-up call.</p>
   <table style="border-collapse:collapse;width:100%;margin-bottom:24px;font-size:14px;">
     <tr><td style="padding:6px 12px 6px 0;color:#6B6B6B;width:220px;">Prospect</td><td style="padding:6px 0;"><a href="mailto:${esc(p.email)}">${esc(p.email)}</a></td></tr>
     <tr><td style="padding:6px 12px 6px 0;color:#6B6B6B;">Site</td><td style="padding:6px 0;"><a href="${esc(p.url)}">${esc(host)}</a></td></tr>
