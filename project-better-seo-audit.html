@@ -1,0 +1,1602 @@
+<!DOCTYPE html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script>
+/* Motion gate. Every animated rule in this document is scoped to html.mo,
+   which is added here — before first paint, so nothing flashes — and only
+   when the visitor has not asked their OS for reduced motion.
+
+   The scroll-reveal rules start elements at opacity 0, so a failure to
+   reach the motion script at the end of <body> would leave the report
+   blank. Two backstops prevent that: the motion script strips the class
+   itself if it throws, and the timer below strips it if the script never
+   ran at all (10s — long enough that a slow font stylesheet, which blocks
+   the parser and therefore that script, doesn't trip it on a normal load).
+   Stripping reverts the page to the plain static document. */
+(function(){
+  var d = document.documentElement;
+  window.__moOff = function(){
+    d.className = d.className.replace(/(^|\s)mo(\s|$)/, ' ');
+  };
+  try{
+    if(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  }catch(e){ return; }
+  d.className += ' mo';
+  setTimeout(function(){ if(!window.__moBooted) window.__moOff(); }, 10000);
+})();
+</script>
+<title>SEO Overview Audit — Project Better</title>
+<meta name="description" content="A 12-month SEO overview audit and growth plan for Project Better — 31 July 2025 to 31 July 2026, Australian market.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="preload" href="/assets/project-better/montserrat-latin.woff2" as="font" type="font/woff2" crossorigin>
+<style>
+/* Montserrat, self-hosted. Project Better's own typeface, and the only one
+   this document uses. Served from /assets rather than Google Fonts so the
+   report renders identically offline, behind a corporate proxy, or from a
+   saved copy — and so nothing render-blocking sits on a third-party host.
+   One variable file covers 400–800; latin-ext is a separate subset, needed
+   for the macron in "KĀYA". */
+@font-face{
+  font-family:'Montserrat';
+  src:url('/assets/project-better/montserrat-latin.woff2') format('woff2');
+  font-weight:400 800;font-style:normal;font-display:swap;
+  unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,
+    U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD;
+}
+@font-face{
+  font-family:'Montserrat';
+  src:url('/assets/project-better/montserrat-latin-ext.woff2') format('woff2');
+  font-weight:400 800;font-style:normal;font-display:swap;
+  unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,
+    U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C0,
+    U+2113,U+2C60-2C7F,U+A720-A7FF;
+}
+/* ============================================================
+   PROJECT BETTER — BRAND TOKENS
+   Pulled from projectbetter.com.au:
+     Ink #161616 · White #FFFFFF · Alt surface #F2F4F7
+     Hairline #E3E7F0 · Steel #9BA5BF · Slate #727F9F
+   Typeface: Montserrat, single family, three roles —
+     display 700/800 · body 400/500 · label 600 uppercase tracked.
+   The brand is deliberately monochrome, so --signal below is the only
+   non-brand colour in the document. It is functional, not decorative:
+   it marks broken journeys and nothing else. Warmth comes from the
+   photography, which is Project Better's own.
+   ============================================================ */
+:root{
+  --ink:#161616;
+  --white:#FFFFFF;
+  --paper:#F7F8FA;
+  --alt:#F2F4F7;
+  --line:#E3E7F0;
+  --line-soft:#EEF1F6;
+  --steel:#9BA5BF;
+  --slate:#727F9F;
+  --muted:#5F6878;
+
+  --signal:#B3392C;          /* broken / error only */
+  --signal-soft:#F7EAE8;
+  --signal-line:#E2C3BE;
+
+  --f:'Montserrat',-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,sans-serif;
+
+  --max:1120px;
+  --gut:clamp(20px,5vw,64px);
+  --nav-h:60px;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:calc(var(--nav-h) + 24px);-webkit-text-size-adjust:100%}
+body{
+  background:var(--white);
+  color:var(--ink);
+  font-family:var(--f);
+  font-size:17px;
+  line-height:1.62;
+  font-weight:400;
+  -webkit-font-smoothing:antialiased;
+}
+
+/* ---------- type scale ----------
+   No second typeface. The "label" role is Montserrat 600 at small size
+   with wide tracking — the same treatment Project Better uses for its
+   own navigation and section markers. */
+.eyebrow{
+  font-family:var(--f);
+  font-size:11px;
+  font-weight:600;
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  color:var(--muted);
+}
+h1,h2,h3,h4{font-family:var(--f);font-weight:700;letter-spacing:-.022em;line-height:1.14;
+  text-wrap:balance;-webkit-hyphens:none;hyphens:none}
+h1{font-weight:800;letter-spacing:-.035em}
+h2{font-size:clamp(28px,3.7vw,38px);margin-bottom:12px;letter-spacing:-.03em}
+h3{font-size:clamp(20px,2.2vw,24px);margin-bottom:10px;letter-spacing:-.024em}
+h4{font-size:17px;font-weight:700;letter-spacing:-.014em;margin-bottom:8px}
+p{margin-bottom:16px;max-width:72ch;text-wrap:pretty}
+p:last-child{margin-bottom:0}
+strong{font-weight:600}
+em.q{font-style:normal;font-weight:500;color:var(--ink);white-space:nowrap}
+a{color:var(--ink);text-underline-offset:2px}
+a:hover{color:var(--slate)}
+.num,td.num,th.num,.val,.tbl-scroll table{font-variant-numeric:tabular-nums}
+
+/* ---------- layout ---------- */
+.wrap{max-width:var(--max);margin:0 auto;padding-left:var(--gut);padding-right:var(--gut)}
+section{padding:clamp(38px,4.8vw,58px) 0;border-top:1px solid var(--line)}
+section:first-of-type{border-top:0}
+.sec-head{margin-bottom:clamp(20px,2.6vw,30px)}
+.sec-head .eyebrow{display:block;margin-bottom:12px}
+.lede{font-size:clamp(18px,2vw,20px);line-height:1.55;color:var(--ink);max-width:66ch;font-weight:500}
+.sub{color:var(--muted);font-size:15.5px}
+.block{margin-top:clamp(26px,3vw,36px)}
+.block:first-child{margin-top:0}
+.block > .eyebrow{display:block;margin-bottom:10px}
+
+/* ---------- masthead ----------
+   Project Better's own hero photograph, desaturated and dropped behind
+   ink so the type stays at full contrast. */
+.masthead{
+  position:relative;background:var(--ink);color:var(--white);
+  padding:clamp(48px,6.4vw,80px) 0 clamp(32px,4.5vw,48px);
+  overflow:hidden
+}
+/* Photo sits ABOVE the ink fill (z 0) and below the scrim (z 1); the
+   content is lifted to z 2. Negative z-indexes would paint behind the
+   masthead's own background and disappear. */
+.masthead::before{
+  content:"";position:absolute;inset:0;z-index:0;
+  background-image:url("/assets/project-better/pb-hero.jpg");
+  background-size:cover;background-position:50% 42%;
+  filter:grayscale(1) contrast(1.08);opacity:.62
+}
+.masthead::after{
+  content:"";position:absolute;inset:0;z-index:1;
+  background:linear-gradient(180deg,rgba(22,22,22,.30) 0%,rgba(22,22,22,.66) 52%,rgba(22,22,22,.90) 100%)
+}
+.masthead > .wrap{position:relative;z-index:2}
+.masthead .eyebrow{color:var(--steel)}
+.wordmark{
+  font-weight:800;font-size:clamp(40px,8.4vw,80px);letter-spacing:-.045em;
+  line-height:.98;color:var(--white);margin:18px 0 4px;text-transform:lowercase
+}
+.masthead .kicker{
+  font-size:11px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--steel);margin-top:8px
+}
+.masthead h1{
+  font-size:clamp(26px,4.6vw,44px);
+  color:var(--white);max-width:22ch;margin-top:24px;line-height:1.1
+}
+.meta-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+  gap:1px;background:rgba(255,255,255,.22);
+  margin-top:clamp(36px,5vw,56px);border:1px solid rgba(255,255,255,.22)
+}
+.meta-grid div{background:rgba(22,22,22,.72);padding:16px 18px;backdrop-filter:blur(2px)}
+.meta-grid dt{
+  font-size:10.5px;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--steel);margin-bottom:6px
+}
+.meta-grid dd{font-size:15px;line-height:1.45;color:var(--white);font-weight:500}
+.meta-grid dd a{color:var(--white)}
+
+/* ---------- sticky nav ---------- */
+.nav{
+  position:sticky;top:0;z-index:60;background:var(--white);
+  border-bottom:1px solid var(--line);height:var(--nav-h)
+}
+.nav-inner{
+  max-width:var(--max);margin:0 auto;padding:0 var(--gut);
+  height:var(--nav-h);display:flex;align-items:center;gap:8px
+}
+.nav-brand{
+  font-weight:800;font-size:18px;letter-spacing:-.04em;color:var(--ink);
+  flex:0 0 auto;text-decoration:none;padding-right:14px;
+  border-right:1px solid var(--line);margin-right:6px;text-transform:lowercase
+}
+.nav-scroll{
+  display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;
+  -ms-overflow-style:none;flex:1 1 auto
+}
+.nav-scroll::-webkit-scrollbar{display:none}
+.nav a.nl{
+  font-size:11px;font-weight:600;letter-spacing:.1em;
+  text-transform:uppercase;color:var(--muted);text-decoration:none;
+  padding:7px 10px;white-space:nowrap;border-radius:3px;flex:0 0 auto
+}
+.nav a.nl:hover{color:var(--ink);background:var(--alt)}
+.nav a.nl[aria-current="true"]{color:var(--white);background:var(--ink)}
+
+/* ---------- stat tiles ---------- */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.tile{background:var(--white);padding:20px 18px 18px}
+.tile .lab{font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:10px;line-height:1.4}
+/* Sized so the widest value in the row — "US$1,378" — clears its tile at
+   the five-across breakpoint. Bigger overflows into the neighbour. */
+.tile .val{font-weight:800;font-size:clamp(26px,3.1vw,33px);letter-spacing:-.04em;line-height:1.05;color:var(--ink);display:block}
+.tile .val.neg{color:var(--signal)}
+.tile .val small{font-size:.46em;font-weight:600;letter-spacing:-.01em;color:var(--muted)}
+.tile .delta{font-size:12px;font-weight:500;letter-spacing:.01em;color:var(--muted);margin-top:10px;display:block}
+
+/* ---------- tables ---------- */
+.tbl-scroll{overflow-x:auto;border:1px solid var(--line);margin-top:18px;-webkit-overflow-scrolling:touch}
+table{border-collapse:collapse;width:100%;font-size:15px;min-width:540px;background:var(--white)}
+caption{text-align:left;font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);padding:13px 16px;border-bottom:1px solid var(--line);background:var(--paper)}
+th,td{text-align:left;padding:11px 16px;border-bottom:1px solid var(--line-soft);vertical-align:top}
+thead th{
+  font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);background:var(--paper);border-bottom:1px solid var(--line);
+  position:sticky;top:0;white-space:nowrap
+}
+tbody tr:last-child td{border-bottom:0}
+tbody tr:hover{background:var(--paper)}
+td.num,th.num{text-align:right;font-size:14px;font-weight:500;white-space:nowrap}
+td.key{font-weight:600}
+tfoot td{background:var(--paper);font-weight:600;border-top:1px solid var(--line);border-bottom:0}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:12.5px;background:var(--alt);padding:2px 6px;border:1px solid var(--line);border-radius:3px;white-space:nowrap}
+
+/* ---------- pills / status ---------- */
+.pill{
+  display:inline-flex;align-items:center;gap:5px;font-size:10.5px;
+  font-weight:600;letter-spacing:.09em;text-transform:uppercase;
+  padding:3px 8px;border-radius:3px;white-space:nowrap;border:1px solid transparent
+}
+.pill.bad{background:var(--signal);color:var(--white)}
+.pill.warn{background:var(--signal-soft);color:#83291F;border-color:var(--signal-line)}
+.pill.ok{background:var(--ink);color:var(--white)}
+.pill.up{background:var(--ink);color:var(--white)}
+.pill.flat{background:var(--alt);color:var(--muted);border-color:var(--line)}
+
+/* ---------- callouts ---------- */
+.callout{border:1px solid var(--line);border-left:4px solid var(--ink);background:var(--paper);padding:16px 20px;margin-top:20px}
+.callout .eyebrow{display:block;margin-bottom:9px;color:var(--ink)}
+.callout p{font-size:16px;max-width:70ch}
+.callout.alert{border-left-color:var(--signal);background:var(--signal-soft);border-color:var(--signal-line)}
+.callout.alert .eyebrow{color:#83291F}
+.callout.quiet{border-left-color:var(--steel)}
+.callout.quiet .eyebrow{color:var(--muted)}
+
+/* ---------- charts ---------- */
+.chart{margin-top:18px;border:1px solid var(--line);padding:18px}
+.chart-title{font-weight:700;font-size:16px;letter-spacing:-.018em;margin-bottom:3px}
+.chart-note{font-size:10.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:16px}
+.legend{display:flex;flex-wrap:wrap;gap:16px;margin-bottom:18px}
+.legend span{display:inline-flex;align-items:center;gap:7px;font-size:10.5px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.swatch{display:inline-block;width:11px;height:11px;border-radius:2px;flex:0 0 auto;border:1px solid rgba(22,22,22,.14)}
+
+.bars{display:flex;flex-direction:column;gap:14px}
+.bar-row{display:grid;grid-template-columns:minmax(96px,178px) 1fr;gap:14px;align-items:center}
+.bar-lab{font-size:13.5px;line-height:1.3;color:var(--ink);font-weight:500}
+.bar-lab small{display:block;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-top:3px}
+.bar-track{position:relative;height:22px;background:var(--alt);border-radius:3px;overflow:visible}
+.bar-fill{height:100%;border-radius:0 4px 4px 0;background:var(--ink);position:relative;min-width:2px;transition:width .5s ease}
+.bar-fill.prev{background:var(--steel)}
+.bar-fill.sig{background:var(--signal)}
+.bar-val{
+  position:absolute;left:calc(100% + 8px);top:50%;transform:translateY(-50%);
+  font-size:12px;color:var(--ink);white-space:nowrap;font-weight:600;font-variant-numeric:tabular-nums
+}
+.bar-val.inside{left:auto;right:8px;color:var(--white)}
+/* Steel is too light to carry white text — flip the inside label to ink. */
+.bar-fill.prev .bar-val.inside{color:var(--ink)}
+.pairs{display:flex;flex-direction:column;gap:5px}
+.pair-track{position:relative;height:15px;background:var(--alt);border-radius:3px}
+
+/* stacked share bar */
+.stack{display:flex;height:34px;border:1px solid var(--line);border-radius:3px;overflow:hidden;margin-top:6px}
+.stack span{display:flex;align-items:center;justify-content:center;font-size:11.5px;font-weight:700;color:var(--white);letter-spacing:-.01em;min-width:0;overflow:hidden;white-space:nowrap}
+.stack .s1{background:var(--ink)}
+.stack .s2{background:var(--slate)}
+.stack .s3{background:var(--steel);color:var(--ink)}
+.stack-key{display:flex;flex-wrap:wrap;gap:16px;margin-top:12px}
+.stack-key span{display:inline-flex;align-items:center;gap:7px;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+
+/* ---------- photography ----------
+   Project Better's own images. Desaturated so they read as report
+   furniture rather than marketing, and never carrying information
+   the text doesn't also state. */
+.figstrip{margin-top:clamp(26px,3vw,36px);border:1px solid var(--line)}
+.figstrip img{
+  display:block;width:100%;height:clamp(180px,26vw,300px);object-fit:cover;
+  object-position:50% 50%;filter:grayscale(1) contrast(1.04)
+}
+/* Portrait source in a landscape band — pull the crop up to the subject. */
+.figstrip img.pos-high{object-position:50% 26%}
+.outlook .figstrip{border-color:rgba(255,255,255,.18)}
+.outlook .figstrip figcaption{background:rgba(255,255,255,.04);border-top-color:rgba(255,255,255,.18);color:var(--steel)}
+.outlook .figstrip img{opacity:.85}
+.figstrip figcaption{
+  font-size:10.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;
+  color:var(--muted);padding:11px 16px;border-top:1px solid var(--line);background:var(--paper)
+}
+.figduo{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:clamp(26px,3vw,36px)}
+.figduo figure{background:var(--white);margin:0}
+.figduo img{display:block;width:100%;height:clamp(160px,20vw,220px);object-fit:cover;filter:grayscale(1) contrast(1.04)}
+.figduo figcaption{font-size:10.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--muted);padding:11px 14px}
+
+/* ---------- lists ---------- */
+ul.plain,ol.plain{margin:0 0 16px 0;padding-left:0;list-style:none;max-width:72ch}
+ul.plain li{position:relative;padding-left:20px;margin-bottom:7px;font-size:16px;line-height:1.5}
+ul.plain li::before{content:"";position:absolute;left:0;top:.64em;width:8px;height:2px;background:var(--ink)}
+ol.steps{counter-reset:s;list-style:none;padding:0;margin:0;max-width:74ch}
+ol.steps li{counter-increment:s;position:relative;padding-left:46px;margin-bottom:15px;font-size:16.5px;line-height:1.5}
+ol.steps li::before{
+  content:counter(s,decimal-leading-zero);position:absolute;left:0;top:-1px;width:31px;height:29px;
+  display:flex;align-items:center;justify-content:center;background:var(--ink);color:var(--white);
+  font-size:12px;font-weight:700;letter-spacing:.02em;border-radius:3px
+}
+ol.steps li strong{display:block;font-weight:700;font-size:17px;letter-spacing:-.018em;margin-bottom:3px}
+
+/* ---------- phase cards ---------- */
+.phases{display:grid;gap:1px;background:var(--line);border:1px solid var(--line)}
+.phase{background:var(--white);padding:22px}
+.phase-hd{display:flex;align-items:baseline;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.phase-num{font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--white);background:var(--ink);padding:4px 9px;border-radius:3px}
+.phase h3{margin-bottom:0}
+.phase .why{color:var(--muted);font-size:15px;margin:8px 0 18px;max-width:70ch}
+
+/* ---------- two col ---------- */
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(24px,3.4vw,40px)}
+.card{border:1px solid var(--line);padding:22px}
+.card h4{margin-bottom:8px}
+.card p{font-size:15.5px;color:var(--muted)}
+.card p strong{color:var(--ink)}
+.card .eyebrow{display:block;margin-bottom:9px}
+
+/* ---------- workstream grid (scope of works) ---------- */
+.streams{display:grid;grid-template-columns:repeat(auto-fit,minmax(238px,1fr));gap:1px;background:var(--line);border:1px solid var(--line);margin-top:20px}
+.stream{background:var(--white);padding:20px 18px 22px}
+.stream .n{font-size:22px;font-weight:800;letter-spacing:-.04em;color:var(--steel);display:block;line-height:1;margin-bottom:12px}
+.stream h4{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;margin-bottom:12px}
+.stream ul{list-style:none;padding:0;margin:0}
+.stream li{position:relative;padding-left:16px;font-size:14px;line-height:1.45;color:var(--muted);margin-bottom:8px}
+.stream li:last-child{margin-bottom:0}
+.stream li::before{content:"";position:absolute;left:0;top:.6em;width:6px;height:6px;background:var(--ink);border-radius:1px}
+.stream .tag{display:inline-block;font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;background:var(--ink);color:var(--white);padding:3px 7px;border-radius:3px;margin-left:8px;vertical-align:2px}
+
+/* price tiles */
+.price{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.price div{background:var(--white);padding:24px 20px}
+.price div.hi{background:var(--ink);color:var(--white)}
+.price dt{font-size:10.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:12px}
+.price div.hi dt{color:var(--steel)}
+.price dd{font-weight:800;font-size:clamp(30px,4.2vw,38px);letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
+.price dd span{font-size:.42em;font-weight:600;letter-spacing:0;color:var(--muted);display:block;margin-top:11px;line-height:1.4}
+.price div.hi dd span{color:var(--steel)}
+/* Tax basis rides with the figure rather than sitting in a footnote —
+   every number on this page is quoted on the same basis. */
+.price dd .ex{
+  font-style:normal;font-size:.3em;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted);margin-left:.5em;vertical-align:.42em
+}
+.price div.hi dd .ex{color:var(--steel)}
+
+/* ---------- outlook ---------- */
+.outlook{background:var(--ink);color:var(--paper);padding:clamp(38px,4.8vw,60px) 0;border-top:0}
+.outlook h2{color:var(--white)}
+.outlook .eyebrow{color:var(--steel)}
+.outlook p{color:#C9CEDA}
+.outlook strong{color:var(--white)}
+.outlook .bar-track{background:rgba(255,255,255,.12)}
+.outlook .bar-fill{background:var(--white)}
+.outlook .bar-fill.prev{background:var(--slate)}
+.outlook .bar-lab{color:var(--paper)}
+.outlook .bar-lab small{color:var(--steel)}
+.outlook .bar-val{color:var(--white)}
+.outlook .chart{border-color:rgba(255,255,255,.18)}
+.outlook .chart-title{color:var(--white)}
+.outlook .chart-note,.outlook .legend span{color:var(--steel)}
+.outlook ul.plain li::before{background:var(--white)}
+
+/* ---------- next steps ---------- */
+.cta{background:var(--alt);padding:clamp(36px,4.5vw,56px) 0;border-top:0}
+.cta h2{color:var(--ink)}
+.cta .eyebrow{color:var(--muted)}
+
+/* ---------- footer ---------- */
+.foot{background:var(--ink);color:var(--white);padding:36px 0;border-top:1px solid rgba(255,255,255,.12)}
+.foot-inner{display:flex;flex-wrap:wrap;gap:16px;justify-content:space-between;align-items:center}
+.foot .fm{font-size:10.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--steel);line-height:1.7}
+.foot .fw{font-weight:800;font-size:23px;letter-spacing:-.045em;text-transform:lowercase}
+.foot a{color:var(--white)}
+
+/* ---------- widow / orphan control ---------- */
+.lede,.chart-title,.chart-note,.eyebrow,
+.tile .lab,.tile .delta,.bar-lab,.bar-lab small,
+.phase .why,.card p,.callout p,.more>summary,.ap>summary,
+caption,th,.pill,.foot .fm,.figstrip figcaption,.figduo figcaption{text-wrap:balance}
+ul.plain li,ol.steps li,td,.stream li{text-wrap:pretty}
+.masthead h1{text-wrap:balance;max-width:17ch}
+
+/* ---------- inline "show more" ---------- */
+.more{margin-top:16px;border:1px solid var(--line);background:var(--white)}
+.more>summary{cursor:pointer;list-style:none;padding:12px 16px;display:flex;align-items:center;gap:10px;
+  font-size:10.5px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--muted)}
+.more>summary::-webkit-details-marker{display:none}
+.more>summary::after{content:"+";margin-left:auto;font-size:17px;color:var(--ink);line-height:1}
+.more[open]>summary::after{content:"\2013"}
+.more[open]>summary{border-bottom:1px solid var(--line);background:var(--paper);color:var(--ink)}
+.more>summary:hover{background:var(--paper);color:var(--ink)}
+.more .tbl-scroll{margin:0;border:0;border-bottom:1px solid var(--line-soft)}
+.more .tbl-scroll:last-child{border-bottom:0}
+.more .cols{gap:24px}
+.more-body{padding:18px 16px 20px}
+
+/* ---------- appendix details ---------- */
+.ap{border:1px solid var(--line);border-top:0;background:var(--white)}
+.ap:first-of-type{border-top:1px solid var(--line)}
+.ap > summary{list-style:none;cursor:pointer;padding:15px 20px;display:flex;align-items:center;gap:14px;
+  font-weight:700;font-size:16.5px;letter-spacing:-.018em;background:var(--white)}
+.ap > summary::-webkit-details-marker{display:none}
+.ap > summary::after{content:"+";margin-left:auto;font-size:19px;color:var(--ink);line-height:1;flex:0 0 auto}
+.ap[open] > summary::after{content:"\2013"}
+.ap[open] > summary{background:var(--paper);border-bottom:1px solid var(--line)}
+.ap > summary:hover{background:var(--paper)}
+.ap .ap-n{font-size:10.5px;font-weight:600;letter-spacing:.1em;color:var(--white);
+  background:var(--ink);padding:4px 8px;border-radius:3px;flex:0 0 auto}
+.ap-body{padding:18px 20px 22px}
+.ap-body > p{font-size:15.5px}
+.ap-body .tbl-scroll{margin-top:16px}
+.ap-body ul.plain li{font-size:15.5px}
+@media print{ .ap > summary::after,.more > summary::after{display:none} }
+
+/* ---------- misc ---------- */
+.totop{
+  position:fixed;right:18px;bottom:18px;z-index:70;background:var(--ink);color:var(--white);
+  width:42px;height:42px;border-radius:50%;border:0;cursor:pointer;display:none;
+  align-items:center;justify-content:center;font-size:17px;line-height:1
+}
+.totop.on{display:flex}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:-999px;top:0;background:var(--ink);color:#fff;padding:10px 16px;z-index:100}
+.skip:focus{left:8px;top:8px}
+:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+
+/* ============================================================
+   MOTION
+   All of it is scoped to html.mo (set by the gate script in
+   <head>). No class = no hidden initial states, no transitions —
+   reduced-motion visitors and anyone whose JS fails get the
+   finished document exactly as it was before this block existed.
+   ============================================================ */
+@keyframes moRise{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes moDrop{from{opacity:0;transform:translateY(-8px)}to{opacity:1;transform:none}}
+
+html.mo .masthead .eyebrow,
+html.mo .masthead .wordmark,
+html.mo .masthead .kicker,
+html.mo .masthead h1,
+html.mo .masthead .meta-grid{animation:moRise .85s cubic-bezier(.22,.7,.25,1) both}
+html.mo .masthead .wordmark{animation-delay:.07s}
+html.mo .masthead .kicker{animation-delay:.14s}
+html.mo .masthead h1{animation-delay:.2s}
+html.mo .masthead .meta-grid{animation-delay:.3s}
+
+/* ---- scroll reveal ----
+   This selector list is mirrored exactly in the motion script; if you
+   add a rule here, add it there too or the element stays invisible. */
+html.mo .sec-head,
+html.mo section > .wrap > *:not(.block):not(.sec-head),
+html.mo .block > *:not(.tiles):not(.phases):not(.cols):not(.streams):not(.steps):not(.price):not(.figduo),
+html.mo .tiles > .tile,
+html.mo .phases > .phase,
+html.mo .cols > .card,
+html.mo .streams > .stream,
+html.mo .price > div,
+html.mo .figduo > figure,
+html.mo .steps > li{
+  opacity:0;transform:translateY(15px);
+  transition:opacity .6s cubic-bezier(.22,.7,.25,1) var(--mo-d,0ms),
+             transform .6s cubic-bezier(.22,.7,.25,1) var(--mo-d,0ms)
+}
+/* !important on purpose: the hidden rule above carries several :not()
+   classes, which outweighs a plain .mo-in selector and would strand
+   revealed elements at opacity 0. */
+html.mo .mo-in{opacity:1!important;transform:none!important}
+
+html.mo .bar-fill{width:0!important;min-width:0;
+  transition:width .95s cubic-bezier(.22,.7,.25,1) var(--mo-d,0ms)}
+html.mo .bar-fill.mo-bar-in{width:var(--mo-w)!important;min-width:2px}
+html.mo .bar-fill .bar-val{opacity:0;
+  transition:opacity .45s ease calc(var(--mo-d,0ms) + 460ms)}
+html.mo .bar-fill.mo-bar-in .bar-val{opacity:1}
+
+html.mo .mo-prog{
+  position:absolute;left:0;right:0;bottom:-1px;height:2px;background:var(--ink);
+  transform:scaleX(0);transform-origin:0 50%;pointer-events:none;z-index:2}
+html.mo .nav{transition:box-shadow .28s ease}
+html.mo .nav.mo-stuck{box-shadow:0 2px 16px rgba(22,22,22,.10)}
+html.mo .nav a.nl{transition:background-color .22s ease,color .22s ease}
+
+html.mo .ap[open] > .ap-body,
+html.mo .more[open] > *:not(summary){animation:moDrop .42s cubic-bezier(.22,.7,.25,1) both}
+html.mo .ap > summary,html.mo .more > summary{transition:background-color .2s ease,color .2s ease}
+
+html.mo .totop{
+  display:flex;opacity:0;visibility:hidden;transform:translateY(10px) scale(.85);
+  transition:opacity .3s ease,transform .3s cubic-bezier(.34,1.3,.5,1),visibility .3s,background-color .2s ease}
+html.mo .totop.on{opacity:1;visibility:visible;transform:none}
+
+@media (hover:hover) and (pointer:fine){
+  html.mo .card,html.mo .stream{transition:transform .28s cubic-bezier(.22,.7,.25,1),box-shadow .28s ease}
+  html.mo .card:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(22,22,22,.08)}
+  html.mo .figstrip img,html.mo .figduo img{transition:filter .5s ease}
+  html.mo .figstrip:hover img,html.mo .figduo figure:hover img{filter:grayscale(0) contrast(1)}
+}
+
+/* ---- horizontal-scroll hint ----
+   Not gated on .mo: this is a mobile affordance, not decoration, so
+   reduced-motion visitors get it too. */
+.mo-hint{
+  display:none;font-size:10px;font-weight:600;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--muted);margin-top:7px;transition:opacity .3s ease}
+.mo-hint.on{display:block}
+.mo-hint.done{opacity:0}
+.more .mo-hint,.ap .mo-hint{padding:0 16px 12px;margin-top:5px}
+@media print{.mo-hint{display:none!important}}
+
+@media (max-width:640px){
+  body{font-size:16px}
+  .bar-row{grid-template-columns:1fr;gap:7px}
+  .bar-track,.pairs{margin-right:78px}
+  .bar-track{height:20px}
+  .bar-val{font-size:11.5px}
+  .nav-brand{font-size:16px;padding-right:10px}
+  table{font-size:14px}
+  th,td{padding:9px 12px}
+  .stack span{font-size:10px}
+  .tiles>.tile:last-child:nth-child(odd){grid-column:1/-1}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *{transition:none!important;animation:none!important}
+}
+@media print{
+  .nav,.totop,.skip{display:none!important}
+  body{font-size:11pt}
+  section{page-break-inside:avoid;border-top:1px solid #ccc}
+  .masthead,.outlook,.foot,.cta{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .tbl-scroll{overflow:visible}
+  table{min-width:0}
+  a[href^="http"]::after{content:" (" attr(href) ")";font-size:8pt;color:#666}
+}
+</style>
+</head>
+<body data-palette="#161616,#F2F4F7,#9BA5BF">
+
+<a class="skip" href="#main">Skip to content</a>
+
+<!-- ══════════════════ MASTHEAD ══════════════════ -->
+<header class="masthead" id="top">
+  <div class="wrap">
+    <span class="eyebrow">SEO Overview Audit</span>
+    <div class="wordmark">project better.</div>
+    <div class="kicker">Collingwood · Brunswick East · East Brunswick Village · West Melbourne</div>
+    <h1>Fewer searches, stronger positions, and four broken journeys to fix.</h1>
+
+    <dl class="meta-grid">
+      <div><dt>Period</dt><dd>31 July 2025 – 31 July 2026</dd></div>
+      <div><dt>Data source</dt><dd>Ahrefs, Australian market</dd></div>
+      <div><dt>Prepared</dt><dd>12 August 2026</dd></div>
+      <div><dt>Website</dt><dd><a href="https://projectbetter.com.au/">projectbetter.com.au</a></dd></div>
+    </dl>
+  </div>
+</header>
+
+<!-- ══════════════════ NAV ══════════════════ -->
+<nav class="nav" aria-label="Report sections">
+  <div class="nav-inner">
+    <a class="nav-brand" href="#top">pb.</a>
+    <div class="nav-scroll">
+      <a class="nl" href="#summary">Summary</a>
+      <a class="nl" href="#performance">1 · Performance</a>
+      <a class="nl" href="#changed">2 · What changed</a>
+      <a class="nl" href="#working">3 · What's working</a>
+      <a class="nl" href="#growth">4 · Growth</a>
+      <a class="nl" href="#priorities">5 · Priorities</a>
+      <a class="nl" href="#investment">Investment</a>
+      <a class="nl" href="#appendix">Scope</a>
+    </div>
+  </div>
+</nav>
+
+<main id="main">
+
+<!-- ══════════════════ SUMMARY ══════════════════ -->
+<section id="summary">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Executive summary</span>
+      <h2>Concentration, not decline.</h2>
+    </div>
+
+    <p class="lede">Project Better appears for far fewer searches than a year ago, but the terms it retains are stronger and estimated traffic has held steady. The risk is not the ranking — it is that discovery now runs through a very narrow group of pages, and several membership journeys are broken.</p>
+
+    <div class="block">
+      <span class="eyebrow">The year on one line</span>
+      <div class="tiles">
+        <div class="tile">
+          <span class="lab">Search terms</span>
+          <span class="val neg">84</span>
+          <span class="delta">Was 442 · down 81%</span>
+        </div>
+        <div class="tile">
+          <span class="lab">Top-three rankings</span>
+          <span class="val">16</span>
+          <span class="delta">Was 10 · up 6 positions</span>
+        </div>
+        <div class="tile">
+          <span class="lab">Est. monthly traffic</span>
+          <span class="val">1,370</span>
+          <span class="delta">Was 1,357 · broadly flat</span>
+        </div>
+        <div class="tile">
+          <span class="lab">Est. traffic value</span>
+          <span class="val">US$1,378</span>
+          <span class="delta">Was US$1,211 · up 14%</span>
+        </div>
+        <div class="tile">
+          <span class="lab">Broken journeys</span>
+          <span class="val neg">6</span>
+          <span class="delta">4 site errors · 2 member portal</span>
+        </div>
+      </div>
+      <p class="sub" style="margin-top:14px">Comparable full-month view, Australian market. Ahrefs estimates, not measured sessions.</p>
+    </div>
+
+    <div class="block">
+      <span class="eyebrow">The three highest-leverage actions</span>
+      <ol class="steps">
+        <li><strong>Repair the membership journeys.</strong> Four site addresses and two member portal pages return errors, including Fitness Passport, the membership portal and the member password reset. Every one of these interrupts somebody already deciding to join or trying to get back in.</li>
+        <li><strong>Turn the pre-launch location pages into real pages.</strong> Brunswick, Prahran, Kensington and Abbotsford carry only a "coming" line and an email form. Brunswick in particular now competes with the open Brunswick East gym for the same suburb signals.</li>
+        <li><strong>Widen discovery beyond the homepage.</strong> The homepage carries roughly 77% of estimated traffic. Stronger location, membership, amenity and personal-training pages move people closer to the next step instead of routing nearly everyone through the front door.</li>
+      </ol>
+    </div>
+
+    <div class="callout quiet">
+      <span class="eyebrow">Scope note</span>
+      <p>This is an overview audit built on Ahrefs data plus live verification of specific addresses. <strong>No full technical crawl and no Google Business Profile review have been carried out</strong> — both are set out as open items in the scope section, and the local-pack work is likely to be the next significant lever.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 1 · PERFORMANCE ══════════════════ -->
+<section id="performance">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Part 1 — Headline performance</span>
+      <h2>What the numbers say.</h2>
+      <p class="lede">Ahrefs Site Explorer, Australian data, comparable full months from 31 July 2025 to 31 July 2026.</p>
+    </div>
+
+    <div class="block">
+      <span class="eyebrow">1.1 — Year-on-year comparison</span>
+      <h3>Narrower footprint, better positions</h3>
+      <p>The keyword count fell hard while every quality measure held or improved. A site that ranked for 442 terms and got 1,357 visits now ranks for 84 terms and gets 1,370 — which means the surviving terms are doing considerably more work each.</p>
+
+      <div class="tbl-scroll">
+        <table>
+          <caption>Ahrefs snapshot · Australia · full-month comparable view</caption>
+          <thead>
+            <tr><th>Measure</th><th class="num">Jul 2025</th><th class="num">Jul 2026</th><th class="num">Change</th><th>Read</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="key">Organic search terms</td><td class="num">442</td><td class="num">84</td><td class="num">−81%</td><td><span class="pill warn">Narrower</span></td></tr>
+            <tr><td class="key">Top-three rankings</td><td class="num">10</td><td class="num">16</td><td class="num">+6</td><td><span class="pill ok">Stronger</span></td></tr>
+            <tr><td class="key">Est. monthly organic traffic</td><td class="num">1,357</td><td class="num">1,370</td><td class="num">+1%</td><td><span class="pill flat">Flat</span></td></tr>
+            <tr><td class="key">Est. monthly traffic value</td><td class="num">US$1,211</td><td class="num">US$1,378</td><td class="num">+14%</td><td><span class="pill ok">Stronger</span></td></tr>
+            <tr><td class="key">Website authority (DR)</td><td class="num">12</td><td class="num">11</td><td class="num">−1</td><td><span class="pill flat">Context only</span></td></tr>
+            <tr><td class="key">Homepage strength (UR)</td><td class="num">—</td><td class="num">8</td><td class="num">—</td><td><span class="pill flat">Context only</span></td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="sub" style="margin-top:14px">Authority and homepage-strength measures are third-party scores. They provide context only — enquiries, free trials and memberships remain the measures that matter.</p>
+    </div>
+
+    <div class="block">
+      <span class="eyebrow">1.2 — The shape of the year</span>
+      <h3>Uneven, with a spring peak and a February trough</h3>
+
+      <div class="chart">
+        <div class="chart-title">Estimated organic traffic, monthly average</div>
+        <div class="chart-note">Ahrefs · Australia · monthly-average measure</div>
+        <div class="bars">
+          <div class="bar-row">
+            <div class="bar-lab">November 2025<small>Peak</small></div>
+            <div class="bar-track"><div class="bar-fill" style="width:100%"><span class="bar-val inside">1,781</span></div></div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-lab">February 2026<small>Trough</small></div>
+            <div class="bar-track"><div class="bar-fill prev" style="width:61.9%"><span class="bar-val">1,102</span></div></div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-lab">July 2026<small>Latest full month</small></div>
+            <div class="bar-track"><div class="bar-fill" style="width:71.8%"><span class="bar-val">1,278</span></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="callout">
+        <span class="eyebrow">Two different measures — read them separately</span>
+        <p>The monthly averages above and the single-day snapshot figures in 1.1 are <strong>not the same measure and will not tie exactly</strong>. The snapshot is used for the year-on-year comparison; the monthly average is used for the trend. August 2026 is a partial month and should not be treated as a completed comparison.</p>
+      </div>
+    </div>
+
+    <div class="block">
+      <span class="eyebrow">1.3 — Branded versus non-branded</span>
+      <h3>The narrower keyword set is capturing genuine new demand</h3>
+      <p>Non-branded traffic grew over the period while branded traffic softened. That is the clearest available evidence that the remaining keywords are pulling in people who did not already know the brand, rather than simply catching those searching for <em class="q">project better</em> by name.</p>
+      <p>It is also why the headline "down 81% on keywords" should not be read as a collapse. A large share of what disappeared was thin, low-intent coverage. What remains converts search demand into gym visits.</p>
+    </div>
+
+    <figure class="figstrip">
+      <img src="/assets/project-better/pb-west-melbourne.jpg" alt="Bikes lined up against the brick wall at a Project Better gym" width="1024" height="683" loading="lazy" decoding="async">
+      <figcaption>West Melbourne · one of four open sites carrying the current search footprint</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ══════════════════ 2 · WHAT CHANGED ══════════════════ -->
+<section id="changed">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Part 2 — What changed</span>
+      <h2>The move to structured location addresses.</h2>
+      <p class="lede">The website moved to a structured set of location addresses. Most of that work was done properly. A small number of gaps remain, and each one sits on a membership journey.</p>
+    </div>
+
+    <div class="block">
+      <span class="eyebrow">2.1 — What was handled correctly</span>
+      <h3>Most old addresses redirect to their current equivalent</h3>
+      <p>Brunswick East, West Melbourne, East Brunswick Village, Collingwood, memberships, contact, about, FAQs, personal training and privacy all redirect properly. That preserved a good deal of search visibility. <strong>No further repair is needed on any of these.</strong></p>
+    </div>
+
+    <div class="block">
+      <span class="eyebrow">2.2 — The gaps that remain</span>
+      <h3>Four addresses on the site return errors</h3>
+      <p>All were verified live rather than read from cached crawl data. Each one interrupts somebody who may already be considering eligibility, joining, or getting into their existing membership.</p>
+
+      <div class="tbl-scroll">
+        <table>
+          <caption>Verified live · 12 August 2026</caption>
+          <thead>
+            <tr><th>Old address</th><th>Status</th><th>Should resolve to</th><th>Why it matters</th></tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td class="key">Old Fitness Passport address</td>
+              <td><span class="pill bad">404</span></td>
+              <td>The live Fitness Passport page</td>
+              <td>Stops a Fitness Passport member checking eligibility</td>
+            </tr>
+            <tr>
+              <td class="key">Old membership portal address</td>
+              <td><span class="pill bad">404</span></td>
+              <td>The current member portal</td>
+              <td>A Project Better help article still links here</td>
+            </tr>
+            <tr>
+              <td class="key">Old contact-us address</td>
+              <td><span class="pill bad">404</span></td>
+              <td>The live contact page</td>
+              <td>Breaks an enquiry path that already existed</td>
+            </tr>
+            <tr>
+              <td class="key">Old blog address</td>
+              <td><span class="pill bad">404</span></td>
+              <td>A working home for content</td>
+              <td>There is currently nowhere to publish supporting content</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout alert">
+        <span class="eyebrow">Fix the address, not the link</span>
+        <p>A Project Better help article still contains a link to the broken membership portal address. <strong>Redirecting the underlying address resolves the help-article link and every other reference to it at once</strong> — which is faster and safer than hunting individual links.</p>
+      </div>
+    </div>
+
+    <div class="block">
+      <span class="eyebrow">2.3 — The member portal subdomain</span>
+      <h3>Members hitting error pages when they try to get back in</h3>
+      <p>The member portal subdomain is visible in search and ranks for brand terms, yet several of its addresses return errors — including <strong>the password reset page</strong> and <strong>the main member dashboard</strong>, both confirmed live.</p>
+      <p>A member trying to reset a password and landing on an error page is a retention issue before it is a search issue. Alongside fixing the errors, portal and login addresses should be kept out of search results entirely — they are not pages a prospective member should ever land on from Google.</p>
+    </div>
+
+    <div class="block">
+      <span class="eyebrow">2.4 — Duplicate and low-value addresses</span>
+      <h3>Two Collingwood pages, and some housekeeping</h3>
+      <p>There are two live Collingwood pages presenting the same gym and the same address. This splits search signals and makes it harder for Google to choose the best page. Alongside them sit several addresses that add nothing for customers.</p>
+
+      <div class="tbl-scroll">
+        <table>
+          <caption>Consolidate or remove · no impact on customer experience</caption>
+          <thead><tr><th>What</th><th>Issue</th><th>Action</th></tr></thead>
+          <tbody>
+            <tr><td class="key">Two live Collingwood pages</td><td>Same gym, same address, split signals</td><td>Combine into one, redirect the duplicate</td></tr>
+            <tr><td class="key">Old "page not found" address</td><td>Returns a success response instead of an error</td><td>Return a proper error status</td></tr>
+            <tr><td class="key">Unused location-combine page</td><td>No customer value</td><td>Remove</td></tr>
+            <tr><td class="key">Automatic location archive and feed addresses</td><td>Generated, thin, no customer value</td><td>Remove from indexing</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="block">
+      <span class="eyebrow">2.5 — Where visibility softened</span>
+      <h3>Four themes weakened over the period</h3>
+      <p>Some search visibility was lost or weakened around <em class="q">brunswick gym</em>, Fitness Passport questions, <em class="q">sauna collingwood</em> and <em class="q">personal trainer brunswick</em>.</p>
+      <p><strong>This does not prove the site changes caused every movement.</strong> Rankings move for many reasons. What it does show is exactly where stronger pages and clearer internal links could recapture relevant demand — and three of the four map directly onto a gap identified above.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 3 · WHAT'S WORKING ══════════════════ -->
+<section id="working">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Part 3 — What is working</span>
+      <h2>Personal training is the clearest growth theme.</h2>
+      <p class="lede">The gains over the period are commercially valuable ones — they connect directly to people looking for a gym, a local option, or a low-commitment way to try the business.</p>
+    </div>
+
+    <div class="block">
+      <span class="eyebrow">3.1 — Position movement</span>
+      <h3>Four terms that moved into striking distance</h3>
+
+      <div class="tbl-scroll">
+        <table>
+          <caption>July 2025 compared to July 2026 · Australian positions</caption>
+          <thead>
+            <tr><th>Search term</th><th class="num">Was</th><th class="num">Now</th><th>Movement</th><th>Why it matters</th></tr>
+          </thead>
+          <tbody>
+            <tr><td class="key">personal training</td><td class="num">45</td><td class="num">2</td><td><span class="pill up">+43</span></td><td>700 monthly searches · ~55 visits</td></tr>
+            <tr><td class="key">gym melbourne</td><td class="num">10</td><td class="num">2</td><td><span class="pill up">+8</span></td><td>Broad, high-intent city term</td></tr>
+            <tr><td class="key">brunswick gyms</td><td class="num">6</td><td class="num">1</td><td><span class="pill up">+5</span></td><td>Core local term, now first</td></tr>
+            <tr><td class="key">gym near me free trial</td><td class="num">28</td><td class="num">5</td><td><span class="pill up">+23</span></td><td>Directly matches the free-trial offer</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <p style="margin-top:16px">Three related terms have also entered from nothing: <em class="q">best personal trainer</em>, <em class="q">personal trainer near me</em> and <em class="q">personal trainers near me</em>. The personal-training page itself attracted an estimated <strong>74 visits</strong> in the full July view — the strongest non-homepage page on the site.</p>
+    </div>
+
+    <figure class="figstrip">
+      <img class="pos-high" src="/assets/project-better/pb-personal-training.jpg" alt="A member training with a barbell on the Project Better gym floor" width="533" height="800" loading="lazy" decoding="async">
+      <figcaption>Personal training · position 45 to position 2 over twelve months</figcaption>
+    </figure>
+
+    <div class="block">
+      <span class="eyebrow">3.2 — Where the traffic actually lands</span>
+      <h3>The homepage carries roughly 77% of it</h3>
+      <p>This confirms the strength of the Project Better brand and the main offer. It also shows why stronger location, membership, amenity and personal-training pages matter: they can bring prospective members closer to the most relevant next step, rather than routing nearly everyone through the front door and asking them to navigate.</p>
+
+      <div class="chart">
+        <div class="chart-title">Share of estimated organic traffic by page</div>
+        <div class="chart-note">Ahrefs · July 2026 full-month view</div>
+        <div class="stack" role="img" aria-label="Homepage 77 per cent, personal training page 5 per cent, all other pages 18 per cent">
+          <span class="s1" style="flex:0 0 77%">Homepage · 77%</span>
+          <span class="s2" style="flex:0 0 5%"></span>
+          <span class="s3" style="flex:1 1 18%">Everything else · 18%</span>
+        </div>
+        <div class="stack-key">
+          <span><i class="swatch" style="background:var(--ink)"></i>Homepage · 77%</span>
+          <span><i class="swatch" style="background:var(--slate)"></i>Personal training · 5%</span>
+          <span><i class="swatch" style="background:var(--steel)"></i>All other pages · 18%</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <span class="eyebrow">3.3 — AI search</span>
+      <h3>Early citations, small numbers, treat as a signal</h3>
+      <p>Ahrefs has detected early citations across several AI search tools, including AI Overviews, AI Mode, ChatGPT and Copilot. <strong>The numbers are small and do not represent enquiries or memberships.</strong> They should be treated as an emerging visibility signal rather than a business result — worth tracking from now, not worth reallocating budget to yet.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 4 · GROWTH ══════════════════ -->
+<section id="growth">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Part 4 — Growth opportunities and risks</span>
+      <h2>Local discovery is the near-term opportunity.</h2>
+      <p class="lede">The keyword set is dominated by "near me" style searches across multiple physical sites. That makes location pages, business profiles and consistent local detail the highest-value work available.</p>
+    </div>
+
+    <div class="block">
+      <span class="eyebrow">4.1 — The pre-launch location pages</span>
+      <h3>Four pages carrying a date and an email form</h3>
+      <p>Brunswick, Prahran, Kensington and Abbotsford are currently pre-launch pages carrying only "coming 2026" or "coming 2028" messaging and an email notification form. They need accurate location details, a clear opening proposition, reasons to choose Project Better, and a tracked call to action for presale membership or trial interest.</p>
+
+      <div class="tbl-scroll">
+        <table>
+          <caption>Location page status · pre-launch sites</caption>
+          <thead><tr><th>Location</th><th>Status</th><th>Priority</th><th>Note</th></tr></thead>
+          <tbody>
+            <tr><td class="key">Brunswick</td><td>Coming 2026</td><td><span class="pill bad">First</span></td><td>Competes with the open Brunswick East gym for the same suburb signals</td></tr>
+            <tr><td class="key">Prahran</td><td>Coming 2026</td><td><span class="pill bad">First</span></td><td>New catchment, no existing Project Better presence to protect</td></tr>
+            <tr><td class="key">Kensington</td><td>Coming 2026</td><td><span class="pill warn">Confirm</span></td><td>Already ranks position 5 for <em class="q">kensington gym</em> while not open — confirm status before promoting further</td></tr>
+            <tr><td class="key">Abbotsford</td><td>Coming 2028</td><td><span class="pill flat">Later</span></td><td>Treat as a longer-horizon placeholder</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="callout alert">
+        <span class="eyebrow">The Brunswick conflict</span>
+        <p>The thin Brunswick page now sits alongside the actual Brunswick East gym and <strong>competes for the same suburb signals</strong>. That is part of why Brunswick terms weakened. The Brunswick page needs to be built so it supports Brunswick East rather than competing with it — clear, distinct positioning and internal links that point demand to the gym that is actually open.</p>
+      </div>
+    </div>
+
+    <figure class="figstrip">
+      <img src="/assets/project-better/pb-locations.jpg" alt="The equipment floor at a Project Better gym" width="1024" height="683" loading="lazy" decoding="async">
+      <figcaption>Four sites open, three opening 2026, one 2028 — eight location pages competing for local demand</figcaption>
+    </figure>
+
+    <div class="block">
+      <span class="eyebrow">4.2 — Supporting content</span>
+      <h3>There is currently nowhere to put it</h3>
+      <p>The blog address returns an error, so the site has no working home for supporting content. Restoring it is a prerequisite, not an optional extra.</p>
+      <p>Useful topics should answer real membership questions and reinforce each gym's location, facilities, personal training, Fitness Passport access and free-trial offer. <strong>The goal is not volume.</strong> It is helping more nearby customers find the right gym and take the next step — and avoiding the trap of treating close keyword variations as separate audiences.</p>
+    </div>
+
+    <div class="block">
+      <span class="eyebrow">4.3 — The incoming-link profile</span>
+      <h3>Grown sharply, and worth watching without overreacting</h3>
+
+      <div class="chart">
+        <div class="chart-title">Live incoming links and referring websites</div>
+        <div class="chart-note">Ahrefs · August 2026 is a partial snapshot</div>
+        <div class="legend">
+          <span><i class="swatch" style="background:var(--ink)"></i>Links</span>
+          <span><i class="swatch" style="background:var(--steel)"></i>Referring websites</span>
+        </div>
+        <div class="bars">
+          <div class="bar-row">
+            <div class="bar-lab">July 2025</div>
+            <div class="pairs">
+              <div class="pair-track"><div class="bar-fill" style="width:20%;height:100%"><span class="bar-val">235</span></div></div>
+              <div class="pair-track"><div class="bar-fill prev" style="width:5.8%;height:100%"><span class="bar-val">35</span></div></div>
+            </div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-lab">July 2026</div>
+            <div class="pairs">
+              <div class="pair-track"><div class="bar-fill" style="width:93.4%;height:100%"><span class="bar-val">1,096</span></div></div>
+              <div class="pair-track"><div class="bar-fill prev" style="width:88.7%;height:100%"><span class="bar-val">535</span></div></div>
+            </div>
+          </div>
+          <div class="bar-row">
+            <div class="bar-lab">August 2026<small>Partial</small></div>
+            <div class="pairs">
+              <div class="pair-track"><div class="bar-fill" style="width:100%;height:100%"><span class="bar-val inside">1,174</span></div></div>
+              <div class="pair-track"><div class="bar-fill prev" style="width:100%;height:100%"><span class="bar-val inside">603</span></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cols" style="margin-top:26px">
+        <div class="card">
+          <span class="eyebrow">Observed</span>
+          <h4>Promotional links, mostly nofollow</h4>
+          <p>Many of the unusual links are marked <strong>"nofollow"</strong>, which generally tells search engines not to treat them as endorsements, and a large share carry promotional anchor text advertising third-party SEO services.</p>
+        </div>
+        <div class="card">
+          <span class="eyebrow">Interpretation</span>
+          <h4>Monitor, do not panic</h4>
+          <p>This pattern should be reviewed and monitored. It is <strong>not evidence of a penalty, and not evidence of deliberate manipulation by Project Better.</strong> Passive accumulation of this kind is common and frequently harmless.</p>
+        </div>
+        <div class="card">
+          <span class="eyebrow">Explained</span>
+          <h4>The Brunswick Zebras sponsorship</h4>
+          <p>A local sponsorship creates many repeated links from one website. That is <strong>one genuine relationship, not hundreds of separate endorsements</strong>, and is not a cause for alarm on its own.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="block">
+      <span class="eyebrow">4.4 — Competitors and paid search</span>
+      <h3>Room to grow coverage, and an untested channel</h3>
+      <p>Competitors including <strong>KĀYA</strong>, <strong>Chasing Better</strong>, <strong>East Brunswick Village</strong> and <strong>Cheeky Winx</strong> currently appear for a broader range of searches. Their estimated traffic is not directly comparable, because the brands, services and locations differ. The useful takeaway is simply that Project Better has room to grow its coverage of high-intent local and service searches.</p>
+      <p>Ahrefs detected <strong>no paid-search activity</strong>. That may offer an additional route to market once launch timing, budgets and conversion tracking are confirmed — particularly for high-intent membership and free-trial searches, where organic position alone caps how much of the demand can be captured.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ 5 · PRIORITIES ══════════════════ -->
+<section id="priorities">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Part 5 — Recommended priorities</span>
+      <h2>In order, and for a reason.</h2>
+      <p class="lede">Repairs first, because they protect demand that already exists. Then presale locations, then consolidation, then coverage, then measurement.</p>
+    </div>
+
+    <div class="phases">
+      <div class="phase">
+        <div class="phase-hd"><span class="phase-num">Priority 01</span><h3>Repair the membership journeys</h3></div>
+        <p class="why">These are people who have already decided to act. Every day the errors stay live, that intent is wasted.</p>
+        <ul class="plain">
+          <li>Send the old Fitness Passport address to the current Fitness Passport page</li>
+          <li>Redirect the old blog, contact-us and membership portal addresses to their live equivalents, so every existing reference resolves</li>
+          <li>Fix the error pages on the member portal subdomain, starting with password reset and the member dashboard</li>
+          <li>Keep portal and login addresses out of search results</li>
+        </ul>
+      </div>
+
+      <div class="phase">
+        <div class="phase-hd"><span class="phase-num">Priority 02</span><h3>Strengthen Brunswick and Prahran for presale demand</h3></div>
+        <p class="why">Two suburbs where demand exists now and the page cannot yet capture it.</p>
+        <ul class="plain">
+          <li>Add approved location details, distinctive local benefits, and tracked membership or free-trial calls to action</li>
+          <li>Make sure the Brunswick page supports rather than competes with Brunswick East</li>
+          <li>Confirm Kensington's status before further promotion — it already ranks position 5 while not open</li>
+          <li>Treat Abbotsford as a longer-horizon placeholder</li>
+        </ul>
+      </div>
+
+      <div class="phase">
+        <div class="phase-hd"><span class="phase-num">Priority 03</span><h3>Create one clear Collingwood destination</h3></div>
+        <p class="why">Two pages for one gym forces Google to choose. Make the choice for it.</p>
+        <ul class="plain">
+          <li>Combine the best information into a single page</li>
+          <li>Redirect the duplicate address to it</li>
+          <li>Remove the low-value background addresses — the old "page not found" address, the unused location-combine page, and the automatic archive and feed addresses</li>
+        </ul>
+      </div>
+
+      <div class="phase">
+        <div class="phase-hd"><span class="phase-num">Priority 04</span><h3>Expand high-intent search coverage</h3></div>
+        <p class="why">Protect what is working while widening the base beyond a single page.</p>
+        <ul class="plain">
+          <li>Protect the homepage and personal-training gains</li>
+          <li>Build useful location, membership, facility, Fitness Passport and free-trial content</li>
+          <li>Restore a working home for that content</li>
+          <li>Avoid treating close keyword variations as separate audiences</li>
+        </ul>
+      </div>
+
+      <div class="phase">
+        <div class="phase-hd"><span class="phase-num">Priority 05</span><h3>Measure and scale what produces enquiries</h3></div>
+        <p class="why">Ahrefs estimates start the conversation. Search Console, analytics and lead data finish it.</p>
+        <ul class="plain">
+          <li>Track search clicks, form completions, trials and memberships</li>
+          <li>Monitor the unusual links without overreacting</li>
+          <li>Then assess a controlled paid-search test, where location readiness and lead tracking support it</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ INVESTMENT ══════════════════ -->
+<section id="investment">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Investment</span>
+      <h2>What it costs to run this.</h2>
+      <p class="lede">A one-off set-up covering the repairs, consolidation and page builds identified above, then a monthly programme working across eight workstreams in parallel. All figures are quoted in Australian dollars, excluding GST.</p>
+    </div>
+
+    <dl class="price">
+      <div class="hi">
+        <dt>Set-up — one off</dt>
+        <dd>$2,500<i class="ex">ex GST</i><span>Technical repairs, redirect map, Collingwood consolidation, location page builds and tracking setup</span></dd>
+      </div>
+      <div>
+        <dt>Ongoing — per month</dt>
+        <dd>$2,000<i class="ex">ex GST</i><span>Eight workstreams running continuously, with a dedicated account manager and monthly reporting</span></dd>
+      </div>
+      <div>
+        <dt>Year one — total</dt>
+        <dd>$26,500<i class="ex">ex GST</i><span>$2,500 set-up plus twelve months at $2,000</span></dd>
+      </div>
+    </dl>
+
+    <div class="block">
+      <span class="eyebrow">The full scope · every month</span>
+      <h3>Eight workstreams, running continuously</h3>
+      <p>These run in parallel across the whole engagement — not just at launch. Emphasis is re-weighted month to month based on what the priorities in Part 5 need at the time.</p>
+
+      <div class="streams">
+        <div class="stream">
+          <span class="n">01</span>
+          <h4>Audits &amp; Reports</h4>
+          <ul>
+            <li>Backlink audit &amp; disavow review</li>
+            <li>CRO &amp; heatmapping</li>
+            <li>Competitor &amp; SERP movement tracking</li>
+            <li>Monthly performance reporting</li>
+          </ul>
+        </div>
+        <div class="stream">
+          <span class="n">02</span>
+          <h4>Technical SEO</h4>
+          <ul>
+            <li>Schema markup implementation</li>
+            <li>Robots.txt, sitemap &amp; crawl tuning</li>
+            <li>Core Web Vitals &amp; page speed</li>
+            <li>Indexation, canonical &amp; redirect map</li>
+          </ul>
+        </div>
+        <div class="stream">
+          <span class="n">03</span>
+          <h4>On-Page SEO</h4>
+          <ul>
+            <li>Internal linking optimisation</li>
+            <li>Meta tag creation</li>
+            <li>Header / footer optimisation</li>
+            <li>Conversion-pathway alignment</li>
+          </ul>
+        </div>
+        <div class="stream">
+          <span class="n">04</span>
+          <h4>Copywriting</h4>
+          <ul>
+            <li>Page copy rewrites, including location pages</li>
+            <li>Blog article — 600 words per month</li>
+            <li>Copywriting guide &amp; quarterly workshop</li>
+            <li>Membership and free-trial supporting content</li>
+          </ul>
+        </div>
+        <div class="stream">
+          <span class="n">05</span>
+          <h4>Local SEO</h4>
+          <ul>
+            <li>Google Business Profile optimisation</li>
+            <li>GBP posting &amp; review management</li>
+            <li>Coverage across every open and presale site</li>
+            <li>Local citation building</li>
+          </ul>
+        </div>
+        <div class="stream">
+          <span class="n">06</span>
+          <h4>Backlinks &amp; Off-Page</h4>
+          <ul>
+            <li>Targeted outreach &amp; placement on AU sites</li>
+            <li>Niche / vertical link building</li>
+            <li>Toxic link disavow</li>
+            <li>Industry / community partnerships</li>
+          </ul>
+        </div>
+        <div class="stream">
+          <span class="n">07</span>
+          <h4>AEO / GEO<span class="tag">New in 2026</span></h4>
+          <ul>
+            <li>Entity &amp; topical authority mapping</li>
+            <li>FAQ, HowTo &amp; Product schema rollout</li>
+            <li>Citation-shaped answer blocks</li>
+            <li>AI Overview &amp; assistant visibility tracking</li>
+          </ul>
+        </div>
+        <div class="stream">
+          <span class="n">08</span>
+          <h4>Strategy &amp; Reporting</h4>
+          <ul>
+            <li>Monthly strategy call + quarterly business review</li>
+            <li>Location-specific keyword &amp; conversion strategy</li>
+            <li>Monthly dashboard: rankings, traffic, leads</li>
+            <li>Dedicated account manager</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="callout quiet">
+        <span class="eyebrow">Final priorities confirmed in discovery</span>
+        <p>Workstream emphasis can be re-weighted based on what the focus locations need in any given month. Local SEO is expected to carry more weight early, given that the keyword set is dominated by "near me" searches across multiple physical sites and no business profile review has yet been carried out.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════ OUTLOOK ══════════════════ -->
+<section class="outlook" id="outlook">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Why this matters</span>
+      <h2>From discovery to enquiry, free trial and membership.</h2>
+    </div>
+
+    <p class="lede" style="color:#E4E8F0">Project Better still captures meaningful demand. But discovery runs through a narrow group of searches and pages, and several of the paths from that discovery to a membership are broken.</p>
+
+    <div class="cols" style="margin-top:32px">
+      <div class="card" style="border-color:rgba(255,255,255,.18)">
+        <span class="eyebrow" style="color:var(--steel)">The opportunity</span>
+        <h4 style="color:#fff">Rebuild breadth without disturbing what works</h4>
+        <p style="color:#C9CEDA">The concentrated keyword set is performing. Widening local visibility is additive work — <strong>it does not require touching the homepage and personal-training gains that are already delivering.</strong></p>
+      </div>
+      <div class="card" style="border-color:rgba(255,255,255,.18)">
+        <span class="eyebrow" style="color:var(--steel)">The cost of waiting</span>
+        <h4 style="color:#fff">Six broken journeys, live right now</h4>
+        <p style="color:#C9CEDA">Every one of them sits in front of somebody who has already decided to check eligibility, join, or log back in. <strong>This is demand that has already been paid for.</strong></p>
+      </div>
+    </div>
+
+    <p style="margin-top:32px">This work connects more local gym searches to the right Project Better offer, removes avoidable barriers in the joining and member-access journeys, and creates a clearer path from discovery to enquiry, free trial and membership.</p>
+
+    <figure class="figstrip">
+      <img src="/assets/project-better/pb-community.jpg" alt="Two dogs on the floor of a Project Better gym" width="1024" height="683" loading="lazy" decoding="async">
+      <figcaption>More than a gym, a community — the thing the search results should be leading people to</figcaption>
+    </figure>
+  </div>
+</section>
+
+<!-- ══════════════════ CTA ══════════════════ -->
+<section class="cta">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Next steps</span>
+      <h2>Start with the four 404s.</h2>
+    </div>
+    <p class="lede">They are the cheapest fix in this document and the only ones sitting directly on a membership journey. Everything else in Part 5 can follow on a normal schedule.</p>
+    <ol class="steps" style="margin-top:26px">
+      <li><strong>Approve the redirect map.</strong> Fitness Passport, blog, contact-us and membership portal — four addresses, resolved to their live equivalents.</li>
+      <li><strong>Get the member portal errors in front of whoever owns that system.</strong> Password reset and the member dashboard first.</li>
+      <li><strong>Confirm launch dates and approved detail for Brunswick, Prahran and Kensington</strong> so the location pages can be built with accurate information.</li>
+      <li><strong>Grant access to Search Console, analytics and lead tracking</strong> so the commercial return on this work can be measured rather than estimated.</li>
+    </ol>
+  </div>
+</section>
+
+<!-- ══════════════════ APPENDIX ══════════════════ -->
+<section id="appendix">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Scope and limitations</span>
+      <h2>What this report can and cannot tell you.</h2>
+      <p class="lede">Two areas are outside what has been examined and should be treated as open.</p>
+    </div>
+
+    <details class="ap">
+      <summary><span class="ap-n">A.1</span> Open area — no full technical crawl has been run</summary>
+      <div class="ap-body">
+        <p>Page titles, meta descriptions, headings, internal link depth, structured data and page-speed metrics <strong>have not been assessed</strong>. The technical findings in this report come from Ahrefs' crawl sample plus live verification of specific addresses.</p>
+        <p>This matters because those are exactly the areas where a site with 84 ranking terms and one dominant page usually has recoverable ground. A full crawl is the first piece of work in workstream 02.</p>
+      </div>
+    </details>
+
+    <details class="ap">
+      <summary><span class="ap-n">A.2</span> Open area — no Google Business Profile or local-pack review</summary>
+      <div class="ap-body">
+        <p>No business profile or local-pack review has been carried out. Given that the keyword set is dominated by "near me" style searches across multiple physical sites, <strong>business profile optimisation, review activity and consistent location details are likely to be a significant lever</strong> — and should be the next area of work.</p>
+        <p>For a multi-site gym business, the local pack frequently sits above the organic results entirely. A strong organic position on <em class="q">brunswick gyms</em> is worth considerably less if the business profile beneath it is incomplete.</p>
+      </div>
+    </details>
+
+    <details class="ap">
+      <summary><span class="ap-n">A.3</span> Ahrefs figures are estimates, not measured sessions</summary>
+      <div class="ap-body">
+        <p>Ahrefs traffic and traffic-value figures are modelled estimates. They are <strong>not</strong> actual website sessions, enquiries, memberships or revenue.</p>
+        <p>Directional conclusions — the shape of the year, the scale of the keyword narrowing, the direction of the position movements — are reliable. Absolute numbers are not. <strong>Search Console, website analytics and lead data should be used to measure the commercial return from this work.</strong></p>
+        <p>Two specific cautions carried from the body of the report:</p>
+        <ul class="plain">
+          <li>The monthly-average and single-day snapshot measures will not tie exactly, and are used for different purposes</li>
+          <li>August 2026 is a partial month in every figure it appears in, and is not a completed comparison</li>
+        </ul>
+      </div>
+    </details>
+
+    <details class="ap">
+      <summary><span class="ap-n">A.4</span> Correlation is not causation on the ranking movements</summary>
+      <div class="ap-body">
+        <p>The report notes that visibility softened around <em class="q">brunswick gym</em>, Fitness Passport questions, <em class="q">sauna collingwood</em> and <em class="q">personal trainer brunswick</em> over the same period as the address restructure.</p>
+        <p><strong>This does not prove the site changes caused every movement.</strong> Rankings move for many reasons, including competitor activity and algorithm updates. What the overlap does establish is where stronger pages and clearer internal links would recapture relevant demand — which is actionable regardless of the original cause.</p>
+      </div>
+    </details>
+
+    <details class="ap">
+      <summary><span class="ap-n">A.5</span> Method and data sources</summary>
+      <div class="ap-body">
+        <p><strong>Data sources.</strong> Ahrefs Site Explorer and Keywords Explorer, Australian market. Live verification of specific addresses by direct request rather than cached crawl data. <strong>Audit window:</strong> 31 July 2025 – 31 July 2026, compiled 12 August 2026.</p>
+        <p><strong>On the backlink profile.</strong> The growth from 235 links across 35 websites to 1,096 across 535 is unusual, and the promotional anchor text is worth reviewing. But the pattern is equally consistent with passive scraper-directory accumulation, which is harmless. <strong>Do not file a disavow on the basis of this report alone</strong> — confirm the link history first, including whether any third-party service was engaged.</p>
+      </div>
+    </details>
+
+    <div class="block" style="margin-top:44px">
+      <span class="eyebrow">Prepared by</span>
+      <h3>Zib Digital for Project Better</h3>
+      <p class="sub">SEO Overview Audit · 12 August 2026 · Ahrefs data, Australian market, 31 July 2025 to 31 July 2026.</p>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ══════════════════ FOOTER ══════════════════ -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="foot-inner">
+      <div>
+        <div class="fw">project better.</div>
+        <div class="fm" style="margin-top:8px">SEO Overview Audit · 12 August 2026</div>
+      </div>
+      <div class="fm" style="text-align:right">
+        Prepared by Zib Digital<br>
+        <a href="https://projectbetter.com.au/">projectbetter.com.au</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<button class="totop" id="totop" aria-label="Back to top">↑</button>
+
+<script>
+(function(){
+  var links = Array.prototype.slice.call(document.querySelectorAll('.nav a.nl'));
+  var map = {}, targets = [];
+  links.forEach(function(a){
+    var id = a.getAttribute('href').slice(1), el = document.getElementById(id);
+    if(el){ map[id] = a; targets.push(el); }
+  });
+  function setCurrent(id){
+    links.forEach(function(a){ a.removeAttribute('aria-current'); });
+    if(map[id]){
+      map[id].setAttribute('aria-current','true');
+      var sc = document.querySelector('.nav-scroll');
+      if(sc && sc.scrollWidth > sc.clientWidth){
+        var r = map[id].getBoundingClientRect(), s = sc.getBoundingClientRect();
+        if(r.left < s.left || r.right > s.right){ sc.scrollTo({left: map[id].offsetLeft - 16, behavior:'smooth'}); }
+      }
+    }
+  }
+  var btn = document.getElementById('totop'), ticking = false;
+  function onScroll(){
+    if(ticking) return;
+    ticking = true;
+    requestAnimationFrame(function(){
+      if(window.scrollY > 700){ btn.classList.add('on'); } else { btn.classList.remove('on'); }
+      var cur = null;
+      for(var i=0;i<targets.length;i++){ if(targets[i].getBoundingClientRect().top <= 140) cur = targets[i].id; }
+      if(cur) setCurrent(cur);
+      ticking = false;
+    });
+  }
+  window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
+  btn.addEventListener('click', function(){ window.scrollTo({top:0, behavior:'smooth'}); });
+
+  // ---- widow control ----
+  // text-wrap:balance handles headings in modern browsers. This is the belt-and-braces
+  // pass: it walks the element's trailing text ACROSS inline tags (<strong>, <em>,
+  // <span>) and converts the last few spaces to non-breaking spaces, so a line never
+  // ends on a lone word. Width-independent, so it never needs recalculating on resize.
+  (function bindWidows(){
+    var SEL = 'h1,h2,h3,h4,p,li,.chart-title,.chart-note,caption,' +
+              '.tile .lab,.tile .delta,.bar-lab,.more>summary,.ap>summary,.phase .why';
+    var MIN_TAIL = 12;   // keep binding until the protected tail is at least this long
+    var MAX_TAIL = 26;   // ...but never longer than this, or narrow screens overflow
+    var MAX_WORDS = 3;
+
+    document.querySelectorAll(SEL).forEach(function(el){
+      if(el.dataset.nw) return;
+      el.dataset.nw = '1';
+
+      var nodes = [], w = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null), n;
+      while((n = w.nextNode())) nodes.push(n);
+      if(!nodes.length) return;
+
+      var text = '', map = [];
+      nodes.forEach(function(node){
+        for(var i=0;i<node.textContent.length;i++){ map.push([node,i]); }
+        text += node.textContent;
+      });
+      var endIdx = text.replace(/\s+$/,'').length;
+      if(endIdx < 2) return;
+
+      var bound = 0, words = 0, i = endIdx - 1;
+      while(i > 0 && words < MAX_WORDS){
+        var ch = text[i];
+        if(/\s/.test(ch)){
+          if(!/\S/.test(text.slice(i+1, endIdx))) { i--; continue; }  // trailing space
+          var tailLen = endIdx - i - 1;
+          if(tailLen >= MIN_TAIL) break;
+          var prevSpace = text.slice(0, i).search(/\s\S*$/);
+          var wouldBe = endIdx - (prevSpace < 0 ? 0 : prevSpace) - 1;
+          if(wouldBe > MAX_TAIL && bound > 0) break;
+          if(endIdx - i - 1 > MAX_TAIL) break;
+          var m = map[i];
+          m[0].textContent = m[0].textContent.slice(0, m[1]) + ' ' + m[0].textContent.slice(m[1] + 1);
+          bound++; words++;
+        }
+        i--;
+      }
+    });
+  })();
+
+  var opened = [];
+  window.addEventListener('beforeprint', function(){
+    opened = [];
+    document.querySelectorAll('details').forEach(function(d){ if(!d.open){ opened.push(d); d.open = true; } });
+  });
+  window.addEventListener('afterprint', function(){
+    opened.forEach(function(d){ d.open = false; }); opened = [];
+  });
+})();
+</script>
+
+<script>
+/* ============================================================
+   MOTION
+   Two independent parts:
+   1. the horizontal-scroll hints, which run for everyone, because
+      knowing a table scrolls sideways is not decoration; and
+   2. everything else, which runs only when html.mo is present —
+      i.e. the visitor has not asked for reduced motion.
+   Setting __moBooted tells the gate script in <head> that this
+   file parsed; if it throws before that line, the gate strips the
+   class after 10s and the whole document reverts to static.
+   ============================================================ */
+try{
+(function(){
+  var root = document.documentElement;
+
+  /* ---- horizontal-scroll hints (mobile) ------------------------------ */
+  var narrow = window.matchMedia('(max-width:640px)');
+  function hints(){
+    document.querySelectorAll('.tbl-scroll').forEach(function(el){
+      var hint = el.nextElementSibling;
+      if(!hint || !hint.classList.contains('mo-hint')){
+        hint = document.createElement('div');
+        hint.className = 'mo-hint';
+        hint.setAttribute('aria-hidden', 'true');
+        hint.textContent = 'Scroll →';
+        el.parentNode.insertBefore(hint, el.nextSibling);
+        el.addEventListener('scroll', function(){
+          hint.classList.add('done');
+        }, { passive: true, once: true });
+      }
+      hint.classList.toggle('on', narrow.matches && el.scrollWidth > el.clientWidth + 4);
+    });
+  }
+  hints();
+  window.addEventListener('resize', hints, { passive: true });
+
+  window.__moBooted = 1;
+  if(!root.classList.contains('mo')) return;
+
+  /* ---- stagger children of the grouped blocks ------------------------ */
+  document.querySelectorAll('.tiles,.phases,.cols,.streams,.price,.figduo,.steps').forEach(function(g){
+    Array.prototype.forEach.call(g.children, function(c, i){
+      c.style.setProperty('--mo-d', Math.min(i, 7) * 70 + 'ms');
+    });
+  });
+
+  /* ---- number roll-up -------------------------------------------------
+     Animates the FIRST text node only, so markup like
+     `1,370<span> visits</span>` keeps its unit. Restores the original
+     string verbatim on the last frame — no reformatting drift. */
+  function rollUp(node){
+    var raw = node.nodeValue;
+    var m = raw.match(/^(\s*[^\d]*)([\d.,]+)([\s\S]*)$/);
+    if(!m) return;
+    var target = parseFloat(m[2].replace(/,/g, ''));
+    if(isNaN(target)) return;
+    var comma = m[2].indexOf(',') > -1;
+    var decs = (m[2].split('.')[1] || '').length;
+    var pre = m[1], post = m[3], t0 = null, dur = 1100;
+    function frame(ts){
+      if(t0 === null) t0 = ts;
+      var p = Math.min(1, (ts - t0) / dur);
+      if(p < 1){
+        var v = (target * (1 - Math.pow(1 - p, 3))).toFixed(decs);
+        node.nodeValue = pre + (comma ? v.replace(/\B(?=(\d{3})+(?!\d))/g, ',') : v) + post;
+        requestAnimationFrame(frame);
+      } else {
+        node.nodeValue = raw;
+      }
+    }
+    requestAnimationFrame(frame);
+  }
+  function firstText(el){
+    for(var n = el && el.firstChild; n; n = n.nextSibling){
+      if(n.nodeType === 3 && /\d/.test(n.nodeValue)) return n;
+    }
+    return null;
+  }
+
+  /* ---- scroll reveal --------------------------------------------------
+     Mirrors the selector list in the stylesheet. */
+  var REVEAL = [
+    '.sec-head',
+    'section > .wrap > *:not(.block):not(.sec-head)',
+    '.block > *:not(.tiles):not(.phases):not(.cols):not(.streams):not(.steps):not(.price):not(.figduo)',
+    '.tiles > .tile',
+    '.phases > .phase',
+    '.cols > .card',
+    '.streams > .stream',
+    '.price > div',
+    '.figduo > figure',
+    '.steps > li'
+  ].join(',');
+
+  var io = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting) return;
+      var el = e.target;
+      io.unobserve(el);
+      el.classList.add('mo-in');
+      if(el.classList.contains('tile')){
+        var t = firstText(el.querySelector('.val')); if(t) rollUp(t);
+      }
+      if(el.parentElement && el.parentElement.classList.contains('price')){
+        var d = firstText(el.querySelector('dd')); if(d) rollUp(d);
+      }
+    });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.01 });
+
+  document.querySelectorAll(REVEAL).forEach(function(el){ io.observe(el); });
+
+  /* ---- bars ----------------------------------------------------------
+     The target width lives in each fill's inline style; the stylesheet
+     overrides it to 0 until the chart scrolls in, then hands it back
+     through --mo-w, staggered a row at a time. */
+  var groups = [];
+  document.querySelectorAll('.bar-fill').forEach(function(f){
+    f.style.setProperty('--mo-w', f.style.width || '100%');
+    var g = f.closest('.chart') || f.closest('.block') || f.parentElement;
+    var rec = null;
+    for(var i = 0; i < groups.length; i++){ if(groups[i].el === g){ rec = groups[i]; break; } }
+    if(!rec){ rec = { el: g, fills: [] }; groups.push(rec); }
+    rec.fills.push(f);
+  });
+
+  var barIo = new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting) return;
+      barIo.unobserve(e.target);
+      var rec = null;
+      for(var i = 0; i < groups.length; i++){ if(groups[i].el === e.target){ rec = groups[i]; break; } }
+      if(!rec) return;
+      var rows = [];
+      rec.fills.forEach(function(f){
+        var row = f.closest('.bar-row') || f.parentElement;
+        var idx = rows.indexOf(row);
+        if(idx < 0){ idx = rows.length; rows.push(row); }
+        f.style.setProperty('--mo-d', Math.min(idx, 9) * 80 + 'ms');
+        f.classList.add('mo-bar-in');
+      });
+    });
+  }, { threshold: 0.12 });
+  groups.forEach(function(rec){ barIo.observe(rec.el); });
+
+  /* ---- read-progress rule + nav elevation ---------------------------- */
+  var nav = document.querySelector('.nav');
+  var masthead = document.querySelector('.masthead');
+  var prog = null;
+  if(nav){
+    prog = document.createElement('div');
+    prog.className = 'mo-prog';
+    prog.setAttribute('aria-hidden', 'true');
+    nav.appendChild(prog);
+  }
+  var pending = false;
+  function onScroll(){
+    if(pending) return;
+    pending = true;
+    requestAnimationFrame(function(){
+      var span = document.documentElement.scrollHeight - window.innerHeight;
+      if(prog) prog.style.transform = 'scaleX(' + (span > 0 ? Math.min(1, window.scrollY / span) : 0) + ')';
+      if(nav && masthead) nav.classList.toggle('mo-stuck', window.scrollY > masthead.offsetHeight * 0.6);
+      pending = false;
+    });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll, { passive: true });
+  onScroll();
+})();
+}catch(e){
+  /* Anything unexpected: drop back to the static document rather than
+     leaving reveal-hidden content stranded at opacity 0. */
+  if(window.__moOff) window.__moOff();
+}
+</script>
+</body>
+</html>
