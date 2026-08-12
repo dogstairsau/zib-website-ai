@@ -176,8 +176,11 @@
 @media (max-width: 900px) { .sm-suburb-grid { grid-template-columns: repeat(2, 1fr); } }
 @media (max-width: 600px) { .sm-suburb-grid { grid-template-columns: 1fr; } }
 
+/* Top padding runs deliberately larger than the bottom: the heading's cap
+   height sits high in its line box, so equal padding reads as the title
+   crowding the rule above it while the paragraph looks loose below. */
 .sm-suburb {
-  padding: clamp(22px, 2.6vw, 30px) clamp(18px, 2vw, 28px) clamp(22px, 2.6vw, 30px) 0;
+  padding: clamp(38px, 4.2vw, 56px) clamp(18px, 2vw, 28px) clamp(28px, 3vw, 38px) 0;
   border-bottom: 0.5px solid var(--rule);
   border-right: 0.5px solid var(--rule);
 }
@@ -189,9 +192,9 @@
 }
 @media (max-width: 600px) { .sm-suburb, .sm-suburb:nth-child(3n) { border-right: 0; padding-right: 0; } }
 
-.sm-suburb-name { font-family: var(--display); font-size: clamp(19px, 1.9vw, 24px); font-weight: 500; letter-spacing: -0.02em; display: flex; align-items: baseline; gap: 10px; }
+.sm-suburb-name { font-family: var(--display); font-size: clamp(19px, 1.9vw, 24px); font-weight: 500; letter-spacing: -0.02em; line-height: 1.1; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
 .sm-suburb-pc { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.12em; color: var(--accent); font-weight: 600; }
-.sm-suburb p { margin-top: 10px; color: var(--muted); font-size: 14.5px; line-height: 1.55; }
+.sm-suburb p { margin-top: 14px; color: var(--muted); font-size: 14.5px; line-height: 1.55; }
 .sm-suburb-note {
   margin-top: clamp(36px, 4vw, 52px);
   color: var(--muted);
