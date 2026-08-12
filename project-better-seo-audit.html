@@ -368,6 +368,13 @@ ol.steps li strong{display:block;font-weight:700;font-size:17px;letter-spacing:-
 .price dd{font-weight:800;font-size:clamp(30px,4.2vw,38px);letter-spacing:-.04em;line-height:1;font-variant-numeric:tabular-nums}
 .price dd span{font-size:.42em;font-weight:600;letter-spacing:0;color:var(--muted);display:block;margin-top:11px;line-height:1.4}
 .price div.hi dd span{color:var(--steel)}
+/* Tax basis rides with the figure rather than sitting in a footnote —
+   every number on this page is quoted on the same basis. */
+.price dd .ex{
+  font-style:normal;font-size:.3em;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--muted);margin-left:.5em;vertical-align:.42em
+}
+.price div.hi dd .ex{color:var(--steel)}
 
 /* ---------- outlook ---------- */
 .outlook{background:var(--ink);color:var(--paper);padding:clamp(38px,4.8vw,60px) 0;border-top:0}
@@ -1076,21 +1083,21 @@ html.mo .totop.on{opacity:1;visibility:visible;transform:none}
     <div class="sec-head">
       <span class="eyebrow">Investment</span>
       <h2>What it costs to run this.</h2>
-      <p class="lede">A one-off set-up covering the repairs, consolidation and page builds identified above, then a monthly programme working across eight workstreams in parallel.</p>
+      <p class="lede">A one-off set-up covering the repairs, consolidation and page builds identified above, then a monthly programme working across eight workstreams in parallel. All figures are quoted in Australian dollars, excluding GST.</p>
     </div>
 
     <dl class="price">
       <div class="hi">
         <dt>Set-up — one off</dt>
-        <dd>$2,500<span>Technical repairs, redirect map, Collingwood consolidation, location page builds and tracking setup</span></dd>
+        <dd>$2,500<i class="ex">ex GST</i><span>Technical repairs, redirect map, Collingwood consolidation, location page builds and tracking setup</span></dd>
       </div>
       <div>
         <dt>Ongoing — per month</dt>
-        <dd>$2,000<span>Eight workstreams running continuously, with a dedicated account manager and monthly reporting</span></dd>
+        <dd>$2,000<i class="ex">ex GST</i><span>Eight workstreams running continuously, with a dedicated account manager and monthly reporting</span></dd>
       </div>
       <div>
         <dt>Year one — total</dt>
-        <dd>$26,500<span>$2,500 set-up plus twelve months at $2,000</span></dd>
+        <dd>$26,500<i class="ex">ex GST</i><span>$2,500 set-up plus twelve months at $2,000</span></dd>
       </div>
     </dl>
 
