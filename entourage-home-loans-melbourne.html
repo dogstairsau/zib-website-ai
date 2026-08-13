@@ -112,7 +112,7 @@
   .eyebrow{
     font-family:var(--display); font-size:16px; font-weight:700;
     letter-spacing:var(--track-small); color:var(--green);
-    margin:0 0 24px; padding-bottom:16px;
+    margin:0 0 16px; padding-bottom:18px;
     border-bottom:1px solid rgba(255,255,255,.22);
   }
   .eyebrow--dark{color:var(--forest); border-bottom-color:rgba(33,33,33,.16)}
@@ -198,12 +198,8 @@
   }
   .hero__in{
     position:relative; display:grid; grid-template-columns:minmax(0,1fr) 470px;
-    grid-template-areas:"copy form" "more form";
-    column-gap:clamp(40px,3.5vw,64px); align-content:start; padding-block:76px 84px;
+    column-gap:clamp(40px,3.5vw,64px); align-items:end; padding-block:76px 84px;
   }
-  .hero__copy{grid-area:copy}
-  .hero__more{grid-area:more}
-  .qual{grid-area:form}
   .hero h1{font-size:clamp(38px,4.6vw,62px); line-height:1; margin-bottom:22px; max-width:17ch}
   .hero h1 em{font-style:normal; color:var(--green)}
   .hero__sub{font-size:19px; line-height:1.55; color:rgba(255,255,255,.86); max-width:48ch; margin-bottom:30px}
@@ -211,7 +207,7 @@
   .hero__points li{display:flex; gap:12px; align-items:flex-start; font-size:16px; color:rgba(255,255,255,.9)}
   .hero__points svg{flex:0 0 auto; margin-top:5px; fill:var(--green)}
   .hero__calls{display:flex; gap:14px; flex-wrap:wrap; align-items:center}
-  .hero__callnote{font-size:13.5px; color:rgba(255,255,255,.6)}
+  .hero__callnote{font-size:13.5px; color:rgba(255,255,255,.6); margin-bottom:0}
 
   /* Proof strip */
   .proof{position:relative; border-top:1px solid var(--line-dark); background:rgba(0,0,0,.22)}
@@ -225,9 +221,16 @@
        hero's two buttons are dropped here — the sticky bar at the bottom of
        the screen already carries both, and repeating them just pushed the
        form further down. */
-    .hero__in{grid-template-columns:1fr; grid-template-areas:"copy" "form" "more"; row-gap:28px; padding-block:40px 52px}
+    /* display:contents dissolves the desktop wrapper so the headline, the form
+       and the supporting detail become siblings that can be reordered — form
+       second, detail last. The hero's own buttons go: the sticky bar at the
+       bottom of the screen already carries both. */
+    .hero__in{grid-template-columns:1fr; row-gap:26px; padding-block:40px 52px; align-items:start}
+    .hero__text{display:contents}
+    .hero__copy{order:1}
+    .qual{order:2}
+    .hero__more{order:3}
     .hero__calls,.hero__callnote{display:none}
-    .hero__more{margin-top:4px}
     .proof__in{grid-template-columns:repeat(2,1fr)}
     .proof__item:nth-child(2){border-right:0}
     .proof__item:nth-child(-n+2){border-bottom:1px solid var(--line-dark)}
@@ -239,7 +242,7 @@
   /* ---------- Qualifying form ---------- */
   .qual{
     background:var(--white); color:var(--ink); border-radius:3px;
-    box-shadow:var(--shadow); overflow:hidden; position:sticky; top:94px;
+    box-shadow:var(--shadow); overflow:hidden;
   }
   .qual__head{padding:24px 28px 20px; border-bottom:1px solid var(--line)}
   .qual__head h2{font-size:26px; margin-bottom:8px}
@@ -452,10 +455,7 @@
   }
 
   /* Awards */
-  .awards__copy h2{font-size:clamp(26px,3vw,40px); margin-bottom:14px}
-  /* One line, but only where one line fits — unscoped it forced a 444px line
-     onto a 390px phone. */
-  @media (min-width:900px){ .awards__copy h2{text-wrap:nowrap} }
+  .awards__copy h2{font-size:clamp(19px,5.2vw,40px); margin-bottom:14px; text-wrap:nowrap}
   .awards__copy p{color:var(--grey); margin:0; font-size:17px; max-width:60ch}
   .medals{
     margin-top:38px; overflow:hidden;
@@ -496,7 +496,7 @@
   .faqwrap__intro{position:sticky; top:104px}
   .faqwrap__intro h2{font-size:clamp(30px,3.5vw,44px); margin-bottom:18px}
   .faqwrap__note{font-size:17px; color:var(--grey); max-width:38ch; margin-bottom:24px}
-  .faq{max-width:none; padding-top:calc(16px * 1.5 + 16px + 1px)}
+  .faq{max-width:none; padding-top:calc(16px * 1.5 + 18px + 1px)}
   .faq details:first-child{border-top:1px solid var(--line)}
   @media (max-width:900px){
     .faqwrap{grid-template-columns:1fr; gap:32px}
@@ -639,6 +639,7 @@
   <div class="hero__bg" aria-hidden="true"></div>
   <div class="wrap hero__in">
 
+    <div class="hero__text">
     <div class="hero__copy">
       <h1>Get an <em>Entourage</em> behind your next move.</h1>
       <p class="hero__sub">
@@ -671,6 +672,7 @@
       <p class="hero__callnote" style="margin-top:16px">
         Five questions, forty seconds. No credit check.
       </p>
+    </div>
     </div>
 
     <!-- ---------------- The qualifying form ---------------- -->
