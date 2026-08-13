@@ -64,8 +64,22 @@
     --line:rgba(33,33,33,.14);
     --line-dark:rgba(255,255,255,.16);
 
+    /* Entourage set the whole site in Domaine Text — their base rule is
+       `body{font-family:Domaine,helvetica,roboto,arial,sans-serif}`, so the
+       sans names are fallbacks, not the body face. Headings are the same
+       family at Bold: every heading class on their site asks for 700/800/900
+       and only two weights are served, so they all land on the Bold file.
+       Their tracking is negative throughout (-.05rem at display sizes,
+       -.0125rem on small titles) — expressed here in em so it holds at every
+       clamp step. */
     --display:'Domaine Text', 'Times New Roman', Times, serif;
-    --body:Roboto, -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --body:'Domaine Text', 'Times New Roman', Times, serif;
+    /* The measurement panel is a Zib instrument sitting on top of Entourage's
+       page, not part of it — it stays in a UI sans so the two never read as
+       the same object. */
+    --ui:-apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --track-display:-.022em;
+    --track-small:-.011em;
     --wrap:1180px;
     --shadow:0 24px 60px -28px rgba(0,61,36,.45);
   }
@@ -74,18 +88,20 @@
   html{-webkit-text-size-adjust:100%; scroll-behavior:smooth}
   body{
     margin:0; background:var(--white); color:var(--ink);
-    font-family:var(--body); font-size:17px; line-height:1.6;
+    font-family:var(--body); font-size:17px; line-height:1.5;
     -webkit-font-smoothing:antialiased; overflow-x:hidden;
   }
   img{max-width:100%; display:block}
   a{color:inherit}
   button{font:inherit}
-  h1,h2,h3,h4{font-family:var(--display); font-weight:400; margin:0; line-height:1.08; letter-spacing:-.01em; text-wrap:balance}
-  p{margin:0 0 1em; text-wrap:pretty}
+  /* Bold, and tightened — matching .page-heading / .section-feature-text. */
+  h1,h2,h3,h4{font-family:var(--display); font-weight:700; margin:0; line-height:1.17; letter-spacing:var(--track-display); text-wrap:balance}
+  h3,h4{line-height:1.33; letter-spacing:var(--track-small)}
+  p{margin:0 0 1em; line-height:1.6; text-wrap:pretty}
   .wrap{width:min(100% - 40px, var(--wrap)); margin-inline:auto}
   .eyebrow{
-    font-family:var(--body); font-size:11.5px; font-weight:700;
-    letter-spacing:.19em; text-transform:uppercase; color:var(--green);
+    font-family:var(--display); font-size:12px; font-weight:700;
+    letter-spacing:.17em; text-transform:uppercase; color:var(--green);
     margin:0 0 18px;
   }
   .eyebrow--dark{color:var(--forest)}
@@ -96,7 +112,7 @@
     display:inline-flex; align-items:center; gap:12px; justify-content:center;
     background:var(--ink); color:var(--white); text-decoration:none;
     padding:16px 26px; border:1px solid var(--ink); border-radius:2px;
-    font-size:15px; font-weight:500; letter-spacing:.02em; cursor:pointer;
+    font-size:15px; font-weight:700; letter-spacing:-.018em; cursor:pointer;
     transition:background .16s ease, color .16s ease, transform .12s ease;
   }
   .btn:hover{background:var(--forest); border-color:var(--forest)}
@@ -124,7 +140,7 @@
   }
   .head__phone{
     display:inline-flex; align-items:center; gap:10px; color:var(--white);
-    text-decoration:none; font-size:16px; font-weight:500; white-space:nowrap;
+    text-decoration:none; font-size:16px; font-weight:700; white-space:nowrap; letter-spacing:-.014em;
   }
   .head__phone svg{fill:var(--green)}
   .head__phone:hover{color:var(--green)}
@@ -152,7 +168,7 @@
       linear-gradient(180deg, rgba(33,33,33,.5) 0%, rgba(0,52,31,.2) 50%, rgba(0,52,31,.82) 100%);
   }
   .hero__in{position:relative; display:grid; grid-template-columns:1fr 470px; gap:64px; align-items:start; padding:76px 0 84px}
-  .hero h1{font-size:clamp(38px,4.6vw,62px); margin-bottom:22px}
+  .hero h1{font-size:clamp(38px,4.6vw,62px); line-height:1; margin-bottom:22px}
   .hero h1 em{font-style:normal; color:var(--green)}
   .hero__sub{font-size:19px; line-height:1.55; color:rgba(255,255,255,.86); max-width:37ch; margin-bottom:30px}
   .hero__points{list-style:none; margin:0 0 34px; padding:0; display:grid; gap:12px; max-width:44ch}
@@ -166,7 +182,7 @@
   .proof__in{display:grid; grid-template-columns:repeat(4,1fr); gap:0}
   .proof__item{padding:26px 28px; border-right:1px solid var(--line-dark); color:var(--white)}
   .proof__item:last-child{border-right:0}
-  .proof__n{font-family:var(--display); font-size:clamp(24px,2.5vw,32px); line-height:1.05; display:block}
+  .proof__n{font-family:var(--display); font-size:clamp(24px,2.5vw,32px); line-height:1; display:block}
   .proof__l{font-size:12.5px; letter-spacing:.12em; text-transform:uppercase; color:rgba(255,255,255,.62); margin-top:8px; display:block}
   @media (max-width:980px){
     .hero__in{grid-template-columns:1fr; gap:40px; padding:52px 0 60px}
@@ -272,7 +288,7 @@
   .stepcard{padding:34px 30px 34px 0; border-right:1px solid var(--line)}
   .stepcard:last-child{border-right:0; padding-right:0}
   .stepcard:not(:first-child){padding-left:30px}
-  .stepcard__n{font-family:var(--display); font-size:14px; letter-spacing:.2em; color:var(--green); display:block; margin-bottom:16px}
+  .stepcard__n{font-family:var(--display); font-size:14px; font-weight:700; letter-spacing:.2em; color:var(--green); display:block; margin-bottom:16px}
   .stepcard h3{font-size:23px; margin-bottom:10px}
   .stepcard p{font-size:15.5px; color:var(--grey); margin:0}
   @media (max-width:860px){
@@ -373,7 +389,7 @@
   .foot{background:var(--ink); color:rgba(255,255,255,.6); padding:52px 0 40px; font-size:13.5px}
   .foot__mark{width:150px; margin-bottom:26px; opacity:.9}
   .foot__cols{display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:34px; padding-bottom:30px; border-bottom:1px solid rgba(255,255,255,.12)}
-  .foot h4{font-family:var(--body); font-size:11.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--white); margin:0 0 14px; font-weight:700}
+  .foot h4{font-family:var(--display); font-size:11.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--white); margin:0 0 14px; font-weight:700}
   .foot p{margin:0 0 8px; line-height:1.65}
   .foot a{text-decoration:none}
   .foot a:hover{color:var(--green)}
@@ -392,7 +408,7 @@
   }
   .mbar a{
     display:flex; align-items:center; justify-content:center; gap:9px;
-    padding:15px 10px; text-decoration:none; font-size:15px; font-weight:500;
+    padding:15px 10px; text-decoration:none; font-size:15px; font-weight:700;
   }
   .mbar__call{background:var(--ink); color:var(--white)}
   .mbar__call svg{fill:var(--green)}
@@ -437,25 +453,25 @@
     body.dbg-open{padding-right:430px}
   }
   .dbg__head{padding:18px 20px; border-bottom:1px solid rgba(255,255,255,.12)}
-  .dbg__head h3{font-family:var(--body); font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:var(--white); margin:0 0 6px}
+  .dbg__head h3{font-family:var(--ui); font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:var(--white); margin:0 0 6px}
   .dbg__head p{margin:0; font-size:12px; color:#8A8A8A; line-height:1.5}
   .dbg__close{position:absolute; top:14px; right:14px; background:none; border:0; color:#8A8A8A; font-size:22px; cursor:pointer; line-height:1; padding:4px}
   .dbg__close:hover{color:var(--white)}
   .dbg__grade{padding:16px 20px; border-bottom:1px solid rgba(255,255,255,.12); display:grid; grid-template-columns:repeat(3,1fr); gap:12px}
   .dbg__g{}
   .dbg__g span{display:block; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:#7A7A7A; margin-bottom:5px}
-  .dbg__g b{font-size:15px; color:var(--white); font-weight:500; font-family:var(--body)}
+  .dbg__g b{font-size:15px; color:var(--white); font-weight:500; font-family:var(--ui)}
   .dbg__g b.ok{color:var(--green)}
   .dbg__g b.warn{color:#F5B301}
   .dbg__log{flex:1; overflow-y:auto; padding:14px 20px 24px; font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:11.5px; line-height:1.55}
-  .dbg__empty{color:#6A6A6A; font-family:var(--body); font-size:12.5px; line-height:1.6}
+  .dbg__empty{color:#6A6A6A; font-family:var(--ui); font-size:12.5px; line-height:1.6}
   .dbg__e{padding:10px 0; border-bottom:1px solid rgba(255,255,255,.08)}
   .dbg__e-h{display:flex; gap:8px; align-items:baseline; margin-bottom:5px}
   .dbg__e-h b{color:var(--green); font-weight:400}
   .dbg__e-h i{color:#5F5F5F; font-style:normal; margin-left:auto; font-size:10.5px}
   .dbg__e-p{color:#9E9E9E; white-space:pre-wrap; word-break:break-word; margin:0}
   .dbg__e-p k{color:#C9C9C9; font-weight:400}
-  .dbg__foot{padding:14px 20px; border-top:1px solid rgba(255,255,255,.12); color:#7A7A7A; font-family:var(--body); font-size:11.5px; line-height:1.55}
+  .dbg__foot{padding:14px 20px; border-top:1px solid rgba(255,255,255,.12); color:#7A7A7A; font-family:var(--ui); font-size:11.5px; line-height:1.55}
 </style>
 </head>
 <body>
@@ -692,8 +708,8 @@
         <div class="done__mark"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4l-1.4 1.4L16.2 11H4v2h12.2l-5.6 5.6L12 20l8-8z"/></svg></div>
         <h3>First home? We've got a better starting point for you.</h3>
         <p>
-          We absolutely help first home buyers — but you'll get more out of our First Home Buyer
-          Guide and a specialist first-home broker than the upgrader team this page goes to.
+          We help a lot of first home buyers — you'll just get more out of our First Home Buyer
+          Guide and a specialist first-home broker than from the upgrader team this page goes to.
         </p>
         <a class="btn btn--green btn--full" href="https://entourage.com.au/first-home-buyer-guide/" target="_blank" rel="noopener" style="margin-bottom:10px">Get the First Home Buyer Guide</a>
         <a class="btn btn--full" href="tel:+61394211651" style="background:transparent;color:var(--ink);border-color:var(--line)">Or call 03 9421 1651</a>
@@ -702,10 +718,11 @@
       <!-- Outcome: routed to the asset / commercial lane -->
       <div class="done done--route" id="done-asset">
         <div class="done__mark"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4l-1.4 1.4L16.2 11H4v2h12.2l-5.6 5.6L12 20l8-8z"/></svg></div>
-        <h3>That's our Asset team, not this one.</h3>
+        <h3>That one's for our Asset team.</h3>
         <p>
           Vehicle, equipment, caravan, boat and business lending sits with Entourage Asset —
-          a different team with a different set of lenders. Straight through to them:
+          same building, different specialists and a different lender panel. Here's the
+          quickest way through to them:
         </p>
         <a class="btn btn--green btn--full" href="https://entourage.com.au/asset/" target="_blank" rel="noopener" style="margin-bottom:10px">See Entourage Asset</a>
         <a class="btn btn--full" href="tel:+61394211651" style="background:transparent;color:var(--ink);border-color:var(--line)">Or call 03 9421 1651</a>
@@ -714,10 +731,11 @@
       <!-- Outcome: nurture -->
       <div class="done done--route" id="done-nurture">
         <div class="done__mark"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4l-1.4 1.4L16.2 11H4v2h12.2l-5.6 5.6L12 20l8-8z"/></svg></div>
-        <h3>No timeframe yet? No sales call, then.</h3>
+        <h3>Still early? Start here — no sales call.</h3>
         <p>
-          You told us you're researching, so we won't put a broker on the phone to you.
-          Take the guides and the calculators instead — and come back when it's real.
+          Since you're weighing it up rather than moving on something, we'll skip the
+          broker call for now. The calculators and guides will be far more use to you
+          today, and we're a phone call away the moment things get real.
         </p>
         <a class="btn btn--green btn--full" href="https://entourage.com.au/loan-calculators/" target="_blank" rel="noopener" style="margin-bottom:10px">Open the loan calculators</a>
         <a class="btn btn--full" href="https://entourage.com.au/resources/" target="_blank" rel="noopener" style="background:transparent;color:var(--ink);border-color:var(--line)">Browse the guides</a>
@@ -775,22 +793,22 @@
     <div class="pillars">
       <div class="pillar">
         <div class="pillar__r"></div>
-        <h3>We listen</h3>
+        <h3>We Listen</h3>
         <p>Our clients aren't anonymous bank loans. You know where you're going — and because we listen, so do we.</p>
       </div>
       <div class="pillar">
         <div class="pillar__r"></div>
-        <h3>Save time</h3>
+        <h3>Save Time</h3>
         <p>One team, one briefing, one seamless process, with everyone working on your agenda instead of a bank's.</p>
       </div>
       <div class="pillar">
         <div class="pillar__r"></div>
-        <h3>Long-term support</h3>
+        <h3>Long-term Support</h3>
         <p>We don't forget about you once the loan is approved. Think of us as your on-call support crew for the long haul.</p>
       </div>
       <div class="pillar">
         <div class="pillar__r"></div>
-        <h3>Informed decisions</h3>
+        <h3>Informed Decisions</h3>
         <p>Independent finance, property, legal and wealth advice — so every decision is made with the full picture in front of you.</p>
       </div>
     </div>
@@ -931,7 +949,7 @@
       </details>
       <details>
         <summary>What if I'm just looking at the moment?</summary>
-        <p>Then say so in the form and we won't put a broker on the phone to you. You'll get the calculators and the guides instead, and you can come back when there's an actual deadline attached.</p>
+        <p>Then say so in the form and we'll skip the broker call. You'll get the calculators and the guides instead, which are more use at that stage anyway — and you're welcome to come back to us whenever there's a real deadline attached.</p>
       </details>
     </div>
   </div>
@@ -1183,7 +1201,7 @@
     barWrap.style.display = 'none';
     document.getElementById('done-' + kind).classList.add('is-on');
     document.querySelector('.qual__head h2').textContent = 'Thanks — here’s the useful bit.';
-    document.querySelector('.qual__head p').textContent = 'We’d rather send you somewhere that helps than take a call slot you don’t need.';
+    document.querySelector('.qual__head p').textContent = 'We’d rather point you somewhere genuinely useful than book a call you don’t need yet.';
 
     /* Routed away: still a tracked outcome, with a reason code attached, and
        explicitly NOT counted as a lead conversion. This is the fix for the
