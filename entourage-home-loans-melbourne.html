@@ -473,6 +473,13 @@
     .medals{overflow-x:auto}
   }
 
+  /* The badge row is a rule of small marks rather than a block of content, so
+     it needs far less room under it than a normal section — the default
+     bottom padding plus the next section's top padding was stacking to over
+     200px of empty page. */
+  .awardband{padding-bottom:44px}
+  @media (max-width:860px){ .awardband{padding-bottom:32px} }
+
   /* FAQ */
   .faq{max-width:820px}
   .faq details{border-bottom:1px solid var(--line); padding:4px 0}
@@ -948,7 +955,7 @@
 </section>
 
 <!-- ============================ AWARDS ============================ -->
-<section>
+<section class="awardband">
   <div class="wrap awards">
     <div class="awards__copy">
       <p class="eyebrow eyebrow--dark">Recognition</p>
