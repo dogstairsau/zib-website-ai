@@ -143,6 +143,7 @@
   border-bottom: 0.5px solid var(--rule);
 }
 .sm-suburb-grid {
+  --cell-x: clamp(22px, 2.6vw, 40px);
   margin-top: clamp(44px, 5vw, 68px);
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -155,30 +156,43 @@
 /* Top padding runs deliberately larger than the bottom: the heading's cap
    height sits high in its line box, so equal padding reads as the title
    crowding the rule above it while the paragraph looks loose below. */
+/* Padding is symmetrical so text in the second and third columns clears the
+   rule on its left by the same distance it clears the one on its right. The
+   outer edges are then zeroed per breakpoint, so the first column still lines
+   up with the container's left margin and the last with its right — the grid
+   reads as full-bleed while the interior columns keep their gutters. */
 .sm-suburb {
-  padding: clamp(38px, 4.2vw, 56px) clamp(18px, 2vw, 28px) clamp(28px, 3vw, 38px) 0;
+  padding: clamp(38px, 4.2vw, 56px) var(--cell-x) clamp(30px, 3.2vw, 40px);
   border-bottom: 0.5px solid var(--rule);
   border-right: 0.5px solid var(--rule);
-  /* Grid rows are as tall as their tallest cell, so a two-line blurb next to a
-     four-line one used to leave a 61px gap above the rule where its neighbour
-     left 39px — the ragged bottom edge is what reads as broken spacing, not the
-     gap itself. Column layout with the blurb pushed down bottom-aligns every
-     cell, so both rules get identical clearance and the slack collects in the
-     one place nobody reads as an error: under the heading. */
-  display: flex;
-  flex-direction: column;
 }
+/* 3 columns */
+.sm-suburb:nth-child(3n + 1) { padding-left: 0; }
 .sm-suburb:nth-child(3n) { border-right: 0; padding-right: 0; }
+/* 2 columns. The 3-column rules are reset at matching specificity first —
+   :nth-child(3n) outranks a bare .sm-suburb, so without this the 4th and 10th
+   cells keep their flush-left padding and every 3rd cell loses its divider. */
 @media (max-width: 900px) {
-  .sm-suburb { border-right: 0.5px solid var(--rule); padding-right: clamp(18px, 2vw, 28px); }
-  .sm-suburb:nth-child(3n) { border-right: 0.5px solid var(--rule); padding-right: clamp(18px, 2vw, 28px); }
+  .sm-suburb:nth-child(3n + 1) { padding-left: var(--cell-x); }
+  .sm-suburb:nth-child(3n) { border-right: 0.5px solid var(--rule); padding-right: var(--cell-x); }
+  .sm-suburb:nth-child(2n + 1) { padding-left: 0; }
   .sm-suburb:nth-child(2n) { border-right: 0; padding-right: 0; }
 }
-@media (max-width: 600px) { .sm-suburb, .sm-suburb:nth-child(3n) { border-right: 0; padding-right: 0; } }
+/* 1 column */
+@media (max-width: 600px) {
+  .sm-suburb, .sm-suburb:nth-child(2n), .sm-suburb:nth-child(3n) {
+    border-right: 0;
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
 
 .sm-suburb-name { font-family: var(--display); font-size: clamp(19px, 1.9vw, 24px); font-weight: 500; letter-spacing: -0.02em; line-height: 1.1; display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; }
 .sm-suburb-pc { font-family: var(--mono); font-size: 10.5px; letter-spacing: 0.12em; color: var(--accent); font-weight: 600; }
-.sm-suburb p { margin-top: auto; padding-top: 14px; color: var(--muted); font-size: 14.5px; line-height: 1.55; }
+/* Top-aligned, with the blurbs written to a consistent length so the cells in
+   a row come out near enough the same height. Bottom-aligning them instead
+   just moves the ragged edge up under the headings, where it's more obvious. */
+.sm-suburb p { margin-top: 14px; color: var(--muted); font-size: 14.5px; line-height: 1.55; }
 .sm-suburb-note {
   margin-top: clamp(36px, 4vw, 52px);
   color: var(--muted);
@@ -320,7 +334,7 @@
   <div class="container sm-hero-content">
     <div class="mono eyebrow reveal">Digital marketing · South Melbourne 3205</div>
     <h1 class="hero-h reveal">
-      A South Melbourne agency you can <em class="word-cycle" data-words="walk into, sit down with, look in the eye, hold to a number">walk into</em>.
+      A South Melbourne agency you can <em class="word-cycle" data-words="walk into, sit down with, look in the eye, get a straight answer from">walk into</em>.
     </h1>
 
     <div class="loc-hero-row">
@@ -438,7 +452,7 @@
     <div class="sm-suburb-grid reveal-stagger">
       <div class="sm-suburb">
         <div class="sm-suburb-name">South Melbourne <span class="sm-suburb-pc mono">3205</span></div>
-        <p>Our new postcode, and the one we work hardest in. Showrooms and wholesalers along Cecil and Coventry, creative studios in the warehouse conversions, and the Market traders who've outlasted every retail trend since 1867.</p>
+        <p>Our new postcode, and the one we work hardest in. Showrooms and wholesalers along Cecil and Coventry, creative studios in the warehouse conversions.</p>
       </div>
       <div class="sm-suburb">
         <div class="sm-suburb-name">South Yarra <span class="sm-suburb-pc mono">3141</span></div>
@@ -462,15 +476,15 @@
       </div>
       <div class="sm-suburb">
         <div class="sm-suburb-name">Melbourne CBD <span class="sm-suburb-pc mono">3000</span></div>
-        <p>Legal, finance and B2B, where a lead is worth thousands and the whole game is intent quality rather than traffic volume.</p>
+        <p>Legal, finance and B2B, where a single lead is worth thousands, the buying cycle runs long, and the game is intent quality rather than traffic volume.</p>
       </div>
       <div class="sm-suburb">
         <div class="sm-suburb-name">Docklands <span class="sm-suburb-pc mono">3008</span></div>
-        <p>Corporate head offices and national brands running multi-location campaigns that need one system, not seven agency relationships.</p>
+        <p>Corporate head offices and national brands running multi-location campaigns — the ones that need one system and one report, not seven agency relationships.</p>
       </div>
       <div class="sm-suburb">
         <div class="sm-suburb-name">Toorak <span class="sm-suburb-pc mono">3142</span></div>
-        <p>Premium trades, property and health services where the brief is fewer, better leads — not a bigger pipeline of tyre-kickers.</p>
+        <p>Premium trades, property and health services, where the brief is fewer and better leads rather than a bigger pipeline of quotes that never close.</p>
       </div>
       <div class="sm-suburb">
         <div class="sm-suburb-name">Elwood <span class="sm-suburb-pc mono">3184</span></div>
@@ -486,7 +500,7 @@
       </div>
       <div class="sm-suburb">
         <div class="sm-suburb-name">Richmond &amp; Cremorne <span class="sm-suburb-pc mono">3121</span></div>
-        <p>Our old neighbourhood — we ran the agency from here before the move, and half the team still knows which coffee is worth the walk. Tech, SaaS and scale-ups, with buyers who'll audit our reporting as hard as we audit their funnel.</p>
+        <p>Our old neighbourhood, where we ran the agency before the move. Tech, SaaS and scale-ups, with buyers who audit our reporting as hard as we audit their funnel.</p>
       </div>
       <div class="sm-suburb">
         <div class="sm-suburb-name">Windsor <span class="sm-suburb-pc mono">3181</span></div>
@@ -494,7 +508,7 @@
       </div>
       <div class="sm-suburb">
         <div class="sm-suburb-name">Brighton <span class="sm-suburb-pc mono">3186</span></div>
-        <p>Church Street retail, property and premium home services, where the buyer researches for weeks before they call anyone.</p>
+        <p>Church Street retail, property and premium home services, where the buyer researches for weeks and lines up three quotes before calling anyone.</p>
       </div>
     </div>
 
@@ -734,7 +748,7 @@
   <div class="container">
     <div class="mono cta-eyebrow reveal">Talk to a senior strategist</div>
     <h2 class="cta-title reveal">
-      We're ten minutes away. <em>Use that.</em>
+      We're ten minutes away. <em>Come and see us.</em>
     </h2>
     <p class="cta-sub reveal">
       Thirty minutes, in our boardroom or yours. We'll read your business, tell you the one place we'd move first, and give you the unvarnished version. No deck, no upsell, and if we're not the right fit we'll say so and point you somewhere better.
