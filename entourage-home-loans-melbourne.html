@@ -1,0 +1,1553 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Mortgage Brokers Melbourne | Upgrading, Refinancing or Investing | Entourage</title>
+<meta name="description" content="Upgrading, refinancing or buying your next investment? Entourage brokers compare 60+ lenders and handle it end to end. $5 billion+ settled, 5.0 from 544 Google reviews. Answer 5 questions to see if we can help.">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Get an Entourage behind your next move | Entourage">
+<meta property="og:description" content="Melbourne mortgage brokers for upgraders, investors and refinancers. 60+ lenders, one team, $5 billion+ settled.">
+<link rel="icon" href="/assets/entourage/wordmark.svg">
+<link rel="preload" as="font" type="font/woff2" href="/assets/entourage/domaine-text-regular.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/assets/entourage/domaine-text-bold.woff2" crossorigin>
+<link rel="preload" as="image" href="/assets/entourage/hero-melbourne.webp" fetchpriority="high">
+<style>
+  /* ------------------------------------------------------------------
+     Entourage — paid-media landing page (concept build by Zib Digital)
+
+     LANE: core finance / upgraders. Per the August 2026 audit this is the
+     40% lane — 35+ upgraders, portfolio investors and strained refinancers.
+     The other three lanes (buyers advocacy, asset finance, brand) reuse this
+     same shell with a different hero, proof block and question set.
+
+     THE POINT OF THE PAGE. The audit found A$24,686 of spend, 123 platform
+     "leads" and zero closed deals, because nothing past the form submit was
+     ever measured. So this page is not built to maximise form fills. It is
+     built to grade the enquiry before it reaches a broker, route the people
+     Entourage can't help somewhere useful rather than into Emma's call list,
+     and push a graded, valued conversion back to Google and Meta so the
+     platforms start buying the right person.
+
+     FONTS. Domaine Text is Entourage's licensed brand face (Klim Type
+     Foundry), subset to latin and converted to woff2 from the files already
+     served on entourage.com.au. It is used here so the concept reads as
+     Entourage in the pitch. Before this ships on a production domain the
+     font must be served under Entourage's own Klim licence — see the
+     handover note in docs/entourage-landing-page.md.
+     ------------------------------------------------------------------ */
+  @font-face{
+    font-family:'Domaine Text'; font-style:normal; font-weight:400; font-display:swap;
+    src:url('/assets/entourage/domaine-text-regular.woff2') format('woff2');
+  }
+  @font-face{
+    font-family:'Domaine Text'; font-style:normal; font-weight:700; font-display:swap;
+    src:url('/assets/entourage/domaine-text-bold.woff2') format('woff2');
+  }
+
+  :root{
+    /* Palette lifted from entourage.com.au's stylesheet, in its own ratios:
+       forest green carries the brand, near-black carries the type, the warm
+       bone neutral does the page ground, and the bright green is reserved
+       for progress and confirmation only — never for large fields. */
+    --forest:#003D24;
+    --forest-deep:#00341F;
+    --green:#13AF7A;
+    --ink:#212121;
+    --ink-soft:#191919;
+    --navy:#061130;
+    --bone:#E6E5E3;
+    --sand:#DED6D1;
+    --grey:#737373;
+    --white:#FFFFFF;
+    --line:rgba(33,33,33,.14);
+    --line-dark:rgba(255,255,255,.16);
+
+    /* Entourage set the whole site in Domaine Text — their base rule is
+       `body{font-family:Domaine,helvetica,roboto,arial,sans-serif}`, so the
+       sans names are fallbacks, not the body face. Headings are the same
+       family at Bold: every heading class on their site asks for 700/800/900
+       and only two weights are served, so they all land on the Bold file.
+       Their tracking is negative throughout (-.05rem at display sizes,
+       -.0125rem on small titles) — expressed here in em so it holds at every
+       clamp step. */
+    --display:'Domaine Text', 'Times New Roman', Times, serif;
+    --body:'Domaine Text', 'Times New Roman', Times, serif;
+    /* The measurement panel is a Zib instrument sitting on top of Entourage's
+       page, not part of it — it stays in a UI sans so the two never read as
+       the same object. */
+    --ui:-apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --track-display:-.022em;
+    --track-small:-.011em;
+    --wrap:1600px;   /* their .grid-container: max-width 100rem */
+    --gutter:20px;   /* their padding step: 1.25rem → 2.5rem → 5rem */
+    --shadow:0 24px 60px -28px rgba(0,61,36,.45);
+  }
+
+  *,*::before,*::after{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%; scroll-behavior:smooth}
+  body{
+    margin:0; background:var(--white); color:var(--ink);
+    font-family:var(--body); font-size:17px; line-height:1.5;
+    -webkit-font-smoothing:antialiased; overflow-x:hidden;
+  }
+  img{max-width:100%; display:block}
+  a{color:inherit}
+  button{font:inherit}
+  /* Bold, and tightened — matching .page-heading / .section-feature-text. */
+  h1,h2,h3,h4{font-family:var(--display); font-weight:700; margin:0; line-height:1.17; letter-spacing:var(--track-display); text-wrap:balance}
+  h3,h4{line-height:1.33; letter-spacing:var(--track-small)}
+  p{margin:0 0 1em; line-height:1.6; text-wrap:pretty}
+  .wrap{width:100%; max-width:var(--wrap); margin-inline:auto; padding-inline:var(--gutter)}
+  /* The header runs wider than the content, exactly as it does on their site —
+     .chr-header-container caps at 160rem with 60px gutters while the body caps
+     at 100rem. That difference is what makes the nav read as full-bleed. */
+  .head__in{width:100%; max-width:var(--wrap); margin-inline:auto; padding-inline:var(--gutter)}
+  @media (min-width:768px){ :root{--gutter:40px} }
+  @media (min-width:1200px){ :root{--gutter:80px} }
+  /* Entourage's own section label: Domaine Bold at 1rem, sentence case, with a
+     hairline rule under it. Wide-tracked uppercase is a sans-serif device —
+     in a serif it just looks stretched, and nothing on their site does it. */
+  .eyebrow{
+    font-family:var(--display); font-size:16px; font-weight:700;
+    letter-spacing:var(--track-small); color:var(--green);
+    margin:0 0 16px; padding-bottom:18px;
+    border-bottom:1px solid rgba(255,255,255,.22);
+  }
+  .eyebrow--dark{color:var(--forest); border-bottom-color:rgba(33,33,33,.16)}
+  .sr{position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0 0 0 0); white-space:nowrap; border:0}
+
+  /* ---------- Buttons ---------- */
+  .btn{
+    display:inline-flex; align-items:center; gap:12px; justify-content:center;
+    background:var(--ink); color:var(--white); text-decoration:none;
+    padding:16px 26px; border:1px solid var(--ink); border-radius:2px;
+    font-size:15px; font-weight:700; letter-spacing:-.018em; cursor:pointer;
+    transition:background .16s ease, color .16s ease, transform .12s ease;
+  }
+  .btn:hover{background:var(--forest); border-color:var(--forest)}
+  .btn:active{transform:translateY(1px)}
+  .btn--green{background:var(--forest); border-color:var(--forest)}
+  .btn--green:hover{background:var(--forest-deep); border-color:var(--forest-deep)}
+  .btn--ghost{background:transparent; color:var(--white); border-color:var(--line-dark)}
+  .btn--ghost:hover{background:var(--white); color:var(--ink); border-color:var(--white)}
+  .btn--lg{padding:19px 32px; font-size:16px}
+  .btn--full{width:100%}
+  .btn svg{flex:0 0 auto}
+
+  /* ---------- Header ---------- */
+  .head{
+    position:sticky; top:0; z-index:60; background:var(--ink);
+    border-bottom:1px solid rgba(255,255,255,.1);
+  }
+  .head__in{display:flex; align-items:center; gap:24px; padding-block:16px; min-height:70px}
+  .head__mark{width:172px; flex:0 0 auto}
+  .head__mark img{width:100%}
+  .head__spacer{margin-left:auto}
+  /* Social proof in the header. Paid traffic lands cold and decides in the
+     first screen, so the rating sits beside the wordmark rather than waiting
+     for the proof strip below the fold. It degrades in two steps as space
+     runs out: full sentence → rating only → hidden, with the phone number
+     always winning the last of the room. */
+  .head__rev{
+    display:inline-flex; align-items:center; gap:9px; margin-left:auto;
+    text-decoration:none; color:rgba(255,255,255,.82); font-size:13px; white-space:nowrap;
+  }
+  .head__rev:hover{color:var(--white)}
+  .head__rev-stars{display:inline-flex; gap:1.5px}
+  .head__rev-stars svg{fill:#F5B301}
+  .head__rev-t b{font-weight:700; color:var(--white)}
+  .head__sep{width:1px; height:18px; background:rgba(255,255,255,.2)}
+  .head__settled{color:rgba(255,255,255,.82); font-size:13px; white-space:nowrap}
+  @media (max-width:1180px){
+    .head__rev-long{display:none}
+    .head__sep,.head__settled{display:none}
+  }
+  .head__phone{
+    display:inline-flex; align-items:center; gap:10px; color:var(--white);
+    text-decoration:none; font-size:16px; font-weight:700; white-space:nowrap; letter-spacing:-.014em;
+  }
+  .head__phone svg{fill:var(--green)}
+  .head__phone:hover{color:var(--green)}
+  @media (max-width:900px){
+    .head__mark{width:132px}
+    .head .btn{display:none}
+  }
+  /* Below this the phone number needs the room more than the rating does. */
+  @media (max-width:600px){
+    .head__rev{display:none}
+  }
+
+  /* ---------- Hero ---------- */
+  .hero{position:relative; background:var(--ink); color:var(--white); overflow:hidden}
+  .hero__bg{
+    position:absolute; inset:0;
+    background:url('/assets/entourage/hero-melbourne.webp') center 62%/cover no-repeat;
+    /* The source frame is already heavily darkened on Entourage's own site, so
+       it is lifted here rather than dimmed — otherwise the skyline disappears
+       entirely and the hero reads as flat black. The scrim below then buys back
+       contrast only where type actually sits. */
+    filter:brightness(1.9) contrast(1.05);
+  }
+  .hero__bg::after{
+    content:''; position:absolute; inset:0;
+    background:
+      linear-gradient(100deg, rgba(15,15,15,.92) 0%, rgba(15,15,15,.74) 46%, rgba(15,15,15,.34) 78%),
+      linear-gradient(180deg, rgba(33,33,33,.5) 0%, rgba(0,52,31,.2) 50%, rgba(0,52,31,.82) 100%);
+  }
+  .hero__in{
+    position:relative; display:grid; grid-template-columns:minmax(0,1fr) 470px;
+    column-gap:clamp(40px,3.5vw,64px); align-items:end; padding-block:76px 84px;
+  }
+  .hero h1{font-size:clamp(38px,4.6vw,62px); line-height:1; margin-bottom:22px; max-width:17ch}
+  .hero h1 em{font-style:normal; color:var(--green)}
+  .hero__sub{font-size:19px; line-height:1.55; color:rgba(255,255,255,.86); max-width:48ch; margin-bottom:30px}
+  .hero__points{list-style:none; margin:0 0 34px; padding:0; display:grid; gap:12px; max-width:52ch}
+  .hero__points li{display:flex; gap:12px; align-items:flex-start; font-size:16px; color:rgba(255,255,255,.9)}
+  .hero__points svg{flex:0 0 auto; margin-top:5px; fill:var(--green)}
+  .hero__calls{display:flex; gap:14px; flex-wrap:wrap; align-items:center}
+  .hero__callnote{font-size:13.5px; color:rgba(255,255,255,.6); margin-bottom:0}
+
+  /* Proof strip */
+  .proof{position:relative; border-top:1px solid var(--line-dark); background:rgba(0,0,0,.22)}
+  .proof__in{display:grid; grid-template-columns:repeat(4,1fr); gap:0}
+  .proof__item{padding:26px 28px; border-right:1px solid var(--line-dark); color:var(--white)}
+  .proof__item:last-child{border-right:0}
+  .proof__n{font-family:var(--display); font-size:clamp(24px,2.5vw,32px); line-height:1; display:block}
+  .proof__l{font-size:14px; letter-spacing:var(--track-small); color:rgba(255,255,255,.66); margin-top:6px; display:block}
+  @media (max-width:980px){
+    /* Phone order: headline, then the form, then the supporting detail. The
+       hero's two buttons are dropped here — the sticky bar at the bottom of
+       the screen already carries both, and repeating them just pushed the
+       form further down. */
+    /* display:contents dissolves the desktop wrapper so the headline, the form
+       and the supporting detail become siblings that can be reordered — form
+       second, detail last. The hero's own buttons go: the sticky bar at the
+       bottom of the screen already carries both. */
+    .hero__in{grid-template-columns:1fr; row-gap:26px; padding-block:40px 52px; align-items:start}
+    .hero__text{display:contents}
+    .hero__copy{order:1}
+    .qual{order:2}
+    .hero__more{order:3}
+    .hero__calls,.hero__callnote{display:none}
+    .proof__in{grid-template-columns:repeat(2,1fr)}
+    .proof__item:nth-child(2){border-right:0}
+    .proof__item:nth-child(-n+2){border-bottom:1px solid var(--line-dark)}
+  }
+  @media (max-width:520px){
+    .proof__item{padding:20px 16px}
+  }
+
+  /* ---------- Qualifying form ---------- */
+  .qual{
+    background:var(--white); color:var(--ink); border-radius:3px;
+    box-shadow:var(--shadow); overflow:hidden;
+  }
+  .qual__head{padding:24px 28px 20px; border-bottom:1px solid var(--line)}
+  .qual__head h2{font-size:26px; margin-bottom:8px}
+  .qual__head p{font-size:14.5px; color:var(--grey); margin:0}
+  .qual__bar{height:3px; background:var(--bone); position:relative}
+  .qual__bar i{position:absolute; inset:0 auto 0 0; width:0; background:var(--green); transition:width .35s cubic-bezier(.4,0,.2,1)}
+  .qual__body{padding:26px 28px 28px}
+  .step{display:none}
+  .step.is-on{display:block; animation:slidein .28s ease}
+  @keyframes slidein{from{opacity:0; transform:translateY(6px)} to{opacity:1; transform:none}}
+  @media (prefers-reduced-motion:reduce){
+    .step.is-on{animation:none}
+    html{scroll-behavior:auto}
+  }
+  .step__count{font-size:13.5px; letter-spacing:var(--track-small); color:var(--grey); margin-bottom:10px}
+  .step__q{font-family:var(--display); font-size:23px; line-height:1.2; margin-bottom:18px}
+  .opts{display:grid; gap:9px}
+  .opt{
+    display:flex; align-items:center; gap:13px; width:100%; text-align:left;
+    background:var(--white); border:1px solid var(--line); border-radius:2px;
+    padding:15px 16px; cursor:pointer; font-size:15.5px; color:var(--ink);
+    transition:border-color .14s ease, background .14s ease, transform .1s ease;
+  }
+  .opt:hover{border-color:var(--forest); background:#FAFAF9}
+  .opt:active{transform:translateY(1px)}
+  .opt.is-picked{border-color:var(--forest); background:var(--forest); color:var(--white)}
+  .opt__k{
+    flex:0 0 auto; width:26px; height:26px; border-radius:50%; border:1px solid var(--line);
+    display:grid; place-items:center; font-size:11px; font-weight:700; color:var(--grey);
+  }
+  .opt.is-picked .opt__k{border-color:rgba(255,255,255,.5); color:var(--white)}
+  .opt__t{flex:1}
+  .opt__t small{display:block; font-size:13px; color:var(--grey); margin-top:2px; line-height:1.4}
+  .opt.is-picked .opt__t small{color:rgba(255,255,255,.72)}
+  .back{
+    background:none; border:0; padding:0; margin-top:16px; cursor:pointer;
+    font-size:13.5px; color:var(--grey); text-decoration:underline; text-underline-offset:3px;
+  }
+  .back:hover{color:var(--ink)}
+
+  /* Summary chip row shown on the contact step */
+  .recap{display:flex; flex-wrap:wrap; gap:7px; margin-bottom:18px}
+  .recap span{
+    font-size:13px; letter-spacing:var(--track-small); font-weight:700;
+    background:var(--bone); color:var(--forest); padding:6px 11px; border-radius:2px;
+  }
+  .fields{display:grid; grid-template-columns:1fr 1fr; gap:13px}
+  .field{display:block}
+  .field--wide{grid-column:1/-1}
+  .field label{display:block; font-size:13.5px; letter-spacing:var(--track-small); color:var(--grey); margin-bottom:6px}
+  .field input{
+    width:100%; padding:13px 14px; border:1px solid var(--line); border-radius:2px;
+    font-family:var(--body); font-size:16px; color:var(--ink); background:var(--white);
+  }
+  .field input:focus{outline:2px solid var(--forest); outline-offset:-1px; border-color:var(--forest)}
+  .field input[aria-invalid="true"]{border-color:#B3261E; background:#FFF7F6}
+  .field .err{display:none; font-size:12.5px; color:#B3261E; margin-top:5px}
+  .field input[aria-invalid="true"] ~ .err{display:block}
+  .field__lab{display:block; font-size:13.5px; letter-spacing:var(--track-small); color:var(--grey); margin-bottom:6px}
+  .times{display:grid; grid-template-columns:repeat(2,1fr); gap:8px}
+  .time{
+    padding:12px 14px; background:var(--white); border:1px solid var(--line);
+    border-radius:2px; font-family:var(--body); font-size:15px; color:var(--ink); cursor:pointer;
+    transition:border-color .14s ease, background .14s ease, color .14s ease;
+  }
+  .time:hover{border-color:var(--forest)}
+  .time.is-picked{background:var(--forest); border-color:var(--forest); color:var(--white); font-weight:700}
+  .consent{grid-column:1/-1; display:flex; gap:11px; align-items:flex-start; font-size:12.5px; color:var(--grey); line-height:1.5}
+  .consent input{margin-top:2px; flex:0 0 auto; width:16px; height:16px; accent-color:var(--forest)}
+  .fine{font-size:12px; color:var(--grey); margin:14px 0 0; line-height:1.5}
+
+  /* Outcome panels */
+  .done{display:none; padding:34px 28px 30px; text-align:left}
+  .done.is-on{display:block}
+  .done__mark{width:46px; height:46px; border-radius:50%; display:grid; place-items:center; background:var(--forest); margin-bottom:18px}
+  .done__mark svg{fill:var(--white)}
+  .done h3{font-size:26px; margin-bottom:12px}
+  .done p{font-size:15.5px; color:var(--grey)}
+  .done ul{margin:0 0 20px; padding-left:18px; font-size:15px; color:var(--grey)}
+  .done ul li{margin-bottom:7px}
+  .done--route .done__mark{background:var(--sand)}
+  .done--route .done__mark svg{fill:var(--forest)}
+
+  /* ---------- Generic sections ---------- */
+  section{padding:106px 0}
+  .sec-head{max-width:62ch; margin-bottom:60px}
+  .sec-head h2{font-size:clamp(30px,3.5vw,44px); margin-bottom:16px; max-width:26ch}
+  .sec-head p{font-size:18px; color:var(--grey); margin:0}
+  .bg-bone{background:var(--bone)}
+  .bg-ink{background:var(--ink); color:var(--white)}
+  .bg-ink .sec-head p{color:rgba(255,255,255,.72)}
+  .bg-forest{background:var(--forest); color:var(--white)}
+  .bg-forest .sec-head p{color:rgba(255,255,255,.76)}
+
+  /* Process */
+  .steps{display:grid; grid-template-columns:repeat(3,1fr); gap:0; border-top:1px solid var(--line)}
+  .stepcard{padding:34px 30px 34px 0; border-right:1px solid var(--line)}
+  .stepcard:last-child{border-right:0; padding-right:0}
+  .stepcard:not(:first-child){padding-left:30px}
+  .stepcard__n{font-family:var(--display); font-size:15px; font-weight:700; letter-spacing:var(--track-small); color:var(--green); display:block; margin-bottom:16px}
+  .stepcard h3{font-size:23px; margin-bottom:10px}
+  .stepcard p{font-size:15.5px; color:var(--grey); margin:0}
+  @media (max-width:860px){
+    .steps{grid-template-columns:1fr}
+    .stepcard{border-right:0; border-bottom:1px solid var(--line); padding:26px 0}
+    .stepcard:not(:first-child){padding-left:0}
+    .stepcard:last-child{border-bottom:0}
+  }
+
+  /* Pillars */
+  .pillars{display:grid; grid-template-columns:repeat(4,1fr); gap:34px}
+  .pillar h3{font-size:21px; margin-bottom:10px}
+  .pillar p{font-size:15px; color:rgba(255,255,255,.72); margin:0}
+  .pillar__r{height:2px; width:34px; background:var(--green); margin-bottom:18px}
+  @media (max-width:900px){.pillars{grid-template-columns:1fr 1fr; gap:28px}}
+  @media (max-width:560px){.pillars{grid-template-columns:1fr}}
+
+  /* Stories */
+  .stories{display:grid; grid-template-columns:1.35fr 1fr 1fr; gap:22px}
+  .story{background:var(--white); border:1px solid var(--line); border-radius:3px; overflow:hidden; display:flex; flex-direction:column}
+  /* Fixed height rather than an aspect ratio: the three cards sit in unequal
+     columns, so a shared ratio would give each a different height and leave
+     the card bodies out of step with one another. */
+  .story__img{position:relative; height:216px; background:var(--sand); overflow:hidden}
+  .story__img img{width:100%; height:100%; object-fit:cover}
+  .story__play{
+    position:absolute; left:20px; bottom:20px; width:48px; height:48px; border-radius:50%;
+    background:rgba(33,33,33,.82); display:grid; place-items:center; backdrop-filter:blur(2px);
+  }
+  .story__play svg{fill:var(--white); margin-left:3px}
+  .story__body{padding:22px 22px 24px; flex:1; display:flex; flex-direction:column}
+  .story__tag{font-size:13.5px; letter-spacing:var(--track-small); font-weight:700; color:var(--green); margin-bottom:12px}
+  .story h3{font-size:21px; margin-bottom:9px}
+  .story p{font-size:15px; color:var(--grey); margin:0 0 16px}
+  .story__src{margin-top:auto; font-size:13px; letter-spacing:var(--track-small); color:var(--grey)}
+  .story--type .story__img{background:var(--forest); display:grid; place-items:center; padding:20px}
+  .story--type .story__initials{font-family:var(--display); font-size:44px; color:var(--white); letter-spacing:.04em}
+  @media (max-width:960px){.stories{grid-template-columns:1fr 1fr}}
+  @media (max-width:640px){.stories{grid-template-columns:1fr}}
+
+  /* ---------- Review wall ----------
+     544 five-star reviews is a quantity claim, so the section has to feel like
+     quantity rather than assert it. Three columns drift at different speeds and
+     never end; you cannot read to the bottom, which is the correct impression.
+     Sharp corners and hairline rules rather than rounded bordered cards — the
+     rounded-card grid is what every other broker page looks like. */
+  .rev__head{display:grid; grid-template-columns:1fr auto; gap:40px; align-items:end; margin-bottom:34px}
+  .rev__head h2{font-size:clamp(30px,3.6vw,46px); max-width:16ch}
+  .rev__badge{display:flex; align-items:center; gap:16px; text-align:left}
+  .rev__num{font-family:var(--display); font-weight:700; font-size:60px; line-height:.9; letter-spacing:var(--track-display)}
+  .rev__stars5{display:flex; gap:2px}
+  .rev__stars5 svg{fill:#F5B301; width:17px; height:17px}
+  .rev__meta{margin:7px 0 0; font-size:14.5px; color:var(--grey)}
+  .rev__meta b{color:var(--ink); font-weight:700}
+
+  .rtags{display:flex; flex-wrap:wrap; align-items:center; gap:9px; padding-bottom:34px}
+  .rtags__l{font-size:13.5px; color:var(--grey); margin-right:5px}
+  .rtag{
+    display:inline-flex; align-items:center; gap:8px; background:var(--white);
+    border:1px solid rgba(33,33,33,.12); padding:7px 13px; font-size:14px; color:var(--ink);
+  }
+  .rtag b{font-weight:700; color:var(--forest)}
+  .rtag--more{color:var(--grey); background:transparent; border-style:dashed}
+
+  .wall{
+    display:grid; grid-template-columns:repeat(3,1fr); gap:18px;
+    height:620px; overflow:hidden;
+    width:100%; max-width:var(--wrap); margin-inline:auto; padding-inline:var(--gutter);
+    /* Feather the ends so the columns read as a continuing stream rather than
+       a block that happens to be clipped. */
+    -webkit-mask-image:linear-gradient(180deg,transparent,#000 7%,#000 88%,transparent);
+    mask-image:linear-gradient(180deg,transparent,#000 7%,#000 88%,transparent);
+  }
+  .wall__col{display:flex; flex-direction:column; gap:18px; will-change:transform}
+  .wall__set{display:flex; flex-direction:column; gap:18px}
+  /* One set plus half a gap is exactly one loop — with `gap`, a flat -50%
+     lands half a gap short and the seam visibly jumps. */
+  @keyframes wallUp{from{transform:translateY(0)} to{transform:translateY(calc(-50% - 9px))}}
+  .wall__col--1{animation:wallUp 66s linear infinite}
+  .wall__col--2{animation:wallUp 86s linear infinite; animation-direction:reverse}
+  .wall__col--3{animation:wallUp 74s linear infinite}
+  .wall:hover .wall__col{animation-play-state:paused}
+
+  .rv{margin:0; background:var(--white); padding:24px 24px 22px; box-shadow:0 1px 0 rgba(33,33,33,.07)}
+  .rv__stars{display:flex; gap:1.5px; margin-bottom:13px}
+  .rv__stars svg{fill:#F5B301}
+  .rv__q{margin:0 0 18px; font-size:15.5px; line-height:1.58; color:var(--ink)}
+  .rv__by{display:flex; align-items:center; gap:11px; font-size:13px; color:var(--grey)}
+  .rv__av{
+    width:32px; height:32px; flex:0 0 auto; border-radius:50%; background:var(--forest);
+    color:var(--white); display:grid; place-items:center; font-size:14px; font-weight:700;
+  }
+  .rv__by b{display:block; color:var(--ink); font-size:14.5px; font-weight:700; letter-spacing:var(--track-small)}
+
+  .rev__foot{display:flex; flex-wrap:wrap; align-items:center; gap:20px; padding-top:38px}
+  .rev__live{
+    display:inline-flex; align-items:center; gap:8px; font-size:13px;
+    letter-spacing:var(--track-small); color:var(--grey);
+  }
+  .rev__live i{width:7px; height:7px; border-radius:50%; background:var(--green); display:block; box-shadow:0 0 0 3px rgba(19,175,122,.2)}
+
+  @media (max-width:900px){
+    .rev__head{grid-template-columns:1fr; gap:24px; align-items:start}
+    .wall{grid-template-columns:1fr; height:520px}
+    .wall__col--2,.wall__col--3{display:none}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .wall__col{animation:none}
+    .wall{height:auto; max-height:760px; overflow-y:auto}
+  }
+
+  /* Awards */
+  .awards__copy h2{font-size:clamp(19px,5.2vw,40px); margin-bottom:14px; text-wrap:nowrap}
+  .awards__copy p{color:var(--grey); margin:0; font-size:17px; max-width:60ch}
+  .medals{
+    margin-top:38px; overflow:hidden;
+    width:100%; max-width:var(--wrap); margin-inline:auto; padding-inline:var(--gutter);
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);
+    mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);
+  }
+  .medals__track{display:flex; align-items:center; gap:38px; width:max-content; animation:medalRun 64s linear infinite}
+  .medals__track img{width:66px; height:66px; object-fit:contain; flex:0 0 auto}
+  .medals:hover .medals__track{animation-play-state:paused}
+  /* Half the track is a duplicate, so one loop is exactly -50% less half a gap. */
+  @keyframes medalRun{from{transform:translateX(0)} to{transform:translateX(calc(-50% - 19px))}}
+  @media (prefers-reduced-motion:reduce){
+    .medals__track{animation:none}
+    .medals{overflow-x:auto}
+  }
+
+  /* The badge row is a rule of small marks rather than a block of content, so
+     it needs far less room under it than a normal section — the default
+     bottom padding plus the next section's top padding was stacking to over
+     200px of empty page. */
+  .awardband{padding-bottom:44px}
+  @media (max-width:860px){ .awardband{padding-bottom:32px} }
+
+  /* FAQ */
+  .faq{max-width:820px}
+  .faq details{border-bottom:1px solid var(--line); padding:4px 0}
+  .faq summary{
+    list-style:none; cursor:pointer; padding:22px 44px 22px 0; position:relative;
+    font-family:var(--display); font-size:20px; line-height:1.3;
+  }
+  .faq summary::-webkit-details-marker{display:none}
+  .faq summary::after{
+    content:''; position:absolute; right:6px; top:50%; width:11px; height:11px; margin-top:-8px;
+    border-right:1.5px solid var(--forest); border-bottom:1.5px solid var(--forest);
+    transform:rotate(45deg); transition:transform .2s ease;
+  }
+  .faq details[open] summary::after{transform:rotate(-135deg); margin-top:-3px}
+  .faq p{font-size:16px; color:var(--grey); padding:0 44px 22px 0; margin:0}
+
+  /* The FAQ is the one block whose content is narrower than the 1600px
+     container, so it splits rather than stranding half a row. The heading
+     column sticks while the questions scroll past it. */
+  .faqwrap{display:grid; grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr); gap:clamp(40px,6vw,96px); align-items:start}
+  .faqwrap__intro{position:sticky; top:104px}
+  .faqwrap__intro h2{font-size:clamp(30px,3.5vw,44px); margin-bottom:18px}
+  .faqwrap__note{font-size:17px; color:var(--grey); max-width:38ch; margin-bottom:24px}
+  .faq{max-width:none; padding-top:calc(16px * 1.5 + 18px + 1px)}
+  .faq details:first-child{border-top:1px solid var(--line)}
+  @media (max-width:900px){
+    .faqwrap{grid-template-columns:1fr; gap:32px}
+    .faqwrap__intro{position:static}
+  }
+
+  /* Final CTA */
+  .final{display:grid; grid-template-columns:1.2fr 1fr; gap:56px; align-items:center}
+  .final h2{font-size:clamp(32px,4vw,50px); margin-bottom:18px}
+  .final p{font-size:18px; color:rgba(255,255,255,.78); max-width:46ch}
+  .final__box{background:rgba(255,255,255,.07); border:1px solid var(--line-dark); border-radius:3px; padding:30px}
+  .final__box .btn{margin-bottom:14px}
+  .final__row{display:flex; align-items:center; gap:12px; padding:13px 0; border-top:1px solid var(--line-dark); font-size:15px; color:rgba(255,255,255,.82)}
+  .final__row svg{fill:var(--green); flex:0 0 auto}
+  .final__row a{text-decoration:none}
+  .final__row a:hover{color:var(--green)}
+  @media (max-width:900px){.final{grid-template-columns:1fr; gap:34px}}
+
+  /* Footer */
+  .foot{background:var(--ink); color:rgba(255,255,255,.6); padding:52px 0 40px; font-size:13.5px}
+  .foot__mark{width:150px; margin-bottom:26px; opacity:.9}
+  .foot__cols{display:grid; grid-template-columns:1.4fr 1fr 1fr; gap:34px; padding-bottom:30px; border-bottom:1px solid rgba(255,255,255,.12)}
+  .foot h4{font-family:var(--display); font-size:16px; letter-spacing:var(--track-small); color:var(--white); margin:0 0 14px; font-weight:700}
+  .foot p{margin:0 0 8px; line-height:1.65}
+  .foot a{text-decoration:none}
+  .foot a:hover{color:var(--green)}
+  .foot__legal{padding-top:24px; font-size:12px; line-height:1.7; color:rgba(255,255,255,.45)}
+  .foot__note{
+    margin-top:26px; padding:18px 20px; border:1px dashed rgba(255,255,255,.28);
+    border-radius:3px; font-size:12.5px; line-height:1.65; color:rgba(255,255,255,.66);
+  }
+  .foot__note b{color:var(--white)}
+  @media (max-width:820px){.foot__cols{grid-template-columns:1fr; gap:26px}}
+
+  /* ---------- Mobile sticky bar ---------- */
+  .mbar{
+    position:fixed; left:0; right:0; bottom:0; z-index:70; display:none;
+    grid-template-columns:1fr 1fr; border-top:1px solid rgba(255,255,255,.16);
+  }
+  .mbar a{
+    display:flex; align-items:center; justify-content:center; gap:9px;
+    padding:15px 10px; text-decoration:none; font-size:15px; font-weight:700;
+  }
+  .mbar__call{background:var(--ink); color:var(--white)}
+  .mbar__call svg{fill:var(--green)}
+  .mbar__form{background:var(--forest); color:var(--white)}
+  @media (max-width:860px){
+    .mbar{display:grid}
+    body{padding-bottom:54px}
+    .qual{position:static}
+    section{padding:74px 0}
+    .sec-head{margin-bottom:36px}
+  }
+
+  /* ---------- Measurement debug panel ----------
+     This is the demo instrument, not page furniture. It shows the event
+     stream the audit says does not exist today: every answer graded, a value
+     attached to the lead, and a reason code on the ones we route away. In the
+     meeting, open it and fill the form — that is the whole pitch in 40s. */
+  .dbg-toggle{
+    position:fixed; left:16px; bottom:16px; z-index:80;
+    display:inline-flex; align-items:center; gap:9px; padding:11px 16px;
+    background:var(--ink); color:var(--white); border:1px solid rgba(255,255,255,.22);
+    border-radius:100px; font-family:var(--ui); font-size:13px; letter-spacing:.01em;
+    font-weight:600; cursor:pointer; box-shadow:0 10px 30px -12px rgba(0,0,0,.6);
+  }
+  .dbg-toggle i{width:8px; height:8px; border-radius:50%; background:var(--green); box-shadow:0 0 0 3px rgba(19,175,122,.25)}
+  .dbg-toggle b{background:var(--green); color:var(--ink); border-radius:100px; padding:1px 7px; font-size:11px}
+  @media (max-width:860px){.dbg-toggle{bottom:66px}}
+  .dbg{
+    position:fixed; top:0; right:0; bottom:0; width:min(430px,100%); z-index:90;
+    background:#0E0E0E; color:#D8D8D8; transform:translateX(101%);
+    transition:transform .28s cubic-bezier(.4,0,.2,1); display:flex; flex-direction:column;
+    border-left:1px solid rgba(255,255,255,.14); font-size:12.5px;
+  }
+  .dbg.is-on{transform:none}
+  /* The panel must never cover the form — the demo is watching the two
+     together, answer on the left, event on the right. So on a wide screen the
+     page gives up the width instead of being overlaid, the way a devtools
+     drawer does. Below that the panel overlays, which is fine: on a laptop
+     you are showing one or the other. */
+  @media (min-width:1100px){
+    body{transition:padding-right .28s cubic-bezier(.4,0,.2,1)}
+    body.dbg-open{padding-right:430px}
+  }
+  .dbg__head{padding:18px 20px; border-bottom:1px solid rgba(255,255,255,.12)}
+  .dbg__head h3{font-family:var(--ui); font-size:13px; letter-spacing:.14em; text-transform:uppercase; color:var(--white); margin:0 0 6px}
+  .dbg__head p{margin:0; font-size:12px; color:#8A8A8A; line-height:1.5}
+  .dbg__close{position:absolute; top:14px; right:14px; background:none; border:0; color:#8A8A8A; font-size:22px; cursor:pointer; line-height:1; padding:4px}
+  .dbg__close:hover{color:var(--white)}
+  .dbg__grade{padding:16px 20px; border-bottom:1px solid rgba(255,255,255,.12); display:grid; grid-template-columns:repeat(3,1fr); gap:12px}
+  .dbg__g{}
+  .dbg__g span{display:block; font-size:10px; letter-spacing:.14em; text-transform:uppercase; color:#7A7A7A; margin-bottom:5px}
+  .dbg__g b{font-size:15px; color:var(--white); font-weight:500; font-family:var(--ui)}
+  .dbg__g b.ok{color:var(--green)}
+  .dbg__g b.warn{color:#F5B301}
+  .dbg__log{flex:1; overflow-y:auto; padding:14px 20px 24px; font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:11.5px; line-height:1.55}
+  .dbg__empty{color:#6A6A6A; font-family:var(--ui); font-size:12.5px; line-height:1.6}
+  .dbg__e{padding:10px 0; border-bottom:1px solid rgba(255,255,255,.08)}
+  .dbg__e-h{display:flex; gap:8px; align-items:baseline; margin-bottom:5px}
+  .dbg__e-h b{color:var(--green); font-weight:400}
+  .dbg__e-h i{color:#5F5F5F; font-style:normal; margin-left:auto; font-size:10.5px}
+  .dbg__e-p{color:#9E9E9E; white-space:pre-wrap; word-break:break-word; margin:0}
+  .dbg__e-p k{color:#C9C9C9; font-weight:400}
+  .dbg__foot{padding:14px 20px; border-top:1px solid rgba(255,255,255,.12); color:#7A7A7A; font-family:var(--ui); font-size:11.5px; line-height:1.55}
+</style>
+</head>
+<body>
+
+<!-- ============================ HEADER ============================ -->
+<header class="head">
+  <div class="head__in">
+    <a class="head__mark" href="#top" aria-label="Entourage">
+      <img src="/assets/entourage/wordmark.svg" alt="Entourage" width="172" height="35">
+    </a>
+    <a class="head__rev" href="#reviews">
+      <span class="head__rev-stars" aria-hidden="true">
+        <svg width="13" height="13" viewBox="0 0 24 24"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg>
+        <svg width="13" height="13" viewBox="0 0 24 24"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg>
+        <svg width="13" height="13" viewBox="0 0 24 24"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg>
+        <svg width="13" height="13" viewBox="0 0 24 24"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg>
+        <svg width="13" height="13" viewBox="0 0 24 24"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg>
+      </span>
+      <span class="head__rev-t"><b>5.0</b><span class="head__rev-long"> · 544 Google reviews</span></span>
+      <span class="sr">Rated 5.0 from 544 Google reviews — read them</span>
+    </a>
+    <span class="head__sep" aria-hidden="true"></span>
+    <span class="head__settled">$5b+ settled</span>
+    <a class="head__phone" href="tel:+61394211651">
+      <svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg>
+      03 9421 1651
+    </a>
+    <a class="btn btn--green" href="#start">Check if we can help</a>
+  </div>
+</header>
+
+<!-- ============================ HERO ============================ -->
+<main id="top">
+<div class="hero">
+  <div class="hero__bg" aria-hidden="true"></div>
+  <div class="wrap hero__in">
+
+    <div class="hero__text">
+    <div class="hero__copy">
+      <h1>Get an <em>Entourage</em> behind your next move.</h1>
+      <p class="hero__sub">
+        Brokers, buyers advocates and conveyancers in one team, with access to 60+ lenders.
+      </p>
+    </div>
+
+    <div class="hero__more">
+      <ul class="hero__points">
+        <li>
+          <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>
+          <span>60+ lenders compared — not one bank's product list</span>
+        </li>
+        <li>
+          <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>
+          <span>One team, one briefing — finance, property and legal</span>
+        </li>
+        <li>
+          <svg width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg>
+          <span>No cost to you — the lender you choose pays us</span>
+        </li>
+      </ul>
+      <div class="hero__calls">
+        <a class="btn btn--green btn--lg" href="#start">
+          Check if we can help
+          <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true" style="fill:currentColor"><path d="M12 4l-1.4 1.4L16.2 11H4v2h12.2l-5.6 5.6L12 20l8-8z"/></svg>
+        </a>
+        <a class="btn btn--ghost btn--lg" href="tel:+61394211651">Call 03 9421 1651</a>
+      </div>
+      <p class="hero__callnote" style="margin-top:16px">
+        Five questions, forty seconds. No credit check.
+      </p>
+    </div>
+    </div>
+
+    <!-- ---------------- The qualifying form ---------------- -->
+    <div class="qual" id="start">
+      <div class="qual__head">
+        <h2>Can we help you?</h2>
+        <p>Answer five quick questions and we'll tell you straight — including if we're not the right fit.</p>
+      </div>
+      <div class="qual__bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Form progress"><i id="bar"></i></div>
+
+      <form class="qual__body" id="qform" novalidate>
+
+        <!-- Q1 -->
+        <div class="step is-on" data-step="1" data-key="goal">
+          <p class="step__count">Question 1 of 5</p>
+          <h3 class="step__q">What are you looking to do?</h3>
+          <div class="opts">
+            <button type="button" class="opt" data-val="upgrade" data-label="Upgrading home">
+              <span class="opt__k">A</span><span class="opt__t">Buy my next home<small>Upgrading, downsizing or relocating</small></span>
+            </button>
+            <button type="button" class="opt" data-val="refinance" data-label="Refinancing">
+              <span class="opt__k">B</span><span class="opt__t">Refinance my existing loan<small>Rate, repayments or accessing equity</small></span>
+            </button>
+            <button type="button" class="opt" data-val="invest" data-label="Investment">
+              <span class="opt__k">C</span><span class="opt__t">Buy an investment property<small>Adding to a portfolio</small></span>
+            </button>
+            <button type="button" class="opt" data-val="firsthome" data-label="First home" data-route="firsthome">
+              <span class="opt__k">D</span><span class="opt__t">Buy my first home<small>Haven't owned property before</small></span>
+            </button>
+            <button type="button" class="opt" data-val="asset" data-label="Asset or business" data-route="asset">
+              <span class="opt__k">E</span><span class="opt__t">Finance a vehicle, equipment or business<small>Asset and commercial lending</small></span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="step" data-step="2" data-key="owns">
+          <p class="step__count">Question 2 of 5</p>
+          <h3 class="step__q">Do you own property at the moment?</h3>
+          <div class="opts">
+            <button type="button" class="opt" data-val="one" data-label="Owns 1 property">
+              <span class="opt__k">A</span><span class="opt__t">Yes — one property</span>
+            </button>
+            <button type="button" class="opt" data-val="multi" data-label="Portfolio owner">
+              <span class="opt__k">B</span><span class="opt__t">Yes — two or more<small>Portfolio investor</small></span>
+            </button>
+            <button type="button" class="opt" data-val="sold" data-label="Recently sold">
+              <span class="opt__k">C</span><span class="opt__t">I've owned before, but not right now</span>
+            </button>
+            <button type="button" class="opt" data-val="none" data-label="Doesn't own" data-route="firsthome">
+              <span class="opt__k">D</span><span class="opt__t">No — this would be my first</span>
+            </button>
+          </div>
+          <button type="button" class="back">← Back</button>
+        </div>
+
+        <!-- Q3 -->
+        <div class="step" data-step="3" data-key="loan">
+          <p class="step__count">Question 3 of 5</p>
+          <h3 class="step__q">Roughly how much are you looking to borrow?</h3>
+          <div class="opts">
+            <button type="button" class="opt" data-val="lt400" data-label="Under $400k">
+              <span class="opt__k">A</span><span class="opt__t">Under $400,000</span>
+            </button>
+            <button type="button" class="opt" data-val="400-750" data-label="$400k–$750k">
+              <span class="opt__k">B</span><span class="opt__t">$400,000 – $750,000</span>
+            </button>
+            <button type="button" class="opt" data-val="750-1500" data-label="$750k–$1.5m">
+              <span class="opt__k">C</span><span class="opt__t">$750,000 – $1.5 million</span>
+            </button>
+            <button type="button" class="opt" data-val="gt1500" data-label="$1.5m+">
+              <span class="opt__k">D</span><span class="opt__t">More than $1.5 million</span>
+            </button>
+            <button type="button" class="opt" data-val="unsure" data-label="Not sure yet">
+              <span class="opt__k">E</span><span class="opt__t">Not sure yet<small>That's fine — we'll work it out on the call</small></span>
+            </button>
+          </div>
+          <button type="button" class="back">← Back</button>
+        </div>
+
+        <!-- Q4 -->
+        <div class="step" data-step="4" data-key="when">
+          <p class="step__count">Question 4 of 5</p>
+          <h3 class="step__q">When are you hoping to have this sorted?</h3>
+          <div class="opts">
+            <button type="button" class="opt" data-val="now" data-label="Within 30 days">
+              <span class="opt__k">A</span><span class="opt__t">In the next 30 days<small>Under offer, or rate review is urgent</small></span>
+            </button>
+            <button type="button" class="opt" data-val="1-3" data-label="1–3 months">
+              <span class="opt__k">B</span><span class="opt__t">1 – 3 months</span>
+            </button>
+            <button type="button" class="opt" data-val="3-6" data-label="3–6 months">
+              <span class="opt__k">C</span><span class="opt__t">3 – 6 months</span>
+            </button>
+            <button type="button" class="opt" data-val="research" data-label="Researching" data-route="nurture">
+              <span class="opt__k">D</span><span class="opt__t">Just doing my research<small>No timeframe yet</small></span>
+            </button>
+          </div>
+          <button type="button" class="back">← Back</button>
+        </div>
+
+        <!-- Q5 -->
+        <div class="step" data-step="5" data-key="where">
+          <p class="step__count">Question 5 of 5</p>
+          <h3 class="step__q">Where's the property?</h3>
+          <div class="opts">
+            <button type="button" class="opt" data-val="melb" data-label="Melbourne metro">
+              <span class="opt__k">A</span><span class="opt__t">Melbourne metro</span>
+            </button>
+            <button type="button" class="opt" data-val="vic" data-label="Regional VIC">
+              <span class="opt__k">B</span><span class="opt__t">Regional Victoria<small>Geelong, Mornington Peninsula and beyond</small></span>
+            </button>
+            <button type="button" class="opt" data-val="interstate" data-label="Interstate">
+              <span class="opt__k">C</span><span class="opt__t">Interstate<small>We're licensed to lend Australia-wide</small></span>
+            </button>
+            <button type="button" class="opt" data-val="expat" data-label="Expat / overseas">
+              <span class="opt__k">D</span><span class="opt__t">I'm overseas, buying in Australia</span>
+            </button>
+          </div>
+          <button type="button" class="back">← Back</button>
+        </div>
+
+        <!-- Contact -->
+        <div class="step" data-step="6" data-key="contact">
+          <p class="step__count">Last step</p>
+          <h3 class="step__q">Good news — that's exactly what we do.</h3>
+          <div class="recap" id="recap"></div>
+          <div class="fields">
+            <div class="field">
+              <label for="f-first">First name</label>
+              <input id="f-first" name="firstname" type="text" autocomplete="given-name" required>
+              <span class="err">Please add your first name</span>
+            </div>
+            <div class="field">
+              <label for="f-last">Last name</label>
+              <input id="f-last" name="lastname" type="text" autocomplete="family-name" required>
+              <span class="err">Please add your last name</span>
+            </div>
+            <div class="field field--wide">
+              <label for="f-email">Email</label>
+              <input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" required>
+              <span class="err">Please add a valid email address</span>
+            </div>
+            <div class="field field--wide">
+              <label for="f-phone">Mobile</label>
+              <input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required>
+              <span class="err">Please add a mobile we can reach you on</span>
+            </div>
+            <div class="field field--wide">
+              <span class="field__lab" id="pt-lab">Best time to reach you</span>
+              <div class="times" role="group" aria-labelledby="pt-lab">
+                <button type="button" class="time" data-time="morning">Morning</button>
+                <button type="button" class="time" data-time="afternoon">Afternoon</button>
+                <button type="button" class="time" data-time="evening">After 5pm</button>
+                <button type="button" class="time is-picked" data-time="any" aria-pressed="true">Anytime</button>
+              </div>
+            </div>
+            <label class="consent">
+              <input type="checkbox" id="f-consent" required>
+              <span>I'd like an Entourage broker to call me about this. I've read the <a href="https://entourage.com.au/privacy-policy/" target="_blank" rel="noopener">privacy policy</a>.</span>
+            </label>
+          </div>
+          <div style="margin-top:18px">
+            <button type="submit" class="btn btn--green btn--full btn--lg" id="submit">Request my call back</button>
+          </div>
+          <p class="fine">No credit check and no impact on your credit file.</p>
+          <button type="button" class="back">← Back</button>
+        </div>
+      </form>
+
+      <!-- Outcome: qualified -->
+      <div class="done" id="done-core">
+        <div class="done__mark"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg></div>
+        <h3 id="done-core-h">You're through to a broker.</h3>
+        <p id="done-core-p">We've got what we need to be useful on the first call rather than spend it on background questions.</p>
+        <ul>
+          <li>A broker who works on this exact scenario will call you.</li>
+          <li>They'll already have your goal, timing and rough borrowing figure.</li>
+          <li>Bring your last two payslips and your current loan statement if you have them handy.</li>
+        </ul>
+        <a class="btn btn--green btn--full" href="tel:+61394211651">Or call now — 03 9421 1651</a>
+      </div>
+
+      <!-- Outcome: routed to the first-home lane -->
+      <div class="done done--route" id="done-firsthome">
+        <div class="done__mark"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4l-1.4 1.4L16.2 11H4v2h12.2l-5.6 5.6L12 20l8-8z"/></svg></div>
+        <h3>First home? We've got a better starting point for you.</h3>
+        <p>
+          We help a lot of first home buyers — you'll just get more out of our First Home Buyer
+          Guide and a specialist first-home broker than from the upgrader team this page goes to.
+        </p>
+        <a class="btn btn--green btn--full" href="https://entourage.com.au/first-home-buyer-guide/" target="_blank" rel="noopener" style="margin-bottom:10px">Get the First Home Buyer Guide</a>
+        <a class="btn btn--full" href="tel:+61394211651" style="background:transparent;color:var(--ink);border-color:var(--line)">Or call 03 9421 1651</a>
+      </div>
+
+      <!-- Outcome: routed to the asset / commercial lane -->
+      <div class="done done--route" id="done-asset">
+        <div class="done__mark"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4l-1.4 1.4L16.2 11H4v2h12.2l-5.6 5.6L12 20l8-8z"/></svg></div>
+        <h3>That one's for our Asset team.</h3>
+        <p>
+          Vehicle, equipment, caravan, boat and business lending sits with Entourage Asset —
+          same building, different specialists and a different lender panel. Here's the
+          quickest way through to them:
+        </p>
+        <a class="btn btn--green btn--full" href="https://entourage.com.au/asset/" target="_blank" rel="noopener" style="margin-bottom:10px">See Entourage Asset</a>
+        <a class="btn btn--full" href="tel:+61394211651" style="background:transparent;color:var(--ink);border-color:var(--line)">Or call 03 9421 1651</a>
+      </div>
+
+      <!-- Outcome: nurture -->
+      <div class="done done--route" id="done-nurture">
+        <div class="done__mark"><svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4l-1.4 1.4L16.2 11H4v2h12.2l-5.6 5.6L12 20l8-8z"/></svg></div>
+        <h3>Still early? Start here — no sales call.</h3>
+        <p>
+          Since you're weighing it up rather than moving on something, we'll skip the
+          broker call for now. The calculators and guides will be far more use to you
+          today, and we're a phone call away the moment things get real.
+        </p>
+        <a class="btn btn--green btn--full" href="https://entourage.com.au/loan-calculators/" target="_blank" rel="noopener" style="margin-bottom:10px">Open the loan calculators</a>
+        <a class="btn btn--full" href="https://entourage.com.au/resources/" target="_blank" rel="noopener" style="background:transparent;color:var(--ink);border-color:var(--line)">Browse the guides</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Proof strip -->
+  <div class="proof">
+    <div class="wrap proof__in">
+      <div class="proof__item"><span class="proof__n">$5 billion+</span><span class="proof__l">Loans settled</span></div>
+      <div class="proof__item"><span class="proof__n">544</span><span class="proof__l">5-star Google reviews</span></div>
+      <div class="proof__item"><span class="proof__n">3,500+</span><span class="proof__l">Properties financed</span></div>
+      <div class="proof__item"><span class="proof__n">60+</span><span class="proof__l">Lenders on panel</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ============================ REVIEWS ============================ -->
+<section id="reviews" class="bg-bone" style="scroll-margin-top:86px">
+  <div class="wrap">
+    <div class="rev__head">
+      <div>
+        <p class="eyebrow eyebrow--dark">Reviews</p>
+        <h2>544 reviews. Not one of them under five stars.</h2>
+      </div>
+      <div class="rev__badge">
+        <span class="rev__num">5.0</span>
+        <div>
+          <div class="rev__stars5" aria-hidden="true"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div>
+          <p class="rev__meta"><b id="rev-count">544</b> Google reviews · Cremorne</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Google's own review topics, with its own counts. Nothing summarised
+         by us — these are the tags the listing surfaces. -->
+    <div class="rtags">
+      <span class="rtags__l">Most mentioned</span>
+      <span class="rtag">Refinancing<b>46</b></span><span class="rtag">Seamless process<b>38</b></span><span class="rtag">Conveyancing<b>31</b></span><span class="rtag">First home purchase<b>29</b></span>
+      <span class="rtag rtag--more">+6 more</span>
+    </div>
+  </div>
+
+  <!-- Three columns drifting at different speeds. The point is volume: you
+       cannot reach the end of it, which is the honest impression 544 five-star
+       reviews should leave. Hover pauses; reduced-motion stops it dead and
+       hands back a normal scrollable block. -->
+  <div class="wall" role="region" aria-label="Google reviews for Entourage">
+    <div class="wall__col wall__col--1"><div class="wall__set"><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">Amazing service. I engaged Entourage for conveyancing services when preparing an offer for purchase. They were incredibly responsive, turned around the contract review promptly and provided valuable advice on structural and legal considerations. Highly recommend Aggie in the Legal Team for any conveyancing matters.</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">B</span><span><b>Ben S</b>a month ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">This will be my third transaction with Entourage and they&#x27;ve all been equally as good as the first. Nittaya and Robbie make a great team, super-efficient, fantastic communicators. We will be using them again for the fourth transaction without a doubt.</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">N</span><span><b>Natalie K</b>2 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">Really happy with the service provided by the Entourage team. They were very helpful and supportive throughout the entire process and made the experience of buying our first house so much more comfortable. Would highly recommend Entourage to anyone!</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">M</span><span><b>Matthew Azzopardi</b>5 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">I would like to thank everyone who helped us and made it achievable in the shortest possible time !!! Kat and her team were amazing. We can&#x27;t be happier. Best possible experience. Friendly, supportive and professional. Thank you guys!</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">J</span><span><b>Jelena</b>3 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">I recently worked with Entourage again for a refinance and purchase, and they exceeded my expectations. This was my third time using Entourage, and the experience continues to be consistently excellent. …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">T</span><span><b>Theo Radford</b>6 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">We recently purchased our first home and couldn&#x27;t be more grateful to the team at Entourage for guiding and supporting us through the entire process from start to finish. …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">M</span><span><b>Mica Silver</b>2 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">Jack is an absolute delight to work with. I have now purchased 2 properties with his help and he has recently helped us negotiate a better ongoing rate and a few extras. His ability to answers any questions no matter how small or big sets …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">S</span><span><b>Sarah McCulloch</b>a month ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">My wife and I approached Entourage at the very end of October with a massive ask to find and buy our dream home before the end of year 2025. We knew asking to secure a property in such a short window and during the end of the year was not a …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">H</span><span><b>Hans Jakob Emmel</b>7 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">Can&#x27;t recommend Entourage highly enough after our recent land settlement. Jordan structured the loan perfectly for what we were trying to achieve and kept everything moving smoothly. He gave straight, knowledgeable advice with no pressure …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">J</span><span><b>Jack Leamer-Alessi</b>3 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">I heartily recommend Antoinette Sagaria who recently negotiated on my behalf to buy an apartment in a private sale. When I asked Antoinette for her help, I already knew she had great market knowledge and skill, as last year she had …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">A</span><span><b>Anne Lindon</b>4 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">My partner and I could not be more thankful for the support of Entourage Mortgage Brokers! We had a great consultation with Vincent, he was extremely reassuring and easy-going, open to all questions - no matter how big or small. Vincent …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">J</span><span><b>Jo Herg</b>5 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">I had the absolute pleasure of working with Petria from Entourage, and the experience was seamless and enjoyable from start to finish. It&#x27;s refreshing to work with someone in the industry who is not only highly experienced and professional, …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">T</span><span><b>Toni Leskovec</b>5 months ago</span></figcaption></figure></div><div class="wall__set" aria-hidden="true"><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">Amazing service. I engaged Entourage for conveyancing services when preparing an offer for purchase. They were incredibly responsive, turned around the contract review promptly and provided valuable advice on structural and legal considerations. Highly recommend Aggie in the Legal Team for any conveyancing matters.</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">B</span><span><b>Ben S</b>a month ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">This will be my third transaction with Entourage and they&#x27;ve all been equally as good as the first. Nittaya and Robbie make a great team, super-efficient, fantastic communicators. We will be using them again for the fourth transaction without a doubt.</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">N</span><span><b>Natalie K</b>2 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">Really happy with the service provided by the Entourage team. They were very helpful and supportive throughout the entire process and made the experience of buying our first house so much more comfortable. Would highly recommend Entourage to anyone!</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">M</span><span><b>Matthew Azzopardi</b>5 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">I would like to thank everyone who helped us and made it achievable in the shortest possible time !!! Kat and her team were amazing. We can&#x27;t be happier. Best possible experience. Friendly, supportive and professional. Thank you guys!</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">J</span><span><b>Jelena</b>3 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">I recently worked with Entourage again for a refinance and purchase, and they exceeded my expectations. This was my third time using Entourage, and the experience continues to be consistently excellent. …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">T</span><span><b>Theo Radford</b>6 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">We recently purchased our first home and couldn&#x27;t be more grateful to the team at Entourage for guiding and supporting us through the entire process from start to finish. …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">M</span><span><b>Mica Silver</b>2 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">Jack is an absolute delight to work with. I have now purchased 2 properties with his help and he has recently helped us negotiate a better ongoing rate and a few extras. His ability to answers any questions no matter how small or big sets …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">S</span><span><b>Sarah McCulloch</b>a month ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">My wife and I approached Entourage at the very end of October with a massive ask to find and buy our dream home before the end of year 2025. We knew asking to secure a property in such a short window and during the end of the year was not a …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">H</span><span><b>Hans Jakob Emmel</b>7 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">Can&#x27;t recommend Entourage highly enough after our recent land settlement. Jordan structured the loan perfectly for what we were trying to achieve and kept everything moving smoothly. He gave straight, knowledgeable advice with no pressure …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">J</span><span><b>Jack Leamer-Alessi</b>3 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">I heartily recommend Antoinette Sagaria who recently negotiated on my behalf to buy an apartment in a private sale. When I asked Antoinette for her help, I already knew she had great market knowledge and skill, as last year she had …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">A</span><span><b>Anne Lindon</b>4 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">My partner and I could not be more thankful for the support of Entourage Mortgage Brokers! We had a great consultation with Vincent, he was extremely reassuring and easy-going, open to all questions - no matter how big or small. Vincent …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">J</span><span><b>Jo Herg</b>5 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">I had the absolute pleasure of working with Petria from Entourage, and the experience was seamless and enjoyable from start to finish. It&#x27;s refreshing to work with someone in the industry who is not only highly experienced and professional, …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">T</span><span><b>Toni Leskovec</b>5 months ago</span></figcaption></figure></div></div><div class="wall__col wall__col--2"><div class="wall__set"><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">From our first connection with Entourage the service was first class. Our entire mortgage experience was such a seamless process with Damien and his team managing every complexity along the way with speed and expertise. Highly recommend anyone looking for a genuine financial partner.</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">A</span><span><b>Andrew Field</b>2 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">Nittaya and Lauren made applying for a home loan SO easy! Always picked up my phone calls and responded to my emails very quickly, provided me with all the information I needed to make the best decision for me and were always available to answer all my questions. Can&#x27;t recommend them enough.</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">M</span><span><b>Malaika Jaovisidha</b>3 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">Entourage were the perfect team to handle our finance process with an investment purchase. Big shout out to Robbie and Nittaya for their amazing work!</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">M</span><span><b>Matthew Damon</b>2 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">Can&#x27;t recommend enough! Nittaya Boyland and Lauren Cunningham were fantastic. Helped us with a first home purchase and made the whole transaction seamless. Thank you both (along with the rest of the team).</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">A</span><span><b>Andy Gbormittah</b>5 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">This is the second time I&#x27;ve used Entourage, and once again they exceeded every expectation. …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">P</span><span><b>Petra Triandos</b>a month ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">We had such an amazing experience with Entourage throughout our entire house sale and purchase process! They were so friendly, informative and knowledgeable and we truly feel like the process was so seamless because of the lovely people we …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">V</span><span><b>Victoria Randle</b>2 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">Just wanted to give a big shout out to Damian, Lauren, Hume and the rest of the team at Entourage for making our refinancing a smooth and seamless process. The team continually kept us informed on the progress, answered our questions and …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">C</span><span><b>Cameron Ingram</b>a month ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">The team at Entourage have been ABSOLUTELY AMAZING. The whole team (Kathryn, Haden, Tamanna and Blake) have raised the bar on what excellence is all about. We engaged Entourage&#x27;s services for property and finance support during the …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">B</span><span><b>Bops Singh</b>6 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">Nittaya and Lauren were absolutely superb throughout our mortgage process, always speedily answering questions (and re-answering questions!) no matter how small, explaining everything in detail and everyday language. They guided us …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">S</span><span><b>Sarah Carter</b>4 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">We had such a great experience with Kat and Tam buying our first home. The process was definitely stressful at times and a few unexpected things popped up, but they were always there for us and did everything they could to get the best …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">Z</span><span><b>Zach Adams</b>11 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">I was initially introduced to Vincent at Entourage Finance by a friend, and I&#x27;m so glad I was! Vincent and his team were fantastic from the very start, guiding me through the finance process with expertise and care. Vincent then referred me …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">N</span><span><b>Nathan klassen</b>10 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">We recently secured a personal loan through Sarah and couldn&#x27;t be happier with the experience. From start to finish, the process was smooth, efficient, and stress-free. Sarah kept us informed every step of the way, and worked hard to find …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">M</span><span><b>Marleen Marais</b>3 months ago</span></figcaption></figure></div><div class="wall__set" aria-hidden="true"><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">From our first connection with Entourage the service was first class. Our entire mortgage experience was such a seamless process with Damien and his team managing every complexity along the way with speed and expertise. Highly recommend anyone looking for a genuine financial partner.</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">A</span><span><b>Andrew Field</b>2 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">Nittaya and Lauren made applying for a home loan SO easy! Always picked up my phone calls and responded to my emails very quickly, provided me with all the information I needed to make the best decision for me and were always available to answer all my questions. Can&#x27;t recommend them enough.</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">M</span><span><b>Malaika Jaovisidha</b>3 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">Entourage were the perfect team to handle our finance process with an investment purchase. Big shout out to Robbie and Nittaya for their amazing work!</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">M</span><span><b>Matthew Damon</b>2 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">Can&#x27;t recommend enough! Nittaya Boyland and Lauren Cunningham were fantastic. Helped us with a first home purchase and made the whole transaction seamless. Thank you both (along with the rest of the team).</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">A</span><span><b>Andy Gbormittah</b>5 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">This is the second time I&#x27;ve used Entourage, and once again they exceeded every expectation. …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">P</span><span><b>Petra Triandos</b>a month ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">We had such an amazing experience with Entourage throughout our entire house sale and purchase process! They were so friendly, informative and knowledgeable and we truly feel like the process was so seamless because of the lovely people we …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">V</span><span><b>Victoria Randle</b>2 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">Just wanted to give a big shout out to Damian, Lauren, Hume and the rest of the team at Entourage for making our refinancing a smooth and seamless process. The team continually kept us informed on the progress, answered our questions and …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">C</span><span><b>Cameron Ingram</b>a month ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">The team at Entourage have been ABSOLUTELY AMAZING. The whole team (Kathryn, Haden, Tamanna and Blake) have raised the bar on what excellence is all about. We engaged Entourage&#x27;s services for property and finance support during the …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">B</span><span><b>Bops Singh</b>6 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">Nittaya and Lauren were absolutely superb throughout our mortgage process, always speedily answering questions (and re-answering questions!) no matter how small, explaining everything in detail and everyday language. They guided us …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">S</span><span><b>Sarah Carter</b>4 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">We had such a great experience with Kat and Tam buying our first home. The process was definitely stressful at times and a few unexpected things popped up, but they were always there for us and did everything they could to get the best …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">Z</span><span><b>Zach Adams</b>11 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">I was initially introduced to Vincent at Entourage Finance by a friend, and I&#x27;m so glad I was! Vincent and his team were fantastic from the very start, guiding me through the finance process with expertise and care. Vincent then referred me …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">N</span><span><b>Nathan klassen</b>10 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">We recently secured a personal loan through Sarah and couldn&#x27;t be happier with the experience. From start to finish, the process was smooth, efficient, and stress-free. Sarah kept us informed every step of the way, and worked hard to find …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">M</span><span><b>Marleen Marais</b>3 months ago</span></figcaption></figure></div></div><div class="wall__col wall__col--3"><div class="wall__set"><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">Refinancing with the help of the Entourage crew was a seamless experience. They excelled at communicating complex legalities and found us the absolute best banking deals. Thank you to Damian, Lauren, and Hume for your exceptional service!</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">G</span><span><b>Georgia Ingram</b>a month ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">Aggie, Maria and Krystel at Entourage legal were fantastic! Expert and timely advice and always available to answer questions. It was a dream to know I had such a great team of conveyancers managing my purchase. There work alongside Vincent&#x27;s loan brokerage made my move possible. Thank you so much team :)</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">G</span><span><b>Greta Williams</b>2 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">Sarah was amazing from start to finish. Super knowledgeable, concise in dealing with lenders and most importantly, ensured our experience was seamless as she is very accessible and prompt in communication. Highly recommend working with her</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">B</span><span><b>Brody Hodic</b>4 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">Fantastic experience! Sarah was professional, knowledgeable, and incredibly responsive. She took the time to explain all of my options and made the entire loan process easy to understand. I highly recommend her services to anyone looking for a loan.</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">兔</span><span><b>兔妮兔妮</b>4 weeks ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">We recently purchased our first home and couldn&#x27;t have done it without the team at Entourage. They supported us through the entire process from finding the right mortgage, finding the right house and helping us get it for a great price and …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">T</span><span><b>Toni Williams</b>3 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">The team at Entourage, especially Kathryn and Blake, have been incredible throughout the entire process. They made what has been a very stressful experience in the past with others feel so much easier. …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">M</span><span><b>Maysam Al-Bermani</b>2 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">We used the Entourage team to purchase our new home and honestly couldn&#x27;t be happier with the experience. Vinnie, Aggie and the team worked incredibly hard to help us meet some very tight deadlines, and we really appreciated all of their …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">L</span><span><b>Lucy Croft</b>2 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">I had to share the exceptional service we received at Entourage. Vincent, Aggie (conveyancer extraordinaire), Bonnie, Kristel, Maria and Nick all went above and beyond for us. As first home buyers, we had a lot of questions a they were …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">C</span><span><b>Charlotte Webb</b>2 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">I can&#x27;t recommend Nittaya and Robbie from Entourage Finance highly enough. They worked tirelessly to help me secure my mortgage and went above and beyond to ensure we settled before a very strict settlement deadline. Their communication was …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">J</span><span><b>Josh Pound</b>6 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">I can&#x27;t speak highly enough of Sarah and the team at Entourage. They were recommended to me by a family member who had used them to secure a car loan, and I&#x27;m so glad they did. …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">D</span><span><b>Darren Spence</b>5 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">The staff at Entourage help me and my wife buy our first house. They help us understand and guide us on the best loan option and support us for settlement day and beyond. …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">F</span><span><b>Francesco Nelli</b>3 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">Fantastic experience from start to finish. From my initial contact with Nick, through to Jack, and finally Aggie, everything was handled smoothly and the team really made me feel looked after. Everyone was easy to deal with and …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">M</span><span><b>Matthew Rizzi</b>3 months ago</span></figcaption></figure></div><div class="wall__set" aria-hidden="true"><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">Refinancing with the help of the Entourage crew was a seamless experience. They excelled at communicating complex legalities and found us the absolute best banking deals. Thank you to Damian, Lauren, and Hume for your exceptional service!</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">G</span><span><b>Georgia Ingram</b>a month ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">Aggie, Maria and Krystel at Entourage legal were fantastic! Expert and timely advice and always available to answer questions. It was a dream to know I had such a great team of conveyancers managing my purchase. There work alongside Vincent&#x27;s loan brokerage made my move possible. Thank you so much team :)</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">G</span><span><b>Greta Williams</b>2 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">Sarah was amazing from start to finish. Super knowledgeable, concise in dealing with lenders and most importantly, ensured our experience was seamless as she is very accessible and prompt in communication. Highly recommend working with her</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">B</span><span><b>Brody Hodic</b>4 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">Fantastic experience! Sarah was professional, knowledgeable, and incredibly responsive. She took the time to explain all of my options and made the entire loan process easy to understand. I highly recommend her services to anyone looking for a loan.</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">兔</span><span><b>兔妮兔妮</b>4 weeks ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">We recently purchased our first home and couldn&#x27;t have done it without the team at Entourage. They supported us through the entire process from finding the right mortgage, finding the right house and helping us get it for a great price and …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">T</span><span><b>Toni Williams</b>3 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">The team at Entourage, especially Kathryn and Blake, have been incredible throughout the entire process. They made what has been a very stressful experience in the past with others feel so much easier. …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">M</span><span><b>Maysam Al-Bermani</b>2 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">We used the Entourage team to purchase our new home and honestly couldn&#x27;t be happier with the experience. Vinnie, Aggie and the team worked incredibly hard to help us meet some very tight deadlines, and we really appreciated all of their …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">L</span><span><b>Lucy Croft</b>2 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">I had to share the exceptional service we received at Entourage. Vincent, Aggie (conveyancer extraordinaire), Bonnie, Kristel, Maria and Nick all went above and beyond for us. As first home buyers, we had a lot of questions a they were …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">C</span><span><b>Charlotte Webb</b>2 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">I can&#x27;t recommend Nittaya and Robbie from Entourage Finance highly enough. They worked tirelessly to help me secure my mortgage and went above and beyond to ensure we settled before a very strict settlement deadline. Their communication was …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">J</span><span><b>Josh Pound</b>6 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">I can&#x27;t speak highly enough of Sarah and the team at Entourage. They were recommended to me by a family member who had used them to secure a car loan, and I&#x27;m so glad they did. …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">D</span><span><b>Darren Spence</b>5 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">The staff at Entourage help me and my wife buy our first house. They help us understand and guide us on the best loan option and support us for settlement day and beyond. …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">F</span><span><b>Francesco Nelli</b>3 months ago</span></figcaption></figure><figure class="rv"><div class="rv__stars"><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg><svg width="13" height="13" viewBox="0 0 24 24" aria-hidden="true"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg></div><blockquote class="rv__q">Fantastic experience from start to finish. From my initial contact with Nick, through to Jack, and finally Aggie, everything was handled smoothly and the team really made me feel looked after. Everyone was easy to deal with and …</blockquote><figcaption class="rv__by"><span class="rv__av" aria-hidden="true">M</span><span><b>Matthew Rizzi</b>3 months ago</span></figcaption></figure></div></div>
+  </div>
+
+  <div class="wrap rev__foot">
+    <a class="btn btn--green" href="https://www.google.com/maps/search/?api=1&amp;query=Entourage+Cremorne" target="_blank" rel="noopener">Read all 544 on Google</a>
+    <span class="rev__live" id="rev-live"><i></i><span id="rev-live-t">Verbatim from Google · updated 13 Aug 2026</span></span>
+  </div>
+</section>
+
+<!-- ============================ AWARDS ============================ -->
+<section class="awardband">
+  <div class="wrap awards">
+    <div class="awards__copy">
+      <p class="eyebrow eyebrow--dark">Recognition</p>
+      <h2>140+ award wins and nominations.</h2>
+      <p>Named the 2026 MFAA Best Diversified Brokerage and a 2026 LMG Diversified Business of the Year finalist &mdash; built on the intersection of property and finance.</p>
+    </div>
+  </div>
+  <!-- The badge wall from their homepage, run small and moving. Twenty-three
+       seals at 66px says "140+" far better than the number does; at the size
+       they use on their own site the row would be three screens wide. -->
+  <div class="medals" role="img" aria-label="A selection of Entourage's industry awards from 2013 to 2026">
+    <div class="medals__track"><img src="/assets/entourage/awards/2026-State-Excellence-Awards-Medallions-DIVB-WINNER.webp" alt="MFAA 2026 State Excellence Awards - Diversified Brokerage winner" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/Awards-Seal-Finalist_burgundy.webp" alt="LMG 2026 Diversified Business of the Year finalist" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/BBA-2023-Finalist-1.webp" alt="Better Business Awards 2023 finalist" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/AMA-2022-Winner-1.webp" alt="Australian Mortgage Awards 2022 winner" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/AMA-2022-Winner-2.webp" alt="Australian Mortgage Awards 2022 winner" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/2022-WIF-Winner.webp" alt="Women in Finance Awards 2022 winner" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/MFAA-2021-National-Winner-Broker.webp" alt="MFAA 2021 National Winner - Broker" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/MFAA-2021-National-Winner-Loan-Admin.webp" alt="MFAA 2021 National Winner - Loan Administrator" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/MFAA-2021-Winner-Residential.webp" alt="MFAA 2021 Winner - Residential" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/AMA-2021-Winner.webp" alt="Australian Mortgage Awards 2021 winner" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/Better-Business-2021-wINNER.webp" alt="Better Business Awards 2021 winner" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/MPA-2021-Top-Brokerage-1.webp" alt="MPA Top Brokerage 2021" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/Women-in-Finance-2021-Finalist-1.webp" alt="Women in Finance Awards 2021 finalist" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/Better-Business-2020-wINNER.webp" alt="Better Business Awards 2020 winner" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/MFAA-2020-National-Winner.webp" alt="MFAA 2020 National Winner" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/ABA-2020-Winner.webp" alt="Australian Broking Awards 2020 winner" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/MFAA-2018-National-Winner.webp" alt="MFAA 2018 National Winner" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/30-under-30-2017.webp" alt="30 Under 30, 2017" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/MPA-2017.webp" alt="MPA Top 100 Brokers 2017" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/AMA-2016-Winner.webp" alt="Australian Mortgage Awards 2016 winner" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/Better-Business-2015-Winner.webp" alt="Better Business Awards 2015 winner" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/AMA-2015-Winner.webp" alt="Australian Mortgage Awards 2015 winner" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/MPA-2013.webp" alt="MPA Top 100 Brokers 2013" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/2026-State-Excellence-Awards-Medallions-DIVB-WINNER.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"><img src="/assets/entourage/awards/Awards-Seal-Finalist_burgundy.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"><img src="/assets/entourage/awards/BBA-2023-Finalist-1.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"><img src="/assets/entourage/awards/AMA-2022-Winner-1.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"><img src="/assets/entourage/awards/AMA-2022-Winner-2.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"><img src="/assets/entourage/awards/2022-WIF-Winner.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"><img src="/assets/entourage/awards/MFAA-2021-National-Winner-Broker.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"><img src="/assets/entourage/awards/MFAA-2021-National-Winner-Loan-Admin.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"><img src="/assets/entourage/awards/MFAA-2021-Winner-Residential.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"><img src="/assets/entourage/awards/AMA-2021-Winner.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"><img src="/assets/entourage/awards/Better-Business-2021-wINNER.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"><img src="/assets/entourage/awards/MPA-2021-Top-Brokerage-1.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"><img src="/assets/entourage/awards/Women-in-Finance-2021-Finalist-1.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"><img src="/assets/entourage/awards/Better-Business-2020-wINNER.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"><img src="/assets/entourage/awards/MFAA-2020-National-Winner.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"><img src="/assets/entourage/awards/ABA-2020-Winner.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"><img src="/assets/entourage/awards/MFAA-2018-National-Winner.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"><img src="/assets/entourage/awards/30-under-30-2017.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"><img src="/assets/entourage/awards/MPA-2017.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"><img src="/assets/entourage/awards/AMA-2016-Winner.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"><img src="/assets/entourage/awards/Better-Business-2015-Winner.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"><img src="/assets/entourage/awards/AMA-2015-Winner.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"><img src="/assets/entourage/awards/MPA-2013.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"></div>
+  </div>
+</section>
+
+<!-- ============================ FAQ ============================ -->
+<section>
+  <div class="wrap faqwrap">
+    <div class="faqwrap__intro">
+      <p class="eyebrow eyebrow--dark">Before you ask</p>
+      <h2>The questions we get every week.</h2>
+      <p class="faqwrap__note">Still not answered? A broker will talk it through with no obligation — you don't have to fill anything in first.</p>
+      <a class="btn btn--green" href="tel:+61394211651">Call 03 9421 1651</a>
+    </div>
+    <div class="faq">
+      <details open>
+        <summary>What does a broker cost me?</summary>
+        <p>Nothing, in almost every case. Brokers are paid a commission by the lender whose loan you choose, and it doesn't change the rate you're offered. If a scenario ever needs a fee — some complex commercial or specialist lending does — we tell you the number before any work starts, never after.</p>
+      </details>
+      <details>
+        <summary>Will this affect my credit score?</summary>
+        <p>No. The call and the comparison work happen without touching your credit file. A credit enquiry is only made once you've picked a lender and told us to lodge the application.</p>
+      </details>
+      <details>
+        <summary>Do I have to leave my current bank?</summary>
+        <p>No. Sometimes the best result is a repriced loan with the bank you're already with, and if that's what the comparison shows, that's what we'll tell you. We'd rather be right than move you.</p>
+      </details>
+      <details>
+        <summary>I'm not in Melbourne. Can you still help?</summary>
+        <p>Yes. Entourage is Melbourne-based but licensed to arrange finance Australia-wide, with offices in Cremorne, Mornington, Geelong, Brisbane and Byron Bay, and clients overseas. Our buyers advocacy service is the one that's Victoria-only.</p>
+      </details>
+      <details>
+        <summary>How long does it take?</summary>
+        <p>A first call within one business day, options back to you in a few days, and a formal approval typically inside two to four weeks depending on the lender and how quickly documents come through. If you're under a contract deadline, say so on the call and we'll work the timeline backwards from it.</p>
+      </details>
+      <details>
+        <summary>What if I'm just looking at the moment?</summary>
+        <p>Then say so in the form and we'll skip the broker call. You'll get the calculators and the guides instead, which are more use at that stage anyway — and you're welcome to come back to us whenever there's a real deadline attached.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ STORIES ============================ -->
+<section class="bg-bone">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow eyebrow--dark">Client stories</p>
+      <h2>What it's like to have an Entourage.</h2>
+      <p>Real clients, in their own words, on entourage.com.au.</p>
+    </div>
+    <div class="stories">
+      <article class="story">
+        <div class="story__img">
+          <img src="/assets/entourage/story-daicos.webp" alt="Josh and Nick Daicos talking to camera in the Entourage office" width="960" height="591" loading="lazy">
+          <span class="story__play" aria-hidden="true"><svg width="16" height="16" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg></span>
+        </div>
+        <div class="story__body">
+          <p class="story__tag">Finance</p>
+          <h3>Josh &amp; Nick Daicos</h3>
+          <p>Buying their first homes, side by side. Two brothers, one Entourage, and everyone on the same page.</p>
+          <p class="story__src">Client story · entourage.com.au</p>
+        </div>
+      </article>
+
+      <article class="story story--type">
+        <div class="story__img"><span class="story__initials">GG</span></div>
+        <div class="story__body">
+          <p class="story__tag">Finance</p>
+          <h3>Genevieve Gregson</h3>
+          <p>An Olympic athlete purchasing her next investment property with Entourage behind her.</p>
+          <p class="story__src">Client story · entourage.com.au</p>
+        </div>
+      </article>
+
+      <article class="story story--type">
+        <div class="story__img"><span class="story__initials">B&amp;E</span></div>
+        <div class="story__body">
+          <p class="story__tag">Finance</p>
+          <h3>Brad &amp; Eleanor</h3>
+          <p>From renting to settled in ninety days — a first property journey handled end to end.</p>
+          <p class="story__src">Client story · entourage.com.au</p>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ PILLARS ============================ -->
+<section class="bg-forest">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow">Why Entourage</p>
+      <h2>Not a transaction. Your next chapter.</h2>
+      <p>We've assembled the team so you only have to brief it once.</p>
+    </div>
+    <div class="pillars">
+      <div class="pillar">
+        <div class="pillar__r"></div>
+        <h3>We Listen</h3>
+        <p>Our clients aren't anonymous bank loans. You know where you're going — and because we listen, so do we.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar__r"></div>
+        <h3>Save Time</h3>
+        <p>One team, one briefing, one seamless process, with everyone working on your agenda instead of a bank's.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar__r"></div>
+        <h3>Long-term Support</h3>
+        <p>We don't forget about you once the loan is approved. Think of us as your on-call support crew for the long haul.</p>
+      </div>
+      <div class="pillar">
+        <div class="pillar__r"></div>
+        <h3>Informed Decisions</h3>
+        <p>Independent finance, property, legal and wealth advice — so every decision is made with the full picture in front of you.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ PROCESS ============================ -->
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow eyebrow--dark">What happens next</p>
+      <h2>Three steps, and only one of them is yours.</h2>
+      <p>Most of the work in a home loan is research and paperwork. That's the part we take off you.</p>
+    </div>
+    <div class="steps">
+      <div class="stepcard">
+        <span class="stepcard__n">01</span>
+        <h3>A 15-minute call</h3>
+        <p>A broker who handles your exact scenario calls you — usually the same day, always within one business day. No credit check, no obligation, no impact on your credit file.</p>
+      </div>
+      <div class="stepcard">
+        <span class="stepcard__n">02</span>
+        <h3>We go to 60+ lenders</h3>
+        <p>We compare your situation against the whole panel, not one bank's product list, and come back with the two or three that genuinely fit — with the numbers next to them.</p>
+      </div>
+      <div class="stepcard">
+        <span class="stepcard__n">03</span>
+        <h3>We handle the rest</h3>
+        <p>Application, lender back-and-forth, valuation and settlement. If you need conveyancing or a buyers advocate, they're sitting in the same office.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================ FINAL CTA ============================ -->
+<section class="bg-forest">
+  <div class="wrap final">
+    <div>
+      <p class="eyebrow">Get started</p>
+      <h2>Get yourself an Entourage.</h2>
+      <p>Five questions tells us whether we're the right team for what you're doing. If we're not, we'll point you at who is.</p>
+    </div>
+    <div class="final__box">
+      <a class="btn btn--full btn--lg" href="#start" style="background:var(--white);color:var(--forest);border-color:var(--white)">Check if we can help</a>
+      <div class="final__row">
+        <svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg>
+        <a href="tel:+61394211651">03 9421 1651</a>
+      </div>
+      <div class="final__row">
+        <svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true"><path d="M20 4H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2zm0 4-8 5-8-5V6l8 5 8-5z"/></svg>
+        <a href="mailto:info@entourage.com.au">info@entourage.com.au</a>
+      </div>
+      <div class="final__row">
+        <svg width="17" height="17" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2a7 7 0 0 0-7 7c0 5.3 7 13 7 13s7-7.7 7-13a7 7 0 0 0-7-7zm0 9.5A2.5 2.5 0 1 1 12 6.5a2.5 2.5 0 0 1 0 5z"/></svg>
+        <span>Level 5, 9–11 Cremorne St, Cremorne VIC 3121</span>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<!-- ============================ FOOTER ============================ -->
+<footer class="foot">
+  <div class="wrap">
+    <img class="foot__mark" src="/assets/entourage/wordmark.svg" alt="Entourage" width="150" height="31">
+    <div class="foot__cols">
+      <div>
+        <h4>Entourage</h4>
+        <p>Finance, property advisory, asset finance and conveyancing under one roof. Melbourne based, nationally focused, globally connected.</p>
+        <p>Cremorne · Mornington · Geelong · Brisbane · Byron Bay</p>
+      </div>
+      <div>
+        <h4>Talk to us</h4>
+        <p><a href="tel:+61394211651">03 9421 1651</a></p>
+        <p><a href="mailto:info@entourage.com.au">info@entourage.com.au</a></p>
+        <p>Level 5, 9–11 Cremorne St,<br>Cremorne VIC 3121</p>
+      </div>
+      <div>
+        <h4>Licensing</h4>
+        <p>Entourage Finance Pty Ltd<br>ABN 63 605 295 234<br>Australian Credit Licence 475676</p>
+        <p>Entourage Property Advisory Pty Ltd<br>Real Estate Licence 083861L</p>
+      </div>
+    </div>
+    <p class="foot__legal">
+      © 2026 Entourage. Any advice on this page is general in nature and does not take account of your objectives, financial
+      situation or needs. Lending is subject to lender credit criteria, and comparison of the 60+ lender panel does not
+      guarantee approval. Consider whether the information is appropriate for you before acting on it.
+    </p>
+    <p class="foot__note">
+      <b>Concept build — not a live Entourage page.</b> Produced by Zib Digital as a paid-media landing page concept for the
+      core finance / upgrader lane, alongside the August 2026 Google and Meta audit. The form does not submit anywhere:
+      answers are graded in the browser and the resulting conversion payload is printed to the measurement panel so the
+      flow can be demonstrated. Brand marks, photography, client stories, statistics, awards and licensing details are
+      Entourage's own, taken from entourage.com.au. Domaine Text is licensed to Entourage — production hosting must be
+      served under their own foundry licence. Lead values in the measurement panel are illustrative placeholders and would
+      be rebuilt from Entourage's real commission and close-rate figures before go-live.
+    </p>
+  </div>
+</footer>
+
+<!-- Mobile sticky bar -->
+<nav class="mbar" aria-label="Quick actions">
+  <a class="mbar__call" href="tel:+61394211651">
+    <svg width="16" height="16" viewBox="0 0 24 24" aria-hidden="true"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1-9.4 0-17-7.6-17-17 0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.3 0 .7-.2 1l-2.3 2.2z"/></svg>
+    Call now
+  </a>
+  <a class="mbar__form" href="#start">Check if we can help</a>
+</nav>
+
+<!-- Measurement panel -->
+<button class="dbg-toggle" id="dbg-open" aria-controls="dbg" aria-expanded="false">
+  <i aria-hidden="true"></i> Measurement <b id="dbg-count">0</b>
+</button>
+
+<aside class="dbg" id="dbg" aria-label="Measurement event stream">
+  <div class="dbg__head">
+    <button class="dbg__close" id="dbg-close" aria-label="Close measurement panel">×</button>
+    <h3>Measurement — live</h3>
+    <p>What the ad platforms would receive from this page. The audit found none of this exists today: every conversion reports A$0 and nothing past the form submit is tracked.</p>
+  </div>
+  <div class="dbg__grade">
+    <div class="dbg__g"><span>Lane</span><b id="dbg-lane">—</b></div>
+    <div class="dbg__g"><span>Grade</span><b id="dbg-grade">—</b></div>
+    <div class="dbg__g"><span>Value</span><b id="dbg-value">A$0</b></div>
+  </div>
+  <div class="dbg__log" id="dbg-log">
+    <p class="dbg__empty">No events yet. Start the form and every answer is graded here in real time — then the final conversion is fired with a lane, a grade, a dollar value and, where we route someone away, a reason code.</p>
+  </div>
+  <div class="dbg__foot">
+    Reason codes match the seven agreed in the proposal. Values shown are illustrative placeholders pending Entourage's real commission figures.
+  </div>
+</aside>
+
+<script>
+(function () {
+  'use strict';
+
+  /* ================================================================
+     LEAD GRADING
+     The whole argument of the audit in ~60 lines. Answers become a lane,
+     a grade and a dollar value, so Google and Meta can optimise toward the
+     enquiry Entourage can actually convert instead of the cheapest form fill.
+     Values are placeholders — swap for real upfront + trail commission.
+     ================================================================ */
+  var LOAN_VALUE = { lt400: 1400, '400-750': 2900, '750-1500': 5200, gt1500: 9000, unsure: 2500 };
+  var TIMING_MULT = { now: 1.35, '1-3': 1.15, '3-6': 0.8, research: 0.15 };
+  var OWNER_MULT  = { one: 1, multi: 1.3, sold: 0.95, none: 0.6 };
+
+  /* Reason codes, verbatim from the proposal's agreed list of seven. */
+  var REASONS = {
+    firsthome: 'wrong_service',
+    asset:     'wrong_service',
+    nurture:   'not_ready_or_timing'
+  };
+
+  var answers = { pref_time: 'any' };
+  var labels = {};
+  var eventCount = 0;
+  var startedAt = null;
+
+  var form = document.getElementById('qform');
+  var steps = Array.prototype.slice.call(form.querySelectorAll('.step'));
+  var bar = document.getElementById('bar');
+  var barWrap = bar.parentNode;
+  var recap = document.getElementById('recap');
+  var current = 1;
+
+  /* Qualification points. Deliberately NOT derived from the dollar value:
+     a $350k refinance from an owner-occupier with a real deadline is a good
+     lead worth a small commission, and grading it off value alone would rank
+     it beside a tyre-kicker. Value tells the platforms what the deal is worth;
+     grade tells them whether the person is worth calling. Two different axes —
+     and the audit found neither of them exists today. */
+  var PTS_OWNS = { one: 2, multi: 3, sold: 1, none: 0 };
+  var PTS_WHEN = { now: 3, '1-3': 2, '3-6': 1, research: -2 };
+  var PTS_LOAN = { gt1500: 2, '750-1500': 2, '400-750': 1, lt400: 0, unsure: 0 };
+  var PTS_GOAL = { upgrade: 1, refinance: 1, invest: 1, firsthome: 0, asset: 0 };
+
+  function grade() {
+    var base = LOAN_VALUE[answers.loan] || 0;
+    var v = base * (TIMING_MULT[answers.when] || 1) * (OWNER_MULT[answers.owns] || 1);
+    v = Math.round(v / 50) * 50;
+
+    var pts = (PTS_OWNS[answers.owns] || 0) + (PTS_WHEN[answers.when] || 0) +
+              (PTS_LOAN[answers.loan] || 0) + (PTS_GOAL[answers.goal] || 0);
+    var g = pts >= 7 ? 'A' : pts >= 5 ? 'B' : pts >= 3 ? 'C' : 'D';
+    return { value: v, grade: g, points: pts };
+  }
+
+  function laneOf() {
+    if (answers.goal === 'firsthome' || answers.owns === 'none') return 'first-home';
+    if (answers.goal === 'asset') return 'asset-finance';
+    if (answers.when === 'research') return 'nurture';
+    return 'finance-upgraders';
+  }
+
+  /* ================================================================
+     EVENT BUS
+     Fires the real platform events AND mirrors them into the panel, so the
+     demo shows exactly what production would send. Nothing is invented for
+     the panel's benefit — it renders the same payload that goes out.
+     ================================================================ */
+  var log = document.getElementById('dbg-log');
+  var countEl = document.getElementById('dbg-count');
+
+  function esc(s) {
+    return String(s).replace(/[&<>]/g, function (c) {
+      return { '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c];
+    });
+  }
+
+  function track(name, payload, dest) {
+    eventCount++;
+    countEl.textContent = eventCount;
+
+    /* Real platform calls — each guarded, so a missing tag is skipped
+       silently rather than throwing on a lead-capture page. */
+    try { if (window.fbq && payload.fbq) window.fbq('track', payload.fbq, payload); } catch (e) {}
+    try {
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push(Object.assign({ event: name }, payload));
+    } catch (e) {}
+    try { if (window.gtag && payload.gtagEvent) window.gtag('event', payload.gtagEvent, payload); } catch (e) {}
+
+    /* Panel mirror */
+    var empty = log.querySelector('.dbg__empty');
+    if (empty) empty.remove();
+    var t = new Date();
+    var stamp = ('0' + t.getHours()).slice(-2) + ':' + ('0' + t.getMinutes()).slice(-2) + ':' + ('0' + t.getSeconds()).slice(-2);
+    var body = Object.keys(payload)
+      .filter(function (k) { return k !== 'fbq' && k !== 'gtagEvent'; })
+      .map(function (k) { return '<k>' + esc(k) + '</k>: ' + esc(payload[k]); })
+      .join('\n');
+    var row = document.createElement('div');
+    row.className = 'dbg__e';
+    row.innerHTML = '<div class="dbg__e-h"><b>' + esc(name) + '</b><span style="color:#6A6A6A">→ ' + esc(dest || 'GA4 · Google Ads · Meta') + '</span><i>' + stamp + '</i></div><p class="dbg__e-p">' + body + '</p>';
+    log.appendChild(row);
+    log.scrollTop = log.scrollHeight;
+  }
+
+  function paintGrade() {
+    var g = grade();
+    var lane = laneOf();
+    document.getElementById('dbg-lane').textContent = lane;
+    var gEl = document.getElementById('dbg-grade');
+    gEl.textContent = answers.loan ? g.grade : '—';
+    gEl.className = g.grade === 'A' || g.grade === 'B' ? 'ok' : g.grade === 'D' ? 'warn' : '';
+    document.getElementById('dbg-value').textContent = 'A$' + (answers.loan ? g.value.toLocaleString('en-AU') : '0');
+  }
+
+  /* ================================================================
+     STEP MACHINE
+     ================================================================ */
+  function show(n) {
+    steps.forEach(function (s) { s.classList.toggle('is-on', +s.dataset.step === n); });
+    current = n;
+    var pct = Math.round(((n - 1) / steps.length) * 100);
+    bar.style.width = pct + '%';
+    barWrap.setAttribute('aria-valuenow', String(pct));
+    if (n === 6) {
+      recap.innerHTML = ['goal', 'owns', 'loan', 'when', 'where']
+        .filter(function (k) { return labels[k]; })
+        .map(function (k) { return '<span>' + esc(labels[k]) + '</span>'; })
+        .join('');
+      var head = steps[5].querySelector('.step__q');
+      head.textContent = answers.when === 'now'
+        ? "You're on a deadline — let's get a broker onto it."
+        : answers.owns === 'multi'
+          ? 'Portfolio lending is squarely our thing.'
+          : 'Good news — that’s exactly what we do.';
+      var first = document.getElementById('f-first');
+      if (first && window.matchMedia('(min-width:861px)').matches) setTimeout(function () { first.focus(); }, 60);
+    }
+  }
+
+  function route(kind) {
+    document.querySelector('.qual__body').style.display = 'none';
+    barWrap.style.display = 'none';
+    document.getElementById('done-' + kind).classList.add('is-on');
+    document.querySelector('.qual__head h2').textContent = 'Thanks — here’s the useful bit.';
+    document.querySelector('.qual__head p').textContent = 'We’d rather point you somewhere genuinely useful than book a call you don’t need yet.';
+
+    /* Routed away: still a tracked outcome, with a reason code attached, and
+       explicitly NOT counted as a lead conversion. This is the fix for the
+       audit's finding that 8 primary conversion actions all fired off one
+       page event and told the platforms nothing. */
+    track('zib_lead_routed', {
+      lane: laneOf(),
+      reason_code: REASONS[kind] || 'wrong_service',
+      routed_to: kind,
+      goal: answers.goal || '',
+      counts_as_conversion: 'no',
+      value: 0,
+      currency: 'AUD'
+    }, 'GA4 only — not a conversion');
+    paintGrade();
+    document.querySelector('.qual').scrollIntoView({ block: 'center', behavior: 'smooth' });
+  }
+
+  /* Option taps */
+  form.addEventListener('click', function (e) {
+    var opt = e.target.closest('.opt');
+    if (opt) {
+      var step = opt.closest('.step');
+      var key = step.dataset.key;
+      step.querySelectorAll('.opt').forEach(function (o) { o.classList.remove('is-picked'); });
+      opt.classList.add('is-picked');
+      answers[key] = opt.dataset.val;
+      labels[key] = opt.dataset.label;
+
+      if (!startedAt) {
+        startedAt = Date.now();
+        track('zib_form_start', { form: 'entourage_qualifier', lane: 'finance-upgraders' }, 'GA4 · Google Ads');
+      }
+
+      track('zib_form_step', {
+        step: step.dataset.step,
+        question: key,
+        answer: opt.dataset.val,
+        answer_label: opt.dataset.label
+      }, 'GA4 — micro-conversion');
+      paintGrade();
+
+      var r = opt.dataset.route;
+      setTimeout(function () {
+        if (r) { route(r); return; }
+        if (current < 6) show(current + 1);
+      }, 190);
+      return;
+    }
+
+    var t = e.target.closest('.time');
+    if (t) {
+      t.parentNode.querySelectorAll('.time').forEach(function (o) {
+        o.classList.remove('is-picked');
+        o.setAttribute('aria-pressed', 'false');
+      });
+      t.classList.add('is-picked');
+      t.setAttribute('aria-pressed', 'true');
+      answers.pref_time = t.dataset.time;
+      return;
+    }
+
+    var back = e.target.closest('.back');
+    if (back) { show(Math.max(1, current - 1)); }
+  });
+
+  /* Validation + submit */
+  var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+  function validate() {
+    var ok = true;
+    [['f-first', function (v) { return v.trim().length > 1; }],
+     ['f-last', function (v) { return v.trim().length > 1; }],
+     ['f-email', function (v) { return emailRe.test(v.trim()); }],
+     ['f-phone', function (v) { return v.replace(/\D/g, '').length >= 8; }]].forEach(function (pair) {
+      var el = document.getElementById(pair[0]);
+      var good = pair[1](el.value);
+      el.setAttribute('aria-invalid', good ? 'false' : 'true');
+      if (!good && ok) { el.focus(); }
+      if (!good) ok = false;
+    });
+    var c = document.getElementById('f-consent');
+    if (!c.checked) { c.focus(); ok = false; }
+    return ok;
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (!validate()) return;
+
+    var g = grade();
+    var lane = laneOf();
+    var seconds = startedAt ? Math.round((Date.now() - startedAt) / 1000) : 0;
+
+    /* THE conversion. Note what travels with it and does not today:
+       a lane, a grade, a dollar value, the service line and the timing.
+       That is what lets the platforms stop buying tyre-kickers. */
+    track('generate_lead', {
+      fbq: 'Lead',
+      gtagEvent: 'generate_lead',
+      lane: lane,
+      lead_grade: g.grade,
+      qualification_points: g.points,
+      value: g.value,
+      currency: 'AUD',
+      service_line: 'mortgage-broking',
+      goal: answers.goal,
+      owns: answers.owns,
+      loan_band: answers.loan,
+      timeframe: answers.when,
+      location: answers.where,
+      preferred_contact_time: answers.pref_time || 'any',
+      time_to_complete_s: seconds,
+      crm_stage: 'new_enquiry',
+      reason_code: ''
+    }, 'Google Ads · Meta CAPI · GA4 · CRM');
+
+    document.querySelector('.qual__body').style.display = 'none';
+    barWrap.style.display = 'none';
+
+    var name = document.getElementById('f-first').value.trim();
+    document.querySelector('.qual__head h2').textContent = name ? 'Thanks, ' + name + '.' : 'Thanks.';
+    var TIME_SAYS = {
+      morning: 'in the morning', afternoon: 'in the afternoon',
+      evening: 'after 5pm', any: 'within one business day'
+    };
+    document.querySelector('.qual__head p').textContent =
+      answers.pref_time === 'any'
+        ? 'A broker will call you within one business day.'
+        : 'A broker will call you ' + TIME_SAYS[answers.pref_time] + '.';
+
+    if (answers.when === 'now') {
+      document.getElementById('done-core-h').textContent = "You're on a deadline — we've flagged it.";
+      document.getElementById('done-core-p').textContent = 'Your enquiry is marked urgent, so a broker who handles this scenario will call you today where possible.';
+    }
+    document.getElementById('done-core').classList.add('is-on');
+    paintGrade();
+    document.querySelector('.qual').scrollIntoView({ block: 'center', behavior: 'smooth' });
+  });
+
+  /* ================================================================
+     PANEL WIRING
+     ================================================================ */
+  var dbg = document.getElementById('dbg');
+  var openBtn = document.getElementById('dbg-open');
+  function setPanel(on) {
+    dbg.classList.toggle('is-on', on);
+    document.body.classList.toggle('dbg-open', on);
+    openBtn.setAttribute('aria-expanded', on ? 'true' : 'false');
+  }
+  openBtn.addEventListener('click', function () { setPanel(!dbg.classList.contains('is-on')); });
+  document.getElementById('dbg-close').addEventListener('click', function () { setPanel(false); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setPanel(false); });
+  if (/[?&]debug=1/.test(location.search)) setPanel(true);
+
+  track('page_view', {
+    page: 'entourage-home-loans-melbourne',
+    lane: 'finance-upgraders',
+    campaign_source: new URLSearchParams(location.search).get('utm_source') || '(direct)'
+  }, 'GA4 · Meta');
+
+  /* ================================================================
+     LIVE GOOGLE REVIEWS
+     Progressive enhancement: the grid already renders verifiable facts, so
+     the page is never empty. If /api/entourage-reviews has a Places key it
+     swaps in real review text, author and date.
+     ================================================================ */
+  fetch('/api/entourage-reviews')
+    .then(function (r) { return r.ok ? r.json() : null; })
+    .then(function (d) {
+      if (!d || !d.live || !d.reviews || !d.reviews.length) return;
+      if (d.rating) document.getElementById('rev-score').textContent = Number(d.rating).toFixed(1);
+      if (d.total) document.getElementById('rev-count').textContent = Number(d.total).toLocaleString('en-AU');
+      var star = '<svg width="15" height="15" viewBox="0 0 24 24"><path d="m12 17.3 6.2 3.7-1.6-7 5.4-4.7-7.1-.6L12 2 9.1 8.7l-7.1.6 5.4 4.7-1.6 7z"/></svg>';
+      document.getElementById('rev-grid').innerHTML = d.reviews.slice(0, 3).map(function (r) {
+        var stars = new Array(Math.max(1, Math.min(5, r.rating || 5)) + 1).join(star);
+        return '<div class="rev__card"><div class="rev__stars" aria-hidden="true">' + stars + '</div>' +
+               '<p>' + esc(r.text) + '</p>' +
+               '<p class="rev__who"><b>' + esc(r.author) + '</b>' + esc(r.when || 'Google review') + '</p></div>';
+      }).join('');
+      var live = document.getElementById('rev-live');
+      live.classList.add('is-live');
+      document.getElementById('rev-live-t').textContent = 'Live from Google';
+    })
+    .catch(function () { /* concept build: endpoint absent locally, placeholders stand */ });
+})();
+</script>
+</body>
+</html>
