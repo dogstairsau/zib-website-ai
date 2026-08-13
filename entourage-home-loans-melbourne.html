@@ -80,7 +80,8 @@
     --ui:-apple-system, BlinkMacSystemFont, 'Helvetica Neue', Helvetica, Arial, sans-serif;
     --track-display:-.022em;
     --track-small:-.011em;
-    --wrap:1180px;
+    --wrap:1600px;   /* their .grid-container: max-width 100rem */
+    --gutter:20px;   /* their padding step: 1.25rem → 2.5rem → 5rem */
     --shadow:0 24px 60px -28px rgba(0,61,36,.45);
   }
 
@@ -98,14 +99,26 @@
   h1,h2,h3,h4{font-family:var(--display); font-weight:700; margin:0; line-height:1.17; letter-spacing:var(--track-display); text-wrap:balance}
   h3,h4{line-height:1.33; letter-spacing:var(--track-small)}
   p{margin:0 0 1em; line-height:1.6; text-wrap:pretty}
-  .wrap{width:min(100% - 40px, var(--wrap)); margin-inline:auto}
+  .wrap{width:100%; max-width:var(--wrap); margin-inline:auto; padding-inline:var(--gutter)}
+  /* The header runs wider than the content, exactly as it does on their site —
+     .chr-header-container caps at 160rem with 60px gutters while the body caps
+     at 100rem. That difference is what makes the nav read as full-bleed. */
+  .head__in{width:100%; max-width:2560px; margin-inline:auto; padding-inline:var(--gutter)}
+  @media (min-width:768px){
+    :root{--gutter:40px}
+    .head__in{padding-inline:40px}
+  }
+  @media (min-width:1200px){
+    :root{--gutter:80px}
+    .head__in{padding-inline:60px}
+  }
   /* Entourage's own section label: Domaine Bold at 1rem, sentence case, with a
      hairline rule under it. Wide-tracked uppercase is a sans-serif device —
      in a serif it just looks stretched, and nothing on their site does it. */
   .eyebrow{
     font-family:var(--display); font-size:16px; font-weight:700;
     letter-spacing:var(--track-small); color:var(--green);
-    margin:0 0 26px; padding-bottom:14px;
+    margin:0 0 34px; padding-bottom:22px;
     border-bottom:1px solid rgba(255,255,255,.22);
   }
   .eyebrow--dark{color:var(--forest); border-bottom-color:rgba(33,33,33,.16)}
@@ -134,7 +147,7 @@
     position:sticky; top:0; z-index:60; background:var(--ink);
     border-bottom:1px solid rgba(255,255,255,.1);
   }
-  .head__in{display:flex; align-items:center; gap:24px; padding:16px 0; min-height:70px}
+  .head__in{display:flex; align-items:center; gap:24px; padding-block:16px; min-height:70px}
   .head__mark{width:172px; flex:0 0 auto}
   .head__mark img{width:100%}
   .head__spacer{margin-left:auto}
@@ -189,8 +202,8 @@
       linear-gradient(100deg, rgba(15,15,15,.92) 0%, rgba(15,15,15,.74) 46%, rgba(15,15,15,.34) 78%),
       linear-gradient(180deg, rgba(33,33,33,.5) 0%, rgba(0,52,31,.2) 50%, rgba(0,52,31,.82) 100%);
   }
-  .hero__in{position:relative; display:grid; grid-template-columns:1fr 470px; gap:64px; align-items:start; padding:76px 0 84px}
-  .hero h1{font-size:clamp(38px,4.6vw,62px); line-height:1; margin-bottom:22px}
+  .hero__in{position:relative; display:grid; grid-template-columns:minmax(0,1fr) 470px; gap:clamp(48px,6vw,110px); align-items:start; padding-block:76px 84px}
+  .hero h1{font-size:clamp(38px,4.6vw,62px); line-height:1; margin-bottom:22px; max-width:14ch}
   .hero h1 em{font-style:normal; color:var(--green)}
   .hero__sub{font-size:19px; line-height:1.55; color:rgba(255,255,255,.86); max-width:37ch; margin-bottom:30px}
   .hero__points{list-style:none; margin:0 0 34px; padding:0; display:grid; gap:12px; max-width:44ch}
@@ -207,7 +220,7 @@
   .proof__n{font-family:var(--display); font-size:clamp(24px,2.5vw,32px); line-height:1; display:block}
   .proof__l{font-size:14px; letter-spacing:var(--track-small); color:rgba(255,255,255,.66); margin-top:6px; display:block}
   @media (max-width:980px){
-    .hero__in{grid-template-columns:1fr; gap:40px; padding:52px 0 60px}
+    .hero__in{grid-template-columns:1fr; gap:40px; padding-block:52px 60px}
     .proof__in{grid-template-columns:repeat(2,1fr)}
     .proof__item:nth-child(2){border-right:0}
     .proof__item:nth-child(-n+2){border-bottom:1px solid var(--line-dark)}
@@ -278,6 +291,15 @@
   .field input[aria-invalid="true"]{border-color:#B3261E; background:#FFF7F6}
   .field .err{display:none; font-size:12.5px; color:#B3261E; margin-top:5px}
   .field input[aria-invalid="true"] ~ .err{display:block}
+  .field__lab{display:block; font-size:13.5px; letter-spacing:var(--track-small); color:var(--grey); margin-bottom:6px}
+  .times{display:grid; grid-template-columns:repeat(2,1fr); gap:8px}
+  .time{
+    padding:12px 14px; background:var(--white); border:1px solid var(--line);
+    border-radius:2px; font-family:var(--body); font-size:15px; color:var(--ink); cursor:pointer;
+    transition:border-color .14s ease, background .14s ease, color .14s ease;
+  }
+  .time:hover{border-color:var(--forest)}
+  .time.is-picked{background:var(--forest); border-color:var(--forest); color:var(--white); font-weight:700}
   .consent{grid-column:1/-1; display:flex; gap:11px; align-items:flex-start; font-size:12.5px; color:var(--grey); line-height:1.5}
   .consent input{margin-top:2px; flex:0 0 auto; width:16px; height:16px; accent-color:var(--forest)}
   .fine{font-size:12px; color:var(--grey); margin:14px 0 0; line-height:1.5}
@@ -295,9 +317,9 @@
   .done--route .done__mark svg{fill:var(--forest)}
 
   /* ---------- Generic sections ---------- */
-  section{padding:88px 0}
-  .sec-head{max-width:62ch; margin-bottom:52px}
-  .sec-head h2{font-size:clamp(30px,3.5vw,44px); margin-bottom:16px}
+  section{padding:106px 0}
+  .sec-head{max-width:62ch; margin-bottom:60px}
+  .sec-head h2{font-size:clamp(30px,3.5vw,44px); margin-bottom:16px; max-width:26ch}
   .sec-head p{font-size:18px; color:var(--grey); margin:0}
   .bg-bone{background:var(--bone)}
   .bg-ink{background:var(--ink); color:var(--white)}
@@ -377,7 +399,7 @@
 
   .wall{
     display:grid; grid-template-columns:repeat(3,1fr); gap:18px;
-    height:620px; overflow:hidden; padding:0 20px;
+    height:620px; overflow:hidden; padding-inline:var(--gutter);
     /* Feather the ends so the columns read as a continuing stream rather than
        a block that happens to be clipped. */
     -webkit-mask-image:linear-gradient(180deg,transparent,#000 7%,#000 88%,transparent);
@@ -421,32 +443,23 @@
     .wall{height:auto; max-height:760px; overflow-y:auto}
   }
 
-  /* ---------- Named brokers ----------
-     The distinctive finding in the review corpus: 28 of 36 name an individual.
-     A brokerage that gets thanked by first name is the literal definition of
-     the brand promise, and no competitor can assert it without the reviews to
-     back it. Sized in three tiers by mention count. */
-  .names{display:grid; grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr); gap:56px; align-items:center}
-  .names h2{font-size:clamp(28px,3.2vw,42px); margin-bottom:16px}
-  .names p{color:rgba(255,255,255,.74); font-size:17px; margin:0; max-width:44ch}
-  .names__cloud{display:flex; flex-wrap:wrap; align-items:baseline; gap:10px 22px}
-  .nm{
-    font-family:var(--display); font-weight:700; color:var(--white);
-    letter-spacing:var(--track-display); line-height:1.1; white-space:nowrap;
-  }
-  .nm sup{font-family:var(--ui); font-size:11px; font-weight:600; color:var(--green); margin-left:5px; top:-.7em; position:relative}
-  .nm--1{font-size:clamp(30px,3.4vw,44px)}
-  .nm--2{font-size:clamp(22px,2.4vw,31px); color:rgba(255,255,255,.88)}
-  .nm--3{font-size:clamp(16px,1.6vw,21px); color:rgba(255,255,255,.6)}
-  .nm--3 sup{color:rgba(19,175,122,.75)}
-  @media (max-width:900px){.names{grid-template-columns:1fr; gap:30px}}
-
   /* Awards */
-  .awards{display:flex; flex-wrap:wrap; align-items:center; gap:34px}
-  .awards img{width:104px; height:auto}
-  .awards__copy{flex:1; min-width:280px}
-  .awards__copy h3{font-size:clamp(24px,3vw,34px); margin-bottom:12px}
-  .awards__copy p{color:rgba(255,255,255,.76); margin:0; font-size:16.5px; max-width:56ch}
+  .awards__copy h2{font-size:clamp(26px,3vw,40px); margin-bottom:14px; max-width:20ch}
+  .awards__copy p{color:var(--grey); margin:0; font-size:17px; max-width:60ch}
+  .medals{
+    margin-top:38px; overflow:hidden;
+    -webkit-mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);
+    mask-image:linear-gradient(90deg,transparent,#000 5%,#000 95%,transparent);
+  }
+  .medals__track{display:flex; align-items:center; gap:38px; width:max-content; animation:medalRun 64s linear infinite}
+  .medals__track img{width:66px; height:66px; object-fit:contain; flex:0 0 auto}
+  .medals:hover .medals__track{animation-play-state:paused}
+  /* Half the track is a duplicate, so one loop is exactly -50% less half a gap. */
+  @keyframes medalRun{from{transform:translateX(0)} to{transform:translateX(calc(-50% - 19px))}}
+  @media (prefers-reduced-motion:reduce){
+    .medals__track{animation:none}
+    .medals{overflow-x:auto}
+  }
 
   /* FAQ */
   .faq{max-width:820px}
@@ -463,6 +476,20 @@
   }
   .faq details[open] summary::after{transform:rotate(-135deg); margin-top:-3px}
   .faq p{font-size:16px; color:var(--grey); padding:0 44px 22px 0; margin:0}
+
+  /* The FAQ is the one block whose content is narrower than the 1600px
+     container, so it splits rather than stranding half a row. The heading
+     column sticks while the questions scroll past it. */
+  .faqwrap{display:grid; grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr); gap:clamp(40px,6vw,96px); align-items:start}
+  .faqwrap__intro{position:sticky; top:104px}
+  .faqwrap__intro h2{font-size:clamp(30px,3.5vw,44px); margin-bottom:18px}
+  .faqwrap__note{font-size:17px; color:var(--grey); max-width:38ch; margin-bottom:24px}
+  .faq{max-width:none}
+  .faq details:first-child{border-top:1px solid var(--line)}
+  @media (max-width:900px){
+    .faqwrap{grid-template-columns:1fr; gap:32px}
+    .faqwrap__intro{position:static}
+  }
 
   /* Final CTA */
   .final{display:grid; grid-template-columns:1.2fr 1fr; gap:56px; align-items:center}
@@ -508,7 +535,7 @@
     .mbar{display:grid}
     body{padding-bottom:54px}
     .qual{position:static}
-    section{padding:62px 0}
+    section{padding:74px 0}
     .sec-head{margin-bottom:36px}
   }
 
@@ -569,7 +596,7 @@
 
 <!-- ============================ HEADER ============================ -->
 <header class="head">
-  <div class="wrap head__in">
+  <div class="head__in">
     <a class="head__mark" href="#top" aria-label="Entourage">
       <img src="/assets/entourage/wordmark.svg" alt="Entourage" width="172" height="35">
     </a>
@@ -601,7 +628,6 @@
   <div class="wrap hero__in">
 
     <div>
-      <p class="eyebrow">Upgrading · Refinancing · Investing</p>
       <h1>Get an <em>Entourage</em> behind your next move.</h1>
       <p class="hero__sub">
         Brokers, buyers advocates and conveyancers in one team, with access to 60+ lenders.
@@ -758,26 +784,35 @@
           <h3 class="step__q">Good news — that's exactly what we do.</h3>
           <div class="recap" id="recap"></div>
           <div class="fields">
-            <label class="field">
+            <div class="field">
               <label for="f-first">First name</label>
               <input id="f-first" name="firstname" type="text" autocomplete="given-name" required>
               <span class="err">Please add your first name</span>
-            </label>
-            <label class="field">
+            </div>
+            <div class="field">
               <label for="f-last">Last name</label>
               <input id="f-last" name="lastname" type="text" autocomplete="family-name" required>
               <span class="err">Please add your last name</span>
-            </label>
-            <label class="field field--wide">
+            </div>
+            <div class="field field--wide">
               <label for="f-email">Email</label>
               <input id="f-email" name="email" type="email" autocomplete="email" inputmode="email" required>
               <span class="err">Please add a valid email address</span>
-            </label>
-            <label class="field field--wide">
+            </div>
+            <div class="field field--wide">
               <label for="f-phone">Mobile</label>
               <input id="f-phone" name="phone" type="tel" autocomplete="tel" inputmode="tel" required>
               <span class="err">Please add a mobile we can reach you on</span>
-            </label>
+            </div>
+            <div class="field field--wide">
+              <span class="field__lab" id="pt-lab">Best time to reach you</span>
+              <div class="times" role="group" aria-labelledby="pt-lab">
+                <button type="button" class="time" data-time="morning">Morning</button>
+                <button type="button" class="time" data-time="afternoon">Afternoon</button>
+                <button type="button" class="time" data-time="evening">After 5pm</button>
+                <button type="button" class="time is-picked" data-time="any" aria-pressed="true">Anytime</button>
+              </div>
+            </div>
             <label class="consent">
               <input type="checkbox" id="f-consent" required>
               <span>I'd like an Entourage broker to call me about this. I've read the <a href="https://entourage.com.au/privacy-policy/" target="_blank" rel="noopener">privacy policy</a>.</span>
@@ -786,7 +821,7 @@
           <div style="margin-top:18px">
             <button type="submit" class="btn btn--green btn--full btn--lg" id="submit">Request my call back</button>
           </div>
-          <p class="fine">No credit check and no impact on your credit file. A broker calls within one business day — or tell us a better time when we speak.</p>
+          <p class="fine">No credit check and no impact on your credit file.</p>
           <button type="button" class="back">← Back</button>
         </div>
       </form>
@@ -895,39 +930,31 @@
   </div>
 </section>
 
-<!-- ============================ NAMED BROKERS ============================ -->
-<section class="bg-ink" style="padding:76px 0">
-  <div class="wrap names">
-    <div>
-      <p class="eyebrow">The Entourage effect</p>
-      <h2>28 of the last 36 reviews thank someone by name.</h2>
-      <p>
-        Not "the team" — Nittaya, Aggie, Vincent, Kat. You get people, and you
-        keep the same ones. Sized below by how often clients named them.
-      </p>
-    </div>
-    <div class="names__cloud"><span class="nm nm--1">Nittaya<sup>6</sup></span><span class="nm nm--1">Vincent<sup>5</sup></span><span class="nm nm--1">Aggie<sup>5</sup></span><span class="nm nm--1">Lauren<sup>5</sup></span><span class="nm nm--1">Kathryn<sup>4</sup></span><span class="nm nm--1">Sarah<sup>4</sup></span><span class="nm nm--2">Damian<sup>3</sup></span><span class="nm nm--2">Robbie<sup>3</sup></span><span class="nm nm--2">Jack<sup>2</sup></span><span class="nm nm--2">Blake<sup>2</sup></span><span class="nm nm--2">Tamanna<sup>2</sup></span><span class="nm nm--2">Hume<sup>2</sup></span><span class="nm nm--2">Nick<sup>2</sup></span><span class="nm nm--2">Maria<sup>2</sup></span><span class="nm nm--2">Kristel<sup>2</sup></span><span class="nm nm--3">Jordan<sup>1</sup></span><span class="nm nm--3">Petria<sup>1</sup></span><span class="nm nm--3">Antoinette<sup>1</sup></span><span class="nm nm--3">Bonnie<sup>1</sup></span><span class="nm nm--3">Haden<sup>1</sup></span></div>
-  </div>
-</section>
-
 <!-- ============================ AWARDS ============================ -->
-<section class="bg-ink" style="padding:64px 0">
+<section>
   <div class="wrap awards">
-    <img src="/assets/entourage/award-mfaa-2026.webp" alt="2026 State Excellence Awards — Diversified Brokerage winner medallion" width="104" height="104" loading="lazy">
-    <img src="/assets/entourage/award-lmg-2026.webp" alt="2026 LMG Diversified Business of the Year finalist seal" width="104" height="104" loading="lazy">
     <div class="awards__copy">
-      <h3>140+ award wins and nominations</h3>
-      <p>Named the 2026 MFAA Best Diversified Brokerage and a 2026 LMG Diversified Business of the Year finalist — built on the intersection of property and finance.</p>
+      <p class="eyebrow eyebrow--dark">Recognition</p>
+      <h2>140+ award wins and nominations.</h2>
+      <p>Named the 2026 MFAA Best Diversified Brokerage and a 2026 LMG Diversified Business of the Year finalist &mdash; built on the intersection of property and finance.</p>
     </div>
+  </div>
+  <!-- The badge wall from their homepage, run small and moving. Twenty-three
+       seals at 66px says "140+" far better than the number does; at the size
+       they use on their own site the row would be three screens wide. -->
+  <div class="medals" role="img" aria-label="A selection of Entourage's industry awards from 2013 to 2026">
+    <div class="medals__track"><img src="/assets/entourage/awards/2026-State-Excellence-Awards-Medallions-DIVB-WINNER.webp" alt="MFAA 2026 State Excellence Awards - Diversified Brokerage winner" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/Awards-Seal-Finalist_burgundy.webp" alt="LMG 2026 Diversified Business of the Year finalist" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/BBA-2023-Finalist-1.webp" alt="Better Business Awards 2023 finalist" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/AMA-2022-Winner-1.webp" alt="Australian Mortgage Awards 2022 winner" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/AMA-2022-Winner-2.webp" alt="Australian Mortgage Awards 2022 winner" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/2022-WIF-Winner.webp" alt="Women in Finance Awards 2022 winner" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/MFAA-2021-National-Winner-Broker.webp" alt="MFAA 2021 National Winner - Broker" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/MFAA-2021-National-Winner-Loan-Admin.webp" alt="MFAA 2021 National Winner - Loan Administrator" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/MFAA-2021-Winner-Residential.webp" alt="MFAA 2021 Winner - Residential" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/AMA-2021-Winner.webp" alt="Australian Mortgage Awards 2021 winner" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/Better-Business-2021-wINNER.webp" alt="Better Business Awards 2021 winner" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/MPA-2021-Top-Brokerage-1.webp" alt="MPA Top Brokerage 2021" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/Women-in-Finance-2021-Finalist-1.webp" alt="Women in Finance Awards 2021 finalist" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/Better-Business-2020-wINNER.webp" alt="Better Business Awards 2020 winner" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/MFAA-2020-National-Winner.webp" alt="MFAA 2020 National Winner" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/ABA-2020-Winner.webp" alt="Australian Broking Awards 2020 winner" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/MFAA-2018-National-Winner.webp" alt="MFAA 2018 National Winner" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/30-under-30-2017.webp" alt="30 Under 30, 2017" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/MPA-2017.webp" alt="MPA Top 100 Brokers 2017" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/AMA-2016-Winner.webp" alt="Australian Mortgage Awards 2016 winner" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/Better-Business-2015-Winner.webp" alt="Better Business Awards 2015 winner" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/AMA-2015-Winner.webp" alt="Australian Mortgage Awards 2015 winner" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/MPA-2013.webp" alt="MPA Top 100 Brokers 2013" width="66" height="66" loading="lazy"><img src="/assets/entourage/awards/2026-State-Excellence-Awards-Medallions-DIVB-WINNER.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"><img src="/assets/entourage/awards/Awards-Seal-Finalist_burgundy.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"><img src="/assets/entourage/awards/BBA-2023-Finalist-1.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"><img src="/assets/entourage/awards/AMA-2022-Winner-1.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"><img src="/assets/entourage/awards/AMA-2022-Winner-2.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"><img src="/assets/entourage/awards/2022-WIF-Winner.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"><img src="/assets/entourage/awards/MFAA-2021-National-Winner-Broker.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"><img src="/assets/entourage/awards/MFAA-2021-National-Winner-Loan-Admin.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"><img src="/assets/entourage/awards/MFAA-2021-Winner-Residential.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"><img src="/assets/entourage/awards/AMA-2021-Winner.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"><img src="/assets/entourage/awards/Better-Business-2021-wINNER.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"><img src="/assets/entourage/awards/MPA-2021-Top-Brokerage-1.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"><img src="/assets/entourage/awards/Women-in-Finance-2021-Finalist-1.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"><img src="/assets/entourage/awards/Better-Business-2020-wINNER.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"><img src="/assets/entourage/awards/MFAA-2020-National-Winner.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"><img src="/assets/entourage/awards/ABA-2020-Winner.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"><img src="/assets/entourage/awards/MFAA-2018-National-Winner.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"><img src="/assets/entourage/awards/30-under-30-2017.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"><img src="/assets/entourage/awards/MPA-2017.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"><img src="/assets/entourage/awards/AMA-2016-Winner.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"><img src="/assets/entourage/awards/Better-Business-2015-Winner.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"><img src="/assets/entourage/awards/AMA-2015-Winner.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"><img src="/assets/entourage/awards/MPA-2013.webp" alt="" width="66" height="66" loading="lazy" aria-hidden="true"></div>
   </div>
 </section>
 
 <!-- ============================ FAQ ============================ -->
 <section>
-  <div class="wrap">
-    <div class="sec-head">
+  <div class="wrap faqwrap">
+    <div class="faqwrap__intro">
       <p class="eyebrow eyebrow--dark">Before you ask</p>
       <h2>The questions we get every week.</h2>
+      <p class="faqwrap__note">Still not answered? A broker will talk it through with no obligation — you don't have to fill anything in first.</p>
+      <a class="btn btn--green" href="tel:+61394211651">Call 03 9421 1651</a>
     </div>
     <div class="faq">
       <details open>
@@ -1008,7 +1035,7 @@
   <div class="wrap">
     <div class="sec-head">
       <p class="eyebrow">Why Entourage</p>
-      <h2>Your mortgage isn't a transaction. It's your next chapter.</h2>
+      <h2>Not a transaction. Your next chapter.</h2>
       <p>We've assembled the team so you only have to brief it once.</p>
     </div>
     <div class="pillars">
@@ -1185,7 +1212,7 @@
     nurture:   'not_ready_or_timing'
   };
 
-  var answers = {};
+  var answers = { pref_time: 'any' };
   var labels = {};
   var eventCount = 0;
   var startedAt = null;
@@ -1361,6 +1388,18 @@
       return;
     }
 
+    var t = e.target.closest('.time');
+    if (t) {
+      t.parentNode.querySelectorAll('.time').forEach(function (o) {
+        o.classList.remove('is-picked');
+        o.setAttribute('aria-pressed', 'false');
+      });
+      t.classList.add('is-picked');
+      t.setAttribute('aria-pressed', 'true');
+      answers.pref_time = t.dataset.time;
+      return;
+    }
+
     var back = e.target.closest('.back');
     if (back) { show(Math.max(1, current - 1)); }
   });
@@ -1410,6 +1449,7 @@
       loan_band: answers.loan,
       timeframe: answers.when,
       location: answers.where,
+      preferred_contact_time: answers.pref_time || 'any',
       time_to_complete_s: seconds,
       crm_stage: 'new_enquiry',
       reason_code: ''
@@ -1420,7 +1460,14 @@
 
     var name = document.getElementById('f-first').value.trim();
     document.querySelector('.qual__head h2').textContent = name ? 'Thanks, ' + name + '.' : 'Thanks.';
-    document.querySelector('.qual__head p').textContent = 'A broker will call you within one business day.';
+    var TIME_SAYS = {
+      morning: 'in the morning', afternoon: 'in the afternoon',
+      evening: 'after 5pm', any: 'within one business day'
+    };
+    document.querySelector('.qual__head p').textContent =
+      answers.pref_time === 'any'
+        ? 'A broker will call you within one business day.'
+        : 'A broker will call you ' + TIME_SAYS[answers.pref_time] + '.';
 
     if (answers.when === 'now') {
       document.getElementById('done-core-h').textContent = "You're on a deadline — we've flagged it.";

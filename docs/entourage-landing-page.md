@@ -43,7 +43,8 @@ Asset finance needs the capacity cap in the proposal reflected as a throttle.
 | Qualifying form, routing, grading | Real, working, client-side |
 | Tracking events | Real event names and payloads; fire into `dataLayer` / `fbq` / `gtag` when tags are present |
 | Form submission | **Stubbed** — nothing is posted or stored |
-| Google reviews wall | Live via `/api/entourage-reviews` when configured; verifiable placeholder cards otherwise |
+| Google reviews wall | 36 verbatim reviews from the Cremorne listing; `/api/entourage-reviews` refreshes the rating and count |
+| Award badges | 23 real seals (2013-2026) pulled from entourage.com.au |
 | Lead dollar values | **Illustrative placeholders** — must be rebuilt from real commission data |
 
 ## The measurement panel
@@ -67,7 +68,7 @@ event stream are visible together at ≥1100px.
 
 `generate_lead` carries `lane`, `lead_grade`, `qualification_points`, `value`,
 `currency`, `service_line`, `goal`, `owns`, `loan_band`, `timeframe`,
-`location`, `time_to_complete_s` and `crm_stage`.
+`location`, `preferred_contact_time`, `time_to_complete_s` and `crm_stage`.
 
 ⚠️ This page fires the Meta `Lead` event directly, the same as
 `assets/conversion.js`. Do **not** also build a GTM tag firing Meta `Lead` off
@@ -121,17 +122,31 @@ counted as conversions.
 5. **Real values.** Replace `LOAN_VALUE` and the multipliers with Entourage's
    upfront and trail commission, and the grade thresholds with their actual
    qualification bar.
-6. **Reviews.** Set `GOOGLE_PLACES_API_KEY` and `ENTOURAGE_PLACE_ID`. Without
+6. **Review count.** The Google listing states **544** reviews; the website
+   claims 1,500+ (plausibly aggregating the Mornington, Geelong, Brisbane and
+   Byron Bay listings). Anything on this page sitting beside actual review
+   content cites 544, because that is what the source verifiably says. Confirm
+   with Entourage which figure they want used where.
+7. **Reviews.** Set `GOOGLE_PLACES_API_KEY` and `ENTOURAGE_PLACE_ID`. Without
    them `/api/entourage-reviews` returns `live: false` and the wall keeps its
    placeholder cards — it never invents a review.
-7. **Consent and compliance.** Add the cookie/consent layer for the pixels, and
+8. **Consent and compliance.** Add the cookie/consent layer for the pixels, and
    have Entourage's compliance sign off the general-advice wording in the
    footer.
+
+## Layout notes
+
+Container widths match their Foundation grid exactly: content caps at
+`100rem`/1600px with gutters stepping 20 → 40 → 80px, and the header runs
+wider at 2560px with 60px gutters — that difference is what makes their nav
+read as full-bleed. If the page ever looks narrow, check for a `padding`
+shorthand on a `.wrap` co-class: it silently resets the inline gutter to zero.
 
 ## Files
 
 ```
 entourage-home-loans-melbourne.html   the page (self-contained)
 api/entourage-reviews.ts              Places API reviews, graceful fallback
-assets/entourage/                     fonts, wordmark, hero, story, award badges
+assets/entourage/                     fonts, wordmark, hero, story
+assets/entourage/awards/              23 award badges
 ```
