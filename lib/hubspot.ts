@@ -3,7 +3,7 @@
  * Both stub to console if env vars are missing — safe to ship without keys.
  *
  * When auditContext is supplied, a HubSpot note is attached to the contact
- * record so partners (Brad et al) see the strategist read + SEO snapshot
+ * record so partners see the strategist read + SEO snapshot
  * when they open the contact in HubSpot — e.g. just before a meeting.
  */
 

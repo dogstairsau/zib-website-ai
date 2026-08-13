@@ -73,7 +73,7 @@
 <script>
 (() => {
   // Brand every tool link with this partner's slug, taken from the page URL
-  // (e.g. /brad-reece → ?partner=brad-reece). Keeps one include working for all.
+  // (e.g. /marty-tucker → ?partner=marty-tucker). Keeps one include working for all.
   const seg = location.pathname.replace(/^\/+|\/+$/g, '').split('/')[0].replace(/\.html$/, '');
   if (!seg) return;
   document.querySelectorAll('#toolkit a[data-tool]').forEach((a) => {

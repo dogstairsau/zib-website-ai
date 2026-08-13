@@ -25,6 +25,8 @@
     }
   },
   "redirects": [
+    { "source": "/brad-reece", "destination": "/partners", "permanent": true },
+    { "source": "/brad-breece-thank-you", "destination": "/partners", "permanent": true },
     { "source": "/case-study", "destination": "/case-studies", "permanent": true },
     { "source": "/casestudy", "destination": "/case-studies", "permanent": true },
     { "source": "/our-portfolio", "destination": "/case-studies", "permanent": true },
