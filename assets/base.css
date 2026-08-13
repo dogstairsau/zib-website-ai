@@ -362,7 +362,19 @@ h1, h2, h3, .hero-h, .fork-h, .path-title, .moat-h, .cta-title { text-wrap: bala
   }
   .nav-group-menu a:last-child { border-bottom: 0; }
 }
+/* Reserves the space the fixed header floats over. Below 880px the header
+   switches to position:relative (see the nav-drawer block above), so it takes
+   up its own height in flow and the spacer becomes 68px of dead white between
+   the header and the first section.
+   Collapsed with height rather than display:none on purpose. A handful of
+   pages (index, audit, start, …) ship their own header CSS that re-declares
+   both rules after this file loads, keeping the header fixed on mobile; those
+   re-declare height too, so they keep their spacer and their content stays
+   clear of the header. Using display:none would collapse the spacer on those
+   pages as well — they don't re-declare display — and slide their first
+   section under the header. */
 .header-spacer { height: 68px; }
+@media (max-width: 880px) { .header-spacer { height: 0; } }
 
 /* ─── Mega menu · mobile (stacks inside the drawer) ───────────── */
 @media (max-width: 880px) {
