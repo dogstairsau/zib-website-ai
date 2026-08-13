@@ -136,11 +136,23 @@ counted as conversions.
 
 ## Layout notes
 
-Container widths match their Foundation grid exactly: content caps at
-`100rem`/1600px with gutters stepping 20 → 40 → 80px, and the header runs
-wider at 2560px with 60px gutters — that difference is what makes their nav
-read as full-bleed. If the page ever looks narrow, check for a `padding`
-shorthand on a `.wrap` co-class: it silently resets the inline gutter to zero.
+Content caps at `100rem`/1600px with gutters stepping 20 → 40 → 80px, matching
+their `.grid-container`. **Everything shares that one container** — header,
+sections, and both marquees — so the wordmark, every section label and the
+first review card sit on a single left edge. Their own site runs the nav wider
+(2560px, 60px gutters), which is faithful but puts three different left edges
+on screen; the single edge was the deliberate call.
+
+Two traps worth knowing:
+
+- A `padding` shorthand on a `.wrap` co-class (`padding:76px 0 84px`) resets the
+  inline gutter to zero. Use `padding-block`.
+- `text-wrap:nowrap` on a heading must be scoped to a min-width. Unscoped on the
+  awards heading it forced a 444px line onto a 390px phone.
+
+On phones the hero reorders to headline → form → supporting detail, and the
+hero's two buttons are hidden because the sticky bottom bar already carries
+both.
 
 ## Files
 
