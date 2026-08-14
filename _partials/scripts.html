@@ -236,6 +236,78 @@
     kwRailsEl.innerHTML = kwRail(r1, false) + kwRail(r2, true);
   }
 
+  // FAQ accordions. location.css hides .faq-a behind max-height:0 and reveals
+  // it on .faq-item.open — nothing was toggling that class, so every FAQ on the
+  // site rendered as a dead list of questions. Height is set explicitly from
+  // scrollHeight rather than relying on the CSS 600px cap, which clips longer
+  // answers mid-sentence.
+  const faqItems = document.querySelectorAll('.faq-item');
+  if (faqItems.length) {
+    const answerOf = (item) => item.querySelector('.faq-a');
+    // Measure the fully-open height with transitions suppressed. The open state
+    // also animates padding-bottom in, so reading scrollHeight while that
+    // transition is still running measures the answer before its padding
+    // exists and pins a max-height ~30px short, clipping the last line.
+    const openHeight = (item, a) => {
+      const prev = a.style.transition;
+      a.style.transition = 'none';
+      const wasOpen = item.classList.contains('open');
+      item.classList.add('open');
+      a.style.maxHeight = 'none';
+      const target = a.scrollHeight;
+      if (!wasOpen) item.classList.remove('open');
+      a.style.maxHeight = '';
+      void a.offsetHeight; // flush, so the transition has a start value to run from
+      a.style.transition = prev;
+      return target;
+    };
+    const setOpen = (item, open) => {
+      const a = answerOf(item);
+      const btn = item.querySelector('.faq-q');
+      if (btn) btn.setAttribute('aria-expanded', String(open));
+      if (!a) { item.classList.toggle('open', open); return; }
+      if (open) {
+        const target = openHeight(item, a);
+        item.classList.add('open');
+        a.style.maxHeight = target + 'px';
+      } else {
+        // Pin the current height first so the collapse has somewhere to run
+        // from, then drop to zero.
+        a.style.maxHeight = a.scrollHeight + 'px';
+        void a.offsetHeight;
+        item.classList.remove('open');
+        a.style.maxHeight = '0px';
+      }
+    };
+    faqItems.forEach((item) => {
+      const btn = item.querySelector('.faq-q');
+      // Static FAQ lists (e.g. /seo-agency) reuse .faq-item without a button —
+      // they are always-visible copy, not accordions. Leave them alone.
+      if (!btn) return;
+      // Guard against double-binding, which would toggle twice per click and
+      // leave the panel stuck open.
+      if (btn.dataset.faqBound) return;
+      btn.dataset.faqBound = '1';
+      btn.setAttribute('aria-expanded', String(item.classList.contains('open')));
+      btn.addEventListener('click', (e) => {
+        e.preventDefault();
+        setOpen(item, !item.classList.contains('open'));
+      });
+    });
+    // Reflow open answers when the viewport changes — a narrower column wraps
+    // the text taller, and a stale pixel height would crop it.
+    let faqResize;
+    window.addEventListener('resize', () => {
+      clearTimeout(faqResize);
+      faqResize = setTimeout(() => {
+        document.querySelectorAll('.faq-item.open').forEach((item) => {
+          const a = answerOf(item);
+          if (a) a.style.maxHeight = openHeight(item, a) + 'px';
+        });
+      }, 150);
+    }, { passive: true });
+  }
+
   // Melbourne clock
   const clockEl = document.getElementById('clock');
   if (clockEl) {

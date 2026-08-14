@@ -259,20 +259,6 @@
 <!-- @include _partials/footer.html -->
 <!-- @include _partials/scripts.html -->
 
-<script>
-// FAQ accordion
-(() => {
-  const list = document.getElementById('faqList');
-  if (!list) return;
-  list.addEventListener('click', (e) => {
-    const btn = e.target.closest('.faq-q');
-    if (!btn) return;
-    const item = btn.parentElement;
-    const open = item.classList.toggle('open');
-    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
-  });
-})();
-</script>
 
 </body>
 </html>
