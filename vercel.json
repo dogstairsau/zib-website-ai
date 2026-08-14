@@ -55,7 +55,6 @@
     { "source": "/referrals", "destination": "/submit-a-referral", "permanent": true },
     { "source": "/submit-referral", "destination": "/submit-a-referral", "permanent": true },
     { "source": "/partner-opportunity", "destination": "/partner", "permanent": true },
-    { "source": "/email-marketing-melbourne", "destination": "/email-marketing", "permanent": true },
     { "source": "/local-seo-melbourne", "destination": "/seo-melbourne", "permanent": true },
     { "source": "/web-graphic-designers", "destination": "/web-graphic-design-melbourne", "permanent": true },
     { "source": "/design-branding", "destination": "/web-graphic-design-melbourne", "permanent": true },
