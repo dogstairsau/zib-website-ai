@@ -4,11 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Temporary Fencing Hire Melbourne | Delivered &amp; Installed | Professional Hire</title>
-<meta name="description" content="Temporary fence hire across Melbourne and Victoria. AS4687-compliant 2.5m x 1.8m panels, delivered and installed. Quote back within the hour. Open 24/7 including public holidays. Call 0448 403 436.">
+<meta name="description" content="Temporary fence hire across Melbourne and Victoria. AS4687-compliant 2.5m x 1.8m panels, delivered and installed. Same-day quotes. Open 24/7 including public holidays. Call 0448 403 436.">
 <meta name="robots" content="noindex, nofollow">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Temporary Fencing Hire Melbourne | Professional Hire">
-<meta property="og:description" content="AS4687-compliant temp fencing, delivered and installed across Melbourne. Quote within the hour. Open 24/7.">
+<meta property="og:description" content="AS4687-compliant temp fencing, delivered and installed across Melbourne. Same-day quotes. Open 24/7.">
 <link rel="icon" href="/assets/professional-hire/logo.webp">
 <link rel="preload" as="font" type="font/woff2" href="/assets/professional-hire/bebas-neue-latin.woff2" crossorigin>
 <style>
@@ -137,7 +137,7 @@
   .quote__head h2{font-size:34px; line-height:.95}
   .quote__head p{margin:9px 0 0; font-size:14.5px; color:var(--gravel); line-height:1.5}
   .quote form{padding:22px 28px 28px; display:grid; gap:14px}
-  .field label{display:block; font-size:11.5px; letter-spacing:.15em; text-transform:uppercase; color:var(--gravel); margin-bottom:6px; font-weight:700}
+  .field > label,.field > .field-label{display:block; font-size:11.5px; letter-spacing:.15em; text-transform:uppercase; color:var(--gravel); margin-bottom:6px; font-weight:700}
   .field input,.field select,.field textarea{
     width:100%; min-width:0; font:inherit; font-size:16px; padding:13px 14px; background:#fff;
     border:1.5px solid #C9C9C4; border-radius:0; color:var(--black);
@@ -145,6 +145,17 @@
   .field textarea{min-height:78px; resize:vertical}
   .field input:focus,.field select:focus,.field textarea:focus{outline:none; border-color:var(--black); box-shadow:inset 0 -3px 0 var(--yellow)}
   .field-row{display:grid; grid-template-columns:1fr 1fr; gap:14px}
+  /* Add-on chips. A fencing enquiry often needs barriers or toilets on the same
+     truck, and knowing up front is what lets the whole job be quoted at once. */
+  .chips{display:flex; flex-wrap:wrap; gap:8px}
+  .chips label{
+    display:inline-flex; align-items:center; gap:7px; cursor:pointer;
+    border:1.5px solid #C9C9C4; background:#fff; padding:8px 12px; font-size:14px; line-height:1;
+  }
+  .chips input{appearance:none; width:15px; height:15px; margin:0; border:1.5px solid #9C9C97; flex:none}
+  .chips input:checked{background:var(--yellow) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M20.3 5.7 9 17l-5.3-5.3 1.4-1.4L9 14.2l9.9-9.9z'/%3E%3C/svg%3E") center/13px no-repeat; border-color:var(--black)}
+  .chips label:has(input:checked){border-color:var(--black); background:#FBFBF9}
+  .chips input:focus-visible{outline:2px solid var(--black); outline-offset:2px}
   .quote__fine{margin:14px 0 0; font-size:12.5px; line-height:1.55; color:var(--gravel); text-align:center}
   .quote__fine a{color:var(--black)}
   .quote__or{display:flex; align-items:center; gap:12px; font-size:11.5px; letter-spacing:.16em; text-transform:uppercase; color:var(--steel); margin:2px 0}
@@ -259,17 +270,14 @@
   .feature li::before{content:""; position:absolute; left:0; top:9px; width:16px; height:3px; background:var(--yellow)}
 
   /* ---------- Pricing ---------- */
-  .rates{display:grid; grid-template-columns:repeat(3,1fr); gap:20px}
-  .rate{background:#fff; border:1px solid #DCDCD7; padding:30px 26px; display:flex; flex-direction:column}
-  .rate--flag{border:2px solid var(--black); position:relative}
-  .rate--flag::before{content:"Most common"; position:absolute; top:-13px; left:26px; background:var(--yellow); color:var(--black); font-family:var(--head); font-size:15px; letter-spacing:.13em; padding:5px 12px 3px}
-  .rate h3{font-size:27px}
-  .rate__price{font-family:var(--head); font-size:52px; line-height:1; margin:16px 0 4px}
-  .rate__price small{font-family:var(--body); font-size:14px; letter-spacing:.02em; color:var(--gravel); display:block; margin-top:8px; text-transform:none; line-height:1.4}
-  .rate ul{list-style:none; margin:20px 0 24px; padding:0; display:grid; gap:9px; font-size:15.5px; color:var(--gravel)}
-  .rate li{position:relative; padding-left:24px}
-  .rate li::before{content:""; position:absolute; left:0; top:8px; width:11px; height:2px; background:var(--black)}
-  .rate .btn{margin-top:auto}
+  /* Price drivers, not a rate card. A ten-panel job can cost more to stand up
+     than a hundred-panel one, so a price list on the page would mislead. */
+  .drivers{display:grid; grid-template-columns:repeat(3,1fr); gap:20px}
+  .driver{background:#fff; border:1px solid #DCDCD7; padding:26px 24px}
+  .driver__n{font-family:var(--head); font-size:14px; letter-spacing:.18em; color:var(--steel)}
+  .driver h3{font-size:25px; margin:8px 0 0}
+  .driver p{margin:9px 0 0; font-size:15.5px; line-height:1.55; color:var(--gravel)}
+  .rates-cta{margin-top:34px; text-align:center}
   .included{margin-top:34px; background:var(--black); color:var(--paper); padding:30px 32px}
   .included h3{font-size:26px; color:var(--yellow)}
   .included ul{list-style:none; margin:16px 0 0; padding:0; display:grid; grid-template-columns:repeat(3,1fr); gap:10px 30px; font-size:15.5px}
@@ -375,7 +383,7 @@
     .logo-row{grid-template-columns:repeat(3,1fr)}
   }
   @media (max-width:900px){
-    .steps,.uses,.rates,.gear,.quotes{grid-template-columns:1fr}
+    .steps,.uses,.drivers,.gear,.quotes{grid-template-columns:1fr}
     .specs,.feature,.areas{grid-template-columns:1fr}
     /* Column re-ordering only makes sense once there are columns. */
     .specs > figure,.areas > :first-child{order:0}
@@ -450,7 +458,7 @@
     </a>
     <nav class="head-nav" aria-label="Page sections">
       <a href="#specs">Specs</a>
-      <a href="#rates">Hire rates</a>
+      <a href="#rates">Pricing</a>
       <a href="#areas">Areas</a>
       <a href="#faq">FAQ</a>
     </nav>
@@ -470,12 +478,12 @@
   <div class="wrap">
     <div>
       <div class="eyebrow">Temporary fencing hire · Melbourne &amp; Victoria</div>
-      <h1>Temp fencing on site <em>by&nbsp;tomorrow.</em></h1>
-      <p class="hero__sub">AS4687-compliant panels, feet, clamps and bracing — delivered, installed and collected by the crew that owns the gear. Tell us the site and we'll have a price back to you within the hour.</p>
+      <h1>Temp fencing, <em>quoted the day you&nbsp;call.</em></h1>
+      <p class="hero__sub">AS4687-compliant panels, feet, clamps and bracing — stood up by the crew that owns the gear. Tell us about the site and you'll have a real price the same day, from the person who'll run the job.</p>
       <ul class="ticks">
-        <li>2.5m × 1.8m anti-climb panels — hired by the metre, not the guesswork</li>
-        <li>Next-day delivery across metro Melbourne, same-day where we can</li>
-        <li>Install and pack-down included — you don't lift a panel</li>
+        <li>20 panels or 400 metres, fully braced and scrimmed — same crew either way</li>
+        <li>Ring the number and you'll get the owner, not a call centre</li>
+        <li>We deliver it, stand it up and take it away — you don't lift a panel</li>
         <li>One phone number, answered 24/7, including public holidays</li>
       </ul>
       <div class="hero__actions">
@@ -491,8 +499,8 @@
     <!-- Quote form -->
     <div class="quote" id="quote">
       <div class="quote__head">
-        <h2>Free quote — within the hour</h2>
-        <p>Five details is all we need — and you'll get a price and an availability date back, not a runaround.</p>
+        <h2>Free quote — same day</h2>
+        <p>The more you can tell us, the tighter the price. Nothing here takes more than a minute, and it comes back to you the same day.</p>
       </div>
       <form id="quote-form" novalidate>
         <div class="field">
@@ -527,8 +535,31 @@
           </div>
         </div>
         <div class="field">
-          <label for="q-detail">Anything else? <span style="text-transform:none;letter-spacing:0;font-weight:400">(optional)</span></label>
-          <textarea id="q-detail" name="detail" placeholder="Gates, bracing, shade cloth, access restrictions, hire length…"></textarea>
+          <label for="q-duration">How long do you need it?</label>
+          <select id="q-duration" name="duration">
+            <option value="">Select…</option>
+            <option>A few days / one event</option>
+            <option>1–4 weeks</option>
+            <option>1–3 months</option>
+            <option>3 months or longer</option>
+            <option>Not sure yet</option>
+          </select>
+        </div>
+        <div class="field" role="group" aria-labelledby="addons-label">
+          <span class="field-label" id="addons-label">Anything else going out with it? <span style="text-transform:none;letter-spacing:0;font-weight:400">(optional)</span></span>
+          <div class="chips">
+            <label><input type="checkbox" name="addons" value="Bracing">Bracing</label>
+            <label><input type="checkbox" name="addons" value="Shade cloth / scrim">Shade cloth</label>
+            <label><input type="checkbox" name="addons" value="Gates">Gates</label>
+            <label><input type="checkbox" name="addons" value="Crowd control barriers">Crowd control</label>
+            <label><input type="checkbox" name="addons" value="Water-filled barriers">Water barriers</label>
+            <label><input type="checkbox" name="addons" value="Portable toilets">Toilets</label>
+            <label><input type="checkbox" name="addons" value="Ground protection mats">Ground mats</label>
+          </div>
+        </div>
+        <div class="field">
+          <label for="q-detail">Tell us about the site <span style="text-transform:none;letter-spacing:0;font-weight:400">(optional)</span></label>
+          <textarea id="q-detail" name="detail" placeholder="Access, ground, what you're fencing, anything awkward…"></textarea>
         </div>
         <button class="btn btn--dark btn--full" type="submit">Send my quote request</button>
         <p class="quote__fine">Concept form — nothing is submitted or stored. Prefer to talk it through?</p>
@@ -538,7 +569,7 @@
       <div class="quote__done" role="status">
         <div class="mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.3 5.7 9 17l-5.3-5.3 1.4-1.4L9 14.2l9.9-9.9z"/></svg></div>
         <h3>Request received</h3>
-        <p>In the live build this fires a Google Ads conversion, emails the office and texts the on-call number. You'd have a price back within the hour.</p>
+        <p>In the live build this fires a Google Ads conversion, emails the office and texts the on-call number. You'd have a real price back the same day.</p>
       </div>
     </div>
   </div>
@@ -560,8 +591,8 @@
       <div><h3>Victoria-wide</h3><p>Metro Melbourne daily, regional Victoria on request. We own the trucks.</p></div>
     </div>
     <div class="trust__item">
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 17.3 5.8 21l1.6-7L2 9.2l7.2-.6L12 2l2.8 6.6 7.2.6-5.4 4.8 1.6 7z"/></svg>
-      <div><h3>5-star service</h3><p>Well-maintained gear that keeps your site looking clean and professional.</p></div>
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 12a5 5 0 1 0 0-10 5 5 0 0 0 0 10zm0 2c-4.4 0-8 2.2-8 5v3h16v-3c0-2.8-3.6-5-8-5z"/></svg>
+      <div><h3>You get the owner</h3><p>Ring the number and you'll get the person who owns the gear, not a call centre.</p></div>
     </div>
   </div>
 </section>
@@ -609,8 +640,8 @@
     <div class="rail-head">
       <div class="rail-head__label">01 / Process</div>
       <div>
-        <h2>Call before lunch. Fenced by tomorrow.</h2>
-        <p class="lede">No account application, no minimum contract, no waiting three days for a rep to call you back.</p>
+        <h2>One call. One price. One crew.</h2>
+        <p class="lede">No call centre, no rep who has never stood a panel up, no waiting three days for a number.</p>
       </div>
     </div>
     <div class="steps">
@@ -621,8 +652,8 @@
       </div>
       <div class="step">
         <div class="step__n">Step 02</div>
-        <h3>Price back within the hour</h3>
-        <p>A fixed hire rate with delivery, install and collection in it. Nothing gets added at invoice time.</p>
+        <h3>A real price, same day</h3>
+        <p>Priced on your actual site — the run, the access, the bracing, the scrim and how long you need it. Fixed in writing before anything leaves the yard.</p>
       </div>
       <div class="step">
         <div class="step__n">Step 03</div>
@@ -704,7 +735,7 @@
       <div class="use">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2 3 7v10l9 5 9-5V7l-9-5zm0 4.6 5 2.8v5.2l-5 2.8-5-2.8V9.4l5-2.8z"/></svg>
         <h3>Events &amp; festivals</h3>
-        <p>Event fencing, crowd control barriers and back-of-house separation, delivered on a bump-in schedule that actually holds.</p>
+        <p>Event fencing, crowd control barriers and back-of-house separation. We've stood up 400 metres fully braced and scrimmed for a schoolies week — nine crew and 38 tonnes of support stays.</p>
       </div>
       <div class="use">
         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 21V10l8-6 8 6v11h-6v-5h-4v5H4zM2 9l10-7.5L22 9v2L12 3.5 2 11V9z"/></svg>
@@ -734,58 +765,56 @@
 <section class="sec" id="rates">
   <div class="wrap">
     <div class="sec-head sec-head--center">
-      <div class="eyebrow eyebrow--dark">Hire rates</div>
-      <h2>A number on the page, not "call for pricing".</h2>
-      <p class="lede">Three typical jobs, so you know roughly where you'll land before you pick up the phone. Every quote is fixed in writing before we load a truck.</p>
+      <div class="eyebrow eyebrow--dark">Pricing</div>
+      <h2>Every job is priced on its own. Here's what moves the number.</h2>
+      <p class="lede">A ten-panel job on a tight block can be harder work than a hundred-panel job on an open site, so a price list here would only mislead you. These are the six things we look at — tell us about them and you'll have a real number the same day.</p>
     </div>
-    <div class="rates">
-      <div class="rate">
-        <h3>Small site</h3>
-        <div class="rate__price">$285<small>Up to 50m · 20 panels · 4-week hire, delivered &amp; installed</small></div>
-        <ul>
-          <li>Single residential build or renovation</li>
-          <li>20 panels, feet and clamps</li>
-          <li>Delivery, install and collection included</li>
-          <li>Weekly renewal after week four</li>
-        </ul>
-        <a class="btn btn--dark btn--full" href="#quote">Quote this size</a>
+    <div class="drivers">
+      <div class="driver">
+        <div class="driver__n">01</div>
+        <h3>The run</h3>
+        <p>How many metres, and what that works out to in panels. Each panel covers 2.5m, so a 100m perimeter is 40 panels.</p>
       </div>
-      <div class="rate rate--flag">
-        <h3>Standard site</h3>
-        <div class="rate__price">$640<small>50–100m · 40 panels · 4-week hire, delivered &amp; installed</small></div>
-        <ul>
-          <li>Multi-dwelling or commercial build</li>
-          <li>40 panels, feet, clamps and bracing</li>
-          <li>Delivery, install and collection included</li>
-          <li>One pedestrian gate included</li>
-        </ul>
-        <a class="btn btn--primary btn--full" href="#quote">Quote this size</a>
+      <div class="driver">
+        <div class="driver__n">02</div>
+        <h3>The site</h3>
+        <p>Access, ground and how tight the work is. A truck that can back onto an open site is a different job to carting panels down a laneway.</p>
       </div>
-      <div class="rate">
-        <h3>Event or large site</h3>
-        <div class="rate__price">POA<small>100m+ · priced on the run, the site and the bump-in window</small></div>
-        <ul>
-          <li>Events, council works, civil projects</li>
-          <li>Bracing, gates, shade cloth as required</li>
-          <li>Scheduled bump-in and bump-out</li>
-          <li>Barriers, toilets and mats on the same order</li>
-        </ul>
-        <a class="btn btn--dark btn--full" href="#quote">Talk to us</a>
+      <div class="driver">
+        <div class="driver__n">03</div>
+        <h3>Bracing and scrim</h3>
+        <p>Shade cloth and printed mesh turn a fence into a sail, so they bring bracing with them. On a big exposed run that is tonnes of support stays.</p>
+      </div>
+      <div class="driver">
+        <div class="driver__n">04</div>
+        <h3>The crew it takes</h3>
+        <p>Some jobs are one person for forty minutes. A fully braced and scrimmed event run can be a nine-person day.</p>
+      </div>
+      <div class="driver">
+        <div class="driver__n">05</div>
+        <h3>How long you need it</h3>
+        <p>A weekend for an event prices differently to months on a build. Long hires renew rather than needing a fresh quote each time.</p>
+      </div>
+      <div class="driver">
+        <div class="driver__n">06</div>
+        <h3>What else is going out</h3>
+        <p>Barriers, toilets, mats or gates on the same order travel on the same truck, which is cheaper than booking them separately.</p>
       </div>
     </div>
 
     <div class="included">
-      <h3>What's in the rate</h3>
+      <h3>What your quote spells out</h3>
       <ul>
-        <li>Delivery to site</li>
-        <li>Installation by our crew</li>
         <li>Panels, feet and clamps</li>
+        <li>Delivery and install</li>
+        <li>Bracing and scrim if needed</li>
+        <li>Hire period and renewal</li>
         <li>Collection at end of hire</li>
-        <li>Repositioning during the hire</li>
-        <li>Damage and repairs on fair wear</li>
+        <li>Anything chargeable, up front</li>
       </ul>
     </div>
-    <p class="fineprint"><strong>Concept mockup — pricing shown is illustrative placeholder only.</strong> Figures are for design demonstration and have not been set or approved by Professional Hire. In the live build these would be replaced with real rates, or with a "from $X per panel per week" line if fixed pricing isn't wanted on the page.</p>
+    <div class="rates-cta"><a class="btn btn--dark" href="#quote">Get my job priced</a></div>
+    <p class="fineprint">Jobs range from a single small run to fully braced and scrimmed event fencing, and everything is quoted individually — there is no fixed rate card, because there is no fixed job.</p>
   </div>
 </section>
 
@@ -884,7 +913,15 @@
     <div class="faq">
       <details open>
         <summary>How quickly can you get fencing on my site?</summary>
-        <p>Next business day across metro Melbourne as standard, and same-day where the run is available and the truck is already out. Call rather than fill in the form if you need it today — the phone is answered 24/7, including public holidays.</p>
+        <p>It depends on the run, the crew and what's already out on hire. Tell us your start date and we'll give you a straight answer on whether we can hit it. If it's genuinely urgent, call rather than fill in the form — sometimes we can squeeze a job in and sometimes we honestly can't, and you'll know either way in the one conversation. The phone is answered 24/7, including public holidays.</p>
+      </details>
+      <details>
+        <summary>Why isn't there a price list on this page?</summary>
+        <p>Because it would mislead you. A ten-panel job on a tight inner-suburban block can take longer than a hundred-panel job on an open site, and the number moves with access, bracing, scrim, how many crew it takes to stand up and how long you need it. Every job is quoted on its own, and the price is fixed in writing before anything leaves the yard.</p>
+      </details>
+      <details>
+        <summary>Who actually answers the phone?</summary>
+        <p>The owner, most of the time. Ring around and you'll often get someone reading availability off a screen who's never stood a panel up. Here you'll get the person who owns the gear, knows what it will and won't do on your site, and will walk the job through with you before quoting it.</p>
       </details>
       <details>
         <summary>How much fencing do I actually need?</summary>
@@ -896,7 +933,7 @@
       </details>
       <details>
         <summary>What's the minimum hire period?</summary>
-        <p>Hire is quoted in four-week blocks with weekly renewals after that, and short-term event hire is priced per bump-in. There's no minimum contract term and no account application to get started.</p>
+        <p>Tell us your start date and roughly how long you need it, and we'll price the period you actually want — a weekend for an event, months for a build. Long hires renew rather than needing a fresh quote every time, which is why most of our site work turns into repeat business.</p>
       </details>
       <details>
         <summary>Will it stand up in the wind?</summary>
@@ -904,7 +941,7 @@
       </details>
       <details>
         <summary>What happens if a panel is damaged on site?</summary>
-        <p>Fair wear and tear is on us and gets repaired at no cost. Genuine damage — a panel driven into by an excavator, a stolen run — is charged at replacement value, and we'll tell you what that is before the hire starts rather than surprising you on the final invoice.</p>
+        <p>Fair wear and tear is expected and isn't charged back to you. Genuine damage — a panel driven into by an excavator, a stolen run — is charged at replacement value, and we'll tell you what that is when we quote rather than surprising you on the final invoice.</p>
       </details>
       <details>
         <summary>Can you deliver outside business hours?</summary>
@@ -925,8 +962,8 @@
   </div>
   <div class="wrap">
       <div class="eyebrow">Ready when you are</div>
-      <h2>Get a price on your fence <em>within&nbsp;the&nbsp;hour.</em></h2>
-      <p>Tell us the suburb and the perimeter — or just call and talk it through. Someone who knows the gear will answer, at any hour, on any day.</p>
+      <h2>Get a real price on your fence <em>today.</em></h2>
+      <p>Tell us about the site — or just call and talk it through with the owner. Any hour, any day, including public holidays.</p>
       <div class="close-cta__actions">
         <a class="btn btn--primary" href="tel:+61448403436">
           <svg viewBox="0 0 24 24" aria-hidden="true" fill="currentColor"><path d="M6.6 10.8a15.1 15.1 0 0 0 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.7.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1A17 17 0 0 1 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.7.1.4 0 .7-.2 1l-2.3 2.1z"/></svg>
@@ -955,7 +992,7 @@
       <span>Temporary fencing · Crowd control · Toilets · Barriers · Mats · VMS · Lighting</span>
     </div>
     <div class="disclosure">
-      <b>Concept mockup — not a live page.</b> Built by Zib Digital as a Google Ads landing page concept for Professional Hire's temporary fencing arm. The form does not submit, pricing figures are illustrative placeholders, and photography is AI-generated for layout purposes and would be replaced with Professional Hire's own site photos before launch. Testimonials and equipment specifications are taken from professionalhire.com.au.
+      <b>Concept mockup — not a live page.</b> Built by Zib Digital as a Google Ads landing page concept for Professional Hire's temporary fencing arm. The form does not submit. Photography is AI-generated for layout purposes and would be replaced with Professional Hire's own site photos before launch — the clamp shown in the specifications section is not the coupler Professional Hire uses. Client logos in the trust strip are placeholder marks. Commercial terms — lead times, hire periods, inclusions and damage charges — are indicative and need Professional Hire's sign-off. Testimonials and equipment specifications are taken from professionalhire.com.au.
     </div>
   </div>
 </footer>
@@ -1042,7 +1079,12 @@
         {
           "@type": "Question",
           "name": "How quickly can you get fencing on my site?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Next business day across metro Melbourne as standard, and same-day where the run is available. The phone is answered 24/7, including public holidays." }
+          "acceptedAnswer": { "@type": "Answer", "text": "It depends on the run, the crew and what is already out on hire. Tell us your start date and we will give you a straight answer on whether we can hit it. If it is genuinely urgent, call rather than fill in the form. The phone is answered 24/7, including public holidays." }
+        },
+        {
+          "@type": "Question",
+          "name": "Why isn't there a price list for temporary fencing?",
+          "acceptedAnswer": { "@type": "Answer", "text": "A ten-panel job on a tight block can take longer than a hundred-panel job on an open site. Price moves with access, bracing, scrim, crew size and hire length, so every job is quoted individually and fixed in writing before delivery." }
         },
         {
           "@type": "Question",
@@ -1057,7 +1099,7 @@
         {
           "@type": "Question",
           "name": "What is the minimum hire period?",
-          "acceptedAnswer": { "@type": "Answer", "text": "Hire is quoted in four-week blocks with weekly renewals after that. Short-term event hire is priced per bump-in. There is no minimum contract term." }
+          "acceptedAnswer": { "@type": "Answer", "text": "We price the hire period you actually need, from a weekend for an event to months on a build. Long hires renew rather than needing a fresh quote each time." }
         },
         {
           "@type": "Question",
