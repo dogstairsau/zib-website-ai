@@ -184,7 +184,8 @@ available as dataLayer variables on all four.
    the GTM preview connected.
 2. Enter a URL. You should land on the **qualify** step, not the email gate —
    there is no path to the pack that skips it.
-3. Answer both chips with a real budget (`$3k – $10k`), then submit the gate.
+3. Answer all three chips with a real budget (`$3k – $10k`) and a real
+   customer value (`$10k – $50k`), then submit the gate.
 4. The moment the gate submits and the stages start, you should see:
    - Pixel Helper: a **Lead** event with `content_name: Meta Ads Lab`
    - Pixel Helper: a **QualifiedLead** event with `lead_tier: qualified`
@@ -196,9 +197,13 @@ available as dataLayer variables on all four.
 6. Re-run with `Nothing yet` as the budget. You should get `NurtureLead`
    instead of `QualifiedLead`, and **no calendar** — an email-follow-up note
    in its place.
-7. Repeat on `/audit`. On the nurture path it should also skip the
-   "when suits you for that call?" question entirely.
-8. Then check the homepage audit widget — see the note below.
+7. Repeat on `/audit`, which asks five questions rather than three. On the
+   nurture path it should also skip the "when suits you for that call?"
+   question entirely.
+8. Worth testing once: a real budget with `Under $500` as the customer value.
+   That should land in **review**, not qualified — the retainer maths can't
+   work, so it goes to a human to look at rather than straight to a calendar.
+9. Then check the homepage audit widget — see the note below.
 
 If the pixel event doesn't appear but `zib_lead` does, the pixel isn't loading
 — go back to the prerequisite step.

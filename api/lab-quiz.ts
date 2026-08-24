@@ -23,9 +23,11 @@ type Body = {
   url?: string;
   /** Display labels — what sales reads in HubSpot. */
   budget?: string;
+  dealValue?: string;
   goal?: string;
   /** Stable keys — what the scoring reads. */
   spendKey?: string;
+  dealValueKey?: string;
   goalKey?: string;
   /** The browser sends its own tier so it can branch instantly. Declared so
    *  the payload shape is documented, but deliberately never read — the tier
@@ -69,6 +71,7 @@ export default async function handler(req: Request): Promise<Response> {
 
   const answers: { q: string; a: string }[] = [];
   if (body.budget) answers.push({ q: "Monthly ad spend", a: clip(body.budget) });
+  if (body.dealValue) answers.push({ q: "What a new customer is worth", a: clip(body.dealValue) });
   if (body.goal) answers.push({ q: "What matters most right now", a: clip(body.goal) });
   if (!answers.length) return json({ error: "No answers" }, 400);
 
@@ -76,7 +79,11 @@ export default async function handler(req: Request): Promise<Response> {
   // computes it too (so it can branch instantly), but this is a public
   // endpoint and the tier drives who sales calls — it shouldn't be settable
   // by whoever is posting.
-  const scored = qualify({ spend: clip(body.spendKey, 40), goal: clip(body.goalKey, 40) });
+  const scored = qualify({
+    spend: clip(body.spendKey, 40),
+    dealValue: clip(body.dealValueKey, 40),
+    goal: clip(body.goalKey, 40),
+  });
 
   const quiz = {
     email,
@@ -98,6 +105,7 @@ export default async function handler(req: Request): Promise<Response> {
       lead_source: quiz.lab,
       monthly_ad_spend: clip(body.budget),
       primary_goal: clip(body.goal),
+      customer_value: clip(body.dealValue),
       // Dropped automatically on retry if the form doesn't carry them yet.
       lead_tier: scored.tier,
       lead_score: String(scored.score),

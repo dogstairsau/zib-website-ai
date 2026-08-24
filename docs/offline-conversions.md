@@ -52,6 +52,7 @@ meantime, the data just isn't stored.
 |---|---|---|
 | Lead tier | `lead_tier` | Single-line text |
 | Lead score | `lead_score` | Number |
+| Customer value | `customer_value` | Single-line text |
 | GCLID | `gclid` | Single-line text |
 | WBRAID | `wbraid` | Single-line text |
 | GBRAID | `gbraid` | Single-line text |

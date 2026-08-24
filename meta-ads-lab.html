@@ -723,9 +723,9 @@
     <div class="container">
       <div class="ready-flash">URL accepted</div>
       <div class="mono eyebrow">Step 2 of 3</div>
-      <h2>Two quick things, <em>so the pack fits.</em></h2>
+      <h2>Three quick things, <em>so the pack fits.</em></h2>
       <p class="qual-sub">
-        The concepts, the spend plan and the cadence all change depending on these. Takes about four seconds.
+        The concepts, the spend plan and the cadence all change depending on these. Takes about six seconds.
       </p>
       <div id="qualBody" class="qual-body"></div>
     </div>
@@ -1055,6 +1055,14 @@
       { v: '3k-10k', label: '$3k – $10k' },
       { v: '10k-plus', label: '$10k+' },
     ] },
+    { key: 'dealValue', q: "What's a new customer typically worth to you?", sub: 'Decides whether the spend plan can actually pay for itself.', options: [
+      { v: 'lt500', label: 'Under $500' },
+      { v: '500-2k', label: '$500 – $2k' },
+      { v: '2k-10k', label: '$2k – $10k' },
+      { v: '10k-50k', label: '$10k – $50k' },
+      { v: 'gt50k', label: '$50k+' },
+      { v: 'unsure', label: 'Not sure' },
+    ] },
     { key: 'goal', q: 'What matters most right now?', sub: 'Decides which angle the 12 concepts are written from.', options: [
       { v: 'more-leads', label: 'More leads' },
       { v: 'cheaper-leads', label: 'Cheaper leads' },
@@ -1105,7 +1113,9 @@
         url: state.url,
         budget: quizLabels.spend || '',
         goal: quizLabels.goal || '',
+        dealValue: quizLabels.dealValue || '',
         spendKey: quizAnswers.spend || '',
+        dealValueKey: quizAnswers.dealValue || '',
         goalKey: quizAnswers.goal || '',
         tier: state.qualification?.tier || '',
         score: state.qualification?.score ?? null,
@@ -1519,7 +1529,9 @@
       // a note that lands seconds later. The server scores, not the browser.
       spend: quizLabels.spend || '',
       goal: quizLabels.goal || '',
+      dealValue: quizLabels.dealValue || '',
       spendKey: quizAnswers.spend || '',
+      dealValueKey: quizAnswers.dealValue || '',
       goalKey: quizAnswers.goal || '',
       // Ad click ids, so HubSpot outcomes can be uploaded back to Google and
       // Meta later. See docs/offline-conversions.md.

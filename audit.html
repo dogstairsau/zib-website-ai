@@ -3021,6 +3021,22 @@ footer {
       { v: '3k-10k', label: '$3k – $10k' },
       { v: '10k-plus', label: '$10k+' },
     ] },
+    // The strongest single predictor of fit, and the one the old quiz never
+    // asked. Spend says what they can afford today; this says whether the
+    // maths can ever work.
+    { key: 'dealValue', q: "What's a new customer typically worth to you?", options: [
+      { v: 'lt500', label: 'Under $500' },
+      { v: '500-2k', label: '$500 – $2k' },
+      { v: '2k-10k', label: '$2k – $10k' },
+      { v: '10k-50k', label: '$10k – $50k' },
+      { v: 'gt50k', label: '$50k+' },
+      { v: 'unsure', label: 'Not sure' },
+    ] },
+    { key: 'running', q: 'Are you running ads at the moment?', options: [
+      { v: 'yes', label: 'Yes, right now' },
+      { v: 'no', label: 'Not currently' },
+      { v: 'unsure', label: 'Not sure' },
+    ] },
     { key: 'timeline', q: 'How soon are you looking to get help?', options: [
       { v: 'asap', label: 'ASAP' },
       { v: '1-3-months', label: 'Next 1–3 months' },
@@ -3044,8 +3060,8 @@ footer {
   // Injected from JS (not the shared partial) so this stays /audit-only.
   stagesEl.insertAdjacentHTML('beforebegin', `
     <div class="audit-quiz" id="auditQuiz">
-      <div class="aq-label"><span class="dot" aria-hidden="true"></span>Before we run it · 3 quick taps</div>
-      <p class="aq-sub">The audit reads differently depending on where you're starting from — and if someone from our Growth team calls, they arrive across your situation rather than reading from a script.</p>
+      <div class="aq-label"><span class="dot" aria-hidden="true"></span>Before we run it · 5 quick taps</div>
+      <p class="aq-sub">The audit reads differently depending on where you're starting from — what a customer is worth to you changes which fixes are actually worth doing. If someone from our Growth team calls, they arrive across your situation rather than reading from a script.</p>
       <div id="auditQuizBody"></div>
     </div>`);
   const quizEl = document.getElementById('auditQuiz');
@@ -3061,11 +3077,15 @@ footer {
       // Labels for the humans reading HubSpot…
       marketing: quizLabels.marketing || '',
       budget: quizLabels.spend || '',
+      dealValue: quizLabels.dealValue || '',
+      running: quizLabels.running || '',
       timeline: quizLabels.timeline || '',
       callTime: quizLabels.callTime || '',
       // …keys and tier for the routing.
       marketingKey: quizAnswers.marketing || '',
       spendKey: quizAnswers.spend || '',
+      dealValueKey: quizAnswers.dealValue || '',
+      runningKey: quizAnswers.running || '',
       timelineKey: quizAnswers.timeline || '',
       tier: auditQualification?.tier || '',
       score: auditQualification?.score ?? null,
@@ -3439,8 +3459,11 @@ footer {
             // HubSpot has the tier the moment the contact is created. The
             // server scores, not the browser.
             spend: quizLabels.spend || '',
+            dealValue: quizLabels.dealValue || '',
             timeline: quizLabels.timeline || '',
             spendKey: quizAnswers.spend || '',
+            dealValueKey: quizAnswers.dealValue || '',
+            runningKey: quizAnswers.running || '',
             timelineKey: quizAnswers.timeline || '',
             marketingKey: quizAnswers.marketing || '',
             // Ad click ids, so HubSpot outcomes can be uploaded back to Google

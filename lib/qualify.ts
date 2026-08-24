@@ -17,22 +17,27 @@
  *
  * ⚠️ MIRRORED IN THE BROWSER. `assets/conversion.js` carries a copy of these
  * rules so the page can branch without a round-trip. `lib/qualify.test.ts`
- * asserts the two stay in step — if you change a threshold here, change it
+ * asserts the two stay in step — if you change a weight here, change it
  * there, and the test will tell you if you forgot.
  *
- * The thresholds deliberately match the /start pre-discovery qualifier
- * (api/start.ts): >=62 is green, <38 is red. Same scale, same meaning, so a
- * tool lead and a pre-discovery lead can be compared directly.
+ * The weights and thresholds deliberately track the /start pre-discovery
+ * qualifier (api/start.ts): deal value and spend dominate, >=62 is green,
+ * <38 is red. Same scale, same meaning, so a tool lead and a pre-discovery
+ * lead can be compared directly.
  */
 
 export type QualifyTier = "qualified" | "review" | "nurture";
 
 /** Stable keys sent by the chip buttons. Labels live on the page. */
 export type QualifyAnswers = {
-  /** Monthly ad/marketing spend — the strongest single signal. */
+  /** What a new customer is worth. The single best predictor of fit. */
+  dealValue?: string;
+  /** Monthly ad/marketing spend. */
   spend?: string;
-  /** How soon they want help. Audit only; labs don't ask. */
+  /** How soon they want help. Audit only; the labs don't ask. */
   timeline?: string;
+  /** Whether they're already running ads. Audit only. */
+  running?: string;
   /** Who runs marketing today. Audit only. */
   marketing?: string;
   /** What matters most. Labs only — captured for the strategist, not scored. */
@@ -50,102 +55,141 @@ export type QualifyResult = {
 };
 
 /**
- * Spend carries most of the weight. Someone already spending $3k+/month has
- * a budget, an agency or a team, and a reason to switch — the three things
- * that separate a real opportunity from someone collecting a free report.
+ * Each dimension scores 0-100 on its own, then they're combined by the
+ * weights below. Splitting it this way means a tool that asks three
+ * questions and a tool that asks five land on the same scale — see
+ * `qualify()` for how missing dimensions are handled.
  */
-const SPEND_SCORE: Record<string, number> = {
-  "10k-plus": 85,
-  "3k-10k": 70,
-  "1k-3k": 45,
-  "under-1k": 20,
-  none: 8,
+const DEAL_SCORE: Record<string, number> = {
+  lt500: 5, "500-2k": 35, "2k-10k": 70, "10k-50k": 90, gt50k: 100, unsure: 40,
 };
 
-/** Timeline moves a borderline lead either way. "Just researching" sinks one. */
+const SPEND_SCORE: Record<string, number> = {
+  none: 8, "under-1k": 20, "1k-3k": 50, "3k-10k": 80, "10k-plus": 100,
+};
+
 const TIMELINE_SCORE: Record<string, number> = {
-  asap: 15,
-  "1-3-months": 8,
-  "later-this-year": -2,
-  researching: -20,
+  asap: 100, "1-3-months": 70, "later-this-year": 30, researching: 0,
 };
 
 /**
- * Who runs marketing is a weak signal on its own, but "an agency" means the
- * budget already exists and is already being spent somewhere else.
+ * Already running ads means the budget exists, is already being spent
+ * somewhere, and can move. "No" isn't disqualifying — plenty of good leads
+ * haven't started — so it sits mid-range rather than at zero.
  */
+const RUNNING_SCORE: Record<string, number> = { yes: 100, no: 40, unsure: 50 };
+
 const MARKETING_SCORE: Record<string, number> = {
-  agency: 10,
-  "in-house": 5,
-  myself: 0,
-  "no-one": 2,
+  agency: 100, "in-house": 70, myself: 30, "no-one": 40,
+};
+
+/**
+ * Weighted like /start's opportunityScore: deal value and spend together
+ * carry roughly two thirds. /start also folds in a search-volume estimate;
+ * the tools have no equivalent, so that weight is spread across the two
+ * that matter most.
+ */
+const WEIGHTS: Record<string, number> = {
+  dealValue: 0.32,
+  spend: 0.32,
+  timeline: 0.18,
+  running: 0.09,
+  marketing: 0.09,
+};
+
+const SCORES: Record<string, Record<string, number>> = {
+  dealValue: DEAL_SCORE,
+  spend: SPEND_SCORE,
+  timeline: TIMELINE_SCORE,
+  running: RUNNING_SCORE,
+  marketing: MARKETING_SCORE,
+};
+
+export const DEAL_LABEL: Record<string, string> = {
+  lt500: "Under $500", "500-2k": "$500 – $2k", "2k-10k": "$2k – $10k",
+  "10k-50k": "$10k – $50k", gt50k: "$50k+", unsure: "Not sure",
 };
 
 export const SPEND_LABEL: Record<string, string> = {
-  "10k-plus": "$10k+",
-  "3k-10k": "$3k – $10k",
-  "1k-3k": "$1k – $3k",
-  "under-1k": "Under $1k",
-  none: "Nothing yet",
+  "10k-plus": "$10k+", "3k-10k": "$3k – $10k", "1k-3k": "$1k – $3k",
+  "under-1k": "Under $1k", none: "Nothing yet",
 };
 
 export const TIMELINE_LABEL: Record<string, string> = {
-  asap: "ASAP",
-  "1-3-months": "Next 1–3 months",
-  "later-this-year": "Later this year",
-  researching: "Just researching",
+  asap: "ASAP", "1-3-months": "Next 1–3 months",
+  "later-this-year": "Later this year", researching: "Just researching",
+};
+
+export const RUNNING_LABEL: Record<string, string> = {
+  yes: "Yes, right now", no: "Not currently", unsure: "Not sure",
 };
 
 export const MARKETING_LABEL: Record<string, string> = {
-  agency: "An agency",
-  "in-house": "In-house team",
-  myself: "I do it myself",
-  "no-one": "No one right now",
+  agency: "An agency", "in-house": "In-house team",
+  myself: "I do it myself", "no-one": "No one right now",
 };
 
 export const GOAL_LABEL: Record<string, string> = {
-  "more-leads": "More leads",
-  "cheaper-leads": "Cheaper leads",
-  "new-market": "New market or launch",
-  competitor: "Beating a competitor",
+  "more-leads": "More leads", "cheaper-leads": "Cheaper leads",
+  "new-market": "New market or launch", competitor: "Beating a competitor",
 };
-
-const clamp = (n: number) => Math.max(0, Math.min(100, Math.round(n)));
 
 /**
  * Score a set of chip answers.
  *
- * An unanswered spend question scores 0 and lands in nurture. That's
- * deliberate: the questions now gate the payoff, so a lead with no spend
- * answer got here some other way and hasn't told us anything.
+ * Only the dimensions actually answered contribute, and the weights are
+ * renormalised across them. That's what lets the audit ask five questions
+ * and the labs ask three without the labs being punished for the two they
+ * skip — a lab lead with strong answers scores as well as an audit lead
+ * with the same strength.
+ *
+ * An empty set scores 0 and lands in nurture. That's deliberate: the
+ * questions now gate the payoff, so a lead with no answers got here some
+ * other way and hasn't told us anything.
  */
 export function qualify(answers: QualifyAnswers): QualifyResult {
-  const spend = answers.spend || "";
-  const timeline = answers.timeline || "";
-  const marketing = answers.marketing || "";
+  let weighted = 0;
+  let totalWeight = 0;
+  for (const [key, weight] of Object.entries(WEIGHTS)) {
+    const answer = (answers as Record<string, string | undefined>)[key];
+    if (!answer) continue;
+    const sub = SCORES[key][answer];
+    if (sub === undefined) continue; // unrecognised value — ignore, don't guess
+    weighted += sub * weight;
+    totalWeight += weight;
+  }
+  const score = totalWeight
+    ? Math.max(0, Math.min(100, Math.round(weighted / totalWeight)))
+    : 0;
 
-  const spendScore = SPEND_SCORE[spend] ?? 0;
-  const score = clamp(spendScore + (TIMELINE_SCORE[timeline] ?? 0) + (MARKETING_SCORE[marketing] ?? 0));
-
-  // "Just researching" is a stated intent, not a guess — honour it even when
-  // the spend number looks good. A researcher with a big budget is a real
-  // lead later, and a wasted call today.
-  const researching = timeline === "researching";
-  // No budget at all can't be scored past, whatever else they answered.
-  const noBudget = spend === "none" || spend === "under-1k";
+  // Three overrides that beat the arithmetic, because they're stated facts
+  // rather than estimates.
+  //
+  // No budget can't be scored past, whatever else they answered.
+  const noBudget = answers.spend === "none" || answers.spend === "under-1k";
+  // "Just researching" is an intent they told us. A researcher with a big
+  // budget is a real lead later, and a wasted call today.
+  const researching = answers.timeline === "researching";
+  // Sub-$500 customers can't carry agency retainer maths. This caps the lead
+  // at review rather than sinking it — same as /start, where lt500 blocks
+  // green but doesn't on its own make a lead red.
+  const tinyDeal = answers.dealValue === "lt500";
 
   let tier: QualifyTier;
   if (noBudget || researching || score < 38) tier = "nurture";
-  else if (score >= 62) tier = "qualified";
+  else if (score >= 62 && !tinyDeal) tier = "qualified";
   else tier = "review";
 
   const reasons: string[] = [];
-  if (spend) reasons.push(`Monthly spend: ${SPEND_LABEL[spend] || spend}`);
-  if (timeline) reasons.push(`Timeline: ${TIMELINE_LABEL[timeline] || timeline}`);
-  if (marketing) reasons.push(`Marketing run by: ${MARKETING_LABEL[marketing] || marketing}`);
+  if (answers.dealValue) reasons.push(`Customer value: ${DEAL_LABEL[answers.dealValue] || answers.dealValue}`);
+  if (answers.spend) reasons.push(`Monthly spend: ${SPEND_LABEL[answers.spend] || answers.spend}`);
+  if (answers.timeline) reasons.push(`Timeline: ${TIMELINE_LABEL[answers.timeline] || answers.timeline}`);
+  if (answers.running) reasons.push(`Running ads: ${RUNNING_LABEL[answers.running] || answers.running}`);
+  if (answers.marketing) reasons.push(`Marketing run by: ${MARKETING_LABEL[answers.marketing] || answers.marketing}`);
   if (answers.goal) reasons.push(`Priority: ${GOAL_LABEL[answers.goal] || answers.goal}`);
   if (noBudget) reasons.push("No meaningful budget yet — nurture, don't call.");
   else if (researching) reasons.push("Self-identified as researching — nurture, don't call.");
+  else if (tinyDeal) reasons.push("Customer value under $500 — retainer maths is unlikely to work.");
 
   return { tier, score, reasons, salesReady: tier !== "nurture" };
 }

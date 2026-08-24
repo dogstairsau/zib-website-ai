@@ -24,11 +24,15 @@ type Body = {
   /** Display labels — what sales reads in HubSpot. */
   marketing?: string;
   budget?: string;
+  dealValue?: string;
+  running?: string;
   timeline?: string;
   callTime?: string;
   /** Stable keys — what the scoring reads. */
   marketingKey?: string;
   spendKey?: string;
+  dealValueKey?: string;
+  runningKey?: string;
   timelineKey?: string;
   /** The browser sends its own tier so it can branch instantly. Declared so
    *  the payload shape is documented, but deliberately never read — the tier
@@ -72,6 +76,8 @@ export default async function handler(req: Request): Promise<Response> {
   const answers: { q: string; a: string }[] = [];
   if (body.marketing) answers.push({ q: "Who looks after marketing today", a: clip(body.marketing) });
   if (body.budget) answers.push({ q: "Monthly marketing budget", a: clip(body.budget) });
+  if (body.dealValue) answers.push({ q: "What a new customer is worth", a: clip(body.dealValue) });
+  if (body.running) answers.push({ q: "Running ads right now", a: clip(body.running) });
   if (body.timeline) answers.push({ q: "How soon they want help", a: clip(body.timeline) });
   if (body.callTime) answers.push({ q: "Best time for the Growth team to call", a: clip(body.callTime) });
   if (!answers.length) return json({ error: "No answers" }, 400);
@@ -82,6 +88,8 @@ export default async function handler(req: Request): Promise<Response> {
   // by whoever is posting.
   const scored = qualify({
     spend: clip(body.spendKey, 40),
+    dealValue: clip(body.dealValueKey, 40),
+    running: clip(body.runningKey, 40),
     timeline: clip(body.timelineKey, 40),
     marketing: clip(body.marketingKey, 40),
   });
@@ -107,6 +115,7 @@ export default async function handler(req: Request): Promise<Response> {
         website: quiz.url,
         lead_source: "Website Audit quiz",
         monthly_ad_spend: clip(body.budget),
+        customer_value: clip(body.dealValue),
         // Dropped automatically on retry if the form doesn't carry them yet.
         lead_tier: scored.tier,
         lead_score: String(scored.score),

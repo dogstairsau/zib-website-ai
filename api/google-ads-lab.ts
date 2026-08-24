@@ -39,6 +39,7 @@ type Body = {
    *  tier too so it can branch instantly, but the server never reads it —
    *  this is a public endpoint and the tier decides who sales calls. */
   spendKey?: string;
+  dealValueKey?: string;
   goalKey?: string;
   /** Ad click ids captured on landing, for offline conversion import. */
   clickIds?: Record<string, string>;
@@ -129,7 +130,11 @@ export default async function handler(req: Request): Promise<Response> {
       const notes = (body.notes || "").trim();
       const sourceTag = (body.sourceTag || "").trim();
       const source = sourceTag ? `Google Ads Lab · ${sourceTag}` : "Google Ads Lab";
-      const scored = qualify({ spend: (body.spendKey || "").trim(), goal: (body.goalKey || "").trim() });
+      const scored = qualify({
+        spend: (body.spendKey || "").trim(),
+        dealValue: (body.dealValueKey || "").trim(),
+        goal: (body.goalKey || "").trim(),
+      });
       const hubspotPromise = captureLead(
         {
           email, firstname, company: "", phone: phone || undefined, website: url, source,

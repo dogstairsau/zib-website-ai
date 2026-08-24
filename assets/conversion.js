@@ -220,30 +220,50 @@
 
      ⚠️ Change a number here and you must change it in lib/qualify.ts too.
      ─────────────────────────────────────────────────────────────────────── */
-  const SPEND_SCORE = { '10k-plus': 85, '3k-10k': 70, '1k-3k': 45, 'under-1k': 20, 'none': 8 };
-  const TIMELINE_SCORE = { 'asap': 15, '1-3-months': 8, 'later-this-year': -2, 'researching': -20 };
-  const MARKETING_SCORE = { 'agency': 10, 'in-house': 5, 'myself': 0, 'no-one': 2 };
+  const DEAL_SCORE = { 'lt500': 5, '500-2k': 35, '2k-10k': 70, '10k-50k': 90, 'gt50k': 100, 'unsure': 40 };
+  const SPEND_SCORE = { 'none': 8, 'under-1k': 20, '1k-3k': 50, '3k-10k': 80, '10k-plus': 100 };
+  const TIMELINE_SCORE = { 'asap': 100, '1-3-months': 70, 'later-this-year': 30, 'researching': 0 };
+  const RUNNING_SCORE = { 'yes': 100, 'no': 40, 'unsure': 50 };
+  const MARKETING_SCORE = { 'agency': 100, 'in-house': 70, 'myself': 30, 'no-one': 40 };
+
+  const WEIGHTS = { dealValue: 0.32, spend: 0.32, timeline: 0.18, running: 0.09, marketing: 0.09 };
+  const SCORES = {
+    dealValue: DEAL_SCORE, spend: SPEND_SCORE, timeline: TIMELINE_SCORE,
+    running: RUNNING_SCORE, marketing: MARKETING_SCORE,
+  };
 
   /**
    * Score chip answers into a tier.
    *
-   * @param   {Object}  answers  { spend, timeline, marketing, goal } stable keys
+   * Only answered dimensions count and the weights are renormalised across
+   * them, so the audit's five questions and the labs' three land on the same
+   * scale rather than the labs being punished for what they don't ask.
+   *
+   * @param   {Object}  answers  { dealValue, spend, timeline, running, marketing, goal }
    * @returns {{tier: string, score: number, salesReady: boolean}}
    */
   window.zibQualify = (answers = {}) => {
-    const spend = answers.spend || '';
-    const timeline = answers.timeline || '';
-    const marketing = answers.marketing || '';
-    const raw = (SPEND_SCORE[spend] || 0) + (TIMELINE_SCORE[timeline] || 0) + (MARKETING_SCORE[marketing] || 0);
-    const score = Math.max(0, Math.min(100, Math.round(raw)));
+    let weighted = 0, totalWeight = 0;
+    for (const key of Object.keys(WEIGHTS)) {
+      const answer = answers[key];
+      if (!answer) continue;
+      const sub = SCORES[key][answer];
+      if (sub === undefined) continue; // unrecognised value — ignore, don't guess
+      weighted += sub * WEIGHTS[key];
+      totalWeight += WEIGHTS[key];
+    }
+    const score = totalWeight
+      ? Math.max(0, Math.min(100, Math.round(weighted / totalWeight)))
+      : 0;
 
-    // Mirrors lib/qualify.ts: a stated "just researching" and a missing budget
-    // both override the score outright.
-    const researching = timeline === 'researching';
-    const noBudget = spend === 'none' || spend === 'under-1k';
+    // Mirrors lib/qualify.ts: three stated facts that beat the arithmetic.
+    const noBudget = answers.spend === 'none' || answers.spend === 'under-1k';
+    const researching = answers.timeline === 'researching';
+    const tinyDeal = answers.dealValue === 'lt500';
+
     let tier;
     if (noBudget || researching || score < 38) tier = 'nurture';
-    else if (score >= 62) tier = 'qualified';
+    else if (score >= 62 && !tinyDeal) tier = 'qualified';
     else tier = 'review';
 
     return { tier, score, salesReady: tier !== 'nurture' };

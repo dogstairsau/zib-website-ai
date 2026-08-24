@@ -32,6 +32,8 @@ type Body = {
    *  tier too so it can branch instantly, but the server never reads it —
    *  this is a public endpoint and the tier decides who sales calls. */
   spendKey?: string;
+  dealValueKey?: string;
+  runningKey?: string;
   timelineKey?: string;
   marketingKey?: string;
   /** Ad click ids captured on landing, for offline conversion import. */
@@ -374,6 +376,8 @@ export default async function handler(req: Request): Promise<Response> {
         const source = sourceTag ? `Audit · ${sourceTag}` : fallback;
         const scored = qualify({
           spend: (body.spendKey || "").trim(),
+          dealValue: (body.dealValueKey || "").trim(),
+          running: (body.runningKey || "").trim(),
           timeline: (body.timelineKey || "").trim(),
           marketing: (body.marketingKey || "").trim(),
         });
