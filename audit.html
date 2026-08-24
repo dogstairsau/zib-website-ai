@@ -1458,6 +1458,27 @@ h1.hero-h em {
   max-width: 38ch;
 }
 
+/* One branch is shown at a time — stack rather than the parent's row layout,
+   because the qualified branch carries a full calendar underneath its line. */
+.audit-after { flex-direction: column; align-items: stretch; }
+.after-branch { width: 100%; }
+.after-note {
+  display: block; margin-top: 12px; max-width: 56ch;
+  font-size: 14.5px; line-height: 1.6; color: rgba(255,255,255,0.66);
+}
+/* Reserve height before HubSpot's iframe lands so the result doesn't jump
+   under someone mid-read. */
+.after-cal { margin-top: 20px; min-height: 560px; }
+.after-cal .meetings-iframe-container { min-height: 560px; }
+.after-cal .cal-fallback {
+  display: inline-block; margin-top: 8px;
+  font-size: 14.5px; color: rgba(255,255,255,0.66);
+}
+.after-cal .cal-fallback a { color: #fff; }
+@media (max-width: 720px) {
+  .after-cal, .after-cal .meetings-iframe-container { min-height: 640px; }
+}
+
 @media (max-width: 720px) {
   .audit-form {
     grid-template-columns: 1fr;
@@ -2976,25 +2997,71 @@ footer {
     strategist: 'think',
   };
 
-  /* ─── Wait-time qualifying quiz · runs while the audit streams ──────
-     Same pattern as the ads-lab micro-quiz: the visitor is captive for
-     30–60s watching the stages, so four tap-to-answer questions land in
-     the lead email + HubSpot note and the Growth team calls briefed. */
+  /* ─── Qualifying quiz · runs BEFORE the audit, not during ───────────
+     This used to run while the audit streamed. The report arrived either
+     way, so answering was optional and a large share of leads reached the
+     Growth team carrying no budget or timeline at all. Now the questions
+     stand between the submit and the crawl: three taps, about five seconds,
+     and every lead arrives with a tier attached.
+
+     The fourth question — when to call — is only asked of leads a human
+     will actually ring. Asking a no-budget researcher to pick a time sets
+     up a call that nobody is going to make. */
   const QUIZ_QUESTIONS = [
-    { key: 'marketing', q: 'Who looks after your marketing right now?', options: ['An agency', 'In-house team', 'I do it myself', 'No one right now'] },
-    { key: 'budget', q: 'Roughly what do you spend on marketing each month?', options: ['Nothing yet', 'Under $1k', '$1k – $3k', '$3k – $10k', '$10k+'] },
-    { key: 'timeline', q: 'How soon are you looking to get help?', options: ['ASAP', 'Next 1–3 months', 'Later this year', 'Just researching'] },
-    { key: 'callTime', q: 'When suits you for that call?', options: ['Morning', 'Midday', 'Afternoon', 'SMS me first'] },
+    { key: 'marketing', q: 'Who looks after your marketing right now?', options: [
+      { v: 'agency', label: 'An agency' },
+      { v: 'in-house', label: 'In-house team' },
+      { v: 'myself', label: 'I do it myself' },
+      { v: 'no-one', label: 'No one right now' },
+    ] },
+    { key: 'spend', q: 'Roughly what do you spend on marketing each month?', options: [
+      { v: 'none', label: 'Nothing yet' },
+      { v: 'under-1k', label: 'Under $1k' },
+      { v: '1k-3k', label: '$1k – $3k' },
+      { v: '3k-10k', label: '$3k – $10k' },
+      { v: '10k-plus', label: '$10k+' },
+    ] },
+    // The strongest single predictor of fit, and the one the old quiz never
+    // asked. Spend says what they can afford today; this says whether the
+    // maths can ever work.
+    { key: 'dealValue', q: "What's a new customer typically worth to you?", options: [
+      { v: 'lt500', label: 'Under $500' },
+      { v: '500-2k', label: '$500 – $2k' },
+      { v: '2k-10k', label: '$2k – $10k' },
+      { v: '10k-50k', label: '$10k – $50k' },
+      { v: 'gt50k', label: '$50k+' },
+      { v: 'unsure', label: 'Not sure' },
+    ] },
+    { key: 'running', q: 'Are you running ads at the moment?', options: [
+      { v: 'yes', label: 'Yes, right now' },
+      { v: 'no', label: 'Not currently' },
+      { v: 'unsure', label: 'Not sure' },
+    ] },
+    { key: 'timeline', q: 'How soon are you looking to get help?', options: [
+      { v: 'asap', label: 'ASAP' },
+      { v: '1-3-months', label: 'Next 1–3 months' },
+      { v: 'later-this-year', label: 'Later this year' },
+      { v: 'researching', label: 'Just researching' },
+    ] },
   ];
-  const quizAnswers = {};
+  const CALL_TIME_QUESTION = { key: 'callTime', q: 'When suits you for that call?', options: [
+    { v: 'morning', label: 'Morning' },
+    { v: 'midday', label: 'Midday' },
+    { v: 'afternoon', label: 'Afternoon' },
+    { v: 'sms', label: 'SMS me first' },
+  ] };
+
+  const quizAnswers = {};   // stable keys, for scoring
+  const quizLabels = {};    // display text, for HubSpot and the strategist
   let quizSent = false;
-  let quizDone = false;
+  let auditQualification = null;
+  let quizResolve = null;
 
   // Injected from JS (not the shared partial) so this stays /audit-only.
-  stagesEl.insertAdjacentHTML('afterend', `
+  stagesEl.insertAdjacentHTML('beforebegin', `
     <div class="audit-quiz" id="auditQuiz">
-      <div class="aq-label"><span class="dot" aria-hidden="true"></span>While it runs · 4 quick taps</div>
-      <p class="aq-sub">Someone from our Growth team will call to walk you through the results. These four taps mean they arrive across your situation, not reading from a script.</p>
+      <div class="aq-label"><span class="dot" aria-hidden="true"></span>Before we run it · 5 quick taps</div>
+      <p class="aq-sub">The audit reads differently depending on where you're starting from — what a customer is worth to you changes which fixes are actually worth doing. If someone from our Growth team calls, they arrive across your situation rather than reading from a script.</p>
       <div id="auditQuizBody"></div>
     </div>`);
   const quizEl = document.getElementById('auditQuiz');
@@ -3007,7 +3074,22 @@ footer {
     const payload = JSON.stringify({
       email: emailInput.value.trim(),
       url: rawUrl ? 'https://' + rawUrl : '',
-      ...quizAnswers,
+      // Labels for the humans reading HubSpot…
+      marketing: quizLabels.marketing || '',
+      budget: quizLabels.spend || '',
+      dealValue: quizLabels.dealValue || '',
+      running: quizLabels.running || '',
+      timeline: quizLabels.timeline || '',
+      callTime: quizLabels.callTime || '',
+      // …keys and tier for the routing.
+      marketingKey: quizAnswers.marketing || '',
+      spendKey: quizAnswers.spend || '',
+      dealValueKey: quizAnswers.dealValue || '',
+      runningKey: quizAnswers.running || '',
+      timelineKey: quizAnswers.timeline || '',
+      tier: auditQualification?.tier || '',
+      score: auditQualification?.score ?? null,
+      clickIds: (window.zibClickIds && window.zibClickIds()) || {},
     });
     if (useBeacon && navigator.sendBeacon) {
       navigator.sendBeacon('/api/audit-quiz', new Blob([payload], { type: 'application/json' }));
@@ -3021,35 +3103,120 @@ footer {
     }
   };
 
+  /** Score what we have so far. Called once the three base questions are in. */
+  const scoreQuiz = () => {
+    auditQualification = (window.zibQualify && window.zibQualify(quizAnswers))
+      || { tier: 'review', score: 0, salesReady: true };
+    return auditQualification;
+  };
+
+  const finishQuiz = () => {
+    sendQuizAnswers(false);
+    const whenMap = { morning: ' in the morning', midday: ' around midday', afternoon: ' in the afternoon' };
+    const when = whenMap[quizAnswers.callTime] || '';
+    const line = auditQualification?.salesReady
+      ? `Locked in. The Growth team will have this in front of them when they call${when}.`
+      : 'Locked in. Running your audit now — the full report also lands in your inbox.';
+    quizBody.innerHTML = `<div class="aq-done"><span class="tick">✓</span><span>${line}</span></div>`;
+    const resolve = quizResolve;
+    quizResolve = null;
+    // Let them read the confirmation for a beat before the stages take over.
+    setTimeout(() => resolve && resolve(), 700);
+  };
+
   const renderQuizStep = (step) => {
-    if (step >= QUIZ_QUESTIONS.length) {
-      quizDone = true;
-      sendQuizAnswers(false);
-      const whenMap = { 'Morning': ' in the morning', 'Midday': ' around midday', 'Afternoon': ' in the afternoon' };
-      const when = whenMap[quizAnswers.callTime] || '';
-      quizBody.innerHTML = `
-        <div class="aq-done"><span class="tick">✓</span><span>Locked in. The Growth team will have this in front of them when they call${when}.</span></div>`;
+    // Three base questions, then the call-time question only for leads a
+    // human will actually ring.
+    if (step === QUIZ_QUESTIONS.length) {
+      const qual = scoreQuiz();
+      if (!qual.salesReady) { finishQuiz(); return; }
+      renderQuestion(CALL_TIME_QUESTION, 'Last one', () => finishQuiz());
       return;
     }
+    if (step > QUIZ_QUESTIONS.length) { finishQuiz(); return; }
     const q = QUIZ_QUESTIONS[step];
+    renderQuestion(q, `Question ${step + 1} of ${QUIZ_QUESTIONS.length}`, () => renderQuizStep(step + 1));
+  };
+
+  const renderQuestion = (q, stepLabel, next) => {
     quizBody.innerHTML = `
       <h3 class="aq-q">${q.q}</h3>
-      <div class="aq-chips">${q.options.map(o => `<button type="button" data-v="${o}">${o}</button>`).join('')}</div>
-      <div class="aq-step">Question ${step + 1} of ${QUIZ_QUESTIONS.length}</div>`;
+      <div class="aq-chips">${q.options.map(o =>
+        `<button type="button" data-v="${o.v}" data-label="${o.label}">${o.label}</button>`).join('')}</div>
+      <div class="aq-step">${stepLabel}</div>`;
     quizBody.querySelectorAll('.aq-chips button').forEach(b =>
       b.addEventListener('click', () => {
         quizAnswers[q.key] = b.dataset.v;
+        quizLabels[q.key] = b.dataset.label;
         // A pagehide flush may have fired a partial send — new answers re-arm it
         quizSent = false;
-        renderQuizStep(step + 1);
+        next();
       }));
   };
 
-  const quizShow = () => {
-    if (quizDone) { quizEl.classList.add('is-shown'); return; }
-    renderQuizStep(Object.keys(quizAnswers).length ? QUIZ_QUESTIONS.findIndex(q => !(q.key in quizAnswers)) : 0);
-    quizEl.classList.add('is-shown');
+  /* ─── Post-result branch · calendar or nurture ──────────────────────
+     The old result footer linked to #cta, an anchor further down the page.
+     Someone who has just watched a report about their own site build is at
+     the highest intent they will ever be, and an anchor link spends it. A
+     qualified lead now gets a calendar in place; a nurture lead gets the
+     report and is left alone. */
+  const MEETINGS_SRC = 'https://meetings.hubspot.com/mglasser';
+  let meetingsLoaded = false;
+
+  const loadMeetingsEmbed = (container, email) => {
+    // Prefill what we know so booking is a time-pick, not a re-typed form.
+    const src = MEETINGS_SRC + '?embed=true' + (email ? '&email=' + encodeURIComponent(email) : '');
+    container.innerHTML =
+      `<div class="meetings-iframe-container" data-src="${src}"></div>` +
+      `<span class="cal-fallback">Prefer email? <a href="mailto:michael.glasser@zibdigital.com.au">Send us the report instead</a>.</span>`;
+    if (meetingsLoaded) return;
+    meetingsLoaded = true;
+    // Loaded only when a qualified lead actually reaches this point, so the
+    // 20+ pages that never show a calendar don't carry the weight.
+    const tag = document.createElement('script');
+    tag.src = 'https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js';
+    tag.async = true;
+    document.body.appendChild(tag);
   };
+
+  // HubSpot's embed reports a completed booking by postMessage. That's the
+  // strongest signal the site can produce, so it gets its own event.
+  window.addEventListener('message', (e) => {
+    if (!e.data || e.data.meetingBookSucceeded !== true) return;
+    window.zibCallBooked && window.zibCallBooked({
+      tool: 'Website Audit',
+      email: emailInput.value.trim(),
+      tier: auditQualification?.tier,
+      score: auditQualification?.score,
+    });
+  });
+
+  const renderAfterBranch = () => {
+    const after = document.getElementById('resAfter');
+    const qualified = document.getElementById('afterQualified');
+    const nurture = document.getElementById('afterNurture');
+    if (!after || !qualified || !nurture) return;
+    const salesReady = auditQualification?.salesReady;
+    qualified.hidden = !salesReady;
+    nurture.hidden = !!salesReady;
+    after.hidden = false;
+    if (salesReady) loadMeetingsEmbed(document.getElementById('afterCal'), emailInput.value.trim());
+  };
+
+  /**
+   * Show the quiz and resolve once it's done. The audit run awaits this, so
+   * the questions genuinely gate the report rather than sitting beside it.
+   */
+  const collectQualification = () => new Promise((resolve) => {
+    quizResolve = resolve;
+    Object.keys(quizAnswers).forEach((k) => delete quizAnswers[k]);
+    Object.keys(quizLabels).forEach((k) => delete quizLabels[k]);
+    quizSent = false;
+    auditQualification = null;
+    quizEl.classList.add('is-shown');
+    renderQuizStep(0);
+    requestAnimationFrame(() => quizEl.scrollIntoView({ behavior: 'smooth', block: 'center' }));
+  });
 
   // Partial answers still brief the caller — flush on page-leave if the
   // visitor bailed mid-quiz.
@@ -3255,6 +3422,12 @@ footer {
       if (phone.replace(/\D/g, '').length < 6) { setStatus('Enter a valid phone number.', 'error'); phoneInput.focus(); return; }
 
       btn.disabled = true;
+
+      // Qualify BEFORE running. The report is what makes the questions worth
+      // answering, so it waits behind them — three taps, roughly five seconds.
+      await collectQualification();
+      const qual = auditQualification || { tier: 'review', score: 0, salesReady: true };
+
       resultEl.classList.remove('is-shown');
       if (resAdvisory) { resAdvisory.hidden = true; resAdvisoryBody.innerHTML = ''; }
       resStrategist.innerHTML = '';
@@ -3267,6 +3440,7 @@ footer {
       resHeroRewrite.classList.remove('is-shown');
       resHeroRewrite.hidden = true;
       resPunchline.classList.remove('is-shown');
+      document.getElementById('resAfter')?.setAttribute('hidden', '');
       stagesReset();
       stagesShow();
       stageActivate('fetch');
@@ -3279,7 +3453,23 @@ footer {
         const res = await fetch('/api/audit', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ url, email, phone, sourceTag })
+          body: JSON.stringify({
+            url, email, phone, sourceTag,
+            // The answers travel with the lead so the server can score them and
+            // HubSpot has the tier the moment the contact is created. The
+            // server scores, not the browser.
+            spend: quizLabels.spend || '',
+            dealValue: quizLabels.dealValue || '',
+            timeline: quizLabels.timeline || '',
+            spendKey: quizAnswers.spend || '',
+            dealValueKey: quizAnswers.dealValue || '',
+            runningKey: quizAnswers.running || '',
+            timelineKey: quizAnswers.timeline || '',
+            marketingKey: quizAnswers.marketing || '',
+            // Ad click ids, so HubSpot outcomes can be uploaded back to Google
+            // and Meta later. See docs/offline-conversions.md.
+            clickIds: (window.zibClickIds && window.zibClickIds()) || {},
+          })
         });
 
         if (!res.ok || !res.body) {
@@ -3292,8 +3482,12 @@ footer {
         // audit streams into this same view.
         window.zibLead && window.zibLead({ tool: 'Website Audit', url, email });
 
-        // The visitor is captive for the next 30–60s — qualify while they wait
-        quizShow();
+        // …and the quality signal on top. `Lead` fires for everyone so the
+        // historical numbers stay comparable; this is the one worth optimising
+        // and building audiences against.
+        const quality = { tool: 'Website Audit', url, email, tier: qual.tier, score: qual.score };
+        if (qual.salesReady) window.zibQualifiedLead && window.zibQualifiedLead(quality);
+        else window.zibNurtureLead && window.zibNurtureLead(quality);
 
         // Show result shell + scroll so stages are visible
         resultEl.classList.add('is-shown');
@@ -3378,6 +3572,7 @@ footer {
                 resAdImg.classList.remove('is-loading');
               }
               resPunchline.classList.add('is-shown');
+              renderAfterBranch();
               stagesFinish();
               setTimeout(() => stagesEl.classList.remove('is-shown'), 1600);
               clearStatus();

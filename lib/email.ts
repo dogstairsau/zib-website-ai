@@ -82,12 +82,19 @@ export type LabQuizEmail = {
   url: string;
   lab: string;
   answers: { q: string; a: string }[];
+  /** Tier from lib/qualify.ts — decides whether this lead gets called at all. */
+  tier?: string;
+  score?: number;
 };
 
 /**
- * Internal notification with the ads-lab quiz answers (budget + goal),
- * sent to LEAD_NOTIFY_EMAIL so the strategist is briefed for the 24h call
- * even before HubSpot is connected.
+ * Internal notification with the qualifying quiz answers, sent to
+ * LEAD_NOTIFY_EMAIL so the strategist is briefed even before HubSpot is
+ * connected.
+ *
+ * The subject line leads with the tier. These land in an inbox alongside
+ * everything else, and whether a lead is worth calling should be readable
+ * without opening the mail.
  */
 export async function sendLabQuizEmail(p: LabQuizEmail): Promise<void> {
   const apiKey = process.env.RESEND_API_KEY;
@@ -103,10 +110,30 @@ export async function sendLabQuizEmail(p: LabQuizEmail): Promise<void> {
 
   const rows = p.answers.map((x) =>
     `<tr><td style="padding:6px 12px 6px 0;color:#6B6B6B;width:220px;">${esc(x.q)}</td><td style="padding:6px 0;font-weight:600;">${esc(x.a)}</td></tr>`).join("");
+
+  const VERDICT: Record<string, { label: string; bg: string; fg: string; line: string }> = {
+    qualified: { label: "QUALIFIED", bg: "#E7F6EC", fg: "#116B33",
+      line: "Budget and intent both present. Call them." },
+    review: { label: "REVIEW", bg: "#FFF4E0", fg: "#8A5A00",
+      line: "Real budget, softer timing. Clarify priorities before booking time." },
+    nurture: { label: "NURTURE", bg: "#FBE9E9", fg: "#8A1F1F",
+      line: "No budget, or self-identified as researching. Do not call — email only." },
+  };
+  const v = p.tier ? VERDICT[p.tier] : undefined;
+  const verdictBlock = v
+    ? `<div style="background:${v.bg};color:${v.fg};padding:14px 16px;border-radius:8px;margin:0 0 20px;">
+         <div style="font-weight:700;letter-spacing:0.04em;font-size:13px;">${v.label}${
+           typeof p.score === "number" ? ` · ${p.score}/100` : ""
+         }</div>
+         <div style="font-size:14px;margin-top:4px;">${esc(v.line)}</div>
+       </div>`
+    : "";
+
   const html = `<!doctype html>
 <html><body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;line-height:1.55;color:#0F0F0F;max-width:680px;margin:0 auto;padding:24px;">
   <h1 style="font-size:22px;margin:0 0 4px;">${esc(p.lab)} · quiz answers</h1>
-  <p style="color:#6B6B6B;margin:0 0 24px;">Answered while their results generated. Read before the follow-up call.</p>
+  <p style="color:#6B6B6B;margin:0 0 20px;">Answered before their results were generated, so these are complete.</p>
+  ${verdictBlock}
   <table style="border-collapse:collapse;width:100%;margin-bottom:24px;font-size:14px;">
     <tr><td style="padding:6px 12px 6px 0;color:#6B6B6B;width:220px;">Prospect</td><td style="padding:6px 0;"><a href="mailto:${esc(p.email)}">${esc(p.email)}</a></td></tr>
     <tr><td style="padding:6px 12px 6px 0;color:#6B6B6B;">Site</td><td style="padding:6px 0;"><a href="${esc(p.url)}">${esc(host)}</a></td></tr>
@@ -118,7 +145,12 @@ export async function sendLabQuizEmail(p: LabQuizEmail): Promise<void> {
     const res = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
-      body: JSON.stringify({ from, to, subject: `${p.lab} quiz · ${host} · ${p.email}`, html }),
+      body: JSON.stringify({
+        from,
+        to,
+        subject: `${v ? `[${v.label}] ` : ""}${p.lab} · ${host} · ${p.email}`,
+        html,
+      }),
       signal: AbortSignal.timeout(10_000),
     });
     if (!res.ok) {

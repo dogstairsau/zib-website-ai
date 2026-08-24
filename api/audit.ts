@@ -13,6 +13,7 @@ import { fetchSupporting, crawlSite, buildAudit } from "../lib/seoChecks";
 import { guard, clientIp } from "../lib/rateLimit";
 import { sendLeadEmail } from "../lib/email";
 import { isSafeFetchUrl } from "../lib/safeUrl";
+import { qualify } from "../lib/qualify";
 
 export const config = { runtime: "edge" };
 
@@ -24,6 +25,19 @@ type Body = {
   phone?: string;
   mode?: string;
   sourceTag?: string;
+  timeline?: string;
+  /** Qualifying answers collected before the run — labels for humans… */
+  spend?: string;
+  /** …and stable keys, which lib/qualify.ts scores. The browser sends its own
+   *  tier too so it can branch instantly, but the server never reads it —
+   *  this is a public endpoint and the tier decides who sales calls. */
+  spendKey?: string;
+  dealValueKey?: string;
+  runningKey?: string;
+  timelineKey?: string;
+  marketingKey?: string;
+  /** Ad click ids captured on landing, for offline conversion import. */
+  clickIds?: Record<string, string>;
 };
 
 type Brief = {
@@ -360,6 +374,13 @@ export default async function handler(req: Request): Promise<Response> {
         const sourceTag = (body.sourceTag || "").trim();
         const fallback = mode === "seo" ? "SEO page audit" : "Homepage audit";
         const source = sourceTag ? `Audit · ${sourceTag}` : fallback;
+        const scored = qualify({
+          spend: (body.spendKey || "").trim(),
+          dealValue: (body.dealValueKey || "").trim(),
+          running: (body.runningKey || "").trim(),
+          timeline: (body.timelineKey || "").trim(),
+          marketing: (body.marketingKey || "").trim(),
+        });
 
         // Capture lead AFTER analysis completes. Awaited in parallel so the
         // edge runtime doesn't terminate the worker before Resend / HubSpot
@@ -373,6 +394,13 @@ export default async function handler(req: Request): Promise<Response> {
               company: body.company?.trim() || "",
               website: url,
               source,
+              // Scored here, not taken from the browser — this is a public
+              // endpoint and the tier decides who sales calls. The contact
+              // is tiered the moment it's created rather than by a note
+              // that lands seconds later.
+              tier: scored.tier,
+              score: scored.score,
+              clickIds: body.clickIds,
             },
             {
               url,

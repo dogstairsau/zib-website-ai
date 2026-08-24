@@ -17,6 +17,11 @@
  * The API rejects fields that aren't on the target form and names them in
  * the function logs, so a missing field is easy to spot.
  *
+ * Newer fields — lead_tier, lead_score, gclid, fbclid, utm_* — are sent when
+ * present but dropped on retry if the form doesn't carry them yet, so adding
+ * them to the forms is an upgrade rather than a prerequisite. See
+ * docs/offline-conversions.md for what to create and why.
+ *
  * Fails open when env vars are missing, like every other integration here.
  * Build steps for the forms live in docs/hubspot-forms-build.md.
  */
@@ -39,6 +44,18 @@ function resolveFormGuid(source: string): string | undefined {
   return process.env.HUBSPOT_FORM_DEFAULT_GUID;
 }
 
+/**
+ * The seven fields documented as present on every Zib form. Anything outside
+ * this set (tier, score, click ids) is newer than the forms themselves and is
+ * dropped on retry if the portal hasn't had it added yet — HubSpot rejects the
+ * whole submission over one unknown field, and losing the lead is worse than
+ * losing the extra data.
+ */
+const CORE_FIELDS = new Set([
+  "email", "firstname", "phone", "website",
+  "lead_source", "monthly_ad_spend", "primary_goal",
+]);
+
 export async function submitHubSpotForm(
   source: string,
   fields: Record<string, string | undefined>,
@@ -57,22 +74,31 @@ export async function submitHubSpotForm(
     return;
   }
 
+  const endpoint = `https://api.hsforms.com/submissions/v3/integration/submit/${encodeURIComponent(portalId)}/${encodeURIComponent(formGuid)}`;
+  const post = (payload: typeof cleaned) =>
+    fetch(endpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        fields: payload,
+        context: {
+          pageName: context?.pageName || source,
+          pageUri: context?.pageUri || "https://zibdigital.com.au",
+        },
+      }),
+      signal: AbortSignal.timeout(10_000),
+    });
+
   try {
-    const res = await fetch(
-      `https://api.hsforms.com/submissions/v3/integration/submit/${encodeURIComponent(portalId)}/${encodeURIComponent(formGuid)}`,
-      {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          fields: cleaned,
-          context: {
-            pageName: context?.pageName || source,
-            pageUri: context?.pageUri || "https://zibdigital.com.au",
-          },
-        }),
-        signal: AbortSignal.timeout(10_000),
-      },
-    );
+    let res = await post(cleaned);
+
+    const core = cleaned.filter((f) => CORE_FIELDS.has(f.name));
+    if (!res.ok && core.length && core.length < cleaned.length) {
+      const body = await res.text().catch(() => "");
+      console.warn("[hubspot-form] retrying with core fields only:", source, res.status, body.slice(0, 300));
+      res = await post(core);
+    }
+
     if (!res.ok) {
       const body = await res.text().catch(() => "");
       console.warn("[hubspot-form]", source, res.status, body.slice(0, 300));
