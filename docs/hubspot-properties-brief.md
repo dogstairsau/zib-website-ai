@@ -11,6 +11,14 @@ note that you skipped it.
 Est. 25–35 minutes. Exact internal names matter: the website's submissions are
 rejected if a name doesn't match.
 
+> **Faster route.** `npm run hubspot:properties` does Parts A and B through
+> the API in about ten seconds, and can't fat-finger an internal name — which
+> is the one way the manual route goes wrong. It needs a private-app token
+> with `crm.schemas.contacts.write`. Preview it first with
+> `node scripts/hubspot-properties.mjs --dry-run`. It's idempotent, so it's
+> safe to run after a partial manual attempt. Part C (the forms) is still
+> manual, and is optional — see the note there.
+
 ---
 
 ## Context — what this is for (no action needed)
@@ -99,6 +107,13 @@ generates for these options don't matter — leave whatever it creates.
 ---
 
 ## Part C — Add the new fields to the five forms
+
+> **Optional, and lower priority than Parts A and B.** Two paths write to
+> HubSpot: the private-app path writes these properties straight onto the
+> contact and needs only Part A, while the Forms path needs the fields on the
+> form. So once Part A is done the data is being stored — adding the fields
+> here only affects form-level analytics and native "submitted form" workflow
+> triggers. Worth doing, not worth blocking on.
 
 Go to **Marketing → Forms**. These five forms already exist:
 
