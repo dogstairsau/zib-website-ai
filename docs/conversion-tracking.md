@@ -64,11 +64,17 @@ events below report it.
 | Qualified lead | `QualifiedLead` | `zib_lead_qualified` | Answers show real budget and intent |
 | Nurture lead | `NurtureLead` | `zib_lead_nurture` | No budget, or self-identified as researching |
 | Pack delivered | `PackDelivered` | `zib_pack_delivered` | The pack/audit actually rendered |
-| Call booked | `CallBooked` | `zib_call_booked` | A time was booked in the inline calendar |
+| Call booked | `CallBooked` | `zib_call_booked` | A time was booked in the calendar |
+| Booking opened | — | `zib_booking_opened` | The ads-lab CTA opened the calendar (intent, not a booking) |
 
 All four carry `lead_tier` and `lead_score` (0–100, the same scale as the
 `/start` pre-discovery qualifier). `QualifiedLead` also carries `value` = the
 score, so Meta value rules have something to work with later.
+
+`zib_booking_opened` is dataLayer-only on purpose — someone opening the
+calendar is a real intent signal and a good retargeting audience, but it
+isn't an outcome, and giving it a Meta event would put it in competition
+with `CallBooked` for optimisation.
 
 `zib_lead` still fires for **every** lead, unchanged, so the historical numbers
 stay comparable across the change.
@@ -192,11 +198,14 @@ available as dataLayer variables on all four.
    - GTM preview: `zib_lead` **and** `zib_lead_qualified` in the event list
    - The URL gains `#lead`
    - Events Manager → **Test Events** shows both within ~30s
-5. When the pack finishes, `zib_pack_delivered` fires and a **calendar appears
-   inline** under the ad grid.
+5. When the pack finishes, `zib_pack_delivered` fires, a **sticky booking bar**
+   docks to the bottom of the page, and a calendar appears inline under the ad
+   grid. Clicking the bar opens the calendar in a modal and fires
+   `zib_booking_opened`. The sitewide "Get in touch" button hides itself while
+   the bar is up — two fixed orange CTAs in the same corner reads as a bug.
 6. Re-run with `Nothing yet` as the budget. You should get `NurtureLead`
-   instead of `QualifiedLead`, and **no calendar** — an email-follow-up note
-   in its place.
+   instead of `QualifiedLead`, **no calendar and no booking bar** — an
+   email-follow-up note in its place.
 7. Repeat on `/audit`, which asks five questions rather than three. On the
    nurture path it should also skip the "when suits you for that call?"
    question entirely.
