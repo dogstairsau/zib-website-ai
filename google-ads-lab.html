@@ -60,6 +60,23 @@
 .gal-stage.is-done .timer { color: var(--score-good); }
 
 .gal-gate { padding: clamp(80px, 10vw, 140px) 0; background: var(--ink); color: #fff; position: relative; }
+/* After the pack — calendar for a qualified lead, a note for nurture. */
+.gal-after { margin-top: clamp(48px, 6vw, 80px); padding-top: clamp(32px, 4vw, 48px); border-top: 1px solid var(--rule-2); }
+.gal-after h3 { font-family: var(--display); font-weight: 500; font-size: clamp(22px, 2.4vw, 34px); letter-spacing: -0.02em; }
+.gal-after p { margin-top: 12px; max-width: 56ch; color: var(--ink-2); font-size: 15.5px; line-height: 1.6; }
+/* Reserve height before HubSpot's iframe lands so the pack above doesn't jump. */
+.after-cal { margin-top: 24px; min-height: 560px; }
+.after-cal .meetings-iframe-container { min-height: 560px; }
+.after-cal .cal-fallback { display: inline-block; margin-top: 8px; font-size: 14.5px; color: var(--muted); }
+@media (max-width: 720px) { .after-cal, .after-cal .meetings-iframe-container { min-height: 640px; } }
+
+/* Qualify step — same dark treatment as the gate, chips reuse .q-chips from
+   the wait-hub quiz (white pills read correctly on both surfaces). */
+.gal-qualify .qual-sub { max-width: 54ch; color: rgba(255,255,255,0.72); font-size: clamp(15px,1.2vw,17px); line-height: 1.55; margin-top: 18px; }
+.qual-body { margin-top: clamp(36px, 4.5vw, 52px); max-width: 640px; }
+.qual-body .qual-q { font-family: var(--display); font-weight: 500; font-size: clamp(20px, 2vw, 27px); letter-spacing: -0.015em; color: #fff; }
+.qual-body .q-chips { margin-top: 22px; }
+.qual-body .q-step { color: rgba(255,255,255,0.5); margin-top: 22px; }
 .gal-gate .eyebrow { color: var(--accent); }
 .gal-gate h2 { font-family: var(--display); font-weight: 500; font-size: clamp(36px, 5vw, 72px); letter-spacing: -0.025em; line-height: 1.02; margin-top: 14px; max-width: 22ch; }
 .gal-gate h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
@@ -219,12 +236,30 @@
     </div>
   </section>
 
+  <!-- QUALIFY
+       Asked BEFORE the pack is built rather than during the wait. When these
+       ran during generation the pack arrived either way, so answering was
+       optional and most people skipped it — leaving sales with leads that
+       carried no budget or intent signal. Gating the payoff on two taps means
+       every lead now arrives qualified or disqualified. -->
+  <section id="qualify" class="gal-gate gal-qualify" hidden>
+    <div class="container">
+      <div class="ready-flash">URL accepted</div>
+      <div class="mono eyebrow">Step 2 of 3</div>
+      <h2>Two quick things, <em>so the pack fits.</em></h2>
+      <p class="qual-sub">
+        The keyword themes, the bidding and the budget plan all change depending on these. Takes about four seconds.
+      </p>
+      <div id="qualBody" class="qual-body"></div>
+    </div>
+  </section>
+
   <!-- GATE -->
   <section id="gate" class="gal-gate" hidden>
     <div class="container">
       <div class="ready-flash">URL accepted</div>
-      <div class="mono eyebrow">Step 2 of 2</div>
-      <h2>First, <em>where do we send the pack?</em></h2>
+      <div class="mono eyebrow">Step 3 of 3</div>
+      <h2>Last thing — <em>where do we send the pack?</em></h2>
       <p style="max-width:54ch;color:rgba(255,255,255,0.72);font-size:clamp(15px,1.2vw,17px);line-height:1.55;margin-top:18px;">
         Once you submit your details, we check the Transparency Center, read your brand and build the full Google Ads pack right here. The complete pack also lands in your inbox.
       </p>
@@ -374,6 +409,22 @@
           </div>
         </div>
       </div>
+
+      <!-- Branched on the tier collected before the pack was built. Someone
+           looking at an account structure written for their own business is
+           at peak intent — a qualified lead gets a calendar here rather than
+           waiting on the 24h follow-up. A nurture lead gets the pack, no call. -->
+      <div class="gal-after" id="revealAfter" hidden>
+        <div class="after-branch" id="afterQualified" hidden>
+          <h3>Want a strategist to walk you through this?</h3>
+          <p>Thirty minutes, no deck. Pick a time and they'll come to it having read your pack.</p>
+          <div class="after-cal" id="afterCal" aria-live="polite"></div>
+        </div>
+        <div class="after-branch" id="afterNurture" hidden>
+          <h3>Your full pack is on its way to your inbox.</h3>
+          <p class="after-note">The search ad, the keyword themes and the Performance Max group — no call, no follow-up sequence. Reply to that email any time you want a hand loading them.</p>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -407,6 +458,7 @@
   const stages = Array.from(document.querySelectorAll('.gal-stage'));
   const elapsed = $('elapsed'), elapsedT = elapsed?.querySelector('.t');
   const gateSec = $('gate'), gateForm = $('gateForm');
+  const qualSec = $('qualify');
   const reveal = $('reveal'), brandLbl = $('brandLabel');
   const state = { url: '', email: '', brand: null, pack: null, assets: { logo: null, colors: [] }, isRunning: false };
   let elapsedStart = 0, elapsedTick = null;
@@ -476,7 +528,9 @@
   const startWaitHub = () => {
     if (!waitHub || !waitHub.hidden) return;
     hubReset();
-    renderQuizStep(0);
+    // The quiz has already run — this card now confirms what's coming rather
+    // than asking anything, so the wait stays occupied without a second ask.
+    renderPackChecklist();
     waitHub.hidden = false;
     requestAnimationFrame(() => waitHub.classList.add('is-on'));
   };
@@ -487,23 +541,43 @@
     setTimeout(() => { waitHub.hidden = true; }, 500);
   };
 
-  // ── Micro-quiz → pack checklist ──────────────────────────────────
+  // ── Qualify step (runs BEFORE the gate, see the #qualify section) ─
+  const qualBody = $('qualBody');
   const quizBody = $('quizBody');
+  // `v` is the stable key the scoring reads; `label` is what the visitor sees
+  // and what lands in HubSpot, so sales reads words rather than slugs.
   const QUIZ = [
-    { key: 'budget', q: 'What do you spend on ads per month?', options: ['Nothing yet', 'Under $1k', '$1k – $3k', '$3k – $10k', '$10k+'] },
-    { key: 'goal', q: 'What matters most right now?', options: ['More leads', 'Cheaper leads', 'New market or launch', 'Beating a competitor'] },
+    { key: 'spend', q: 'What do you spend on ads per month?', sub: 'Sets the budget plan and bidding advice in your pack.', options: [
+      { v: 'none', label: 'Nothing yet' },
+      { v: 'under-1k', label: 'Under $1k' },
+      { v: '1k-3k', label: '$1k – $3k' },
+      { v: '3k-10k', label: '$3k – $10k' },
+      { v: '10k-plus', label: '$10k+' },
+    ] },
+    { key: 'goal', q: 'What matters most right now?', sub: 'Decides which keyword themes we build around.', options: [
+      { v: 'more-leads', label: 'More leads' },
+      { v: 'cheaper-leads', label: 'Cheaper leads' },
+      { v: 'new-market', label: 'New market or launch' },
+      { v: 'competitor', label: 'Beating a competitor' },
+    ] },
   ];
   const quizAnswers = {};
+  const quizLabels = {};
+
   const renderQuizStep = (step) => {
-    if (step >= QUIZ.length) { submitQuiz(); renderPackChecklist(); return; }
+    if (step >= QUIZ.length) { revealGate(); return; }
     const q = QUIZ[step];
-    quizBody.innerHTML = `
-      <h3>${q.q}</h3>
-      <p class="q-sub">Your strategist walks into the call already across it. No forms later.</p>
-      <div class="q-chips">${q.options.map(o => `<button type="button" data-v="${esc(o)}">${esc(o)}</button>`).join('')}</div>
-      <div class="q-step">Question ${step + 1} of ${QUIZ.length}</div>`;
-    quizBody.querySelectorAll('.q-chips button').forEach(b =>
-      b.addEventListener('click', () => { quizAnswers[q.key] = b.dataset.v; renderQuizStep(step + 1); }));
+    qualBody.innerHTML = `
+      <div class="qual-q">${q.q}</div>
+      <div class="q-chips">${q.options.map(o =>
+        `<button type="button" data-v="${esc(o.v)}" data-label="${esc(o.label)}">${esc(o.label)}</button>`).join('')}</div>
+      <div class="q-step">Question ${step + 1} of ${QUIZ.length} · ${esc(q.sub)}</div>`;
+    qualBody.querySelectorAll('.q-chips button').forEach(b =>
+      b.addEventListener('click', () => {
+        quizAnswers[q.key] = b.dataset.v;
+        quizLabels[q.key] = b.dataset.label;
+        renderQuizStep(step + 1);
+      }));
   };
   const renderPackChecklist = () => {
     quizBody.innerHTML = `
@@ -518,16 +592,68 @@
     quizBody.querySelectorAll('.q-done-list li').forEach((li, i) =>
       setTimeout(() => li.classList.add('is-in'), 200 + i * 220));
   };
+  // Sent once the gate hands us an email — the answers are already in hand by
+  // then, so this is the only round-trip and it never blocks the pack.
   const submitQuiz = () => {
     fetch('/api/lab-quiz', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         email: state.email || '', url: state.url,
-        budget: quizAnswers.budget || '', goal: quizAnswers.goal || '',
+        budget: quizLabels.spend || '', goal: quizLabels.goal || '',
+        spendKey: quizAnswers.spend || '', goalKey: quizAnswers.goal || '',
+        tier: state.qualification?.tier || '',
+        score: state.qualification?.score ?? null,
+        clickIds: (window.zibClickIds && window.zibClickIds()) || {},
         lab: 'Google Ads Lab',
       }),
     }).catch(() => {});
+  };
+
+  /* ─── Post-pack branch · calendar or nurture ────────────────────── */
+  const MEETINGS_SRC = 'https://meetings.hubspot.com/mglasser';
+  let meetingsLoaded = false;
+
+  const loadMeetingsEmbed = (container, email, firstname) => {
+    // Prefill what we know so booking is a time-pick, not a re-typed form.
+    const src = MEETINGS_SRC + '?embed=true'
+      + (email ? '&email=' + encodeURIComponent(email) : '')
+      + (firstname ? '&firstName=' + encodeURIComponent(firstname) : '');
+    container.innerHTML =
+      `<div class="meetings-iframe-container" data-src="${src}"></div>` +
+      `<span class="cal-fallback">Prefer email? <a href="mailto:michael.glasser@zibdigital.com.au">Reply to the pack instead</a>.</span>`;
+    if (meetingsLoaded) return;
+    meetingsLoaded = true;
+    // Loaded only when a qualified lead reaches this point — never on a page
+    // view, and never for a nurture lead.
+    const tag = document.createElement('script');
+    tag.src = 'https://static.hsappstatic.net/MeetingsEmbed/ex/MeetingsEmbedCode.js';
+    tag.async = true;
+    document.body.appendChild(tag);
+  };
+
+  // HubSpot's embed reports a completed booking by postMessage. That's the
+  // strongest signal the page can produce, so it gets its own event.
+  window.addEventListener('message', (e) => {
+    if (!e.data || e.data.meetingBookSucceeded !== true) return;
+    window.zibCallBooked && window.zibCallBooked({
+      tool: 'Google Ads Lab',
+      email: state.email,
+      tier: state.qualification?.tier,
+      score: state.qualification?.score,
+    });
+  });
+
+  const renderAfterBranch = () => {
+    const after = $('revealAfter');
+    const qualified = $('afterQualified');
+    const nurture = $('afterNurture');
+    if (!after || !qualified || !nurture) return;
+    const salesReady = state.qualification?.salesReady;
+    qualified.hidden = !salesReady;
+    nurture.hidden = !!salesReady;
+    after.hidden = false;
+    if (salesReady) loadMeetingsEmbed($('afterCal'), state.email, state.firstname);
   };
 
   const ratioClass = (r) => /1:1/.test(r) ? 'square' : /4:5/.test(r) ? 'portrait' : '';
@@ -582,6 +708,18 @@
 
     if (reveal.hidden) {
       reveal.hidden = false;
+
+      // The pack genuinely rendered. `zibLead` fired when the server accepted
+      // the submission, which isn't proof anything was delivered — a run that
+      // dies mid-stream still counts as a Lead. This is the honest signal.
+      window.zibPackDelivered && window.zibPackDelivered({
+        tool: 'Google Ads Lab',
+        url: state.url,
+        email: state.email,
+        tier: state.qualification?.tier,
+        score: state.qualification?.score,
+      });
+      renderAfterBranch();
       stopWaitHub();
       setTimeout(() => {
         reveal.scrollIntoView({ behavior: 'smooth', block: 'start' });
@@ -679,10 +817,32 @@
     state.assets = { logo: null, colors: [] };
     if (tickerTimer) { clearInterval(tickerTimer); tickerTimer = null; }
     waitHub.classList.remove('is-on'); waitHub.hidden = true;
+    // A fresh URL means a fresh set of answers — don't carry the last run's
+    // tier over onto a different business.
+    Object.keys(quizAnswers).forEach((k) => delete quizAnswers[k]);
+    Object.keys(quizLabels).forEach((k) => delete quizLabels[k]);
+    state.qualification = null;
+    $('revealAfter')?.setAttribute('hidden', '');
+    // Qualify first. The gate only appears once both chips are answered, so
+    // there is no path to the pack that skips them.
+    gateSec.hidden = true;
+    qualSec.hidden = false;
+    renderQuizStep(0);
+    requestAnimationFrame(() => qualSec.scrollIntoView({ behavior: 'smooth', block: 'start' }));
+  });
+
+  /**
+   * Both chips answered — score them, then hand over to the email gate.
+   * The tier is held on `state` so the gate submit can report it and the
+   * reveal can decide whether to offer a calendar.
+   */
+  function revealGate() {
+    state.qualification = (window.zibQualify && window.zibQualify(quizAnswers)) || { tier: 'review', score: 0, salesReady: true };
+    qualSec.hidden = true;
     gateSec.hidden = false;
     requestAnimationFrame(() => gateSec.scrollIntoView({ behavior: 'smooth', block: 'start' }));
     setTimeout(() => gateForm.querySelector('input[name=name]')?.focus(), 600);
-  });
+  }
 
   // Step 2: email → generate
   gateForm.addEventListener('submit', async (e) => {
@@ -693,12 +853,24 @@
     btn.disabled = true; btn.textContent = 'Building…';
     const fd = new FormData(gateForm);
     state.email = (fd.get('email') || '').toString().trim();
+    const qual = state.qualification || { tier: 'review', score: 0, salesReady: true };
+    state.firstname = (fd.get('name') || '').toString().trim();
     const payload = {
       url: state.url,
       email: state.email,
       firstname: (fd.get('name') || '').toString().trim(),
       phone: (fd.get('phone') || '').toString().trim(),
       sourceTag: document.querySelector('meta[name="zib:source-tag"]')?.content || '',
+      // The answers travel with the lead so the server can score them and
+      // HubSpot has the tier the moment the contact is created, rather than
+      // a note that lands seconds later. The server scores, not the browser.
+      spend: quizLabels.spend || '',
+      goal: quizLabels.goal || '',
+      spendKey: quizAnswers.spend || '',
+      goalKey: quizAnswers.goal || '',
+      // Ad click ids, so HubSpot outcomes can be uploaded back to Google and
+      // Meta later. See docs/offline-conversions.md.
+      clickIds: (window.zibClickIds && window.zibClickIds()) || {},
     };
     gateSec.style.transition = 'opacity 320ms ease'; gateSec.style.opacity = '0';
     setTimeout(() => { gateSec.hidden = true; gateSec.style.opacity = ''; $('flow').scrollIntoView({ behavior: 'smooth', block: 'start' }); }, 320);
@@ -713,6 +885,16 @@
       // This is the conversion point; the pack streams into this same view, so
       // there's no thank-you page load for the pixel to fire on.
       window.zibLead && window.zibLead({ tool: 'Google Ads Lab', url: payload.url, email: payload.email });
+
+      // …and the quality signal on top. `Lead` fires for everyone so the
+      // historical numbers stay comparable; this is the one worth optimising
+      // and building audiences against.
+      const quality = { tool: 'Google Ads Lab', url: payload.url, email: payload.email, tier: qual.tier, score: qual.score };
+      if (qual.salesReady) window.zibQualifiedLead && window.zibQualifiedLead(quality);
+      else window.zibNurtureLead && window.zibNurtureLead(quality);
+
+      // The answers now have an email to hang off, so send them.
+      submitQuiz();
 
       await consumeSse(resp);
     } catch (err) {

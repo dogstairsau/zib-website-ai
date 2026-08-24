@@ -44,6 +44,62 @@ A tool fires at most once per page load.
 
 ---
 
+## Why `Lead` alone was the problem
+
+`Lead` fires the moment an email is captured, and it fires identically for
+every tool and every quality of lead. Optimise an ad set against it and Meta
+does exactly what it was asked: finds the people most willing to trade an
+email for a free thing. Three weeks of spend produced 76 leads at a blended
+A$17.57 CPL, with the cheapest tool — the audit, at A$14.30 — returning the
+largest share of unqualified and unresponsive contacts. A cheap CPL on an
+undifferentiated event is a symptom, not a win.
+
+The tools now ask their qualifying questions **before** the payoff rather than
+during the wait, so every lead carries a budget and a timeline. `lib/qualify.ts`
+turns those into a tier — `qualified`, `review` or `nurture` — and the quality
+events below report it.
+
+| Event | Meta | dataLayer | Fires when |
+|---|---|---|---|
+| Qualified lead | `QualifiedLead` | `zib_lead_qualified` | Answers show real budget and intent |
+| Nurture lead | `NurtureLead` | `zib_lead_nurture` | No budget, or self-identified as researching |
+| Pack delivered | `PackDelivered` | `zib_pack_delivered` | The pack/audit actually rendered |
+| Call booked | `CallBooked` | `zib_call_booked` | A time was booked in the inline calendar |
+
+All four carry `lead_tier` and `lead_score` (0–100, the same scale as the
+`/start` pre-discovery qualifier). `QualifiedLead` also carries `value` = the
+score, so Meta value rules have something to work with later.
+
+`zib_lead` still fires for **every** lead, unchanged, so the historical numbers
+stay comparable across the change.
+
+### Don't repoint the ad sets at `QualifiedLead` on day one
+
+At current volumes — roughly 25 leads a week across all three tools, of which
+a share will be nurture — a qualified-only conversion sits well under Meta's
+50-per-week learning threshold. Point an ad set at it immediately and it will
+starve.
+
+Use it in this order:
+
+1. **Audiences first.** Exclude `NurtureLead` from prospecting; seed lookalikes
+   from `QualifiedLead`. This works at any volume.
+2. **Offline conversions second.** Push real HubSpot outcomes back to both
+   platforms — see `docs/offline-conversions.md`. This is the lever that
+   actually retrains the algorithms on money at low volume.
+3. **Optimise on the event last**, once ~50 qualified events have banked and
+   you can see the weekly rate holding.
+
+### Pack delivered vs. Lead
+
+`zibLead` fires when the server **accepts** the submission, before the pack
+streams. That's a reasonable conversion point but it isn't proof anyone
+received anything — a run that dies mid-stream still counts as a `Lead`.
+`PackDelivered` is the honest completion signal. If the gap between the two
+widens, generation is failing and the lead numbers are flattering.
+
+---
+
 ## ⚠️ The one way to break this
 
 `conversion.js` fires the Meta **Lead** event **directly**.
@@ -114,20 +170,35 @@ GTM → **Triggers → New → Custom Event**, event name `zib_lead`. Then:
 Mark `generate_lead` as a **key event** in GA4 (Admin → Events) so it shows up
 in reporting and can be imported into Google Ads.
 
+Repeat the same Custom Event trigger for `zib_lead_qualified`,
+`zib_lead_nurture`, `zib_pack_delivered` and `zib_call_booked`. Make
+`zib_call_booked` a Google Ads conversion in its own right — it's the closest
+thing on the site to a real outcome. `zib_lead_tier` and `zib_lead_score` are
+available as dataLayer variables on all four.
+
 ---
 
 ## Verifying it works
 
 1. Open `https://zibdigital.com.au/meta-ads-lab` with Pixel Helper open and
    the GTM preview connected.
-2. Run the tool with a real URL and a test email.
-3. The moment the gate submits and the stages start, you should see:
+2. Enter a URL. You should land on the **qualify** step, not the email gate —
+   there is no path to the pack that skips it.
+3. Answer both chips with a real budget (`$3k – $10k`), then submit the gate.
+4. The moment the gate submits and the stages start, you should see:
    - Pixel Helper: a **Lead** event with `content_name: Meta Ads Lab`
-   - GTM preview: a `zib_lead` event in the left-hand event list
+   - Pixel Helper: a **QualifiedLead** event with `lead_tier: qualified`
+   - GTM preview: `zib_lead` **and** `zib_lead_qualified` in the event list
    - The URL gains `#lead`
-   - Events Manager → **Test Events** shows the Lead within ~30s
-4. Repeat on `/audit` and on the homepage audit widget (the widget is the
-   highest-volume surface — don't skip it).
+   - Events Manager → **Test Events** shows both within ~30s
+5. When the pack finishes, `zib_pack_delivered` fires and a **calendar appears
+   inline** under the ad grid.
+6. Re-run with `Nothing yet` as the budget. You should get `NurtureLead`
+   instead of `QualifiedLead`, and **no calendar** — an email-follow-up note
+   in its place.
+7. Repeat on `/audit`. On the nurture path it should also skip the
+   "when suits you for that call?" question entirely.
+8. Then check the homepage audit widget — see the note below.
 
 If the pixel event doesn't appear but `zib_lead` does, the pixel isn't loading
 — go back to the prerequisite step.
@@ -161,6 +232,11 @@ HubSpot for nurture or reporting, the fix is either wiring `captureLead` into
 
 ## Not covered
 
+- **The embedded audit widget** (`assets/audit-widget.js`, on 20+ SEO and
+  location pages) still fires `zib_lead` only — it has no qualifying quiz, so
+  its leads carry no tier. That's deliberate: those placements are organic
+  surfaces, not where the ad budget goes. If paid traffic is ever pointed at
+  them, the widget needs the same treatment `/audit` got.
 - **`cheeks.html` and `jacqui.html`** carry their own copies of the audit code
   (private client pitch pages, excluded from the sitemap). They don't fire
   `zibLead`. Say the word if you want them tracked.

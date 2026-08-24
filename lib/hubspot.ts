@@ -16,7 +16,36 @@ export type Lead = {
   phone?: string;
   website: string;
   source?: string;
+  /** Qualification tier from lib/qualify.ts — "qualified" | "review" | "nurture". */
+  tier?: string;
+  /** 0-100 opportunity score, same scale as the /start pre-discovery qualifier. */
+  score?: number;
+  /**
+   * Ad click ids captured on landing (gclid / fbclid / utm_*). Stored on the
+   * contact so HubSpot outcomes — SQL, closed-won — can be uploaded back to
+   * Google Ads and Meta later. See docs/offline-conversions.md.
+   */
+  clickIds?: Record<string, string>;
 };
+
+/**
+ * Contact properties beyond the always-present set. They're sent separately
+ * because a HubSpot portal that hasn't had them created yet rejects the whole
+ * request with a 400 — see pushToHubSpot's retry.
+ */
+function optionalProperties(lead: Lead): Record<string, string> {
+  const props: Record<string, string> = {};
+  if (lead.tier) props.lead_tier = lead.tier;
+  if (typeof lead.score === "number") props.lead_score = String(lead.score);
+  for (const [k, v] of Object.entries(lead.clickIds || {})) {
+    if (!v) continue;
+    // Only the keys we document as properties — an unexpected query param
+    // shouldn't become a write to an arbitrary field.
+    if (!/^(gclid|wbraid|gbraid|fbclid|msclkid|utm_source|utm_medium|utm_campaign|utm_content|utm_term)$/.test(k)) continue;
+    props[k] = String(v).slice(0, 512);
+  }
+  return props;
+}
 
 export type AuditContext = {
   url: string;
@@ -59,26 +88,41 @@ async function pushToHubSpot(lead: Lead): Promise<string | null> {
     return null;
   }
 
-  const res = await fetch("https://api.hubapi.com/crm/v3/objects/contacts", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      properties: {
-        email: lead.email,
-        firstname: lead.firstname || "",
-        company: lead.company || "",
-        ...(lead.phone ? { phone: lead.phone } : {}),
-        website: lead.website,
-        lifecyclestage: "lead",
-        hs_lead_status: "NEW",
-        lead_source: lead.source || "Homepage audit",
+  const base: Record<string, string> = {
+    email: lead.email,
+    firstname: lead.firstname || "",
+    company: lead.company || "",
+    ...(lead.phone ? { phone: lead.phone } : {}),
+    website: lead.website,
+    lifecyclestage: "lead",
+    hs_lead_status: "NEW",
+    lead_source: lead.source || "Homepage audit",
+  };
+  const extra = optionalProperties(lead);
+
+  const post = (properties: Record<string, string>) =>
+    fetch("https://api.hubapi.com/crm/v3/objects/contacts", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
       },
-    }),
-    signal: AbortSignal.timeout(10_000),
-  });
+      body: JSON.stringify({ properties }),
+      signal: AbortSignal.timeout(10_000),
+    });
+
+  let res = await post({ ...base, ...extra });
+
+  // The tier, score and click-id properties have to be created in the portal
+  // before HubSpot will accept them, and it rejects the entire contact if any
+  // one of them is missing. Losing the lead over a property that hasn't been
+  // set up yet is the worse failure, so drop the extras and try once more —
+  // they start populating on their own the moment the portal has them.
+  if (!res.ok && res.status === 400 && Object.keys(extra).length) {
+    const detail = await res.text().catch(() => "");
+    console.warn("[hubspot] retrying without optional properties:", detail.slice(0, 300));
+    res = await post(base);
+  }
 
   if (res.ok) {
     const body = await res.json().catch(() => ({}));
@@ -243,6 +287,10 @@ export type LabQuiz = {
   url: string;
   lab: string;
   answers: { q: string; a: string }[];
+  /** Tier from lib/qualify.ts, so the note leads with the verdict. */
+  tier?: string;
+  score?: number;
+  clickIds?: Record<string, string>;
 };
 
 /**
@@ -263,6 +311,9 @@ export async function captureLabQuiz(quiz: LabQuiz): Promise<void> {
       email: quiz.email,
       website: quiz.url,
       source: `${quiz.lab} quiz`,
+      tier: quiz.tier,
+      score: quiz.score,
+      clickIds: quiz.clickIds,
     }).catch(() => null);
   }
   if (!contactId) return;
@@ -270,8 +321,24 @@ export async function captureLabQuiz(quiz: LabQuiz): Promise<void> {
   const safe = (s: string) =>
     String(s ?? "").replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
   const rows = quiz.answers.map((p) => `<li><b>${safe(p.q)}</b><br/>${safe(p.a)}</li>`).join("");
+
+  // Lead with the verdict. Whoever opens this contact is deciding whether to
+  // spend half an hour on the call, and that decision shouldn't require
+  // reading four answers and doing the arithmetic themselves.
+  const VERDICT: Record<string, string> = {
+    qualified: "✅ QUALIFIED — budget and intent both present. Worth the call.",
+    review: "🟡 REVIEW — real budget, softer timing. Clarify priorities first.",
+    nurture: "⛔ NURTURE — no budget or just researching. Do not call; email only.",
+  };
+  const verdict = quiz.tier
+    ? `<p><b>${safe(VERDICT[quiz.tier] || quiz.tier)}</b>${
+        typeof quiz.score === "number" ? ` <span>(score ${quiz.score}/100)</span>` : ""
+      }</p>`
+    : "";
+
   const note =
-    `<p><b>${safe(quiz.lab)} quiz</b> · answered while their results generated</p>` +
+    `<p><b>${safe(quiz.lab)} quiz</b> · answered before their results were generated</p>` +
+    verdict +
     `<p><b>Site:</b> ${safe(quiz.url)}</p><ul>${rows}</ul>`;
   await attachNote(contactId, note).catch((e) =>
     console.warn("[hubspot:lab-quiz-note]", (e as Error).message),

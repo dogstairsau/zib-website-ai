@@ -142,9 +142,21 @@
       <p>This was done in 30 seconds. <em>Imagine what we can do in 12 months.</em></p>
     </div>
 
-    <div class="audit-after">
-      <p>Want a senior strategist to walk you through how to fix these?</p>
-      <a class="btn btn-light" href="#cta">Book a conversation <span class="arr">→</span></a>
+    <!-- Branched on the qualification tier collected before the run.
+         Someone who has just read a report about their own site is at the
+         highest intent they will ever be — a qualified lead gets a calendar
+         right here rather than an anchor link to a section further down the
+         page. A nurture-tier lead gets the same report and no call, because
+         booking one wastes their time and the Growth team's. -->
+    <div class="audit-after" id="resAfter" hidden>
+      <div class="after-branch" id="afterQualified" hidden>
+        <p>Want a senior strategist to walk you through how to fix these?</p>
+        <div class="after-cal" id="afterCal" aria-live="polite"></div>
+      </div>
+      <div class="after-branch" id="afterNurture" hidden>
+        <p>Your full report is on its way to your inbox.</p>
+        <span class="after-note">We'll send the fixes worth doing first — no call, no follow-up sequence. Reply to that email any time you want a hand with it.</span>
+      </div>
     </div>
   </div>
 </div>

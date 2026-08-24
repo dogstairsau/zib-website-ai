@@ -1,7 +1,11 @@
 /**
- * Ads-lab micro-quiz capture. Fired while a prospect's pack generates —
- * budget + goal answers land as a HubSpot note on their contact record so
- * the strategist is briefed before the 24h follow-up call.
+ * Ads-lab qualifying quiz capture.
+ *
+ * These questions used to run while the pack generated, which made answering
+ * optional — the pack arrived either way. They now run before the gate, so
+ * every lab lead carries a budget and a goal, and this endpoint records the
+ * tier alongside them. The tier decides whether the lead reaches a human at
+ * all, so it is the most important field in the payload.
  */
 
 import { isValidEmail } from "../lib/site";
@@ -9,14 +13,27 @@ import { captureLabQuiz } from "../lib/hubspot";
 import { submitHubSpotForm } from "../lib/hubspotForms";
 import { sendLabQuizEmail } from "../lib/email";
 import { guard } from "../lib/rateLimit";
+import { qualify } from "../lib/qualify";
+import { clickIdFields } from "../lib/clickIds";
 
 export const config = { runtime: "edge" };
 
 type Body = {
   email?: string;
   url?: string;
+  /** Display labels — what sales reads in HubSpot. */
   budget?: string;
   goal?: string;
+  /** Stable keys — what the scoring reads. */
+  spendKey?: string;
+  goalKey?: string;
+  /** The browser sends its own tier so it can branch instantly. Declared so
+   *  the payload shape is documented, but deliberately never read — the tier
+   *  is re-scored below from the keys above. */
+  tier?: string;
+  score?: number | null;
+  /** Ad click ids, for offline conversion import. */
+  clickIds?: Record<string, string>;
   lab?: string;
 };
 
@@ -55,11 +72,20 @@ export default async function handler(req: Request): Promise<Response> {
   if (body.goal) answers.push({ q: "What matters most right now", a: clip(body.goal) });
   if (!answers.length) return json({ error: "No answers" }, 400);
 
+  // Re-score server-side rather than trusting the browser's tier. The page
+  // computes it too (so it can branch instantly), but this is a public
+  // endpoint and the tier drives who sales calls — it shouldn't be settable
+  // by whoever is posting.
+  const scored = qualify({ spend: clip(body.spendKey, 40), goal: clip(body.goalKey, 40) });
+
   const quiz = {
     email,
     url: clip(body.url, 300),
     lab: clip(body.lab) || "Ads Lab",
     answers,
+    tier: scored.tier,
+    score: scored.score,
+    clickIds: body.clickIds,
   };
   // Three best-effort paths: Resend notification works today; the Forms
   // submission lights up with HUBSPOT_PORTAL_ID + form GUIDs (routed to the
@@ -72,6 +98,10 @@ export default async function handler(req: Request): Promise<Response> {
       lead_source: quiz.lab,
       monthly_ad_spend: clip(body.budget),
       primary_goal: clip(body.goal),
+      // Dropped automatically on retry if the form doesn't carry them yet.
+      lead_tier: scored.tier,
+      lead_score: String(scored.score),
+      ...clickIdFields(body.clickIds),
     }).catch((e) => console.warn("[lab-quiz form]", e?.message)),
     captureLabQuiz(quiz).catch((e) => console.warn("[lab-quiz hubspot]", e?.message)),
   ]);

@@ -3,6 +3,7 @@ import { fetchSiteContent, normaliseUrl, isValidEmail } from "../lib/site";
 import { captureLead } from "../lib/hubspot";
 import { sendGoogleAdsPack } from "../lib/email";
 import { guard } from "../lib/rateLimit";
+import { qualify } from "../lib/qualify";
 import { GOOGLE_ADS_SYSTEM_PROMPT, googleAdsUserPrompt } from "../lib/prompts/google-ads";
 import { isSafeFetchUrl } from "../lib/safeUrl";
 import { auditTransparency, transparencyUrl } from "../lib/adsTransparency";
@@ -31,6 +32,16 @@ type Body = {
   phone?: string;
   notes?: string;
   sourceTag?: string;
+  goal?: string;
+  /** Qualifying answers collected before the run — labels for humans… */
+  spend?: string;
+  /** …and stable keys, which lib/qualify.ts scores. The browser sends its own
+   *  tier too so it can branch instantly, but the server never reads it —
+   *  this is a public endpoint and the tier decides who sales calls. */
+  spendKey?: string;
+  goalKey?: string;
+  /** Ad click ids captured on landing, for offline conversion import. */
+  clickIds?: Record<string, string>;
 };
 
 type AuditItem = { title: string; detail: string };
@@ -118,8 +129,18 @@ export default async function handler(req: Request): Promise<Response> {
       const notes = (body.notes || "").trim();
       const sourceTag = (body.sourceTag || "").trim();
       const source = sourceTag ? `Google Ads Lab · ${sourceTag}` : "Google Ads Lab";
+      const scored = qualify({ spend: (body.spendKey || "").trim(), goal: (body.goalKey || "").trim() });
       const hubspotPromise = captureLead(
-        { email, firstname, company: "", phone: phone || undefined, website: url, source },
+        {
+          email, firstname, company: "", phone: phone || undefined, website: url, source,
+          // Scored here, not taken from the browser — this is a public
+          // endpoint and the tier decides who sales calls. The contact is
+          // tiered the moment it's created rather than by a note that
+          // lands seconds later, so a list sorted by tier is right away.
+          tier: scored.tier,
+          score: scored.score,
+          clickIds: body.clickIds,
+        },
         { url, strategistText: notes ? `Notes from prospect:\n${notes}` : "" },
       ).catch((e) => console.warn("[google-ads lead]", e?.message));
 
