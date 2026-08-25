@@ -1,0 +1,640 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<title>Zib Autopilot · Set-and-forget marketing for small business | Zib Digital</title>
+<meta name="description" content="Zib Autopilot. Agency-grade Google Ads, Meta, SEO and content for founders and small businesses, run by a dedicated agent from $990/month. You set the budget ceiling. It does the rest." />
+<meta name="robots" content="noindex, nofollow" />
+<meta name="zib:source-tag" content="Autopilot page" />
+<!-- @include _partials/head.html -->
+<link rel="stylesheet" href="/assets/location.css">
+<link rel="stylesheet" href="/assets/orange-stats.css">
+<link rel="stylesheet" href="/assets/ai-sections.css">
+<style>
+  /* ─── RULES (what the agent does alone vs what escalates) ─── */
+  .rules { background: var(--paper); border-top: 0.5px solid var(--rule); border-bottom: 0.5px solid var(--rule); }
+  .rules-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(20px, 2.5vw, 32px); }
+  @media (max-width: 880px) { .rules-grid { grid-template-columns: 1fr; } }
+  .rule-card {
+    background: var(--bg); border: 0.5px solid var(--rule-2); border-radius: 14px;
+    padding: clamp(28px, 3vw, 40px); display: flex; flex-direction: column;
+  }
+  .rule-card.gated { background: var(--ink); border-color: var(--ink); color: #fff; }
+  .rule-card .lbl {
+    font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--accent); margin-bottom: 16px;
+  }
+  .rule-card h3 {
+    font-family: var(--display); font-weight: 500; font-size: clamp(22px, 2vw, 28px);
+    line-height: 1.15; letter-spacing: -0.02em; margin-bottom: 10px;
+  }
+  .rule-card > p { font-size: 15px; line-height: 1.55; color: var(--muted); margin-bottom: 24px; }
+  .rule-card.gated > p { color: rgba(255,255,255,0.55); }
+  .rule-card ul { list-style: none; flex: 1; }
+  .rule-card li {
+    display: flex; gap: 14px; padding: 13px 0; font-size: 15px; line-height: 1.5;
+    border-bottom: 0.5px solid var(--rule);
+  }
+  .rule-card.gated li { border-bottom-color: rgba(255,255,255,0.1); color: rgba(255,255,255,0.85); }
+  .rule-card li:last-child { border-bottom: 0; }
+  .rule-card li::before { flex-shrink: 0; font-family: var(--mono); font-weight: 500; width: 18px; color: var(--accent); }
+  .rule-card.instant li::before { content: "→"; }
+  .rule-card.gated li::before { content: "!"; }
+  .rules-foot {
+    margin-top: clamp(28px, 3vw, 40px); padding-top: 28px; border-top: 0.5px solid var(--rule-2);
+    display: grid; grid-template-columns: 1fr 1fr 1fr; gap: clamp(20px, 2.5vw, 40px);
+  }
+  @media (max-width: 880px) { .rules-foot { grid-template-columns: 1fr; gap: 24px; } }
+  .rules-foot .lbl { font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 8px; }
+  .rules-foot p { font-size: 15px; line-height: 1.55; color: var(--muted); }
+  .rules-foot strong { color: var(--ink); font-weight: 500; }
+
+  /* Local fix: shared ai-sections.css sets these bullets to a literal comma
+     (".tier li::before { content: \", \" }"). Overridden here so ticks render
+     correctly, without changing the shared file that Managed AI / AI Partner use. */
+  .tier li::before { content: "\2713"; }
+  .fit-card.yes li::before { content: "\2713"; }
+
+  /* ─── WHERE THE MONEY GOES ─── */
+  .split-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(20px, 2.5vw, 32px); }
+  @media (max-width: 880px) { .split-grid { grid-template-columns: 1fr; } }
+  .split-card {
+    border: 0.5px solid var(--rule-2); border-radius: 14px;
+    padding: clamp(24px, 2.6vw, 34px); background: var(--bg); display: flex; flex-direction: column;
+  }
+  .split-card.ours { background: var(--ink); border-color: var(--ink); color: #fff; }
+  .split-card .who { font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+  .split-card.ours .who { color: var(--accent); }
+  .split-card h3 { font-family: var(--display); font-weight: 500; font-size: 20px; letter-spacing: -0.02em; margin-bottom: 22px; }
+  .split-bar { display: flex; height: 44px; border-radius: 8px; overflow: hidden; margin-bottom: 14px; background: var(--dim); }
+  .split-card.ours .split-bar { background: rgba(255,255,255,0.08); }
+  .split-bar .fee { background: var(--muted-2); }
+  .split-card.ours .split-bar .fee { background: rgba(255,255,255,0.28); }
+  .split-bar .mkt { background: var(--accent); }
+  .split-legend { display: flex; justify-content: space-between; font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; color: var(--muted); margin-bottom: 22px; }
+  .split-card.ours .split-legend { color: rgba(255,255,255,0.55); }
+  .split-legend .amt { color: var(--ink); font-weight: 500; }
+  .split-card.ours .split-legend .amt { color: #fff; }
+  .split-card p { font-size: 15px; line-height: 1.55; color: var(--muted); margin-top: auto; }
+  .split-card.ours p { color: rgba(255,255,255,0.72); }
+
+  /* ─── GUARANTEE STRIP ─── */
+  .promise { border-bottom: 0.5px solid var(--rule); }
+  .promise-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-left: 0.5px solid var(--rule); }
+  @media (max-width: 880px) { .promise-grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 560px) { .promise-grid { grid-template-columns: 1fr; } }
+  .promise-cell { border-right: 0.5px solid var(--rule); padding: clamp(24px, 2.6vw, 36px); }
+  .promise-cell .n { font-family: var(--mono); font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--accent); margin-bottom: 14px; }
+  .promise-cell h4 { font-family: var(--display); font-weight: 500; font-size: 19px; letter-spacing: -0.02em; margin-bottom: 8px; }
+  .promise-cell p { color: var(--muted); font-size: 15px; line-height: 1.55; }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "serviceType": "Automated marketing management",
+  "name": "Zib Autopilot",
+  "description": "A dedicated marketing agent that runs Google Ads, Meta, SEO and content for founders and small businesses. You set the budget and the goal; the agent does the work. From $990 per month with no lock-in.",
+  "provider": { "@id": "https://zibdigital.com.au/#org" },
+  "areaServed": { "@type": "Country", "name": "Australia" }
+}
+</script>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- @include _partials/nav.html -->
+
+<main id="main">
+
+<!-- ─────────────────────────────  HERO  ───────────────────────────── -->
+<section class="loc-hero">
+  <div class="container">
+    <div class="mono eyebrow reveal">Zib Autopilot · do it without me</div>
+    <h1 class="hero-h reveal">Set it, forget it, <em>keep your margin.</em></h1>
+    <div class="loc-hero-row">
+      <p class="hero-sub reveal"><strong>Proper Google Ads, Meta, SEO and content — without paying agency prices for the privilege.</strong> A dedicated agent runs it against the budget and goal you set. Leave it alone for months, or jump in and change direction in thirty seconds. Either way, most of your money goes to the market instead of to a team of account managers.</p>
+      <div class="hero-ctas reveal">
+        <a class="btn btn-primary" href="#pricing">See the plans <span class="arr">→</span></a>
+        <a class="btn btn-outline" href="#maths">Where the money goes</a>
+      </div>
+    </div>
+    <div class="hero-meta reveal">
+      <span><span class="dot" aria-hidden="true"></span>From $990/month, no lock-in</span>
+      <span><span class="dot" aria-hidden="true"></span>You set a spend ceiling it can't cross</span>
+      <span><span class="dot" aria-hidden="true"></span>Every change logged in plain English</span>
+      <span><span class="dot" aria-hidden="true"></span>You own the accounts and the billing</span>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────  PREMISE  ───────────────────────────── -->
+<section class="loc-proof">
+  <div class="container">
+    <div class="loc-proof-head">
+      <div>
+        <div class="mono proof-eyebrow reveal">Why this exists</div>
+        <h2 class="proof-h reveal">The agency model was never built <em>for a business your size.</em></h2>
+      </div>
+      <p class="proof-sub reveal">A real agency retainer starts around three to five thousand a month, before you've spent a cent reaching anyone. If you're a founder, a start-up or a family business turning over what most Australian small businesses turn over, that's not a marketing budget — that's your marketing budget going to salaries. So you end up with one of three bad options: do it yourself badly at midnight, hand it to something cheap that quietly does nothing, or overcommit to an agency you can't really afford and hope it works before the money runs out. Autopilot is the fourth option. The same execution the big accounts get, run by an agent instead of a team, priced so the majority of your money still reaches the market.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────  WHERE THE MONEY GOES  ───────────────────────────── -->
+<section class="section" id="maths">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="mono section-eyebrow">Where the money goes</div>
+      <h2 class="section-h">Same $2,500 a month. <em>Three very different outcomes.</em></h2>
+      <p class="section-sub">This is the whole argument. Not that we're cheap — that <strong>a much larger share of what you spend actually reaches a customer.</strong> Illustrative, using a $2,500 total monthly marketing budget.</p>
+    </div>
+    <div class="split-grid reveal-stagger">
+
+      <div class="split-card">
+        <div class="who">Option A · Traditional agency</div>
+        <h3>Most of it pays for people.</h3>
+        <div class="split-bar" aria-hidden="true">
+          <div class="fee" style="width: 80%"></div>
+          <div class="mkt" style="width: 20%"></div>
+        </div>
+        <div class="split-legend"><span>Fees <span class="amt">$2,000</span></span><span>To market <span class="amt">$500</span></span></div>
+        <p>A real retainer buys you a strategist, a monthly report and someone to call. It also leaves you $500 to actually advertise with, which won't move anything. Excellent service, wrong size business.</p>
+      </div>
+
+      <div class="split-card">
+        <div class="who">Option B · Do it yourself</div>
+        <h3>All of it reaches the market. Badly.</h3>
+        <div class="split-bar" aria-hidden="true">
+          <div class="fee" style="width: 0%"></div>
+          <div class="mkt" style="width: 100%"></div>
+        </div>
+        <div class="split-legend"><span>Fees <span class="amt">$0</span></span><span>To market <span class="amt">$2,500</span></span></div>
+        <p>No fee, full budget, and nobody watching it. Campaigns get set up once and left. The real cost isn't the fee you didn't pay, it's the half of the spend that goes to the wrong searches for eighteen months.</p>
+      </div>
+
+      <div class="split-card ours">
+        <div class="who">Option C · Autopilot</div>
+        <h3>Most of it reaches the market. Well.</h3>
+        <div class="split-bar" aria-hidden="true">
+          <div class="fee" style="width: 40%"></div>
+          <div class="mkt" style="width: 60%"></div>
+        </div>
+        <div class="split-legend"><span>Fee <span class="amt">$990</span></span><span>To market <span class="amt">$1,510</span></span></div>
+        <p>Three times the working budget of Option A, actively managed every day instead of never. The trade is that you give up the relationship, not the work. If you want the strategist, that's Managed AI and it's worth the money — at a bigger budget.</p>
+      </div>
+
+    </div>
+    <p class="fit-foot" style="margin-top: 32px;">Ad spend is paid by you, direct to Google and Meta. We never touch it.</p>
+  </div>
+</section>
+
+<!-- ─────────────────────────────  HOW IT WORKS  ───────────────────────────── -->
+<section class="section how">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="mono section-eyebrow">How it works</div>
+      <h2 class="section-h">Three steps. <em>One of them takes your time.</em></h2>
+      <p class="section-sub">Ninety minutes at the start, then it runs. You keep the wheel — you just stop having to hold it.</p>
+    </div>
+    <div class="how-grid reveal-stagger">
+      <div class="how-step">
+        <div class="how-num">1</div>
+        <h3>Set the dials <em>once.</em></h3>
+        <p>Ninety minutes, one time, with an actual person. You set your monthly ceiling and what a customer is worth to you. We check your tracking works, write down which claims your business can legitimately make, and agree what the agent may do without asking. Get this right and everything after it runs itself.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-num">2</div>
+        <h3>The agent <em>runs it.</em></h3>
+        <p>Campaigns built, budgets paced, creative written and tested, negative keywords added, landing pages shipped, content published. Daily, not monthly. You get access to your agent to ask for anything, change direction, or interrogate a decision, by chat or just by replying to its email.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-num">3</div>
+        <h3>Check in <em>or don't.</em></h3>
+        <p>Every change and the reason for it lands in one running log, with a weekly summary email. Read it properly on a Sunday, skim it in three minutes, or leave it for two months and nothing breaks. The control is there when you want it and silent when you don't.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────  WHAT IT RUNS  ───────────────────────────── -->
+<section class="section" style="padding-bottom: clamp(40px, 5vw, 64px);">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="mono section-eyebrow">What the agent runs</div>
+      <h2 class="section-h">The channels, <em>and the work inside them.</em></h2>
+      <p class="section-sub">Google and Meta already automate bidding. That's not what you're paying for. <strong>You're paying for the work the platforms won't do:</strong> the creative, the landing pages, the offer, and the judgement about where the money should go.</p>
+    </div>
+
+    <div class="closeup" style="border-top: 0;">
+      <div class="reveal">
+        <div class="mono closeup-mono">01 · Google Ads</div>
+        <h3>Built, paced and pruned. <em>Every day.</em></h3>
+        <p>Campaign structure, ad copy in your voice, extensions, negative keyword hygiene and budget pacing against the target cost per lead you set at setup. Search terms reviewed daily rather than whenever someone gets to it.</p>
+        <p>If spend drifts off pace or cost per lead moves outside your agreed band, the agent corrects it and tells you what it did.</p>
+      </div>
+      <div class="visual reveal" aria-hidden="true">
+        <div class="vlabel">Change log · yesterday</div>
+        <div class="row"><span>Negatives added</span><span class="v">14</span></div>
+        <div class="row"><span>Ad variants live</span><span class="v">9</span></div>
+        <div class="row"><span>Budget shifted to Search</span><span class="v">+$40/day</span></div>
+        <div class="row"><span>Cost per lead vs target</span><span class="v">-$8.20</span></div>
+      </div>
+    </div>
+
+    <div class="closeup flip">
+      <div class="reveal">
+        <div class="mono closeup-mono">02 · Meta Ads</div>
+        <h3>New creative weekly. <em>Not quarterly.</em></h3>
+        <p>The reason most small Meta accounts stall is creative fatigue, and the reason creative fatigues is that nobody has time to make more. The agent writes and ships new angles continuously, kills what doesn't work, and scales what does.</p>
+        <p>Audiences, placements and spend paced against the same commercial number as search, so the two channels stop competing for credit.</p>
+      </div>
+      <div class="visual paper reveal" aria-hidden="true">
+        <div class="vlabel">Change log · this week</div>
+        <div class="row"><span>New creative shipped</span><span class="v">11</span></div>
+        <div class="row"><span>Killed on fatigue</span><span class="v">4</span></div>
+        <div class="row"><span>Held for claim check</span><span class="v">1</span></div>
+        <div class="row"><span>Cost per lead trend</span><span class="v">-12%</span></div>
+      </div>
+    </div>
+
+    <div class="closeup">
+      <div class="reveal">
+        <div class="mono closeup-mono">03 · SEO + content</div>
+        <h3>Published, not <em>proposed.</em></h3>
+        <p>Technical fixes, service and location pages, internal linking, schema, and articles that answer what your buyers actually search. Written, reviewed against your claims list, and published on a schedule.</p>
+        <p>The compounding channel, running underneath the paid channels rather than sold as a separate retainer.</p>
+      </div>
+      <div class="visual reveal" aria-hidden="true">
+        <div class="vlabel">Change log · this month</div>
+        <div class="row"><span>Pages published</span><span class="v">6</span></div>
+        <div class="row"><span>Technical issues fixed</span><span class="v">23</span></div>
+        <div class="row"><span>Internal links added</span><span class="v">88</span></div>
+        <div class="row"><span>Schema errors</span><span class="v">0</span></div>
+      </div>
+    </div>
+
+    <div class="closeup flip">
+      <div class="reveal">
+        <div class="mono closeup-mono">04 · Landing pages</div>
+        <h3>When the page is the problem, <em>we rebuild the page.</em></h3>
+        <p>This is the part no ad management tool can do. If the data says your traffic is fine and your page is the bottleneck, the agent builds a new one — and Zib has been building websites since 2009, so it's built on something that works.</p>
+        <p>Most agencies will send you a recommendation about your landing page. This one ships it.</p>
+      </div>
+      <div class="visual paper reveal" aria-hidden="true">
+        <div class="vlabel">Landing page · last rebuild</div>
+        <div class="row"><span>Conversion rate before</span><span class="v">1.9%</span></div>
+        <div class="row"><span>Conversion rate after</span><span class="v">4.4%</span></div>
+        <div class="row"><span>Turnaround</span><span class="v">6 days</span></div>
+        <div class="row"><span>Meetings required</span><span class="v">0</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────  THE RULES  ───────────────────────────── -->
+<section class="section rules" id="rules">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="mono section-eyebrow">The rules</div>
+      <h2 class="section-h">What it does on its own. <em>What always gets a human.</em></h2>
+      <p class="section-sub">Autopilot is not an agent with your credit card and no supervision. It has an explicit list of what it may do unsupervised, and a hard stop on everything else. <strong>You'll get this list in writing before you sign anything.</strong></p>
+    </div>
+
+    <div class="rules-grid reveal-stagger">
+      <div class="rule-card instant">
+        <div class="lbl">Immediate · no approval needed</div>
+        <h3>The agent acts, then tells you.</h3>
+        <p>Anything inside the goals, budget and claims you agreed at setup happens straight away and appears in your log.</p>
+        <ul>
+          <li>Pausing, resuming or restructuring campaigns</li>
+          <li>Moving budget between channels inside the agreed band</li>
+          <li>Adjusting target cost per lead toward your stated goal</li>
+          <li>Writing and shipping new ad creative using approved claims</li>
+          <li>Adding negative keywords, fixing feeds, correcting tracking</li>
+          <li>Publishing content and technical SEO fixes</li>
+        </ul>
+      </div>
+      <div class="rule-card gated">
+        <div class="lbl">Held · a human reviews first</div>
+        <h3>The agent stops and escalates.</h3>
+        <p>These never happen automatically, no matter how confidently the agent thinks it has the right answer.</p>
+        <ul>
+          <li>Any new factual claim not already on your approved list</li>
+          <li>Superlatives, guarantees, pricing promises or comparisons</li>
+          <li>Spend changes beyond your agreed monthly ceiling</li>
+          <li>Bidding on a competitor's brand name</li>
+          <li>Anything touching health, finance, legal or licensing claims</li>
+          <li>A change of strategy rather than a change of setting</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="rules-foot reveal">
+      <div>
+        <div class="lbl">You never get handed off</div>
+        <p>When something escalates, a Zib strategist reviews it internally and the answer comes back through your agent. <strong>You are never asked to get on a call about it.</strong> No humans disappear from the business — they just stop being your problem.</p>
+      </div>
+      <div>
+        <div class="lbl">Approved claims list</div>
+        <p>At setup we write down every factual claim your business is entitled to make, with the evidence behind it. <strong>The agent cannot add to that list.</strong> Nothing goes live asserting something we haven't verified.</p>
+      </div>
+      <div>
+        <div class="lbl">Your money stays yours</div>
+        <p>You own your Google Ads and Meta accounts, your card stays on your own billing, and Zib holds access only. <strong>We never front, hold or invoice your ad spend</strong> — the only thing you pay us is the monthly fee.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────  RESPONSE TIMES  ───────────────────────────── -->
+<section class="section compare">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="mono section-eyebrow">Response times</div>
+      <h2 class="section-h">Instant answer. <em>Honest timeline.</em></h2>
+      <p class="section-sub">The agent replies to everything immediately — it tells you what it has already done and what it's holding. Where something needs a human behind the scenes, here's what you're actually waiting for.</p>
+    </div>
+    <div class="reveal" style="overflow-x: auto;">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Request type</th>
+            <th><span class="col-tag">Acknowledged</span>Agent replies</th>
+            <th><span class="col-tag">Resolved</span>Change is live</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Pause, resume or shift budget</td><td class="check">Immediately</td><td class="check">Immediately</td></tr>
+          <tr><td>New ad creative, approved claims</td><td class="check">Immediately</td><td class="check">Same day</td></tr>
+          <tr><td>Spend pacing anomaly</td><td class="check">Immediately</td><td class="check">Within the hour</td></tr>
+          <tr><td>New claim needing verification</td><td class="check">Immediately</td><td>Same business day</td></tr>
+          <tr><td>New landing page or content piece</td><td class="check">Immediately</td><td>Within 5 business days</td></tr>
+          <tr><td>Change of strategy or scope</td><td class="check">Immediately</td><td>Next business day</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="fit-foot" style="margin-top: 28px;">Business hours are 9–5 AEST, Monday to Friday. Spend anomalies are watched around the clock.</p>
+  </div>
+</section>
+
+<!-- ─────────────────────────────  PRICING  ───────────────────────────── -->
+<section class="pricing" id="pricing">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="mono section-eyebrow">Plans</div>
+      <h2 class="section-h">Priced on output. <em>Not on hours.</em></h2>
+      <p class="section-sub">Talk to your agent as much as you like — conversation is never metered. The plans differ on how much work gets shipped. <strong>Every plan includes the full rule set, the spend ceiling, the change log and the service guarantee.</strong></p>
+    </div>
+    <div class="tier-grid reveal-stagger">
+
+      <div class="tier">
+        <h3>Solo</h3>
+        <p class="desc">One channel, run properly. For founders and local businesses getting paid media working for the first time.</p>
+        <div class="price"><span class="cur">$</span>990<span class="per">/month</span></div>
+        <div class="setup">+ $490 one-off setup · from $1,000/mo ad spend</div>
+        <ul>
+          <li>Google Ads <em>or</em> Meta — one channel</li>
+          <li>Up to 10 change requests a month</li>
+          <li>New ad creative every week</li>
+          <li>Weekly change log and summary email</li>
+          <li>Approved claims list and full rule set</li>
+          <li>Landing pages not included</li>
+        </ul>
+        <a class="tier-cta" href="#start">Start on Solo <span>→</span></a>
+      </div>
+
+      <div class="tier featured">
+        <span class="badge">Most picked</span>
+        <h3>Core</h3>
+        <p class="desc">Both paid channels plus content, working against one number. Where most small businesses land.</p>
+        <div class="price"><span class="cur">$</span>1,500<span class="per">/month</span></div>
+        <div class="setup">+ $490 one-off setup · from $2,500/mo ad spend</div>
+        <ul>
+          <li>Google Ads <em>and</em> Meta</li>
+          <li>Up to 25 change requests a month</li>
+          <li>4 content pieces or service pages a month</li>
+          <li>1 landing page rebuild per quarter</li>
+          <li>Same-business-day claim verification</li>
+          <li>Cross-channel budget allocation</li>
+        </ul>
+        <a class="tier-cta" href="#start">Start on Core <span>→</span></a>
+      </div>
+
+      <div class="tier">
+        <h3>Max</h3>
+        <p class="desc">Everything at volume, with a new landing page every month. For when the account has outgrown the first two.</p>
+        <div class="price"><span class="cur">$</span>2,900<span class="per">/month</span></div>
+        <div class="setup">+ $490 one-off setup · from $6,000/mo ad spend</div>
+        <ul>
+          <li>All paid channels plus full SEO programme</li>
+          <li>Unlimited change requests, fair use</li>
+          <li>12 content pieces or service pages a month</li>
+          <li>1 landing page rebuild every month</li>
+          <li>Priority escalation queue</li>
+          <li>Monthly commercial summary, written not presented</li>
+        </ul>
+        <a class="tier-cta" href="#start">Start on Max <span>→</span></a>
+      </div>
+
+    </div>
+    <p class="footnote">All prices AUD, excluding GST · Direct debit monthly · Cancel any month, no exit fee · Pause for a quiet season, no charge · Ad spend is paid by you, direct to Google and Meta</p>
+  </div>
+</section>
+
+<!-- ─────────────────────────────  THE GUARANTEE  ───────────────────────────── -->
+<section class="section promise">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="mono section-eyebrow">What we guarantee</div>
+      <h2 class="section-h">We guarantee the work. <em>Nobody can guarantee the result.</em></h2>
+      <p class="section-sub">When the budget is tight, the thing you actually need protecting against is paying every month for work that never happened. Nobody can honestly guarantee you a number of leads. <strong>So we guarantee the things that are in our control</strong> — and put your money back if we miss.</p>
+    </div>
+    <div class="promise-grid reveal-stagger">
+      <div class="promise-cell">
+        <div class="n">01</div>
+        <h4>The work ships</h4>
+        <p>If we don't deliver the output your plan specifies in a given month, that month is refunded. Not credited, not made up next month. Refunded.</p>
+      </div>
+      <div class="promise-cell">
+        <div class="n">02</div>
+        <h4>Every change is visible</h4>
+        <p>Every action taken on your account appears in your log with the reason behind it. If it isn't in the log, we didn't do it.</p>
+      </div>
+      <div class="promise-cell">
+        <div class="n">03</div>
+        <h4>Response times hold</h4>
+        <p>The timings in the table above are commitments, not aspirations. Miss them repeatedly in a month and the same refund applies.</p>
+      </div>
+      <div class="promise-cell">
+        <div class="n">04</div>
+        <h4>You keep everything</h4>
+        <p>Accounts, campaigns, creative, content and pages are yours and stay in your name. Leave whenever you like and it all keeps running.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────  FIT  ───────────────────────────── -->
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="mono section-eyebrow">Honest fit</div>
+      <h2 class="section-h">This suits some businesses. <em>It's wrong for others.</em></h2>
+      <p class="section-sub">We'd rather turn you away now than take four months of fees off a business that was never going to get value from it.</p>
+    </div>
+    <div class="fit-grid reveal-stagger">
+      <div class="fit-card yes">
+        <h3><span class="mark" aria-hidden="true">✓</span> Autopilot is right if</h3>
+        <ul>
+          <li>You're a founder, start-up or small business without an agency budget</li>
+          <li>You have something that already sells — customers, reviews, repeat business</li>
+          <li>You'd rather your money bought ads than account management</li>
+          <li>You want to set a ceiling and stop thinking about it</li>
+          <li>You've been doing it yourself and know it's not getting the attention it needs</li>
+          <li>You can put at least $1,000 a month behind it</li>
+        </ul>
+      </div>
+      <div class="fit-card no">
+        <h3><span class="mark" aria-hidden="true">×</span> Go elsewhere if</h3>
+        <ul>
+          <li>You want a strategist who knows your business by name — that's Managed AI</li>
+          <li>You're pre-launch, with no offer, no customers and nothing to advertise yet</li>
+          <li>You're in health, finance, legal or another claim-heavy regulated space</li>
+          <li>You need a person accountable in the room for a board or investors</li>
+          <li>Your total budget is under $1,000 a month — spend a few months building it first</li>
+          <li>You're hoping the monthly fee includes your ad spend. It doesn't</li>
+        </ul>
+      </div>
+    </div>
+    <p class="fit-foot">Not sure which side you're on? <a href="/managed-ai">Compare against Managed AI →</a></p>
+  </div>
+</section>
+
+<!-- ─────────────────────────────  COMPARE  ───────────────────────────── -->
+<section class="section compare">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="mono section-eyebrow">Autopilot vs Managed AI</div>
+      <h2 class="section-h">Same engine. <em>Different amount of human.</em></h2>
+      <p class="section-sub">Autopilot is the on-ramp. Start here while the budget is small, move up when the account is big enough that a strategist pays for themselves.</p>
+    </div>
+    <div class="reveal" style="overflow-x: auto;">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>&nbsp;</th>
+            <th><span class="col-tag">Do it without me</span>Autopilot</th>
+            <th><span class="col-tag">Do it for me</span>Managed AI</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Monthly fee</td><td>$990 – $2,900</td><td>Scoped to your account</td></tr>
+          <tr><td>Built for</td><td>Founders and small business</td><td>Established accounts at scale</td></tr>
+          <tr><td>Human contact</td><td>Setup session only</td><td>Senior strategist on the account</td></tr>
+          <tr><td>Meetings after setup</td><td class="check">None</td><td>Weekly or monthly, your call</td></tr>
+          <tr><td>Reporting</td><td>Live change log + weekly email</td><td>Weekly commercial reporting, walked through</td></tr>
+          <tr><td>Strategy changes</td><td>Escalated and answered in writing</td><td>Owned by your strategist</td></tr>
+          <tr><td>Regulated industries</td><td class="x">Not supported</td><td class="check">Supported</td></tr>
+          <tr><td>Custom commercial modelling</td><td class="x">No</td><td class="check">Yes</td></tr>
+          <tr><td>Time to launch</td><td class="check">About a week</td><td>About four weeks</td></tr>
+          <tr><td>Pause for a quiet season</td><td class="check">Any time, no charge</td><td>By arrangement</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────  FAQ  ───────────────────────────── -->
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal" style="text-align: center; margin-left: auto; margin-right: auto;">
+      <div class="mono section-eyebrow" style="display: inline-flex;">FAQ</div>
+      <h2 class="section-h">The questions <em>people actually ask.</em></h2>
+    </div>
+    <div class="faq-list">
+
+      <details class="faq-item reveal">
+        <summary>We're a small business. Is this actually for us? <span class="plus" aria-hidden="true"></span></summary>
+        <p>It's the reason it exists. Every other option at your size is compromised: real agencies price themselves out, cheap ones take the fee and do nothing, and doing it yourself means it gets attention at eleven at night when you have the energy. Autopilot gives a $2,500-a-month business the same execution a $25,000-a-month account gets, because an agent doing the work costs roughly the same either way. What you give up is the relationship — no strategist who knows your name, no one to call. For a lot of small businesses that was never the part they were paying for anyway.</p>
+      </details>
+
+      <details class="faq-item reveal">
+        <summary>Can I pause during a quiet season? <span class="plus" aria-hidden="true"></span></summary>
+        <p>Yes, at no charge, for as long as you need. Plenty of businesses are seasonal and it's daft to pay a management fee through the months you're not trading. Tell your agent you're going quiet, everything is paused in place, and it picks up where it left off with all your history intact. No restart fee, no renegotiation.</p>
+      </details>
+
+      <details class="faq-item reveal">
+        <summary>Is there really no human involved? <span class="plus" aria-hidden="true"></span></summary>
+        <p>There are humans — you just never have to deal with them. Zib strategists review anything the agent escalates, verify new claims, and keep an eye on the accounts. The promise isn't that nobody is there. The promise is that you are never asked to attend a meeting, take a call, or manage a relationship to get your marketing done.</p>
+      </details>
+
+      <details class="faq-item reveal">
+        <summary>Why is setup still a real conversation? <span class="plus" aria-hidden="true"></span></summary>
+        <p>Because it's the one part that can't be automated well, and everything downstream depends on it. In ninety minutes we check your conversion tracking actually works, agree what a customer is worth to you, write down which claims your business can legitimately make, and set the ceiling and boundaries the agent operates inside. Skip it and you get an agent confidently optimising toward the wrong number — which is exactly how small accounts get quietly wasted. It's the highest-leverage ninety minutes in the product, and it's why there's a one-off setup fee.</p>
+      </details>
+
+      <details class="faq-item reveal">
+        <summary>How do I ask for something? <span class="plus" aria-hidden="true"></span></summary>
+        <p>Talk to your agent directly in the browser, or just reply to any email it sends you — both land in the same place, with the full history of your account behind them. It remembers what you've tried, what failed, what you liked and what you told it never to do again. Ask it to pause something, change direction, explain a decision, or justify last month's spend, and you get an answer straight away rather than a diary invitation.</p>
+      </details>
+
+      <details class="faq-item reveal">
+        <summary>What stops the agent doing something stupid with my budget? <span class="plus" aria-hidden="true"></span></summary>
+        <p>A hard ceiling you set at setup, which the agent cannot exceed without a human approving it. Within that ceiling it can move money between channels and campaigns; beyond it, it stops and escalates. Spend pacing is monitored continuously, and anomalies break through to a human within the hour rather than waiting for a batch review.</p>
+      </details>
+
+      <details class="faq-item reveal">
+        <summary>Who pays for the ads? <span class="plus" aria-hidden="true"></span></summary>
+        <p>You do, directly. Your Google Ads and Meta accounts stay in your name with your card on the billing, and Zib holds access only. We never front your spend, never hold it, and never invoice it. The only money that moves between us is the monthly fee. It keeps your costs transparent and it keeps you in control of the tap.</p>
+      </details>
+
+      <details class="faq-item reveal">
+        <summary>Will an AI write something embarrassing or untrue about my business? <span class="plus" aria-hidden="true"></span></summary>
+        <p>It's the risk we've designed hardest against. Every piece of copy is checked against your approved claims list before it can go live, and the agent is not permitted to add anything to that list. If copy asserts a fact we haven't verified — an award, a response time, a "number one" — it's blocked and sent to a human. Superlatives, guarantees and comparative claims are blocked by default regardless.</p>
+      </details>
+
+      <details class="faq-item reveal">
+        <summary>What if it doesn't work? <span class="plus" aria-hidden="true"></span></summary>
+        <p>Cancel any month, no exit fee, and you keep the accounts, creative, content and pages. We won't guarantee a specific number of leads because nobody honestly can. We do guarantee the work ships, the log is complete and the response times hold — and if we miss on those, that month is refunded.</p>
+      </details>
+
+      <details class="faq-item reveal">
+        <summary>Why is there a minimum ad spend at all? <span class="plus" aria-hidden="true"></span></summary>
+        <p>Because below about a thousand dollars a month there isn't enough data for anyone — human or agent — to optimise against, and the fee ends up being most of what you spend. That's a bad deal for you and it produces a bad result we'd get blamed for. The minimum protects you more than it protects us. If you're under it, put the money into ads directly for a few months and come back when there's a budget worth managing.</p>
+      </details>
+
+      <details class="faq-item reveal">
+        <summary>Can I move up to Managed AI later? <span class="plus" aria-hidden="true"></span></summary>
+        <p>Yes, and a good number of clients do once their account is big enough to warrant a strategist. Everything transfers, because it's the same accounts and the same team behind it. Autopilot isn't a walled-off product, it's the first rung.</p>
+      </details>
+
+      <details class="faq-item reveal">
+        <summary>What if I need more work than my plan includes? <span class="plus" aria-hidden="true"></span></summary>
+        <p>Extra work is either queued to the following month or quoted, your choice — and the agent will tell you which way it's leaning before anything is charged. Conversation is never metered, only shipped output. If you're consistently pushing past your plan, that's usually a sign you'd be better off a tier up, and the agent will say so.</p>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<!-- ─────────────────────────────  FINAL CTA  ───────────────────────────── -->
+<section class="section final-cta" id="start">
+  <div class="container">
+    <div class="mono section-eyebrow reveal">Zib Autopilot</div>
+    <h2 class="reveal">Ninety minutes now. <em>Then it just runs.</em></h2>
+    <p class="reveal">Book the setup session and tell us your budget and your goal. If it turns out you're too small for this to work yet, or big enough that you'd get more from Managed AI, we'll say so rather than sign you up.</p>
+    <div class="cta-buttons reveal">
+      <a class="btn btn-primary" href="mailto:michael.glasser@zibdigital.com.au?subject=Zib%20Autopilot%20-%20I%27d%20like%20to%20start">Book the setup session <span class="arr">→</span></a>
+      <a class="btn btn-outline" href="/audit">Run a free audit first</a>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- @include _partials/footer.html -->
+<!-- @include _partials/scripts.html -->
+
+</body>
+</html>

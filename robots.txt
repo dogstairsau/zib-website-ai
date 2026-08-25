@@ -10,4 +10,7 @@ Disallow: /api/
 # they'd duplicate the canonical /audit and confuse search results)
 Disallow: /p/
 
+# Unlisted product page — noindex, linked only from direct outreach
+Disallow: /autopilot
+
 Sitemap: https://zibdigital.com.au/sitemap.xml
