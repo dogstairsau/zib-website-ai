@@ -1,0 +1,194 @@
+<!-- Google Ads Lab · the run itself: qualify → gate → live stages → the pack.
+     Sits directly after the hero section that carries -form.html. Everything
+     but the stages starts hidden; google-ads-lab.js drives the reveal. -->
+  <!-- QUALIFY
+       Asked BEFORE the pack is built rather than during the wait. When these
+       ran during generation the pack arrived either way, so answering was
+       optional and most people skipped it — leaving sales with leads that
+       carried no budget or intent signal. Gating the payoff on two taps means
+       every lead now arrives qualified or disqualified. -->
+  <section id="qualify" class="gal-gate gal-qualify" hidden>
+    <div class="container">
+      <div class="ready-flash">URL accepted</div>
+      <div class="mono eyebrow">Step 2 of 3</div>
+      <h2>Three quick things, <em>so the pack fits.</em></h2>
+      <p class="qual-sub">
+        The keyword themes, the bidding and the budget plan all change depending on these. Takes about six seconds.
+      </p>
+      <div id="qualBody" class="qual-body"></div>
+    </div>
+  </section>
+
+  <!-- GATE -->
+  <section id="gate" class="gal-gate" hidden>
+    <div class="container">
+      <div class="ready-flash">URL accepted</div>
+      <div class="mono eyebrow">Step 3 of 3</div>
+      <h2>Last thing — <em>where do we send the pack?</em></h2>
+      <p style="max-width:54ch;color:rgba(255,255,255,0.72);font-size:clamp(15px,1.2vw,17px);line-height:1.55;margin-top:18px;">
+        Once you submit your details, we check the Transparency Center, read your brand and build the full Google Ads pack right here. The complete pack also lands in your inbox.
+      </p>
+      <div id="gateCard" class="gate-card" style="margin-top:clamp(40px,5vw,56px);max-width:560px;">
+        <form id="gateForm" class="gate-form">
+          <input type="text" name="name" placeholder="Your name" autocomplete="name" required />
+          <input type="email" name="email" placeholder="Email · we'll send the pack here" autocomplete="email" required />
+          <input type="tel" name="phone" placeholder="Phone · optional, for the strategy call" autocomplete="tel" />
+          <button type="submit" class="submit">Build my Google Ads <span class="arr">→</span></button>
+        </form>
+        <div class="fineprint">No spam. No newsletter. Senior strategist responds within 24h.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- STAGES -->
+  <section id="flow" class="gal-stages">
+    <div class="container">
+      <div class="head reveal">
+        <div>
+          <div class="mono eyebrow">Live · Right now</div>
+          <h2>The AI builds the account. <em>Our strategists own the call.</em></h2>
+        </div>
+        <div id="elapsed" class="gal-elapsed"><span class="pulse"></span><span class="t">0.0s</span></div>
+      </div>
+      <div class="gal-stage-grid">
+        <div class="gal-stage" data-stage="0">
+          <div class="num">01</div><div class="indicator" aria-hidden="true"></div>
+          <h3>Reads your site + ads.</h3>
+          <p>Crawls your pages and checks the Google Ads Transparency Center for the ads your domain is already running.</p>
+          <div class="timer">Ready</div>
+        </div>
+        <div class="gal-stage" data-stage="1">
+          <div class="num">02</div><div class="indicator" aria-hidden="true"></div>
+          <h3>Audits the opportunity.</h3>
+          <p>A commercial read on where your Google Ads are leaking spend, and the gaps a Premier Partner would attack first.</p>
+          <div class="timer">Ready</div>
+        </div>
+        <div class="gal-stage" data-stage="2">
+          <div class="num">03</div><div class="indicator" aria-hidden="true"></div>
+          <h3>Writes the ads.</h3>
+          <p>A full Responsive Search Ad, keyword themes and a Performance Max asset group, all inside Google's character limits.</p>
+          <div class="timer">Ready</div>
+        </div>
+        <div class="gal-stage" data-stage="3">
+          <div class="num">04</div><div class="indicator" aria-hidden="true"></div>
+          <h3>Generates the visuals.</h3>
+          <p>Performance Max image assets in landscape, square and portrait, ready to drop into an asset group.</p>
+          <div class="timer">Ready</div>
+        </div>
+      </div>
+
+      <!-- Live brand board + micro-quiz — only visible during a run -->
+      <div id="waitHub" class="mal-hub" hidden>
+        <div class="hub-card">
+          <div class="hub-label"><span class="pulse"></span>Live · What the system is finding</div>
+          <div class="hub-brand-head">
+            <div class="hub-logo" id="hubLogo"></div>
+            <div>
+              <div class="hub-name" id="hubName"><span class="skel"></span></div>
+              <div class="hub-cat" id="hubCat"></div>
+            </div>
+          </div>
+          <div class="hub-row" id="hubTagline" hidden><span class="k">Brand essence</span><span class="v"></span></div>
+          <div class="hub-row" id="hubColors" hidden><span class="k">Palette</span>
+            <div class="hub-swatches" id="hubSwatches"></div>
+          </div>
+          <div class="hub-row" id="hubKw" hidden><span class="k">Keyword focus</span><span class="v"></span></div>
+          <div class="hub-ticker" id="hubTicker">Crawling the site + Transparency Center…</div>
+        </div>
+        <div class="hub-card hub-quiz" id="quizCard">
+          <div class="hub-label" style="color:var(--muted);">While it builds · 30 seconds</div>
+          <div id="quizBody"></div>
+        </div>
+        <p class="mal-hub-note">Full pack takes about 90 seconds · lands here + in your inbox</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVEAL -->
+  <section id="reveal" class="gal-reveal" hidden>
+    <div class="container">
+      <div class="head reveal">
+        <div>
+          <div class="mono eyebrow">Generated for <span id="brandLabel">your brand</span></div>
+          <h2>Your <em>Google Ads pack.</em></h2>
+        </div>
+        <p class="meta" style="font-family:var(--mono);font-size:11px;letter-spacing:0.12em;color:var(--muted);text-transform:uppercase;max-width:32ch;line-height:1.6;">
+          Search ad, keyword themes and a Performance Max asset group. Full pack also lives in your inbox.
+        </p>
+      </div>
+
+      <!-- audit -->
+      <div class="gal-block">
+        <div class="gal-block-label">The Google Ads read</div>
+        <div id="transpSummary" class="gal-transp-summary" hidden></div>
+        <div id="auditGrid" class="gal-audit-grid"></div>
+        <a id="transpLink" class="gal-transp-link" href="https://adstransparency.google.com/?region=AU" target="_blank" rel="noopener">See the live ads in the Transparency Center →</a>
+      </div>
+
+      <!-- search ad -->
+      <div class="gal-block">
+        <div class="gal-block-label">Responsive Search Ad</div>
+        <h3>How it looks on Google.</h3>
+        <p style="color:var(--muted);font-size:15px;margin:6px 0 20px;max-width:60ch;">Google rotates your headlines and descriptions. Here's one combination, with the full set of assets below.</p>
+        <div id="serp" class="gad-serp"></div>
+        <div class="gal-block" style="margin-top:28px;">
+          <div class="gal-cols">
+            <div>
+              <div class="gal-sublabel">Headlines (<span id="hCount">0</span> · 30 char max)</div>
+              <div id="rsaHeadlines" class="gal-chips"></div>
+            </div>
+            <div>
+              <div class="gal-sublabel">Descriptions (90 char max)</div>
+              <ul id="rsaDescriptions" class="gal-list"></ul>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- keyword themes -->
+      <div class="gal-block">
+        <div class="gal-block-label">Keyword themes</div>
+        <h3>What we'd bid on.</h3>
+        <div id="kwGrid" class="gal-kw-grid" style="margin-top:18px;"></div>
+      </div>
+
+      <!-- PMAX -->
+      <div class="gal-block">
+        <div class="gal-block-label">Performance Max asset group</div>
+        <h3>A full asset group, ready to load.</h3>
+        <div id="pmaxImgGrid" class="gal-img-grid" style="margin-top:20px;"></div>
+        <div class="gal-cols" style="margin-top:32px;">
+          <div>
+            <div class="gal-sublabel">Short headlines</div>
+            <div id="pmaxShort" class="gal-chips"></div>
+            <div class="gal-sublabel" style="margin-top:24px;">Long headlines</div>
+            <ul id="pmaxLong" class="gal-list"></ul>
+          </div>
+          <div>
+            <div class="gal-sublabel">Descriptions</div>
+            <ul id="pmaxDesc" class="gal-list"></ul>
+            <div class="gal-sublabel" style="margin-top:24px;">Callouts</div>
+            <div id="pmaxCallouts" class="gal-chips"></div>
+            <div class="gal-sublabel" style="margin-top:24px;">Sitelinks</div>
+            <ul id="pmaxSitelinks" class="gal-list"></ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Branched on the tier collected before the pack was built. Someone
+           looking at an account structure written for their own business is
+           at peak intent — a qualified lead gets a calendar here rather than
+           waiting on the 24h follow-up. A nurture lead gets the pack, no call. -->
+      <div class="gal-after" id="revealAfter" hidden>
+        <div class="after-branch" id="afterQualified" hidden>
+          <h3>Want Zib to implement this entire strategy?</h3>
+          <p>Thirty minutes with a senior strategist who's already read your pack — how to run it, what it costs, what to expect. No deck, no pitch.</p>
+          <div class="after-cal" id="afterCal" aria-live="polite"></div>
+        </div>
+        <div class="after-branch" id="afterNurture" hidden>
+          <h3>Your full pack is on its way to your inbox.</h3>
+          <p class="after-note">The search ad, the keyword themes and the Performance Max group — no call, no follow-up sequence. Reply to that email any time you want a hand loading them.</p>
+        </div>
+      </div>
+    </div>
+  </section>

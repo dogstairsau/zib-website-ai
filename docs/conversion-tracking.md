@@ -27,7 +27,7 @@ If you specifically want a URL-based conversion, you've got one — see
 | `/audit` | `audit.html` | `Website Audit` |
 | Audit widget (home, SEO + location pages, partner pages — 20+ placements) | `assets/audit-widget.js` | `Website Audit` |
 | `/meta-ads-lab` | `meta-ads-lab.html` | `Meta Ads Lab` |
-| `/google-ads-lab` | `google-ads-lab.html` | `Google Ads Lab` |
+| Google Ads Lab (`/google-ads-lab`, `/google-ads-management-agency-melbourne`) | `assets/google-ads-lab.js` | `Google Ads Lab` |
 
 Each call fires four things:
 

@@ -1,0 +1,333 @@
+/* ─────────────────────────────────────────────────────────────
+   google-ads-lab.css · Google Ads Lab tool
+   Used by: google-ads-lab, google-ads-management-agency-melbourne.
+   Pairs with /assets/google-ads-lab.js and the three tool partials
+   (_partials/google-ads-lab-form / -flow / -booking).
+   ───────────────────────────────────────────────────────────── */
+
+/* ─── HERO ──────────────────────────────────────────────────────── */
+.gal-hero { padding-top: clamp(40px, 6vw, 80px); padding-bottom: clamp(64px, 8vw, 110px); background: var(--paper); border-bottom: 0.5px solid var(--rule); position: relative; overflow: hidden; }
+.gal-hero::before { content: ""; position: absolute; inset: -1px 0 0 0; background: radial-gradient(60% 80% at 88% 0%, rgba(255, 98, 0, 0.10), transparent 60%), radial-gradient(50% 80% at 8% 100%, rgba(26, 86, 219, 0.06), transparent 60%); pointer-events: none; }
+.gal-hero .container { position: relative; }
+.gal-hero h1 { font-family: var(--display); font-weight: 500; letter-spacing: -0.03em; font-size: clamp(40px, 6.4vw, 92px); line-height: 0.98; max-width: 16ch; margin-top: 14px; }
+.gal-hero h1 em { font-style: italic; color: var(--accent); font-weight: 400; }
+.gal-hero .sub { margin-top: clamp(20px, 2.4vw, 28px); max-width: 62ch; color: var(--muted); font-size: clamp(16px, 1.3vw, 19px); line-height: 1.55; }
+.gal-hero .sub strong { color: var(--ink); font-weight: 500; }
+.gal-form { margin-top: clamp(28px, 4vw, 44px); display: grid; grid-template-columns: 1fr auto; gap: 10px; max-width: 680px; padding: 10px; border-radius: 999px; background: #fff; border: 1px solid var(--rule-2); box-shadow: 0 30px 80px -40px rgba(0,0,0,0.18); transition: border-color 200ms var(--ease), transform 200ms var(--ease); }
+.gal-form:focus-within { border-color: var(--ink); transform: translateY(-1px); }
+.gal-form input { font-family: var(--display); font-size: clamp(15px, 1.2vw, 17px); padding: 14px 18px; color: var(--ink); background: transparent; border: 0; outline: 0; min-width: 0; }
+.gal-form input::placeholder { color: var(--muted-2); }
+.gal-form .url-field { display: flex; align-items: center; min-width: 0; }
+.gal-form .url-prefix { padding-left: 18px; color: var(--muted-2); font-family: var(--display); font-size: clamp(15px, 1.2vw, 17px); white-space: nowrap; user-select: none; }
+.gal-form .url-field input { padding-left: 3px; width: 100%; }
+.gal-form button { font-family: var(--display); font-weight: 500; font-size: 15px; padding: 0 26px; height: 48px; border-radius: 999px; background: var(--ink); color: #fff; border: 0; cursor: pointer; transition: transform 200ms var(--ease), background 200ms var(--ease); white-space: nowrap; }
+.gal-form button:hover { background: var(--accent); transform: translateY(-1px); }
+.gal-form button .arr { display: inline-block; margin-left: 6px; transition: transform 200ms var(--ease); }
+.gal-form button:hover .arr { transform: translateX(3px); }
+@media (max-width: 560px) { .gal-form { grid-template-columns: 1fr; border-radius: 22px; padding: 8px; } .gal-form button { height: 52px; } }
+.gal-trust { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 8px 22px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+.gal-trust .dot { width: 6px; height: 6px; border-radius: 999px; background: var(--accent); display: inline-block; margin-right: 8px; vertical-align: middle; }
+
+/* ─── STAGES + GATE (shared visual language with the labs) ───────── */
+.gal-stages { padding: clamp(80px, 10vw, 140px) 0; border-bottom: 0.5px solid var(--rule); }
+.gal-stages .head { margin-bottom: clamp(44px, 6vw, 64px); display: flex; justify-content: space-between; align-items: end; gap: 24px; flex-wrap: wrap; }
+.gal-stages .head > div:first-child { max-width: 60ch; }
+.gal-stages h2 { font-family: var(--display); font-weight: 500; font-size: clamp(34px, 4.2vw, 60px); letter-spacing: -0.025em; line-height: 1.02; margin-top: 14px; }
+.gal-stages h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
+.gal-elapsed { font-family: var(--mono); font-size: 12px; letter-spacing: 0.12em; color: var(--muted); text-transform: uppercase; opacity: 0; transition: opacity 240ms var(--ease); display: inline-flex; align-items: center; gap: 8px; }
+.gal-elapsed.is-on { opacity: 1; }
+.gal-elapsed .pulse { width: 8px; height: 8px; border-radius: 999px; background: var(--accent); animation: galpulse 1.2s ease-in-out infinite; }
+.gal-elapsed.is-done .pulse { background: var(--score-good); animation: none; }
+@keyframes galpulse { 0%,100% { opacity: 0.4; } 50% { opacity: 1; } }
+.gal-stage-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(14px, 1.6vw, 20px); }
+@media (max-width: 1080px) { .gal-stage-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .gal-stage-grid { grid-template-columns: 1fr; } }
+.gal-stage { position: relative; padding: clamp(24px, 2.4vw, 32px); border: 1px solid var(--rule); border-radius: 18px; background: #fff; transition: transform 280ms var(--ease), border-color 280ms var(--ease), box-shadow 280ms var(--ease); }
+.gal-stage:hover { transform: translateY(-3px); border-color: var(--ink); }
+.gal-stage.is-active { border-color: var(--accent); box-shadow: 0 0 0 4px rgba(255, 98, 0, 0.10), 0 24px 60px -36px rgba(255, 98, 0, 0.5); }
+.gal-stage .num { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; color: var(--muted-2); font-weight: 600; }
+.gal-stage.is-active .num, .gal-stage.is-done .num { color: var(--accent); }
+.gal-stage .indicator { position: absolute; top: 22px; right: 22px; width: 22px; height: 22px; border-radius: 999px; display: grid; place-items: center; background: transparent; border: 1.5px solid var(--rule-2); transition: background 240ms var(--ease), border-color 240ms var(--ease), transform 320ms var(--ease-spring); font-size: 12px; font-weight: 700; color: transparent; }
+.gal-stage.is-active .indicator { border-color: var(--accent); border-top-color: transparent; animation: galspin 0.8s linear infinite; }
+.gal-stage.is-done .indicator { background: var(--score-good); border-color: var(--score-good); color: #fff; animation: none; transform: scale(1); }
+.gal-stage.is-done .indicator::after { content: "✓"; }
+@keyframes galspin { to { transform: rotate(360deg); } }
+.gal-stage h3 { font-family: var(--display); font-weight: 500; font-size: clamp(20px, 1.8vw, 24px); letter-spacing: -0.018em; margin: 14px 0 10px; }
+.gal-stage p { color: var(--muted); font-size: 14.5px; line-height: 1.6; }
+.gal-stage .timer { margin-top: 18px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; color: var(--muted-2); transition: color 240ms var(--ease); }
+.gal-stage.is-active .timer { color: var(--accent); }
+.gal-stage.is-done .timer { color: var(--score-good); }
+
+.gal-gate { padding: clamp(80px, 10vw, 140px) 0; background: var(--ink); color: #fff; position: relative; }
+/* After the pack — calendar for a qualified lead, a note for nurture. */
+.gal-after { margin-top: clamp(48px, 6vw, 80px); padding-top: clamp(32px, 4vw, 48px); border-top: 1px solid var(--rule-2); }
+.gal-after h3 { font-family: var(--display); font-weight: 500; font-size: clamp(22px, 2.4vw, 34px); letter-spacing: -0.02em; }
+.gal-after p { margin-top: 12px; max-width: 56ch; color: var(--ink-2); font-size: 15.5px; line-height: 1.6; }
+/* Reserve height before HubSpot's iframe lands so the pack above doesn't jump. */
+.after-cal { margin-top: 24px; min-height: 560px; }
+.after-cal .meetings-iframe-container { min-height: 560px; }
+.after-cal .cal-fallback { display: inline-block; margin-top: 8px; font-size: 14.5px; color: var(--muted); }
+@media (max-width: 720px) { .after-cal, .after-cal .meetings-iframe-container { min-height: 640px; } }
+
+/* ─── STICKY BOOKING CTA + CALENDAR MODAL ────────────────────────
+   The inline calendar at the end of the pack is easy to miss — it sits
+   below twelve ad cards and two more sections, at the point someone has
+   already got what they came for. This bar docks to the bottom the moment
+   the pack lands and rides the whole scroll, so the offer is in front of
+   them while they're actually looking at their own ads.
+
+   Shown to qualified and review tiers only. A nurture lead gets the pack
+   and is left alone — putting a calendar in front of someone with no
+   budget is exactly the problem the tiering exists to stop. */
+/* Above the sitewide .float-cta (z-index 90), which is fixed bottom-right
+   in the same accent colour — left alone it covers this bar and offers a
+   weaker action at the exact moment the stronger one appears. */
+.book-bar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 95;
+  background: var(--ink); color: #fff;
+  border-top: 1px solid rgba(255,255,255,0.14);
+  transform: translateY(105%);
+  transition: transform 420ms var(--ease-out);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  box-shadow: 0 -12px 40px rgba(0,0,0,0.18);
+}
+.book-bar.is-in { transform: none; }
+.book-bar-inner {
+  max-width: var(--max); margin: 0 auto;
+  padding: 16px var(--pad);
+  display: flex; align-items: center; gap: clamp(16px, 3vw, 40px);
+}
+.book-bar-copy { flex: 1; min-width: 0; }
+.book-bar-copy strong {
+  display: block; font-family: var(--display); font-weight: 500;
+  font-size: clamp(16px, 1.5vw, 20px); letter-spacing: -0.015em;
+  /* Never strand a single word on its own line. */
+  text-wrap: balance;
+}
+.book-bar-copy .bb-narrow { display: none; }
+.book-bar-copy .bb-sub {
+  display: block; margin-top: 3px;
+  font-size: 13.5px; line-height: 1.45; color: rgba(255,255,255,0.66);
+}
+.book-bar-cta {
+  flex-shrink: 0; cursor: pointer;
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  text-align: center;
+  font-family: var(--display); font-weight: 500; font-size: 15px;
+  padding: 13px 24px; border-radius: 999px; border: 0;
+  background: var(--accent); color: #fff; white-space: nowrap;
+  transition: transform 200ms var(--ease), filter 200ms var(--ease);
+}
+.book-bar-cta:hover { transform: translateY(-1px); filter: brightness(1.08); }
+.book-bar-x {
+  flex-shrink: 0; cursor: pointer; background: none; border: 0;
+  color: rgba(255,255,255,0.42); font-size: 22px; line-height: 1;
+  padding: 6px 2px; transition: color 200ms var(--ease);
+}
+.book-bar-x:hover { color: #fff; }
+/* Keep the bar off the last section's content while it's up, and stand
+   the sitewide contact button down — two fixed orange CTAs stacked in
+   the same corner reads as a bug, and 'Get in touch' is the weaker ask. */
+body.has-book-bar { padding-bottom: 104px; }
+body.has-book-bar .float-cta { display: none; }
+
+/* Above .float-cta too, or it punches through the backdrop. Stays under
+   the skip link (200) so keyboard nav still escapes. */
+.book-modal { position: fixed; inset: 0; z-index: 150; }
+.book-modal-backdrop {
+  position: absolute; inset: 0; background: rgba(0,0,0,0.55);
+  opacity: 0; transition: opacity 260ms var(--ease);
+}
+.book-modal.is-in .book-modal-backdrop { opacity: 1; }
+.book-modal-panel {
+  position: relative; z-index: 1;
+  max-width: 720px; margin: clamp(24px, 6vh, 72px) auto;
+  max-height: calc(100vh - clamp(48px, 12vh, 144px));
+  overflow-y: auto; -webkit-overflow-scrolling: touch;
+  background: #fff; border-radius: 14px;
+  padding: clamp(28px, 4vw, 44px);
+  transform: translateY(14px); opacity: 0;
+  transition: transform 320ms var(--ease-out), opacity 320ms var(--ease-out);
+}
+.book-modal.is-in .book-modal-panel { transform: none; opacity: 1; }
+.book-modal-panel h3 {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(23px, 2.6vw, 34px); letter-spacing: -0.02em;
+  max-width: 20ch; padding-right: 32px;
+  text-wrap: balance;
+}
+.book-modal-panel > p {
+  margin-top: 10px; max-width: 52ch;
+  color: var(--muted); font-size: 15px; line-height: 1.6;
+}
+.book-modal-x {
+  position: absolute; top: 14px; right: 16px;
+  cursor: pointer; background: none; border: 0;
+  color: var(--muted-2); font-size: 26px; line-height: 1; padding: 6px;
+  transition: color 200ms var(--ease);
+}
+.book-modal-x:hover { color: var(--ink); }
+.book-modal-cal { margin-top: 20px; min-height: 560px; }
+.book-modal-cal .meetings-iframe-container { min-height: 560px; }
+.book-modal-cal .cal-fallback { display: inline-block; margin-top: 8px; font-size: 14px; color: var(--muted); }
+
+@media (max-width: 720px) {
+  /* Centred stack rather than a squeezed row: at this width the headline and
+     a pill can't share a line without the headline wrapping badly, and a
+     centred button is a bigger, more obvious tap target. */
+  .book-bar-inner {
+    position: relative;
+    flex-direction: column; align-items: stretch; text-align: center;
+    padding: 14px 44px 16px; gap: 10px;
+  }
+  .book-bar-copy .bb-wide { display: none; }
+  .book-bar-copy .bb-narrow { display: inline; }
+  .book-bar-copy .bb-sub { display: none; }   /* the headline carries it */
+  .book-bar-cta { width: 100%; padding: 13px 18px; font-size: 15px; }
+  .book-bar-x { position: absolute; top: 8px; right: 10px; }
+  body.has-book-bar { padding-bottom: 124px; }
+  .book-modal-panel { margin: 0; border-radius: 0; max-height: 100vh; min-height: 100vh; }
+  .book-modal-cal, .book-modal-cal .meetings-iframe-container { min-height: 640px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .book-bar, .book-modal-backdrop, .book-modal-panel { transition: none; }
+}
+
+
+/* Qualify step — same dark treatment as the gate, chips reuse .q-chips from
+   the wait-hub quiz (white pills read correctly on both surfaces). */
+.gal-qualify .qual-sub { max-width: 54ch; color: rgba(255,255,255,0.72); font-size: clamp(15px,1.2vw,17px); line-height: 1.55; margin-top: 18px; }
+.qual-body { margin-top: clamp(36px, 4.5vw, 52px); max-width: 640px; }
+.qual-body .qual-q { font-family: var(--display); font-weight: 500; font-size: clamp(20px, 2vw, 27px); letter-spacing: -0.015em; color: #fff; }
+.qual-body .q-chips { margin-top: 22px; }
+.qual-body .q-step { color: rgba(255,255,255,0.5); margin-top: 22px; }
+.gal-gate .eyebrow { color: var(--accent); }
+.gal-gate h2 { font-family: var(--display); font-weight: 500; font-size: clamp(36px, 5vw, 72px); letter-spacing: -0.025em; line-height: 1.02; margin-top: 14px; max-width: 22ch; }
+.gal-gate h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
+.gal-gate .ready-flash { display: inline-block; font-family: var(--mono); font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; padding: 6px 12px; border-radius: 999px; background: rgba(255, 98, 0, 0.18); color: var(--accent); margin-bottom: 18px; }
+.gate-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); border-radius: 22px; padding: clamp(28px, 3vw, 40px); }
+.gate-form { display: grid; gap: 12px; }
+.gate-form input { font-family: var(--display); font-size: 15px; padding: 14px 16px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.14); border-radius: 12px; color: #fff; width: 100%; transition: border-color 200ms var(--ease), background 200ms var(--ease); }
+.gate-form input::placeholder { color: rgba(255,255,255,0.4); }
+.gate-form input:focus { outline: 0; border-color: var(--accent); background: rgba(255,255,255,0.08); }
+.gate-form .submit { margin-top: 6px; padding: 16px 24px; background: var(--accent); color: #fff; font-family: var(--display); font-weight: 500; font-size: 16px; border: 0; border-radius: 999px; cursor: pointer; transition: transform 200ms var(--ease), background 200ms var(--ease); }
+.gate-form .submit:hover { transform: translateY(-1px); background: #ff7a26; }
+.gate-form .submit[disabled] { opacity: 0.6; cursor: not-allowed; transform: none; }
+.gate-card .fineprint { margin-top: 16px; font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; color: rgba(255,255,255,0.4); text-transform: uppercase; }
+
+/* ─── REVEAL ────────────────────────────────────────────────────── */
+.gal-reveal { padding: clamp(80px, 10vw, 140px) 0; background: var(--paper); border-bottom: 0.5px solid var(--rule); }
+.gal-reveal[hidden] { display: none; }
+.gal-reveal .head { display: flex; justify-content: space-between; align-items: end; gap: 40px; flex-wrap: wrap; margin-bottom: clamp(40px, 5vw, 60px); }
+.gal-reveal h2 { font-family: var(--display); font-weight: 500; font-size: clamp(34px, 4.2vw, 60px); letter-spacing: -0.025em; line-height: 1.02; margin-top: 14px; max-width: 22ch; }
+.gal-reveal h2 em { font-style: italic; color: var(--accent); font-weight: 400; }
+.gal-block { margin-top: clamp(40px, 5vw, 64px); }
+.gal-block-label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; color: var(--accent); text-transform: uppercase; font-weight: 600; margin-bottom: 18px; }
+.gal-block h3 { font-family: var(--display); font-weight: 500; font-size: clamp(22px, 2vw, 30px); letter-spacing: -0.02em; margin-bottom: 8px; }
+
+/* audit cards */
+.gal-audit-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(16px, 1.8vw, 24px); }
+@media (max-width: 880px) { .gal-audit-grid { grid-template-columns: 1fr; } }
+.gal-audit-card { background: #fff; border: 1px solid var(--rule); border-left: 3px solid var(--accent); border-radius: 14px; padding: clamp(22px, 2.2vw, 28px); }
+.gal-audit-card .t { font-family: var(--display); font-weight: 500; font-size: 18px; letter-spacing: -0.015em; margin-bottom: 8px; }
+.gal-audit-card .d { color: var(--muted); font-size: 14.5px; line-height: 1.6; }
+.gal-transp-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 22px; font-family: var(--mono); font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); }
+.gal-transp-link:hover { text-decoration: underline; }
+.gal-transp-summary { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 22px; padding: 16px 20px; background: #fff; border: 1px solid var(--rule); border-left: 3px solid #1a56db; border-radius: 12px; font-size: 15px; line-height: 1.55; color: var(--ink-2); }
+.gal-transp-summary[hidden] { display: none; }
+.gal-transp-summary .dot { flex-shrink: 0; width: 9px; height: 9px; border-radius: 999px; background: #1a56db; margin-top: 6px; }
+.gal-transp-summary strong { color: var(--ink); font-weight: 600; }
+
+/* Google search ad (RSA) mockup */
+.gad-serp { background: #fff; border: 1px solid var(--rule); border-radius: 16px; padding: clamp(22px, 2.4vw, 30px); max-width: 640px; }
+.gad-serp .sponsored { font-size: 12px; color: #202124; font-weight: 700; margin-bottom: 6px; }
+.gad-serp .url-row { display: flex; align-items: center; gap: 8px; margin-bottom: 4px; }
+.gad-serp .fav { width: 26px; height: 26px; border-radius: 999px; background: #f1f3f4; display: grid; place-items: center; font-family: var(--display); font-weight: 600; color: #1a56db; font-size: 13px; }
+.gad-serp .url { font-size: 14px; color: #202124; line-height: 1.2; }
+.gad-serp .url .path { color: #5f6368; }
+.gad-serp .title { font-family: arial, sans-serif; color: #1a0dab; font-size: clamp(18px, 1.8vw, 21px); line-height: 1.3; margin: 6px 0 6px; }
+.gad-serp .desc { color: #4d5156; font-size: 14px; line-height: 1.58; }
+.gad-serp .ext { margin-top: 12px; display: flex; flex-wrap: wrap; gap: 6px 18px; }
+.gad-serp .ext a { color: #1a0dab; font-size: 13.5px; }
+.gad-rotate-note { margin-top: 12px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.06em; color: var(--muted); text-transform: uppercase; }
+
+/* asset chips + lists */
+.gal-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.gal-chip { font-size: 13px; color: var(--ink-2); background: #fff; border: 1px solid var(--rule); border-radius: 999px; padding: 7px 14px; }
+.gal-chip .c { font-family: var(--mono); font-size: 10px; color: var(--muted-2); margin-left: 8px; }
+.gal-list { list-style: none; padding: 0; margin: 14px 0 0; display: grid; gap: 10px; }
+.gal-list li { font-size: 15px; line-height: 1.5; color: var(--ink-2); padding-left: 22px; position: relative; }
+.gal-list li::before { content: ""; position: absolute; left: 0; top: 9px; width: 12px; height: 1px; background: var(--accent); }
+.gal-cols { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 3vw, 48px); }
+@media (max-width: 880px) { .gal-cols { grid-template-columns: 1fr; } }
+.gal-sublabel { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 0 0 10px; }
+
+/* keyword themes */
+.gal-kw-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(14px, 1.6vw, 20px); }
+@media (max-width: 720px) { .gal-kw-grid { grid-template-columns: 1fr; } }
+.gal-kw { background: #fff; border: 1px solid var(--rule); border-radius: 14px; padding: 20px 22px; }
+.gal-kw .th { font-family: var(--display); font-weight: 500; font-size: 17px; margin-bottom: 6px; }
+.gal-kw .ex { color: var(--muted); font-size: 14px; line-height: 1.5; }
+
+/* PMAX image assets */
+.gal-img-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(14px, 1.6vw, 20px); }
+@media (max-width: 1080px) { .gal-img-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .gal-img-grid { grid-template-columns: 1fr; } }
+.gal-img-card { background: #fff; border: 1px solid var(--rule); border-radius: 16px; overflow: hidden; opacity: 0; transform: translateY(16px); transition: opacity 480ms var(--ease-out), transform 480ms var(--ease-out); }
+.gal-img-card.is-revealed { opacity: 1; transform: none; }
+.gal-img-visual { position: relative; aspect-ratio: 1.91 / 1; background: linear-gradient(140deg, #1a1a1a, #2a2a2a); background-size: cover; background-position: center; }
+.gal-img-visual.square { aspect-ratio: 1 / 1; }
+.gal-img-visual.portrait { aspect-ratio: 4 / 5; }
+.gal-img-visual.placeholder::after { content: "Rendering…"; position: absolute; inset: 0; display: grid; place-items: center; color: rgba(255,255,255,0.55); font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; }
+.gal-img-meta { padding: 12px 14px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.gal-img-meta .ratio { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted-2); }
+.gal-img-meta .concept { font-size: 13px; color: var(--ink-2); }
+
+/* ─── WAIT HUB (brand board + quiz while generating) ────────────── */
+.mal-hub { margin-top: clamp(40px, 5vw, 64px); display: grid; grid-template-columns: 1.15fr 1fr; gap: clamp(16px, 1.8vw, 24px); opacity: 0; transform: translateY(14px); transition: opacity 480ms var(--ease-out), transform 480ms var(--ease-out); }
+.mal-hub[hidden] { display: none; }
+.mal-hub.is-on { opacity: 1; transform: none; }
+@media (max-width: 880px) { .mal-hub { grid-template-columns: 1fr; } }
+.hub-card { border: 1px solid var(--rule); border-radius: 18px; background: #fff; padding: clamp(24px, 2.6vw, 34px); }
+.hub-label { font-family: var(--mono); font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); font-weight: 600; display: flex; align-items: center; gap: 8px; }
+.hub-label .pulse { width: 7px; height: 7px; border-radius: 999px; background: var(--accent); animation: galpulse 1.2s ease-in-out infinite; }
+.hub-brand-head { display: flex; align-items: center; gap: 16px; margin-top: 20px; }
+.hub-logo { width: 52px; height: 52px; border-radius: 999px; flex-shrink: 0; border: 1.5px dashed var(--rule-2); display: grid; place-items: center; overflow: hidden; background: #fff; font-family: var(--display); font-weight: 500; font-size: 22px; color: var(--muted-2); transition: border-color 300ms var(--ease); }
+.hub-logo.is-filled { border: 0.5px solid var(--rule-2); }
+.hub-logo img { width: 100%; height: 100%; object-fit: contain; padding: 4px; }
+.hub-name { font-family: var(--display); font-weight: 500; font-size: clamp(19px, 1.7vw, 23px); letter-spacing: -0.015em; }
+.hub-cat { font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin-top: 4px; }
+.hub-row { margin-top: 16px; font-size: 14.5px; line-height: 1.55; color: var(--ink-2); }
+.hub-row .k { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted-2); display: block; margin-bottom: 4px; }
+.hub-swatches { display: flex; gap: 8px; margin-top: 6px; }
+.hub-swatches .sw { width: 28px; height: 28px; border-radius: 8px; border: 0.5px solid rgba(0,0,0,0.08); transform: scale(0); transition: transform 320ms var(--ease-spring); }
+.hub-swatches .sw.is-in { transform: scale(1); }
+.hub-ticker { font-family: var(--mono); margin-top: 20px; padding-top: 16px; border-top: 0.5px solid var(--rule); font-size: 12px; letter-spacing: 0.06em; color: var(--muted); min-height: 20px; transition: opacity 240ms var(--ease); }
+.hub-ticker.is-fading { opacity: 0; }
+.hub-ticker em { color: var(--ink); font-style: normal; font-weight: 500; }
+.mal-hub-note { grid-column: 1 / -1; font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted-2); text-align: right; }
+.skel { display: inline-block; width: 140px; height: 14px; border-radius: 6px; background: linear-gradient(90deg, var(--dim) 25%, #efefec 50%, var(--dim) 75%); background-size: 200% 100%; animation: galshimmer 1.4s linear infinite; }
+@keyframes galshimmer { to { background-position: -200% 0; } }
+.hub-quiz h3 { font-family: var(--display); font-weight: 500; font-size: clamp(19px, 1.7vw, 23px); letter-spacing: -0.015em; margin-top: 18px; }
+.hub-quiz .q-sub { color: var(--muted); font-size: 14px; margin-top: 6px; line-height: 1.5; }
+.q-chips { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+.q-chips button { font-family: var(--display); font-size: 14px; font-weight: 500; padding: 10px 16px; border-radius: 999px; border: 1px solid var(--rule-2); background: #fff; color: var(--ink); cursor: pointer; transition: border-color 180ms var(--ease), background 180ms var(--ease), transform 180ms var(--ease); }
+.q-chips button:hover { border-color: var(--ink); transform: translateY(-1px); }
+.q-step { font-family: var(--mono); font-size: 10px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted-2); margin-top: 18px; }
+.q-done-list { list-style: none; padding: 0; margin: 18px 0 0; display: grid; gap: 12px; }
+.q-done-list li { display: flex; gap: 12px; align-items: baseline; font-size: 14.5px; color: var(--ink-2); line-height: 1.5; opacity: 0; transform: translateY(6px); transition: opacity 360ms var(--ease-out), transform 360ms var(--ease-out); }
+.q-done-list li.is-in { opacity: 1; transform: none; }
+.q-done-list .tick { width: 18px; height: 18px; border-radius: 999px; flex-shrink: 0; background: var(--score-good); color: #fff; display: grid; place-items: center; font-size: 10px; font-weight: 700; transform: translateY(3px); }
+
+/* FAQ */
+.gal-faq { padding: clamp(80px, 10vw, 140px) 0; border-bottom: 0.5px solid var(--rule); }
+.gal-faq .head { max-width: 60ch; margin-bottom: clamp(40px, 5vw, 60px); }
+.gal-faq h2 { font-family: var(--display); font-weight: 500; font-size: clamp(34px, 4.2vw, 60px); letter-spacing: -0.025em; line-height: 1.02; margin-top: 14px; }
+/* Scoped to .gal-faq: pages that embed the tool (location pages) carry their
+   own .faq-item accordion from location.css — an unscoped rule here would
+   restyle it. */
+.gal-faq .faq-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(24px, 3vw, 40px); }
+@media (max-width: 880px) { .gal-faq .faq-grid { grid-template-columns: 1fr; } }
+.gal-faq .faq-item { border-top: 1px solid var(--rule); padding: 24px 0; }
+.gal-faq .faq-item h3 { font-family: var(--display); font-weight: 500; font-size: clamp(18px, 1.5vw, 21px); letter-spacing: -0.015em; margin-bottom: 10px; }
+.gal-faq .faq-item p { color: var(--muted); font-size: 15px; line-height: 1.6; }

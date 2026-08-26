@@ -1,0 +1,28 @@
+<!-- Google Ads Lab · sticky booking bar + calendar modal. Fixed-position, so
+     it goes after </main> (and the footer include) rather than inside the flow. -->
+  <!-- Sticky booking CTA — shown once the pack lands, to sales-ready tiers
+       only. See the .book-bar styles for why it exists alongside the inline
+       calendar at the end of the pack. -->
+  <div class="book-bar" id="bookBar" hidden>
+    <div class="book-bar-inner">
+      <div class="book-bar-copy">
+        <strong>
+          <span class="bb-wide">Want Zib to build this out for you?</span>
+          <span class="bb-narrow">Want Zib to build this out?</span>
+        </strong>
+        <span class="bb-sub">Thirty minutes with a strategist who's already read your pack. No deck, no pitch.</span>
+      </div>
+      <button type="button" class="book-bar-cta" id="bookBarCta">Book a time <span class="arr">&rarr;</span></button>
+      <button type="button" class="book-bar-x" id="bookBarClose" aria-label="Dismiss">&times;</button>
+    </div>
+  </div>
+
+  <div class="book-modal" id="bookModal" hidden role="dialog" aria-modal="true" aria-labelledby="bookModalTitle">
+    <div class="book-modal-backdrop" data-book-close></div>
+    <div class="book-modal-panel">
+      <button type="button" class="book-modal-x" id="bookModalClose" aria-label="Close">&times;</button>
+      <h3 id="bookModalTitle">Want Zib to implement this entire strategy?</h3>
+      <p>Pick a time below. A senior strategist will have your pack open in front of them, so it starts at how to run it — not at who you are.</p>
+      <div class="book-modal-cal" id="bookModalCal" aria-live="polite"></div>
+    </div>
+  </div>
