@@ -4,6 +4,25 @@ Built from the *Zib Digital — Industry Page Build Pack* (27 Aug 2026), compani
 & marketing brief. This note records what shipped, what is deliberately held back, and the
 decisions taken where the brief left an open question.
 
+## Current state: LIVE FOR REVIEW, not launched (28 Aug 2026)
+
+The nine pages are deployed to production so they can be reviewed at their real URLs, but
+they are **held back from launch** until sign-off:
+
+- Every page carries `<meta name="robots" content="noindex, nofollow">` (marked with a
+  `review hold` comment in each file's head).
+- They are **not** in `sitemap.xml` — `migration/sitemap.mjs` skips noindex pages
+  automatically, so the sitemap regenerates correctly in either state.
+- The nav dropdown, footer column and `llms.txt` section are **reverted** for now, so no
+  live page links to them. They exist in history in commit `a55536e`.
+- Side effect of noindex: `build.mjs` skips FAQPage schema injection on noindex pages.
+  It returns automatically once the noindex meta is removed — no action needed.
+
+**To launch after approval:** delete the `review hold` robots meta line from each of the nine
+`industries/*.html` files, `git revert` the "hold back" commit (restores nav + footer +
+llms.txt), run `node build.mjs && node migration/sitemap.mjs`, commit — the sitemap picks the
+nine URLs back up on the next deploy.
+
 ## What shipped
 
 Nine pages under `/industries/`, all cloning the `/seo-for-real-estate-agents` structure
