@@ -34,6 +34,9 @@ const VERSIONED_ASSETS = [
   // Styles the HubSpot embeds, which render after page load — a stale copy
   // shows HubSpot's own defaults instead of ours, on a live lead form.
   "assets/contact-form.css",
+  // Carries the input reset the audit form needs on pages without their own
+  // (industry/location pages) — a stale copy shows raw UA input borders.
+  "assets/audit-widget.css",
 ];
 const ASSET_VERSIONS = new Map(); // "/assets/base.css" -> "?v=abcd1234"
 

@@ -79,6 +79,14 @@
 .url-prefix input { padding-left: 0; }
 
 .audit-form input {
+  /* Full reset: the widget originally relied on a page-level `input` reset that
+     only audit.html / index.html / seo-agency.html carry. Without it the UA's
+     inset border renders — bent into a pill by the location-page radius. */
+  appearance: none;
+  border: 0;
+  outline: 0;
+  background: none;
+  color: inherit;
   height: 56px;
   font-family: var(--display);
   font-size: clamp(15px, 1.3vw, 18px);
