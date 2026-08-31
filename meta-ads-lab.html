@@ -1584,7 +1584,48 @@ body.has-book-bar .float-cta { display: none; }
     stopElapsed();
     elapsedT.textContent = 'Failed';
     const head = document.querySelector('.mal-stages h2');
-    if (head) head.insertAdjacentHTML('afterend',
+    if (!head) return;
+    document.getElementById('malErr')?.remove();
+
+    // A firewall block isn't a broken tool and isn't the prospect's mistake —
+    // it's their own site security turning away an automated reader, common on
+    // larger and enterprise sites. Don't dead-end them on "try another URL":
+    // explain it, then hand off to the strategist. The lead is already captured
+    // (server-side, before the crawl), so this promise is real — a strategist
+    // reads the site by hand and builds the same pack.
+    const blocked = /firewall|blocking automated readers|\b(401|403|406|429|503)\b/i.test(msg);
+    let host = '';
+    try { host = new URL(state.url).hostname.replace(/^www\./, ''); } catch {}
+
+    if (blocked) {
+      head.insertAdjacentHTML('afterend',
+        `<div id="malErr" style="margin-top:16px; max-width:640px;">
+          <p style="color:var(--ink); font-size:16px; font-weight:500; margin:0 0 8px;">
+            ${host ? escapeHtml(host) + "'s" : 'Your site’s'} security blocked our reader.
+          </p>
+          <p style="color:var(--muted); font-size:15px; line-height:1.55; margin:0 0 16px;">
+            The site sits behind a firewall or bot protection that turns away automated crawlers — common on
+            larger and enterprise sites. It’s a setting on the site, not a fault with the tool, and no URL tweak
+            gets past it. <strong style="color:var(--ink); font-weight:500;">But you’re not stuck:</strong> we’ve
+            got your details, and this is exactly what the strategist call is for. A senior strategist will read
+            your site by hand and build the same 12-concept pack with you — live.
+          </p>
+          <button type="button" id="malErrBook"
+            style="appearance:none; border:0; cursor:pointer; background:var(--ink); color:#fff; font:inherit;
+                   font-size:15px; font-weight:500; padding:13px 22px; border-radius:10px;">
+            Book your strategist call <span class="arr">&rarr;</span>
+          </button>
+        </div>`);
+      const bookBtn = document.getElementById('malErrBook');
+      if (bookBtn) {
+        bookBtn.addEventListener('mouseenter', () => { bookBtn.style.background = 'var(--accent)'; });
+        bookBtn.addEventListener('mouseleave', () => { bookBtn.style.background = 'var(--ink)'; });
+        bookBtn.addEventListener('click', openBookModal);
+      }
+      return;
+    }
+
+    head.insertAdjacentHTML('afterend',
       `<p id="malErr" style="margin-top:14px; color:var(--score-bad); font-size:15px;">Something went wrong: ${escapeHtml(msg)}. Try a different URL.</p>`);
   };
 
