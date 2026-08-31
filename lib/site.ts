@@ -37,13 +37,29 @@ export type SiteContent = {
   jsRendered: JsRenderHint;
 };
 
+// WAF/CDN responses that usually mean "we don't like your user-agent",
+// not "this page is broken" — worth one retry disguised as a browser.
+const BLOCK_STATUSES = new Set([401, 403, 406, 429, 503]);
+
+const BROWSER_HEADERS = {
+  "User-Agent":
+    "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/126.0.0.0 Safari/537.36",
+  Accept:
+    "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+  "Accept-Language": "en-AU,en;q=0.9",
+  "Upgrade-Insecure-Requests": "1",
+} as const;
+
 export async function fetchSiteContent(rawUrl: string): Promise<SiteContent> {
   const url = normaliseUrl(rawUrl);
   if (!url) throw new Error("Invalid URL");
 
   // safeFetch validates the host (and every redirect hop) against the SSRF
   // guard before fetching — this is the user-controlled entry point.
-  const res = await safeFetch(url, {
+  // First attempt identifies honestly; firewalls (Cloudflare, Wordfence,
+  // Sucuri) commonly 403 unknown bot UAs, so a blocked response gets one
+  // retry with browser headers before we give up.
+  let res = await safeFetch(url, {
     headers: {
       "User-Agent": "ZibAudit/1.0 (+https://zibdigital.com.au/audit)",
       Accept: "text/html,application/xhtml+xml",
@@ -51,7 +67,20 @@ export async function fetchSiteContent(rawUrl: string): Promise<SiteContent> {
     signal: AbortSignal.timeout(10_000),
   });
 
-  if (!res.ok) throw new Error(`Site responded ${res.status}`);
+  if (!res.ok && BLOCK_STATUSES.has(res.status)) {
+    res = await safeFetch(url, {
+      headers: { ...BROWSER_HEADERS },
+      signal: AbortSignal.timeout(10_000),
+    });
+  }
+
+  if (!res.ok) {
+    throw new Error(
+      BLOCK_STATUSES.has(res.status)
+        ? `this site's firewall is blocking automated readers (HTTP ${res.status})`
+        : `Site responded ${res.status}`,
+    );
+  }
   const ct = res.headers.get("content-type") || "";
   if (!ct.includes("html")) throw new Error("Not an HTML page");
 
