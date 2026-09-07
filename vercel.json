@@ -36,6 +36,7 @@
     { "source": "/team/paul-harrison", "destination": "/meet-the-team", "permanent": true },
     { "source": "/marketing-strategies-2021", "destination": "/blog", "permanent": true },
     { "source": "/marketing-trends-2022", "destination": "/blog", "permanent": true },
+    { "source": "/2025-digital-marketing-trends", "destination": "/digital-marketing-trends", "permanent": true },
     { "source": "/aaron-jason", "destination": "/contact", "permanent": true },
     { "source": "/ange-ethan", "destination": "/contact", "permanent": true },
     { "source": "/ben-kelly", "destination": "/contact", "permanent": true },
