@@ -4,22 +4,81 @@
 
 Zib pioneered the partner model in Australian digital marketing: each partner runs their own territory with skin in the game and a dedicated senior digital manager handling day-to-day execution. No juniors on rotation, no handoffs to a service rep. Zib itself ranks for over 4,151 commercial keywords in the top 3 on zibdigital.com.au — the agency that sells SEO can demonstrate it.
 
-## Free tools
+## About
 
-- [30-second commercial audit](https://www.ziboutreach.com.au/audit): Drop a URL → 10-page technical crawl + senior strategist read + side-by-side hero rewrite + sample social ad creative. Streamed live, results appear in 30 seconds, no email required to see them.
-- [ROI Calculator](https://www.ziboutreach.com.au/roi-calculator): Project monthly leads, revenue and ROI across SEO, Google Ads or paid social based on real margins and a campaign plan you control. Diagnostic-first.
-- [AI Growth Simulator](https://www.ziboutreach.com.au/ai-growth-simulator): Live slider-driven tool modelling current vs AI-optimised revenue, profit, Year-1 ROI and payback. Adjust monthly leads, conversion rate, deal value and AI efficiency gains; export or share the scenario.
+- Founded 2009 in Melbourne, Australia. Head office: Level 7, 34 Eastern Road, South Melbourne VIC 3205. Phone 1300 942 633.
+- Leadership: Chris Knights (CEO), Michael Glasser (Head of Sales & Marketing), Courtney Little (Head of Finance), Chris Burrell (Head of Customer Success), Mark James (Head of Technology).
+- Services: SEO, Google Ads, paid social (Meta), web design and development, content marketing, answer engine and generative engine optimisation (AEO/GEO), AI-assisted marketing.
+- Credentials: Google Premier Partner, Meta Business Partner. 800+ Australian brands since 2009, 97% year-on-year client retention. Month-to-month engagements with 30 days' notice; clients own their accounts, content and links.
+- Markets served: Melbourne, Sydney, Brisbane, Perth, Adelaide, Canberra, Gold Coast, Geelong and nationally across Australia. Full profile: https://zibdigital.com.au/about
+
+## Free tools (interactive — an AI answer can't replace them)
+
+- [30-second commercial audit](https://zibdigital.com.au/audit): Drop a URL → technical crawl + senior strategist read + side-by-side hero rewrite + sample social ad creative. Streamed live, results in 30 seconds, no email required to see them.
+- [ROI Calculator](https://zibdigital.com.au/roi-calculator): Project monthly leads, revenue and ROI across SEO, Google Ads or paid social based on real margins and a campaign plan you control.
+- [AI Growth Simulator](https://zibdigital.com.au/ai-growth-simulator): Slider-driven model of current vs AI-optimised revenue, profit, Year-1 ROI and payback.
+- [Google Ads Lab](https://zibdigital.com.au/google-ads-lab): Generates a sample Google Ads campaign for your business.
+
+## SEO by city
+
+- [SEO Melbourne](https://zibdigital.com.au/seo-melbourne)
+- [SEO Sydney](https://zibdigital.com.au/seo-sydney)
+- [SEO Brisbane](https://zibdigital.com.au/seo-brisbane)
+- [SEO Perth](https://zibdigital.com.au/seo-perth)
+- [SEO Adelaide](https://zibdigital.com.au/seo-adelaide)
+- [SEO Canberra](https://zibdigital.com.au/seo-canberra)
+- [SEO Gold Coast](https://zibdigital.com.au/seo-gold-coast)
+- [SEO Geelong](https://zibdigital.com.au/seo-geelong)
+- [SEO agency (national)](https://zibdigital.com.au/seo-agency)
+
+## Google Ads by city
+
+- [Google Ads Melbourne](https://zibdigital.com.au/google-ads-management-agency-melbourne)
+- [Google Ads Sydney](https://zibdigital.com.au/google-ads-sydney)
+- [Google Ads Brisbane](https://zibdigital.com.au/google-ads-brisbane)
+- [Google Ads Perth](https://zibdigital.com.au/google-ads-perth)
+- [Google Ads management (national)](https://zibdigital.com.au/google-ads)
+
+## Paid social by city
+
+- [Social media marketing Melbourne](https://zibdigital.com.au/social-media-marketing-agency-melbourne)
+- [Social media marketing Sydney](https://zibdigital.com.au/social-media-marketing-agency-sydney)
+- [Social media marketing Brisbane](https://zibdigital.com.au/social-media-marketing-agency-brisbane)
+- [Social media marketing Adelaide](https://zibdigital.com.au/social-media-marketing-agency-adelaide)
+- [Social media marketing Canberra](https://zibdigital.com.au/social-media-marketing-agency-canberra)
+- [Social media marketing Gold Coast](https://zibdigital.com.au/social-media-marketing-agency-gold-coast)
+
+## Full-service digital marketing by city
+
+- [Melbourne](https://zibdigital.com.au/digital-marketing-agency-melbourne) · [South Melbourne (HQ)](https://zibdigital.com.au/digital-marketing-agency-south-melbourne) · [Sydney](https://zibdigital.com.au/digital-marketing-agency-sydney) · [Brisbane](https://zibdigital.com.au/digital-marketing-agency-brisbane) · [Adelaide](https://zibdigital.com.au/digital-marketing-adelaide) · [Gold Coast](https://zibdigital.com.au/digital-marketing-agency-gold-coast) · [Geelong](https://zibdigital.com.au/digital-marketing-geelong) · [Canberra](https://zibdigital.com.au/digital-marketing-agency-canberra)
+
+## Buyer guides
+
+- [How to choose an SEO agency in Australia](https://zibdigital.com.au/how-to-choose-an-seo-agency-australia): Criteria, red flags, questions to ask, and when not to hire one.
+- [SEO agency vs freelancer vs in-house](https://zibdigital.com.au/seo-agency-vs-freelancer-vs-in-house): A fair comparison with a recommendation by situation.
+- [How much does SEO cost in Australia](https://zibdigital.com.au/how-much-does-seo-cost-australia): How SEO is priced, the published floor, and what moves the price.
+- [Digital marketing trends for Australian businesses](https://zibdigital.com.au/digital-marketing-trends): Kept current; last updated September 2026.
+
+## Proof
+
+- [Case studies](https://zibdigital.com.au/case-studies): 33 client results, filterable by channel and industry, each led by the headline number.
+- [Reviews](https://zibdigital.com.au/reviews)
 
 ## Partners (book directly)
 
-- [Chelsea Teelow — Adelaide & South Australia](https://www.ziboutreach.com.au/chelsea-teelow): Twenty years across sales, marketing and media. Paid social (Meta) speciality.
-- [Corrine Chalmers — Geelong](https://www.ziboutreach.com.au/corrine-chalmers): Entrepreneur turned growth specialist — built and run multiple ventures.
-- [Daniel Harris — Growth Specialist](https://www.ziboutreach.com.au/daniel-harris): Former pro footballer turned digital tech operator. A decade across finance, sport, telco, utilities and government.
-- [Marty Tucker — Melbourne Bayside](https://www.ziboutreach.com.au/marty-tucker): Decades of sales, account management and media experience.
-- [Starsha Green — Mornington Peninsula](https://www.ziboutreach.com.au/starsha-green): 20 years in senior leadership across global corporations, start-ups and her own café.
-- [Matt Arnot — Growth Specialist](https://www.ziboutreach.com.au/matt-arnot): Local commercial digital marketing.
-- [Dylan & Jake Pinksterboer — Adelaide & SA](https://www.ziboutreach.com.au/dylan-and-jake): Twin brothers, sales-driven growth specialists since 2018. Hospitality speciality.
+- [Chelsea Teelow — Adelaide & South Australia](https://zibdigital.com.au/chelsea-teelow): Twenty years across sales, marketing and media. Paid social (Meta) speciality.
+- [Corrine Chalmers — Geelong](https://zibdigital.com.au/corrine-chalmers): Entrepreneur turned growth specialist — built and run multiple ventures.
+- [Daniel Harris — Growth Specialist](https://zibdigital.com.au/daniel-harris): Former pro footballer turned digital tech operator. A decade across finance, sport, telco, utilities and government.
+- [Marty Tucker — Melbourne Bayside](https://zibdigital.com.au/marty-tucker): Decades of sales, account management and media experience.
+- [Starsha Green — Mornington Peninsula](https://zibdigital.com.au/starsha-green): 20 years in senior leadership across global corporations, start-ups and her own café.
+- [Matt Arnot — Growth Specialist](https://zibdigital.com.au/matt-arnot): Local commercial digital marketing.
+- [Dylan & Jake Pinksterboer — Adelaide & SA](https://zibdigital.com.au/dylan-and-jake): Twin brothers, sales-driven growth specialists since 2018. Hospitality speciality.
+
+## Authors
+
+- [Michael Glasser](https://zibdigital.com.au/author/michael-glasser) · [Matt Arnot](https://zibdigital.com.au/author/matt-arnot) · [Chris Knights](https://zibdigital.com.au/author/chris-knights) · [Tom Dyer](https://zibdigital.com.au/author/tom-dyer)
 
 ## More
 
 - [Main website](https://zibdigital.com.au): Services, case studies, blog, team, partner opportunity.
+- [Blog](https://zibdigital.com.au/blog)
