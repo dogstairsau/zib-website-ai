@@ -18,8 +18,11 @@ const HOST = "https://zibdigital.com.au";
 // robots meta is missing.
 const EXCLUDE = new Set([
   "alchemy-construct", "archer-scott-lawyers", "australian-infinity-hospitality-solutions",
-  "Mad-Mex-SEO-GEO-Opportunity", "prompt-research", "meta-ads-lab", "roi-calculator",
-  "ai-growth-simulator", "zib-os", "ai-readiness", "automation-map", "audit", "p/matt/apiam-animal-health",
+  "Mad-Mex-SEO-GEO-Opportunity", "prompt-research", "meta-ads-lab",
+  "zib-os", "ai-readiness", "automation-map", "p/matt/apiam-animal-health",
+  // /audit, /roi-calculator and /ai-growth-simulator are public tools linked from
+  // the nav and llms.txt; they are deliberately indexable (AI answers can't
+  // substitute for an interactive tool, so they are the click the citation earns).
   "boothalicious-seo-audit", "project-better-seo-audit",
 ]);
 
