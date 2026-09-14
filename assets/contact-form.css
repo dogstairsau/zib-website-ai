@@ -238,14 +238,18 @@
   cursor: pointer;
 }
 /* Until a value is chosen the placeholder option should read as placeholder,
-   not as an answer. HubSpot marks it with an empty value. */
+   not as an answer. :invalid only fires on a required select, so match the
+   empty option being checked too — that covers optional fields as well. */
 .hs-form-wrap .hs-form select.hs-input:invalid,
-.hs-form-wrap .hs-form select.hs-input option[value=""] { color: var(--muted-2); }
+.hs-form-wrap .hs-form select.hs-input:has(option[value=""]:checked) { color: var(--muted-2); }
+.hs-form-wrap .hs-form select.hs-input option { color: var(--ink); }
 
 /* ─── Radio / checkbox groups · segmented pills ────────────────────────
-   HubSpot renders these as a bare <ul class="inputs-list">. Unstyled they
-   drop out of the design entirely, so they get pills sized for thumbs. */
-.hs-form-wrap .hs-form .inputs-list {
+   HubSpot renders these as a bare <ul class="inputs-list"> of <label>s.
+   Those labels are matched by the generic `.hs-form-field label` rule above
+   (0,3,1), which makes them full-width block captions and stacks the pills
+   one per row. Every selector here carries .inputs-list so it outranks it. */
+.hs-form-wrap .hs-form .hs-form-field .inputs-list {
   list-style: none;
   margin: 0;
   padding: 0;
@@ -253,18 +257,23 @@
   flex-wrap: wrap;
   gap: 10px;
 }
-.hs-form-wrap .hs-form .hs-form-radio,
-.hs-form-wrap .hs-form .hs-form-checkbox { flex: 1 1 auto; min-width: 104px; }
-.hs-form-wrap .hs-form .hs-form-radio-display,
-.hs-form-wrap .hs-form .hs-form-checkbox-display {
+/* A row of pills needs the full width; half a grid column stacks them. */
+.hs-form-wrap .hs-form .hs-form-field:has(.inputs-list) { grid-column: 1 / -1; }
+.hs-form-wrap .hs-form .inputs-list .hs-form-radio,
+.hs-form-wrap .hs-form .inputs-list .hs-form-checkbox { flex: 1 1 0; min-width: 96px; }
+.hs-form-wrap .hs-form .inputs-list .hs-form-radio-display,
+.hs-form-wrap .hs-form .inputs-list .hs-form-checkbox-display {
   display: flex;
   align-items: center;
   justify-content: center;
   gap: 8px;
+  width: 100%;
   margin: 0;
-  min-height: 50px;
+  min-height: 54px;
   padding: 12px 18px;
-  font-size: 15px;
+  font-family: var(--display);
+  font-size: clamp(15px, 1.3vw, 17px);
+  line-height: 1.2;
   text-align: center;
   color: var(--ink);
   background: var(--paper);
@@ -273,24 +282,26 @@
   cursor: pointer;
   transition: border-color .18s var(--ease), background .18s var(--ease);
 }
-.hs-form-wrap .hs-form .hs-form-radio-display:hover,
-.hs-form-wrap .hs-form .hs-form-checkbox-display:hover { border-color: var(--ink-3); }
-/* The native control stays in the DOM for keyboard and screen readers; the
-   pill is the visible affordance. */
-.hs-form-wrap .hs-form .hs-form-radio-display input,
-.hs-form-wrap .hs-form .hs-form-checkbox-display input {
+.hs-form-wrap .hs-form .inputs-list .hs-form-radio-display:hover,
+.hs-form-wrap .hs-form .inputs-list .hs-form-checkbox-display:hover { border-color: var(--ink-3); }
+/* Native control stays in the DOM for keyboard and screen readers; the pill
+   is the visible affordance. */
+.hs-form-wrap .hs-form .inputs-list .hs-form-radio-display > input,
+.hs-form-wrap .hs-form .inputs-list .hs-form-checkbox-display > input {
   position: absolute;
   opacity: 0;
   width: 1px;
   height: 1px;
+  margin: 0;
 }
-.hs-form-wrap .hs-form .hs-form-radio-display:has(input:checked),
-.hs-form-wrap .hs-form .hs-form-checkbox-display:has(input:checked) {
+.hs-form-wrap .hs-form .inputs-list .hs-form-radio-display:has(input:checked),
+.hs-form-wrap .hs-form .inputs-list .hs-form-checkbox-display:has(input:checked) {
   border-color: var(--accent);
   background: var(--accent-tint);
+  color: var(--ink);
 }
-.hs-form-wrap .hs-form .hs-form-radio-display:has(input:focus-visible),
-.hs-form-wrap .hs-form .hs-form-checkbox-display:has(input:focus-visible) {
+.hs-form-wrap .hs-form .inputs-list .hs-form-radio-display:has(input:focus-visible),
+.hs-form-wrap .hs-form .inputs-list .hs-form-checkbox-display:has(input:focus-visible) {
   outline: 2px solid var(--ink);
   outline-offset: 2px;
 }
