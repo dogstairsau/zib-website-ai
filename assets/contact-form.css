@@ -306,22 +306,38 @@
   outline-offset: 2px;
 }
 
+/* ─── Two-up short fields ───────────────────────────────────────────────
+   HubSpot only puts fields in a shared row when someone drags them side by
+   side in the form builder; otherwise each lands in its own
+   form-columns-1 fieldset, which the rule above stretches to full width.
+   Pairing these four in CSS keeps the form short without depending on how
+   it was assembled. Fields the builder did pair sit in form-columns-2 and
+   are untouched by this. */
+@media (min-width: 620px) {
+  .hs-form-wrap .hs-form .form-columns-1 .hs-form-field.hs_firstname,
+  .hs-form-wrap .hs-form .form-columns-1 .hs-form-field.hs_lastname,
+  .hs-form-wrap .hs-form .form-columns-1 .hs-form-field.hs_email,
+  .hs-form-wrap .hs-form .form-columns-1 .hs-form-field.hs_phone {
+    grid-column: span 1;
+  }
+}
+
 /* ─── Progressive disclosure · assets/form-progressive.js ───────────────
-   Steps below the fold of the form open as the ones above are answered.
-   Only the reveal transition lives here; the hiding is done in JS, so with
-   the script absent every field renders normally. */
-.hs-form-wrap .hs-form fieldset.is-revealing {
+   Fields below the first few open as the ones above are answered. Only the
+   reveal transition lives here; the hiding is done in JS, so with the
+   script absent every field renders normally. */
+.hs-form-wrap .hs-form .hs-form-field.is-revealing {
   opacity: 0;
   transform: translateY(-6px);
   transition: opacity .3s var(--ease), transform .3s var(--ease);
 }
-.hs-form-wrap .hs-form fieldset.is-revealing.is-revealed {
+.hs-form-wrap .hs-form .hs-form-field.is-revealing.is-revealed {
   opacity: 1;
   transform: none;
 }
 @media (prefers-reduced-motion: reduce) {
-  .hs-form-wrap .hs-form fieldset.is-revealing,
-  .hs-form-wrap .hs-form fieldset.is-revealing.is-revealed {
+  .hs-form-wrap .hs-form .hs-form-field.is-revealing,
+  .hs-form-wrap .hs-form .hs-form-field.is-revealing.is-revealed {
     opacity: 1;
     transform: none;
     transition: none;
