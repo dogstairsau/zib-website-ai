@@ -222,3 +222,75 @@
 @media (max-width: 720px) {
   .hs-form-wrap .hs-form { grid-template-columns: 1fr; gap: 24px; }
 }
+
+/* ─── Select · custom arrow ─────────────────────────────────────────────
+   select.hs-input already picks up the base input treatment above; without
+   appearance:none it also keeps the OS chevron, which reads as a foreign
+   control next to the custom inputs. Arrow is an inline data URI because
+   the CSP on published pages blocks external image requests. */
+.hs-form-wrap .hs-form select.hs-input {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%236B6B6B' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 18px center;
+  padding-right: 46px;
+  cursor: pointer;
+}
+/* Until a value is chosen the placeholder option should read as placeholder,
+   not as an answer. HubSpot marks it with an empty value. */
+.hs-form-wrap .hs-form select.hs-input:invalid,
+.hs-form-wrap .hs-form select.hs-input option[value=""] { color: var(--muted-2); }
+
+/* ─── Radio / checkbox groups · segmented pills ────────────────────────
+   HubSpot renders these as a bare <ul class="inputs-list">. Unstyled they
+   drop out of the design entirely, so they get pills sized for thumbs. */
+.hs-form-wrap .hs-form .inputs-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.hs-form-wrap .hs-form .hs-form-radio,
+.hs-form-wrap .hs-form .hs-form-checkbox { flex: 1 1 auto; min-width: 104px; }
+.hs-form-wrap .hs-form .hs-form-radio-display,
+.hs-form-wrap .hs-form .hs-form-checkbox-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  margin: 0;
+  min-height: 50px;
+  padding: 12px 18px;
+  font-size: 15px;
+  text-align: center;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: border-color .18s var(--ease), background .18s var(--ease);
+}
+.hs-form-wrap .hs-form .hs-form-radio-display:hover,
+.hs-form-wrap .hs-form .hs-form-checkbox-display:hover { border-color: var(--ink-3); }
+/* The native control stays in the DOM for keyboard and screen readers; the
+   pill is the visible affordance. */
+.hs-form-wrap .hs-form .hs-form-radio-display input,
+.hs-form-wrap .hs-form .hs-form-checkbox-display input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+}
+.hs-form-wrap .hs-form .hs-form-radio-display:has(input:checked),
+.hs-form-wrap .hs-form .hs-form-checkbox-display:has(input:checked) {
+  border-color: var(--accent);
+  background: var(--accent-tint);
+}
+.hs-form-wrap .hs-form .hs-form-radio-display:has(input:focus-visible),
+.hs-form-wrap .hs-form .hs-form-checkbox-display:has(input:focus-visible) {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
