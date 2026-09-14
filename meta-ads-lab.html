@@ -1855,6 +1855,18 @@ body.has-book-bar .float-cta { display: none; }
       state.isRunning = false;
     }
   });
+
+  // Handoff from an industry landing page: /meta-ads-lab?url=example.com.au
+  // arrives with the URL already typed, so start the run instead of asking
+  // for it a second time. Same normalising as a manual submit.
+  const handoffUrl = new URLSearchParams(location.search).get('url');
+  if (handoffUrl && heroUrl && heroForm) {
+    heroUrl.value = handoffUrl.trim().replace(/^https?:\/\//i, '');
+    if (heroUrl.value) {
+      if (typeof heroForm.requestSubmit === 'function') heroForm.requestSubmit();
+      else heroForm.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+    }
+  }
 })();
 </script>
 </body>
