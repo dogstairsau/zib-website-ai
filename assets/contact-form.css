@@ -305,3 +305,25 @@
   outline: 2px solid var(--ink);
   outline-offset: 2px;
 }
+
+/* ─── Progressive disclosure · assets/form-progressive.js ───────────────
+   Steps below the fold of the form open as the ones above are answered.
+   Only the reveal transition lives here; the hiding is done in JS, so with
+   the script absent every field renders normally. */
+.hs-form-wrap .hs-form fieldset.is-revealing {
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity .3s var(--ease), transform .3s var(--ease);
+}
+.hs-form-wrap .hs-form fieldset.is-revealing.is-revealed {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hs-form-wrap .hs-form fieldset.is-revealing,
+  .hs-form-wrap .hs-form fieldset.is-revealing.is-revealed {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
