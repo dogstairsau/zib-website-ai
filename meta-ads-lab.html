@@ -593,6 +593,21 @@ body.has-book-bar .float-cta { display: none; }
   color: var(--muted); text-transform: uppercase;
   max-width: 32ch; line-height: 1.6;
 }
+.mal-reveal .head-side {
+  display: flex; flex-direction: column; align-items: flex-end;
+  gap: 18px; text-align: right;
+}
+.mal-dl {
+  appearance: none; border: 0; cursor: pointer; text-align: left;
+  background: var(--ink); color: #fff; border-radius: 12px;
+  padding: 14px 22px; display: inline-flex; flex-direction: column; gap: 2px;
+  transition: background 160ms var(--ease), transform 160ms var(--ease), opacity 160ms var(--ease);
+}
+.mal-dl[hidden] { display: none; }
+.mal-dl:hover { background: var(--accent); transform: translateY(-1px); }
+.mal-dl:disabled { opacity: 0.6; cursor: default; transform: none; }
+.mal-dl .lbl { font-family: var(--display); font-weight: 500; font-size: 15px; letter-spacing: -0.01em; }
+.mal-dl .sub { font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.7; }
 
 .mal-ad-grid {
   display: grid;
@@ -954,9 +969,19 @@ body.has-book-bar .float-cta { display: none; }
           <div class="mono eyebrow">Generated for <span id="brandLabel">your brand</span></div>
           <h2>Here are <em>the 12 concepts.</em></h2>
         </div>
-        <p class="meta">
-          Each concept lands here as its creative finishes rendering. The full pack also lives in your inbox.
-        </p>
+        <div class="head-side">
+          <p class="meta">
+            Each concept lands here as its creative finishes rendering. The full pack also lives in your inbox.
+          </p>
+          <!-- Private download, off by default. Shown only when the page is
+               opened with ?creatives in the URL (a link the team shares with a
+               specific client). Zips the rendered creatives in the browser —
+               no server, no storage. -->
+          <button type="button" id="dlPack" class="mal-dl" hidden>
+            <span class="lbl">Download all 12 creatives</span>
+            <span class="sub">ZIP · images + copy sheet</span>
+          </button>
+        </div>
       </div>
 
       <div id="adGrid" class="mal-ad-grid"></div>
@@ -1553,6 +1578,153 @@ body.has-book-bar .float-cta { display: none; }
     if (e.data && e.data.meetingBookSucceeded === true) { bookDismissed = true; hideBookBar(); }
   });
 
+  /* ─── Private creative download (?creatives link) ─────────────────
+     Off by default. When the page is opened with a ?creatives param — a
+     link the team shares with a specific client — a Download button zips
+     the rendered creatives client-side (no server, no storage) so the
+     client can save all 12 as image files plus a copy sheet. */
+  const PACK_DL = (() => {
+    try { return new URLSearchParams(location.search).has('creatives'); }
+    catch { return false; }
+  })();
+  const dlPackBtn = document.getElementById('dlPack');
+
+  const slug = (s, max = 40) => String(s || '')
+    .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, max) || 'creative';
+
+  // Minimal store-only (no compression) ZIP writer. PNGs are already
+  // compressed, so storing them raw costs nothing and keeps this
+  // dependency-free — no CDN, no build step.
+  const crc32 = (() => {
+    const t = new Uint32Array(256);
+    for (let n = 0; n < 256; n++) {
+      let c = n;
+      for (let k = 0; k < 8; k++) c = (c & 1) ? (0xEDB88320 ^ (c >>> 1)) : (c >>> 1);
+      t[n] = c >>> 0;
+    }
+    return (bytes) => {
+      let crc = 0xFFFFFFFF;
+      for (let i = 0; i < bytes.length; i++) crc = (crc >>> 8) ^ t[(crc ^ bytes[i]) & 0xFF];
+      return (crc ^ 0xFFFFFFFF) >>> 0;
+    };
+  })();
+
+  const u16 = (n) => new Uint8Array([n & 0xff, (n >>> 8) & 0xff]);
+  const u32 = (n) => new Uint8Array([n & 0xff, (n >>> 8) & 0xff, (n >>> 16) & 0xff, (n >>> 24) & 0xff]);
+  const cat = (...arrs) => {
+    let len = 0; for (const a of arrs) len += a.length;
+    const out = new Uint8Array(len); let p = 0;
+    for (const a of arrs) { out.set(a, p); p += a.length; }
+    return out;
+  };
+
+  const buildZip = (files) => {
+    const enc = new TextEncoder();
+    const chunks = [];
+    const central = [];
+    let offset = 0;
+    const push = (arr) => { chunks.push(arr); offset += arr.length; };
+    for (const f of files) {
+      const nameBytes = enc.encode(f.name);
+      const crc = crc32(f.data);
+      const size = f.data.length;
+      const localOffset = offset;
+      push(cat(
+        u32(0x04034b50), u16(20), u16(0), u16(0), u16(0), u16(0),
+        u32(crc), u32(size), u32(size), u16(nameBytes.length), u16(0),
+      ));
+      push(nameBytes);
+      push(f.data);
+      central.push({ nameBytes, crc, size, localOffset });
+    }
+    const cdStart = offset;
+    for (const c of central) {
+      push(cat(
+        u32(0x02014b50), u16(20), u16(20), u16(0), u16(0), u16(0), u16(0),
+        u32(c.crc), u32(c.size), u32(c.size),
+        u16(c.nameBytes.length), u16(0), u16(0), u16(0), u16(0), u32(0),
+        u32(c.localOffset),
+      ));
+      push(c.nameBytes);
+    }
+    const cdSize = offset - cdStart;
+    push(cat(
+      u32(0x06054b50), u16(0), u16(0),
+      u16(central.length), u16(central.length),
+      u32(cdSize), u32(cdStart), u16(0),
+    ));
+    return new Blob(chunks, { type: 'application/zip' });
+  };
+
+  const dataUriToBytes = (uri) => {
+    const comma = uri.indexOf(',');
+    if (comma < 0) return null;
+    const bin = atob(uri.slice(comma + 1));
+    const bytes = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) bytes[i] = bin.charCodeAt(i);
+    return bytes;
+  };
+
+  const copySheet = () => {
+    const brand = state.brand?.name || 'Your brand';
+    const lines = [
+      `${brand} — Meta ad creatives`,
+      `Generated by Zib Digital · Meta Ads Lab`,
+      state.url ? `Site: ${state.url}` : '',
+      state.audience ? `Audience: ${state.audience}` : '',
+      '', '──────────────────────────────────────', '',
+    ];
+    state.ads.forEach((ad, i) => {
+      const n = String(i + 1).padStart(2, '0');
+      const kind = i < 4 ? 'HERO' : 'VARIATION';
+      lines.push(
+        `${n} · ${kind} · ${ad.angle || ''} · ${ad.format || ''}`,
+        `Audience : ${ad.audience || ''}`,
+        `Headline : ${ad.headline || ''}`,
+        `Body     : ${ad.body || ''}`,
+        `CTA      : ${ad.cta || ''}`,
+        `Platform : ${ad.platform || ''}`,
+        '',
+      );
+    });
+    return new TextEncoder().encode(lines.filter((l) => l !== undefined).join('\n'));
+  };
+
+  const downloadPack = () => {
+    if (!state.ads.length) return;
+    const brandSlug = slug(state.brand?.name || state.brand?.domain || 'brand');
+    const files = [{ name: `00-copy-sheet.txt`, data: copySheet() }];
+    state.ads.forEach((ad, i) => {
+      if (!ad.image_url || !ad.image_url.startsWith('data:')) return;
+      const bytes = dataUriToBytes(ad.image_url);
+      if (!bytes) return;
+      const n = String(i + 1).padStart(2, '0');
+      const kind = i < 4 ? 'hero' : 'var';
+      files.push({ name: `${n}-${kind}-${slug(ad.angle || ad.headline)}.png`, data: bytes });
+    });
+    const blob = buildZip(files);
+    const a = document.createElement('a');
+    const objUrl = URL.createObjectURL(blob);
+    a.href = objUrl;
+    a.download = `${brandSlug}-meta-ads-creatives.zip`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(() => URL.revokeObjectURL(objUrl), 4000);
+
+    const imageCount = files.length - 1;
+    if (dlPackBtn) {
+      dlPackBtn.querySelector('.sub').textContent =
+        `Downloaded · ${imageCount} image${imageCount === 1 ? '' : 's'} + copy sheet`;
+    }
+  };
+
+  const showDownloadPack = () => {
+    if (!PACK_DL || !dlPackBtn || !state.ads.length) return;
+    dlPackBtn.hidden = false;
+  };
+  if (dlPackBtn) dlPackBtn.addEventListener('click', downloadPack);
+
   const finishReveal = () => {
     state.imagesGated = false;
     stopWaitHub();
@@ -1571,6 +1743,7 @@ body.has-book-bar .float-cta { display: none; }
     });
     renderAfterBranch();
     showBookBar();
+    showDownloadPack();
 
     adGrid.querySelectorAll('.ad-card.is-pending').forEach((c, i) => setTimeout(() => {
       c.classList.remove('is-pending');
