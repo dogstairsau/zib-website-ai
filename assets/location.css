@@ -441,3 +441,301 @@ h1, h2, h3, .hero-h, .local-h, .services-h, .stats-h, .faq-h, .cta-title { text-
 /* ─── Cycling hero word (digital-marketing location headlines) ─── */
 .word-cycle { display: inline-block; transition: opacity 300ms var(--ease), transform 300ms var(--ease); }
 .word-cycle.swap { opacity: 0; transform: translateY(-6px); }
+
+/* ═══════════════════════════════════════════════════════════════════════
+   INDUSTRY LANDING PAGES · conversion layer
+   Used by /industries/*. Paid traffic lands on these, so the lead form is
+   the hero rather than a scroll-to CTA, and the Meta Ads Lab sits lower as
+   the secondary path. Self-contained: these pages no longer load
+   audit-widget.css, so nothing here may depend on it.
+   ═══════════════════════════════════════════════════════════════════════ */
+
+/* ─── Lead-capture hero · copy left, form right ─────────────────────── */
+.lead-hero-row {
+  margin-top: clamp(20px, 2.4vw, 34px);
+  display: grid;
+  grid-template-columns: 1.05fr 0.95fr;
+  gap: clamp(32px, 5vw, 72px);
+  align-items: start;
+}
+.lead-hero-intro { max-width: 30em; }
+/* The full-bleed hero scale is far too big for a column: at 80px a 16ch
+   measure wrapped the headline to eight lines and left half the column
+   empty. Smaller, and bounded by the column rather than a character count. */
+.lead-hero-row .hero-h {
+  font-size: clamp(32px, 3.5vw, 54px);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  max-width: none;
+}
+.lead-hero-sub {
+  margin-top: clamp(20px, 2.4vw, 28px);
+  font-size: clamp(16px, 1.3vw, 18.5px);
+  line-height: 1.55;
+  color: var(--muted);
+  max-width: 46ch;
+}
+.lead-hero-sub strong { color: var(--ink); font-weight: 500; }
+
+.lead-form-card {
+  border: 1px solid var(--rule);
+  border-radius: 16px;
+  background: var(--paper);
+  padding: clamp(24px, 2.6vw, 36px);
+}
+.lead-form-h {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(21px, 2vw, 27px);
+  line-height: 1.12;
+  letter-spacing: -0.025em;
+  text-wrap: balance;
+}
+.lead-form-sub {
+  margin-top: 10px;
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--muted);
+}
+.lead-form-points {
+  list-style: none;
+  margin: 20px 0 0;
+  padding: 0;
+  display: grid;
+  gap: 9px;
+}
+.lead-form-points li {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  font-size: 14px;
+  line-height: 1.45;
+}
+.lead-form-points li::before {
+  content: "✓";
+  color: var(--accent);
+  font-weight: 600;
+  flex: none;
+}
+.lead-form-card .hs-form-wrap { margin-top: 22px; }
+.lead-form-foot {
+  margin-top: 18px;
+  padding-top: 16px;
+  border-top: 1px solid var(--rule);
+  font-size: 13px;
+  color: var(--muted);
+}
+.lead-form-foot a { color: var(--ink); }
+
+@media (max-width: 900px) {
+  .lead-hero-row { grid-template-columns: 1fr; }
+  .lead-hero-intro { max-width: none; }
+}
+
+/* ─── Meta Ads Lab entry · secondary conversion path ────────────────────
+   One field. Submitting hands off to /meta-ads-lab with the URL prefilled
+   so the tool runs there immediately — the landing page keeps a single
+   lead capture (the hero form) and never competes with itself. */
+.mal-entry {
+  padding: var(--section-y) 0;
+  border-bottom: 0.5px solid var(--rule);
+  background: var(--paper);
+}
+.mal-entry-head { max-width: 62ch; }
+.mal-entry-h {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(30px, 4.4vw, 62px);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  margin-top: 14px;
+  text-wrap: balance;
+}
+.mal-entry-h em { color: var(--accent); font-style: italic; font-weight: 400; }
+.mal-entry-sub {
+  margin-top: clamp(16px, 2vw, 24px);
+  font-size: clamp(15.5px, 1.2vw, 17.5px);
+  line-height: 1.6;
+  color: var(--muted);
+  max-width: 56ch;
+}
+.mal-entry-form {
+  margin-top: clamp(24px, 3vw, 36px);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  max-width: 620px;
+}
+.mal-entry-form input {
+  flex: 1 1 260px;
+  min-width: 0;
+  font-family: var(--body);
+  font-size: 16px;
+  padding: 16px 18px;
+  color: var(--ink);
+  background: var(--bg);
+  border: 1px solid var(--rule);
+  border-radius: 12px;
+  transition: border-color .2s var(--ease);
+}
+.mal-entry-form input::placeholder { color: var(--muted); }
+.mal-entry-form input:focus {
+  outline: none;
+  border-color: var(--ink);
+}
+.mal-entry-form button {
+  flex: 0 0 auto;
+  font-family: var(--body);
+  font-size: 15px;
+  font-weight: 500;
+  padding: 16px 26px;
+  color: #fff;
+  background: var(--accent);
+  border: 1px solid var(--accent);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: background .2s var(--ease), transform .2s var(--ease);
+}
+.mal-entry-form button:hover { background: #ff7a24; transform: translateY(-1px); }
+.mal-entry-trust {
+  margin-top: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 26px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.mal-entry-trust span { display: inline-flex; align-items: center; gap: 8px; }
+.mal-entry-trust .dot {
+  width: 5px; height: 5px; border-radius: 50%;
+  background: var(--accent); flex: none;
+}
+
+/* ─── Testimonials · real Google reviews ───────────────────────────────
+   Plain markup, no Review schema: self-serving review markup on a service
+   page isn't eligible for rich results, and the aggregate already lives on
+   /reviews. These are here to convert, not to chase a star rating. */
+.rev-strip { padding: var(--section-y) 0; border-bottom: 0.5px solid var(--rule); }
+.rev-strip-grid {
+  margin-top: clamp(32px, 4vw, 48px);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+.rev-card {
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+  padding: 28px;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+}
+.rev-stars { color: var(--accent); letter-spacing: 2px; font-size: 15px; margin-bottom: 12px; }
+.rev-card blockquote { margin: 0; font-size: 15.5px; line-height: 1.6; color: var(--ink); }
+.rev-card cite {
+  display: block;
+  margin-top: auto;
+  padding-top: 16px;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  color: var(--ink);
+}
+.rev-card cite .mono { color: var(--muted); font-weight: 400; }
+.rev-strip-foot { margin-top: clamp(28px, 3vw, 40px); font-size: 14px; color: var(--muted); }
+.rev-strip-foot a { color: var(--ink); }
+
+/* ─── Who you'll talk to · named strategist ─────────────────────────────
+   Paid traffic converts on a person, not a brand. Portrait left, the
+   commercial claim and a real quote right. Stacks under 760px. */
+.strat-strip { padding: var(--section-y) 0; border-bottom: 0.5px solid var(--rule); }
+.strat-row {
+  margin-top: clamp(32px, 4vw, 48px);
+  display: grid;
+  grid-template-columns: minmax(0, 0.75fr) minmax(0, 1.25fr);
+  gap: clamp(28px, 4vw, 56px);
+  align-items: start;
+}
+.strat-photo {
+  margin: 0;
+  border: 1px solid var(--rule);
+  border-radius: 16px;
+  overflow: hidden;
+  background: var(--dim);
+  aspect-ratio: 4 / 5;
+  max-width: 100%;
+}
+.strat-photo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.strat-name {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(28px, 3.2vw, 44px);
+  line-height: 1.04;
+  letter-spacing: -0.03em;
+}
+.strat-role { margin-top: 8px; color: var(--accent); }
+.strat-body { margin-top: clamp(18px, 2vw, 24px); font-size: 16.5px; line-height: 1.6; max-width: 54ch; }
+.strat-quote {
+  margin: clamp(22px, 2.6vw, 32px) 0 0;
+  padding-left: clamp(18px, 2vw, 24px);
+  border-left: 2px solid var(--accent);
+  font-family: var(--display);
+  font-size: clamp(19px, 1.9vw, 25px);
+  line-height: 1.34;
+  letter-spacing: -0.02em;
+  text-wrap: balance;
+}
+.strat-quote cite {
+  display: block;
+  margin-top: 12px;
+  font-family: var(--body);
+  font-style: normal;
+  font-size: 14px;
+  color: var(--muted);
+  letter-spacing: 0;
+}
+.strat-facts {
+  list-style: none;
+  margin: clamp(24px, 3vw, 32px) 0 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 20px 28px;
+}
+.strat-facts li { border-top: 1px solid var(--rule); padding-top: 14px; }
+.strat-facts .k { font-size: 12.5px; color: var(--muted); display: block; margin-bottom: 5px; }
+.strat-facts .v { font-size: 15px; line-height: 1.45; }
+.strat-cta { margin-top: clamp(26px, 3vw, 36px); display: flex; flex-wrap: wrap; gap: 12px; }
+
+@media (max-width: 760px) {
+  .strat-row { grid-template-columns: 1fr; }
+  .strat-photo { max-width: 320px; }
+}
+
+/* ─── Lead hero · tighter top ───────────────────────────────────────────
+   The shared .loc-hero padding leaves a dead band under the fixed header
+   when the hero is a form rather than a full-bleed headline. Scoped to the
+   industry landing pages so the city pages keep their own rhythm. */
+.loc-hero--lead { padding-top: clamp(20px, 2.4vw, 36px); }
+.loc-hero--lead .eyebrow { margin-bottom: clamp(16px, 1.8vw, 24px); }
+
+/* ─── Hero partner badges ───────────────────────────────────────────── */
+.hero-partners {
+  margin-top: clamp(22px, 2.6vw, 30px);
+  padding-top: clamp(18px, 2vw, 24px);
+  border-top: 1px solid var(--rule);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 28px;
+}
+.hero-partner {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13.5px;
+  line-height: 1.3;
+  color: var(--muted);
+}
+.hero-partner img { width: 26px; height: 26px; display: block; flex: none; }
+.hero-partner .pk { color: var(--ink); font-weight: 500; }

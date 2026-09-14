@@ -222,3 +222,108 @@
 @media (max-width: 720px) {
   .hs-form-wrap .hs-form { grid-template-columns: 1fr; gap: 24px; }
 }
+
+/* ─── Select · custom arrow ─────────────────────────────────────────────
+   select.hs-input already picks up the base input treatment above; without
+   appearance:none it also keeps the OS chevron, which reads as a foreign
+   control next to the custom inputs. Arrow is an inline data URI because
+   the CSP on published pages blocks external image requests. */
+.hs-form-wrap .hs-form select.hs-input {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8' fill='none'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%236B6B6B' stroke-width='1.6' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 18px center;
+  padding-right: 46px;
+  cursor: pointer;
+}
+/* Until a value is chosen the placeholder option should read as placeholder,
+   not as an answer. :invalid only fires on a required select, so match the
+   empty option being checked too — that covers optional fields as well. */
+.hs-form-wrap .hs-form select.hs-input:invalid,
+.hs-form-wrap .hs-form select.hs-input:has(option[value=""]:checked) { color: var(--muted-2); }
+.hs-form-wrap .hs-form select.hs-input option { color: var(--ink); }
+
+/* ─── Radio / checkbox groups · segmented pills ────────────────────────
+   HubSpot renders these as a bare <ul class="inputs-list"> of <label>s.
+   Those labels are matched by the generic `.hs-form-field label` rule above
+   (0,3,1), which makes them full-width block captions and stacks the pills
+   one per row. Every selector here carries .inputs-list so it outranks it. */
+.hs-form-wrap .hs-form .hs-form-field .inputs-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+/* A row of pills needs the full width; half a grid column stacks them. */
+.hs-form-wrap .hs-form .hs-form-field:has(.inputs-list) { grid-column: 1 / -1; }
+.hs-form-wrap .hs-form .inputs-list .hs-form-radio,
+.hs-form-wrap .hs-form .inputs-list .hs-form-checkbox { flex: 1 1 0; min-width: 96px; }
+.hs-form-wrap .hs-form .inputs-list .hs-form-radio-display,
+.hs-form-wrap .hs-form .inputs-list .hs-form-checkbox-display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  margin: 0;
+  min-height: 54px;
+  padding: 12px 18px;
+  font-family: var(--display);
+  font-size: clamp(15px, 1.3vw, 17px);
+  line-height: 1.2;
+  text-align: center;
+  color: var(--ink);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: border-color .18s var(--ease), background .18s var(--ease);
+}
+.hs-form-wrap .hs-form .inputs-list .hs-form-radio-display:hover,
+.hs-form-wrap .hs-form .inputs-list .hs-form-checkbox-display:hover { border-color: var(--ink-3); }
+/* Native control stays in the DOM for keyboard and screen readers; the pill
+   is the visible affordance. */
+.hs-form-wrap .hs-form .inputs-list .hs-form-radio-display > input,
+.hs-form-wrap .hs-form .inputs-list .hs-form-checkbox-display > input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  margin: 0;
+}
+.hs-form-wrap .hs-form .inputs-list .hs-form-radio-display:has(input:checked),
+.hs-form-wrap .hs-form .inputs-list .hs-form-checkbox-display:has(input:checked) {
+  border-color: var(--accent);
+  background: var(--accent-tint);
+  color: var(--ink);
+}
+.hs-form-wrap .hs-form .inputs-list .hs-form-radio-display:has(input:focus-visible),
+.hs-form-wrap .hs-form .inputs-list .hs-form-checkbox-display:has(input:focus-visible) {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+/* ─── Progressive disclosure · assets/form-progressive.js ───────────────
+   Steps below the fold of the form open as the ones above are answered.
+   Only the reveal transition lives here; the hiding is done in JS, so with
+   the script absent every field renders normally. */
+.hs-form-wrap .hs-form fieldset.is-revealing {
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity .3s var(--ease), transform .3s var(--ease);
+}
+.hs-form-wrap .hs-form fieldset.is-revealing.is-revealed {
+  opacity: 1;
+  transform: none;
+}
+@media (prefers-reduced-motion: reduce) {
+  .hs-form-wrap .hs-form fieldset.is-revealing,
+  .hs-form-wrap .hs-form fieldset.is-revealing.is-revealed {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
