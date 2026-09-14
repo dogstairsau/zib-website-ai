@@ -452,18 +452,21 @@ h1, h2, h3, .hero-h, .local-h, .services-h, .stats-h, .faq-h, .cta-title { text-
 
 /* ─── Lead-capture hero · copy left, form right ─────────────────────── */
 .lead-hero-row {
-  margin-top: clamp(32px, 4vw, 56px);
+  margin-top: clamp(20px, 2.4vw, 34px);
   display: grid;
   grid-template-columns: 1.05fr 0.95fr;
   gap: clamp(32px, 5vw, 72px);
   align-items: start;
 }
-.lead-hero-intro { max-width: 34ch; }
-/* The full-bleed hero scale is too big for a column; step it down so the
-   headline and the form card hold the same optical weight. */
+.lead-hero-intro { max-width: 30em; }
+/* The full-bleed hero scale is far too big for a column: at 80px a 16ch
+   measure wrapped the headline to eight lines and left half the column
+   empty. Smaller, and bounded by the column rather than a character count. */
 .lead-hero-row .hero-h {
-  font-size: clamp(40px, 5.4vw, 80px);
-  max-width: 16ch;
+  font-size: clamp(32px, 3.5vw, 54px);
+  line-height: 1.02;
+  letter-spacing: -0.035em;
+  max-width: none;
 }
 .lead-hero-sub {
   margin-top: clamp(20px, 2.4vw, 28px);
@@ -708,3 +711,31 @@ h1, h2, h3, .hero-h, .local-h, .services-h, .stats-h, .faq-h, .cta-title { text-
   .strat-row { grid-template-columns: 1fr; }
   .strat-photo { max-width: 320px; }
 }
+
+/* ─── Lead hero · tighter top ───────────────────────────────────────────
+   The shared .loc-hero padding leaves a dead band under the fixed header
+   when the hero is a form rather than a full-bleed headline. Scoped to the
+   industry landing pages so the city pages keep their own rhythm. */
+.loc-hero--lead { padding-top: clamp(20px, 2.4vw, 36px); }
+.loc-hero--lead .eyebrow { margin-bottom: clamp(16px, 1.8vw, 24px); }
+
+/* ─── Hero partner badges ───────────────────────────────────────────── */
+.hero-partners {
+  margin-top: clamp(22px, 2.6vw, 30px);
+  padding-top: clamp(18px, 2vw, 24px);
+  border-top: 1px solid var(--rule);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 14px 28px;
+}
+.hero-partner {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13.5px;
+  line-height: 1.3;
+  color: var(--muted);
+}
+.hero-partner img { width: 26px; height: 26px; display: block; flex: none; }
+.hero-partner .pk { color: var(--ink); font-weight: 500; }
