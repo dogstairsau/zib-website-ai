@@ -162,11 +162,20 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
 @media (max-width: 620px) { .hdr-phone span { display: none; } .site-header .row { height: 66px; } .brand img { height: 28px; } }
 
 /* ─── Hero ──────────────────────────────────────────────────────── */
-.hero { position: relative; overflow: hidden; background: linear-gradient(180deg, #f7fbf9 0%, #ffffff 62%); padding: clamp(40px, 6vw, 76px) 0 clamp(52px, 7vw, 86px); }
-.hero::before {
-  content: ""; position: absolute; top: -280px; right: -180px; width: 780px; height: 780px;
-  background: radial-gradient(circle, rgba(54,174,30,0.13) 0%, rgba(21,104,106,0.05) 45%, transparent 70%);
-  pointer-events: none;
+.hero { position: relative; overflow: hidden; background: #0d2a24; padding: clamp(44px, 6vw, 84px) 0 clamp(52px, 7vw, 88px); }
+.hero-bg { position: absolute; inset: 0; z-index: 0; }
+.hero-bg img { width: 100%; height: 100%; object-fit: cover; object-position: 44% 46%; }
+.hero-bg::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    linear-gradient(90deg, rgba(4,32,27,0.94) 0%, rgba(4,32,27,0.82) 38%, rgba(4,32,27,0.42) 62%, rgba(4,32,27,0.24) 100%),
+    linear-gradient(180deg, rgba(3,51,52,0.55) 0%, transparent 34%);
+}
+@media (max-width: 980px) {
+  .hero-bg img { object-position: 64% 38%; }
+  .hero-bg::after {
+    background: linear-gradient(180deg, rgba(4,32,27,0.72) 0%, rgba(4,32,27,0.9) 46%, rgba(4,32,27,0.97) 72%);
+  }
 }
 .hero .container { position: relative; z-index: 1; }
 .hero-grid { display: grid; grid-template-columns: 1.02fr 0.98fr; gap: clamp(32px, 4.5vw, 64px); align-items: center; }
@@ -185,21 +194,22 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
   .hero-points  { order: 5; margin-top: 6px; }
 }
 
-.hero-trust { display: inline-flex; align-items: center; gap: 12px; padding: 8px 18px 8px 10px; background: #fff; border: 1px solid var(--line); border-radius: 100px; box-shadow: 0 2px 10px rgba(0,0,0,0.04); margin-bottom: 22px; flex-wrap: wrap; }
-.hero-trust .ht-txt { font-size: 13.5px; color: var(--ink-2); font-family: var(--inter); }
-.hero-trust .ht-txt b { font-weight: 600; }
-.hero-trust .avatars { display: flex; }
-.hero-trust .avatars span {
-  width: 28px; height: 28px; border-radius: 50%; border: 2px solid #fff; margin-right: -9px;
-  display: grid; place-items: center; font-size: 10.5px; font-weight: 700; color: #fff; font-family: var(--inter);
-}
-.hero h1 { color: var(--ink); }
-.hero h1 em { font-style: normal; background: linear-gradient(267deg, #36ae1e 0%, #1d9647 62%, #15807f 100%); -webkit-background-clip: text; background-clip: text; color: transparent; }
+.hero-trust { display: inline-flex; align-items: center; gap: 11px; margin-bottom: 24px; flex-wrap: wrap; }
+.hero-trust { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18); border-radius: 100px; padding: 7px 16px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.hero-trust .ht-txt { font-size: 13.5px; color: rgba(255,255,255,0.92); font-family: var(--inter); display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.hero-trust .ht-txt b { font-weight: 600; color: #fff; }
+.hero-trust .ht-src { color: rgba(255,255,255,0.62); }
+.hero-trust .g { width: 17px; height: 17px; flex: 0 0 auto; }
+.hero h1 { color: #fff; }
+.hero h1 em { font-style: normal; color: #4fd634; }
 .hero-sub { margin-top: 20px; max-width: 54ch; }
+.hero .lede { color: rgba(255,255,255,0.82); }
+.hero .lede strong { color: #fff; font-weight: 600; }
 .hero-points { list-style: none; margin-top: 26px; display: grid; gap: 12px; }
-.hero-points li { display: flex; align-items: flex-start; gap: 12px; font-size: 15.5px; color: var(--ink-2); }
-.hero-points .tick { flex: 0 0 auto; width: 21px; height: 21px; border-radius: 50%; background: rgba(54,174,30,0.13); display: grid; place-items: center; margin-top: 2px; }
-.hero-points .tick svg { width: 11px; height: 11px; stroke: var(--green); fill: none; stroke-width: 3; }
+.hero-points li { display: flex; align-items: flex-start; gap: 11px; font-size: 15.5px; color: rgba(255,255,255,0.86); }
+.hero-points li strong { color: #fff; font-weight: 600; }
+.hero-points .tick { flex: 0 0 auto; margin-top: 6px; }
+.hero-points .tick svg { width: 13px; height: 13px; stroke: #5ede3a; fill: none; stroke-width: 3; }
 
 /* ─── Hero quiz card (the conversion engine) ────────────────────── */
 .qz-card {
@@ -311,22 +321,34 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
 .sv-tag { position: absolute; top: 14px; right: 20px; font-family: var(--inter); font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); background: rgba(54,174,30,0.11); padding: 4px 10px; border-radius: 100px; }
 .sv-bar.best { padding-top: 40px; }
 .sv-note { font-size: 13px; color: var(--muted-2); margin-top: 18px; line-height: 1.55; }
+.sv-photo { border-radius: 18px; overflow: hidden; margin-top: 26px; aspect-ratio: 16 / 10; }
+.sv-photo img { width: 100%; height: 100%; object-fit: cover; }
+@media (max-width: 940px) { .sv-photo { display: none; } }
 .sv-save { display: inline-flex; align-items: baseline; gap: 10px; background: rgba(54,174,30,0.1); border-radius: 100px; padding: 10px 20px; margin-top: 22px; }
 .sv-save b { font-family: var(--bebas); font-size: 27px; color: var(--green); line-height: 1; }
 .sv-save span { font-size: 14.5px; color: var(--ink-2); }
 
 /* ─── What's included ───────────────────────────────────────────── */
 .incl { padding: var(--sec) 0; background: #fff; }
-.incl-wrap { background: var(--grad-deep); border-radius: 26px; padding: clamp(34px, 5vw, 62px); color: #fff; position: relative; overflow: hidden; }
-.incl-wrap::after { content: ""; position: absolute; bottom: -180px; left: -120px; width: 520px; height: 520px; background: radial-gradient(circle, rgba(54,174,30,0.3) 0%, transparent 68%); pointer-events: none; }
-.incl-wrap > * { position: relative; z-index: 1; }
+.incl-wrap { --band: clamp(190px, 26vw, 330px); background: var(--teal-deep); border-radius: 22px; padding: clamp(34px, 5vw, 62px); color: #fff; position: relative; overflow: hidden; }
+.incl-bg { position: absolute; top: 0; left: 0; right: 0; height: var(--band); z-index: 0; }
+.incl-bg img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 58%; }
+.incl-bg::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(3,40,38,0.28) 0%, rgba(3,40,38,0.55) 42%, rgba(3,40,38,0.9) 76%, var(--teal-deep) 100%);
+}
+
+.incl-wrap > *:not(.incl-bg) { position: relative; z-index: 1; }
 .incl-wrap h2 { color: #fff; max-width: 17ch; }
+/* Clear the photo band, minus the panel's own top padding. */
+.incl-wrap .eyebrow { display: block; margin-top: calc(var(--band) - clamp(34px, 5vw, 62px) - 14px); }
 .incl-wrap .lede { color: rgba(255,255,255,0.75); margin-top: 16px; max-width: 52ch; }
 .incl-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(168px, 1fr)); gap: 14px; margin-top: clamp(32px, 4vw, 48px); }
-.incl-item { background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.13); border-radius: 15px; padding: 20px 18px; transition: background 220ms var(--ease), transform 220ms var(--ease); }
-.incl-item:hover { background: rgba(255,255,255,0.12); transform: translateY(-3px); }
-.incl-item .ic { width: 34px; height: 34px; border-radius: 10px; background: rgba(255,255,255,0.14); display: grid; place-items: center; margin-bottom: 13px; }
-.incl-item .ic svg { width: 17px; height: 17px; stroke: #fff; fill: none; stroke-width: 1.9; }
+.incl-item { background: rgba(255,255,255,0.055); border: 1px solid rgba(255,255,255,0.14); border-radius: 14px; padding: 20px 18px; transition: background 220ms var(--ease), transform 220ms var(--ease); }
+.incl-item:hover { background: rgba(255,255,255,0.11); transform: translateY(-3px); }
+.incl-item small { color: rgba(255,255,255,0.7); }
+.incl-item .ic { display: block; margin-bottom: 12px; }
+.incl-item .ic svg { width: 19px; height: 19px; stroke: var(--green-bright); fill: none; stroke-width: 1.7; }
 .incl-item b { display: block; font-size: 15px; font-weight: 600; }
 .incl-item small { display: block; font-size: 13px; color: rgba(255,255,255,0.64); margin-top: 5px; line-height: 1.45; font-weight: 300; }
 .incl-foot { margin-top: clamp(30px, 4vw, 44px); display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
@@ -345,6 +367,9 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
 .steps-track { display: flex; gap: 7px; margin-top: 22px; }
 .steps-track i { flex: 1; height: 3px; border-radius: 99px; background: var(--line-2); transition: background 320ms var(--ease); }
 .steps-track i.on { background: var(--green); }
+.steps-photo { border-radius: 18px; overflow: hidden; margin-top: 30px; aspect-ratio: 4 / 3; }
+.steps-photo img { width: 100%; height: 100%; object-fit: cover; }
+@media (max-width: 940px) { .steps-photo { display: none; } }
 
 .step-list { display: grid; gap: 14px; }
 .step-card {
@@ -415,8 +440,8 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
 .elig-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(255px, 1fr)); gap: 16px; }
 .elig-card { border: 1px solid var(--line); border-radius: 17px; padding: 26px 24px; transition: border-color 220ms var(--ease), transform 220ms var(--ease); }
 .elig-card:hover { border-color: var(--green-bright); transform: translateY(-3px); }
-.elig-card .ec-ic { width: 40px; height: 40px; border-radius: 12px; background: rgba(54,174,30,0.1); display: grid; place-items: center; margin-bottom: 16px; }
-.elig-card .ec-ic svg { width: 19px; height: 19px; stroke: var(--green); fill: none; stroke-width: 1.9; }
+.elig-card .ec-ic { display: block; margin-bottom: 14px; }
+.elig-card .ec-ic svg { width: 20px; height: 20px; stroke: var(--green); fill: none; stroke-width: 1.7; }
 .elig-card b { display: block; font-size: 16.5px; font-weight: 600; letter-spacing: -0.01em; }
 .elig-card p { font-size: 14.5px; color: var(--muted); margin-top: 8px; line-height: 1.58; font-weight: 300; }
 
@@ -441,10 +466,9 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
 }
 .faq-q:hover { color: var(--green); }
 .faq-item.open .faq-q { color: var(--green); }
-.faq-ic { flex: 0 0 auto; width: 30px; height: 30px; border-radius: 50%; border: 1.5px solid var(--line-2); display: grid; place-items: center; transition: inherit; }
-.faq-item.open .faq-ic { border-color: var(--green); background: var(--green); }
-.faq-ic svg { width: 12px; height: 12px; stroke: var(--muted); fill: none; stroke-width: 2.4; transition: transform 300ms var(--ease), stroke 180ms var(--ease); }
-.faq-item.open .faq-ic svg { transform: rotate(45deg); stroke: #fff; }
+.faq-ic { flex: 0 0 auto; display: grid; place-items: center; }
+.faq-ic svg { width: 14px; height: 14px; stroke: var(--muted-2); fill: none; stroke-width: 2.2; transition: transform 300ms var(--ease), stroke 180ms var(--ease); }
+.faq-item.open .faq-ic svg { transform: rotate(45deg); stroke: var(--green); }
 .faq-a { max-height: 0; overflow: hidden; transition: max-height 380ms var(--ease); }
 .faq-a p { font-size: 15.5px; line-height: 1.68; color: var(--muted); padding-bottom: 26px; max-width: 64ch; font-weight: 300; }
 
@@ -472,6 +496,13 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
 .ft-col a:hover { color: var(--green-bright); }
 .ft-bot { padding-top: 26px; display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap; font-size: 13px; color: rgba(255,255,255,0.45); }
 .ft-disc { margin-top: 20px; font-size: 12.5px; line-height: 1.6; color: rgba(255,255,255,0.4); max-width: 88ch; }
+
+/* ─── CTA focus pulse ───────────────────────────────────────────
+   A plain #quiz anchor reads as dead when the card is already on
+   screen. Clicking any CTA now rings the card and focuses it. */
+.qz-card { transition: box-shadow 420ms var(--ease); }
+.qz-card.pulse { box-shadow: 0 0 0 4px rgba(54,174,30,0.34), 0 24px 70px rgba(3,51,52,0.16); }
+@media (prefers-reduced-motion: reduce) { .qz-card { transition: none; } }
 
 /* ─── Sticky mobile CTA ─────────────────────────────────────────── */
 .mob-cta {
@@ -531,18 +562,16 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
 
 <!-- ═══ Hero ═══════════════════════════════════════════════════════ -->
 <section class="hero">
+  <div class="hero-bg" aria-hidden="true">
+    <img src="/assets/novated-choice/hero-driveway.webp" alt="" width="1024" height="688" fetchpriority="high" decoding="async">
+  </div>
   <div class="container">
     <div class="hero-grid">
 
       <div class="hero-copy">
         <div class="hero-trust">
-          <div class="avatars" aria-hidden="true">
-            <span style="background:#1d9647">HE</span>
-            <span style="background:#15686a">DM</span>
-            <span style="background:#36ae1e">AR</span>
-            <span style="background:#033334">BW</span>
-          </div>
           <div class="ht-txt">
+            <svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#4285F4" d="M45 24c0-1.6-.1-2.7-.4-4H24v7.5h12c-.2 2-1.6 5-4.5 7l6.9 5.3C42.5 36 45 30.6 45 24Z"/><path fill="#34A853" d="M24 46c5.9 0 10.9-2 14.5-5.3l-6.9-5.3c-1.9 1.3-4.4 2.2-7.6 2.2-5.8 0-10.7-3.8-12.5-9.1l-7.1 5.5C8 41.4 15.4 46 24 46Z"/><path fill="#FBBC05" d="M11.5 28.5c-.5-1.4-.7-2.9-.7-4.5s.3-3.1.7-4.5l-7.1-5.5C2.9 17 2 20.4 2 24s.9 7 2.4 10l7.1-5.5Z"/><path fill="#EA4335" d="M24 10.4c4.1 0 6.9 1.8 8.5 3.3l6.2-6C34.9 4.1 29.9 2 24 2 15.4 2 8 6.6 4.4 14l7.1 5.5c1.8-5.3 6.7-9.1 12.5-9.1Z"/></svg>
             <span class="stars" aria-hidden="true">
               <svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>
               <svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>
@@ -550,7 +579,8 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
               <svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>
               <svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>
             </span>
-            <b data-needs-client="review count">Rated 4.9</b> by Australian drivers
+            <b data-needs-client="review count">4.9</b>
+            <span class="ht-src">from Google reviews</span>
           </div>
         </div>
 
@@ -818,6 +848,9 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
           <span>saved against a car loan, on a $60k vehicle over five years</span>
         </div>
         <p class="sv-note">Figures are a worked example on a $60,000 vehicle, five-year term, $100k salary, including finance and running costs. Your numbers will differ — the estimate above is built from your answers.</p>
+        <div class="sv-photo">
+          <img src="/assets/novated-choice/ev-charging.webp" alt="An electric vehicle charging at home" width="900" height="900" loading="lazy" decoding="async">
+        </div>
       </div>
 
       <div class="sv-bars reveal">
@@ -856,6 +889,9 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
 <section class="incl">
   <div class="container">
     <div class="incl-wrap reveal">
+      <div class="incl-bg" aria-hidden="true">
+        <img src="/assets/novated-choice/coastal-road.webp" alt="" width="1024" height="688" loading="lazy" decoding="async">
+      </div>
       <span class="eyebrow" style="color:var(--green-bright)">One payment, everything in it</span>
       <h2 style="margin-top:14px">Your whole car, bundled into one pre-tax payment</h2>
       <p class="lede">No separate rego bill in March. No surprise tyre invoice. Every running cost is estimated up front, rolled into one deduction, and reconciled as you go.</p>
@@ -910,6 +946,9 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
         <div class="steps-nowtitle" id="stepTitle">Get your quote</div>
         <div class="steps-track" id="stepTrack">
           <i class="on"></i><i></i><i></i><i></i>
+        </div>
+        <div class="steps-photo">
+          <img src="/assets/novated-choice/keys-handover.webp" alt="Handing over the keys to a new car" width="1100" height="829" loading="lazy" decoding="async">
         </div>
       </div>
 
@@ -1262,6 +1301,30 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
   onScroll();
 
   var yr = $("#yr"); if (yr) yr.textContent = new Date().getFullYear();
+
+  /* ══ CTA → quiz ══════════════════════════════════════════════
+     Every in-page CTA points at #quiz. Left as a bare anchor it does
+     nothing perceptible when the card is already in view, so it reads
+     as a dead button. Scroll it under the header, ring it, and put the
+     cursor on the first thing to click. */
+  function focusQuiz() {
+    var card = $("#quiz");
+    if (!card) return;
+    var headerH = 90;
+    var y = window.scrollY + card.getBoundingClientRect().top - headerH;
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: Math.max(0, y), behavior: reduce ? "auto" : "smooth" });
+    card.classList.remove("pulse");
+    void card.offsetWidth;                 // restart the transition
+    card.classList.add("pulse");
+    setTimeout(function () { card.classList.remove("pulse"); }, 1100);
+    var step = $('.qz-step:not([hidden])');
+    var first = step && step.querySelector(".qz-chip, .qz-opt, .qz-input, .btn");
+    if (first) setTimeout(function () { first.focus({ preventScroll: true }); }, reduce ? 0 : 520);
+  }
+  $$('a[href="#quiz"]').forEach(function (a) {
+    a.addEventListener("click", function (e) { e.preventDefault(); focusQuiz(); });
+  });
 
   /* ══ Reveal on scroll ════════════════════════════════════════ */
   var reveals = $$(".reveal");
