@@ -93,11 +93,11 @@ button, input, select, textarea { font: inherit; color: inherit; }
   font-family: var(--inter); font-size: 12px; font-weight: 600;
   letter-spacing: 0.14em; text-transform: uppercase; color: var(--green-bright);
 }
-h1, h2, h3 { font-weight: 600; line-height: 1.08; letter-spacing: -0.025em; text-wrap: balance; }
+h1, h2, h3 { font-weight: 600; line-height: 1.0; letter-spacing: -0.035em; text-wrap: balance; }
 h1 { font-size: clamp(34px, 5.4vw, 62px); }
 h2 { font-size: clamp(28px, 4.2vw, 48px); }
 h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
-.lede { font-size: clamp(16px, 1.7vw, 19px); line-height: 1.6; color: var(--muted); font-weight: 300; }
+.lede { font-size: clamp(16px, 1.7vw, 19px); line-height: 1.45; letter-spacing: -0.012em; color: var(--muted); font-weight: 300; }
 .sec-head { max-width: 720px; margin-bottom: clamp(36px, 5vw, 60px); }
 .sec-head .eyebrow { margin-bottom: 14px; display: block; }
 .sec-head p { margin-top: 16px; }
@@ -151,7 +151,7 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
   border-bottom: 1px solid transparent;
   transition: border-color 260ms var(--ease), box-shadow 260ms var(--ease);
 }
-.site-header.scrolled { border-bottom-color: var(--line); box-shadow: 0 4px 20px rgba(0,0,0,0.04); }
+.site-header.scrolled { background: rgba(255,255,255,0.97); border-bottom-color: var(--line); box-shadow: 0 4px 20px rgba(0,0,0,0.04); }
 .site-header .row { display: flex; align-items: center; justify-content: space-between; gap: 20px; height: 76px; }
 .brand img { height: 34px; width: auto; }
 .hdr-nav { display: flex; align-items: center; gap: 28px; font-size: 15px; color: var(--ink-2); }
@@ -185,8 +185,28 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
 .hero-grid { display: grid; grid-template-columns: 1.02fr 0.98fr; gap: clamp(32px, 4.5vw, 64px); align-items: center; }
 @media (max-width: 980px) { .hero-grid { grid-template-columns: 1fr; gap: 32px; } }
 
+
+.hero-trust { display: inline-flex; align-items: center; gap: 11px; margin-bottom: 24px; flex-wrap: wrap; }
+.hero-trust { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18); border-radius: 100px; padding: 7px 16px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.hero-trust .ht-txt { font-size: 13.5px; color: rgba(255,255,255,0.92); font-family: var(--inter); display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.hero-trust .ht-txt b { font-weight: 600; color: #fff; }
+.hero-trust .ht-src { color: rgba(255,255,255,0.62); }
+.hero-trust .g { width: 17px; height: 17px; flex: 0 0 auto; }
+.hero h1 { color: #fff; line-height: 0.93; letter-spacing: -0.045em; }
+.hero h1 em { font-style: normal; color: #4fd634; }
+.hero-sub { margin-top: 20px; max-width: 54ch; }
+.hero .lede { color: rgba(255,255,255,0.82); }
+.hero .lede strong { color: #fff; font-weight: 600; }
+.hero-points { list-style: none; margin-top: 26px; display: grid; gap: 10px; }
+.hero-points li { display: flex; align-items: flex-start; gap: 11px; font-size: 15.5px; line-height: 1.4; letter-spacing: -0.01em; color: rgba(255,255,255,0.86); }
+.hero-points li strong { color: #fff; font-weight: 600; }
+.hero-points .tick { flex: 0 0 auto; margin-top: 6px; }
+.hero-points .tick svg { width: 13px; height: 13px; stroke: #5ede3a; fill: none; stroke-width: 3; }
+
 /* On mobile the order is: headline -> quiz -> supporting points, so the
-   first interaction is on screen without scrolling. */
+   first interaction is on screen without scrolling. This must sit after
+   the base hero rules above — a media query carries no extra specificity,
+   so source order is what lets these win. */
 @media (max-width: 980px) {
   .hero { padding-top: 22px; }
   .hero-grid { display: flex; flex-direction: column; gap: 18px; }
@@ -195,25 +215,8 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
   .hero-copy h1 { order: 2; }
   .hero-sub     { order: 3; margin-top: 0; font-size: 15.5px; }
   .qz-card      { order: 4; margin-top: 4px; }
-  .hero-points  { order: 5; margin-top: 6px; }
+  .hero-points  { order: 5; margin-top: 4px; }
 }
-
-.hero-trust { display: inline-flex; align-items: center; gap: 11px; margin-bottom: 24px; flex-wrap: wrap; }
-.hero-trust { background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18); border-radius: 100px; padding: 7px 16px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
-.hero-trust .ht-txt { font-size: 13.5px; color: rgba(255,255,255,0.92); font-family: var(--inter); display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; }
-.hero-trust .ht-txt b { font-weight: 600; color: #fff; }
-.hero-trust .ht-src { color: rgba(255,255,255,0.62); }
-.hero-trust .g { width: 17px; height: 17px; flex: 0 0 auto; }
-.hero h1 { color: #fff; }
-.hero h1 em { font-style: normal; color: #4fd634; }
-.hero-sub { margin-top: 20px; max-width: 54ch; }
-.hero .lede { color: rgba(255,255,255,0.82); }
-.hero .lede strong { color: #fff; font-weight: 600; }
-.hero-points { list-style: none; margin-top: 26px; display: grid; gap: 12px; }
-.hero-points li { display: flex; align-items: flex-start; gap: 11px; font-size: 15.5px; color: rgba(255,255,255,0.86); }
-.hero-points li strong { color: #fff; font-weight: 600; }
-.hero-points .tick { flex: 0 0 auto; margin-top: 6px; }
-.hero-points .tick svg { width: 13px; height: 13px; stroke: #5ede3a; fill: none; stroke-width: 3; }
 
 /* ─── Hero quiz card (the conversion engine) ────────────────────── */
 .qz-card {
@@ -223,7 +226,7 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
 }
 .qz-head { background: var(--grad-deep); color: #fff; padding: 22px clamp(22px, 3vw, 32px) 20px; }
 .qz-head .qz-kicker { font-family: var(--inter); font-size: 11.5px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.72); }
-.qz-head .qz-title { font-size: 20px; font-weight: 600; margin-top: 7px; letter-spacing: -0.02em; line-height: 1.25; }
+.qz-head .qz-title { font-size: 20px; font-weight: 600; margin-top: 7px; letter-spacing: -0.032em; line-height: 1.15; }
 .qz-bar { height: 4px; border-radius: 99px; background: rgba(255,255,255,0.22); overflow: hidden; margin-top: 16px; }
 .qz-bar span { display: block; height: 100%; width: 0%; border-radius: 99px; background: #fff; transition: width 420ms var(--ease); }
 .qz-steplabel { font-family: var(--inter); font-size: 11.5px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.72); margin-top: 10px; display: block; }
@@ -234,7 +237,7 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
 @keyframes qzIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
 @media (prefers-reduced-motion: reduce) { .qz-step { animation: none; } html { scroll-behavior: auto; } }
 
-.qz-q { font-size: clamp(19px, 2.2vw, 23px); font-weight: 600; letter-spacing: -0.02em; line-height: 1.24; color: var(--ink); }
+.qz-q { font-size: clamp(19px, 2.2vw, 23px); font-weight: 600; letter-spacing: -0.032em; line-height: 1.14; color: var(--ink); }
 .qz-hint { font-size: 14px; color: var(--muted); margin-top: 8px; font-weight: 300; }
 .qz-opts { display: grid; gap: 9px; margin-top: 20px; }
 .qz-opts.two { grid-template-columns: 1fr 1fr; }
@@ -301,9 +304,9 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
 /* ─── Logo strip ────────────────────────────────────────────────── */
 .logos { padding: clamp(28px, 4vw, 44px) 0; border-bottom: 1px solid var(--line); background: #fff; }
 .logos .lg-label { text-align: center; font-family: var(--inter); font-size: 11.5px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted-2); margin-bottom: 22px; }
-.logos .lg-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 18px clamp(22px, 3.6vw, 46px); }
+.logos .lg-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 20px clamp(18px, 2.4vw, 32px); }
 .logos .lg-row img {
-  height: clamp(26px, 2.8vw, 34px); width: auto; object-fit: contain;
+  height: clamp(23px, 2.5vw, 28px); width: auto; object-fit: contain;
   filter: grayscale(1); opacity: 0.46;
   transition: filter 240ms var(--ease), opacity 240ms var(--ease);
 }
@@ -368,7 +371,6 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
 .steps-grid { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: clamp(30px, 5vw, 70px); align-items: start; }
 @media (max-width: 940px) { .steps-grid { grid-template-columns: 1fr; gap: 28px; } }
 .steps-sticky { position: sticky; top: 118px; }
-@media (max-width: 940px) { .steps-sticky { position: static; } }
 .steps-counter { font-family: var(--bebas); font-size: clamp(76px, 12vw, 128px); line-height: 0.86; color: var(--green); letter-spacing: 0.01em; display: block; }
 .steps-counter .tot { color: var(--line-2); }
 .steps-nowtitle { font-size: clamp(20px, 2.4vw, 27px); font-weight: 600; letter-spacing: -0.02em; margin-top: 14px; min-height: 2.4em; line-height: 1.2; }
@@ -378,6 +380,25 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
 .steps-photo { border-radius: 18px; overflow: hidden; margin-top: 30px; aspect-ratio: 4 / 3; }
 .steps-photo img { width: 100%; height: 100%; object-fit: cover; }
 @media (max-width: 940px) { .steps-photo { display: none; } }
+
+/* Compact sticky progress bar on mobile, where the tall left column would
+   otherwise scroll away and leave a stale counter behind.
+   Must sit after the .steps-* base rules above: a media query adds no
+   specificity, so source order is what lets these win.
+   Background is solid, not translucent — card text ghosted through a
+   0.93-alpha fill as the cards scrolled under it. */
+@media (max-width: 940px) {
+  .steps-sticky {
+    position: sticky; top: 66px; z-index: 20;
+    display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;
+    background: var(--wash-2);
+    padding: 11px 0 12px;
+    border-bottom: 1px solid var(--line);
+  }
+  .steps-counter { font-size: 30px; line-height: 1; }
+  .steps-nowtitle { font-size: 16px; margin-top: 0; min-height: 0; flex: 1; letter-spacing: -0.02em; }
+  .steps-track { width: 100%; margin-top: 2px; }
+}
 
 .step-list { display: grid; gap: 14px; }
 .step-card {
@@ -836,16 +857,15 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
   <div class="container">
     <p class="lg-label">Any make, any model — new or late-model used</p>
     <div class="lg-row">
-      <img src="/assets/novated-choice/brands/tesla.webp" alt="Tesla" width="200" height="44" loading="lazy" decoding="async">
-      <img src="/assets/novated-choice/brands/toyota.webp" alt="Toyota" width="200" height="44" loading="lazy" decoding="async">
-      <img src="/assets/novated-choice/brands/ford.webp" alt="Ford" width="200" height="44" loading="lazy" decoding="async">
-      <img src="/assets/novated-choice/brands/mazda.webp" alt="Mazda" width="200" height="44" loading="lazy" decoding="async">
-      <img src="/assets/novated-choice/brands/byd.webp" alt="BYD" width="200" height="44" loading="lazy" decoding="async">
-      <img src="/assets/novated-choice/brands/kia.webp" alt="Kia" width="200" height="44" loading="lazy" decoding="async">
-      <img src="/assets/novated-choice/brands/hyundai.webp" alt="Hyundai" width="200" height="44" loading="lazy" decoding="async">
-      <img src="/assets/novated-choice/brands/isuzu.webp" alt="Isuzu" width="200" height="44" loading="lazy" decoding="async">
-      <img src="/assets/novated-choice/brands/bmw.webp" alt="BMW" width="200" height="44" loading="lazy" decoding="async">
-      <img src="/assets/novated-choice/brands/mitsubishi.webp" alt="Mitsubishi" width="200" height="44" loading="lazy" decoding="async">
+      <img src="/assets/novated-choice/brands/tesla.webp" alt="Tesla" width="183" height="56" loading="lazy" decoding="async">
+      <img src="/assets/novated-choice/brands/toyota.webp" alt="Toyota" width="240" height="40" loading="lazy" decoding="async">
+      <img src="/assets/novated-choice/brands/ford.webp" alt="Ford" width="155" height="56" loading="lazy" decoding="async">
+      <img src="/assets/novated-choice/brands/mazda.webp" alt="Mazda" width="81" height="56" loading="lazy" decoding="async">
+      <img src="/assets/novated-choice/brands/byd.webp" alt="BYD" width="240" height="48" loading="lazy" decoding="async">
+      <img src="/assets/novated-choice/brands/kia.webp" alt="Kia" width="239" height="56" loading="lazy" decoding="async">
+      <img src="/assets/novated-choice/brands/hyundai.webp" alt="Hyundai" width="90" height="56" loading="lazy" decoding="async">
+      <img src="/assets/novated-choice/brands/isuzu.webp" alt="Isuzu" width="169" height="56" loading="lazy" decoding="async">
+      <img src="/assets/novated-choice/brands/bmw.webp" alt="BMW" width="56" height="56" loading="lazy" decoding="async">
     </div>
   </div>
 </section>
@@ -1409,13 +1429,47 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
       if (card) stepTitle.textContent = card.getAttribute("data-title");
     }
   }
-  if (stepCards.length && "IntersectionObserver" in window) {
-    var so = new IntersectionObserver(function (entries) {
-      entries.forEach(function (e) {
-        if (e.isIntersecting) setStep(+e.target.getAttribute("data-i"));
-      });
-    }, { rootMargin: "-42% 0px -42% 0px", threshold: 0 });
-    stepCards.forEach(function (c) { so.observe(c); });
+  if (stepCards.length) {
+    var stepTicking = false;
+    var lastStep = 0;
+
+    var stepHeader = $("#siteHeader");
+    var stepBar = $(".steps-sticky");
+
+    function pickStep() {
+      stepTicking = false;
+      // Anchor on the centre of what is actually visible, not the centre of
+      // the viewport: the sticky header — and on mobile the sticky progress
+      // bar too — cover the top of the screen. Measuring them keeps the
+      // active card matched to what the reader is looking at instead of
+      // switching early.
+      var covered = stepHeader ? stepHeader.getBoundingClientRect().bottom : 0;
+      if (stepBar) {
+        var br = stepBar.getBoundingClientRect();
+        if (br.bottom > covered && br.top <= covered + 1) covered = br.bottom;
+      }
+      covered = Math.max(0, Math.min(covered, window.innerHeight * 0.5));
+      var anchor = covered + (window.innerHeight - covered) / 2;
+      var best = null, bestDist = Infinity;
+      for (var i = 0; i < stepCards.length; i++) {
+        var r = stepCards[i].getBoundingClientRect();
+        var dist = Math.abs(r.top + r.height / 2 - anchor);
+        if (dist < bestDist) { bestDist = dist; best = stepCards[i]; }
+      }
+      if (!best) return;
+      var n = +best.getAttribute("data-i");
+      if (n !== lastStep) { lastStep = n; setStep(n); }
+    }
+
+    function onStepScroll() {
+      if (stepTicking) return;
+      stepTicking = true;
+      window.requestAnimationFrame(pickStep);
+    }
+
+    window.addEventListener("scroll", onStepScroll, { passive: true });
+    window.addEventListener("resize", onStepScroll, { passive: true });
+    pickStep();
   }
 
   /* ══ FAQ accordion ═══════════════════════════════════════════ */
