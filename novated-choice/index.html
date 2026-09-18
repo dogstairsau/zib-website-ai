@@ -393,6 +393,15 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
 @media (max-width: 940px) { .sv-grid { grid-template-columns: 1fr; } }
 
 .sv-bars { display: grid; gap: 16px; }
+.sv-subject { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 20px 22px; }
+.sv-subject-head { font-size: 16px; font-weight: 600; letter-spacing: -0.025em; color: var(--ink); text-wrap: balance; }
+.sv-subject-facts { list-style: none; display: flex; flex-wrap: wrap; gap: 7px; margin: 14px 0 0; }
+.sv-subject-facts li {
+  font-family: var(--inter); font-size: 12px; font-weight: 500; color: var(--ink-2);
+  background: var(--wash); border-radius: 100px; padding: 5px 12px; white-space: nowrap;
+}
+.sv-subject-note { font-size: 13px; line-height: 1.5; color: var(--muted); margin-top: 14px; }
+.sv-subject-note strong { color: var(--ink-2); font-weight: 600; }
 .sv-bar { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 20px 22px; position: relative; overflow: hidden; }
 .sv-bar.best { border-color: var(--green); box-shadow: 0 10px 34px rgba(29,150,71,0.14); }
 .sv-bar .sv-top { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; margin-bottom: 13px; }
@@ -409,7 +418,9 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
 .sv-photo { border-radius: 18px; overflow: hidden; margin-top: 26px; aspect-ratio: 16 / 10; }
 .sv-photo img { width: 100%; height: 100%; object-fit: cover; }
 @media (max-width: 940px) { .sv-photo { display: none; } }
-.sv-saves { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+.sv-saves-label { font-size: 14.5px; line-height: 1.5; color: var(--ink-2); margin-top: 24px; text-wrap: pretty; }
+.sv-saves-label strong { font-weight: 600; color: var(--ink); }
+.sv-saves { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
 .sv-save { display: inline-flex; align-items: baseline; gap: 9px; background: rgba(54,174,30,0.1); border-radius: 100px; padding: 10px 19px; }
 .sv-save b { font-family: var(--bebas); font-size: 26px; color: var(--green); line-height: 1; }
 .sv-save span { font-size: 14px; color: var(--ink-2); }
@@ -981,47 +992,59 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
         <span class="eyebrow">The same car, three ways to pay</span>
         <h2>Where the money actually goes</h2>
         <p class="lede">Buy the car outright and you pay with money that's already been taxed. Take a car loan and you add interest on top. A novated lease takes the payment out <strong>before</strong> tax — and strips the GST off the purchase price.</p>
+        <p class="sv-saves-label">On a <strong>Tesla Model&nbsp;3 RWD</strong> over five years, a novated lease came out:</p>
         <div class="sv-saves">
           <div class="sv-save">
             <b>$23,942</b>
-            <span>less than a car loan</span>
+            <span>cheaper than the car loan</span>
           </div>
           <div class="sv-save">
             <b>$10,080</b>
-            <span>less than buying outright</span>
+            <span>cheaper than buying outright</span>
           </div>
         </div>
-        <p class="sv-note">Novated Choice's published example: a Tesla Model 3 RWD over five years, NSW driver, $90,000 annual pre-tax salary, 15,000km a year, 8.5% p.a. interest assumption, covering the purchase and running costs. The two figures above are the differences between those published totals — not independently verified savings forecasts. Your own numbers will differ.</p>
+        <p class="sv-note">Novated Choice's published example. The two figures are the differences between those published totals — not independently verified savings forecasts. Your own numbers will differ; the estimate in the form is built from your answers.</p>
         <div class="sv-photo">
           <img src="/assets/novated-choice/ev-charging.webp" alt="An electric vehicle charging at home" width="900" height="900" loading="lazy" decoding="async">
         </div>
       </div>
 
       <div class="sv-bars reveal">
+        <div class="sv-subject">
+          <div class="sv-subject-head">Same car, same five years, three ways to pay for it</div>
+          <ul class="sv-subject-facts">
+            <li>Tesla Model&nbsp;3 RWD</li>
+            <li>5-year term</li>
+            <li>$90,000 salary</li>
+            <li>15,000km a year</li>
+            <li>8.5% p.a.</li>
+          </ul>
+          <p class="sv-subject-note">Each figure below is the <strong>total cost of that car over five years</strong> — purchase plus running costs — shown per week.</p>
+        </div>
         <div class="sv-bar best">
           <span class="sv-tag">Best value</span>
           <div class="sv-top">
-            <span class="sv-name">Novated lease</span>
+            <span class="sv-name">On a novated lease</span>
             <span class="sv-amt">$268<span style="font-family:var(--sora);font-size:14px;font-weight:400;color:var(--muted)">/wk</span></span>
           </div>
           <div class="sv-track"><span class="sv-fill" data-w="74"></span></div>
-          <p class="sv-note" style="margin-top:11px">$69,738 all-in over five years</p>
+          <p class="sv-note" style="margin-top:11px"><strong>$69,738</strong> all up &middot; pre-tax salary, no GST on the purchase</p>
         </div>
         <div class="sv-bar">
           <div class="sv-top">
-            <span class="sv-name">Buy outright</span>
+            <span class="sv-name">Bought outright, cash</span>
             <span class="sv-amt">$307<span style="font-family:var(--sora);font-size:14px;font-weight:400;color:var(--muted)">/wk</span></span>
           </div>
           <div class="sv-track"><span class="sv-fill" data-w="85"></span></div>
-          <p class="sv-note" style="margin-top:11px">$79,818 — post-tax dollars, GST included</p>
+          <p class="sv-note" style="margin-top:11px"><strong>$79,818</strong> all up &middot; already-taxed dollars, GST included</p>
         </div>
         <div class="sv-bar">
           <div class="sv-top">
-            <span class="sv-name">Car loan</span>
+            <span class="sv-name">On a car loan</span>
             <span class="sv-amt">$360<span style="font-family:var(--sora);font-size:14px;font-weight:400;color:var(--muted)">/wk</span></span>
           </div>
           <div class="sv-track"><span class="sv-fill" data-w="100"></span></div>
-          <p class="sv-note" style="margin-top:11px">$93,680 — post-tax, plus interest, running costs on top</p>
+          <p class="sv-note" style="margin-top:11px"><strong>$93,680</strong> all up &middot; already-taxed dollars, plus interest</p>
         </div>
       </div>
 
