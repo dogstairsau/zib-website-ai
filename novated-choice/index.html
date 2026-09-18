@@ -149,15 +149,17 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
    4-star), but Trustpilot weights low review counts, so quoting the
    average instead of the published score would contradict the badge a
    visitor sees when they click through. */
-.tp-stars { display: inline-flex; gap: 2px; }
+.tp-stars { display: inline-flex; align-items: center; gap: 2px; vertical-align: middle; }
 .tp-stars i {
   width: 18px; height: 18px; display: grid; place-items: center;
   background: #00b67a; border-radius: 2px;
 }
 .tp-stars i.off { background: #dcdce6; }
 .tp-stars svg { width: 13px; height: 13px; fill: #fff; }
-.tp-logo { display: inline-flex; align-items: center; gap: 5px; font-weight: 600; letter-spacing: -0.01em; }
-.tp-logo svg { width: 15px; height: 15px; fill: #00b67a; }
+.tp-logo { display: inline-flex; align-items: center; gap: 5px; font-weight: 600; letter-spacing: -0.01em; vertical-align: middle; }
+.tp-logo svg { width: 15px; height: 15px; fill: #00b67a; display: block; }
+/* Nudge the inline logo onto the surrounding text's optical centre. */
+.tp-meta .tp-logo { position: relative; top: -1px; }
 
 .tp-strip {
   display: flex; align-items: center; gap: 14px 20px; flex-wrap: wrap;
@@ -299,7 +301,7 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
 .qz-hint { font-size: 14px; color: var(--muted); margin-top: 8px; font-weight: 300; }
 .qz-opts { display: grid; gap: 9px; margin-top: 20px; }
 .qz-opts.two { grid-template-columns: 1fr 1fr; }
-@media (max-width: 460px) { .qz-opts.two { grid-template-columns: 1fr; } }
+@media (max-width: 330px) { .qz-opts.two { grid-template-columns: 1fr; } }
 .qz-opt {
   display: flex; align-items: center; gap: 13px; width: 100%; text-align: left;
   padding: 15px 17px; border: 1.5px solid var(--line); border-radius: 14px; background: #fff;
@@ -334,8 +336,11 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
 .qz-input::placeholder { color: var(--muted-2); }
 .qz-fields { display: grid; gap: 13px; margin-top: 20px; }
 .qz-fields.two { grid-template-columns: 1fr 1fr; }
-@media (max-width: 460px) { .qz-fields.two { grid-template-columns: 1fr; } }
+@media (max-width: 330px) { .qz-fields.two { grid-template-columns: 1fr; } }
 .qz-field label { display: block; font-family: var(--inter); font-size: 11.5px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 7px; }
+.qz-sublabel { display: block; font-family: var(--inter); font-size: 11.5px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 16px 0 0; }
+/* The sublabel already spaces the group; drop the grid's own top margin. */
+.qz-sublabel + .qz-opts { margin-top: 8px; }
 
 .qz-actions { display: flex; align-items: center; gap: 14px; margin-top: 22px; flex-wrap: wrap; }
 .qz-actions .btn { flex: 1; min-width: 180px; }
@@ -463,8 +468,16 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
 .steps-track { display: flex; gap: 7px; margin-top: 22px; }
 .steps-track i { flex: 1; height: 3px; border-radius: 99px; background: var(--line-2); transition: background 320ms var(--ease); }
 .steps-track i.on { background: var(--green); }
-.steps-photo { border-radius: 18px; overflow: hidden; margin-top: 30px; aspect-ratio: 4 / 3; }
-.steps-photo img { width: 100%; height: 100%; object-fit: cover; }
+/* Photos are stacked and crossfaded so the frame never resizes or jumps
+   as the active step changes. aspect-ratio holds the box even though
+   every image is absolutely positioned. */
+.steps-photo { position: relative; border-radius: 18px; overflow: hidden; margin-top: 30px; aspect-ratio: 4 / 3; background: var(--wash); }
+.steps-photo img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  opacity: 0; transition: opacity 520ms var(--ease);
+}
+.steps-photo img.on { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .steps-photo img { transition: none; } }
 @media (max-width: 940px) { .steps-photo { display: none; } }
 
 /* Compact sticky progress bar on mobile, where the tall left column would
@@ -694,7 +707,8 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
               <i class="off"><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg></i>
             </span>
             <b>Rated Great</b>
-            <span class="ht-src">on <span class="tp-logo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>Trustpilot</span></span>
+            <span class="ht-src">on</span>
+            <span class="tp-logo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>Trustpilot</span>
           </div>
         </div>
 
@@ -755,8 +769,6 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
               <button type="button" class="qz-chip" data-car="Toyota RAV4">Toyota RAV4</button>
               <button type="button" class="qz-chip" data-car="BYD Sealion 7">BYD Sealion 7</button>
               <button type="button" class="qz-chip" data-car="Mazda CX-60">Mazda CX-60</button>
-              <button type="button" class="qz-chip" data-car="Kia EV5">Kia EV5</button>
-              <button type="button" class="qz-chip" data-car="Isuzu D-MAX">Isuzu D-MAX</button>
             </div>
             <div class="qz-fields" style="margin-top:14px">
               <div class="qz-field">
@@ -854,23 +866,25 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
 
           <!-- STEP 5 — employment + salary (eligibility + savings maths) -->
           <div class="qz-step" data-step="5" hidden>
-            <div class="qz-q">Last bit — so the numbers are yours, not averages</div>
-            <p class="qz-hint">A novated lease comes out of your salary, so your income sets the saving.</p>
-            <div class="qz-opts" data-group="employment" style="margin-top:18px">
+            <div class="qz-q">Last bit — so the numbers are yours</div>
+            <p class="qz-hint">Your income sets the saving.</p>
+            <span class="qz-sublabel">Your employment</span>
+            <div class="qz-opts two" data-group="employment">
               <button type="button" class="qz-opt" data-val="Permanent PAYG (full or part-time)" data-eligible="1">
                 <span class="dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
-                <span class="oi"><b>Permanent employee</b><small>Full-time or part-time, PAYG</small></span>
+                <span class="oi"><b>Permanent</b></span>
               </button>
               <button type="button" class="qz-opt" data-val="Casual or contract" data-eligible="0">
                 <span class="dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
-                <span class="oi"><b>Casual or contract</b><small>We'll check what's possible</small></span>
+                <span class="oi"><b>Casual / contract</b></span>
               </button>
               <button type="button" class="qz-opt" data-val="Self-employed / business owner" data-eligible="0">
                 <span class="dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
-                <span class="oi"><b>Self-employed</b><small>Other structures may suit you better</small></span>
+                <span class="oi"><b>Self-employed</b></span>
               </button>
             </div>
-            <div class="qz-opts two" data-group="salary" style="margin-top:14px">
+            <span class="qz-sublabel">Your salary</span>
+            <div class="qz-opts two" data-group="salary">
               <button type="button" class="qz-opt" data-val="Under $60k" data-rate="0.21">
                 <span class="dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
                 <span class="oi"><b>Under $60k</b></span>
@@ -1114,8 +1128,11 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
         <div class="steps-track" id="stepTrack">
           <i class="on"></i><i></i><i></i><i></i>
         </div>
-        <div class="steps-photo">
-          <img src="/assets/novated-choice/keys-handover.webp" alt="Handing over the keys to a new car" width="1100" height="829" loading="lazy" decoding="async">
+        <div class="steps-photo" id="stepPhoto">
+          <img src="/assets/novated-choice/step-1-choose.webp" alt="Browsing cars at home" data-i="1" class="on" width="900" height="678" loading="lazy" decoding="async">
+          <img src="/assets/novated-choice/step-2-employer.webp" alt="Going through the paperwork with an employer" data-i="2" width="900" height="678" loading="lazy" decoding="async">
+          <img src="/assets/novated-choice/step-3-approval.webp" alt="Reading the approval on a phone" data-i="3" width="900" height="678" loading="lazy" decoding="async">
+          <img src="/assets/novated-choice/step-4-keys.webp" alt="Handing over the keys to a new car" data-i="4" width="900" height="675" loading="lazy" decoding="async">
         </div>
       </div>
 
@@ -1599,8 +1616,11 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
   var stepTitle = $("#stepTitle");
   var trackBits = $$("#stepTrack i");
 
+  var stepPhotos = $$("#stepPhoto img");
+
   function setStep(i) {
     stepCards.forEach(function (c) { c.classList.toggle("active", +c.getAttribute("data-i") === i); });
+    stepPhotos.forEach(function (im) { im.classList.toggle("on", +im.getAttribute("data-i") === i); });
     trackBits.forEach(function (b, n) { b.classList.toggle("on", n < i); });
     if (stepNow)   stepNow.textContent = "0" + i;
     if (stepTitle) {
@@ -1698,10 +1718,29 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
 
   var qzBody = $(".qz-body");
   var qzBar  = $("#qzBar");
+  var lockedHeight = 0;
+
+  /* Tallest question, measured by briefly showing each one. Every swap
+     happens inside this single synchronous task, so the browser never
+     paints an intermediate state. */
+  function measureTallest() {
+    if (!qzBody) return 0;
+    var steps = $$(".qz-step");
+    var restore = current;
+    var max = 0;
+    qzBody.style.minHeight = "";
+    steps.forEach(function (st) {
+      if (+st.getAttribute("data-step") === 0) return;   // cover stays compact
+      steps.forEach(function (o) { o.hidden = o !== st; });
+      max = Math.max(max, qzBody.offsetHeight);
+    });
+    steps.forEach(function (o) {
+      o.hidden = +o.getAttribute("data-step") !== restore;
+    });
+    return max;
+  }
 
   function show(step) {
-    // Ease the card between sizes — the jump from the compact cover to a
-    // full question is large enough to be jarring otherwise.
     var from = qzBody ? qzBody.offsetHeight : 0;
 
     $$(".qz-step").forEach(function (s) {
@@ -1709,10 +1748,18 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
     });
     current = step;
 
-    if (qzBody && from) {
+    if (qzBody) {
+      if (step === 0) {
+        qzBody.style.minHeight = "";
+      } else {
+        if (!lockedHeight) lockedHeight = measureTallest();
+        qzBody.style.minHeight = lockedHeight + "px";
+      }
+      // Only the cover -> questions change actually resizes the card, so
+      // that is the only one worth easing.
       var to = qzBody.offsetHeight;
       var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      if (!reduce && to !== from) {
+      if (!reduce && from && to !== from) {
         qzBody.style.height = from + "px";
         void qzBody.offsetHeight;                 // force reflow
         qzBody.style.height = to + "px";
@@ -1750,6 +1797,19 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
   }
 
   function err(id) { var e = $(id); if (e) e.classList.add("show"); }
+
+  // Wrapping changes which step is tallest, so re-measure on resize.
+  var reflowTimer;
+  window.addEventListener("resize", function () {
+    clearTimeout(reflowTimer);
+    reflowTimer = setTimeout(function () {
+      lockedHeight = 0;
+      if (current > 0) {
+        lockedHeight = measureTallest();
+        if (qzBody) qzBody.style.minHeight = lockedHeight + "px";
+      }
+    }, 180);
+  }, { passive: true });
 
   var startBtn = $("#qzStart");
   if (startBtn) startBtn.addEventListener("click", function () { show(1); });
