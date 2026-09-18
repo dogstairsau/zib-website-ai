@@ -131,23 +131,30 @@ copy alone is ~296 words.
 
 ---
 
-## 4. Where each finding lands on the scope page
+## 4. Where each finding lands on the client page
 
-| Finding | Section | What it drives |
+`/quest-coaches` is written for the owner of a coach company, not a marketer. No
+jargon: "structured data" becomes what Google can read, "domain rating" becomes how
+many sites link to yours, templates become "page recipes", ranking positions become
+page numbers. Keep it that way when editing.
+
+| Finding | Section on the page | What it drives |
 |---|---|---|
-| 61 → 1 keywords, DR 0.3 | Masthead, §4 | The headline diagnosis |
-| Lost keyword table | §4, §9 S2 | Page-to-keyword mapping, tracked set |
-| Size-based demand | §4, §7 Template C | Four vehicle pages |
-| Regional demand | §4, §6, §7 Template B | Nine area pages, regional included |
-| tel: / viewport | §2, §8 W2, §12 wk 1–2 | Conversion layer, quick wins |
-| UA dead + portal gap | §3, §11 | Measurement setup, cross-domain |
-| No service pages | §1, §5, §6 | The 58-page architecture |
-| Crown title, COVID, footer | §1, §12 wk 1–2 | Quick-win cleanup |
-| No accreditation content | §10 | Three trust pages, phase 1 |
-| Crown's school page depth | §5, §7 Template A | Service page anatomy |
-| Ventura's hub structure | §5, §6 | Hub-and-child site map |
+| 61 → 1 keywords | Masthead, The short version, What Google sees | The headline diagnosis |
+| Lost keyword table | What Google sees | Shown as page numbers, not positions |
+| Size-based demand | What Google sees, Bus pages | Four vehicle pages |
+| Regional demand | What Google sees, Your new website | Nine area pages, regional included |
+| tel: / viewport | Your phone number | Its own section — biggest single loss |
+| UA dead + portal gap | The short version, What happens when | Tracking setup, cross-domain |
+| No service pages | The short version, Your new website | The 58-page site map tree |
+| Crown title, COVID, footer | What Google sees, What happens when | First-fortnight cleanup |
+| No accreditation content | The other operators | Three trust pages, stage one |
+| Crown's school page depth | The other operators, Trip pages | Page recipe contents |
+| Ventura's hub structure | Your new website | Hub-and-child site map |
 
----
+Page sections, in order: The short version · Your phone number · What Google sees ·
+The other operators · Your new website · How pages get built · What happens when ·
+What it costs · What we need.
 
 ## 5. Still unverified — do not publish claims on these
 
