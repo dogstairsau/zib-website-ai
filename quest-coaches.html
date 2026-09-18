@@ -1,0 +1,1550 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Quest Coaches Scope of Work</title>
+<meta name="description" content="Website rebuild and SEO scope for Quest Coaches: the site map, the page templates, what the audit found and the 12-month plan.">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zib Digital">
+<meta property="og:locale" content="en_AU">
+<meta property="og:title" content="Quest Coaches Scope of Work">
+<meta property="og:description" content="Eleven pages, none of which sell a service. The rebuild, the site map and the 12-month search plan.">
+<meta property="og:url" content="https://www.ziboutreach.com.au/quest-coaches">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Quest Coaches Scope of Work">
+<link rel="canonical" href="https://www.ziboutreach.com.au/quest-coaches">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ==========================================================================
+   QUEST COACHES × ZIB DIGITAL — scope of work
+   Palette drawn from the Quest wordmark: fleet orange on near-black, over
+   warm paper. Rubik (their own brand face) for display, Barlow for reading,
+   IBM Plex Mono for data labels and specs.
+   ========================================================================== */
+:root{
+  --paper:#FFFFFF;
+  --soft:#FBF7F1;
+  --band:#F4EDE2;
+  --ink:#231F20;          /* Quest wordmark black */
+  --ink-2:#3A3431;
+  --muted:#6E645C;        /* warm grey, biased to the orange */
+  --rule:#E7DFD3;
+  --rule-2:#F1EAE0;
+  --orange:#F9A01B;       /* Quest fleet orange */
+  --orange-deep:#9A6200;  /* legible orange for small text and links */
+  --orange-wash:#FDF0DA;
+  --critical:#A3231C;
+  --critical-wash:#F9E9E7;
+  --good:#2F6B45;
+  --good-wash:#E8F1EB;
+  --on-dark:#FFFFFF;
+  --dark-bg:#231F20;
+  --dark-soft:#332D2B;
+  --dark-rule:#4A4340;
+  --dark-muted:#B9AFA7;
+
+  --f-display:'Rubik',system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --f-body:'Barlow',system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --f-mono:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+
+  --max:1140px;
+  --gut:clamp(18px,4.5vw,56px);
+  --nav-h:52px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#1A1716;
+    --soft:#211D1C;
+    --band:#2A2523;
+    --ink:#F7F3EE;
+    --ink-2:#E4DCD4;
+    --muted:#AEA49B;
+    --rule:#3A3431;
+    --rule-2:#2E2927;
+    --orange:#FFB23F;
+    --orange-deep:#FFC16B;
+    --orange-wash:#3A2C14;
+    --critical:#FF9C92;
+    --critical-wash:#3A211E;
+    --good:#8FD3AA;
+    --good-wash:#1D2E24;
+    --dark-bg:#100E0D;
+    --dark-soft:#1D1A18;
+    --dark-rule:#3A3431;
+    --dark-muted:#AEA49B;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#1A1716;
+  --soft:#211D1C;
+  --band:#2A2523;
+  --ink:#F7F3EE;
+  --ink-2:#E4DCD4;
+  --muted:#AEA49B;
+  --rule:#3A3431;
+  --rule-2:#2E2927;
+  --orange:#FFB23F;
+  --orange-deep:#FFC16B;
+  --orange-wash:#3A2C14;
+  --critical:#FF9C92;
+  --critical-wash:#3A211E;
+  --good:#8FD3AA;
+  --good-wash:#1D2E24;
+  --dark-bg:#100E0D;
+  --dark-soft:#1D1A18;
+  --dark-rule:#3A3431;
+  --dark-muted:#AEA49B;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--f-body);
+  font-size:17px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* ---------- type ---------- */
+h1,h2,h3,h4{font-family:var(--f-display);line-height:1.12;text-wrap:balance;letter-spacing:-.02em}
+h1{font-weight:700;letter-spacing:-.035em}
+h2{font-size:clamp(25px,3.4vw,36px);font-weight:600}
+h3{font-size:clamp(19px,2.1vw,22px);font-weight:600;letter-spacing:-.015em}
+h4{font-size:16.5px;font-weight:600;font-family:var(--f-display)}
+p{max-width:68ch;text-wrap:pretty}
+strong{font-weight:600;color:var(--ink)}
+a{color:var(--orange-deep);text-underline-offset:2px}
+:focus-visible{outline:2px solid var(--orange);outline-offset:2px;border-radius:2px}
+
+.eyebrow{
+  font-family:var(--f-mono);font-size:11.5px;font-weight:500;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--muted);
+}
+.lede{font-size:clamp(17.5px,1.9vw,20px);line-height:1.55;color:var(--ink-2);max-width:64ch}
+.sub{color:var(--muted);font-size:15px;max-width:72ch}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+
+/* ---------- layout ---------- */
+.wrap{max-width:var(--max);margin:0 auto;padding-left:var(--gut);padding-right:var(--gut)}
+section{padding-block:clamp(40px,5vw,66px);border-top:1px solid var(--rule);background:var(--paper)}
+section.soft{background:var(--soft)}
+section.band{background:var(--band)}
+section.dark{background:var(--dark-bg);color:var(--on-dark);border-top-color:var(--dark-rule)}
+section.dark h2,section.dark h3,section.dark h4{color:var(--on-dark)}
+section.dark .eyebrow,section.dark .sub{color:var(--dark-muted)}
+section.dark .lede{color:#EFE8E1}
+.sec-head{margin-bottom:clamp(20px,2.6vw,32px);display:flex;flex-direction:column;gap:10px}
+.stack{display:flex;flex-direction:column;gap:clamp(20px,2.4vw,30px)}
+.stack-sm{display:flex;flex-direction:column;gap:12px}
+.prose{display:flex;flex-direction:column;gap:14px}
+
+/* ---------- masthead ---------- */
+.masthead{background:var(--dark-bg);color:var(--on-dark);padding-block:clamp(34px,5vw,60px) clamp(28px,4vw,44px);border:0}
+.mh-top{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:clamp(26px,4vw,44px)}
+.qmark{
+  font-family:var(--f-display);font-weight:700;font-size:15px;letter-spacing:.02em;
+  color:var(--dark-bg);background:var(--orange);padding:5px 11px;border-radius:3px;white-space:nowrap
+}
+.mh-top .x{color:var(--dark-muted);font-size:14px}
+.mh-top .zib{font-family:var(--f-display);font-weight:600;font-size:15px;color:var(--on-dark)}
+.masthead h1{font-size:clamp(30px,5.6vw,58px);color:var(--on-dark);max-width:22ch}
+.masthead h1 em{font-style:normal;color:var(--orange)}
+.masthead .lede{margin-top:22px;color:#EFE8E1}
+.meta-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));
+  gap:1px;background:var(--dark-rule);border:1px solid var(--dark-rule);
+  margin-top:clamp(30px,4.4vw,48px)
+}
+.meta-grid div{background:var(--dark-bg);padding:14px 16px;display:flex;flex-direction:column;gap:5px}
+.meta-grid dt{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--orange)}
+.meta-grid dd{font-size:14.5px;line-height:1.4;color:var(--on-dark);font-weight:500;font-family:var(--f-body);overflow-wrap:anywhere}
+
+/* ---------- sticky nav ---------- */
+.nav{
+  position:sticky;top:env(safe-area-inset-top,0px);z-index:60;
+  background:var(--paper);border-bottom:1px solid var(--rule)
+}
+.nav-inner{
+  max-width:var(--max);margin:0 auto;padding:0 var(--gut);height:var(--nav-h);
+  display:flex;align-items:center;gap:2px;overflow-x:auto;scrollbar-width:none
+}
+.nav-inner::-webkit-scrollbar{display:none}
+.nav a{
+  flex:0 0 auto;font-family:var(--f-mono);font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;padding:7px 10px;border-radius:2px;white-space:nowrap
+}
+.nav a:hover{color:var(--ink);background:var(--rule-2)}
+section{scroll-margin-top:calc(var(--nav-h) + 16px)}
+
+/* ---------- stat tiles ---------- */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.tile{background:var(--paper);padding:16px 18px;display:flex;flex-direction:column;gap:6px}
+section.soft .tile{background:var(--soft)}
+.tile .n{font-family:var(--f-display);font-weight:700;font-size:clamp(26px,3.4vw,34px);letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+.tile .n.bad{color:var(--critical)}
+.tile .k{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.tile .tnote{font-size:13.5px;color:var(--muted);line-height:1.45}
+
+/* ---------- bar chart ---------- */
+.bars{display:flex;flex-direction:column;gap:10px;border:1px solid var(--rule);background:var(--paper);padding:16px 18px}
+section.soft .bars{background:var(--soft)}
+.bar{display:grid;grid-template-columns:1fr 46px;gap:4px 12px;align-items:center}
+.bar .bl{font-size:13.5px;color:var(--muted);grid-column:1 / -1;font-family:var(--f-mono);letter-spacing:.02em}
+.bar .bt{height:14px;background:var(--orange);border-radius:1px;width:var(--w);min-width:3px;display:block}
+.bar .bt.crit{background:var(--critical)}
+.bar .bv{font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-size:14px;font-weight:500;text-align:right;color:var(--ink)}
+
+/* ---------- tables ---------- */
+.scroller{overflow-x:auto;border:1px solid var(--rule);background:var(--paper)}
+section.soft .scroller,section.band .scroller{background:var(--paper)}
+table{border-collapse:collapse;width:100%;min-width:600px;font-size:14.5px}
+caption{caption-side:bottom;text-align:left;padding:10px 14px;font-size:13px;color:var(--muted);font-family:var(--f-body)}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--rule-2);vertical-align:top}
+thead th{
+  font-family:var(--f-mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--muted);background:var(--soft);border-bottom:1px solid var(--rule);font-weight:500;white-space:nowrap
+}
+section.soft thead th{background:var(--band)}
+tbody tr:last-child td{border-bottom:0}
+td.num,th.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+tbody th{font-weight:600;font-family:var(--f-display);font-size:14.5px}
+tr.us{background:var(--orange-wash)}
+tr.us td,tr.us th{font-weight:600}
+
+/* ---------- pills ---------- */
+.pill{
+  display:inline-block;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;
+  padding:2px 7px;border-radius:2px;white-space:nowrap;font-weight:500
+}
+.pill.crit{background:var(--critical-wash);color:var(--critical)}
+.pill.med{background:var(--band);color:var(--ink-2)}
+.pill.ok{background:var(--good-wash);color:var(--good)}
+.pill.new{background:var(--orange-wash);color:var(--orange-deep)}
+
+/* ---------- finding cards ---------- */
+.findings{display:grid;grid-template-columns:repeat(auto-fit,minmax(272px,1fr));gap:14px}
+.finding{
+  background:var(--paper);border:1px solid var(--rule);border-left:3px solid var(--critical);
+  padding:16px 18px;display:flex;flex-direction:column;gap:8px
+}
+.finding.med{border-left-color:var(--muted)}
+.finding.opp{border-left-color:var(--orange)}
+.finding h4{font-size:16px}
+.finding p{font-size:14.5px;color:var(--ink-2);max-width:none}
+.finding code{font-family:var(--f-mono);font-size:12.5px;background:var(--band);padding:1px 5px;border-radius:2px;color:var(--ink)}
+
+/* ---------- site map tree ---------- */
+.tree-shell{overflow-x:auto;border:1px solid var(--rule);background:var(--paper);padding:20px clamp(14px,2.4vw,26px)}
+.tree,.tree ul{list-style:none;margin:0;padding:0}
+.tree{min-width:520px;font-size:15px}
+.tree ul{margin-left:14px;padding-left:16px;border-left:1px solid var(--rule)}
+.tree li{position:relative;padding:3px 0 3px 16px}
+.tree li::before{
+  content:"";position:absolute;left:0;top:17px;width:12px;height:1px;background:var(--rule)
+}
+.tree > li{padding-left:0}
+.tree > li::before{display:none}
+.tree .node{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+.tree .name{font-family:var(--f-display);font-weight:500;color:var(--ink)}
+.tree > li > .node .name{font-weight:700;font-size:17px}
+.tree .slug{font-family:var(--f-mono);font-size:12px;color:var(--muted);word-break:break-all}
+.tree .tag{
+  font-family:var(--f-mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;
+  padding:1px 6px;border-radius:2px;background:var(--band);color:var(--ink-2);white-space:nowrap
+}
+.tree .tag.a{background:var(--orange-wash);color:var(--orange-deep)}
+.tree .tag.b{background:var(--good-wash);color:var(--good)}
+.tree .tag.c{background:var(--critical-wash);color:var(--critical)}
+.tree .tag.keep{background:var(--rule-2);color:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:16px;font-size:13.5px;color:var(--muted);align-items:center}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+
+/* ---------- template anatomy ---------- */
+.tpl{display:grid;grid-template-columns:repeat(auto-fit,minmax(288px,1fr));gap:16px}
+.tpl-card{background:var(--paper);border:1px solid var(--rule);padding:18px 20px;display:flex;flex-direction:column;gap:12px}
+.tpl-card .hd{display:flex;flex-direction:column;gap:5px}
+.tpl-card ol{margin:0;padding-left:0;list-style:none;counter-reset:s;display:flex;flex-direction:column;gap:9px}
+.tpl-card ol li{counter-increment:s;display:grid;grid-template-columns:24px 1fr;gap:10px;font-size:14.5px;line-height:1.45;color:var(--ink-2)}
+.tpl-card ol li::before{
+  content:counter(s,decimal-leading-zero);font-family:var(--f-mono);font-size:11px;color:var(--orange-deep);
+  padding-top:3px;font-variant-numeric:tabular-nums
+}
+.tpl-card .foot{font-size:13.5px;color:var(--muted);border-top:1px solid var(--rule-2);padding-top:11px}
+
+/* ---------- workstreams ---------- */
+.streams{display:grid;grid-template-columns:repeat(auto-fit,minmax(268px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.stream{background:var(--paper);padding:17px 19px;display:flex;flex-direction:column;gap:8px}
+section.soft .stream{background:var(--soft)}
+.stream .num{font-family:var(--f-mono);font-size:11px;color:var(--orange-deep);letter-spacing:.08em}
+.stream h4{font-size:16px}
+.stream p{font-size:14px;color:var(--muted);max-width:none;line-height:1.5}
+.stream ul{margin:0;padding-left:17px;font-size:14px;color:var(--ink-2);display:flex;flex-direction:column;gap:4px}
+
+/* ---------- phases ---------- */
+.phase{display:grid;grid-template-columns:118px 1fr;gap:18px;padding-block:18px;border-top:1px solid var(--rule)}
+.phase:first-of-type{border-top:0;padding-top:0}
+.phase .when{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--orange-deep);padding-top:3px}
+.phase .what{display:flex;flex-direction:column;gap:9px}
+.phase ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:5px;font-size:15px;color:var(--ink-2)}
+@media (max-width:620px){.phase{grid-template-columns:1fr;gap:8px}}
+
+/* ---------- callout ---------- */
+.callout{
+  border:1px solid var(--rule);border-left:3px solid var(--orange);background:var(--orange-wash);
+  padding:16px 18px;display:flex;flex-direction:column;gap:8px
+}
+.callout h4{font-size:16px}
+.callout p{font-size:15px;color:var(--ink-2);max-width:none}
+.note{
+  border:1px dashed var(--rule);background:var(--soft);padding:14px 16px;
+  font-size:14px;color:var(--muted);display:flex;flex-direction:column;gap:6px
+}
+.note strong{color:var(--ink)}
+
+/* ---------- two-col ---------- */
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(18px,2.6vw,32px)}
+.kv{display:flex;flex-direction:column;gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.kv > div{background:var(--paper);padding:12px 15px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:14.5px}
+section.soft .kv > div{background:var(--soft)}
+.kv .k{color:var(--muted);font-family:var(--f-mono);font-size:12px;letter-spacing:.05em;text-transform:uppercase}
+.kv .v{font-weight:600;font-family:var(--f-display);text-align:right;overflow-wrap:anywhere}
+
+/* ---------- close ---------- */
+.close-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:8px}
+.btn{
+  display:inline-block;font-family:var(--f-display);font-weight:600;font-size:15px;text-decoration:none;
+  padding:11px 20px;border-radius:3px;background:var(--orange);color:#231F20;border:1px solid var(--orange)
+}
+.btn.ghost{background:transparent;color:var(--on-dark);border-color:var(--dark-rule)}
+footer{background:var(--dark-bg);color:var(--dark-muted);padding-block:26px;font-size:13.5px}
+footer .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+footer a{color:var(--orange)}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="mh-top">
+      <span class="qmark">QUEST COACHES</span>
+      <span class="x">&times;</span>
+      <span class="zib">Zib Digital</span>
+    </div>
+    <p class="eyebrow">Website &amp; SEO scope of work &middot; September 2026</p>
+    <h1>A year ago 61 searches found this site. <em>Today, one does.</em></h1>
+    <p class="lede">Quest has run charter work across Melbourne since 1989. The website is eleven pages
+    that describe a fleet, with not one page that speaks to a school, a company, a football club or a
+    winery. Over the past twelve months it has lost all but one of the search terms it ranked for. This
+    is the scope to rebuild it, and the search programme that makes it earn.</p>
+    <dl class="meta-grid">
+      <div><dt>Prepared for</dt><dd>Quest Coaches &middot; Pharoahs Services Pty Ltd</dd></div>
+      <div><dt>Domain</dt><dd>questcoaches.com.au</dd></div>
+      <div><dt>Depot</dt><dd>17 Thomas St, Ferntree Gully VIC 3156</dd></div>
+      <div><dt>Audit date</dt><dd>18 September 2026 &middot; verified live</dd></div>
+      <div><dt>Data sources</dt><dd>Ahrefs (Australia) &middot; live crawl &middot; Sept 2026</dd></div>
+      <div><dt>Status</dt><dd>Scope for review</dd></div>
+    </dl>
+  </div>
+</header>
+
+<nav class="nav" aria-label="Sections">
+  <div class="nav-inner">
+    <a href="#summary">Summary</a>
+    <a href="#current">1 &middot; Current state</a>
+    <a href="#mobile">2 &middot; The mobile problem</a>
+    <a href="#blind">3 &middot; Flying blind</a>
+    <a href="#visibility">4 &middot; Search visibility</a>
+    <a href="#competitors">5 &middot; Competitors</a>
+    <a href="#sitemap">6 &middot; Site map</a>
+    <a href="#templates">7 &middot; Templates</a>
+    <a href="#website-scope">8 &middot; Website scope</a>
+    <a href="#seo-scope">9 &middot; SEO scope</a>
+    <a href="#trust">10 &middot; Trust content</a>
+    <a href="#measurement">11 &middot; Measurement</a>
+    <a href="#timeline">12 &middot; Timeline</a>
+    <a href="#investment">Investment</a>
+    <a href="#terms">Assumptions</a>
+  </div>
+</nav>
+
+<section id="summary">
+  <div class="wrap stack">
+    <div class="sec-head">
+      <p class="eyebrow">Summary</p>
+      <h2>The site isn't broken. It was never built to sell.</h2>
+      <p class="lede">Every page loads. Nothing 404s. That is the whole of the good news. What Quest has
+      is a 2016-era brochure served off unsupported software, with no page for any of the four markets
+      that actually pay the invoices, no way for a phone user to tap the 1300 number, and no working
+      analytics since the middle of 2023.</p>
+    </div>
+
+    <div class="tiles">
+      <div class="tile"><span class="n bad">1</span><span class="k">Ranking keywords</span><span class="tnote">Was 61 a year ago. Peaked near 70 in Aug 2025.</span></div>
+      <div class="tile"><span class="n bad">4</span><span class="k">Visits / month</span><span class="tnote">From unpaid search. Peak was 25&ndash;28 in Apr&ndash;May 2025.</span></div>
+      <div class="tile"><span class="n bad">0.3</span><span class="k">Domain rating</span><span class="tnote">Three live referring domains, two of them directories.</span></div>
+      <div class="tile"><span class="n bad">0</span><span class="k">Service pages</span><span class="tnote">No school, corporate, club, winery or area page exists.</span></div>
+      <div class="tile"><span class="n bad">0</span><span class="k">Structured data</span><span class="tnote">No schema of any kind. Crown Coaches runs eleven types.</span></div>
+      <div class="tile"><span class="n bad">Off</span><span class="k">Tap-to-call</span><span class="tnote">Phone detection is explicitly disabled sitewide.</span></div>
+    </div>
+
+    <div class="cols">
+      <div class="prose">
+        <h3>The three things that matter</h3>
+        <p><strong>Build the pages that match how buyers search.</strong> A school books an excursion coach.
+        A club books an away game. A winery books guest transport. Each of those is a different search, a
+        different objection and a different page. Quest currently answers all of them with a fleet list,
+        and that is the direct reason the rankings went: there was never a page strong enough to hold
+        &ldquo;bus charter Melbourne&rdquo; once competitors invested.</p>
+        <p><strong>Fix the phone.</strong> A charter business lives on its 1300 number, and on mobile that
+        number cannot be tapped because the site tells the browser not to make it a link. This is the
+        cheapest fix on the list and the one costing the most money.</p>
+        <p><strong>Get the measurement back.</strong> Quotes are handled on a separate booking portal with
+        no shared tracking, and site analytics stopped reporting more than three years ago. Nobody can say
+        which suburb, service or search produced last month's bookings.</p>
+      </div>
+      <div class="stack-sm">
+        <div class="callout">
+          <h4>What this document is</h4>
+          <p>Two scopes in one place. Sections 5 to 8 are the website: the site map, the three page
+          templates and the rebuild of what exists. Sections 7 and 9 to 12 are search: the Ahrefs audit,
+          the technical and content work, the measurement and the 12-month sequence.</p>
+        </div>
+        <div class="note">
+          <strong>On numbers.</strong> Keyword, traffic, authority and backlink figures come from Ahrefs
+          (Australian market, September 2026) and are estimates &mdash; at four visits a month the traffic
+          figures are noisy, and Quest's own Search Console data would firm them up. Everything about the
+          site itself &mdash; page count, headings, schema, tags, server software &mdash; was verified live
+          on 18 September 2026 against questcoaches.com.au and each competitor named.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="current" class="soft">
+  <div class="wrap stack">
+    <div class="sec-head">
+      <p class="eyebrow">1 &middot; Current state</p>
+      <h2>What the audit found.</h2>
+      <p class="sub">Crawled live on 18 September 2026 across all eleven pages. Ordered by commercial
+      damage, not by technical severity.</p>
+    </div>
+
+    <div class="findings">
+      <div class="finding">
+        <span class="pill crit">Critical</span>
+        <h4>The site is not responsive</h4>
+        <p>Every page declares <code>width=550</code> as its viewport instead of the device width. A phone
+        renders the desktop layout shrunk to fit, so text is unreadable until the visitor pinches and
+        zooms. Most charter enquiries start on a phone.</p>
+      </div>
+      <div class="finding">
+        <span class="pill crit">Critical</span>
+        <h4>Tap-to-call is switched off</h4>
+        <p>Every page carries <code>format-detection: telephone=no</code>, and there is not a single
+        <code>tel:</code> link anywhere on the site. The 1300 number is plain text that a phone will not
+        dial. Crown and Ventura both put two tappable numbers on every page.</p>
+      </div>
+      <div class="finding">
+        <span class="pill crit">Critical</span>
+        <h4>No page for any market Quest serves</h4>
+        <p>Schools, corporate, sporting clubs, weddings, wineries, seniors and airport work are named in a
+        list on the homepage and the about page. None has a page. There is nothing for Google to rank and
+        nothing for a buyer to read.</p>
+      </div>
+      <div class="finding">
+        <span class="pill crit">Critical</span>
+        <h4>No analytics since mid-2023</h4>
+        <p>The only tag installed is Universal Analytics (<code>UA-90737186-1</code>), which stopped
+        processing data in July 2023. No GA4, no Tag Manager, no conversion tracking, no call tracking.</p>
+      </div>
+      <div class="finding">
+        <span class="pill crit">Critical</span>
+        <h4>Quoting happens on a domain with no tracking</h4>
+        <p>The quote link leaves the site for <code>portal.questcoaches.com.au</code>, a Coach Manager
+        booking portal. Without cross-domain measurement, every quote that starts on the website is
+        invisible, and a 20-plus field form is the only path offered.</p>
+      </div>
+      <div class="finding">
+        <span class="pill crit">Critical</span>
+        <h4>Zero structured data</h4>
+        <p>No <code>LocalBusiness</code>, no <code>Service</code>, no <code>FAQPage</code>, no review
+        markup — across all eleven pages. The FAQ page and eight testimonials are both sitting there
+        unmarked, which is the easiest schema win on the site.</p>
+      </div>
+      <div class="finding med">
+        <span class="pill med">Major</span>
+        <h4>No robots.txt and no sitemap.xml</h4>
+        <p>Both return 404. Nothing directs a crawler, and there is no sitemap to submit to Search
+        Console. Crown publishes four segmented sitemaps.</p>
+      </div>
+      <div class="finding med">
+        <span class="pill med">Major</span>
+        <h4>Two &lt;title&gt; tags per page</h4>
+        <p>Every page declares its title twice. The second contains a typo — <em>&ldquo;Mebourne&rdquo;</em>
+        — and Google may use either. The pages also still carry a <code>meta keywords</code> tag, which has
+        been ignored since 2009.</p>
+      </div>
+      <div class="finding med">
+        <span class="pill med">Major</span>
+        <h4>www and non-www both resolve, with no canonical</h4>
+        <p>Both hosts return 200 with different content lengths and no canonical tag anywhere on the site.
+        The <code>http</code> redirect is a 302, not a 301. Google is left to pick a version.</p>
+      </div>
+      <div class="finding med">
+        <span class="pill med">Major</span>
+        <h4>Unsupported server software</h4>
+        <p>Pages are served by PHP 5.6, which has had no security patches since December 2018, alongside
+        jQuery 1.11 from 2014. HTML responses are also sent <code>no-store</code>, so nothing caches.</p>
+      </div>
+      <div class="finding med">
+        <span class="pill med">Major</span>
+        <h4>Thin content throughout</h4>
+        <p>The homepage carries 349 words; the fleet page 196; about 215. Crown's two main service pages
+        carry 1,789 and 2,276. There is not enough on any Quest page to compete for a commercial search.</p>
+      </div>
+      <div class="finding">
+        <span class="pill crit">Critical</span>
+        <h4>A competitor's brand name in Quest's page title</h4>
+        <p>The terms page is titled <em>&ldquo;Crown Bus Charter&rdquo;</em>. It is the reason Quest turns up
+        for <em>crown buses</em> and <em>crown coaches bus</em> &mdash; the site is helping a direct
+        competitor's brand searches. The credit card terms page then duplicates that same title.</p>
+      </div>
+      <div class="finding med">
+        <span class="pill med">Major</span>
+        <h4>Missing titles, descriptions and a double H1</h4>
+        <p>The COVID-19 page has no title and no meta description. The quote page is titled only
+        <em>&ldquo;Quest Coaches&rdquo;</em> and carries two H1s. Both terms pages have no description.
+        Apart from the homepage, no H1 on the site contains a keyword anyone searches.</p>
+      </div>
+      <div class="finding med">
+        <span class="pill med">Major</span>
+        <h4>The site reads as abandoned</h4>
+        <p>A COVID-19 banner still sits on every page, six years on, with its own page still linked
+        sitewide. The footer reads &copy;&nbsp;2021. For a buyer checking whether an operator is still
+        trading, that is the first impression.</p>
+      </div>
+      <div class="finding med">
+        <span class="pill med">Moderate</span>
+        <h4>No sharing previews, no page language</h4>
+        <p>No Open Graph tags, so a link posted to Facebook or sent through Messenger renders as a bare
+        URL with no image. No <code>lang</code> attribute either, which is a basic accessibility and
+        localisation signal.</p>
+      </div>
+      <div class="finding med">
+        <span class="pill med">Moderate</span>
+        <h4>A broken heading, and one heavy image</h4>
+        <p>The homepage H1 reads <em>&ldquo;Reliable and ProfessionalBus Charter Service&rdquo;</em> &mdash;
+        a missing space from a line break inside the heading. Load time is otherwise fine at roughly two
+        seconds; the largest single asset is a 418&nbsp;KB JPEG that should be a modern format.</p>
+      </div>
+    </div>
+
+    <div class="scroller">
+      <table>
+        <caption>Every live URL, verified 18 September 2026. Ahrefs crawls 8 of these; the itinerary forms
+      and testimonials pages sit outside its crawl path. Word counts include navigation and footer, so
+      body copy is lower again &mdash; the homepage carries roughly 296 words of its own.</caption>
+        <thead>
+          <tr><th>URL</th><th class="num">Words</th><th>H1</th><th>Schema</th><th>Canonical</th><th>Purpose today</th></tr>
+        </thead>
+        <tbody>
+          <tr><th>/</th><td class="num">349</td><td>Reliable and Professional&hellip;</td><td>None</td><td>None</td><td>Fleet overview plus a service list</td></tr>
+          <tr><th>/our-fleet</th><td class="num">196</td><td>Our Fleet</td><td>None</td><td>None</td><td>Four vehicles, four photos</td></tr>
+          <tr><th>/about-us</th><td class="num">215</td><td>About Us</td><td>None</td><td>None</td><td>History, no depot, no accreditation</td></tr>
+          <tr><th>/faqs</th><td class="num">541</td><td>FAQ</td><td>None</td><td>None</td><td>Nine questions, all commercial terms</td></tr>
+          <tr><th>/testimonials</th><td class="num">572</td><td>Testimonials</td><td>None</td><td>None</td><td>Eight reviews, unmarked</td></tr>
+          <tr><th>/contact-us</th><td class="num">211</td><td>Contact Us</td><td>None</td><td>None</td><td>Address and hours, no form, no map</td></tr>
+          <tr><th>/itinerary-forms</th><td class="num">&mdash;</td><td>Itinerary Forms</td><td>None</td><td>None</td><td>Index of itinerary forms</td></tr>
+          <tr><th>/itinerary-for-direct-transfer</th><td class="num">307</td><td>Itinerary for Direct Transfer</td><td>None</td><td>None</td><td>Printable trip form</td></tr>
+          <tr><th>/covid-19</th><td class="num">&mdash;</td><td>COVID-19</td><td>None</td><td>None</td><td>2020 notice, no title, no description</td></tr>
+          <tr><th>/terms-and-conditions</th><td class="num">&mdash;</td><td>Terms</td><td>None</td><td>None</td><td>Titled &ldquo;Crown Bus Charter&rdquo;</td></tr>
+          <tr><th>/credit-card-terms-and-conditions</th><td class="num">&mdash;</td><td>Credit card terms</td><td>None</td><td>None</td><td>Duplicates the terms title</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section id="mobile">
+  <div class="wrap stack">
+    <div class="sec-head">
+      <p class="eyebrow">2 &middot; The mobile problem</p>
+      <h2>A charter business whose phone number can't be tapped.</h2>
+      <p class="lede">This is worth its own section because it is the single clearest loss on the site, and
+      it is two lines of code.</p>
+    </div>
+    <div class="cols">
+      <div class="prose">
+        <p>Quest's entire conversion strategy is the 1300 number. It sits in the header of every page. On a
+        desktop that is fine. On a phone, two settings break it.</p>
+        <p>First, the site tells the browser not to turn phone numbers into links
+        (<code style="font-family:var(--f-mono);font-size:13px;background:var(--band);padding:1px 5px">format-detection: telephone=no</code>).
+        Browsers normally do that automatically, and this switches it off. Second, no <code style="font-family:var(--f-mono);font-size:13px;background:var(--band);padding:1px 5px">tel:</code>
+        link exists anywhere in the markup to replace it. So the number is text. A caller has to memorise
+        it, leave the site and dial manually.</p>
+        <p>On top of that the page is rendered at a fixed 550&nbsp;pixels and scaled down, so that number is
+        roughly half the size it should be while the visitor is trying to read it.</p>
+        <p>The rebuild puts a tappable number in the header, a sticky call-and-quote bar on mobile, and a
+        short on-site quote form ahead of the full portal itinerary.</p>
+      </div>
+      <div class="stack-sm">
+        <div class="kv">
+          <div><span class="k">Quest</span><span class="v">0 tel: links</span></div>
+          <div><span class="k">Crown Coaches</span><span class="v">2 per page</span></div>
+          <div><span class="k">Ventura Charter</span><span class="v">2 per page</span></div>
+          <div><span class="k">McKenzie's</span><span class="v">1 per page</span></div>
+          <div><span class="k">Nuline Charter</span><span class="v">0</span></div>
+        </div>
+        <div class="callout">
+          <h4>The fix, in order</h4>
+          <p>Remove the phone-detection block. Add <code style="font-family:var(--f-mono);font-size:13px">tel:1300255287</code>
+          to the header, the footer and every service page. Add a sticky mobile bar with <em>Call</em> and
+          <em>Get a quote</em>. Then track both as conversions, so the next time we talk about this we are
+          talking about counted calls.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="blind" class="soft">
+  <div class="wrap stack">
+    <div class="sec-head">
+      <p class="eyebrow">3 &middot; Flying blind</p>
+      <h2>Three years with no data, and a quote form on another domain.</h2>
+      <p class="sub">Any conversation about return on marketing needs a baseline. Right now there isn't one.</p>
+    </div>
+    <div class="cols">
+      <div class="prose">
+        <h3>What is installed</h3>
+        <p>One tag, on all eleven pages: Universal Analytics, property <code style="font-family:var(--f-mono);font-size:13px;background:var(--band);padding:1px 5px">UA-90737186-1</code>,
+        loaded through the old <code style="font-family:var(--f-mono);font-size:13px;background:var(--band);padding:1px 5px">analytics.js</code>
+        library. Google switched that platform off in July 2023. It has collected nothing since.</p>
+        <p>There is no GA4 property tagged on the site, no Google Tag Manager container, no Google Ads
+        conversion tag and no Meta pixel. There is also no call tracking, so a phone enquiry leaves no
+        record of what the caller was looking at.</p>
+        <h3>The portal gap</h3>
+        <p>Quoting runs on <code style="font-family:var(--f-mono);font-size:13px;background:var(--band);padding:1px 5px">portal.questcoaches.com.au</code>,
+        a Coach Manager system by Distinctive Systems. That is a sound operational tool and we are not
+        proposing to replace it. The problem is the handoff: a visitor crossing from the website to the
+        portal starts a new session on a different host, so even with GA4 installed tomorrow, every quote
+        would be attributed to the portal rather than to the search, page or campaign that produced it.</p>
+        <p>Cross-domain measurement across both hosts is part of the scope, along with a short qualifying
+        form on the website itself for the majority of enquirers who will not complete a twenty-field
+        itinerary on a phone.</p>
+      </div>
+      <div class="stack-sm">
+        <div class="kv">
+          <div><span class="k">GA4</span><span class="v">Not installed</span></div>
+          <div><span class="k">Tag Manager</span><span class="v">Not installed</span></div>
+          <div><span class="k">Universal Analytics</span><span class="v">Dead since 07/2023</span></div>
+          <div><span class="k">Call tracking</span><span class="v">None</span></div>
+          <div><span class="k">Form tracking</span><span class="v">None</span></div>
+          <div><span class="k">Ads conversions</span><span class="v">None</span></div>
+          <div><span class="k">Cross-domain</span><span class="v">Not configured</span></div>
+          <div><span class="k">Search Console</span><span class="v">No sitemap to submit</span></div>
+        </div>
+        <div class="note">
+          <strong>What this means for targets.</strong> We cannot honestly forecast traffic growth off a
+          baseline that does not exist. The Ahrefs audit gives us an external estimate to start from, and
+          the first 30 days of real GA4 data give us the true one. Targets in §12 are set against those two,
+          not guessed now.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="visibility">
+  <div class="wrap stack">
+    <div class="sec-head">
+      <p class="eyebrow">4 &middot; Search visibility</p>
+      <h2>Sixty-one search terms, down to one.</h2>
+      <p class="lede">Ahrefs, Australian market, September 2026. A year ago the site was found for 61
+      search terms and peaked near 70 the month before that. It now ranks for a single term. This is not a
+      penalty. It is a thin site losing every contested search to operators who built real pages.</p>
+    </div>
+
+    <div class="cols">
+      <div class="stack-sm">
+        <h3>Ranking keywords, the last twelve months</h3>
+        <div class="bars">
+          <div class="bar"><span class="bl">Aug 2025 &middot; peak</span><span class="bt" style="--w:100%"></span><span class="bv">~70</span></div>
+          <div class="bar"><span class="bl">Sep 2025</span><span class="bt" style="--w:87%"></span><span class="bv">61</span></div>
+          <div class="bar"><span class="bl">Jan 2026 &middot; partial recovery</span><span class="bt" style="--w:29%"></span><span class="bv">~20</span></div>
+          <div class="bar"><span class="bl">Sep 2026 &middot; today</span><span class="bt crit" style="--w:1.5%"></span><span class="bv">1</span></div>
+        </div>
+        <p class="sub">The fall came sharply in September and October 2025, recovered a little to about 20
+        terms in January 2026, then faded to almost nothing by May. Ahrefs estimates; at this volume they
+        are noisy.</p>
+      </div>
+      <div class="stack-sm">
+        <h3>Where the site sits today</h3>
+        <div class="kv">
+          <div><span class="k">Ranking keywords</span><span class="v">1</span></div>
+          <div><span class="k">Organic visits / mo</span><span class="v">4</span></div>
+          <div><span class="k">Traffic value / mo</span><span class="v">$5</span></div>
+          <div><span class="k">Domain rating</span><span class="v">0.3</span></div>
+          <div><span class="k">Referring domains</span><span class="v">3 live &middot; 12 ever</span></div>
+          <div><span class="k">Backlinks</span><span class="v">4 live &middot; 85 ever</span></div>
+          <div><span class="k">Brand-name rankings</span><span class="v">0 &middot; was 11</span></div>
+          <div><span class="k">Pages crawled</span><span class="v">8</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="callout">
+      <h4>The one keyword left is the proof this works</h4>
+      <p>The single surviving term is <strong>coach charter</strong> &mdash; 150 searches a month, and Quest
+      sits at position 9, up from 58. One untargeted mention on a 296-word homepage was enough to climb 49
+      places on a national term. That is what a purpose-built page is meant to do, deliberately, across
+      thirty searches instead of one.</p>
+    </div>
+
+    <div class="stack-sm">
+      <h3>What it used to rank for, and lost</h3>
+      <p class="sub">Every one of these is a commercial search from a buyer looking to book. Volumes are
+      monthly, Australian market. Positions are the best Quest held before the fall.</p>
+      <div class="scroller">
+        <table>
+          <caption>Ahrefs lost-keywords report, Australian market, September 2026. None of these terms has
+          a page written for it on questcoaches.com.au.</caption>
+          <thead>
+            <tr><th>Search term</th><th class="num">Searches / mo</th><th class="num">Was ranked</th><th>Page that should own it</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>bus charter</td><td class="num">300</td><td class="num">&mdash;</td><td>Charter hub</td></tr>
+            <tr><td>coach hire</td><td class="num">250</td><td class="num">&mdash;</td><td>Charter hub</td></tr>
+            <tr><td>bus charter melbourne</td><td class="num">200</td><td class="num">31</td><td>Homepage</td></tr>
+            <tr><td>charter bus melbourne</td><td class="num">200</td><td class="num">21</td><td>Homepage</td></tr>
+            <tr><td>chartered bus</td><td class="num">200</td><td class="num">30</td><td>Charter hub</td></tr>
+            <tr><td>corporate bus hire melbourne</td><td class="num">150</td><td class="num">18</td><td>Corporate bus hire</td></tr>
+            <tr><td>charter bus hire melbourne</td><td class="num">150</td><td class="num">24</td><td>Homepage</td></tr>
+            <tr><td>mini bus charter melbourne</td><td class="num">150</td><td class="num">40</td><td>13-seat minibus</td></tr>
+            <tr><td>melbourne bus hire</td><td class="num">150</td><td class="num">44</td><td>Homepage</td></tr>
+            <tr><td>melbourne bus charter</td><td class="num">&mdash;</td><td class="num">23</td><td>Homepage</td></tr>
+            <tr class="us"><td>coach charter <span class="pill ok">Still ranking</span></td><td class="num">150</td><td class="num">9 &middot; from 58</td><td>Charter hub</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="sub">Position 18 on <em>corporate bus hire melbourne</em> is the one that should sting. That
+      is a repeat-booking, purchase-order client, and Quest was on page two with no corporate page at all.</p>
+    </div>
+
+    <div class="cols">
+      <div class="finding opp">
+        <span class="pill new">Demand found</span>
+        <h4>Searches by bus size</h4>
+        <p>The site used to rank weakly for <strong>25-seater and 30-seater bus hire</strong> and
+        <strong>coaster bus hire</strong>. People search by the vehicle they need, and Quest has a 13, a 24,
+        a 27 and a 48/57. One page per vehicle, named the way buyers name them, is in scope.</p>
+      </div>
+      <div class="finding opp">
+        <span class="pill new">Demand found</span>
+        <h4>Regional Victoria</h4>
+        <p>Weak historical rankings for bus hire in <strong>Shepparton, Traralgon, Pakenham and
+        Echuca</strong>. That is demand outside metro Melbourne with no page behind it, and it shapes the
+        area pages in §6: regional first where evidence exists, not a blanket suburb rollout.</p>
+      </div>
+      <div class="finding med">
+        <span class="pill med">To confirm</span>
+        <h4>Two brand questions for Quest</h4>
+        <p>The site ranks for <em>crown</em> terms because a page title carries a competitor's name. It also
+        picks up <em>quinces coaches</em> searches. We need to know whether that is a former trading name, a
+        partner operator, or a leftover from an old template.</p>
+      </div>
+    </div>
+
+    <div class="prose">
+      <h3>Why it fell, honestly</h3>
+      <p>The sharp drop lines up roughly with Google's August 2025 spam update, and it would be easy to sell
+      that as the villain. It probably isn't. There is no sign of a penalty: the pages are indexed, they
+      load, nothing is cloaked or spun. What the site has is 296 words on its most important page, no
+      service pages, no schema, three referring domains and a domain rating of 0.3.</p>
+      <p>Against that, the two operators Ahrefs lists as Quest's closest competitors rank for
+      <strong>527</strong> and <strong>103</strong> keywords. When the algorithm re-weighted, Quest had
+      nothing to hold its positions with. Rebuilding the pages is the fix, and it is a fix we control.</p>
+    </div>
+  </div>
+</section>
+
+<section id="competitors" class="soft">
+  <div class="wrap stack">
+    <div class="sec-head">
+      <p class="eyebrow">5 &middot; Competitors</p>
+      <h2>Two operators own this market. Two are as thin as Quest.</h2>
+      <p class="sub">Structure verified live on each site, 18 September 2026: pages counted from their own
+      XML sitemaps, word counts and schema read from the live markup.</p>
+    </div>
+
+    <div class="scroller">
+      <table>
+        <caption>Word counts are for each operator's main charter or bus-hire page. Quest's figure is its
+        homepage, which is the only page it has that attempts the job.</caption>
+        <thead>
+          <tr><th>Operator</th><th class="num">Pages</th><th class="num">Words on main page</th><th>Structured data</th><th>Responsive</th><th class="num">Tap-to-call</th><th>Position</th></tr>
+        </thead>
+        <tbody>
+          <tr><th>Ventura Charter</th><td class="num">45</td><td class="num">869</td><td>Organization, WebPage, Breadcrumb</td><td>Yes</td><td class="num">2</td><td>Best architecture in the market</td></tr>
+          <tr><th>Crown Coaches</th><td class="num">35</td><td class="num">1,789&ndash;2,276</td><td>11 types incl. LocalBusiness, Service, FAQPage, Review</td><td>Yes</td><td class="num">2</td><td>Best executed pages</td></tr>
+          <tr><th>Nuline Charter</th><td class="num">15</td><td class="num">127</td><td>LocalBusiness, WebSite</td><td>Yes</td><td class="num">0</td><td>Thin, and its headings are broken</td></tr>
+          <tr><th>McKenzie's</th><td class="num">9</td><td class="num">487</td><td>WebSite only</td><td>Yes</td><td class="num">1</td><td>Yarra Valley angle, one bus-hire page</td></tr>
+          <tr class="us"><th>Quest Coaches</th><td class="num">11</td><td class="num">296</td><td>None</td><td>No &middot; 550px</td><td class="num">0</td><td>Nothing built to compete</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="cols">
+      <div class="prose">
+        <h3>What Crown has that Quest doesn't</h3>
+        <p>Crown is the benchmark for schools. Their school page runs 2,276 words and does the work a
+        decision-maker needs: 150 schools named as clients, 75 daily runs, 1,500 students, a parent
+        tracking app, the actual camps and excursion venues Melbourne schools go to, a size-to-group
+        comparison table, and six FAQs marked up as schema. Sub-pages sit beneath it for airport, weddings,
+        corporate, accessible and seniors work. They publish an absentee form, a child safety policy, a bus
+        safety policy and a climate page.</p>
+        <p>Quest can match the substance. Quest has run this work since 1989 and holds eight written
+        testimonials. What's missing is the page to put it on.</p>
+        <h3>What Ventura has that Quest doesn't</h3>
+        <p>Ventura's value is the shape, and it is the shape we should copy. Four service hubs &mdash;
+        school, event, corporate, private tours &mdash; each with five to eight child pages underneath:
+        camps, sports, swimming shuttles, AM/PM runs, conferences, Christmas parties, weddings, snow trips,
+        social clubs. That is 45 pages doing 45 different jobs. It is also a business with 900 buses and 12
+        depots, so we are not out to out-scale them. We are out to out-specify them on the searches a
+        Ferntree Gully operator can actually win.</p>
+      </div>
+      <div class="stack-sm">
+        <div class="callout">
+          <h4>Where the room is</h4>
+          <p><strong>Sporting clubs.</strong> Not one of the four has a page for club transport, despite
+          every junior and senior club in Melbourne needing away-game buses through winter.</p>
+          <p><strong>Wineries, from the venue's side.</strong> The wine-tour searches are fought over by
+          tour operators selling tickets. Nobody is selling transport <em>to</em> the wineries and cellar
+          doors that need it for their own guests. That is a business-to-business page with no competitor.</p>
+          <p><strong>Area-level search.</strong> Every one of the four talks about &ldquo;Melbourne&rdquo;
+          and stops. Quest's own lost keywords already prove demand in Pakenham, Shepparton, Traralgon and
+          Echuca.</p>
+          <p><strong>Vehicle-size search.</strong> Crown lists seat ranges inside a table. Nobody has a
+          page built for &ldquo;25 seater bus hire&rdquo; the way people type it.</p>
+        </div>
+        <div class="note">
+          <strong>A note on ambition.</strong> Beating Ventura on &ldquo;bus hire Melbourne&rdquo; is a
+          two-year job, not a six-month one. The sequence in §12 takes the winnable searches first &mdash;
+          service, size and area terms where the competing pages are weak or absent &mdash; and uses the
+          authority those build to go after the head terms later.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="sitemap">
+  <div class="wrap stack">
+    <div class="sec-head">
+      <p class="eyebrow">6 &middot; Site map</p>
+      <h2>From eleven pages to fifty-eight.</h2>
+      <p class="lede">The whole architecture, in build order. Three hubs carry the site: what Quest does,
+      what Quest drives, and where Quest goes. Every page below has a job and a search behind it &mdash; no
+      page exists to fill out a menu.</p>
+    </div>
+
+    <div class="tiles">
+      <div class="tile"><span class="n">11</span><span class="k">Pages today</span><span class="tnote">Eight of them crawlable, none commercial.</span></div>
+      <div class="tile"><span class="n">30</span><span class="k">At launch</span><span class="tnote">Phase 1: core, fleet, schools, corporate, trust.</span></div>
+      <div class="tile"><span class="n">51</span><span class="k">By month 6</span><span class="tnote">Phase 2 adds clubs, wineries, events and areas.</span></div>
+      <div class="tile"><span class="n">58</span><span class="k">By month 12</span><span class="tnote">Phase 3 adds the guides that earn links.</span></div>
+    </div>
+
+    <div class="tree-shell">
+      <ul class="tree">
+        <li>
+          <div class="node"><span class="name">Home</span><span class="slug">/</span><span class="tag c">Rewrite</span></div>
+          <ul>
+            <li>
+              <div class="node"><span class="name">Bus &amp; Coach Hire Melbourne</span><span class="slug">/bus-coach-hire-melbourne</span><span class="tag">Hub</span><span class="tag new">New</span></div>
+              <ul>
+                <li>
+                  <div class="node"><span class="name">School Bus Charter</span><span class="slug">/school-bus-charter-melbourne</span><span class="tag a">Template A</span></div>
+                  <ul>
+                    <li><div class="node"><span class="name">School Excursions</span><span class="slug">/school-excursion-bus-hire</span><span class="tag a">A</span></div></li>
+                    <li><div class="node"><span class="name">School Camps</span><span class="slug">/school-camp-transport</span><span class="tag a">A</span></div></li>
+                    <li><div class="node"><span class="name">Swimming Shuttles</span><span class="slug">/school-swimming-shuttles</span><span class="tag a">A</span></div></li>
+                    <li><div class="node"><span class="name">School Sport &amp; Carnivals</span><span class="slug">/school-sport-bus-hire</span><span class="tag a">A</span></div></li>
+                    <li><div class="node"><span class="name">Daily School Runs</span><span class="slug">/daily-school-bus-runs</span><span class="tag a">A</span></div></li>
+                  </ul>
+                </li>
+                <li>
+                  <div class="node"><span class="name">Corporate Bus Hire</span><span class="slug">/corporate-bus-hire-melbourne</span><span class="tag a">Template A</span></div>
+                  <ul>
+                    <li><div class="node"><span class="name">Conference &amp; Delegate Transfers</span><span class="slug">/conference-bus-transfers</span><span class="tag a">A</span></div></li>
+                    <li><div class="node"><span class="name">Staff &amp; Site Shuttles</span><span class="slug">/staff-shuttle-bus-hire</span><span class="tag a">A</span></div></li>
+                    <li><div class="node"><span class="name">Airport Transfers</span><span class="slug">/airport-transfer-bus-hire-melbourne</span><span class="tag a">A</span></div></li>
+                    <li><div class="node"><span class="name">Christmas Parties &amp; Team Days</span><span class="slug">/christmas-party-bus-hire</span><span class="tag a">A</span></div></li>
+                  </ul>
+                </li>
+                <li>
+                  <div class="node"><span class="name">Sporting Club Bus Hire</span><span class="slug">/sporting-club-bus-hire</span><span class="tag a">Template A</span><span class="tag new">Open lane</span></div>
+                  <ul>
+                    <li><div class="node"><span class="name">Away Games &amp; Fixtures</span><span class="slug">/away-game-bus-hire</span><span class="tag a">A</span></div></li>
+                    <li><div class="node"><span class="name">Finals &amp; Carnival Days</span><span class="slug">/finals-carnival-bus-hire</span><span class="tag a">A</span></div></li>
+                    <li><div class="node"><span class="name">Junior Club Transport</span><span class="slug">/junior-club-bus-transport</span><span class="tag a">A</span></div></li>
+                  </ul>
+                </li>
+                <li>
+                  <div class="node"><span class="name">Winery &amp; Brewery Transport</span><span class="slug">/winery-tour-bus-hire</span><span class="tag a">Template A</span><span class="tag new">Open lane</span></div>
+                  <ul>
+                    <li><div class="node"><span class="name">Yarra Valley Wine Tour Bus Hire</span><span class="slug">/yarra-valley-wine-tour-bus-hire</span><span class="tag a">A</span></div></li>
+                    <li><div class="node"><span class="name">Mornington Peninsula Wine Tours</span><span class="slug">/mornington-peninsula-wine-tour-bus</span><span class="tag a">A</span></div></li>
+                    <li><div class="node"><span class="name">Macedon Ranges &amp; Bellarine</span><span class="slug">/macedon-bellarine-wine-tour-bus</span><span class="tag a">A</span></div></li>
+                    <li><div class="node"><span class="name">For Wineries &amp; Cellar Doors <em>(B2B)</em></span><span class="slug">/winery-guest-transport-partners</span><span class="tag a">A</span></div></li>
+                  </ul>
+                </li>
+                <li><div class="node"><span class="name">Weddings &amp; Guest Transfers</span><span class="slug">/wedding-bus-hire-melbourne</span><span class="tag a">A</span></div></li>
+                <li><div class="node"><span class="name">Seniors &amp; Community Groups</span><span class="slug">/seniors-community-bus-hire</span><span class="tag a">A</span></div></li>
+                <li><div class="node"><span class="name">Social Clubs &amp; Day Tours</span><span class="slug">/social-club-day-tour-bus-hire</span><span class="tag a">A</span></div></li>
+              </ul>
+            </li>
+            <li>
+              <div class="node"><span class="name">Our Fleet</span><span class="slug">/our-fleet</span><span class="tag">Hub</span><span class="tag keep">Keep URL</span></div>
+              <ul>
+                <li><div class="node"><span class="name">13-Seat Minibus Hire</span><span class="slug">/13-seat-minibus-hire</span><span class="tag b">Template C</span></div></li>
+                <li><div class="node"><span class="name">24-Seat Bus Hire</span><span class="slug">/24-seat-bus-hire</span><span class="tag b">C</span></div></li>
+                <li><div class="node"><span class="name">27-Seat Mini Coach Hire</span><span class="slug">/27-seat-mini-coach-hire</span><span class="tag b">C</span></div></li>
+                <li><div class="node"><span class="name">48 &amp; 57-Seat Coach Hire</span><span class="slug">/57-seat-coach-hire</span><span class="tag b">C</span></div></li>
+              </ul>
+            </li>
+            <li>
+              <div class="node"><span class="name">Areas We Service</span><span class="slug">/areas-we-service</span><span class="tag">Hub</span><span class="tag new">New</span></div>
+              <ul>
+                <li><div class="node"><span class="name">Eastern Suburbs &amp; Knox</span><span class="slug">/bus-hire-eastern-suburbs-melbourne</span><span class="tag c">Template B</span></div></li>
+                <li><div class="node"><span class="name">South East &amp; Dandenong</span><span class="slug">/bus-hire-south-east-melbourne</span><span class="tag c">B</span></div></li>
+                <li><div class="node"><span class="name">Pakenham &amp; Cardinia</span><span class="slug">/bus-hire-pakenham</span><span class="tag c">B</span></div></li>
+                <li><div class="node"><span class="name">Melbourne CBD &amp; Inner</span><span class="slug">/bus-hire-melbourne-cbd</span><span class="tag c">B</span></div></li>
+                <li><div class="node"><span class="name">Bayside &amp; Mornington Peninsula</span><span class="slug">/bus-hire-mornington-peninsula</span><span class="tag c">B</span></div></li>
+                <li><div class="node"><span class="name">Yarra Valley &amp; Dandenong Ranges</span><span class="slug">/bus-hire-yarra-valley</span><span class="tag c">B</span></div></li>
+                <li><div class="node"><span class="name">Northern &amp; Western Suburbs</span><span class="slug">/bus-hire-northern-western-melbourne</span><span class="tag c">B</span></div></li>
+                <li><div class="node"><span class="name">Gippsland &amp; Traralgon</span><span class="slug">/bus-hire-traralgon-gippsland</span><span class="tag c">B</span></div></li>
+                <li><div class="node"><span class="name">Regional Victoria</span><span class="slug">/bus-hire-regional-victoria</span><span class="tag c">B</span></div></li>
+              </ul>
+            </li>
+            <li>
+              <div class="node"><span class="name">Why Quest Coaches</span><span class="slug">/about-us</span><span class="tag keep">Keep URL</span><span class="tag c">Rewrite</span></div>
+              <ul>
+                <li><div class="node"><span class="name">Safety &amp; Accreditation</span><span class="slug">/safety-accreditation</span><span class="tag new">New</span></div></li>
+                <li><div class="node"><span class="name">Child Safety &amp; Working With Children</span><span class="slug">/child-safety</span><span class="tag new">New</span></div></li>
+                <li><div class="node"><span class="name">Our Drivers</span><span class="slug">/our-drivers</span><span class="tag new">New</span></div></li>
+              </ul>
+            </li>
+            <li><div class="node"><span class="name">Get a Quote <em>(on-site form)</em></span><span class="slug">/get-a-quote</span><span class="tag new">New</span></div></li>
+            <li><div class="node"><span class="name">Reviews</span><span class="slug">/reviews</span><span class="tag keep">From /testimonials</span></div></li>
+            <li><div class="node"><span class="name">FAQs</span><span class="slug">/faqs</span><span class="tag keep">Keep URL</span><span class="tag c">Expand</span></div></li>
+            <li>
+              <div class="node"><span class="name">Guides</span><span class="slug">/guides</span><span class="tag">Hub</span><span class="tag new">Phase 3</span></div>
+              <ul>
+                <li><div class="node"><span class="name">Six guides, one a month from month 7</span><span class="slug">/guides/&hellip;</span><span class="tag new">Phase 3</span></div></li>
+              </ul>
+            </li>
+            <li>
+              <div class="node"><span class="name">Contact</span><span class="slug">/contact-us</span><span class="tag keep">Keep URL</span><span class="tag c">Rewrite</span></div>
+              <ul>
+                <li><div class="node"><span class="name">Booking Terms</span><span class="slug">/terms-and-conditions</span><span class="tag c">Fix title</span></div></li>
+                <li><div class="node"><span class="name">Credit Card Terms</span><span class="slug">/credit-card-terms-and-conditions</span><span class="tag c">Fix title</span></div></li>
+                <li><div class="node"><span class="name">Privacy Policy</span><span class="slug">/privacy-policy</span><span class="tag new">New</span></div></li>
+              </ul>
+            </li>
+          </ul>
+        </li>
+      </ul>
+      <div class="legend">
+        <span><span class="tag a">Template A</span> Service page &middot; 23 pages</span>
+        <span><span class="tag c">Template B</span> Area page &middot; 9 pages</span>
+        <span><span class="tag b">Template C</span> Vehicle page &middot; 4 pages</span>
+        <span><span class="tag keep">Keep URL</span> Existing address retained</span>
+        <span><span class="tag new">New</span> Page that does not exist today</span>
+      </div>
+    </div>
+
+    <div class="cols">
+      <div class="prose">
+        <h3>Why the hubs sit where they do</h3>
+        <p>Three questions decide a charter booking: <em>do you do my kind of trip</em>, <em>do you have a
+        bus my size</em>, and <em>do you come to me</em>. The three hubs answer one each, and every child
+        page inherits authority from its hub while targeting its own search. A school sports coordinator and
+        a winery events manager never have to read each other's page.</p>
+        <p>Deliberately not in the scope: a page per suburb. Fifty near-identical suburb pages is the oldest
+        mistake in local search and Google treats it as what it is. Nine area pages go in, each with real
+        detail &mdash; the schools, venues, clubs and freeway routes in that area, and where the depot sits
+        relative to it. We add more only where Ahrefs and Search Console show demand, one at a time.</p>
+      </div>
+      <div class="stack-sm">
+        <div class="scroller">
+          <table>
+            <caption>What happens to every URL that exists today. Nothing is deleted without a redirect.</caption>
+            <thead><tr><th>Existing URL</th><th>Action</th></tr></thead>
+            <tbody>
+              <tr><td>/</td><td>Rewrite to 800+ words on bus charter and bus hire Melbourne</td></tr>
+              <tr><td>/our-fleet</td><td>Becomes the fleet hub, four vehicle pages beneath it</td></tr>
+              <tr><td>/about-us</td><td>Rewrite as Why Quest, with the three trust pages beneath</td></tr>
+              <tr><td>/faqs</td><td>Keep and expand, marked up as FAQ schema</td></tr>
+              <tr><td>/testimonials</td><td>301 to /reviews, with review schema</td></tr>
+              <tr><td>/contact-us</td><td>Rewrite with a form, a map and tappable numbers</td></tr>
+              <tr><td>/itinerary-forms</td><td>Fold into /get-a-quote, 301</td></tr>
+              <tr><td>/itinerary-for-direct-transfer</td><td>Fold into /get-a-quote, 301</td></tr>
+              <tr><td>/covid-19</td><td>Retire, 301 to home. Banner removed sitewide</td></tr>
+              <tr><td>/terms-and-conditions</td><td>Keep, fix the Crown Bus Charter title</td></tr>
+              <tr><td>/credit-card-terms-and-conditions</td><td>Keep, give it its own title and description</td></tr>
+              <tr><td>portal.questcoaches.com.au</td><td>Stays as the booking system, with cross-domain tracking</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="templates" class="soft">
+  <div class="wrap stack">
+    <div class="sec-head">
+      <p class="eyebrow">7 &middot; Templates</p>
+      <h2>Three templates. Thirty-six pages.</h2>
+      <p class="lede">Building 36 pages one at a time is not affordable, and it is not necessary. Three
+      templates are designed and built once, then each page is filled with its own research, copy, photos
+      and schema. The structure repeats. The content never does.</p>
+    </div>
+
+    <div class="tpl">
+      <div class="tpl-card">
+        <div class="hd">
+          <span class="pill new">Template A</span>
+          <h3>Service page</h3>
+          <p class="sub">23 pages &middot; 900&ndash;1,400 words each. Targets one job-to-be-done, e.g.
+          &ldquo;school excursion bus hire Melbourne&rdquo;.</p>
+        </div>
+        <ol>
+          <li>H1 naming the service and the city, plus a one-line promise</li>
+          <li>Tappable call button and a three-field quote start, above the fold</li>
+          <li>Who this is for, in that buyer's language</li>
+          <li>What's included, and what it costs extra &mdash; answering the FAQ objections up front</li>
+          <li>Which vehicle suits which group size, linking to the fleet pages</li>
+          <li>The proof that matters to this buyer: accreditation for schools, invoicing for corporate, seatbelts for clubs</li>
+          <li>Two or three named examples of real trips of this type</li>
+          <li>Areas served, linking to the relevant area pages</li>
+          <li>Four to six FAQs specific to this service, marked up as schema</li>
+          <li>Review pulled from the matching testimonial, with review schema</li>
+          <li>Closing quote block and phone number</li>
+        </ol>
+        <p class="foot">Schema: <span class="mono">Service</span> + <span class="mono">FAQPage</span> +
+        <span class="mono">LocalBusiness</span> + <span class="mono">Breadcrumb</span>.</p>
+      </div>
+
+      <div class="tpl-card">
+        <div class="hd">
+          <span class="pill new">Template B</span>
+          <h3>Area page</h3>
+          <p class="sub">9 pages &middot; 700&ndash;900 words each. Targets &ldquo;bus hire
+          {area}&rdquo; and the near-me searches from that area.</p>
+        </div>
+        <ol>
+          <li>H1 naming the area, with the depot distance stated plainly</li>
+          <li>Tappable call button and quote start</li>
+          <li>How Quest serves this area: pickup points, freeway routes, typical run times</li>
+          <li>Suburbs and towns covered, written as a sentence not a keyword list</li>
+          <li>Named local destinations Quest actually runs to from here</li>
+          <li>The services most booked in this area, linking to Template A pages</li>
+          <li>Which vehicles are based or most used on these runs</li>
+          <li>One local job described in detail, with a review if we have one</li>
+          <li>Three FAQs on travel time, minimum hire and out-of-area pricing</li>
+          <li>Map and depot details</li>
+        </ol>
+        <p class="foot">Each page needs 300+ words that could only be written about that area. If we can't
+        write them, the page doesn't get built. Schema: <span class="mono">LocalBusiness</span> +
+        <span class="mono">areaServed</span> + <span class="mono">FAQPage</span>.</p>
+      </div>
+
+      <div class="tpl-card">
+        <div class="hd">
+          <span class="pill new">Template C</span>
+          <h3>Vehicle page</h3>
+          <p class="sub">4 pages &middot; 500&ndash;700 words each. Targets how people actually search:
+          &ldquo;25 seater bus hire&rdquo;, &ldquo;coaster bus hire&rdquo;, &ldquo;mini bus charter
+          Melbourne&rdquo;.</p>
+        </div>
+        <ol>
+          <li>H1 naming the seat count and the hire type</li>
+          <li>Real photography of that vehicle, inside and out</li>
+          <li>Spec table: seats, seatbelts, air conditioning, PA, luggage capacity, trailer option, accessibility</li>
+          <li>What this vehicle is right for, and when to size up or down</li>
+          <li>The trips it gets booked for most, linking to Template A pages</li>
+          <li>Stated plainly: no onboard toilet, and what that means for long runs</li>
+          <li>Quote start and phone number</li>
+        </ol>
+        <p class="foot">The size-based searches Quest already ranked weakly for &mdash; 25-seater,
+        30-seater, coaster &mdash; land here. Schema: <span class="mono">Product</span> /
+        <span class="mono">Vehicle</span> + <span class="mono">Offer</span>.</p>
+      </div>
+    </div>
+
+    <div class="callout">
+      <h4>What makes this worth doing rather than spinning 36 near-identical pages</h4>
+      <p>Google has spent three algorithm updates getting better at spotting templated pages with the
+      nouns swapped. The template gives us the layout, the schema and the conversion furniture. The words,
+      the photos, the named venues, the FAQs and the reviews are written per page from what Quest actually
+      does. That is the difference between 36 assets and 36 liabilities, and it is the reason this is
+      staged across twelve months rather than dumped live in one week.</p>
+    </div>
+  </div>
+</section>
+
+<section id="website-scope">
+  <div class="wrap stack">
+    <div class="sec-head">
+      <p class="eyebrow">8 &middot; Website scope</p>
+      <h2>What gets built.</h2>
+      <p class="sub">The website half of the engagement, in delivery order.</p>
+    </div>
+
+    <div class="streams">
+      <div class="stream">
+        <span class="num">W1</span>
+        <h4>Platform &amp; rebuild</h4>
+        <ul>
+          <li>New responsive build replacing the fixed 550px layout</li>
+          <li>Off PHP 5.6 onto supported, patched hosting</li>
+          <li>Design system carrying the existing Quest orange and wordmark</li>
+          <li>Real photography of the four vehicles, inside and out</li>
+          <li>Accessibility pass: contrast, focus states, alt text, page language</li>
+        </ul>
+      </div>
+      <div class="stream">
+        <span class="num">W2</span>
+        <h4>The conversion layer</h4>
+        <ul>
+          <li>Tappable phone number in header, footer and every page</li>
+          <li>Sticky mobile bar: call and get a quote</li>
+          <li>Short on-site quote form, three to five fields, handing off to the portal</li>
+          <li>Contact page with a form, a map and stated office hours</li>
+          <li>Thank-you pages that fire as tracked conversions</li>
+        </ul>
+      </div>
+      <div class="stream">
+        <span class="num">W3</span>
+        <h4>Core page rewrites</h4>
+        <ul>
+          <li>Homepage to 800+ words targeting bus charter and bus hire Melbourne</li>
+          <li>Why Quest, replacing the 215-word about page</li>
+          <li>Fleet hub, reviews, FAQs expanded</li>
+          <li>Terms titles fixed, COVID content retired, footer year live</li>
+          <li>Privacy policy written</li>
+        </ul>
+      </div>
+      <div class="stream">
+        <span class="num">W4</span>
+        <h4>Template build</h4>
+        <ul>
+          <li>Templates A, B and C designed and built once</li>
+          <li>Schema baked into each template, not bolted on later</li>
+          <li>Internal linking rules set at template level</li>
+          <li>A page can be published by a Quest staff member without a developer</li>
+        </ul>
+      </div>
+      <div class="stream">
+        <span class="num">W5</span>
+        <h4>Page production</h4>
+        <ul>
+          <li>30 pages live at launch</li>
+          <li>21 more through phase 2, in demand order</li>
+          <li>Per-page research, copywriting, imagery and schema</li>
+          <li>Named venues, schools, clubs and wineries verified with Quest before publishing</li>
+        </ul>
+      </div>
+      <div class="stream">
+        <span class="num">W6</span>
+        <h4>Migration &amp; launch</h4>
+        <ul>
+          <li>301 map for every existing URL, per the table in §6</li>
+          <li>robots.txt and XML sitemap published</li>
+          <li>Canonicals on every page; one host chosen, the other 301'd</li>
+          <li>Search Console verified, sitemap submitted, index coverage watched for 30 days</li>
+          <li>Open Graph tags so a shared link renders properly</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="note">
+      <strong>What we need from Quest to build this.</strong> Photos of the four vehicles or access to
+      photograph them; the Safe Transport Victoria accreditation number; confirmation of driver checks and
+      child safety policy; a list of schools, clubs, companies and wineries Quest currently carries (names
+      used only with permission); the real service boundary and any out-of-area charges; logins for the
+      domain, hosting and the Coach Manager portal; and Google Business Profile access.
+    </div>
+  </div>
+</section>
+
+<section id="seo-scope" class="soft">
+  <div class="wrap stack">
+    <div class="sec-head">
+      <p class="eyebrow">9 &middot; SEO scope</p>
+      <h2>What gets worked, every month.</h2>
+      <p class="sub">Eight workstreams. The first four front-loaded; the last four compounding across the
+      year.</p>
+    </div>
+
+    <div class="streams">
+      <div class="stream">
+        <span class="num">S1</span>
+        <h4>Technical foundations</h4>
+        <ul>
+          <li>robots.txt, XML sitemap, canonicals, host consolidation</li>
+          <li>One H1 per page, titles and descriptions written for all 58</li>
+          <li>Crown Bus Charter title removed and the brand terms it attracts cleaned up</li>
+          <li>Core Web Vitals and image formats</li>
+          <li>Crawl re-run monthly, errors fixed inside the month</li>
+        </ul>
+      </div>
+      <div class="stream">
+        <span class="num">S2</span>
+        <h4>Keyword strategy</h4>
+        <ul>
+          <li>Ahrefs mapping of every target term to exactly one page</li>
+          <li>The ten lost keywords in §4 assigned owners and tracked weekly</li>
+          <li>Size and regional terms researched properly before their pages are built</li>
+          <li>Rank tracking set up on a named keyword set, reported monthly</li>
+        </ul>
+      </div>
+      <div class="stream">
+        <span class="num">S3</span>
+        <h4>On-page &amp; content</h4>
+        <ul>
+          <li>Per-page briefs from search data, not from a word count</li>
+          <li>Copy written for the buyer, then optimised &mdash; in that order</li>
+          <li>FAQs sourced from what Quest's office actually gets asked</li>
+          <li>Internal links placed as pages publish, not in a batch at the end</li>
+        </ul>
+      </div>
+      <div class="stream">
+        <span class="num">S4</span>
+        <h4>Structured data</h4>
+        <ul>
+          <li>LocalBusiness with depot, hours, service area and ABN</li>
+          <li>Service schema on all 23 service pages</li>
+          <li>FAQPage on every page carrying FAQs</li>
+          <li>Review and AggregateRating on the reviews page</li>
+          <li>Vehicle and Offer on the four fleet pages</li>
+        </ul>
+      </div>
+      <div class="stream">
+        <span class="num">S5</span>
+        <h4>Local search</h4>
+        <ul>
+          <li>Google Business Profile claimed, completed and categorised properly</li>
+          <li>Services, service areas, photos and Q&amp;A populated</li>
+          <li>Review generation process for after every charter</li>
+          <li>Citation build across bus, coach, transport and Victorian directories</li>
+          <li>Map-pack visibility tracked from the areas that matter</li>
+        </ul>
+      </div>
+      <div class="stream">
+        <span class="num">S6</span>
+        <h4>Authority</h4>
+        <ul>
+          <li>From three referring domains up, deliberately and slowly</li>
+          <li>The busaustralia.com link is genuine and worth building on</li>
+          <li>Industry bodies, supplier pages, club and school sponsor listings, venue partner pages</li>
+          <li>No paid link schemes, no private networks, no directory blasts</li>
+        </ul>
+      </div>
+      <div class="stream">
+        <span class="num">S7</span>
+        <h4>AI answers</h4>
+        <ul>
+          <li>Schema and clear question-and-answer content so AI tools can quote the site</li>
+          <li>Tracking whether Quest gets named in AI answers for charter searches</li>
+          <li>The guides in phase 3 written to be the quotable source</li>
+        </ul>
+      </div>
+      <div class="stream">
+        <span class="num">S8</span>
+        <h4>Reporting</h4>
+        <ul>
+          <li>Monthly report: rankings, traffic, calls, form starts, quotes</li>
+          <li>Quarterly strategy review against the plan in §12</li>
+          <li>One named contact, not a ticket queue</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="trust">
+  <div class="wrap stack">
+    <div class="sec-head">
+      <p class="eyebrow">10 &middot; Trust content</p>
+      <h2>Schools can't book what they can't verify.</h2>
+      <p class="lede">This gets its own section because it is a revenue blocker, not an SEO nicety. Under
+      Victorian Department of Education policy, a school chartering a bus has to satisfy itself that the
+      operator is accredited with Safe Transport Victoria. Quest's website gives them nothing to check.</p>
+    </div>
+    <div class="cols">
+      <div class="prose">
+        <p>The about page says the business is &ldquo;fully accredited&rdquo;. There is no accreditation
+        number, no mention of the Bus Safety Act, no child safety policy, no statement that drivers hold
+        Working With Children checks, and no seatbelt information. A school business manager doing due
+        diligence on three quotes will find all of that on Crown's site and none of it on Quest's.</p>
+        <p>Crown publishes a bus safety policy, a child safety and wellbeing policy, an environmental
+        policy and a safety page, and names its accreditation number. Nuline, thin as it is, publishes a
+        child safety policy. Quest publishes a 2020 COVID notice.</p>
+        <p>Three pages close this, and they are in phase 1 for that reason. They are also the pages that
+        let the school, club and winery pages make claims that stand up.</p>
+      </div>
+      <div class="stack-sm">
+        <div class="scroller">
+          <table>
+            <caption>Trust signals on the live sites, 18 September 2026.</caption>
+            <thead><tr><th>Signal</th><th>Quest</th><th>Crown</th></tr></thead>
+            <tbody>
+              <tr><td>Accreditation number published</td><td><span class="pill crit">No</span></td><td><span class="pill ok">Yes</span></td></tr>
+              <tr><td>Child safety policy</td><td><span class="pill crit">No</span></td><td><span class="pill ok">Yes</span></td></tr>
+              <tr><td>Working With Children statement</td><td><span class="pill crit">No</span></td><td><span class="pill ok">Yes</span></td></tr>
+              <tr><td>Seatbelt information</td><td><span class="pill crit">No</span></td><td><span class="pill ok">Yes</span></td></tr>
+              <tr><td>Bus safety policy</td><td><span class="pill crit">No</span></td><td><span class="pill ok">Yes</span></td></tr>
+              <tr><td>Named school clients</td><td><span class="pill crit">No</span></td><td><span class="pill ok">150+</span></td></tr>
+              <tr><td>Reviews with schema</td><td><span class="pill crit">8, unmarked</span></td><td><span class="pill ok">Yes</span></td></tr>
+              <tr><td>Depot address on site</td><td><span class="pill ok">Yes</span></td><td><span class="pill ok">Yes</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="note">
+          <strong>One caveat.</strong> We publish Quest's accreditation details once Quest confirms them.
+          Nothing on this list gets written as a claim we haven't verified with the operator first.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="measurement" class="soft">
+  <div class="wrap stack">
+    <div class="sec-head">
+      <p class="eyebrow">11 &middot; Measurement</p>
+      <h2>Counting calls, quotes and where they came from.</h2>
+      <p class="sub">Installed in week one, because everything after it is measured against it.</p>
+    </div>
+    <div class="cols">
+      <div class="stack-sm">
+        <h3>What gets installed</h3>
+        <div class="kv">
+          <div><span class="k">GA4</span><span class="v">New property, AU time zone</span></div>
+          <div><span class="k">Tag Manager</span><span class="v">Container on both hosts</span></div>
+          <div><span class="k">Cross-domain</span><span class="v">Site &harr; booking portal</span></div>
+          <div><span class="k">Call tracking</span><span class="v">On the 1300 number</span></div>
+          <div><span class="k">Form events</span><span class="v">Start, submit, thank-you</span></div>
+          <div><span class="k">Search Console</span><span class="v">Verified, sitemap submitted</span></div>
+          <div><span class="k">Rank tracking</span><span class="v">Named keyword set</span></div>
+          <div><span class="k">Old UA tag</span><span class="v">Removed</span></div>
+        </div>
+      </div>
+      <div class="prose">
+        <h3>The conversions we count</h3>
+        <p>Four, and they are the ones Quest's office would recognise: a tapped phone call, a completed
+        on-site quote form, a quote started in the booking portal, and a direct email to
+        charter@questcoaches.com.au. Each is attributed back to the page, the search and the area it came
+        from, which is what makes the area and service pages accountable rather than decorative.</p>
+        <h3>What we can promise about targets</h3>
+        <p>We now have a real starting line from Ahrefs: one keyword, four visits a month, domain rating
+        0.3, three referring domains. What we do not have is Quest's own Search Console history or a single
+        month of working analytics, and at four visits a month third-party estimates are noisy. So the
+        numeric targets get set at the end of month one, against the first real data, and reviewed
+        quarterly. Any agency quoting traffic figures for this site today is guessing.</p>
+        <p>What is fair to say now: the site currently competes for one search term. The scope in §6 gives
+        it fifty-eight pages aimed at terms with published demand, including ten it has already ranked for
+        before. Getting back to where it was in August 2025 is not the goal. It is the floor.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="timeline">
+  <div class="wrap stack">
+    <div class="sec-head">
+      <p class="eyebrow">12 &middot; Timeline</p>
+      <h2>Twelve months, in the order that pays fastest.</h2>
+      <p class="sub">Fixes that cost nothing and earn immediately come first. The contested head terms are
+      a year-two conversation.</p>
+    </div>
+
+    <div>
+      <div class="phase">
+        <span class="when">Weeks 1&ndash;2<br>Quick wins</span>
+        <div class="what">
+          <h4>Stop the bleeding before the rebuild lands</h4>
+          <ul>
+            <li>Tappable phone numbers added to the current site</li>
+            <li>Phone-detection block removed</li>
+            <li>COVID banner and page retired, footer year fixed</li>
+            <li>Crown Bus Charter title corrected, missing titles and descriptions written</li>
+            <li>robots.txt and a sitemap published, Search Console verified</li>
+            <li>GA4, Tag Manager and call tracking live; old UA tag removed</li>
+            <li>Google Business Profile claimed and completed</li>
+          </ul>
+        </div>
+      </div>
+      <div class="phase">
+        <span class="when">Months 1&ndash;3<br>Phase 1</span>
+        <div class="what">
+          <h4>Rebuild and launch 30 pages</h4>
+          <ul>
+            <li>Responsive build on supported hosting, on the Quest brand</li>
+            <li>Homepage, Why Quest, fleet hub, reviews, FAQs, contact rewritten</li>
+            <li>Templates A, B and C built</li>
+            <li>Schools cluster (6 pages) and corporate cluster (5 pages) live &mdash; the two markets Quest names as primary</li>
+            <li>Four vehicle pages live, carrying the size searches</li>
+            <li>Three trust pages live: accreditation, child safety, drivers</li>
+            <li>301 map executed, index coverage monitored</li>
+          </ul>
+        </div>
+      </div>
+      <div class="phase">
+        <span class="when">Months 4&ndash;6<br>Phase 2</span>
+        <div class="what">
+          <h4>The open lanes and the map</h4>
+          <ul>
+            <li>Sporting club cluster (4 pages) &mdash; no competitor has one</li>
+            <li>Winery cluster (5 pages), including the business-to-business page for venues</li>
+            <li>Weddings, seniors and social club pages</li>
+            <li>Nine area pages, Eastern Suburbs and Pakenham first on the evidence in §4</li>
+            <li>Citation build and review generation running</li>
+            <li>First rankings review against the ten lost keywords</li>
+          </ul>
+        </div>
+      </div>
+      <div class="phase">
+        <span class="when">Months 7&ndash;12<br>Phase 3</span>
+        <div class="what">
+          <h4>Authority, answers and the head terms</h4>
+          <ul>
+            <li>Six guides, one a month, written to earn links and AI citations</li>
+            <li>Sustained authority work from three referring domains upward</li>
+            <li>Head terms attacked with the authority the clusters have built</li>
+            <li>Additional area pages only where data shows demand</li>
+            <li>Conversion rate work on the pages traffic is landing on</li>
+            <li>Quarterly strategy reviews; year-two plan set in month 11</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="investment" class="dark">
+  <div class="wrap stack">
+    <div class="sec-head">
+      <p class="eyebrow">Investment</p>
+      <h2>Two buckets, one build.</h2>
+      <p class="lede">The website is a one-off project. The search programme is monthly and compounding.
+      Deliverable volumes below are fixed by this scope; the commercial figures are set with Quest.</p>
+    </div>
+    <div class="cols">
+      <div class="stack-sm">
+        <h3>Website build &mdash; one-off</h3>
+        <div class="kv" style="--paper:var(--dark-soft);border-color:var(--dark-rule);background:var(--dark-rule)">
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Responsive rebuild</span><span class="v">Included</span></div>
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Core page rewrites</span><span class="v">9 pages</span></div>
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Templates</span><span class="v">3 built</span></div>
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Pages at launch</span><span class="v">30</span></div>
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Conversion layer</span><span class="v">Included</span></div>
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Migration &amp; 301s</span><span class="v">Included</span></div>
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Measurement setup</span><span class="v">Included</span></div>
+        </div>
+      </div>
+      <div class="stack-sm">
+        <h3>Search programme &mdash; monthly</h3>
+        <div class="kv" style="border-color:var(--dark-rule);background:var(--dark-rule)">
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Workstreams</span><span class="v">8 &middot; §9</span></div>
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">New pages, months 4&ndash;6</span><span class="v">21</span></div>
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Guides, months 7&ndash;12</span><span class="v">6</span></div>
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Local search &amp; GBP</span><span class="v">Ongoing</span></div>
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Authority building</span><span class="v">Ongoing</span></div>
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Reporting</span><span class="v">Monthly + quarterly</span></div>
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Minimum term</span><span class="v">6 months</span></div>
+        </div>
+      </div>
+    </div>
+    <div class="note" style="background:var(--dark-soft);border-color:var(--dark-rule);color:var(--dark-muted)">
+      <strong style="color:var(--on-dark)">Figures to be completed before this page goes to the client.</strong>
+      The build fee, the monthly retainer and any ad spend are set by Zib against this deliverable list.
+      Everything above is the scope those figures buy.
+    </div>
+  </div>
+</section>
+
+<section id="terms">
+  <div class="wrap stack">
+    <div class="sec-head">
+      <p class="eyebrow">Assumptions &amp; exclusions</p>
+      <h2>What this scope does and doesn't cover.</h2>
+    </div>
+    <div class="cols">
+      <div class="prose">
+        <h3>Assumptions</h3>
+        <ul style="padding-left:18px;display:flex;flex-direction:column;gap:6px">
+          <li>Quest provides depot, fleet and accreditation details, and approves any client named on the site.</li>
+          <li>The Coach Manager portal stays as the booking system. We integrate with it, we don't replace it.</li>
+          <li>Quest provides or approves vehicle photography. Stock imagery is a fallback, not a plan.</li>
+          <li>Domain, hosting, Google Business Profile and portal access are handed over in week one.</li>
+          <li>One Quest contact reviews and approves copy inside five working days per batch.</li>
+          <li>Ahrefs figures are estimates; Search Console access will replace them as the source of truth.</li>
+        </ul>
+        <h3>Not in this scope</h3>
+        <ul style="padding-left:18px;display:flex;flex-direction:column;gap:6px">
+          <li>Google Ads or paid social. Both are worth discussing once the pages exist to send traffic to.</li>
+          <li>Replacing or customising the booking portal beyond tracking and the quote handoff.</li>
+          <li>Fleet branding, print or vehicle livery.</li>
+          <li>A page per suburb. Nine area pages, extended only on evidence.</li>
+          <li>Email marketing and CRM, unless added later.</li>
+        </ul>
+      </div>
+      <div class="stack-sm">
+        <h3>Open questions for Quest</h3>
+        <div class="kv">
+          <div><span class="k">Brand</span><span class="v">Why does the site rank for <em>quinces coaches</em>?</span></div>
+          <div><span class="k">Brand</span><span class="v">Where did the Crown Bus Charter title come from?</span></div>
+          <div><span class="k">Accreditation</span><span class="v">Safe Transport Victoria number?</span></div>
+          <div><span class="k">Fleet</span><span class="v">Seatbelts and accessibility per vehicle?</span></div>
+          <div><span class="k">Coverage</span><span class="v">Real service boundary, and regional charges?</span></div>
+          <div><span class="k">Markets</span><span class="v">Split of revenue across schools, corporate, clubs, wineries?</span></div>
+          <div><span class="k">Capacity</span><span class="v">How much more work can the fleet take?</span></div>
+          <div><span class="k">Data</span><span class="v">Search Console and portal booking history?</span></div>
+        </div>
+        <div class="callout">
+          <h4>The honest summary</h4>
+          <p>Quest has a real business, a real depot, a real fleet and 37 years of trading behind a website
+          that ranks for one search. There is no penalty to appeal and no disaster to recover from. There
+          are 58 pages to build and a market where two of the four competitors have not bothered either.
+          That is a good position to start from.</p>
+        </div>
+      </div>
+    </div>
+    <div class="close-cta">
+      <a class="btn" href="tel:1300255287">Discuss the scope</a>
+      <a class="btn" style="background:transparent;color:var(--ink);border-color:var(--rule)" href="#sitemap">Back to the site map</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Quest Coaches &times; Zib Digital &middot; Website &amp; SEO scope of work &middot; September 2026</span>
+    <span>Prepared by <a href="https://www.zibdigital.com.au">Zib Digital</a> &middot; Commercial in confidence</span>
+  </div>
+</footer>
+
+</body>
+</html>
