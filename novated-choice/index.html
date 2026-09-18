@@ -265,6 +265,35 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
   .hero-points  { order: 5; margin-top: 4px; }
 }
 
+/* On a laptop the viewport is wide but short — a 13" MacBook leaves
+   roughly 790px once browser chrome is taken out, which pushed the quiz
+   card's button below the fold. These key off height, not width, so a
+   tall desktop monitor is untouched. */
+@media (min-width: 981px) and (max-height: 900px) {
+  .hero { padding-top: clamp(20px, 3vh, 40px); padding-bottom: clamp(24px, 4vh, 48px); }
+  .hero h1 { font-size: clamp(30px, 3.6vw, 46px); }
+  .hero-sub { margin-top: 14px; font-size: 16px; }
+  .hero-points { margin-top: 18px; gap: 8px; }
+  .hero-points li { font-size: 14.5px; }
+  .hero-trust { margin-bottom: 16px; }
+  .qz-head { padding-top: 15px; padding-bottom: 14px; }
+  .qz-head .qz-title { font-size: 18px; }
+  .qz-progress { margin-top: 12px; }
+  .qz-body { padding-top: 18px; padding-bottom: 18px; }
+  .qz-sublabel { margin-top: 12px; }
+  .qz-opts { gap: 8px; }
+  .topbar .row { height: 36px; }
+}
+@media (min-width: 981px) and (max-height: 780px) {
+  .hero h1 { font-size: clamp(28px, 3.2vw, 40px); }
+  .hero-points { display: none; }   /* repeated verbatim further down the page */
+  .hero-sub { font-size: 15.5px; }
+  .qz-opt { padding: 12px 15px; }
+  .qz-chip { padding: 7px 14px; }
+  .qz-actions { margin-top: 16px; }
+  .btn { height: 52px; }
+}
+
 /* ─── Hero quiz card (the conversion engine) ────────────────────── */
 .qz-card {
   background: #fff; border: 1px solid var(--line); border-radius: 24px;
@@ -274,10 +303,11 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
 .qz-head { background: var(--grad-deep); color: #fff; padding: 22px clamp(22px, 3vw, 32px) 20px; }
 .qz-head .qz-kicker { font-family: var(--inter); font-size: 11.5px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.72); }
 .qz-head .qz-title { font-size: 20px; font-weight: 600; margin-top: 7px; letter-spacing: -0.032em; line-height: 1.15; }
-.qz-bar { height: 4px; border-radius: 99px; background: rgba(255,255,255,0.22); overflow: hidden; margin-top: 16px; }
-.qz-bar[hidden], .qz-steplabel[hidden] { display: none; }
+.qz-progress { display: flex; align-items: center; gap: 14px; margin-top: 15px; }
+.qz-progress[hidden] { display: none; }
+.qz-bar { flex: 1; height: 4px; border-radius: 99px; background: rgba(255,255,255,0.22); overflow: hidden; }
 .qz-bar span { display: block; height: 100%; width: 0%; border-radius: 99px; background: #fff; transition: width 420ms var(--ease); }
-.qz-steplabel { font-family: var(--inter); font-size: 11.5px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.72); margin-top: 10px; display: block; }
+.qz-steplabel { font-family: var(--inter); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.72); white-space: nowrap; }
 
 .qz-body { padding: clamp(22px, 3vw, 32px); }
 .qz-cover-lead { font-size: 15px; line-height: 1.5; color: var(--muted); }
@@ -286,6 +316,10 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
 .qz-cover .qz-actions .btn { width: 100%; flex: none; }
 .qz-cover-meta { list-style: none; display: grid; gap: 8px; margin-top: 18px; }
 .qz-cover-meta li { display: flex; align-items: center; gap: 9px; font-size: 13.5px; color: var(--muted); }
+.qz-next { list-style: none; display: grid; gap: 11px; padding: 16px 18px; background: var(--wash-2); border-radius: 14px; }
+.qz-next li { display: flex; align-items: flex-start; gap: 10px; font-size: 14.5px; line-height: 1.45; color: var(--ink-2); }
+.qz-next strong { font-weight: 600; color: var(--ink); }
+.qz-next svg { flex: 0 0 auto; width: 14px; height: 14px; stroke: var(--green); fill: none; stroke-width: 3; margin-top: 4px; }
 .qz-cover-meta svg { flex: 0 0 auto; width: 14px; height: 14px; stroke: var(--green); fill: none; stroke-width: 2; }
 /* The card grows as the quiz opens; easing that keeps it from snapping. */
 .qz-card { transition: box-shadow 420ms var(--ease); }
@@ -327,6 +361,9 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
 }
 .qz-chip:hover { border-color: var(--green-bright); color: var(--green); }
 .qz-chip.sel { background: var(--green); border-color: var(--green); color: #fff; }
+.qz-chip-other { border-style: dashed; color: var(--muted); }
+.qz-chip-other:hover { border-style: solid; }
+.qz-chip-other.sel { border-style: solid; }
 
 .qz-input {
   width: 100%; height: 54px; padding: 0 18px; border: 1.5px solid var(--line); border-radius: 13px;
@@ -335,10 +372,13 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
 .qz-input:focus { outline: 0; border-color: var(--green); box-shadow: 0 0 0 4px rgba(29,150,71,0.1); }
 .qz-input::placeholder { color: var(--muted-2); }
 .qz-fields { display: grid; gap: 13px; margin-top: 20px; }
+/* An explicit display beats the UA stylesheet's [hidden] rule, so say it. */
+.qz-fields[hidden], .qz-opts[hidden], .qz-chips[hidden] { display: none; }
 .qz-fields.two { grid-template-columns: 1fr 1fr; }
 @media (max-width: 330px) { .qz-fields.two { grid-template-columns: 1fr; } }
 .qz-field label { display: block; font-family: var(--inter); font-size: 11.5px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 7px; }
 .qz-sublabel { display: block; font-family: var(--inter); font-size: 11.5px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 16px 0 0; }
+.qz-step > .qz-sublabel:first-child { margin-top: 0; }
 /* The sublabel already spaces the group; drop the grid's own top margin. */
 .qz-sublabel + .qz-opts { margin-top: 8px; }
 
@@ -737,112 +777,92 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
         <div class="qz-head">
           <span class="qz-kicker" id="qzKicker">60-second savings estimate</span>
           <div class="qz-title" id="qzTitle">Let's start with the fun part</div>
-          <div class="qz-bar" id="qzBar" hidden><span id="qzFill"></span></div>
-          <span class="qz-steplabel" id="qzLabel" hidden>Step 1 of 6</span>
+          <div class="qz-progress" id="qzProgress" hidden>
+            <div class="qz-bar" id="qzBar"><span id="qzFill"></span></div>
+            <span class="qz-steplabel" id="qzLabel">Step 1 of 3</span>
+          </div>
         </div>
 
         <div class="qz-body">
 
-          <!-- STEP 0 — compact cover. The full step 1 filled the whole
-               mobile fold, which reads as work before the value prop has
-               landed. A small card plus one button keeps the hero visible
-               and turns starting into a deliberate choice. -->
+          <!-- STEP 0 — compact cover. The full first question filled the
+               whole mobile fold, which reads as work before the value
+               proposition has landed. -->
           <div class="qz-step qz-cover" data-step="0">
-            <p class="qz-cover-lead">Six quick questions, starting with the fun one — <strong>the car you've always wanted</strong>. No credit check, no obligation.</p>
+            <p class="qz-cover-lead">Two quick sets of questions — starting with the fun one, <strong>the car you've always wanted</strong>. No credit check, no obligation.</p>
             <div class="qz-actions">
               <button type="button" class="btn btn-primary" id="qzStart">Start now <span class="arr">&rarr;</span></button>
             </div>
             <ul class="qz-cover-meta">
-              <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Takes about 60 seconds</li>
+              <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>About 30 seconds</li>
               <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 13 4 4L19 7"/></svg>Written quote the same day</li>
             </ul>
           </div>
 
-          <!-- STEP 1 — dream car (emotional hook, one tap, zero typing) -->
+          <!-- SET 1 — the car and what it's worth. -->
           <div class="qz-step" data-step="1" hidden>
-            <div class="qz-q">What car have you always wanted?</div>
-            <p class="qz-hint">Pick one, or type anything you like. There's no wrong answer — and it doesn't lock you in.</p>
+            <span class="qz-sublabel">The car you've always wanted</span>
             <div class="qz-chips" id="qzCars">
               <button type="button" class="qz-chip" data-car="Tesla Model 3">Tesla Model 3</button>
               <button type="button" class="qz-chip" data-car="Tesla Model Y">Tesla Model Y</button>
               <button type="button" class="qz-chip" data-car="Ford Ranger">Ford Ranger</button>
               <button type="button" class="qz-chip" data-car="Toyota RAV4">Toyota RAV4</button>
               <button type="button" class="qz-chip" data-car="BYD Sealion 7">BYD Sealion 7</button>
-              <button type="button" class="qz-chip" data-car="Mazda CX-60">Mazda CX-60</button>
+              <button type="button" class="qz-chip qz-chip-other" id="qzCarOtherToggle">Something else&hellip;</button>
             </div>
-            <div class="qz-fields" style="margin-top:14px">
+            <div class="qz-fields" id="qzCarOtherWrap" hidden>
               <div class="qz-field">
-                <label for="qzCarOther">Or tell us yourself</label>
-                <input class="qz-input" type="text" id="qzCarOther" placeholder="e.g. BMW i4, Prado, something fast…" autocomplete="off">
+                <input class="qz-input" type="text" id="qzCarOther" placeholder="e.g. BMW i4, Prado, something fast&hellip;" autocomplete="off">
               </div>
+            </div>
+            <span class="qz-sublabel">Roughly what's it worth?</span>
+            <div class="qz-opts two" data-group="budget">
+              <button type="button" class="qz-opt" data-val="Under $45,000" data-price="38000">
+                <span class="dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
+                <span class="oi"><b>Under $45k</b></span>
+              </button>
+              <button type="button" class="qz-opt" data-val="$45,000 – $75,000" data-price="58000">
+                <span class="dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
+                <span class="oi"><b>$45k – $75k</b></span>
+              </button>
+              <button type="button" class="qz-opt" data-val="$75,000 – $95,000" data-price="84000">
+                <span class="dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
+                <span class="oi"><b>$75k – $95k</b></span>
+              </button>
+              <button type="button" class="qz-opt" data-val="Over $95,000" data-price="110000">
+                <span class="dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
+                <span class="oi"><b>$95k+</b></span>
+              </button>
             </div>
             <div class="qz-actions">
               <button type="button" class="qz-back" data-back>&larr; Back</button>
               <button type="button" class="btn btn-primary" data-next>Continue <span class="arr">&rarr;</span></button>
             </div>
-            <p class="qz-err" id="qzErr1">Pick a car or type one in to keep going.</p>
-            <div class="qz-foot">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg>
-              <span>No obligation, no credit check, and we never sell your details.</span>
-            </div>
+            <p class="qz-err" id="qzErr1">Pick a car and a price range to keep going.</p>
           </div>
 
-          <!-- STEP 2 — budget band, with live savings feedback -->
+          <!-- SET 2 — the two questions that decide lead quality. -->
           <div class="qz-step" data-step="2" hidden>
-            <div class="qz-q">Roughly what's it worth?</div>
-            <p class="qz-hint">A ballpark is plenty — we'll pin down the real number on the call.</p>
-            <div class="qz-opts two" data-group="budget">
-              <button type="button" class="qz-opt" data-val="Under $45,000" data-price="38000">
-                <span class="dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
-                <span class="oi"><b>Under $45k</b><small>Hatch, small SUV, used</small></span>
-              </button>
-              <button type="button" class="qz-opt" data-val="$45,000 – $75,000" data-price="58000">
-                <span class="dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
-                <span class="oi"><b>$45k – $75k</b><small>Most new cars and EVs</small></span>
-              </button>
-              <button type="button" class="qz-opt" data-val="$75,000 – $95,000" data-price="84000">
-                <span class="dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
-                <span class="oi"><b>$75k – $95k</b><small>Large SUV, dual cab, performance</small></span>
-              </button>
-              <button type="button" class="qz-opt" data-val="Over $95,000" data-price="110000">
-                <span class="dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
-                <span class="oi"><b>$95k+</b><small>Prestige and European</small></span>
-              </button>
-            </div>
-            <div class="qz-actions">
-              <button type="button" class="qz-back" data-back>&larr; Back</button>
-            </div>
-          </div>
-
-          <!-- STEP 3 — purchase phase (THE lead-quality question) -->
-          <div class="qz-step" data-step="3" hidden>
-            <div class="qz-q">Where are you up to?</div>
-            <p class="qz-hint">This tells us whether to send numbers or start sourcing the car.</p>
-            <div class="qz-opts" data-group="phase">
+            <span class="qz-sublabel">How far along are you?</span>
+            <div class="qz-opts two" data-group="phase">
               <button type="button" class="qz-opt" data-val="Ready now — chosen the car" data-score="4">
                 <span class="dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
-                <span class="oi"><b>I know the car I want</b><small>Ready to move as soon as the numbers stack up</small></span>
+                <span class="oi"><b>I know the car I want</b></span>
               </button>
               <button type="button" class="qz-opt" data-val="Comparing — shortlisted a few" data-score="3">
                 <span class="dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
-                <span class="oi"><b>I've shortlisted a few</b><small>Test driving and comparing options</small></span>
+                <span class="oi"><b>Shortlisted a few</b></span>
               </button>
               <button type="button" class="qz-opt" data-val="Early — started looking" data-score="2">
                 <span class="dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
-                <span class="oi"><b>Just started looking</b><small>Working out what I can actually get</small></span>
+                <span class="oi"><b>Just started looking</b></span>
               </button>
               <button type="button" class="qz-opt" data-val="Researching savings only" data-score="1">
                 <span class="dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
-                <span class="oi"><b>Just want to see the savings</b><small>Curious whether this beats a car loan</small></span>
+                <span class="oi"><b>Just seeing the savings</b></span>
               </button>
             </div>
-            <div class="qz-actions"><button type="button" class="qz-back" data-back>&larr; Back</button></div>
-          </div>
-
-          <!-- STEP 4 — timing -->
-          <div class="qz-step" data-step="4" hidden>
-            <div class="qz-q">When do you want to be driving it?</div>
-            <p class="qz-hint">Most leases settle within two weeks of approval.</p>
+            <span class="qz-sublabel">When do you want to be driving it?</span>
             <div class="qz-opts two" data-group="timing">
               <button type="button" class="qz-opt" data-val="ASAP" data-score="4">
                 <span class="dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
@@ -861,13 +881,68 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
                 <span class="oi"><b>Not sure yet</b></span>
               </button>
             </div>
-            <div class="qz-actions"><button type="button" class="qz-back" data-back>&larr; Back</button></div>
+            <div class="qz-actions">
+              <button type="button" class="qz-back" data-back>&larr; Back</button>
+              <button type="button" class="btn btn-primary" data-next>Continue <span class="arr">&rarr;</span></button>
+            </div>
+            <p class="qz-err" id="qzErr2">Answer both to keep going.</p>
           </div>
 
-          <!-- STEP 5 — employment + salary (eligibility + savings maths) -->
+          <!-- CONTACT — the lead is captured here, before the optional
+               detail, so someone who stops now is still a lead. -->
+          <div class="qz-step" data-step="3" hidden>
+            <p class="qz-hint" id="qzCapQ">You'll get your written quote today, from one consultant who stays with you — not a call centre.</p>
+            <div class="qz-fields two">
+              <div class="qz-field">
+                <label for="qzFirst">First name</label>
+                <input class="qz-input" type="text" id="qzFirst" placeholder="Jess" autocomplete="given-name" required>
+              </div>
+              <div class="qz-field">
+                <label for="qzLast">Last name</label>
+                <input class="qz-input" type="text" id="qzLast" placeholder="Taylor" autocomplete="family-name">
+              </div>
+            </div>
+            <div class="qz-fields two">
+              <div class="qz-field">
+                <label for="qzEmail">Email</label>
+                <input class="qz-input" type="email" id="qzEmail" placeholder="you@work.com.au" autocomplete="email" required>
+              </div>
+              <div class="qz-field">
+                <label for="qzPhone">Mobile</label>
+                <input class="qz-input" type="tel" id="qzPhone" placeholder="0400 000 000" autocomplete="tel" required>
+              </div>
+            </div>
+            <div class="qz-actions">
+              <button type="button" class="qz-back" data-back>&larr; Back</button>
+              <button type="button" class="btn btn-primary" id="qzSubmit">Get my quote <span class="arr">&rarr;</span></button>
+            </div>
+            <p class="qz-err" id="qzErr3">Please add your name, a valid email and a mobile number.</p>
+            <div class="qz-foot">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg>
+              <span>Your details go to one Novated Choice consultant. No credit check, and no third-party spam — ever.</span>
+            </div>
+          </div>
+
+          <!-- OFFER — the lead is already in. Everything past here is
+               optional detail that sharpens the quote. -->
+          <div class="qz-step" data-step="4" hidden>
+            <ul class="qz-next">
+              <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 13 4 4L19 7"/></svg><span>Your details are with us — <strong>nothing else is required</strong></span></li>
+              <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 13 4 4L19 7"/></svg><span>A written quote lands in your inbox <strong>today</strong></span></li>
+              <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 13 4 4L19 7"/></svg><span>One consultant calls you — not a call centre</span></li>
+            </ul>
+            <div class="qz-q" style="margin-top:20px">Want a sharper number?</div>
+            <p class="qz-hint">Two more questions — your employment and salary band — and we can price it against your actual pay instead of an average. About ten seconds.</p>
+            <div class="qz-actions">
+              <button type="button" class="btn btn-primary" id="qzRefine">Yes, sharpen it <span class="arr">&rarr;</span></button>
+            </div>
+            <div class="qz-actions" style="margin-top:8px">
+              <button type="button" class="qz-back" id="qzSkip">No thanks, send it as is</button>
+            </div>
+          </div>
+
+          <!-- OPTIONAL DETAIL -->
           <div class="qz-step" data-step="5" hidden>
-            <div class="qz-q">Last bit — so the numbers are yours</div>
-            <p class="qz-hint">Your income sets the saving.</p>
             <span class="qz-sublabel">Your employment</span>
             <div class="qz-opts two" data-group="employment">
               <button type="button" class="qz-opt" data-val="Permanent PAYG (full or part-time)" data-eligible="1">
@@ -904,48 +979,13 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
             </div>
             <div class="qz-actions">
               <button type="button" class="qz-back" data-back>&larr; Back</button>
-              <button type="button" class="btn btn-primary" data-next>See my estimate <span class="arr">&rarr;</span></button>
+              <button type="button" class="btn btn-primary" id="qzRefineDone">Update my quote <span class="arr">&rarr;</span></button>
             </div>
-            <p class="qz-err" id="qzErr5">Choose your employment type and salary range to see your estimate.</p>
-          </div>
-
-          <!-- STEP 6 — contact capture -->
-          <div class="qz-step" data-step="6" hidden>
-            <div class="qz-q" id="qzCapQ">Where should we send it?</div>
-            <p class="qz-hint">You'll get your written estimate today, and a call from one person who stays with you the whole way — not a call centre.</p>
-            <div class="qz-fields two">
-              <div class="qz-field">
-                <label for="qzFirst">First name</label>
-                <input class="qz-input" type="text" id="qzFirst" placeholder="Jess" autocomplete="given-name" required>
-              </div>
-              <div class="qz-field">
-                <label for="qzLast">Last name</label>
-                <input class="qz-input" type="text" id="qzLast" placeholder="Taylor" autocomplete="family-name">
-              </div>
-            </div>
-            <div class="qz-fields two">
-              <div class="qz-field">
-                <label for="qzEmail">Email</label>
-                <input class="qz-input" type="email" id="qzEmail" placeholder="you@work.com.au" autocomplete="email" required>
-              </div>
-              <div class="qz-field">
-                <label for="qzPhone">Mobile</label>
-                <input class="qz-input" type="tel" id="qzPhone" placeholder="0400 000 000" autocomplete="tel" required>
-              </div>
-            </div>
-            <div class="qz-actions">
-              <button type="button" class="qz-back" data-back>&larr; Back</button>
-              <button type="button" class="btn btn-primary" id="qzSubmit">Show my savings <span class="arr">&rarr;</span></button>
-            </div>
-            <p class="qz-err" id="qzErr6">Please add your name, a valid email and a mobile number.</p>
-            <div class="qz-foot">
-              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg>
-              <span>Your details go to one Novated Choice consultant. No credit check, no obligation, and no third-party spam — ever.</span>
-            </div>
+            <p class="qz-err" id="qzErr5">Choose your employment type and salary range.</p>
           </div>
 
           <!-- RESULT -->
-          <div class="qz-step" data-step="7" hidden>
+          <div class="qz-step" data-step="6" hidden>
             <span class="eyebrow" id="qzResultEyebrow">What happens next</span>
             <div class="qz-result-fig" id="qzFig">$—
               <small>estimated total saving vs a car loan over 5 years</small>
@@ -959,7 +999,6 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
               <span id="qzResultNote">Your consultant will confirm exact figures against your salary and chosen vehicle. Nothing here is personal financial advice.</span>
             </div>
           </div>
-
         </div>
       </div>
 
@@ -1693,36 +1732,56 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
 
   /* ══════════════════════════════════════════════════════════════
      QUIZ
-     ══════════════════════════════════════════════════════════════ */
-  var TOTAL   = 6;
-  var current = 1;
-  var answers = {};
-  var meta    = { price: 58000, rate: 0.32, ev: false, score: 0 };
 
-  var EV_CARS = ["Tesla Model 3", "Tesla Model Y", "BYD Sealion 7", "Kia EV5"];
+     Three core steps, then everything else is optional:
+       1  the car and what it's worth
+       2  how far along they are, and when
+       3  contact  — the lead is sent HERE, so someone who stops
+                     immediately after is still a lead
+       4  the offer to sharpen the quote
+       5  employment and salary (optional)
+       6  result
+
+     Steps 1, 2 and 5 carry two question groups each and advance on their
+     own once both are answered; the Continue button is there for anyone
+     who does not notice.
+     ══════════════════════════════════════════════════════════════ */
+  var CORE    = 3;               // steps counted in the progress label
+  var current = 0;
+  var answers = {};
+  var meta    = { price: 58000, rate: 0.32, ev: false, score: 0, refined: false };
+
+  var EV_CARS = ["Tesla Model 3", "Tesla Model Y", "BYD Sealion 7"];
 
   var qzFill  = $("#qzFill");
   var qzLabel = $("#qzLabel");
   var qzTitle = $("#qzTitle");
+  var qzBody  = $(".qz-body");
+  var lockedHeight = 0;
 
   var TITLES = {
     0: "See what your dream car really costs",
-    2: "Roughly what are we pricing?",
-    3: "How far along are you?",
-    4: "When do you want the keys?",
-    1: "First, the fun one",
-    5: "Now for your actual numbers",
-    6: "Where should we send it?",
-    7: SHOW_DOLLAR_ESTIMATE ? "Here's what you could save" : "You're all set"
+    1: "First, the fun part",
+    2: "Where you're up to",
+    3: "Where should we send it?",
+    4: "You're in — quote on its way",
+    5: "One last detail",
+    6: SHOW_DOLLAR_ESTIMATE ? "Here's what you could save" : "You're all set"
   };
 
-  var qzBody = $(".qz-body");
-  var qzBar  = $("#qzBar");
-  var lockedHeight = 0;
+  /* Which groups each step needs before it can advance on its own. */
+  var STEP_GROUPS = { 1: ["car", "budget"], 2: ["phase", "timing"], 5: ["employment", "salary"] };
+  // Step 5 is deliberately absent: completing it runs finishRefine(), which
+  // sends the enriched lead before showing the result.
+  var NEXT_STEP   = { 1: 2, 2: 3 };
 
-  /* Tallest question, measured by briefly showing each one. Every swap
-     happens inside this single synchronous task, so the browser never
-     paints an intermediate state. */
+  function stepComplete(step) {
+    return (STEP_GROUPS[step] || []).every(function (k) { return !!answers[k]; });
+  }
+
+  /* Tallest step, measured by briefly showing each one. Every swap happens
+     inside this single synchronous task, so the browser never paints an
+     intermediate state. */
   function measureTallest() {
     if (!qzBody) return 0;
     var steps = $$(".qz-step");
@@ -1767,33 +1826,58 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
       }
     }
 
-    // The cover carries no progress chrome — there is nothing to show yet.
     var onCover = step === 0;
-    if (qzBar)   qzBar.hidden = onCover;
-    if (qzLabel) qzLabel.hidden = onCover;
+    var progress = $("#qzProgress");
+    if (progress) progress.hidden = onCover;
 
-    var pct = Math.min(100, Math.round(((step - 1) / TOTAL) * 100));
-    if (step === 7) pct = 100;
-    if (qzFill)  qzFill.style.width = pct + "%";
     if (qzTitle) qzTitle.textContent = TITLES[step] || "";
-    if (qzLabel) qzLabel.textContent = step === 7 ? "Complete" : "Step " + step + " of " + TOTAL;
+    if (qzLabel) {
+      // Past the contact step the progress bar is full: the required part
+      // is done and anything further is the driver's choice.
+      if (step <= CORE) {
+        qzLabel.textContent = "Step " + step + " of " + CORE;
+        if (qzFill) qzFill.style.width = Math.round(((step - 1) / CORE) * 100) + "%";
+      } else {
+        qzLabel.textContent = step === 6 ? "Complete" : "Optional";
+        if (qzFill) qzFill.style.width = "100%";
+      }
+    }
+
     var kicker = $("#qzKicker");
-    if (kicker && step === 7 && !SHOW_DOLLAR_ESTIMATE) kicker.textContent = "Your personalised quote";
+    if (kicker) {
+      kicker.textContent = step >= 4
+        ? (SHOW_DOLLAR_ESTIMATE && step === 6 ? "Your indicative saving" : "Your personalised quote")
+        : "60-second savings estimate";
+    }
+
     $$(".qz-err").forEach(function (e) { e.classList.remove("show"); });
     keepCardInView();
   }
 
-  /* Scroll the card back under the header if it has drifted off screen. */
+  /* Keep the whole card on screen — including its button.
+
+     Checking only the top was not enough: on a short laptop viewport the
+     card can start comfortably below the header and still run its CTA off
+     the bottom of the screen, with nothing to correct it. */
   function keepCardInView() {
     var card = $("#quiz");
     if (!card) return;
-    var top = card.getBoundingClientRect().top;
+    var r = card.getBoundingClientRect();
     var headerH = 90;
-    if (top < headerH || top > window.innerHeight * 0.45) {
-      var y = window.scrollY + top - headerH;
-      var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      window.scrollTo({ top: Math.max(0, y), behavior: reduce ? "auto" : "smooth" });
+    var avail = window.innerHeight - headerH;
+    var clipped = r.top < headerH || r.bottom > window.innerHeight;
+    if (!clipped) return;
+
+    var y;
+    if (r.height <= avail) {
+      // Fits — sit it in the middle of the space below the header.
+      y = window.scrollY + r.top - headerH - (avail - r.height) / 2;
+    } else {
+      // Taller than the screen — pin the top so the question reads first.
+      y = window.scrollY + r.top - headerH;
     }
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: Math.max(0, y), behavior: reduce ? "auto" : "smooth" });
   }
 
   function err(id) { var e = $(id); if (e) e.classList.add("show"); }
@@ -1814,32 +1898,59 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
   var startBtn = $("#qzStart");
   if (startBtn) startBtn.addEventListener("click", function () { show(1); });
 
-  /* ── Step 1: dream car ─────────────────────────────────────── */
+  /* Advance once every group on this step has an answer. */
+  function maybeAdvance(step) {
+    if (!stepComplete(step)) return;
+    if (step === 5) {
+      setTimeout(function () { if (current === 5) finishRefine(); }, 260);
+      return;
+    }
+    var to = NEXT_STEP[step];
+    if (to) setTimeout(function () { if (current === step) show(to); }, 260);
+  }
+
+  /* ── The car ───────────────────────────────────────────────── */
   var carOther = $("#qzCarOther");
-  $$("#qzCars .qz-chip").forEach(function (chip) {
+  var carOtherWrap = $("#qzCarOtherWrap");
+  var carOtherToggle = $("#qzCarOtherToggle");
+
+  function clearCarChips() {
+    $$("#qzCars .qz-chip").forEach(function (c) { c.classList.remove("sel"); });
+  }
+
+  $$("#qzCars .qz-chip[data-car]").forEach(function (chip) {
     chip.addEventListener("click", function () {
       var wasSel = chip.classList.contains("sel");
-      $$("#qzCars .qz-chip").forEach(function (c) { c.classList.remove("sel"); });
+      clearCarChips();
+      if (carOtherWrap) carOtherWrap.hidden = true;
+      if (carOther) carOther.value = "";
       if (wasSel) { answers.car = ""; return; }
       chip.classList.add("sel");
       answers.car = chip.getAttribute("data-car");
       meta.ev = EV_CARS.indexOf(answers.car) !== -1;
-      if (carOther) carOther.value = "";
-      setTimeout(function () { show(2); }, 210);
+      maybeAdvance(1);
     });
   });
-  if (carOther) {
-    carOther.addEventListener("input", function () {
-      if (carOther.value.trim()) {
-        $$("#qzCars .qz-chip").forEach(function (c) { c.classList.remove("sel"); });
-        answers.car = carOther.value.trim();
-        meta.ev = /tesla|byd|polestar|ioniq|ev\b|e-?tron|leaf|electric|kona electric|mg4|zeekr|xpeng/i.test(answers.car);
-      }
+
+  if (carOtherToggle) {
+    carOtherToggle.addEventListener("click", function () {
+      clearCarChips();
+      carOtherToggle.classList.add("sel");
+      if (carOtherWrap) carOtherWrap.hidden = false;
+      answers.car = (carOther && carOther.value.trim()) || "";
+      if (carOther) carOther.focus({ preventScroll: true });
     });
   }
 
-  /* ── Generic single-select groups ──────────────────────────── */
-  function wireGroup(group, key, onPick, advanceTo) {
+  if (carOther) {
+    carOther.addEventListener("input", function () {
+      answers.car = carOther.value.trim();
+      meta.ev = /tesla|byd|polestar|ioniq|ev\b|e-?tron|leaf|electric|kona electric|mg4|zeekr|xpeng/i.test(answers.car);
+    });
+  }
+
+  /* ── Single-select groups ──────────────────────────────────── */
+  function wireGroup(group, key, onPick, step) {
     var wrap = $('[data-group="' + group + '"]');
     if (!wrap) return;
     $$(".qz-opt", wrap).forEach(function (opt) {
@@ -1848,48 +1959,50 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
         opt.classList.add("sel");
         answers[key] = opt.getAttribute("data-val");
         if (onPick) onPick(opt);
-        if (advanceTo) setTimeout(function () { show(advanceTo); }, 210);
+        maybeAdvance(step);
       });
     });
   }
 
   wireGroup("budget", "budget", function (o) {
     meta.price = +o.getAttribute("data-price") || meta.price;
-  }, 3);
+  }, 1);
 
   wireGroup("phase", "phase", function (o) {
-    meta.score += +o.getAttribute("data-score") || 0;
-  }, 4);
+    meta.score = (meta.score || 0);
+    meta.phaseScore = +o.getAttribute("data-score") || 0;
+  }, 2);
 
   wireGroup("timing", "timing", function (o) {
-    meta.score += +o.getAttribute("data-score") || 0;
-  }, 5);
+    meta.timingScore = +o.getAttribute("data-score") || 0;
+  }, 2);
 
   wireGroup("employment", "employment", function (o) {
     meta.eligible = o.getAttribute("data-eligible") === "1";
-  });
+  }, 5);
 
   wireGroup("salary", "salary", function (o) {
     meta.rate = parseFloat(o.getAttribute("data-rate")) || meta.rate;
-  });
+  }, 5);
+
+  function intentScore() {
+    return (meta.phaseScore || 0) + (meta.timingScore || 0);
+  }
 
   /* ── Next / back ───────────────────────────────────────────── */
   $$("[data-next]").forEach(function (btn) {
     btn.addEventListener("click", function () {
-      if (current === 1) {
-        var typed = carOther && carOther.value.trim();
-        if (typed) answers.car = typed;
-        if (!answers.car) { err("#qzErr1"); return; }
-        show(2);
-      } else if (current === 5) {
-        if (!answers.employment || !answers.salary) { err("#qzErr5"); return; }
-        show(6);
-      }
+      if (!stepComplete(current)) { err("#qzErr" + current); return; }
+      var to = NEXT_STEP[current];
+      if (to) show(to);
     });
   });
 
   $$("[data-back]").forEach(function (btn) {
-    btn.addEventListener("click", function () { show(Math.max(0, current - 1)); });
+    btn.addEventListener("click", function () {
+      // Back from the optional detail returns to the offer, not the form.
+      show(current === 5 ? 4 : Math.max(0, current - 1));
+    });
   });
 
   /* ══ Savings model ═══════════════════════════════════════════
@@ -1931,16 +2044,17 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
     var fig = $("#qzFig");
     if (fig) {
       if (SHOW_DOLLAR_ESTIMATE) {
+        fig.classList.remove("qz-result-words");
         fig.innerHTML = money(total) +
           '<small>estimated total saving over five years, against a car loan' +
           (meta.fbtExempt ? ' &middot; includes the FBT exemption on eligible EVs' : '') +
           '</small>';
       } else {
         fig.classList.add("qz-result-words");
-        fig.innerHTML = "You're a strong fit." +
+        fig.innerHTML = (meta.refined ? "Your quote is being built." : "You're a strong fit.") +
           '<small>' + (meta.fbtExempt
             ? 'Your car is an eligible EV, so the FBT exemption is on the table — usually the single biggest saving available.'
-            : 'We\u2019ll put exact numbers against your salary and your car, and send them through today.') +
+            : 'We’ll put exact numbers against your car and send them through today.') +
           '</small>';
       }
     }
@@ -1952,6 +2066,7 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
         ["Where you're up to", answers.phase || "—"],
         ["Timeframe", answers.timing || "—"]
       ];
+      if (meta.refined && answers.salary) rows.push(["Salary band", answers.salary]);
       recap.innerHTML = rows.map(function (r) {
         return '<div class="rr"><dt>' + r[0] + "</dt><dd>" + r[1] + "</dd></div>";
       }).join("") + (SHOW_DOLLAR_ESTIMATE
@@ -1967,29 +2082,67 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
         "not personal financial advice. Your consultant will confirm exact figures against " +
         "your salary and chosen vehicle.";
     }
-    var capQ = $("#qzCapQ");
-    if (capQ && !meta.eligible) {
-      // Not a red light — casual, contract and self-employed people can
-      // still be worth a conversation, so we soften rather than block.
-      capQ.textContent = "Where should we send it?";
+  }
+
+  /* ── Lead delivery ─────────────────────────────────────────── */
+  function payload(stage) {
+    return {
+      stage: stage,                          // "lead" on capture, "enriched" after the optional detail
+      firstname: answers.firstname || "",
+      lastname:  answers.lastname || "",
+      email:     answers.email || "",
+      phone:     answers.phone || "",
+      car:       answers.car || "",
+      budget:    answers.budget || "",
+      phase:     answers.phase || "",
+      timing:    answers.timing || "",
+      employment: answers.employment || "",
+      salary:    answers.salary || "",
+      is_ev:     meta.ev,
+      eligible:  !!meta.eligible,
+      intent_score: intentScore(),           // 2 = cold, 8 = ready to transact
+      estimated_saving: calcSaving(),
+      source:    "novated-leasing-lp",
+      page:      location.pathname
+    };
+  }
+
+  function sendLead(stage) {
+    var body = payload(stage);
+    if (window.fetch) {
+      fetch(LEAD_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+      }).catch(function () {
+        // Lead capture must never block the flow.
+        console.warn("[novated] lead POST failed — payload:", body);
+      });
+    } else {
+      console.warn("[novated] no fetch — payload:", body);
+    }
+    if (window.dataLayer) {
+      window.dataLayer.push({ event: "novated_lead", stage: stage, intent_score: body.intent_score, is_ev: meta.ev });
+    }
+    if (stage === "lead") {
+      if (window.fbq)  { window.fbq("track", "Lead", { content_name: answers.car || "" }); }
+      if (window.gtag) { window.gtag("event", "generate_lead", { value: body.estimated_saving, currency: "AUD" }); }
     }
   }
 
-  /* ── Submit ────────────────────────────────────────────────── */
+  /* ── Contact submit: the lead goes out here ────────────────── */
   var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
   var submit  = $("#qzSubmit");
 
   if (submit) {
     submit.addEventListener("click", function () {
-      var first = ($("#qzFirst") || {}).value || "";
-      var last  = ($("#qzLast")  || {}).value || "";
-      var email = ($("#qzEmail") || {}).value || "";
-      var phone = ($("#qzPhone") || {}).value || "";
-      first = first.trim(); last = last.trim();
-      email = email.trim().toLowerCase(); phone = phone.trim();
+      var first = (($("#qzFirst") || {}).value || "").trim();
+      var last  = (($("#qzLast")  || {}).value || "").trim();
+      var email = (($("#qzEmail") || {}).value || "").trim().toLowerCase();
+      var phone = (($("#qzPhone") || {}).value || "").trim();
 
       if (!first || !emailRe.test(email) || phone.replace(/\D/g, "").length < 8) {
-        err("#qzErr6");
+        err("#qzErr3");
         return;
       }
 
@@ -1998,59 +2151,32 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
       answers.email     = email;
       answers.phone     = phone;
 
-      var payload = {
-        firstname: first,
-        lastname:  last,
-        email:     email,
-        phone:     phone,
-        car:       answers.car || "",
-        budget:    answers.budget || "",
-        phase:     answers.phase || "",
-        timing:    answers.timing || "",
-        employment: answers.employment || "",
-        salary:    answers.salary || "",
-        is_ev:     meta.ev,
-        eligible:  !!meta.eligible,
-        intent_score: meta.score,            // 2 = cold, 8 = ready to transact
-        estimated_saving: calcSaving(),
-        source:    "novated-leasing-lp",
-        page:      location.pathname
-      };
-
-      submit.disabled = true;
-      submit.innerHTML = "Working it out…";
-
-      var done = function () {
-        renderResult();
-        show(7);
-        submit.disabled = false;
-        submit.innerHTML = 'Show my savings <span class="arr">&rarr;</span>';
-      };
-
-      if (window.fetch) {
-        fetch(LEAD_ENDPOINT, {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload)
-        }).catch(function () {
-          // Lead capture must never block the result.
-          console.warn("[novated] lead POST failed — payload:", payload);
-        }).then(done, done);
-      } else {
-        console.warn("[novated] no fetch — payload:", payload);
-        done();
-      }
-
-      // Analytics hooks — fire regardless of the POST outcome.
-      if (window.dataLayer) {
-        window.dataLayer.push({ event: "novated_lead", intent_score: meta.score, is_ev: meta.ev });
-      }
-      if (window.fbq) { window.fbq("track", "Lead", { content_name: answers.car || "" }); }
-      if (window.gtag) { window.gtag("event", "generate_lead", { value: payload.estimated_saving, currency: "AUD" }); }
+      sendLead("lead");
+      show(4);
     });
   }
 
-  // First paint: render step 1 without the scroll correction.
+  var refineBtn = $("#qzRefine");
+  if (refineBtn) refineBtn.addEventListener("click", function () { show(5); });
+
+  var skipBtn = $("#qzSkip");
+  if (skipBtn) skipBtn.addEventListener("click", function () { renderResult(); show(6); });
+
+  /* The optional detail is done — send the enriched lead once, then show
+     the result. Reached either by answering both groups or by the button. */
+  var refineSent = false;
+  function finishRefine() {
+    if (!stepComplete(5)) { err("#qzErr5"); return; }
+    meta.refined = true;
+    if (!refineSent) { refineSent = true; sendLead("enriched"); }
+    renderResult();
+    show(6);
+  }
+
+  var refineDone = $("#qzRefineDone");
+  if (refineDone) refineDone.addEventListener("click", finishRefine);
+
+  // First paint: render the cover without the scroll correction.
   (function initial() {
     var real = window.scrollTo;
     window.scrollTo = function () {};

@@ -24,6 +24,13 @@ export const config = { runtime: "edge" };
  */
 
 type Body = {
+  /**
+   * "lead"     — captured at the contact step, before the optional detail.
+   *              Someone who stops right here is still a lead.
+   * "enriched" — the same person came back and answered employment and
+   *              salary. Match on email and update rather than create.
+   */
+  stage?: string;
   firstname?: string;
   lastname?: string;
   email?: string;
@@ -68,6 +75,7 @@ export default async function handler(req: Request): Promise<Response> {
   if (blocked) return blocked;
 
   const lead = {
+    stage: body.stage === "enriched" ? "enriched" : "lead",
     firstname,
     lastname: str(body.lastname, 80),
     email,
@@ -122,13 +130,17 @@ async function notifySlack(lead: Record<string, unknown>): Promise<void> {
   const heat = score >= 7 ? ":fire: HOT" : score >= 5 ? ":zap: Warm" : ":snowflake: Early";
 
   const lines = [
-    `${heat} novated lead — *${lead.firstname} ${lead.lastname}*`,
+    lead.stage === "enriched"
+      ? `:heavy_plus_sign: Extra detail — *${lead.firstname} ${lead.lastname}* (same lead, now with salary)`
+      : `${heat} novated lead — *${lead.firstname} ${lead.lastname}*`,
     `:car: ${lead.car || "—"}  ·  ${lead.budget || "—"}${lead.is_ev ? "  ·  EV" : ""}`,
     `:dart: ${lead.phase || "—"}  ·  ${lead.timing || "—"}`,
-    `:office: ${lead.employment || "—"}  ·  ${lead.salary || "—"}`,
+    `:office: ${lead.employment || "not given"}  ·  ${lead.salary || "not given"}`,
     `:telephone_receiver: ${lead.phone}  ·  ${lead.email}`,
   ];
-  if (!lead.eligible) lines.push(":warning: Not permanent PAYG — check what's possible");
+  if (lead.stage === "enriched" && !lead.eligible) {
+    lines.push(":warning: Not permanent PAYG — check what's possible");
+  }
 
   await fetch(url, {
     method: "POST",
