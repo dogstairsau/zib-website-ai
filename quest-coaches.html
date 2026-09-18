@@ -129,13 +129,11 @@ a{color:var(--orange-deep);text-underline-offset:2px}
 }
 .lede{font-size:clamp(17.5px,1.9vw,20px);line-height:1.55;color:var(--ink-2);max-width:64ch}
 .sub{color:var(--muted);font-size:15px;max-width:72ch}
-.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
 
 /* ---------- layout ---------- */
 .wrap{max-width:var(--max);margin:0 auto;padding-left:var(--gut);padding-right:var(--gut)}
 section{padding-block:clamp(40px,5vw,66px);border-top:1px solid var(--rule);background:var(--paper)}
 section.soft{background:var(--soft)}
-section.band{background:var(--band)}
 section.dark{background:var(--dark-bg);color:var(--on-dark);border-top-color:var(--dark-rule)}
 section.dark h2,section.dark h3,section.dark h4{color:var(--on-dark)}
 section.dark .eyebrow,section.dark .sub{color:var(--dark-muted)}
@@ -228,18 +226,6 @@ tr.us td,tr.us th{font-weight:600}
 .pill.ok{background:var(--good-wash);color:var(--good)}
 .pill.new{background:var(--orange-wash);color:var(--orange-deep)}
 
-/* ---------- finding cards ---------- */
-.findings{display:grid;grid-template-columns:repeat(auto-fit,minmax(272px,1fr));gap:14px}
-.finding{
-  background:var(--paper);border:1px solid var(--rule);border-left:3px solid var(--critical);
-  padding:16px 18px;display:flex;flex-direction:column;gap:8px
-}
-.finding.med{border-left-color:var(--muted)}
-.finding.opp{border-left-color:var(--orange)}
-.finding h4{font-size:16px}
-.finding p{font-size:14.5px;color:var(--ink-2);max-width:none}
-.finding code{font-family:var(--f-mono);font-size:12.5px;background:var(--band);padding:1px 5px;border-radius:2px;color:var(--ink)}
-
 /* ---------- site map tree ---------- */
 .tree-shell{overflow-x:auto;border:1px solid var(--rule);background:var(--paper);padding:20px clamp(14px,2.4vw,26px)}
 .tree,.tree ul{list-style:none;margin:0;padding:0}
@@ -254,7 +240,6 @@ tr.us td,tr.us th{font-weight:600}
 .tree .node{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
 .tree .name{font-family:var(--f-display);font-weight:500;color:var(--ink)}
 .tree > li > .node .name{font-weight:700;font-size:17px}
-.tree .slug{font-family:var(--f-mono);font-size:12px;color:var(--muted);word-break:break-all}
 .tree .tag{
   font-family:var(--f-mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;
   padding:1px 6px;border-radius:2px;background:var(--band);color:var(--ink-2);white-space:nowrap
@@ -273,27 +258,6 @@ tr.us td,tr.us th{font-weight:600}
 }
 .legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:16px;font-size:13.5px;color:var(--muted);align-items:center}
 .legend span{display:inline-flex;align-items:center;gap:7px}
-
-/* ---------- template anatomy ---------- */
-.tpl{display:grid;grid-template-columns:repeat(auto-fit,minmax(288px,1fr));gap:16px}
-.tpl-card{background:var(--paper);border:1px solid var(--rule);padding:18px 20px;display:flex;flex-direction:column;gap:12px}
-.tpl-card .hd{display:flex;flex-direction:column;gap:5px}
-.tpl-card ol{margin:0;padding-left:0;list-style:none;counter-reset:s;display:flex;flex-direction:column;gap:9px}
-.tpl-card ol li{counter-increment:s;display:grid;grid-template-columns:24px 1fr;gap:10px;font-size:14.5px;line-height:1.45;color:var(--ink-2)}
-.tpl-card ol li::before{
-  content:counter(s,decimal-leading-zero);font-family:var(--f-mono);font-size:11px;color:var(--orange-deep);
-  padding-top:3px;font-variant-numeric:tabular-nums
-}
-.tpl-card .foot{font-size:13.5px;color:var(--muted);border-top:1px solid var(--rule-2);padding-top:11px}
-
-/* ---------- workstreams ---------- */
-.streams{display:grid;grid-template-columns:repeat(auto-fit,minmax(268px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule)}
-.stream{background:var(--paper);padding:17px 19px;display:flex;flex-direction:column;gap:8px}
-section.soft .stream{background:var(--soft)}
-.stream .num{font-family:var(--f-mono);font-size:11px;color:var(--orange-deep);letter-spacing:.08em}
-.stream h4{font-size:16px}
-.stream p{font-size:14px;color:var(--muted);max-width:none;line-height:1.5}
-.stream ul{margin:0;padding-left:17px;font-size:14px;color:var(--ink-2);display:flex;flex-direction:column;gap:4px}
 
 /* ---------- phases ---------- */
 .phase{display:grid;grid-template-columns:118px 1fr;gap:18px;padding-block:18px;border-top:1px solid var(--rule)}
@@ -347,133 +311,79 @@ footer a{color:var(--orange)}
     <p class="eyebrow">New website &amp; Google plan &middot; September 2026</p>
     <h1>A year ago, 61 Google searches found you. <em>Today, one does.</em></h1>
     <p class="lede">You've been running coaches since 1989. Your website is eleven pages about your
-    buses, and not one page that talks to a school, a company, a footy club or a winery. In the last
-    twelve months it has dropped off Google almost completely. Here's what's wrong, what we'd build,
-    and what happens when.</p>
+    buses, with no page that talks to a school, a company, a footy club or a winery. Here's what's
+    wrong, the 58 pages we'd build, and what it costs.</p>
     <dl class="meta-grid">
       <div><dt>For</dt><dd>Quest Coaches, Ferntree Gully</dd></div>
       <div><dt>Your website</dt><dd>questcoaches.com.au</dd></div>
       <div><dt>Checked</dt><dd>18 September 2026</dd></div>
-      <div><dt>Read time</dt><dd>About six minutes</dd></div>
+      <div><dt>Read time</dt><dd>Three minutes</dd></div>
     </dl>
   </div>
 </header>
 
 <nav class="nav" aria-label="Sections">
   <div class="nav-inner">
-    <a href="#short">The short version</a>
-    <a href="#phone">Your phone number</a>
+    <a href="#short">What's wrong</a>
     <a href="#google">What Google sees</a>
     <a href="#others">The other operators</a>
     <a href="#website">Your new website</a>
-    <a href="#pages">How pages get built</a>
     <a href="#plan">What happens when</a>
-    <a href="#cost">What it costs</a>
-    <a href="#need">What we need</a>
+    <a href="#cost">Cost &amp; next steps</a>
   </div>
 </nav>
 
 <section id="short">
   <div class="wrap stack">
     <div class="sec-head">
-      <p class="eyebrow">The short version</p>
+      <p class="eyebrow">What's wrong</p>
       <h2>Your website isn't broken. It was never built to win work.</h2>
-      <p class="lede">Every page loads. Nothing is missing. That's the good news, and it's all of it.
-      What you have is a brochure from about ten years ago that tells people you own buses. It doesn't
-      answer the questions a school, a business or a club asks before they book, and Google has nothing
-      to show them.</p>
+      <p class="lede">Every page loads, nothing is missing, and Google hasn't punished you. What you have
+      is a brochure from about ten years ago that says you own buses. It doesn't answer what a school, a
+      business or a club asks before booking, so you've simply been out-built.</p>
     </div>
 
     <div class="tiles">
       <div class="tile"><span class="n bad">1</span><span class="k">Searches you show up for</span><span class="tnote">It was 61 a year ago.</span></div>
-      <div class="tile"><span class="n bad">4</span><span class="k">Visitors a month from Google</span><span class="tnote">Was about 25&ndash;28 in early 2025.</span></div>
+      <div class="tile"><span class="n bad">4</span><span class="k">Visitors a month from Google</span><span class="tnote">Was about 25 in early 2025.</span></div>
       <div class="tile"><span class="n bad">0</span><span class="k">Pages about what you do</span><span class="tnote">No school, corporate, club or winery page.</span></div>
       <div class="tile"><span class="n bad">3</span><span class="k">Websites linking to yours</span><span class="tnote">Two are junk directories.</span></div>
       <div class="tile"><span class="n bad">No</span><span class="k">Works properly on a phone</span><span class="tnote">And the number can't be tapped.</span></div>
-      <div class="tile"><span class="n bad">2023</span><span class="k">Last year you had any data</span><span class="tnote">Your visitor tracking stopped working.</span></div>
+      <div class="tile"><span class="n bad">2023</span><span class="k">Last year you had any data</span><span class="tnote">Your visitor tracking stopped.</span></div>
     </div>
 
     <div class="cols">
       <div class="prose">
-        <h3>The three things that matter</h3>
-        <p><strong>You need a page for each kind of job.</strong> A school books an excursion. A club
-        books an away game. A winery books guest transport. Those are three different people asking three
-        different questions, and right now they all land on a page that shows them a list of buses. That's
-        also why you've slipped off Google: there was never a page strong enough to hold its spot once
-        other operators put the work in.</p>
-        <p><strong>Your phone number doesn't work on a phone.</strong> Most people looking for a coach are
-        on their mobile. On yours, the 1300 number is just text &mdash; they can't tap it to call. It's the
-        cheapest thing on this list to fix and the one costing you the most.</p>
-        <p><strong>You can't see where your work comes from.</strong> Your visitor tracking stopped
-        collecting anything in 2023, and quotes happen on a separate booking website. So nobody can tell
-        you which suburb, which service or which search brought last month's bookings in.</p>
+        <h3>Someone on their phone can't call you</h3>
+        <p>Normally a phone turns a number on a website into a button you tap to call. Your site
+        specifically tells it not to, and there's no tap-to-call link to make up for it. So the 1300 number
+        sits there as plain text &mdash; to ring you, someone has to memorise it, leave your site and dial
+        manually. Your site was also never updated for phones, so it loads shrunken and that number is half
+        the size it should be.</p>
+        <p>Crown and Ventura both have two tappable numbers on every page. This is the cheapest fix on the
+        list and the one costing you the most.</p>
       </div>
-      <div class="stack-sm">
-        <div class="callout">
-          <h4>The good news</h4>
-          <p>There's no penalty and nothing to appeal. Google hasn't punished you. You've just been
-          out-built. Two of the four operators we looked at haven't bothered either, and nobody at all has
-          built pages for footy clubs or for wineries. There's room here.</p>
-        </div>
-        <div class="note">
-          <strong>Where the numbers come from.</strong> The Google and search figures come from Ahrefs, an
-          industry tool, for the Australian market in September 2026 &mdash; they're estimates, and at four
-          visitors a month they'll bounce around. Everything about your actual website and your
-          competitors' was checked by hand on 18 September 2026.
-        </div>
+      <div class="prose">
+        <h3>And you can't see where your work comes from</h3>
+        <p>Your visitor tracking stopped collecting anything in 2023, and quotes happen over on your
+        separate booking system. So nobody can tell you which suburb, service or search brought last
+        month's bookings in. That gets fixed in the first fortnight, because everything after it is
+        measured against it.</p>
+        <p>Two smaller things worth knowing: one of your pages is titled <strong>&ldquo;Crown Bus
+        Charter&rdquo;</strong>, a competitor's name, which is why you turn up when people search for
+        Crown. And there's still a COVID notice on every page with a footer that says 2021.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section id="phone" class="soft">
-  <div class="wrap stack">
-    <div class="sec-head">
-      <p class="eyebrow">Your phone number</p>
-      <h2>Someone on their phone can't call you.</h2>
-      <p class="lede">This gets its own section because it's the clearest money you're losing, and it's a
-      half-hour fix.</p>
-    </div>
-    <div class="cols">
-      <div class="prose">
-        <p>Your whole website points at the 1300 number. On a computer, fine. On a phone, two things break
-        it.</p>
-        <p>Normally a phone spots a number on a website and turns it into a button you can tap to call.
-        Your site specifically tells it not to do that. And there's no tap-to-call link anywhere to make up
-        for it. So the number sits there as plain text. To ring you, someone has to memorise it, leave your
-        website and dial it manually. Plenty won't bother.</p>
-        <p>On top of that, your site was built for a computer screen and never updated for phones. It loads
-        as a shrunk-down desktop page, so that number is about half the size it should be while they're
-        trying to read it.</p>
-        <p>Crown and Ventura both have two tappable numbers on every page of their sites.</p>
-      </div>
-      <div class="stack-sm">
-        <div class="kv">
-          <div><span class="k">Quest Coaches</span><span class="v">Can't be tapped</span></div>
-          <div><span class="k">Crown Coaches</span><span class="v">2 per page</span></div>
-          <div><span class="k">Ventura Charter</span><span class="v">2 per page</span></div>
-          <div><span class="k">McKenzie's</span><span class="v">1 per page</span></div>
-          <div><span class="k">Nuline Charter</span><span class="v">None</span></div>
-        </div>
-        <div class="callout">
-          <h4>What we'd do</h4>
-          <p>Make the number tappable on every page. Add a bar that stays at the bottom of the screen on
-          phones with two buttons: <em>Call us</em> and <em>Get a quote</em>. Then count the calls, so next
-          time we talk about this we're talking about real numbers instead of guesses.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section id="google">
+<section id="google" class="soft">
   <div class="wrap stack">
     <div class="sec-head">
       <p class="eyebrow">What Google sees</p>
       <h2>Sixty-one searches, down to one.</h2>
-      <p class="lede">A year ago your website turned up in Google for 61 different searches. It now turns
-      up for one. Nothing has gone wrong technically &mdash; you've simply been beaten to every search
-      worth having by operators with proper pages.</p>
+      <p class="sub">From Ahrefs, an industry tool, for the Australian market. These are estimates, and at
+      four visitors a month they'll bounce around &mdash; but the direction is not in doubt.</p>
     </div>
 
     <div class="cols">
@@ -485,36 +395,24 @@ footer a{color:var(--orange)}
           <div class="bar"><span class="bl">January 2026</span><span class="bt" style="--w:29%"></span><span class="bv">~20</span></div>
           <div class="bar"><span class="bl">Today</span><span class="bt crit" style="--w:1.5%"></span><span class="bv">1</span></div>
         </div>
-        <p class="sub">The drop came suddenly last September and October, recovered a little in January,
-        then faded away by May.</p>
+        <p class="sub">Your most important page has about 296 words on it. Crown's main school page has
+        2,276. When Google had to choose, you had nothing to hold your place with.</p>
       </div>
-      <div class="stack-sm">
-        <h3>Why it keeps slipping</h3>
-        <p>Google works out how established a business is partly from how many other websites link to
-        yours. Yours has <strong>three</strong>. One is a genuine bus industry site worth building on. The
-        other two are the sort of junk directory that counts for nothing.</p>
-        <p>Your most important page also has about <strong>296 words</strong> on it. Crown's main school
-        page has 2,276. When Google had to choose, you had nothing to hold your place with.</p>
-        <p>You've also stopped turning up for searches on <em>your own name</em> &mdash; you used to show
-        for eleven of those.</p>
+      <div class="callout">
+        <h4>The one search you still win proves the point</h4>
+        <p>The last one standing is <strong>&ldquo;coach charter&rdquo;</strong> &mdash; 150 searches a
+        month, and you've gone from 58th to <strong>9th</strong> on it. That's by accident: it's a phrase
+        that happens to appear on your homepage. One accidental mention moved you up 49 places.</p>
+        <p>That's what a page built on purpose is meant to do, across thirty searches instead of one.</p>
       </div>
-    </div>
-
-    <div class="callout">
-      <h4>The one search you still win proves the point</h4>
-      <p>The last one standing is <strong>&ldquo;coach charter&rdquo;</strong> &mdash; 150 searches a
-      month. You've gone from 58th to <strong>9th</strong> on it. And that's by accident: it's a phrase
-      that happens to appear on your homepage. One accidental mention moved you up 49 places. That's what
-      a page built on purpose is meant to do, across thirty searches instead of one.</p>
     </div>
 
     <div class="stack-sm">
       <h3>The work you used to be found for, and lost</h3>
-      <p class="sub">Every one of these is somebody looking to book a bus. The numbers are how many
-      Australians search that phrase each month.</p>
       <div class="scroller">
         <table>
-          <caption>You don't currently have a page written for a single one of these.</caption>
+          <caption>Every one of these is somebody looking to book a bus. You don't have a page written for
+          a single one of them.</caption>
           <thead>
             <tr><th>What people type into Google</th><th class="num">Searches a month</th><th>Where you used to rank</th></tr>
           </thead>
@@ -533,53 +431,31 @@ footer a{color:var(--orange)}
         </table>
       </div>
       <p class="sub">Page 2 on <em>corporate bus hire melbourne</em> is the one that should annoy you.
-      That's a company with a purchase order that books you again and again, and you were nearly there
-      without even having a corporate page.</p>
-    </div>
-
-    <div class="cols">
-      <div class="finding opp">
-        <span class="pill new">Worth having</span>
-        <h4>People search by bus size</h4>
-        <p>You used to turn up faintly for <strong>25-seater</strong>, <strong>30-seater</strong> and
-        <strong>coaster bus hire</strong>. People search for the size they need. You've got a 13, a 24, a
-        27 and a 48/57 &mdash; that's four pages waiting to be written.</p>
-      </div>
-      <div class="finding opp">
-        <span class="pill new">Worth having</span>
-        <h4>And by where they are</h4>
-        <p>You used to turn up faintly for bus hire in <strong>Pakenham, Shepparton, Traralgon and
-        Echuca</strong>. That's people outside Melbourne looking for exactly what you do, with no page of
-        yours to find.</p>
-      </div>
-      <div class="finding med">
-        <span class="pill med">Need to ask you</span>
-        <h4>Two odd things on your site</h4>
-        <p>One of your pages is titled <strong>&ldquo;Crown Bus Charter&rdquo;</strong> &mdash; a
-        competitor's name. It's why you turn up when people search for Crown. You also turn up for
-        <strong>&ldquo;quinces coaches&rdquo;</strong>. Is that an old business name, or a partner?</p>
-      </div>
+      That's a company with a purchase order that books you again and again, and you nearly had it without
+      even having a corporate page. You were also turning up faintly for <strong>25-seater, 30-seater and
+      coaster bus hire</strong>, and for bus hire in <strong>Pakenham, Shepparton, Traralgon and
+      Echuca</strong> &mdash; all demand with no page of yours to find.</p>
     </div>
   </div>
 </section>
 
-<section id="others" class="soft">
+<section id="others">
   <div class="wrap stack">
     <div class="sec-head">
       <p class="eyebrow">The other operators</p>
       <h2>Two have done the work. Two haven't.</h2>
-      <p class="sub">We went through all four of the sites you sent us, page by page.</p>
+      <p class="sub">We went through all four of the sites you sent us, page by page, on 18 September.</p>
     </div>
 
     <div class="scroller">
       <table>
-        <caption>Words counted on each operator's main bus hire page. Yours is your homepage, because
-        it's the only page you have that tries to do the job.</caption>
+        <caption>Words counted on each operator's main bus hire page. Yours is your homepage, because it's
+        the only page you have that tries to do the job.</caption>
         <thead>
-          <tr><th>Operator</th><th class="num">Pages on their site</th><th class="num">Words on their main page</th><th>Works on a phone</th><th>Where they stand</th></tr>
+          <tr><th>Operator</th><th class="num">Pages</th><th class="num">Words on main page</th><th>Works on a phone</th><th>Where they stand</th></tr>
         </thead>
         <tbody>
-          <tr><th>Ventura Charter</th><td class="num">45</td><td class="num">869</td><td>Yes</td><td>Best organised site in the market</td></tr>
+          <tr><th>Ventura Charter</th><td class="num">45</td><td class="num">869</td><td>Yes</td><td>Best organised site &mdash; worth copying the shape</td></tr>
           <tr><th>Crown Coaches</th><td class="num">35</td><td class="num">1,789&ndash;2,276</td><td>Yes</td><td>Best written pages, especially schools</td></tr>
           <tr><th>Nuline Charter</th><td class="num">15</td><td class="num">127</td><td>Yes</td><td>Thin. Barely says anything</td></tr>
           <tr><th>McKenzie's</th><td class="num">9</td><td class="num">487</td><td>Yes</td><td>Yarra Valley angle, one bus hire page</td></tr>
@@ -590,88 +466,55 @@ footer a{color:var(--orange)}
 
     <div class="cols">
       <div class="prose">
-        <h3>What Crown does that you don't</h3>
-        <p>Crown is the one to beat on school work. Their school page runs 2,276 words and answers
-        everything a school asks: they name 150 schools as clients, 75 daily runs, 1,500 students a day, an
-        app so parents can track the bus, the actual camps and excursion spots Melbourne schools go to, and
-        a simple table showing which size bus suits which group. Underneath it they've got separate pages
-        for airport, weddings, corporate, wheelchair-accessible and seniors work.</p>
-        <p>You can match the substance of that. You've been doing this since 1989 and you've got eight
-        written testimonials sitting on your site. What you're missing is the page to put it on.</p>
-        <h3>What Ventura does that you don't</h3>
-        <p>Ventura's site is worth copying the <em>shape</em> of. Four main sections &mdash; schools,
-        events, corporate, private tours &mdash; each with five to eight pages underneath: camps, sports,
-        swimming, conferences, Christmas parties, weddings, snow trips, social clubs. That's 45 pages each
-        doing one job. They've also got 900 buses and 12 depots, so we're not trying to out-muscle them.
-        We're going after the searches a Ferntree Gully operator can actually win.</p>
+        <h3>Four gaps nobody has filled</h3>
+        <p><strong>Footy and sporting clubs.</strong> Not one of the four has a page for club transport,
+        and every club in Melbourne needs buses for away games all winter.</p>
+        <p><strong>Wineries, from the winery's side.</strong> The wine tour searches are fought over by
+        tour companies selling tickets. Nobody offers transport <em>to the wineries and cellar doors</em>
+        for their own guests. That page has no competition at all.</p>
+        <p><strong>Where you go.</strong> All four say &ldquo;Melbourne&rdquo; and stop, while your own
+        lost searches show people looking in Pakenham, Shepparton and Traralgon.</p>
+        <p><strong>Bus size.</strong> Crown buries seat numbers in a table. Nobody has a page for
+        &ldquo;25 seater bus hire&rdquo; the way people search it.</p>
       </div>
       <div class="stack-sm">
-        <div class="callout">
-          <h4>Four gaps nobody has filled</h4>
-          <p><strong>Footy and sporting clubs.</strong> Not one of the four has a page for club transport,
-          and every club in Melbourne needs buses for away games all winter.</p>
-          <p><strong>Wineries, from the winery's side.</strong> The wine tour searches are fought over by
-          tour companies selling tickets. Nobody is offering transport <em>to the wineries and cellar
-          doors</em> for their own guests. That page has no competition at all.</p>
-          <p><strong>Where you go.</strong> All four say &ldquo;Melbourne&rdquo; and stop. Your own lost
-          searches already show people looking in Pakenham, Shepparton and Traralgon.</p>
-          <p><strong>Bus size.</strong> Crown buries seat numbers in a table. Nobody has a page for
-          &ldquo;25 seater bus hire&rdquo; the way people actually search it.</p>
-        </div>
-      </div>
-    </div>
-
-    <div class="cols">
-      <div class="prose">
-        <h3>One more thing, and it's costing you school work</h3>
-        <p>Under Victorian education rules, a school booking a private coach has to satisfy itself that the
-        operator is properly accredited. Your website gives them nothing to check. Your about page says
-        &ldquo;fully accredited&rdquo; and leaves it there &mdash; no accreditation number, nothing about
-        seatbelts, no child safety policy, and no mention of your drivers' Working With Children checks.</p>
-        <p>A school business manager comparing three quotes will find all of that on Crown's website and
-        none of it on yours. Even Nuline, thin as their site is, publishes a child safety policy. Your site
-        still has a COVID notice on every page and a footer that says 2021.</p>
-        <p>Three short pages fix this, and they're in the first stage of the build for that reason.</p>
-      </div>
-      <div class="stack-sm">
+        <h3>And this is costing you school work</h3>
+        <p class="sub">Victorian education rules mean a school booking a private coach has to satisfy
+        itself the operator is properly accredited. Your site gives them nothing to check &mdash; your
+        about page says &ldquo;fully accredited&rdquo; and stops there. A business manager comparing three
+        quotes finds all of this on Crown's site and none of it on yours.</p>
         <div class="scroller">
           <table>
-            <caption>What a school can verify before booking, 18 September 2026.</caption>
-            <thead><tr><th>Can they check&hellip;</th><th>You</th><th>Crown</th></tr></thead>
+            <thead><tr><th>Can a school check&hellip;</th><th>You</th><th>Crown</th></tr></thead>
             <tbody>
               <tr><td>Your accreditation number</td><td><span class="pill crit">No</span></td><td><span class="pill ok">Yes</span></td></tr>
               <tr><td>A child safety policy</td><td><span class="pill crit">No</span></td><td><span class="pill ok">Yes</span></td></tr>
               <tr><td>Working With Children checks</td><td><span class="pill crit">No</span></td><td><span class="pill ok">Yes</span></td></tr>
               <tr><td>Whether buses have seatbelts</td><td><span class="pill crit">No</span></td><td><span class="pill ok">Yes</span></td></tr>
               <tr><td>Other schools you carry</td><td><span class="pill crit">No</span></td><td><span class="pill ok">150+</span></td></tr>
-              <tr><td>Your reviews</td><td><span class="pill med">8, hidden away</span></td><td><span class="pill ok">Yes</span></td></tr>
-              <tr><td>Where your depot is</td><td><span class="pill ok">Yes</span></td><td><span class="pill ok">Yes</span></td></tr>
+              <tr><td>Your reviews</td><td><span class="pill med">8, hidden</span></td><td><span class="pill ok">Yes</span></td></tr>
             </tbody>
           </table>
         </div>
-        <div class="note">
-          <strong>We won't write any of this until you confirm it.</strong> Nothing about accreditation,
-          seatbelts, driver checks or named clients goes on the site until you've told us the facts and
-          agreed to it.
-        </div>
+        <p class="sub">Three short pages fix this, and they're in the first stage. We won't write a word of
+        it until you've confirmed the facts.</p>
       </div>
     </div>
   </div>
 </section>
 
-<section id="website">
+<section id="website" class="soft">
   <div class="wrap stack">
     <div class="sec-head">
       <p class="eyebrow">Your new website</p>
       <h2>From eleven pages to fifty-eight.</h2>
-      <p class="lede">Here's the whole website laid out. Three main sections carry it, and they answer the
-      three questions every caller asks: <em>do you do my kind of trip</em>, <em>have you got a bus my
-      size</em>, and <em>do you come out to me</em>. Every page below has a job and real searches behind
-      it. Nothing is there to pad out a menu.</p>
+      <p class="lede">The whole website laid out. Three main sections carry it, answering the three
+      questions every caller asks: <em>do you do my kind of trip</em>, <em>have you got a bus my
+      size</em>, and <em>do you come out to me</em>.</p>
     </div>
 
     <div class="tiles">
-      <div class="tile"><span class="n">11</span><span class="k">Pages today</span><span class="tnote">None of them selling a service.</span></div>
+      <div class="tile"><span class="n">11</span><span class="k">Pages today</span><span class="tnote">None selling a service.</span></div>
       <div class="tile"><span class="n">30</span><span class="k">Live at launch</span><span class="tnote">Schools, corporate, buses, the basics.</span></div>
       <div class="tile"><span class="n">51</span><span class="k">By month six</span><span class="tnote">Clubs, wineries, weddings, areas.</span></div>
       <div class="tile"><span class="n">58</span><span class="k">By month twelve</span><span class="tnote">Plus six guides that earn links.</span></div>
@@ -758,7 +601,7 @@ footer a{color:var(--orange)}
               </ul>
             </li>
             <li><div class="node"><span class="name">Get a quote</span><span class="tag a">New</span><span class="tag b">Short form, on your site</span></div></li>
-            <li><div class="node"><span class="name">Reviews</span><span class="tag keep">Moved from Testimonials</span></div></li>
+            <li><div class="node"><span class="name">Reviews</span><span class="tag keep">From Testimonials</span></div></li>
             <li><div class="node"><span class="name">Questions &amp; answers</span><span class="tag keep">Keep &amp; expand</span></div></li>
             <li><div class="node"><span class="name">Guides</span><span class="tag a">Six, from month seven</span></div></li>
             <li>
@@ -781,122 +624,34 @@ footer a{color:var(--orange)}
     </div>
 
     <div class="cols">
-      <div class="prose">
-        <h3>One thing we're deliberately not doing</h3>
-        <p>We're not building a page for every suburb in Melbourne. Fifty near-identical pages with the
-        suburb name swapped is the oldest trick in the book and Google is very good at spotting it now. It
-        can get a site buried.</p>
-        <p>Nine area pages go in instead, each with real detail: the schools, venues and clubs in that
-        area, the roads you'd actually run, and how far it is from Ferntree Gully. We add more one at a
-        time, only where we can see people searching for them.</p>
+      <div class="callout">
+        <h4>How 36 new pages get written without cutting corners</h4>
+        <p>We design three layouts once &mdash; trip pages, area pages, bus pages &mdash; then fill each
+        one with its own words, photos, questions and reviews. The layout repeats. The words never do.
+        Google is very good now at spotting pages that are the same thing with the names swapped, and it
+        buries them, which is why this runs over twelve months instead of one week.</p>
+        <p>Same reason we're not building a page per suburb. Nine area pages go in, each with real detail,
+        and we add more only where we can see people searching.</p>
       </div>
-      <div class="stack-sm">
-        <div class="scroller">
-          <table>
-            <caption>Nothing gets deleted. Old page addresses forward to the new ones so you don't lose
-            anything you've already earned.</caption>
-            <thead><tr><th>Page you have now</th><th>What happens to it</th></tr></thead>
-            <tbody>
-              <tr><td>Home</td><td>Rewritten, about 800 words, aimed at bus and coach hire in Melbourne</td></tr>
-              <tr><td>Our Fleet</td><td>Becomes the front page for four new bus pages</td></tr>
-              <tr><td>About Us</td><td>Rewritten as Why Quest, with three trust pages under it</td></tr>
-              <tr><td>FAQs</td><td>Kept and expanded, written so Google can show the answers</td></tr>
-              <tr><td>Testimonials</td><td>Becomes Reviews, set up so your star rating can show in Google</td></tr>
-              <tr><td>Contact Us</td><td>Rewritten with a form, a map and tappable numbers</td></tr>
-              <tr><td>Both itinerary forms</td><td>Folded into one Get a quote page</td></tr>
-              <tr><td>COVID-19 page</td><td>Retired, and the banner comes off every page</td></tr>
-              <tr><td>Terms pages</td><td>Kept, with the Crown Bus Charter title fixed</td></tr>
-              <tr><td>Your booking portal</td><td>Stays exactly as it is. We just connect it up properly</td></tr>
-            </tbody>
-          </table>
-        </div>
+      <div class="scroller">
+        <table>
+          <caption>Nothing gets deleted. Old addresses forward to the new ones so you keep what you've
+          already earned.</caption>
+          <thead><tr><th>Page you have now</th><th>What happens to it</th></tr></thead>
+          <tbody>
+            <tr><td>Home</td><td>Rewritten, about 800 words, aimed at bus and coach hire in Melbourne</td></tr>
+            <tr><td>Our Fleet</td><td>Becomes the front page for four new bus pages</td></tr>
+            <tr><td>About Us</td><td>Rewritten as Why Quest, three trust pages under it</td></tr>
+            <tr><td>FAQs</td><td>Kept and expanded, written so Google can show the answers</td></tr>
+            <tr><td>Testimonials</td><td>Becomes Reviews, so your star rating can show in Google</td></tr>
+            <tr><td>Contact Us</td><td>Rewritten with a form, a map and tappable numbers</td></tr>
+            <tr><td>Both itinerary forms</td><td>Folded into one Get a quote page</td></tr>
+            <tr><td>COVID-19 page</td><td>Retired, banner off every page</td></tr>
+            <tr><td>Terms pages</td><td>Kept, Crown Bus Charter title fixed</td></tr>
+            <tr><td>Your booking system</td><td>Stays as it is. We just connect it up properly</td></tr>
+          </tbody>
+        </table>
       </div>
-    </div>
-  </div>
-</section>
-
-<section id="pages" class="soft">
-  <div class="wrap stack">
-    <div class="sec-head">
-      <p class="eyebrow">How pages get built</p>
-      <h2>Three page recipes, thirty-six pages.</h2>
-      <p class="lede">Building 36 pages from scratch one at a time would cost a fortune. Instead we design
-      three layouts once, then fill each page with its own words, photos, questions and reviews. Same
-      shape, different content every time.</p>
-    </div>
-
-    <div class="tpl">
-      <div class="tpl-card">
-        <div class="hd">
-          <span class="pill new">Recipe 1</span>
-          <h3>Trip pages</h3>
-          <p class="sub">23 pages. One per kind of job &mdash; school camps, away games, wine tours,
-          conferences.</p>
-        </div>
-        <ol>
-          <li>A headline naming the exact job and the city</li>
-          <li>Tap-to-call button and a three-question quote form, before they scroll</li>
-          <li>Who it's for, in words that customer would use</li>
-          <li>What's included and what costs extra, up front</li>
-          <li>Which bus suits which group size</li>
-          <li>The proof that customer cares about &mdash; accreditation for schools, invoicing for companies, seatbelts for clubs</li>
-          <li>Two or three real trips of that kind you've done</li>
-          <li>Which areas you cover for it</li>
-          <li>Four to six questions and answers</li>
-          <li>A review from that kind of customer</li>
-        </ol>
-        <p class="foot">About 900 to 1,400 words each.</p>
-      </div>
-
-      <div class="tpl-card">
-        <div class="hd">
-          <span class="pill new">Recipe 2</span>
-          <h3>Area pages</h3>
-          <p class="sub">9 pages. One per part of Melbourne or Victoria you actually run to.</p>
-        </div>
-        <ol>
-          <li>A headline naming the area, and how far it is from your depot</li>
-          <li>Tap-to-call button and quote form</li>
-          <li>How you serve it &mdash; pickup points, roads, how long a run takes</li>
-          <li>The suburbs and towns covered, written as a sentence</li>
-          <li>Places you actually drive to from there</li>
-          <li>The jobs you get booked for most in that area</li>
-          <li>One local job described properly, with a review if we have one</li>
-          <li>Three questions: travel time, minimum hire, out-of-area cost</li>
-          <li>Map and depot details</li>
-        </ol>
-        <p class="foot">If we can't write 300 words that could only be about that area, we don't build the
-        page.</p>
-      </div>
-
-      <div class="tpl-card">
-        <div class="hd">
-          <span class="pill new">Recipe 3</span>
-          <h3>Bus pages</h3>
-          <p class="sub">4 pages. One per vehicle, named the way people search: 25-seater, coaster,
-          mini bus.</p>
-        </div>
-        <ol>
-          <li>A headline with the seat count</li>
-          <li>Real photos of that bus, inside and out</li>
-          <li>The details: seats, seatbelts, air con, PA, luggage space, trailer option, accessibility</li>
-          <li>What it's right for, and when to go bigger or smaller</li>
-          <li>The trips it gets booked for most</li>
-          <li>Said plainly: no toilet on board, and what that means for long runs</li>
-          <li>Quote form and phone number</li>
-        </ol>
-        <p class="foot">About 500 to 700 words each. These catch the size searches you were already
-        turning up for.</p>
-      </div>
-    </div>
-
-    <div class="callout">
-      <h4>Why we don't just copy and paste</h4>
-      <p>The layout repeats. The words never do. Google has spent the last few years getting good at
-      spotting pages that are the same thing with the nouns swapped, and it buries them. The words, photos,
-      venues, questions and reviews get written per page from what you actually do. That's the difference
-      between 36 pages that earn work and 36 that drag you down, and it's why this is spread over twelve
-      months rather than dumped online in a week.</p>
     </div>
   </div>
 </section>
@@ -907,7 +662,7 @@ footer a{color:var(--orange)}
       <p class="eyebrow">What happens when</p>
       <h2>Twelve months, cheapest wins first.</h2>
       <p class="sub">The things that cost nothing and earn straight away go first. The big competitive
-      searches are a year-two conversation, and we'll be honest with you about that the whole way.</p>
+      searches are a year-two conversation, and we'll say so the whole way through.</p>
     </div>
 
     <div>
@@ -916,12 +671,10 @@ footer a{color:var(--orange)}
         <div class="what">
           <h4>Stop the obvious losses</h4>
           <ul>
-            <li>Make the phone number tappable on your current site</li>
-            <li>Take the COVID banner off and fix the 2021 footer</li>
-            <li>Fix the page titled &ldquo;Crown Bus Charter&rdquo;, and fill in the pages missing titles</li>
-            <li>Give Google a map of your site so it can find everything</li>
-            <li>Put working visitor tracking and call tracking on, so we can count calls and quotes</li>
-            <li>Claim and fill out your Google Business listing properly</li>
+            <li>Phone number made tappable on your current site</li>
+            <li>COVID banner off, 2021 footer fixed, Crown Bus Charter title corrected</li>
+            <li>Google given a map of your site, plus working call and enquiry tracking</li>
+            <li>Google Business listing claimed and filled out properly</li>
           </ul>
         </div>
       </div>
@@ -930,13 +683,10 @@ footer a{color:var(--orange)}
         <div class="what">
           <h4>New site live, 30 pages</h4>
           <ul>
-            <li>New website that works properly on phones, on safe modern hosting, in your colours</li>
-            <li>Home, Why Quest, fleet, reviews, questions and contact all rewritten</li>
-            <li>The three page layouts built</li>
+            <li>New site that works on phones, on safe modern hosting, in your colours</li>
+            <li>Home, Why Quest, fleet, reviews, questions and contact rewritten</li>
             <li>School pages (6) and corporate pages (5) live &mdash; your two main markets</li>
-            <li>Four bus pages live, catching the size searches</li>
-            <li>The three trust pages live: accreditation, child safety, your drivers</li>
-            <li>All old page addresses forwarded so nothing is lost</li>
+            <li>Four bus pages, three trust pages, and every old address forwarded</li>
           </ul>
         </div>
       </div>
@@ -945,13 +695,10 @@ footer a{color:var(--orange)}
         <div class="what">
           <h4>The gaps nobody else has filled</h4>
           <ul>
-            <li>Sporting club pages (4) &mdash; no competitor has one</li>
-            <li>Winery pages (5), including the one aimed at wineries themselves</li>
+            <li>Sporting club pages (4) and winery pages (5), including the one aimed at wineries themselves</li>
             <li>Weddings, seniors and social club pages</li>
             <li>Nine area pages, eastern suburbs and Pakenham first</li>
-            <li>Getting you listed in the bus and transport directories that count</li>
-            <li>A simple way to ask for a review after every charter</li>
-            <li>First proper review of where you're ranking, against the list in section three</li>
+            <li>Bus and transport directory listings, and a simple way to ask for a review after every charter</li>
           </ul>
         </div>
       </div>
@@ -962,43 +709,19 @@ footer a{color:var(--orange)}
           <ul>
             <li>Six guides, one a month, written to get you linked to and quoted</li>
             <li>Steady work getting other websites to link to yours, from three upwards</li>
-            <li>Going after the big competitive searches now there's something behind them</li>
-            <li>More area pages, but only where we can see the demand</li>
-            <li>Improving the pages that are getting visitors so more of them call</li>
-            <li>A report every month, a proper sit-down every three, and next year's plan in month eleven</li>
+            <li>The big competitive searches, now there's something behind them</li>
+            <li>Report every month, a proper sit-down every three, next year's plan in month eleven</li>
           </ul>
         </div>
       </div>
     </div>
 
-    <div class="cols">
-      <div class="prose">
-        <h3>What we'll count, and what we won't promise</h3>
-        <p>Four things get counted from day one, and they're the ones your office would recognise: someone
-        tapped the phone number, someone filled in the quote form on your site, someone started a quote in
-        your booking system, and someone emailed you. Each one gets traced back to the page and the search
-        that brought them, which is what makes these new pages accountable instead of decorative.</p>
-        <p>What we won't do is promise you a traffic number today. You've had no working data since 2023,
-        and the industry tool we're using is estimating from four visitors a month, which is too small to
-        be reliable. We set the targets at the end of the first month against real data, and review them
-        every three. Any agency quoting you visitor numbers for this site right now is guessing.</p>
-        <p>What is fair to say: you currently compete for one search. This plan aims you at searches with
-        real, published demand, including ten you were already turning up for a year ago. Getting back to
-        where you were last August isn't the goal &mdash; it's the floor.</p>
-      </div>
-      <div class="stack-sm">
-        <h3>What gets counted</h3>
-        <div class="kv">
-          <div><span class="k">Phone taps</span><span class="v">Counted</span></div>
-          <div><span class="k">Quote forms</span><span class="v">Counted</span></div>
-          <div><span class="k">Portal quotes</span><span class="v">Counted</span></div>
-          <div><span class="k">Emails</span><span class="v">Counted</span></div>
-          <div><span class="k">Which page they came from</span><span class="v">Yes</span></div>
-          <div><span class="k">Which search they came from</span><span class="v">Yes</span></div>
-          <div><span class="k">Report</span><span class="v">Monthly</span></div>
-          <div><span class="k">Strategy review</span><span class="v">Every 3 months</span></div>
-        </div>
-      </div>
+    <div class="note">
+      <strong>What we won't do is promise you a traffic number today.</strong> You've had no working data
+      since 2023, and four visitors a month is too small a base to forecast from honestly. We count four
+      things from day one &mdash; phone taps, quote forms, portal quotes and emails, each traced back to
+      the page and search that produced it &mdash; then set targets at the end of month one against real
+      numbers. Anyone quoting you visitor figures for this site right now is guessing.
     </div>
   </div>
 </section>
@@ -1006,23 +729,20 @@ footer a{color:var(--orange)}
 <section id="cost" class="dark">
   <div class="wrap stack">
     <div class="sec-head">
-      <p class="eyebrow">What it costs</p>
+      <p class="eyebrow">Cost &amp; next steps</p>
       <h2>Two parts: the build, then the monthly work.</h2>
-      <p class="lede">The website is a one-off job. The Google work is monthly and builds on itself &mdash;
-      the pages written in month four are still earning in month twelve. Here's exactly what each part
-      includes.</p>
+      <p class="lede">The website is a one-off. The Google work is monthly and builds on itself &mdash; the
+      pages written in month four are still earning in month twelve.</p>
     </div>
     <div class="cols">
       <div class="stack-sm">
         <h3>The website build &mdash; one-off</h3>
         <div class="kv" style="border-color:var(--dark-rule);background:var(--dark-rule)">
-          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">New site that works on phones</span><span class="v">Included</span></div>
-          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Main pages rewritten</span><span class="v">9 pages</span></div>
-          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Page layouts built</span><span class="v">3 recipes</span></div>
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">New site, works on phones</span><span class="v">Included</span></div>
           <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Pages live at launch</span><span class="v">30</span></div>
           <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Tap-to-call &amp; quote forms</span><span class="v">Included</span></div>
           <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Old addresses forwarded</span><span class="v">Included</span></div>
-          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Call &amp; enquiry tracking set up</span><span class="v">Included</span></div>
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Call &amp; enquiry tracking</span><span class="v">Included</span></div>
           <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Your cost</span><span class="v" style="color:var(--orange)">To be confirmed</span></div>
         </div>
       </div>
@@ -1031,72 +751,40 @@ footer a{color:var(--orange)}
         <div class="kv" style="border-color:var(--dark-rule);background:var(--dark-rule)">
           <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">New pages, months 4&ndash;6</span><span class="v">21</span></div>
           <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Guides, months 7&ndash;12</span><span class="v">6</span></div>
-          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Google Business listing</span><span class="v">Ongoing</span></div>
-          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Directory listings &amp; links</span><span class="v">Ongoing</span></div>
-          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Review generation</span><span class="v">Ongoing</span></div>
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Google Business &amp; directories</span><span class="v">Ongoing</span></div>
           <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Reporting &amp; one contact</span><span class="v">Included</span></div>
           <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Minimum term</span><span class="v">6 months</span></div>
           <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Your cost</span><span class="v" style="color:var(--orange)">To be confirmed</span></div>
         </div>
       </div>
     </div>
-    <div class="note" style="background:var(--dark-soft);border-color:var(--dark-rule);color:var(--dark-muted)">
-      <strong style="color:var(--on-dark)">Prices go in before this is sent to you.</strong>
-      Everything listed above is the work. The two figures are being finalised and will be filled in.
-      Google Ads isn't in here at all &mdash; worth talking about once there are pages to send traffic to.
-    </div>
-  </div>
-</section>
 
-<section id="need">
-  <div class="wrap stack">
-    <div class="sec-head">
-      <p class="eyebrow">What we need</p>
-      <h2>What we need from you, and what we need to ask.</h2>
-    </div>
     <div class="cols">
       <div class="prose">
-        <h3>To get started</h3>
-        <ul style="padding-left:18px;display:flex;flex-direction:column;gap:7px">
-          <li>Photos of your four buses inside and out, or a morning at the depot to take them</li>
-          <li>Your accreditation number, and your driver check and child safety policies</li>
-          <li>A list of the schools, clubs, companies and wineries you carry &mdash; we'd only name any of
-          them with your permission</li>
-          <li>Where you really will and won't travel, and what you charge for the long runs</li>
-          <li>Logins for your domain name, your website hosting and your booking system</li>
-          <li>Someone at your end who can read and approve copy inside a week</li>
-        </ul>
-        <h3>What's not in this</h3>
-        <ul style="padding-left:18px;display:flex;flex-direction:column;gap:7px">
-          <li>Google Ads or paid social advertising. Both worth discussing later</li>
-          <li>Changing your booking system. It stays as it is</li>
-          <li>Bus signage, printing or livery</li>
-          <li>A page for every suburb. Nine area pages, more only if the demand shows up</li>
-        </ul>
+        <h3>What we need from you to start</h3>
+        <p>Photos of your four buses inside and out, or a morning at the depot to take them. Your
+        accreditation number, driver check and child safety policies. A list of the schools, clubs,
+        companies and wineries you carry &mdash; we'd only name any of them with your permission. Where
+        you really will and won't travel. Logins for your domain, hosting and booking system. And someone
+        who can approve copy inside a week.</p>
+        <p>Not in this: Google Ads, changing your booking system, or bus signage. Ads are worth discussing
+        once there are pages to send traffic to.</p>
       </div>
       <div class="stack-sm">
-        <h3>Questions for you</h3>
-        <div class="kv">
-          <div><span class="k">Your name</span><span class="v">Why do you turn up for &ldquo;quinces coaches&rdquo;?</span></div>
-          <div><span class="k">That title</span><span class="v">Where did &ldquo;Crown Bus Charter&rdquo; come from?</span></div>
-          <div><span class="k">Accreditation</span><span class="v">What's your number?</span></div>
-          <div><span class="k">Your buses</span><span class="v">Which have seatbelts and wheelchair access?</span></div>
-          <div><span class="k">Where you go</span><span class="v">Your real limits, and regional charges?</span></div>
-          <div><span class="k">Your work</span><span class="v">Rough split between schools, corporate, clubs, wineries?</span></div>
-          <div><span class="k">Capacity</span><span class="v">How much more work could the fleet take?</span></div>
+        <h3>And three questions for you</h3>
+        <div class="kv" style="border-color:var(--dark-rule);background:var(--dark-rule)">
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Your name</span><span class="v">Why do you turn up for &ldquo;quinces coaches&rdquo;?</span></div>
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">That title</span><span class="v">Where did &ldquo;Crown Bus Charter&rdquo; come from?</span></div>
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Capacity</span><span class="v">How much more work could the fleet take?</span></div>
         </div>
-        <div class="callout">
-          <h4>The honest summary</h4>
-          <p>You've got a real business, a real depot, a fleet and 37 years behind a website that turns up
-          in Google for one search. There's no penalty to appeal and no disaster to recover from. There are
-          58 pages to build in a market where two of your four competitors haven't bothered either, and
-          where nobody has touched club or winery work. That's a good place to start from.</p>
-        </div>
+        <p class="sub">You've got a real business, a depot, a fleet and 37 years behind a website that
+        turns up for one search. There's no penalty to appeal and no disaster to recover from &mdash; 58
+        pages to build, in a market where two of your four competitors haven't bothered either.</p>
       </div>
     </div>
+
     <div class="close-cta">
       <a class="btn" href="tel:1300255287">Let's talk it through</a>
-      <a class="btn" style="background:transparent;color:var(--ink);border-color:var(--rule)" href="#website">See the page list again</a>
     </div>
   </div>
 </section>
