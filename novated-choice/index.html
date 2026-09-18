@@ -143,6 +143,33 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
 .btn:hover .arr { transform: translateX(4px); }
 .btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; box-shadow: none; }
 
+/* ─── Trustpilot ────────────────────────────────────────────────
+   Figures are exactly what Trustpilot publishes: TrustScore 4.0,
+   "Great", 7 reviews. The raw distribution is higher (six 5-star and one
+   4-star), but Trustpilot weights low review counts, so quoting the
+   average instead of the published score would contradict the badge a
+   visitor sees when they click through. */
+.tp-stars { display: inline-flex; gap: 2px; }
+.tp-stars i {
+  width: 18px; height: 18px; display: grid; place-items: center;
+  background: #00b67a; border-radius: 2px;
+}
+.tp-stars i.off { background: #dcdce6; }
+.tp-stars svg { width: 13px; height: 13px; fill: #fff; }
+.tp-logo { display: inline-flex; align-items: center; gap: 5px; font-weight: 600; letter-spacing: -0.01em; }
+.tp-logo svg { width: 15px; height: 15px; fill: #00b67a; }
+
+.tp-strip {
+  display: flex; align-items: center; gap: 14px 20px; flex-wrap: wrap;
+  background: #fff; border: 1px solid var(--line); border-radius: 16px;
+  padding: 16px 22px;
+}
+.tp-strip .tp-score { font-family: var(--bebas); font-size: 34px; line-height: 1; color: var(--ink); }
+.tp-strip .tp-meta { font-size: 13.5px; color: var(--muted); margin-top: 3px; }
+.tp-strip .tp-meta b { color: var(--ink); font-weight: 600; }
+.tp-strip a { color: var(--green); border-bottom: 1px solid currentColor; font-size: 13.5px; white-space: nowrap; }
+.tp-strip a:hover { color: var(--ink); }
+
 /* ─── Stars ─────────────────────────────────────────────────────── */
 .stars { display: inline-flex; gap: 2px; color: var(--gold); }
 .stars svg { width: 15px; height: 15px; fill: currentColor; }
@@ -486,7 +513,7 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
 .fd-badge b { display: block; font-size: 15.5px; font-weight: 600; }
 .fd-badge small { display: block; font-size: 12.5px; color: var(--muted); margin-top: 2px; }
 .fd-quote { font-size: clamp(20px, 2.7vw, 30px); font-weight: 400; line-height: 1.38; letter-spacing: -0.02em; color: var(--ink); text-wrap: balance; }
-.fd-quote::before { content: "\201C"; font-family: var(--bebas); font-size: 1.5em; color: var(--green-bright); line-height: 0; vertical-align: -0.22em; margin-right: 4px; }
+
 .fd-body { margin-top: 24px; display: grid; gap: 15px; }
 .fd-body p { font-size: 15.5px; line-height: 1.68; color: var(--muted); font-weight: 300; }
 .fd-sign { margin-top: 26px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
@@ -648,16 +675,15 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
       <div class="hero-copy">
         <div class="hero-trust">
           <div class="ht-txt">
-            <svg class="g" viewBox="0 0 48 48" aria-hidden="true"><path fill="#4285F4" d="M45 24c0-1.6-.1-2.7-.4-4H24v7.5h12c-.2 2-1.6 5-4.5 7l6.9 5.3C42.5 36 45 30.6 45 24Z"/><path fill="#34A853" d="M24 46c5.9 0 10.9-2 14.5-5.3l-6.9-5.3c-1.9 1.3-4.4 2.2-7.6 2.2-5.8 0-10.7-3.8-12.5-9.1l-7.1 5.5C8 41.4 15.4 46 24 46Z"/><path fill="#FBBC05" d="M11.5 28.5c-.5-1.4-.7-2.9-.7-4.5s.3-3.1.7-4.5l-7.1-5.5C2.9 17 2 20.4 2 24s.9 7 2.4 10l7.1-5.5Z"/><path fill="#EA4335" d="M24 10.4c4.1 0 6.9 1.8 8.5 3.3l6.2-6C34.9 4.1 29.9 2 24 2 15.4 2 8 6.6 4.4 14l7.1 5.5c1.8-5.3 6.7-9.1 12.5-9.1Z"/></svg>
-            <span class="stars" aria-hidden="true">
-              <svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>
-              <svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>
+            <span class="tp-stars" aria-hidden="true">
+              <i><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg></i>
+              <i><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg></i>
+              <i><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg></i>
+              <i><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg></i>
+              <i class="off"><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg></i>
             </span>
-            <b data-needs-client="review count">4.9</b>
-            <span class="ht-src">from Google reviews</span>
+            <b>Rated Great</b>
+            <span class="ht-src">on <span class="tp-logo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>Trustpilot</span></span>
           </div>
         </div>
 
@@ -1142,9 +1168,11 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
 
       <div class="fd-copy reveal">
         <span class="eyebrow">The person you'll actually deal with</span>
-        <!-- DRAFT COPY — not Geoff's words. Needs his approval or his own
-             wording before this ships over his name and photo. -->
-        <p class="fd-quote" style="margin-top:18px" data-needs-client="quote approval from Geoff">Most people come to us having been passed between four different people at a call centre, none of whom could answer a straight question. That's the thing we set out to fix. You get one person, you get their mobile number, and you keep them for the life of the lease.</p>
+        <!-- Company voice, deliberately NOT styled or attributed as a quote
+             from Geoff — this is agency-drafted copy, not his words. If he
+             wants to say it in his own words, restore the quote styling and
+             the signature block with his approved wording. -->
+        <p class="fd-quote" style="margin-top:18px">Most people come to us having been passed between four different people at a call centre, none of whom could answer a straight question. That's the thing we set out to fix. You get one person, you get their mobile number, and you keep them for the life of the lease.</p>
 
         <div class="fd-body">
           <p>Novated Choice is a Melbourne-based team that arranges novated leases for employees across Australia. We're not a lender and we're not tied to one — we run your application across a panel and take the deal that suits your circumstances.</p>
@@ -1153,10 +1181,6 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
         </div>
 
         <div class="fd-sign">
-          <div>
-            <div class="fs-name">Geoff Kruyt</div>
-            <div class="fs-role">Founder, Novated Choice</div>
-          </div>
           <a class="btn btn-ghost" href="#quiz">Get my estimate <span class="arr">&rarr;</span></a>
         </div>
       </div>
@@ -1173,20 +1197,19 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
         <span class="eyebrow">Real customers, real leases</span>
         <h2>What it's like to deal with us</h2>
       </div>
-      <div class="revs-score reveal">
+      <div class="tp-strip reveal">
+        <span class="tp-stars" aria-hidden="true">
+          <i><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg></i>
+          <i><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg></i>
+          <i><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg></i>
+          <i><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg></i>
+          <i class="off"><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg></i>
+        </span>
         <div>
-          <div class="rs-num" data-needs-client="rating">4.9</div>
+          <div class="tp-score">4.0</div>
+          <div class="tp-meta">TrustScore <b>Great</b> &middot; 7 reviews on <span class="tp-logo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>Trustpilot</span></div>
         </div>
-        <div>
-          <span class="stars" aria-hidden="true">
-            <svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>
-            <svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>
-            <svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>
-            <svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>
-            <svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>
-          </span>
-          <div class="rs-meta" data-needs-client="review count + source">Google reviews &middot; verified customers</div>
-        </div>
+        <a href="https://au.trustpilot.com/review/novatedchoice.com.au" target="_blank" rel="noopener">Read them on Trustpilot &rarr;</a>
       </div>
     </div>
 
