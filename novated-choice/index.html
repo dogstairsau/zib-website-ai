@@ -94,6 +94,24 @@ button, input, select, textarea { font: inherit; color: inherit; }
   letter-spacing: 0.14em; text-transform: uppercase; color: var(--green-bright);
 }
 h1, h2, h3 { font-weight: 600; line-height: 1.0; letter-spacing: -0.035em; text-wrap: balance; }
+
+/* ─── No orphans ────────────────────────────────────────────────
+   `balance` evens out short display text so a heading never drops a
+   single word onto its own line. `pretty` does the same job for longer
+   body copy without reflowing every line. Both degrade to normal
+   wrapping in browsers that don't support them. */
+.qz-q, .qz-head .qz-title, .qz-result-fig, .steps-nowtitle, .step-card h3,
+.elig-card b, .incl-item b, .faq-q, .fd-quote, .fd-badge b, .revs-score .rs-meta,
+.sv-name, .lg-label, .qz-opt .oi b, .hero-trust .ht-txt, .sv-save span,
+.incl-foot .one-pay, .faq-help b, .cta-trust span, .step-meta {
+  text-wrap: balance;
+}
+.lede, .qz-hint, .qz-cover-lead, .qz-foot span, .qz-cover-meta li,
+.step-card p, .elig-card p, .incl-item small, .faq-a p, .fd-body p,
+.rev p, .sv-note, .faq-help p, .ft-brand p, .ft-disc, .hero-points li,
+.qz-opt .oi small, .qz-err, .topbar .row span, .qz-recap .rr dt {
+  text-wrap: pretty;
+}
 h1 { font-size: clamp(34px, 5.4vw, 62px); }
 h2 { font-size: clamp(28px, 4.2vw, 48px); }
 h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
@@ -228,10 +246,23 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
 .qz-head .qz-kicker { font-family: var(--inter); font-size: 11.5px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.72); }
 .qz-head .qz-title { font-size: 20px; font-weight: 600; margin-top: 7px; letter-spacing: -0.032em; line-height: 1.15; }
 .qz-bar { height: 4px; border-radius: 99px; background: rgba(255,255,255,0.22); overflow: hidden; margin-top: 16px; }
+.qz-bar[hidden], .qz-steplabel[hidden] { display: none; }
 .qz-bar span { display: block; height: 100%; width: 0%; border-radius: 99px; background: #fff; transition: width 420ms var(--ease); }
 .qz-steplabel { font-family: var(--inter); font-size: 11.5px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.72); margin-top: 10px; display: block; }
 
 .qz-body { padding: clamp(22px, 3vw, 32px); }
+.qz-cover-lead { font-size: 15px; line-height: 1.5; color: var(--muted); }
+.qz-cover-lead strong { color: var(--ink); font-weight: 600; }
+.qz-cover .qz-actions { margin-top: 18px; }
+.qz-cover .qz-actions .btn { width: 100%; flex: none; }
+.qz-cover-meta { list-style: none; display: grid; gap: 8px; margin-top: 18px; }
+.qz-cover-meta li { display: flex; align-items: center; gap: 9px; font-size: 13.5px; color: var(--muted); }
+.qz-cover-meta svg { flex: 0 0 auto; width: 14px; height: 14px; stroke: var(--green); fill: none; stroke-width: 2; }
+/* The card grows as the quiz opens; easing that keeps it from snapping. */
+.qz-card { transition: box-shadow 420ms var(--ease); }
+@media (prefers-reduced-motion: no-preference) {
+  .qz-body { transition: height 380ms var(--ease); overflow: hidden; }
+}
 .qz-step[hidden] { display: none; }
 .qz-step { animation: qzIn 380ms var(--ease); }
 @keyframes qzIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
@@ -304,13 +335,30 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
 /* ─── Logo strip ────────────────────────────────────────────────── */
 .logos { padding: clamp(28px, 4vw, 44px) 0; border-bottom: 1px solid var(--line); background: #fff; }
 .logos .lg-label { text-align: center; font-family: var(--inter); font-size: 11.5px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted-2); margin-bottom: 22px; }
-.logos .lg-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 20px clamp(18px, 2.4vw, 32px); }
+.lg-marquee {
+  position: relative; overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
+          mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
+}
+.logos .lg-row {
+  display: flex; align-items: center; width: max-content;
+  gap: clamp(30px, 4vw, 56px);
+  animation: lgScroll 42s linear infinite;
+}
+.lg-marquee:hover .lg-row,
+.lg-marquee:focus-within .lg-row { animation-play-state: paused; }
+@keyframes lgScroll { from { transform: translate3d(0,0,0); } to { transform: translate3d(-50%,0,0); } }
 .logos .lg-row img {
   height: clamp(23px, 2.5vw, 28px); width: auto; object-fit: contain;
   filter: grayscale(1); opacity: 0.46;
   transition: filter 240ms var(--ease), opacity 240ms var(--ease);
 }
 .logos .lg-row img:hover { filter: none; opacity: 1; }
+/* No motion: fall back to a row the reader scrolls themselves. */
+@media (prefers-reduced-motion: reduce) {
+  .logos .lg-row { animation: none; }
+  .lg-marquee { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
 
 /* ─── Savings / comparison ──────────────────────────────────────── */
 .savings { padding: var(--sec) 0; background: var(--wash-2); }
@@ -638,14 +686,29 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
         <div class="qz-head">
           <span class="qz-kicker" id="qzKicker">60-second savings estimate</span>
           <div class="qz-title" id="qzTitle">Let's start with the fun part</div>
-          <div class="qz-bar"><span id="qzFill"></span></div>
-          <span class="qz-steplabel" id="qzLabel">Step 1 of 6</span>
+          <div class="qz-bar" id="qzBar" hidden><span id="qzFill"></span></div>
+          <span class="qz-steplabel" id="qzLabel" hidden>Step 1 of 6</span>
         </div>
 
         <div class="qz-body">
 
+          <!-- STEP 0 — compact cover. The full step 1 filled the whole
+               mobile fold, which reads as work before the value prop has
+               landed. A small card plus one button keeps the hero visible
+               and turns starting into a deliberate choice. -->
+          <div class="qz-step qz-cover" data-step="0">
+            <p class="qz-cover-lead">Six quick questions, starting with the fun one — <strong>the car you've always wanted</strong>. No credit check, no obligation.</p>
+            <div class="qz-actions">
+              <button type="button" class="btn btn-primary" id="qzStart">Start now <span class="arr">&rarr;</span></button>
+            </div>
+            <ul class="qz-cover-meta">
+              <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Takes about 60 seconds</li>
+              <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 13 4 4L19 7"/></svg>Written quote the same day</li>
+            </ul>
+          </div>
+
           <!-- STEP 1 — dream car (emotional hook, one tap, zero typing) -->
-          <div class="qz-step" data-step="1">
+          <div class="qz-step" data-step="1" hidden>
             <div class="qz-q">What car have you always wanted?</div>
             <p class="qz-hint">Pick one, or type anything you like. There's no wrong answer — and it doesn't lock you in.</p>
             <div class="qz-chips" id="qzCars">
@@ -665,6 +728,7 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
               </div>
             </div>
             <div class="qz-actions">
+              <button type="button" class="qz-back" data-back>&larr; Back</button>
               <button type="button" class="btn btn-primary" data-next>Continue <span class="arr">&rarr;</span></button>
             </div>
             <p class="qz-err" id="qzErr1">Pick a car or type one in to keep going.</p>
@@ -856,7 +920,8 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
 <section class="logos">
   <div class="container">
     <p class="lg-label">Any make, any model — new or late-model used</p>
-    <div class="lg-row">
+    <div class="lg-marquee">
+      <div class="lg-row">
       <img src="/assets/novated-choice/brands/tesla.webp" alt="Tesla" width="183" height="56" loading="lazy" decoding="async">
       <img src="/assets/novated-choice/brands/toyota.webp" alt="Toyota" width="240" height="40" loading="lazy" decoding="async">
       <img src="/assets/novated-choice/brands/ford.webp" alt="Ford" width="155" height="56" loading="lazy" decoding="async">
@@ -866,6 +931,17 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
       <img src="/assets/novated-choice/brands/hyundai.webp" alt="Hyundai" width="90" height="56" loading="lazy" decoding="async">
       <img src="/assets/novated-choice/brands/isuzu.webp" alt="Isuzu" width="169" height="56" loading="lazy" decoding="async">
       <img src="/assets/novated-choice/brands/bmw.webp" alt="BMW" width="56" height="56" loading="lazy" decoding="async">
+        <!-- Second copy: the track translates -50%, so the loop is seamless. -->
+      <img aria-hidden="true" src="/assets/novated-choice/brands/tesla.webp" alt="" width="183" height="56" loading="lazy" decoding="async">
+      <img aria-hidden="true" src="/assets/novated-choice/brands/toyota.webp" alt="" width="240" height="40" loading="lazy" decoding="async">
+      <img aria-hidden="true" src="/assets/novated-choice/brands/ford.webp" alt="" width="155" height="56" loading="lazy" decoding="async">
+      <img aria-hidden="true" src="/assets/novated-choice/brands/mazda.webp" alt="" width="81" height="56" loading="lazy" decoding="async">
+      <img aria-hidden="true" src="/assets/novated-choice/brands/byd.webp" alt="" width="240" height="48" loading="lazy" decoding="async">
+      <img aria-hidden="true" src="/assets/novated-choice/brands/kia.webp" alt="" width="239" height="56" loading="lazy" decoding="async">
+      <img aria-hidden="true" src="/assets/novated-choice/brands/hyundai.webp" alt="" width="90" height="56" loading="lazy" decoding="async">
+      <img aria-hidden="true" src="/assets/novated-choice/brands/isuzu.webp" alt="" width="169" height="56" loading="lazy" decoding="async">
+      <img aria-hidden="true" src="/assets/novated-choice/brands/bmw.webp" alt="" width="56" height="56" loading="lazy" decoding="async">
+      </div>
     </div>
   </div>
 </section>
@@ -1036,41 +1112,48 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
 </section>
 
 <!-- ═══ Founder ════════════════════════════════════════════════════
-     PLACEHOLDER SECTION — needs from client:
-       1. Founder / lead consultant name + title
-       2. A real photograph (headshot or at-desk, landscape or 4:5 portrait)
-       3. Approval of the quote below, or their own words
-     Do not publish with the bracketed placeholders still in place.
+     Name confirmed: Geoff Kruyt, Founder.
+     STILL NEEDED BEFORE LAUNCH:
+       1. His photograph as a file — save to
+          assets/novated-choice/geoff-kruyt.jpg (4:5 portrait, 1000x1250
+          min) and swap the .fd-ph placeholder for the <img> below it.
+       2. Geoff's sign-off on the pull quote. It is drafted copy, not
+          something he has said — it must not be published over his name
+          and photo until he has approved or replaced it.
      ═══════════════════════════════════════════════════════════════ -->
 <section class="founder">
   <div class="container">
     <div class="fd-grid">
 
       <div class="fd-photo reveal">
-        <!-- Replace this placeholder div with: <img src="/assets/novated-choice/founder.jpg" alt="..."> -->
-        <div class="fd-ph" data-needs-client="founder photo">
-          FOUNDER PHOTO<br>
+        <!-- Swap for: <img src="/assets/novated-choice/geoff-kruyt.jpg"
+             alt="Geoff Kruyt, founder of Novated Choice" width="1000" height="1250"> -->
+        <div class="fd-ph" data-needs-client="founder photo file">
+          PHOTO OF GEOFF<br>
           <span style="opacity:.7">4:5 portrait &middot; 1000&times;1250px min</span>
         </div>
         <div class="fd-badge">
-          <b data-needs-client="founder name">[Founder name]</b>
-          <small data-needs-client="founder title">Founder &amp; Director, Novated Choice</small>
+          <b>Geoff Kruyt</b>
+          <small>Founder, Novated Choice</small>
         </div>
       </div>
 
       <div class="fd-copy reveal">
         <span class="eyebrow">The person you'll actually deal with</span>
-        <p class="fd-quote" style="margin-top:18px" data-needs-client="founder quote approval">Most people come to us having been passed between four different people at a call centre, none of whom could answer a straight question. That's the thing we set out to fix. You get one person, you get their mobile number, and you keep them for the life of the lease.</p>
+        <!-- DRAFT COPY — not Geoff's words. Needs his approval or his own
+             wording before this ships over his name and photo. -->
+        <p class="fd-quote" style="margin-top:18px" data-needs-client="quote approval from Geoff">Most people come to us having been passed between four different people at a call centre, none of whom could answer a straight question. That's the thing we set out to fix. You get one person, you get their mobile number, and you keep them for the life of the lease.</p>
 
         <div class="fd-body">
           <p>Novated Choice is a Melbourne-based team that arranges novated leases for employees across Australia. We're not a lender and we're not tied to one — we run your application across a panel and take the deal that suits your circumstances.</p>
+          <p>Geoff started Novated Choice after years watching people get bounced around leasing call centres. He still takes customer calls himself — you'll find him by name in the reviews further down this page.</p>
           <p>That independence is the whole point. It's also why our national buying program can usually beat the price you'd negotiate at the dealership yourself, and why we'll tell you plainly when a novated lease <em>isn't</em> the right move for you.</p>
         </div>
 
         <div class="fd-sign">
           <div>
-            <div class="fs-name" data-needs-client="founder name">[Founder name]</div>
-            <div class="fs-role" data-needs-client="founder title">Founder &amp; Director</div>
+            <div class="fs-name">Geoff Kruyt</div>
+            <div class="fs-role">Founder, Novated Choice</div>
           </div>
           <a class="btn btn-ghost" href="#quiz">Get my estimate <span class="arr">&rarr;</span></a>
         </div>
@@ -1361,6 +1444,51 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
 
   var yr = $("#yr"); if (yr) yr.textContent = new Date().getFullYear();
 
+  /* ══ No orphans ══════════════════════════════════════════════
+     `text-wrap: pretty` is a hint — browsers apply it with a limited
+     lookback and it still leaves single words stranded. Binding the last
+     two words with a non-breaking space is deterministic and holds at
+     every width. Runs once, and is safe to run again.
+
+     The last word is often inside an inline tag ("...up to
+     <strong>$6,334</strong>"), so when the final text node is a single
+     word we bind the space in the node before it — a non-breaking space
+     still prevents the break across that boundary. */
+  (function noOrphans() {
+    var SEL = ".lede, .qz-hint, .qz-cover-lead, .qz-foot span, .qz-cover-meta li," +
+              ".step-card p, .elig-card p, .incl-item small, .faq-a p, .fd-body p," +
+              ".rev p, .sv-note, .faq-help p, .ft-brand p, .hero-points li span," +
+              ".qz-opt .oi small, .topbar .row span, .elig-card b, .incl-item b," +
+              ".step-card h3, .faq-q, .fd-quote, h1, h2";
+    var NBSP = "\u00A0";
+
+    function textNodes(el) {
+      var out = [], walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+      var n;
+      while ((n = walk.nextNode())) { if (/\S/.test(n.nodeValue)) out.push(n); }
+      return out;
+    }
+
+    $$(SEL).forEach(function (el) {
+      var nodes = textNodes(el);
+      if (!nodes.length) return;
+      var last = nodes[nodes.length - 1];
+      var words = last.nodeValue.trim().split(/\s+/);
+
+      if (words.length > 1) {
+        // Bind the final space inside this node.
+        last.nodeValue = last.nodeValue.replace(/\s+(\S+)\s*$/, NBSP + "$1");
+        return;
+      }
+      // Single trailing word (usually wrapped in <strong>/<b>): bind the
+      // space at the end of the preceding text node instead.
+      if (nodes.length > 1) {
+        var prev = nodes[nodes.length - 2];
+        if (/\s$/.test(prev.nodeValue)) prev.nodeValue = prev.nodeValue.replace(/\s+$/, NBSP);
+      }
+    });
+  })();
+
   /* ══ CTA → quiz ══════════════════════════════════════════════
      Every in-page CTA points at #quiz. Left as a bare anchor it does
      nothing perceptible when the card is already in view, so it reads
@@ -1373,6 +1501,9 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
     var y = window.scrollY + card.getBoundingClientRect().top - headerH;
     var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     window.scrollTo({ top: Math.max(0, y), behavior: reduce ? "auto" : "smooth" });
+    // Clicking a CTA is itself the "start" decision — don't make them
+    // press a second button to reach question one.
+    if (current === 0) show(1);
     card.classList.remove("pulse");
     void card.offsetWidth;                 // restart the transition
     card.classList.add("pulse");
@@ -1507,20 +1638,45 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
   var qzTitle = $("#qzTitle");
 
   var TITLES = {
-    1: "Let's start with the fun part",
+    0: "See what your dream car really costs",
     2: "Roughly what are we pricing?",
     3: "How far along are you?",
     4: "When do you want the keys?",
+    1: "First, the fun one",
     5: "Now for your actual numbers",
     6: "Where should we send it?",
     7: SHOW_DOLLAR_ESTIMATE ? "Here's what you could save" : "You're all set"
   };
 
+  var qzBody = $(".qz-body");
+  var qzBar  = $("#qzBar");
+
   function show(step) {
+    // Ease the card between sizes — the jump from the compact cover to a
+    // full question is large enough to be jarring otherwise.
+    var from = qzBody ? qzBody.offsetHeight : 0;
+
     $$(".qz-step").forEach(function (s) {
       s.hidden = +s.getAttribute("data-step") !== step;
     });
     current = step;
+
+    if (qzBody && from) {
+      var to = qzBody.offsetHeight;
+      var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (!reduce && to !== from) {
+        qzBody.style.height = from + "px";
+        void qzBody.offsetHeight;                 // force reflow
+        qzBody.style.height = to + "px";
+        window.setTimeout(function () { qzBody.style.height = ""; }, 420);
+      }
+    }
+
+    // The cover carries no progress chrome — there is nothing to show yet.
+    var onCover = step === 0;
+    if (qzBar)   qzBar.hidden = onCover;
+    if (qzLabel) qzLabel.hidden = onCover;
+
     var pct = Math.min(100, Math.round(((step - 1) / TOTAL) * 100));
     if (step === 7) pct = 100;
     if (qzFill)  qzFill.style.width = pct + "%";
@@ -1546,6 +1702,9 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
   }
 
   function err(id) { var e = $(id); if (e) e.classList.add("show"); }
+
+  var startBtn = $("#qzStart");
+  if (startBtn) startBtn.addEventListener("click", function () { show(1); });
 
   /* ── Step 1: dream car ─────────────────────────────────────── */
   var carOther = $("#qzCarOther");
@@ -1622,7 +1781,7 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
   });
 
   $$("[data-back]").forEach(function (btn) {
-    btn.addEventListener("click", function () { show(Math.max(1, current - 1)); });
+    btn.addEventListener("click", function () { show(Math.max(0, current - 1)); });
   });
 
   /* ══ Savings model ═══════════════════════════════════════════
@@ -1787,7 +1946,7 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
   (function initial() {
     var real = window.scrollTo;
     window.scrollTo = function () {};
-    show(1);
+    show(0);
     window.scrollTo = real;
   })();
 })();
