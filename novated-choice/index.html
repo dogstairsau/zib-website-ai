@@ -283,7 +283,9 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
 
 /* quiz result */
 .qz-result-fig { font-family: var(--bebas); font-size: clamp(50px, 8vw, 74px); line-height: 1; color: var(--green); letter-spacing: 0.01em; }
-.qz-result-fig small { font-family: var(--sora); font-size: 15px; font-weight: 400; color: var(--muted); display: block; letter-spacing: 0; margin-top: 4px; }
+.qz-result-fig small { font-family: var(--sora); font-size: 15px; font-weight: 400; color: var(--muted); display: block; letter-spacing: 0; margin-top: 4px; line-height: 1.5; }
+.qz-result-fig.qz-result-words { font-family: var(--sora); font-size: clamp(24px, 3.2vw, 32px); font-weight: 600; letter-spacing: -0.02em; color: var(--ink); line-height: 1.15; }
+.qz-result-fig.qz-result-words small { margin-top: 10px; font-size: 15px; }
 .qz-recap { border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; margin-top: 20px; background: var(--wash-2); display: grid; gap: 9px; }
 .qz-recap .rr { display: flex; justify-content: space-between; gap: 14px; font-size: 14px; }
 .qz-recap .rr dt { color: var(--muted); }
@@ -295,12 +297,13 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
 /* ─── Logo strip ────────────────────────────────────────────────── */
 .logos { padding: clamp(28px, 4vw, 44px) 0; border-bottom: 1px solid var(--line); background: #fff; }
 .logos .lg-label { text-align: center; font-family: var(--inter); font-size: 11.5px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted-2); margin-bottom: 22px; }
-.logos .lg-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 14px clamp(24px, 4vw, 54px); }
-.logos .lg-row span {
-  font-family: var(--sora); font-weight: 600; font-size: clamp(15px, 1.8vw, 19px);
-  letter-spacing: 0.02em; color: #b4bcbe; transition: color 200ms var(--ease);
+.logos .lg-row { display: flex; flex-wrap: wrap; justify-content: center; align-items: center; gap: 18px clamp(22px, 3.6vw, 46px); }
+.logos .lg-row img {
+  height: clamp(26px, 2.8vw, 34px); width: auto; object-fit: contain;
+  filter: grayscale(1); opacity: 0.46;
+  transition: filter 240ms var(--ease), opacity 240ms var(--ease);
 }
-.logos .lg-row span:hover { color: var(--ink-2); }
+.logos .lg-row img:hover { filter: none; opacity: 1; }
 
 /* ─── Savings / comparison ──────────────────────────────────────── */
 .savings { padding: var(--sec) 0; background: var(--wash-2); }
@@ -324,9 +327,10 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
 .sv-photo { border-radius: 18px; overflow: hidden; margin-top: 26px; aspect-ratio: 16 / 10; }
 .sv-photo img { width: 100%; height: 100%; object-fit: cover; }
 @media (max-width: 940px) { .sv-photo { display: none; } }
-.sv-save { display: inline-flex; align-items: baseline; gap: 10px; background: rgba(54,174,30,0.1); border-radius: 100px; padding: 10px 20px; margin-top: 22px; }
-.sv-save b { font-family: var(--bebas); font-size: 27px; color: var(--green); line-height: 1; }
-.sv-save span { font-size: 14.5px; color: var(--ink-2); }
+.sv-saves { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; }
+.sv-save { display: inline-flex; align-items: baseline; gap: 9px; background: rgba(54,174,30,0.1); border-radius: 100px; padding: 10px 19px; }
+.sv-save b { font-family: var(--bebas); font-size: 26px; color: var(--green); line-height: 1; }
+.sv-save span { font-size: 14px; color: var(--ink-2); }
 
 /* ─── What's included ───────────────────────────────────────────── */
 .incl { padding: var(--sec) 0; background: #fff; }
@@ -607,7 +611,7 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
       <!-- ═══ The quiz ═══════════════════════════════════════════════ -->
       <div class="qz-card" id="quiz">
         <div class="qz-head">
-          <span class="qz-kicker">60-second savings estimate</span>
+          <span class="qz-kicker" id="qzKicker">60-second savings estimate</span>
           <div class="qz-title" id="qzTitle">Let's start with the fun part</div>
           <div class="qz-bar"><span id="qzFill"></span></div>
           <span class="qz-steplabel" id="qzLabel">Step 1 of 6</span>
@@ -802,7 +806,7 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
 
           <!-- RESULT -->
           <div class="qz-step" data-step="7" hidden>
-            <span class="eyebrow">Your indicative saving</span>
+            <span class="eyebrow" id="qzResultEyebrow">What happens next</span>
             <div class="qz-result-fig" id="qzFig">$—
               <small>estimated total saving vs a car loan over 5 years</small>
             </div>
@@ -812,7 +816,7 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
             </div>
             <div class="qz-foot">
               <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg>
-              <span>Estimate only — based on typical tax and running-cost assumptions, not personal financial advice. Your consultant will confirm exact figures against your salary and chosen vehicle.</span>
+              <span id="qzResultNote">Your consultant will confirm exact figures against your salary and chosen vehicle. Nothing here is personal financial advice.</span>
             </div>
           </div>
 
@@ -828,8 +832,16 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
   <div class="container">
     <p class="lg-label">Any make, any model — new or late-model used</p>
     <div class="lg-row">
-      <span>TESLA</span><span>TOYOTA</span><span>FORD</span><span>MAZDA</span>
-      <span>BYD</span><span>KIA</span><span>HYUNDAI</span><span>ISUZU</span><span>BMW</span>
+      <img src="/assets/novated-choice/brands/tesla.webp" alt="Tesla" width="200" height="44" loading="lazy" decoding="async">
+      <img src="/assets/novated-choice/brands/toyota.webp" alt="Toyota" width="200" height="44" loading="lazy" decoding="async">
+      <img src="/assets/novated-choice/brands/ford.webp" alt="Ford" width="200" height="44" loading="lazy" decoding="async">
+      <img src="/assets/novated-choice/brands/mazda.webp" alt="Mazda" width="200" height="44" loading="lazy" decoding="async">
+      <img src="/assets/novated-choice/brands/byd.webp" alt="BYD" width="200" height="44" loading="lazy" decoding="async">
+      <img src="/assets/novated-choice/brands/kia.webp" alt="Kia" width="200" height="44" loading="lazy" decoding="async">
+      <img src="/assets/novated-choice/brands/hyundai.webp" alt="Hyundai" width="200" height="44" loading="lazy" decoding="async">
+      <img src="/assets/novated-choice/brands/isuzu.webp" alt="Isuzu" width="200" height="44" loading="lazy" decoding="async">
+      <img src="/assets/novated-choice/brands/bmw.webp" alt="BMW" width="200" height="44" loading="lazy" decoding="async">
+      <img src="/assets/novated-choice/brands/mitsubishi.webp" alt="Mitsubishi" width="200" height="44" loading="lazy" decoding="async">
     </div>
   </div>
 </section>
@@ -843,11 +855,17 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
         <span class="eyebrow">The same car, three ways to pay</span>
         <h2>Where the money actually goes</h2>
         <p class="lede">Buy the car outright and you pay with money that's already been taxed. Take a car loan and you add interest on top. A novated lease takes the payment out <strong>before</strong> tax — and strips the GST off the purchase price.</p>
-        <div class="sv-save">
-          <b>$23,942</b>
-          <span>saved against a car loan, on a $60k vehicle over five years</span>
+        <div class="sv-saves">
+          <div class="sv-save">
+            <b>$23,942</b>
+            <span>less than a car loan</span>
+          </div>
+          <div class="sv-save">
+            <b>$10,080</b>
+            <span>less than buying outright</span>
+          </div>
         </div>
-        <p class="sv-note">Figures are a worked example on a $60,000 vehicle, five-year term, $100k salary, including finance and running costs. Your numbers will differ — the estimate above is built from your answers.</p>
+        <p class="sv-note">Novated Choice's published example: a Tesla Model 3 RWD over five years, NSW driver, $90,000 annual pre-tax salary, 15,000km a year, 8.5% p.a. interest assumption, covering the purchase and running costs. The two figures above are the differences between those published totals — not independently verified savings forecasts. Your own numbers will differ.</p>
         <div class="sv-photo">
           <img src="/assets/novated-choice/ev-charging.webp" alt="An electric vehicle charging at home" width="900" height="900" loading="lazy" decoding="async">
         </div>
@@ -1286,6 +1304,23 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
      ────────────────────────────────────────────────────────────── */
   var LEAD_ENDPOINT = "/api/novated-lead";
 
+  /* ── Numerical claims switch ────────────────────────────────────
+     The savings figure the quiz computes is an indicative model, not a
+     substantiated comparison. Under the ACCC's rules on comparative
+     advertising, a dollar amount shown to a prospect needs a retained
+     calculation behind it — vehicle price and variant, calculation date,
+     rates, fees, running-cost budgets, tax treatment and residual.
+
+     Until Novated Choice has signed that off, the result screen confirms
+     what the prospect told us and promises a personalised written quote
+     instead of naming a number. The figure still travels with the lead so
+     the sales team can see it.
+
+     Flip to true only once the calculation is approved and the
+     disclosures are agreed.
+     ────────────────────────────────────────────────────────────── */
+  var SHOW_DOLLAR_ESTIMATE = false;
+
   var $  = function (s, c) { return (c || document).querySelector(s); };
   var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
 
@@ -1420,7 +1455,7 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
     4: "When do you want the keys?",
     5: "Now for your actual numbers",
     6: "Where should we send it?",
-    7: "Here's what you could save"
+    7: SHOW_DOLLAR_ESTIMATE ? "Here's what you could save" : "You're all set"
   };
 
   function show(step) {
@@ -1433,6 +1468,8 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
     if (qzFill)  qzFill.style.width = pct + "%";
     if (qzTitle) qzTitle.textContent = TITLES[step] || "";
     if (qzLabel) qzLabel.textContent = step === 7 ? "Complete" : "Step " + step + " of " + TOTAL;
+    var kicker = $("#qzKicker");
+    if (kicker && step === 7 && !SHOW_DOLLAR_ESTIMATE) kicker.textContent = "Your personalised quote";
     $$(".qz-err").forEach(function (e) { e.classList.remove("show"); });
     keepCardInView();
   }
@@ -1568,10 +1605,19 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
     var total = calcSaving();
     var fig = $("#qzFig");
     if (fig) {
-      fig.innerHTML = money(total) +
-        '<small>estimated total saving over five years, against a car loan' +
-        (meta.fbtExempt ? ' &middot; includes the FBT exemption on eligible EVs' : '') +
-        '</small>';
+      if (SHOW_DOLLAR_ESTIMATE) {
+        fig.innerHTML = money(total) +
+          '<small>estimated total saving over five years, against a car loan' +
+          (meta.fbtExempt ? ' &middot; includes the FBT exemption on eligible EVs' : '') +
+          '</small>';
+      } else {
+        fig.classList.add("qz-result-words");
+        fig.innerHTML = "You're a strong fit." +
+          '<small>' + (meta.fbtExempt
+            ? 'Your car is an eligible EV, so the FBT exemption is on the table — usually the single biggest saving available.'
+            : 'We\u2019ll put exact numbers against your salary and your car, and send them through today.') +
+          '</small>';
+      }
     }
     var recap = $("#qzRecap");
     if (recap) {
@@ -1583,9 +1629,18 @@ h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
       ];
       recap.innerHTML = rows.map(function (r) {
         return '<div class="rr"><dt>' + r[0] + "</dt><dd>" + r[1] + "</dd></div>";
-      }).join("") +
-        '<div class="rr rr-hi"><dt>Roughly <b>' + money(Math.round(total / 260 / 5) * 5) +
-        ' a week</b> back in your pocket</dt></div>';
+      }).join("") + (SHOW_DOLLAR_ESTIMATE
+        ? '<div class="rr rr-hi"><dt>Roughly <b>' + money(Math.round(total / 260 / 5) * 5) +
+          ' a week</b> back in your pocket</dt></div>'
+        : '<div class="rr rr-hi"><dt>Your written quote lands in your inbox <b>today</b></dt></div>');
+    }
+    var eyebrow = $("#qzResultEyebrow");
+    if (eyebrow) eyebrow.textContent = SHOW_DOLLAR_ESTIMATE ? "Your indicative saving" : "What happens next";
+    var note = $("#qzResultNote");
+    if (note && SHOW_DOLLAR_ESTIMATE) {
+      note.textContent = "Estimate only — based on typical tax and running-cost assumptions, " +
+        "not personal financial advice. Your consultant will confirm exact figures against " +
+        "your salary and chosen vehicle.";
     }
     var capQ = $("#qzCapQ");
     if (capQ && !meta.eligible) {
