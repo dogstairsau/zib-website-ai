@@ -869,3 +869,33 @@ h1, h2, h3, .hero-h, .local-h, .services-h, .stats-h, .faq-h, .cta-title { text-
 .strat-team-grid li { list-style: none; border-top: 1px solid var(--rule); padding-top: 13px; }
 .strat-team-grid .r { font-size: 14.5px; font-weight: 500; }
 .strat-team-grid .d { margin-top: 5px; font-size: 13.5px; line-height: 1.5; color: var(--muted); }
+
+/* ─── Image band · relief between type-heavy sections ───────────────────
+   Sized by aspect-ratio so the row never collapses before the image loads
+   and never reflows the sections under it. */
+.band {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  max-height: 520px;
+  overflow: hidden;
+  background: var(--dim);
+  border-bottom: 0.5px solid var(--rule);
+}
+.band img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.band-cap {
+  position: absolute;
+  left: 0; right: 0; bottom: 0;
+  padding: clamp(20px, 3vw, 36px) var(--pad);
+  font-family: var(--display);
+  font-size: clamp(17px, 2.2vw, 30px);
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  color: #fff;
+  text-wrap: balance;
+  /* The image is dark at the base, but not uniformly — the scrim keeps the
+     caption legible wherever the crop lands. */
+  background: linear-gradient(to top, rgba(0,0,0,0.72), rgba(0,0,0,0));
+}
+.band-cap em { color: var(--accent); font-style: italic; font-weight: 400; }
+@media (max-width: 620px) { .band { aspect-ratio: 4 / 3; } }
