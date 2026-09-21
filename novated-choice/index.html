@@ -1,0 +1,2207 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Novated Leasing | Drive Your Dream Car for Up to 40% Less | Novated Choice</title>
+<meta name="description" content="Pay for your next car with pre-tax salary and save up to 40%. Finance, fuel, insurance, rego, servicing and tyres in one payment. Get your personalised savings estimate in 60 seconds." />
+<!-- Staged on the Zib domain: keep it out of the index so a Novated Choice
+     page doesn't get crawled under zibdigital.com.au, and so the build's
+     own breadcrumb schema (which points at the Zib host) is suppressed.
+     Flip to "index, follow" when this ships on novatedchoice.com.au. -->
+<meta name="robots" content="noindex, nofollow" />
+<link rel="canonical" href="https://novatedchoice.com.au/novated-leasing" />
+
+<!-- Own OG block so the build's Zib defaults don't apply to a client page -->
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Novated Choice" />
+<meta property="og:locale" content="en_AU" />
+<meta property="og:title" content="Drive Your Dream Car for Up to 40% Less | Novated Choice" />
+<meta property="og:description" content="Pay for your next car with pre-tax salary. One payment covers finance, fuel, insurance, rego, servicing and tyres. Get your savings estimate in 60 seconds." />
+<meta property="og:url" content="https://novatedchoice.com.au/novated-leasing" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Drive Your Dream Car for Up to 40% Less | Novated Choice" />
+<meta name="twitter:description" content="Pay for your next car with pre-tax salary. Save up to 40%. Savings estimate in 60 seconds." />
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ══════════════════════════════════════════════════════════════════
+   Novated Choice — high-intent landing page
+   Brand tokens lifted from novatedchoice.com.au (theme CSS).
+   Self-contained: no external CSS/JS, so this folder lifts straight
+   out into its own repo.
+   ══════════════════════════════════════════════════════════════════ */
+
+:root {
+  /* Brand — sampled from the live site */
+  --green:        #1d9647;
+  --green-bright: #36ae1e;
+  --teal:         #15686a;
+  --teal-deep:    #033334;
+  --grad:         linear-gradient(267deg, #36ae1e 0%, #15686a 100%);
+  --grad-deep:    linear-gradient(267deg, #1d9647 0%, #033334 100%);
+
+  --ink:     #1a1a1a;
+  --ink-2:   #3a3a3a;
+  --muted:   #6c7275;
+  --muted-2: #9d9d9d;
+  --line:    #e4e9ea;
+  --line-2:  #d2dadb;
+  --wash:    #eff3f4;
+  --wash-2:  #f7f9f9;
+  --white:   #ffffff;
+  --gold:    #f5a623;
+
+  --sora:  "Sora", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --inter: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --bebas: "Bebas Neue", "Sora", system-ui, sans-serif;
+
+  --max: 1200px;
+  --pad: clamp(20px, 4vw, 48px);
+  --sec: clamp(72px, 9vw, 130px);
+  --r:   20px;
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 90px; }
+body {
+  background: var(--white);
+  color: var(--ink);
+  font-family: var(--sora);
+  font-size: 16px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+img, svg { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button, input, select, textarea { font: inherit; color: inherit; }
+::selection { background: var(--green-bright); color: #fff; }
+:focus-visible { outline: 2px solid var(--green); outline-offset: 3px; border-radius: 4px; }
+
+.container { max-width: var(--max); margin: 0 auto; padding-left: var(--pad); padding-right: var(--pad); }
+.skip-link { position: absolute; left: -9999px; top: 0; background: var(--green); color: #fff; padding: 12px 20px; z-index: 200; border-radius: 0 0 8px 0; }
+.skip-link:focus { left: 0; }
+
+/* ─── Type scale ────────────────────────────────────────────────── */
+.eyebrow {
+  font-family: var(--inter); font-size: 12px; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--green-bright);
+}
+h1, h2, h3 { font-weight: 600; line-height: 1.0; letter-spacing: -0.035em; text-wrap: balance; }
+
+/* ─── No orphans ────────────────────────────────────────────────
+   `balance` evens out short display text so a heading never drops a
+   single word onto its own line. `pretty` does the same job for longer
+   body copy without reflowing every line. Both degrade to normal
+   wrapping in browsers that don't support them. */
+.qz-q, .qz-head .qz-title, .qz-result-fig, .steps-nowtitle, .step-card h3,
+.elig-card b, .incl-item b, .faq-q, .fd-quote, .fd-badge b, .revs-score .rs-meta,
+.sv-name, .lg-label, .qz-opt .oi b, .hero-trust .ht-txt, .sv-save span,
+.incl-foot .one-pay, .faq-help b, .cta-trust span, .step-meta {
+  text-wrap: balance;
+}
+.lede, .qz-hint, .qz-cover-lead, .qz-foot span, .qz-cover-meta li,
+.step-card p, .elig-card p, .incl-item small, .faq-a p, .fd-body p,
+.rev p, .sv-note, .faq-help p, .ft-brand p, .ft-disc, .hero-points li,
+.qz-opt .oi small, .qz-err, .topbar .row span, .qz-recap .rr dt {
+  text-wrap: pretty;
+}
+h1 { font-size: clamp(34px, 5.4vw, 62px); }
+h2 { font-size: clamp(28px, 4.2vw, 48px); }
+h3 { font-size: clamp(19px, 2.2vw, 25px); line-height: 1.25; }
+.lede { font-size: clamp(16px, 1.7vw, 19px); line-height: 1.45; letter-spacing: -0.012em; color: var(--muted); font-weight: 300; }
+.sec-head { max-width: 720px; margin-bottom: clamp(36px, 5vw, 60px); }
+.sec-head .eyebrow { margin-bottom: 14px; display: block; }
+.sec-head p { margin-top: 16px; }
+
+/* ─── Buttons ───────────────────────────────────────────────────── */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 10px;
+  height: 58px; padding: 0 32px; border-radius: 100px; border: 0;
+  font-family: var(--sora); font-size: 16px; font-weight: 600; letter-spacing: 0.01em;
+  cursor: pointer; transition: transform 200ms var(--ease), box-shadow 200ms var(--ease), background 200ms var(--ease);
+  white-space: nowrap; text-align: center;
+}
+.btn-primary {
+  background: var(--grad); color: #fff;
+  border: 1px solid rgba(255,255,255,0.4); border-right: 0; border-bottom: 0;
+  box-shadow: 0 6px 22px rgba(29,150,71,0.28);
+}
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(29,150,71,0.36); }
+.btn-ghost { background: transparent; color: var(--ink); border: 1.5px solid var(--line-2); }
+.btn-ghost:hover { border-color: var(--green); color: var(--green); }
+.btn-white { background: #fff; color: var(--teal-deep); }
+.btn-white:hover { transform: translateY(-2px); box-shadow: 0 12px 32px rgba(0,0,0,0.18); }
+.btn-lg { height: 64px; padding: 0 40px; font-size: 17px; }
+.btn .arr { transition: transform 200ms var(--ease); }
+.btn:hover .arr { transform: translateX(4px); }
+.btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; box-shadow: none; }
+
+/* ─── Trustpilot ────────────────────────────────────────────────
+   Figures are exactly what Trustpilot publishes: TrustScore 4.0,
+   "Great", 7 reviews. The raw distribution is higher (six 5-star and one
+   4-star), but Trustpilot weights low review counts, so quoting the
+   average instead of the published score would contradict the badge a
+   visitor sees when they click through. */
+.tp-stars { display: inline-flex; align-items: center; gap: 2px; vertical-align: middle; }
+.tp-stars i {
+  width: 18px; height: 18px; display: grid; place-items: center;
+  background: #00b67a; border-radius: 2px;
+}
+.tp-stars i.off { background: #dcdce6; }
+.tp-stars svg { width: 13px; height: 13px; fill: #fff; }
+.tp-logo { display: inline-flex; align-items: center; gap: 5px; font-weight: 600; letter-spacing: -0.01em; vertical-align: middle; }
+.tp-logo svg { width: 15px; height: 15px; fill: #00b67a; display: block; }
+/* Nudge the inline logo onto the surrounding text's optical centre. */
+.tp-meta .tp-logo { position: relative; top: -1px; }
+
+.tp-strip {
+  display: flex; align-items: center; gap: 14px 20px; flex-wrap: wrap;
+  background: #fff; border: 1px solid var(--line); border-radius: 16px;
+  padding: 16px 22px;
+}
+.tp-strip .tp-score { font-family: var(--bebas); font-size: 34px; line-height: 1; color: var(--ink); }
+.tp-strip .tp-meta { font-size: 13.5px; color: var(--muted); margin-top: 3px; }
+.tp-strip .tp-meta b { color: var(--ink); font-weight: 600; }
+.tp-strip a { color: var(--green); border-bottom: 1px solid currentColor; font-size: 13.5px; white-space: nowrap; }
+.tp-strip a:hover { color: var(--ink); }
+
+/* ─── Stars ─────────────────────────────────────────────────────── */
+.stars { display: inline-flex; gap: 2px; color: var(--gold); }
+.stars svg { width: 15px; height: 15px; fill: currentColor; }
+
+/* ─── Announcement bar ──────────────────────────────────────────── */
+.topbar {
+  background: var(--teal-deep); color: rgba(255,255,255,0.86);
+  font-size: 13px; font-family: var(--inter);
+}
+.topbar .row { display: flex; align-items: center; justify-content: center; gap: 10px 26px; height: 42px; flex-wrap: wrap; }
+.topbar b { color: #fff; font-weight: 600; }
+.topbar .sep { opacity: 0.3; }
+@media (max-width: 720px) {
+  .topbar .hide-sm { display: none; }
+  .topbar .row { display: block; height: auto; padding-top: 9px; padding-bottom: 9px; text-align: center; font-size: 12.5px; line-height: 1.45; }
+}
+
+/* ─── Header ────────────────────────────────────────────────────── */
+.site-header {
+  position: sticky; top: 0; z-index: 90;
+  background: rgba(255,255,255,0.88);
+  backdrop-filter: saturate(160%) blur(14px);
+  -webkit-backdrop-filter: saturate(160%) blur(14px);
+  border-bottom: 1px solid transparent;
+  transition: border-color 260ms var(--ease), box-shadow 260ms var(--ease);
+}
+.site-header.scrolled { background: rgba(255,255,255,0.97); border-bottom-color: var(--line); box-shadow: 0 4px 20px rgba(0,0,0,0.04); }
+.site-header .row { display: flex; align-items: center; justify-content: space-between; gap: 20px; height: 76px; }
+.brand img { height: 34px; width: auto; }
+.hdr-nav { display: flex; align-items: center; gap: 28px; font-size: 15px; color: var(--ink-2); }
+.hdr-nav a { transition: color 160ms var(--ease); }
+.hdr-nav a:hover { color: var(--green); }
+.hdr-right { display: flex; align-items: center; gap: 18px; }
+.hdr-phone { display: inline-flex; align-items: center; gap: 8px; font-weight: 600; font-size: 15px; color: var(--ink); white-space: nowrap; }
+.hdr-phone svg { width: 16px; height: 16px; stroke: var(--green); fill: none; stroke-width: 2; }
+.hdr-phone:hover { color: var(--green); }
+.site-header .btn { height: 48px; padding: 0 24px; font-size: 15px; }
+@media (max-width: 1000px) { .hdr-nav { display: none; } }
+@media (max-width: 620px) { .hdr-phone span { display: none; } .site-header .row { height: 66px; } .brand img { height: 28px; } }
+
+/* ─── Hero ──────────────────────────────────────────────────────── */
+.hero { position: relative; overflow: hidden; background: #0d2a24; padding: clamp(44px, 6vw, 84px) 0 clamp(52px, 7vw, 88px); }
+.hero-bg { position: absolute; inset: 0; z-index: 0; }
+.hero-bg img { width: 100%; height: 100%; object-fit: cover; object-position: 44% 46%; }
+.hero-bg::after {
+  content: ""; position: absolute; inset: 0;
+  background:
+    linear-gradient(90deg, rgba(4,32,27,0.94) 0%, rgba(4,32,27,0.82) 38%, rgba(4,32,27,0.42) 62%, rgba(4,32,27,0.24) 100%),
+    linear-gradient(180deg, rgba(3,51,52,0.55) 0%, transparent 34%);
+}
+@media (max-width: 980px) {
+  .hero-bg img { object-position: 64% 38%; }
+  .hero-bg::after {
+    background: linear-gradient(180deg, rgba(4,32,27,0.72) 0%, rgba(4,32,27,0.9) 46%, rgba(4,32,27,0.97) 72%);
+  }
+}
+.hero .container { position: relative; z-index: 1; }
+.hero-grid { display: grid; grid-template-columns: 1.02fr 0.98fr; gap: clamp(32px, 4.5vw, 64px); align-items: center; }
+@media (max-width: 980px) { .hero-grid { grid-template-columns: 1fr; gap: 32px; } }
+
+
+.hero-trust { display: inline-flex; align-items: center; gap: 11px; margin-bottom: 24px; flex-wrap: wrap; }
+.hero-trust { width: fit-content; background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.18); border-radius: 100px; padding: 7px 15px; backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); }
+.hero-trust .ht-txt { font-size: 13.5px; color: rgba(255,255,255,0.92); font-family: var(--inter); display: inline-flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.hero-trust .ht-txt b { font-weight: 600; color: #fff; }
+.hero-trust .ht-src { color: rgba(255,255,255,0.62); }
+.hero-trust .g { width: 17px; height: 17px; flex: 0 0 auto; }
+.hero h1 { color: #fff; line-height: 0.93; letter-spacing: -0.045em; }
+.hero h1 em { font-style: normal; color: #4fd634; }
+.hero-sub { margin-top: 20px; max-width: 54ch; }
+.hero .lede { color: rgba(255,255,255,0.82); }
+.hero .lede strong { color: #fff; font-weight: 600; }
+.hero-points { list-style: none; margin-top: 26px; display: grid; gap: 10px; }
+.hero-points li { display: flex; align-items: flex-start; gap: 11px; font-size: 15.5px; line-height: 1.4; letter-spacing: -0.01em; color: rgba(255,255,255,0.86); }
+.hero-points li strong { color: #fff; font-weight: 600; }
+.hero-points .tick { flex: 0 0 auto; margin-top: 6px; }
+.hero-points .tick svg { width: 13px; height: 13px; stroke: #5ede3a; fill: none; stroke-width: 3; }
+
+/* On mobile the order is: headline -> quiz -> supporting points, so the
+   first interaction is on screen without scrolling. This must sit after
+   the base hero rules above — a media query carries no extra specificity,
+   so source order is what lets these win. */
+@media (max-width: 980px) {
+  .hero { padding-top: 22px; }
+  .hero-grid { display: flex; flex-direction: column; align-items: stretch; gap: 18px; }
+  .hero-copy { display: contents; }
+  /* Hug the content and sit flush with the headline below it. */
+  .hero-trust   { order: 1; margin-bottom: 0; align-self: flex-start; padding: 6px 14px; }
+  .hero-copy h1 { order: 2; }
+  .hero-sub     { order: 3; margin-top: 0; font-size: 15.5px; }
+  .qz-card      { order: 4; margin-top: 4px; }
+  .hero-points  { order: 5; margin-top: 4px; }
+}
+
+/* On a laptop the viewport is wide but short — a 13" MacBook leaves
+   roughly 790px once browser chrome is taken out, which pushed the quiz
+   card's button below the fold. These key off height, not width, so a
+   tall desktop monitor is untouched. */
+@media (min-width: 981px) and (max-height: 900px) {
+  .hero { padding-top: clamp(20px, 3vh, 40px); padding-bottom: clamp(24px, 4vh, 48px); }
+  .hero h1 { font-size: clamp(30px, 3.6vw, 46px); }
+  .hero-sub { margin-top: 14px; font-size: 16px; }
+  .hero-points { margin-top: 18px; gap: 8px; }
+  .hero-points li { font-size: 14.5px; }
+  .hero-trust { margin-bottom: 16px; }
+  .qz-head { padding-top: 15px; padding-bottom: 14px; }
+  .qz-head .qz-title { font-size: 18px; }
+  .qz-progress { margin-top: 12px; }
+  .qz-body { padding-top: 18px; padding-bottom: 18px; }
+  .qz-sublabel { margin-top: 12px; }
+  .qz-opts { gap: 8px; }
+  .topbar .row { height: 36px; }
+}
+@media (min-width: 981px) and (max-height: 780px) {
+  .hero h1 { font-size: clamp(28px, 3.2vw, 40px); }
+  .hero-points { display: none; }   /* repeated verbatim further down the page */
+  .hero-sub { font-size: 15.5px; }
+  .qz-opt { padding: 12px 15px; }
+  .qz-chip { padding: 7px 14px; }
+  .qz-actions { margin-top: 16px; }
+  .btn { height: 52px; }
+}
+
+/* ─── Hero quiz card (the conversion engine) ────────────────────── */
+.qz-card {
+  background: #fff; border: 1px solid var(--line); border-radius: 24px;
+  box-shadow: 0 24px 70px rgba(3,51,52,0.13), 0 2px 8px rgba(0,0,0,0.03);
+  overflow: hidden; position: relative;
+}
+.qz-head { background: var(--grad-deep); color: #fff; padding: 22px clamp(22px, 3vw, 32px) 20px; }
+.qz-head .qz-kicker { font-family: var(--inter); font-size: 11.5px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: rgba(255,255,255,0.72); }
+.qz-head .qz-title { font-size: 20px; font-weight: 600; margin-top: 7px; letter-spacing: -0.032em; line-height: 1.15; }
+.qz-progress { display: flex; align-items: center; gap: 14px; margin-top: 15px; }
+.qz-progress[hidden] { display: none; }
+.qz-bar { flex: 1; height: 4px; border-radius: 99px; background: rgba(255,255,255,0.22); overflow: hidden; }
+.qz-bar span { display: block; height: 100%; width: 0%; border-radius: 99px; background: #fff; transition: width 420ms var(--ease); }
+.qz-steplabel { font-family: var(--inter); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.72); white-space: nowrap; }
+
+.qz-body { padding: clamp(22px, 3vw, 32px); }
+.qz-cover-lead { font-size: 15px; line-height: 1.5; color: var(--muted); }
+.qz-cover-lead strong { color: var(--ink); font-weight: 600; }
+.qz-cover .qz-actions { margin-top: 18px; }
+.qz-cover .qz-actions .btn { width: 100%; flex: none; }
+.qz-cover-meta { list-style: none; display: grid; gap: 8px; margin-top: 18px; }
+.qz-cover-meta li { display: flex; align-items: center; gap: 9px; font-size: 13.5px; color: var(--muted); }
+.qz-next { list-style: none; display: grid; gap: 11px; padding: 16px 18px; background: var(--wash-2); border-radius: 14px; }
+.qz-next li { display: flex; align-items: flex-start; gap: 10px; font-size: 14.5px; line-height: 1.45; color: var(--ink-2); }
+.qz-next strong { font-weight: 600; color: var(--ink); }
+.qz-next svg { flex: 0 0 auto; width: 14px; height: 14px; stroke: var(--green); fill: none; stroke-width: 3; margin-top: 4px; }
+.qz-cover-meta svg { flex: 0 0 auto; width: 14px; height: 14px; stroke: var(--green); fill: none; stroke-width: 2; }
+/* The card grows as the quiz opens; easing that keeps it from snapping. */
+.qz-card { transition: box-shadow 420ms var(--ease); }
+@media (prefers-reduced-motion: no-preference) {
+  .qz-body { transition: height 380ms var(--ease); overflow: hidden; }
+}
+.qz-step[hidden] { display: none; }
+.qz-step { animation: qzIn 380ms var(--ease); }
+@keyframes qzIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .qz-step { animation: none; } html { scroll-behavior: auto; } }
+
+.qz-q { font-size: clamp(19px, 2.2vw, 23px); font-weight: 600; letter-spacing: -0.032em; line-height: 1.14; color: var(--ink); }
+.qz-hint { font-size: 14px; color: var(--muted); margin-top: 8px; font-weight: 300; }
+.qz-opts { display: grid; gap: 9px; margin-top: 20px; }
+.qz-opts.two { grid-template-columns: 1fr 1fr; }
+@media (max-width: 330px) { .qz-opts.two { grid-template-columns: 1fr; } }
+.qz-opt {
+  display: flex; align-items: center; gap: 13px; width: 100%; text-align: left;
+  padding: 15px 17px; border: 1.5px solid var(--line); border-radius: 14px; background: #fff;
+  font-size: 15px; line-height: 1.35; color: var(--ink-2); cursor: pointer;
+  transition: border-color 160ms var(--ease), background 160ms var(--ease), transform 160ms var(--ease);
+}
+.qz-opt:hover { border-color: var(--green-bright); background: #f6fbf6; transform: translateX(3px); }
+.qz-opt.sel { border-color: var(--green); background: #f2faf4; }
+.qz-opt .dot { flex: 0 0 auto; width: 20px; height: 20px; border-radius: 50%; border: 1.5px solid var(--line-2); display: grid; place-items: center; transition: inherit; }
+.qz-opt.sel .dot { border-color: var(--green); background: var(--green); }
+.qz-opt .dot svg { width: 10px; height: 10px; stroke: #fff; fill: none; stroke-width: 3.2; opacity: 0; transition: opacity 140ms var(--ease); }
+.qz-opt.sel .dot svg { opacity: 1; }
+.qz-opt .oi { flex: 1; }
+.qz-opt .oi b { display: block; font-weight: 600; color: var(--ink); }
+.qz-opt .oi small { display: block; font-size: 13px; color: var(--muted); margin-top: 2px; font-weight: 300; line-height: 1.4; }
+
+/* car chips */
+.qz-chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+.qz-chip {
+  padding: 9px 16px; border-radius: 100px; border: 1.5px solid var(--line); background: #fff;
+  font-size: 14px; color: var(--ink-2); cursor: pointer;
+  transition: border-color 160ms var(--ease), background 160ms var(--ease), color 160ms var(--ease);
+}
+.qz-chip:hover { border-color: var(--green-bright); color: var(--green); }
+.qz-chip.sel { background: var(--green); border-color: var(--green); color: #fff; }
+.qz-chip-other { border-style: dashed; color: var(--muted); }
+.qz-chip-other:hover { border-style: solid; }
+.qz-chip-other.sel { border-style: solid; }
+
+.qz-input {
+  width: 100%; height: 54px; padding: 0 18px; border: 1.5px solid var(--line); border-radius: 13px;
+  background: #fff; font-size: 15.5px; color: var(--ink); transition: border-color 180ms var(--ease), box-shadow 180ms var(--ease);
+}
+.qz-input:focus { outline: 0; border-color: var(--green); box-shadow: 0 0 0 4px rgba(29,150,71,0.1); }
+.qz-input::placeholder { color: var(--muted-2); }
+.qz-fields { display: grid; gap: 13px; margin-top: 20px; }
+/* An explicit display beats the UA stylesheet's [hidden] rule, so say it. */
+.qz-fields[hidden], .qz-opts[hidden], .qz-chips[hidden] { display: none; }
+.qz-fields.two { grid-template-columns: 1fr 1fr; }
+@media (max-width: 330px) { .qz-fields.two { grid-template-columns: 1fr; } }
+.qz-field label { display: block; font-family: var(--inter); font-size: 11.5px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 7px; }
+.qz-sublabel { display: block; font-family: var(--inter); font-size: 11.5px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin: 16px 0 0; }
+.qz-step > .qz-sublabel:first-child { margin-top: 0; }
+/* The sublabel already spaces the group; drop the grid's own top margin. */
+.qz-sublabel + .qz-opts { margin-top: 8px; }
+
+.qz-actions { display: flex; align-items: center; gap: 14px; margin-top: 22px; flex-wrap: wrap; }
+.qz-actions .btn { flex: 1; min-width: 180px; }
+.qz-back { background: none; border: 0; font-size: 13.5px; color: var(--muted); cursor: pointer; padding: 8px 2px; font-family: var(--inter); }
+.qz-back:hover { color: var(--ink); }
+.qz-foot { margin-top: 16px; font-size: 12.5px; color: var(--muted-2); line-height: 1.5; display: flex; align-items: flex-start; gap: 8px; }
+.qz-foot svg { flex: 0 0 auto; width: 13px; height: 13px; stroke: var(--green); fill: none; stroke-width: 2.2; margin-top: 3px; }
+.qz-err { font-size: 13.5px; color: #c62828; margin-top: 12px; display: none; }
+.qz-err.show { display: block; }
+
+/* quiz result */
+.qz-result-fig { font-family: var(--bebas); font-size: clamp(50px, 8vw, 74px); line-height: 1; color: var(--green); letter-spacing: 0.01em; }
+.qz-result-fig small { font-family: var(--sora); font-size: 15px; font-weight: 400; color: var(--muted); display: block; letter-spacing: 0; margin-top: 4px; line-height: 1.5; }
+.qz-result-fig.qz-result-words { font-family: var(--sora); font-size: clamp(24px, 3.2vw, 32px); font-weight: 600; letter-spacing: -0.02em; color: var(--ink); line-height: 1.15; }
+.qz-result-fig.qz-result-words small { margin-top: 10px; font-size: 15px; }
+.qz-recap { border: 1px solid var(--line); border-radius: 14px; padding: 16px 18px; margin-top: 20px; background: var(--wash-2); display: grid; gap: 9px; }
+.qz-recap .rr { display: flex; justify-content: space-between; gap: 14px; font-size: 14px; }
+.qz-recap .rr dt { color: var(--muted); }
+.qz-recap .rr dd { color: var(--ink); font-weight: 600; text-align: right; }
+.qz-recap .rr-hi { border-top: 1px solid var(--line); padding-top: 11px; margin-top: 2px; }
+.qz-recap .rr-hi dt { color: var(--ink-2); font-size: 14.5px; }
+.qz-recap .rr-hi b { color: var(--green); font-weight: 600; }
+
+/* ─── Logo strip ────────────────────────────────────────────────── */
+.logos { padding: clamp(28px, 4vw, 44px) 0; border-bottom: 1px solid var(--line); background: #fff; }
+.logos .lg-label { text-align: center; font-family: var(--inter); font-size: 11.5px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--muted-2); margin-bottom: 22px; }
+.lg-marquee {
+  position: relative; overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
+          mask-image: linear-gradient(90deg, transparent 0, #000 7%, #000 93%, transparent 100%);
+}
+.logos .lg-row {
+  display: flex; align-items: center; width: max-content;
+  gap: clamp(30px, 4vw, 56px);
+  animation: lgScroll 42s linear infinite;
+}
+.lg-marquee:hover .lg-row,
+.lg-marquee:focus-within .lg-row { animation-play-state: paused; }
+@keyframes lgScroll { from { transform: translate3d(0,0,0); } to { transform: translate3d(-50%,0,0); } }
+.logos .lg-row img {
+  height: clamp(23px, 2.5vw, 28px); width: auto; object-fit: contain;
+  filter: grayscale(1); opacity: 0.46;
+  transition: filter 240ms var(--ease), opacity 240ms var(--ease);
+}
+.logos .lg-row img:hover { filter: none; opacity: 1; }
+/* No motion: fall back to a row the reader scrolls themselves. */
+@media (prefers-reduced-motion: reduce) {
+  .logos .lg-row { animation: none; }
+  .lg-marquee { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+}
+
+/* ─── Savings / comparison ──────────────────────────────────────── */
+.savings { padding: var(--sec) 0; background: var(--wash-2); }
+.sv-grid { display: grid; grid-template-columns: 0.92fr 1.08fr; gap: clamp(32px, 5vw, 66px); align-items: center; }
+@media (max-width: 940px) { .sv-grid { grid-template-columns: 1fr; } }
+
+.sv-bars { display: grid; gap: 16px; }
+.sv-subject { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 20px 22px; }
+.sv-subject-head { font-size: 16px; font-weight: 600; letter-spacing: -0.025em; color: var(--ink); text-wrap: balance; }
+.sv-subject-facts { list-style: none; display: flex; flex-wrap: wrap; gap: 7px; margin: 14px 0 0; }
+.sv-subject-facts li {
+  font-family: var(--inter); font-size: 12px; font-weight: 500; color: var(--ink-2);
+  background: var(--wash); border-radius: 100px; padding: 5px 12px; white-space: nowrap;
+}
+.sv-subject-note { font-size: 13px; line-height: 1.5; color: var(--muted); margin-top: 14px; }
+.sv-subject-note strong { color: var(--ink-2); font-weight: 600; }
+.sv-bar { background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 20px 22px; position: relative; overflow: hidden; }
+.sv-bar.best { border-color: var(--green); box-shadow: 0 10px 34px rgba(29,150,71,0.14); }
+.sv-bar .sv-top { display: flex; align-items: baseline; justify-content: space-between; gap: 14px; margin-bottom: 13px; }
+.sv-bar .sv-name { font-size: 15.5px; font-weight: 600; color: var(--ink); }
+.sv-bar .sv-amt { font-family: var(--bebas); font-size: 30px; line-height: 1; color: var(--ink); letter-spacing: 0.01em; }
+.sv-bar.best .sv-amt { color: var(--green); }
+.sv-track { height: 9px; border-radius: 99px; background: var(--wash); overflow: hidden; }
+.sv-fill { display: block; height: 100%; border-radius: 99px; width: 0; transition: width 1100ms var(--ease); }
+.sv-bar.best .sv-fill { background: var(--grad); }
+.sv-bar:not(.best) .sv-fill { background: #ccd5d6; }
+.sv-tag { position: absolute; top: 14px; right: 20px; font-family: var(--inter); font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); background: rgba(54,174,30,0.11); padding: 4px 10px; border-radius: 100px; }
+.sv-bar.best { padding-top: 40px; }
+.sv-note { font-size: 13px; color: var(--muted-2); margin-top: 18px; line-height: 1.55; }
+.sv-photo { border-radius: 18px; overflow: hidden; margin-top: 26px; aspect-ratio: 16 / 10; }
+.sv-photo img { width: 100%; height: 100%; object-fit: cover; }
+@media (max-width: 940px) { .sv-photo { display: none; } }
+.sv-saves-label { font-size: 14.5px; line-height: 1.5; color: var(--ink-2); margin-top: 24px; text-wrap: pretty; }
+.sv-saves-label strong { font-weight: 600; color: var(--ink); }
+.sv-saves { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+.sv-save { display: inline-flex; align-items: baseline; gap: 9px; background: rgba(54,174,30,0.1); border-radius: 100px; padding: 10px 19px; }
+.sv-save b { font-family: var(--bebas); font-size: 26px; color: var(--green); line-height: 1; }
+.sv-save span { font-size: 14px; color: var(--ink-2); }
+
+/* ─── What's included ───────────────────────────────────────────── */
+.incl { padding: var(--sec) 0; background: #fff; }
+.incl-wrap { --band: clamp(190px, 26vw, 330px); background: var(--teal-deep); border-radius: 22px; padding: clamp(34px, 5vw, 62px); color: #fff; position: relative; overflow: hidden; }
+.incl-bg { position: absolute; top: 0; left: 0; right: 0; height: var(--band); z-index: 0; }
+.incl-bg img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 58%; }
+.incl-bg::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(3,40,38,0.28) 0%, rgba(3,40,38,0.55) 42%, rgba(3,40,38,0.9) 76%, var(--teal-deep) 100%);
+}
+
+.incl-wrap > *:not(.incl-bg) { position: relative; z-index: 1; }
+.incl-wrap h2 { color: #fff; max-width: 17ch; }
+/* Clear the photo band, minus the panel's own top padding. */
+.incl-wrap .eyebrow { display: block; margin-top: calc(var(--band) - clamp(34px, 5vw, 62px) - 14px); }
+.incl-wrap .lede { color: rgba(255,255,255,0.75); margin-top: 16px; max-width: 52ch; }
+.incl-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(168px, 1fr)); gap: 14px; margin-top: clamp(32px, 4vw, 48px); }
+.incl-item { background: rgba(255,255,255,0.055); border: 1px solid rgba(255,255,255,0.14); border-radius: 14px; padding: 20px 18px; transition: background 220ms var(--ease), transform 220ms var(--ease); }
+.incl-item:hover { background: rgba(255,255,255,0.11); transform: translateY(-3px); }
+.incl-item small { color: rgba(255,255,255,0.7); }
+.incl-item .ic { display: block; margin-bottom: 12px; }
+.incl-item .ic svg { width: 19px; height: 19px; stroke: var(--green-bright); fill: none; stroke-width: 1.7; }
+.incl-item b { display: block; font-size: 15px; font-weight: 600; }
+.incl-item small { display: block; font-size: 13px; color: rgba(255,255,255,0.64); margin-top: 5px; line-height: 1.45; font-weight: 300; }
+.incl-foot { margin-top: clamp(30px, 4vw, 44px); display: flex; align-items: center; gap: 20px; flex-wrap: wrap; }
+.incl-foot .one-pay { font-size: 15px; color: rgba(255,255,255,0.8); }
+.incl-foot .one-pay b { color: #fff; font-weight: 600; }
+
+/* ─── How it works — sticky step flow ───────────────────────────── */
+.steps { padding: var(--sec) 0; background: var(--wash-2); }
+.steps-grid { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: clamp(30px, 5vw, 70px); align-items: start; }
+@media (max-width: 940px) { .steps-grid { grid-template-columns: 1fr; gap: 28px; } }
+.steps-sticky { position: sticky; top: 118px; }
+.steps-counter { font-family: var(--bebas); font-size: clamp(76px, 12vw, 128px); line-height: 0.86; color: var(--green); letter-spacing: 0.01em; display: block; }
+.steps-counter .tot { color: var(--line-2); }
+.steps-nowtitle { font-size: clamp(20px, 2.4vw, 27px); font-weight: 600; letter-spacing: -0.02em; margin-top: 14px; min-height: 2.4em; line-height: 1.2; }
+.steps-track { display: flex; gap: 7px; margin-top: 22px; }
+.steps-track i { flex: 1; height: 3px; border-radius: 99px; background: var(--line-2); transition: background 320ms var(--ease); }
+.steps-track i.on { background: var(--green); }
+/* Photos are stacked and crossfaded so the frame never resizes or jumps
+   as the active step changes. aspect-ratio holds the box even though
+   every image is absolutely positioned. */
+.steps-photo { position: relative; border-radius: 18px; overflow: hidden; margin-top: 30px; aspect-ratio: 4 / 3; background: var(--wash); }
+.steps-photo img {
+  position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover;
+  opacity: 0; transition: opacity 520ms var(--ease);
+}
+.steps-photo img.on { opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .steps-photo img { transition: none; } }
+@media (max-width: 940px) { .steps-photo { display: none; } }
+
+/* Compact sticky progress bar on mobile, where the tall left column would
+   otherwise scroll away and leave a stale counter behind.
+   Must sit after the .steps-* base rules above: a media query adds no
+   specificity, so source order is what lets these win.
+   Background is solid, not translucent — card text ghosted through a
+   0.93-alpha fill as the cards scrolled under it. */
+@media (max-width: 940px) {
+  .steps-sticky {
+    position: sticky; top: 66px; z-index: 20;
+    display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap;
+    background: var(--wash-2);
+    padding: 11px 0 12px;
+    border-bottom: 1px solid var(--line);
+  }
+  .steps-counter { font-size: 30px; line-height: 1; }
+  .steps-nowtitle { font-size: 16px; margin-top: 0; min-height: 0; flex: 1; letter-spacing: -0.02em; }
+  .steps-track { width: 100%; margin-top: 2px; }
+}
+
+.step-list { display: grid; gap: 14px; }
+.step-card {
+  background: #fff; border: 1px solid var(--line); border-radius: 18px;
+  padding: clamp(22px, 3vw, 30px); display: flex; gap: 20px; align-items: flex-start;
+  transition: border-color 380ms var(--ease), box-shadow 380ms var(--ease), transform 380ms var(--ease), opacity 380ms var(--ease);
+  opacity: 0.56;
+}
+.step-card.active { opacity: 1; border-color: var(--green); box-shadow: 0 14px 44px rgba(3,51,52,0.1); transform: translateX(6px); }
+@media (max-width: 620px) { .step-card { flex-direction: column; gap: 14px; padding: 22px; } .step-card.active { transform: none; } }
+.step-num {
+  flex: 0 0 auto; width: 46px; height: 46px; border-radius: 13px;
+  display: grid; place-items: center; font-family: var(--bebas); font-size: 23px; line-height: 1;
+  background: var(--wash); color: var(--muted); transition: inherit; letter-spacing: 0.02em;
+}
+.step-card.active .step-num { background: var(--grad); color: #fff; }
+.step-card h3 { font-size: clamp(17px, 2vw, 21px); }
+.step-card p { font-size: 15px; color: var(--muted); margin-top: 9px; line-height: 1.58; font-weight: 300; }
+.step-meta { display: inline-flex; align-items: center; gap: 7px; margin-top: 14px; font-family: var(--inter); font-size: 12px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; color: var(--green); }
+.step-meta svg { width: 13px; height: 13px; stroke: currentColor; fill: none; stroke-width: 2.2; }
+
+/* ─── Founder ───────────────────────────────────────────────────── */
+.founder { padding: var(--sec) 0; background: #fff; }
+.fd-grid { display: grid; grid-template-columns: 0.82fr 1.18fr; gap: clamp(30px, 5vw, 64px); align-items: center; }
+@media (max-width: 880px) { .fd-grid { grid-template-columns: 1fr; } }
+.fd-photo { position: relative; border-radius: 22px; overflow: hidden; background: var(--wash); aspect-ratio: 4 / 5; }
+.fd-photo img { width: 100%; height: 100%; object-fit: cover; }
+.fd-photo .fd-ph {
+  position: absolute; inset: 0; display: grid; place-items: center; text-align: center; padding: 28px;
+  background: linear-gradient(150deg, #e8eff0 0%, #d8e4e5 100%); color: var(--muted);
+  font-family: var(--inter); font-size: 12.5px; letter-spacing: 0.06em; line-height: 1.7;
+}
+.fd-badge {
+  position: absolute; left: 18px; bottom: 18px; right: 18px; background: rgba(255,255,255,0.95);
+  backdrop-filter: blur(8px); border-radius: 14px; padding: 13px 16px;
+}
+.fd-badge b { display: block; font-size: 15.5px; font-weight: 600; }
+.fd-badge small { display: block; font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+.fd-quote { font-size: clamp(20px, 2.7vw, 30px); font-weight: 400; line-height: 1.38; letter-spacing: -0.02em; color: var(--ink); text-wrap: balance; }
+
+.fd-body { margin-top: 24px; display: grid; gap: 15px; }
+.fd-body p { font-size: 15.5px; line-height: 1.68; color: var(--muted); font-weight: 300; }
+.fd-sign { margin-top: 26px; display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+.fd-sign .fs-name { font-size: 15.5px; font-weight: 600; }
+.fd-sign .fs-role { font-size: 13.5px; color: var(--muted); }
+
+/* ─── Testimonials ──────────────────────────────────────────────── */
+.revs { padding: var(--sec) 0; background: var(--wash-2); }
+.revs-top { display: flex; justify-content: space-between; align-items: flex-end; gap: 28px; flex-wrap: wrap; margin-bottom: clamp(32px, 4vw, 48px); }
+.revs-score { display: flex; align-items: center; gap: 15px; background: #fff; border: 1px solid var(--line); border-radius: 16px; padding: 15px 22px; }
+.revs-score .rs-num { font-family: var(--bebas); font-size: 42px; line-height: 1; color: var(--ink); }
+.revs-score .rs-meta { font-size: 13px; color: var(--muted); margin-top: 3px; }
+.rev-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 16px; }
+.rev {
+  background: #fff; border: 1px solid var(--line); border-radius: 17px; padding: 26px 24px;
+  display: flex; flex-direction: column; transition: transform 240ms var(--ease), box-shadow 240ms var(--ease);
+}
+.rev:hover { transform: translateY(-4px); box-shadow: 0 14px 38px rgba(3,51,52,0.09); }
+.rev .stars { margin-bottom: 14px; }
+.rev p { font-size: 15px; line-height: 1.62; color: var(--ink-2); flex: 1; font-weight: 300; }
+.rev .rv-by { display: flex; align-items: center; gap: 11px; margin-top: 20px; padding-top: 18px; border-top: 1px solid var(--line); }
+.rev .rv-av { width: 36px; height: 36px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-family: var(--inter); font-size: 13px; font-weight: 700; flex: 0 0 auto; }
+.rev .rv-nm { font-size: 14.5px; font-weight: 600; }
+.rev .rv-src { font-size: 12.5px; color: var(--muted-2); }
+
+/* ─── Eligibility ───────────────────────────────────────────────── */
+.elig { padding: var(--sec) 0; background: #fff; }
+.elig-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(255px, 1fr)); gap: 16px; }
+.elig-card { border: 1px solid var(--line); border-radius: 17px; padding: 26px 24px; transition: border-color 220ms var(--ease), transform 220ms var(--ease); }
+.elig-card:hover { border-color: var(--green-bright); transform: translateY(-3px); }
+.elig-card .ec-ic { display: block; margin-bottom: 14px; }
+.elig-card .ec-ic svg { width: 20px; height: 20px; stroke: var(--green); fill: none; stroke-width: 1.7; }
+.elig-card b { display: block; font-size: 16.5px; font-weight: 600; letter-spacing: -0.01em; }
+.elig-card p { font-size: 14.5px; color: var(--muted); margin-top: 8px; line-height: 1.58; font-weight: 300; }
+
+/* ─── FAQ ───────────────────────────────────────────────────────── */
+.faq { padding: var(--sec) 0; background: var(--wash-2); }
+.faq-grid { display: grid; grid-template-columns: 0.82fr 1.18fr; gap: clamp(30px, 5vw, 56px); align-items: start; }
+.faq-aside h2 { font-size: clamp(26px, 3.2vw, 38px); }
+@media (max-width: 880px) { .faq-grid { grid-template-columns: 1fr; } }
+.faq-aside { position: sticky; top: 118px; }
+@media (max-width: 880px) { .faq-aside { position: static; } }
+.faq-help { background: #fff; border: 1px solid var(--line); border-radius: 18px; padding: 26px 24px; margin-top: 26px; }
+.faq-help b { display: block; font-size: 16.5px; font-weight: 600; }
+.faq-help p { font-size: 14.5px; color: var(--muted); margin: 8px 0 18px; line-height: 1.55; font-weight: 300; }
+.faq-help .btn { width: 100%; }
+.faq-list { display: grid; gap: 0; }
+.faq-item { border-bottom: 1px solid var(--line-2); }
+.faq-q {
+  width: 100%; display: flex; align-items: center; justify-content: space-between; gap: 18px;
+  padding: 24px 0; background: none; border: 0; text-align: left; cursor: pointer;
+  font-size: clamp(16px, 1.8vw, 18.5px); font-weight: 500; color: var(--ink); letter-spacing: -0.015em;
+  transition: color 180ms var(--ease);
+}
+.faq-q:hover { color: var(--green); }
+.faq-item.open .faq-q { color: var(--green); }
+.faq-ic { flex: 0 0 auto; display: grid; place-items: center; }
+.faq-ic svg { width: 14px; height: 14px; stroke: var(--muted-2); fill: none; stroke-width: 2.2; transition: transform 300ms var(--ease), stroke 180ms var(--ease); }
+.faq-item.open .faq-ic svg { transform: rotate(45deg); stroke: var(--green); }
+.faq-a { max-height: 0; overflow: hidden; transition: max-height 380ms var(--ease); }
+.faq-a p { font-size: 15.5px; line-height: 1.68; color: var(--muted); padding-bottom: 26px; max-width: 64ch; font-weight: 300; }
+
+/* ─── Final CTA ─────────────────────────────────────────────────── */
+.cta { padding: var(--sec) 0; background: #fff; }
+.cta-wrap { background: var(--grad-deep); border-radius: 26px; padding: clamp(40px, 6vw, 76px) clamp(28px, 5vw, 62px); text-align: center; color: #fff; position: relative; overflow: hidden; }
+.cta-wrap::after { content: ""; position: absolute; top: -200px; right: -140px; width: 600px; height: 600px; background: radial-gradient(circle, rgba(54,174,30,0.32) 0%, transparent 68%); pointer-events: none; }
+.cta-wrap > * { position: relative; z-index: 1; }
+.cta-wrap h2 { color: #fff; max-width: 19ch; margin: 0 auto; }
+.cta-wrap .lede { color: rgba(255,255,255,0.76); margin: 18px auto 0; max-width: 50ch; }
+.cta-btns { display: flex; gap: 14px; justify-content: center; margin-top: 34px; flex-wrap: wrap; }
+.cta-trust { display: flex; gap: 12px 30px; justify-content: center; flex-wrap: wrap; margin-top: 32px; font-size: 13.5px; color: rgba(255,255,255,0.68); }
+.cta-trust span { display: inline-flex; align-items: center; gap: 8px; }
+.cta-trust svg { width: 14px; height: 14px; stroke: var(--green-bright); fill: none; stroke-width: 2.4; }
+
+/* ─── Footer ────────────────────────────────────────────────────── */
+.site-footer { background: var(--teal-deep); color: rgba(255,255,255,0.62); padding: clamp(44px, 6vw, 68px) 0 32px; font-size: 14px; }
+.ft-top { display: flex; justify-content: space-between; gap: 32px; flex-wrap: wrap; padding-bottom: 32px; border-bottom: 1px solid rgba(255,255,255,0.12); }
+.ft-brand img { height: 32px; width: auto; }
+.ft-brand p { margin-top: 16px; max-width: 34ch; line-height: 1.6; font-weight: 300; }
+.ft-cols { display: flex; gap: clamp(30px, 6vw, 72px); flex-wrap: wrap; }
+.ft-col h4 { font-family: var(--inter); font-size: 11.5px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: #fff; margin-bottom: 15px; }
+.ft-col ul { list-style: none; display: grid; gap: 10px; }
+.ft-col a { transition: color 160ms var(--ease); }
+.ft-col a:hover { color: var(--green-bright); }
+.ft-bot { padding-top: 26px; display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap; font-size: 13px; color: rgba(255,255,255,0.45); }
+.ft-disc { margin-top: 20px; font-size: 12.5px; line-height: 1.6; color: rgba(255,255,255,0.4); max-width: 88ch; }
+
+/* ─── CTA focus pulse ───────────────────────────────────────────
+   A plain #quiz anchor reads as dead when the card is already on
+   screen. Clicking any CTA now rings the card and focuses it. */
+.qz-card { transition: box-shadow 420ms var(--ease); }
+.qz-card.pulse { box-shadow: 0 0 0 4px rgba(54,174,30,0.34), 0 24px 70px rgba(3,51,52,0.16); }
+@media (prefers-reduced-motion: reduce) { .qz-card { transition: none; } }
+
+/* ─── Sticky mobile CTA ─────────────────────────────────────────── */
+.mob-cta {
+  position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 80; display: none;
+  gap: 10px; padding: 10px; background: rgba(255,255,255,0.96);
+  backdrop-filter: blur(12px); border: 1px solid var(--line); border-radius: 100px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.14);
+  transform: translateY(130%); transition: transform 340ms var(--ease);
+}
+.mob-cta.show { transform: none; }
+.mob-cta .btn { flex: 1; height: 50px; font-size: 15px; padding: 0 18px; }
+.mob-cta .btn-ghost { flex: 0 0 auto; width: 50px; padding: 0; border-radius: 50%; }
+.mob-cta .btn-ghost svg { width: 18px; height: 18px; stroke: var(--green); fill: none; stroke-width: 2; }
+@media (max-width: 860px) { .mob-cta { display: flex; } body { padding-bottom: 76px; } }
+
+/* ─── Reveal on scroll ──────────────────────────────────────────── */
+.reveal { opacity: 0; transform: translateY(22px); transition: opacity 700ms var(--ease), transform 700ms var(--ease); }
+.reveal.in { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+</style>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<!-- ═══ Announcement bar ═══════════════════════════════════════════ -->
+<div class="topbar">
+  <div class="container row">
+    <span><b>EV savings:</b> eligible electric vehicles are exempt from FBT — save thousands more</span>
+    <span class="sep hide-sm">|</span>
+    <span class="hide-sm">Talk to a real person: <b>1300 050 550</b></span>
+  </div>
+</div>
+
+<!-- ═══ Header ═════════════════════════════════════════════════════ -->
+<header class="site-header" id="siteHeader">
+  <div class="container row">
+    <a class="brand" href="/" aria-label="Novated Choice home">
+      <img src="/assets/novated-choice/logo-dark.png" alt="Novated Choice" width="338" height="101">
+    </a>
+    <nav class="hdr-nav" aria-label="Primary">
+      <a href="#savings">Your savings</a>
+      <a href="#how">How it works</a>
+      <a href="#reviews">Reviews</a>
+      <a href="#faq">FAQs</a>
+    </nav>
+    <div class="hdr-right">
+      <a class="hdr-phone" href="tel:1300050550">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg>
+        <span>1300 050 550</span>
+      </a>
+      <a class="btn btn-primary" href="#quiz">Get my estimate</a>
+    </div>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ═══ Hero ═══════════════════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-bg" aria-hidden="true">
+    <img src="/assets/novated-choice/hero-driveway.webp" alt="" width="1024" height="688" fetchpriority="high" decoding="async">
+  </div>
+  <div class="container">
+    <div class="hero-grid">
+
+      <div class="hero-copy">
+        <div class="hero-trust">
+          <div class="ht-txt">
+            <span class="tp-stars" aria-hidden="true">
+              <i><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg></i>
+              <i><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg></i>
+              <i><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg></i>
+              <i><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg></i>
+              <i class="off"><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg></i>
+            </span>
+            <b>Rated Great</b>
+            <span class="ht-src">on</span>
+            <span class="tp-logo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>Trustpilot</span>
+          </div>
+        </div>
+
+        <h1>The car you've always wanted — for <em>up to 40% less</em></h1>
+
+        <p class="lede hero-sub">A novated lease pays for your car out of your <strong>pre-tax</strong> salary, with running costs bundled in. Same car, same driveway — thousands less out of pocket.</p>
+
+        <ul class="hero-points">
+          <li>
+            <span class="tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
+            <span>No GST on the purchase price — an instant saving of up to <strong>$6,334</strong></span>
+          </li>
+          <li>
+            <span class="tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
+            <span>Eligible EVs are <strong>FBT-exempt</strong> — the biggest saving on the table</span>
+          </li>
+          <li>
+            <span class="tick" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
+            <span>One person handles everything, from first quote to first drive</span>
+          </li>
+        </ul>
+      </div>
+
+      <!-- ═══ The quiz ═══════════════════════════════════════════════ -->
+      <div class="qz-card" id="quiz">
+        <div class="qz-head">
+          <span class="qz-kicker" id="qzKicker">60-second savings estimate</span>
+          <div class="qz-title" id="qzTitle">Let's start with the fun part</div>
+          <div class="qz-progress" id="qzProgress" hidden>
+            <div class="qz-bar" id="qzBar"><span id="qzFill"></span></div>
+            <span class="qz-steplabel" id="qzLabel">Step 1 of 3</span>
+          </div>
+        </div>
+
+        <div class="qz-body">
+
+          <!-- STEP 0 — compact cover. The full first question filled the
+               whole mobile fold, which reads as work before the value
+               proposition has landed. -->
+          <div class="qz-step qz-cover" data-step="0">
+            <p class="qz-cover-lead">Two quick sets of questions — starting with the fun one, <strong>the car you've always wanted</strong>. No credit check, no obligation.</p>
+            <div class="qz-actions">
+              <button type="button" class="btn btn-primary" id="qzStart">Start now <span class="arr">&rarr;</span></button>
+            </div>
+            <ul class="qz-cover-meta">
+              <li><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>About 30 seconds</li>
+              <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 13 4 4L19 7"/></svg>Written quote the same day</li>
+            </ul>
+          </div>
+
+          <!-- SET 1 — the car and what it's worth. -->
+          <div class="qz-step" data-step="1" hidden>
+            <span class="qz-sublabel">The car you've always wanted</span>
+            <div class="qz-chips" id="qzCars">
+              <button type="button" class="qz-chip" data-car="Tesla Model 3">Tesla Model 3</button>
+              <button type="button" class="qz-chip" data-car="Tesla Model Y">Tesla Model Y</button>
+              <button type="button" class="qz-chip" data-car="Ford Ranger">Ford Ranger</button>
+              <button type="button" class="qz-chip" data-car="Toyota RAV4">Toyota RAV4</button>
+              <button type="button" class="qz-chip" data-car="BYD Sealion 7">BYD Sealion 7</button>
+              <button type="button" class="qz-chip qz-chip-other" id="qzCarOtherToggle">Something else&hellip;</button>
+            </div>
+            <div class="qz-fields" id="qzCarOtherWrap" hidden>
+              <div class="qz-field">
+                <input class="qz-input" type="text" id="qzCarOther" placeholder="e.g. BMW i4, Prado, something fast&hellip;" autocomplete="off">
+              </div>
+            </div>
+            <span class="qz-sublabel">Roughly what's it worth?</span>
+            <div class="qz-opts two" data-group="budget">
+              <button type="button" class="qz-opt" data-val="Under $45,000" data-price="38000">
+                <span class="dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
+                <span class="oi"><b>Under $45k</b></span>
+              </button>
+              <button type="button" class="qz-opt" data-val="$45,000 – $75,000" data-price="58000">
+                <span class="dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
+                <span class="oi"><b>$45k – $75k</b></span>
+              </button>
+              <button type="button" class="qz-opt" data-val="$75,000 – $95,000" data-price="84000">
+                <span class="dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
+                <span class="oi"><b>$75k – $95k</b></span>
+              </button>
+              <button type="button" class="qz-opt" data-val="Over $95,000" data-price="110000">
+                <span class="dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
+                <span class="oi"><b>$95k+</b></span>
+              </button>
+            </div>
+            <div class="qz-actions">
+              <button type="button" class="qz-back" data-back>&larr; Back</button>
+              <button type="button" class="btn btn-primary" data-next>Continue <span class="arr">&rarr;</span></button>
+            </div>
+            <p class="qz-err" id="qzErr1">Pick a car and a price range to keep going.</p>
+          </div>
+
+          <!-- SET 2 — the two questions that decide lead quality. -->
+          <div class="qz-step" data-step="2" hidden>
+            <span class="qz-sublabel">How far along are you?</span>
+            <div class="qz-opts two" data-group="phase">
+              <button type="button" class="qz-opt" data-val="Ready now — chosen the car" data-score="4">
+                <span class="dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
+                <span class="oi"><b>I know the car I want</b></span>
+              </button>
+              <button type="button" class="qz-opt" data-val="Comparing — shortlisted a few" data-score="3">
+                <span class="dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
+                <span class="oi"><b>Shortlisted a few</b></span>
+              </button>
+              <button type="button" class="qz-opt" data-val="Early — started looking" data-score="2">
+                <span class="dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
+                <span class="oi"><b>Just started looking</b></span>
+              </button>
+              <button type="button" class="qz-opt" data-val="Researching savings only" data-score="1">
+                <span class="dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
+                <span class="oi"><b>Just seeing the savings</b></span>
+              </button>
+            </div>
+            <span class="qz-sublabel">When do you want to be driving it?</span>
+            <div class="qz-opts two" data-group="timing">
+              <button type="button" class="qz-opt" data-val="ASAP" data-score="4">
+                <span class="dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
+                <span class="oi"><b>ASAP</b></span>
+              </button>
+              <button type="button" class="qz-opt" data-val="1–3 months" data-score="3">
+                <span class="dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
+                <span class="oi"><b>1–3 months</b></span>
+              </button>
+              <button type="button" class="qz-opt" data-val="3–6 months" data-score="2">
+                <span class="dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
+                <span class="oi"><b>3–6 months</b></span>
+              </button>
+              <button type="button" class="qz-opt" data-val="Just exploring" data-score="1">
+                <span class="dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
+                <span class="oi"><b>Not sure yet</b></span>
+              </button>
+            </div>
+            <div class="qz-actions">
+              <button type="button" class="qz-back" data-back>&larr; Back</button>
+              <button type="button" class="btn btn-primary" data-next>Continue <span class="arr">&rarr;</span></button>
+            </div>
+            <p class="qz-err" id="qzErr2">Answer both to keep going.</p>
+          </div>
+
+          <!-- CONTACT — the lead is captured here, before the optional
+               detail, so someone who stops now is still a lead. -->
+          <div class="qz-step" data-step="3" hidden>
+            <p class="qz-hint" id="qzCapQ">You'll get your written quote today, from one consultant who stays with you — not a call centre.</p>
+            <div class="qz-fields two">
+              <div class="qz-field">
+                <label for="qzFirst">First name</label>
+                <input class="qz-input" type="text" id="qzFirst" placeholder="Jess" autocomplete="given-name" required>
+              </div>
+              <div class="qz-field">
+                <label for="qzLast">Last name</label>
+                <input class="qz-input" type="text" id="qzLast" placeholder="Taylor" autocomplete="family-name">
+              </div>
+            </div>
+            <div class="qz-fields two">
+              <div class="qz-field">
+                <label for="qzEmail">Email</label>
+                <input class="qz-input" type="email" id="qzEmail" placeholder="you@work.com.au" autocomplete="email" required>
+              </div>
+              <div class="qz-field">
+                <label for="qzPhone">Mobile</label>
+                <input class="qz-input" type="tel" id="qzPhone" placeholder="0400 000 000" autocomplete="tel" required>
+              </div>
+            </div>
+            <div class="qz-actions">
+              <button type="button" class="qz-back" data-back>&larr; Back</button>
+              <button type="button" class="btn btn-primary" id="qzSubmit">Get my quote <span class="arr">&rarr;</span></button>
+            </div>
+            <p class="qz-err" id="qzErr3">Please add your name, a valid email and a mobile number.</p>
+            <div class="qz-foot">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg>
+              <span>Your details go to one Novated Choice consultant. No credit check, and no third-party spam — ever.</span>
+            </div>
+          </div>
+
+          <!-- OFFER — the lead is already in. Everything past here is
+               optional detail that sharpens the quote. -->
+          <div class="qz-step" data-step="4" hidden>
+            <ul class="qz-next">
+              <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 13 4 4L19 7"/></svg><span>Your details are with us — <strong>nothing else is required</strong></span></li>
+              <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 13 4 4L19 7"/></svg><span>A written quote lands in your inbox <strong>today</strong></span></li>
+              <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 13 4 4L19 7"/></svg><span>One consultant calls you — not a call centre</span></li>
+            </ul>
+            <div class="qz-q" style="margin-top:20px">Want a sharper number?</div>
+            <p class="qz-hint">Two more questions — your employment and salary band — and we can price it against your actual pay instead of an average. About ten seconds.</p>
+            <div class="qz-actions">
+              <button type="button" class="btn btn-primary" id="qzRefine">Yes, sharpen it <span class="arr">&rarr;</span></button>
+            </div>
+            <div class="qz-actions" style="margin-top:8px">
+              <button type="button" class="qz-back" id="qzSkip">No thanks, send it as is</button>
+            </div>
+          </div>
+
+          <!-- OPTIONAL DETAIL -->
+          <div class="qz-step" data-step="5" hidden>
+            <span class="qz-sublabel">Your employment</span>
+            <div class="qz-opts two" data-group="employment">
+              <button type="button" class="qz-opt" data-val="Permanent PAYG (full or part-time)" data-eligible="1">
+                <span class="dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
+                <span class="oi"><b>Permanent</b></span>
+              </button>
+              <button type="button" class="qz-opt" data-val="Casual or contract" data-eligible="0">
+                <span class="dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
+                <span class="oi"><b>Casual / contract</b></span>
+              </button>
+              <button type="button" class="qz-opt" data-val="Self-employed / business owner" data-eligible="0">
+                <span class="dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
+                <span class="oi"><b>Self-employed</b></span>
+              </button>
+            </div>
+            <span class="qz-sublabel">Your salary</span>
+            <div class="qz-opts two" data-group="salary">
+              <button type="button" class="qz-opt" data-val="Under $60k" data-rate="0.21">
+                <span class="dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
+                <span class="oi"><b>Under $60k</b></span>
+              </button>
+              <button type="button" class="qz-opt" data-val="$60k – $100k" data-rate="0.32">
+                <span class="dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
+                <span class="oi"><b>$60k – $100k</b></span>
+              </button>
+              <button type="button" class="qz-opt" data-val="$100k – $150k" data-rate="0.37">
+                <span class="dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
+                <span class="oi"><b>$100k – $150k</b></span>
+              </button>
+              <button type="button" class="qz-opt" data-val="$150k+" data-rate="0.45">
+                <span class="dot" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg></span>
+                <span class="oi"><b>$150k+</b></span>
+              </button>
+            </div>
+            <div class="qz-actions">
+              <button type="button" class="qz-back" data-back>&larr; Back</button>
+              <button type="button" class="btn btn-primary" id="qzRefineDone">Update my quote <span class="arr">&rarr;</span></button>
+            </div>
+            <p class="qz-err" id="qzErr5">Choose your employment type and salary range.</p>
+          </div>
+
+          <!-- RESULT -->
+          <div class="qz-step" data-step="6" hidden>
+            <span class="eyebrow" id="qzResultEyebrow">What happens next</span>
+            <div class="qz-result-fig" id="qzFig">$—
+              <small>estimated total saving vs a car loan over 5 years</small>
+            </div>
+            <dl class="qz-recap" id="qzRecap"></dl>
+            <div class="qz-actions">
+              <a class="btn btn-primary" href="tel:1300050550">Call now — 1300 050 550</a>
+            </div>
+            <div class="qz-foot">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg>
+              <span id="qzResultNote">Your consultant will confirm exact figures against your salary and chosen vehicle. Nothing here is personal financial advice.</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Brand logos ════════════════════════════════════════════════ -->
+<section class="logos">
+  <div class="container">
+    <p class="lg-label">Any make, any model — new or late-model used</p>
+    <div class="lg-marquee">
+      <div class="lg-row">
+      <img src="/assets/novated-choice/brands/tesla.webp" alt="Tesla" width="183" height="56" loading="lazy" decoding="async">
+      <img src="/assets/novated-choice/brands/toyota.webp" alt="Toyota" width="240" height="40" loading="lazy" decoding="async">
+      <img src="/assets/novated-choice/brands/ford.webp" alt="Ford" width="155" height="56" loading="lazy" decoding="async">
+      <img src="/assets/novated-choice/brands/mazda.webp" alt="Mazda" width="81" height="56" loading="lazy" decoding="async">
+      <img src="/assets/novated-choice/brands/byd.webp" alt="BYD" width="240" height="48" loading="lazy" decoding="async">
+      <img src="/assets/novated-choice/brands/kia.webp" alt="Kia" width="239" height="56" loading="lazy" decoding="async">
+      <img src="/assets/novated-choice/brands/hyundai.webp" alt="Hyundai" width="90" height="56" loading="lazy" decoding="async">
+      <img src="/assets/novated-choice/brands/isuzu.webp" alt="Isuzu" width="169" height="56" loading="lazy" decoding="async">
+      <img src="/assets/novated-choice/brands/bmw.webp" alt="BMW" width="56" height="56" loading="lazy" decoding="async">
+        <!-- Second copy: the track translates -50%, so the loop is seamless. -->
+      <img aria-hidden="true" src="/assets/novated-choice/brands/tesla.webp" alt="" width="183" height="56" loading="lazy" decoding="async">
+      <img aria-hidden="true" src="/assets/novated-choice/brands/toyota.webp" alt="" width="240" height="40" loading="lazy" decoding="async">
+      <img aria-hidden="true" src="/assets/novated-choice/brands/ford.webp" alt="" width="155" height="56" loading="lazy" decoding="async">
+      <img aria-hidden="true" src="/assets/novated-choice/brands/mazda.webp" alt="" width="81" height="56" loading="lazy" decoding="async">
+      <img aria-hidden="true" src="/assets/novated-choice/brands/byd.webp" alt="" width="240" height="48" loading="lazy" decoding="async">
+      <img aria-hidden="true" src="/assets/novated-choice/brands/kia.webp" alt="" width="239" height="56" loading="lazy" decoding="async">
+      <img aria-hidden="true" src="/assets/novated-choice/brands/hyundai.webp" alt="" width="90" height="56" loading="lazy" decoding="async">
+      <img aria-hidden="true" src="/assets/novated-choice/brands/isuzu.webp" alt="" width="169" height="56" loading="lazy" decoding="async">
+      <img aria-hidden="true" src="/assets/novated-choice/brands/bmw.webp" alt="" width="56" height="56" loading="lazy" decoding="async">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Savings comparison ═════════════════════════════════════════ -->
+<section class="savings" id="savings">
+  <div class="container">
+    <div class="sv-grid">
+
+      <div class="sec-head reveal" style="margin-bottom:0">
+        <span class="eyebrow">The same car, three ways to pay</span>
+        <h2>Where the money actually goes</h2>
+        <p class="lede">Buy the car outright and you pay with money that's already been taxed. Take a car loan and you add interest on top. A novated lease takes the payment out <strong>before</strong> tax — and strips the GST off the purchase price.</p>
+        <p class="sv-saves-label">On a <strong>Tesla Model&nbsp;3 RWD</strong> over five years, a novated lease came out:</p>
+        <div class="sv-saves">
+          <div class="sv-save">
+            <b>$23,942</b>
+            <span>cheaper than the car loan</span>
+          </div>
+          <div class="sv-save">
+            <b>$10,080</b>
+            <span>cheaper than buying outright</span>
+          </div>
+        </div>
+        <p class="sv-note">Novated Choice's published example. The two figures are the differences between those published totals — not independently verified savings forecasts. Your own numbers will differ; the estimate in the form is built from your answers.</p>
+        <div class="sv-photo">
+          <img src="/assets/novated-choice/ev-charging.webp" alt="An electric vehicle charging at home" width="900" height="900" loading="lazy" decoding="async">
+        </div>
+      </div>
+
+      <div class="sv-bars reveal">
+        <div class="sv-subject">
+          <div class="sv-subject-head">Same car, same five years, three ways to pay for it</div>
+          <ul class="sv-subject-facts">
+            <li>Tesla Model&nbsp;3 RWD</li>
+            <li>5-year term</li>
+            <li>$90,000 salary</li>
+            <li>15,000km a year</li>
+            <li>8.5% p.a.</li>
+          </ul>
+          <p class="sv-subject-note">Each figure below is the <strong>total cost of that car over five years</strong> — purchase plus running costs — shown per week.</p>
+        </div>
+        <div class="sv-bar best">
+          <span class="sv-tag">Best value</span>
+          <div class="sv-top">
+            <span class="sv-name">On a novated lease</span>
+            <span class="sv-amt">$268<span style="font-family:var(--sora);font-size:14px;font-weight:400;color:var(--muted)">/wk</span></span>
+          </div>
+          <div class="sv-track"><span class="sv-fill" data-w="74"></span></div>
+          <p class="sv-note" style="margin-top:11px"><strong>$69,738</strong> all up &middot; pre-tax salary, no GST on the purchase</p>
+        </div>
+        <div class="sv-bar">
+          <div class="sv-top">
+            <span class="sv-name">Bought outright, cash</span>
+            <span class="sv-amt">$307<span style="font-family:var(--sora);font-size:14px;font-weight:400;color:var(--muted)">/wk</span></span>
+          </div>
+          <div class="sv-track"><span class="sv-fill" data-w="85"></span></div>
+          <p class="sv-note" style="margin-top:11px"><strong>$79,818</strong> all up &middot; already-taxed dollars, GST included</p>
+        </div>
+        <div class="sv-bar">
+          <div class="sv-top">
+            <span class="sv-name">On a car loan</span>
+            <span class="sv-amt">$360<span style="font-family:var(--sora);font-size:14px;font-weight:400;color:var(--muted)">/wk</span></span>
+          </div>
+          <div class="sv-track"><span class="sv-fill" data-w="100"></span></div>
+          <p class="sv-note" style="margin-top:11px"><strong>$93,680</strong> all up &middot; already-taxed dollars, plus interest</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ What's included ════════════════════════════════════════════ -->
+<section class="incl">
+  <div class="container">
+    <div class="incl-wrap reveal">
+      <div class="incl-bg" aria-hidden="true">
+        <img src="/assets/novated-choice/coastal-road.webp" alt="" width="1024" height="688" loading="lazy" decoding="async">
+      </div>
+      <span class="eyebrow" style="color:var(--green-bright)">One payment, everything in it</span>
+      <h2 style="margin-top:14px">Your whole car, bundled into one pre-tax payment</h2>
+      <p class="lede">No separate rego bill in March. No surprise tyre invoice. Every running cost is estimated up front, rolled into one deduction, and reconciled as you go.</p>
+
+      <div class="incl-grid">
+        <div class="incl-item">
+          <span class="ic"><svg viewBox="0 0 24 24"><path d="M3 12h18M3 12a9 9 0 0 1 9-9m-9 9a9 9 0 0 0 9 9m0-18a9 9 0 0 1 0 18"/></svg></span>
+          <b>Finance</b><small>The car itself, at fleet buying prices</small>
+        </div>
+        <div class="incl-item">
+          <span class="ic"><svg viewBox="0 0 24 24"><path d="M14 4h-4v6H7l5 6 5-6h-3V4ZM5 20h14"/></svg></span>
+          <b>Fuel or charging</b><small>Fuel card, or your home charging</small>
+        </div>
+        <div class="incl-item">
+          <span class="ic"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10Z"/></svg></span>
+          <b>Comprehensive insurance</b><small>Negotiated at fleet rates</small>
+        </div>
+        <div class="incl-item">
+          <span class="ic"><svg viewBox="0 0 24 24"><path d="M20.8 5.2a5 5 0 0 1-6.6 6.6l-7 7a2.1 2.1 0 0 1-3-3l7-7a5 5 0 0 1 6.6-6.6l-3 3 2.9 3 3-3Z"/></svg></span>
+          <b>Servicing</b><small>Scheduled and unscheduled</small>
+        </div>
+        <div class="incl-item">
+          <span class="ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/></svg></span>
+          <b>Tyres</b><small>Replaced when they need it</small>
+        </div>
+        <div class="incl-item">
+          <span class="ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18"/></svg></span>
+          <b>Registration &amp; CTP</b><small>Renewed without you lifting a finger</small>
+        </div>
+      </div>
+
+      <div class="incl-foot">
+        <a class="btn btn-white btn-lg" href="#quiz">Estimate my savings <span class="arr">&rarr;</span></a>
+        <span class="one-pay">or call <b>1300 050 550</b> and ask anything</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ How it works — sticky step flow ════════════════════════════ -->
+<section class="steps" id="how">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="eyebrow">From first quote to first drive</span>
+      <h2>Four steps, and we do three of them</h2>
+      <p class="lede">Most people are approved within hours and driving inside a fortnight. Here's exactly what happens, and who does what.</p>
+    </div>
+
+    <div class="steps-grid">
+      <div class="steps-sticky reveal" aria-hidden="true">
+        <span class="steps-counter"><span id="stepNow">01</span><span class="tot">/04</span></span>
+        <div class="steps-nowtitle" id="stepTitle">Get your quote</div>
+        <div class="steps-track" id="stepTrack">
+          <i class="on"></i><i></i><i></i><i></i>
+        </div>
+        <div class="steps-photo" id="stepPhoto">
+          <img src="/assets/novated-choice/step-1-choose.webp" alt="Browsing cars at home" data-i="1" class="on" width="900" height="678" loading="lazy" decoding="async">
+          <img src="/assets/novated-choice/step-2-employer.webp" alt="Going through the paperwork with an employer" data-i="2" width="900" height="678" loading="lazy" decoding="async">
+          <img src="/assets/novated-choice/step-3-approval.webp" alt="Reading the approval on a phone" data-i="3" width="900" height="678" loading="lazy" decoding="async">
+          <img src="/assets/novated-choice/step-4-keys.webp" alt="Handing over the keys to a new car" data-i="4" width="900" height="675" loading="lazy" decoding="async">
+        </div>
+      </div>
+
+      <div class="step-list" id="stepList">
+        <article class="step-card active" data-i="1" data-title="Get your quote">
+          <span class="step-num">01</span>
+          <div>
+            <h3>Tell us the car — we'll find the deal</h3>
+            <p>Got a car in mind? We'll price it. Not sure yet? We'll shortlist options that fit your budget and show what each one costs you per pay cycle. Our national buying program regularly beats the drive-away price you'd negotiate yourself.</p>
+            <span class="step-meta"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> You: 5 minutes</span>
+          </div>
+        </article>
+
+        <article class="step-card" data-i="2" data-title="Employer green light">
+          <span class="step-num">02</span>
+          <div>
+            <h3>We square it away with your employer</h3>
+            <p>A novated lease is a three-way agreement between you, your employer and the financier. We handle the paperwork and talk your payroll team through it — most sign off without a meeting. If your employer hasn't done one before, we set the whole thing up for them at no cost.</p>
+            <span class="step-meta"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg> Us: we do this bit</span>
+          </div>
+        </article>
+
+        <article class="step-card" data-i="3" data-title="Quick approval">
+          <span class="step-num">03</span>
+          <div>
+            <h3>Approval, usually the same day</h3>
+            <p>We run your application across a panel of lenders and take the one that suits your circumstances — not whichever pays us most. Share your details in the morning and you'll typically have an answer by the afternoon.</p>
+            <span class="step-meta"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg> Often within hours</span>
+          </div>
+        </article>
+
+        <article class="step-card" data-i="4" data-title="Hit the road">
+          <span class="step-num">04</span>
+          <div>
+            <h3>Pick it up, and start saving immediately</h3>
+            <p>We arrange delivery or dealer pickup, set up your fuel card and insurance, and your first pre-tax deduction starts with your next pay. From there, one payment covers the lot — and the same consultant stays with you for the life of the lease.</p>
+            <span class="step-meta"><svg viewBox="0 0 24 24"><path d="m5 13 4 4L19 7"/></svg> Savings start on your next payslip</span>
+          </div>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Founder ════════════════════════════════════════════════════
+     Name confirmed: Geoff Kruyt, Founder.
+
+     PHOTO: geoff-kruyt.webp is a retouch of his own LinkedIn portrait —
+     same face, same clothing, recomposed to 4:5 with the background
+     replaced. It is an altered image of a real person, so Geoff should
+     see and approve it before launch. Three variants were produced;
+     swap the file to change which one ships.
+
+     STILL NEEDED BEFORE LAUNCH:
+       1. Geoff's approval of the retouched photo.
+       2. Geoff's sign-off on the pull quote. It is drafted copy, not
+          something he has said — it must not be published over his name
+          and photo until he has approved or replaced it.
+     ═══════════════════════════════════════════════════════════════ -->
+<section class="founder">
+  <div class="container">
+    <div class="fd-grid">
+
+      <div class="fd-photo reveal">
+        <img src="/assets/novated-choice/geoff-kruyt.webp"
+             alt="Geoff Kruyt, founder of Novated Choice"
+             width="900" height="1125" loading="lazy" decoding="async">
+        <div class="fd-badge">
+          <b>Geoff Kruyt</b>
+          <small>Founder, Novated Choice</small>
+        </div>
+      </div>
+
+      <div class="fd-copy reveal">
+        <span class="eyebrow">The person you'll actually deal with</span>
+        <!-- Company voice, deliberately NOT styled or attributed as a quote
+             from Geoff — this is agency-drafted copy, not his words. If he
+             wants to say it in his own words, restore the quote styling and
+             the signature block with his approved wording. -->
+        <p class="fd-quote" style="margin-top:18px">Most people come to us having been passed between four different people at a call centre, none of whom could answer a straight question. That's the thing we set out to fix. You get one person, you get their mobile number, and you keep them for the life of the lease.</p>
+
+        <div class="fd-body">
+          <p>Novated Choice is a Melbourne-based team that arranges novated leases for employees across Australia. We're not a lender and we're not tied to one — we run your application across a panel and take the deal that suits your circumstances.</p>
+          <p>Geoff started Novated Choice after years watching people get bounced around leasing call centres. He still takes customer calls himself — you'll find him by name in the reviews further down this page.</p>
+          <p>That independence is the whole point. It's also why our national buying program can usually beat the price you'd negotiate at the dealership yourself, and why we'll tell you plainly when a novated lease <em>isn't</em> the right move for you.</p>
+        </div>
+
+        <div class="fd-sign">
+          <a class="btn btn-ghost" href="#quiz">Get my estimate <span class="arr">&rarr;</span></a>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Testimonials ═══════════════════════════════════════════════ -->
+<section class="revs" id="reviews">
+  <div class="container">
+    <div class="revs-top">
+      <div class="sec-head reveal" style="margin-bottom:0">
+        <span class="eyebrow">Real customers, real leases</span>
+        <h2>What it's like to deal with us</h2>
+      </div>
+      <div class="tp-strip reveal">
+        <span class="tp-stars" aria-hidden="true">
+          <i><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg></i>
+          <i><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg></i>
+          <i><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg></i>
+          <i><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg></i>
+          <i class="off"><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg></i>
+        </span>
+        <div>
+          <div class="tp-score">4.0</div>
+          <div class="tp-meta">TrustScore <b>Great</b> &middot; 7 reviews on <span class="tp-logo"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg>Trustpilot</span></div>
+        </div>
+        <a href="https://au.trustpilot.com/review/novatedchoice.com.au" target="_blank" rel="noopener">Read them on Trustpilot &rarr;</a>
+      </div>
+    </div>
+
+    <div class="rev-grid">
+      <article class="rev reveal">
+        <span class="stars" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg></span>
+        <p>Being new to novated leases, I reached out to multiple providers with numerous questions. Ben from Novated Choice stood out as the most helpful and responsive of all. This made Novated Choice the clear decision.</p>
+        <div class="rv-by"><span class="rv-av" style="background:#1d9647">DM</span><div><div class="rv-nm">Darren M.</div><div class="rv-src">Novated lease customer</div></div></div>
+      </article>
+
+      <article class="rev reveal">
+        <span class="stars" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg></span>
+        <p>I had issues with my employer in the initial set up stage. Jess dealt with the issues with no fuss in the background. This was my first time doing a lease.</p>
+        <div class="rv-by"><span class="rv-av" style="background:#15686a">AR</span><div><div class="rv-nm">Andrew R.</div><div class="rv-src">Novated lease customer</div></div></div>
+      </article>
+
+      <article class="rev reveal">
+        <span class="stars" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg></span>
+        <p>Novated Choice really stands out for their professionalism and customer care. Their team is knowledgeable and genuinely helpful, always going the extra mile to make the process smooth and stress-free.</p>
+        <div class="rv-by"><span class="rv-av" style="background:#36ae1e">BW</span><div><div class="rv-nm">Brad W.</div><div class="rv-src">Novated lease customer</div></div></div>
+      </article>
+
+      <article class="rev reveal">
+        <span class="stars" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg></span>
+        <p>Great experience with Novated Choice! The team was patient and answered all my questions, making the novated lease process smooth and easy. Highly recommend.</p>
+        <div class="rv-by"><span class="rv-av" style="background:#033334">HE</span><div><div class="rv-nm">H. E.</div><div class="rv-src">Novated lease customer</div></div></div>
+      </article>
+
+      <article class="rev reveal">
+        <span class="stars" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg></span>
+        <p>Jess was extremely helpful throughout the entire process and made the experience easy and straightforward. Great service in a very timely manner. Have recommended her services to other colleagues.</p>
+        <div class="rv-by"><span class="rv-av" style="background:#1d9647">BP</span><div><div class="rv-nm">Brad P.</div><div class="rv-src">Novated lease customer</div></div></div>
+      </article>
+
+      <article class="rev reveal">
+        <span class="stars" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg><svg viewBox="0 0 24 24"><path d="m12 2 3.1 6.3 6.9 1-5 4.9 1.2 6.8L12 17.8 5.8 21l1.2-6.8-5-4.9 6.9-1z"/></svg></span>
+        <p>We've successfully integrated Novated Choice into our employee benefits program. The rollout went smoothly, and several of our staff have already taken advantage of this benefit, acquiring new electric vehicles.</p>
+        <div class="rv-by"><span class="rv-av" style="background:#15686a">SA</span><div><div class="rv-nm">Solution Architecture</div><div class="rv-src">Employer partner</div></div></div>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Eligibility ════════════════════════════════════════════════ -->
+<section class="elig">
+  <div class="container">
+    <div class="sec-head reveal">
+      <span class="eyebrow">Is this actually for you?</span>
+      <h2>A novated lease works best if you're…</h2>
+      <p class="lede">It isn't right for everyone, and we'll say so. But if most of these sound like you, the savings are usually substantial.</p>
+    </div>
+    <div class="elig-grid">
+      <div class="elig-card reveal">
+        <span class="ec-ic"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></span>
+        <b>A permanent employee</b>
+        <p>Working full-time or part-time on a regular PAYG income. Your employer doesn't need an existing scheme — we'll set it up for them.</p>
+      </div>
+      <div class="elig-card reveal">
+        <span class="ec-ic"><svg viewBox="0 0 24 24"><path d="M12 1v22M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></span>
+        <b>After a genuine tax saving</b>
+        <p>Paying for the car and its running costs from pre-tax salary lowers your taxable income — and takes the GST off the purchase price.</p>
+      </div>
+      <div class="elig-card reveal">
+        <span class="ec-ic"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18M7 15h4"/></svg></span>
+        <b>Someone who values one bill</b>
+        <p>Finance, insurance, rego, servicing, tyres and fuel or charging — one payment, one date, no admin.</p>
+      </div>
+      <div class="elig-card reveal">
+        <span class="ec-ic"><svg viewBox="0 0 24 24"><path d="M14 4h-4v6H7l5 6 5-6h-3V4ZM5 20h14"/></svg></span>
+        <b>Considering an EV</b>
+        <p>Eligible electric vehicles are exempt from Fringe Benefits Tax, which makes them the single biggest saving available under a novated lease.</p>
+      </div>
+      <div class="elig-card reveal">
+        <span class="ec-ic"><svg viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-9-9"/><path d="M21 3v6h-6"/></svg></span>
+        <b>Wanting an exit that suits you</b>
+        <p>At the end of the term you keep it, sell it, extend, or upgrade to something new. The choice is yours, not the financier's.</p>
+      </div>
+      <div class="elig-card reveal">
+        <span class="ec-ic"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>
+        <b>Short on time</b>
+        <p>You choose the car. We handle the lender panel, the employer paperwork, the insurance and the delivery.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ FAQ ════════════════════════════════════════════════════════ -->
+<section class="faq" id="faq">
+  <div class="container">
+    <div class="faq-grid">
+
+      <div class="faq-aside reveal">
+        <span class="eyebrow">Straight answers</span>
+        <h2 style="margin-top:14px">Your questions, answered</h2>
+        <div class="faq-help">
+          <b>Still not sure?</b>
+          <p>Ask us anything — including whether a novated lease is the wrong call for your situation. We'll tell you either way.</p>
+          <a class="btn btn-primary" href="tel:1300050550">Call 1300 050 550</a>
+        </div>
+      </div>
+
+      <div class="faq-list" id="faqList">
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">What rate are you charging, and can you get me a discount on the car?<span class="faq-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></button>
+          <div class="faq-a"><p>We have a panel of lenders and select the one that best suits your financial circumstances, rather than defaulting to a single financier. On the car itself, our national buying program gives us fleet buying power — we can often come in well under the recommended retail price, and we'll show you the comparison before you commit.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">Do I own the car?<span class="faq-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></button>
+          <div class="faq-a"><p>During the lease the finance company owns the car, but you have full use of it with no upfront cost. At the end of the term you choose: buy it outright by paying the residual, upgrade to a new model, extend the lease, or walk away. It's genuinely your call.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">Can I pick any car?<span class="faq-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></button>
+          <div class="faq-a"><p>Just about. You can choose from a wide range of new or late-model used cars, including EVs and hybrids. The main exception is utes or vans with a payload over one tonne, which don't qualify for a novated lease because they're classed as commercial vehicles.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">Is it complicated to set up?<span class="faq-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></button>
+          <div class="faq-a"><p>Not with us. You pick the car and sign where we point. We handle the lender panel, the employer paperwork and the payroll setup — including walking your HR or payroll team through it if they haven't done one before. From quote to keys, you have one point of contact throughout.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">Can I include all my car-related expenses?<span class="faq-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></button>
+          <div class="faq-a"><p>Yes — almost all running costs bundle into one convenient pre-tax payment. That covers finance repayments, fuel or charging, servicing, tyres, registration and comprehensive insurance. We estimate the annual cost up front and reconcile it as you go, so you're not caught out by a big bill in one month.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">What if I change jobs during my lease?<span class="faq-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></button>
+          <div class="faq-a"><p>The lease belongs to you, not your employer, so the car goes with you. You can transfer the lease to your new employer (subject to their approval), pay out the remaining balance to own it, or keep making payments personally until you start somewhere new. We handle the transfer paperwork.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">Is there a minimum lease term?<span class="faq-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></button>
+          <div class="faq-a"><p>Novated lease agreements typically run from one to five years (12 to 60 months). Most people choose three to five years, which balances flexibility against lower repayments. Longer terms mean smaller payments but a larger residual at the end.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">What happens at the end?<span class="faq-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></button>
+          <div class="faq-a"><p>You choose. Pay the residual and own the car outright, sell it and keep anything above the residual, extend the lease if you're eligible, or trade up into something new. We'll walk you through the options a few months before the term ends so there are no surprises.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">Does my employer need to already offer novated leasing?<span class="faq-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></button>
+          <div class="faq-a"><p>No. Plenty of our customers are the first person at their workplace to ask. There's no cost to the employer and no ongoing admin burden — in fact it's a pay benefit they can offer staff for free. We approach payroll on your behalf and set the whole thing up, usually without needing a meeting.</p></div>
+        </div>
+        <div class="faq-item">
+          <button class="faq-q" type="button" aria-expanded="false">Why are EVs so much cheaper on a novated lease?<span class="faq-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12h14"/></svg></span></button>
+          <div class="faq-a"><p>Eligible electric vehicles under the luxury car tax threshold for fuel-efficient vehicles are exempt from Fringe Benefits Tax. In practice that means the entire lease payment can come out of your pre-tax salary, rather than part of it being post-tax. On a mid-priced EV that difference is usually worth many thousands of dollars a year, on top of the GST saving.</p></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Final CTA ══════════════════════════════════════════════════ -->
+<section class="cta">
+  <div class="container">
+    <div class="cta-wrap reveal">
+      <span class="eyebrow" style="color:var(--green-bright)">No obligation, no credit check</span>
+      <h2 style="margin-top:16px">Find out what your car actually costs you</h2>
+      <p class="lede">Sixty seconds to an indicative saving, and a written estimate the same day. If the numbers don't stack up for you, we'll be the first to say so.</p>
+      <div class="cta-btns">
+        <a class="btn btn-white btn-lg" href="#quiz">Get my savings estimate <span class="arr">&rarr;</span></a>
+        <a class="btn btn-lg" href="tel:1300050550" style="border:1.5px solid rgba(255,255,255,0.35);color:#fff">Call 1300 050 550</a>
+      </div>
+      <div class="cta-trust">
+        <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 13 4 4L19 7"/></svg> No credit check to get a quote</span>
+        <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 13 4 4L19 7"/></svg> One consultant, start to finish</span>
+        <span><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m5 13 4 4L19 7"/></svg> Your details never sold on</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ═══ Footer ═════════════════════════════════════════════════════ -->
+<footer class="site-footer">
+  <div class="container">
+    <div class="ft-top">
+      <div class="ft-brand">
+        <img src="/assets/novated-choice/logo-white.png" alt="Novated Choice" width="182" height="55">
+        <p>Independent novated leasing for Australian employees. One consultant, a panel of lenders, and a car that costs you less.</p>
+      </div>
+      <div class="ft-cols">
+        <div class="ft-col">
+          <h4>Explore</h4>
+          <ul>
+            <li><a href="#savings">Your savings</a></li>
+            <li><a href="#how">How it works</a></li>
+            <li><a href="#reviews">Reviews</a></li>
+            <li><a href="#faq">FAQs</a></li>
+          </ul>
+        </div>
+        <div class="ft-col">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="tel:1300050550">1300 050 550</a></li>
+            <li><a href="mailto:info@novatedchoice.com.au">info@novatedchoice.com.au</a></li>
+            <li>Suite 6, 209 Toorak Rd<br>South Yarra VIC 3141</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <p class="ft-disc">Savings figures shown on this page are estimates based on typical assumptions about salary, vehicle price, running costs and tax treatment. They are general information only and do not constitute financial, taxation or credit advice. Your actual savings depend on your personal circumstances, your employer's payroll arrangements and the vehicle you choose. Consider seeking independent advice before entering into a novated lease.</p>
+    <div class="ft-bot">
+      <span>&copy; <span id="yr">2026</span> Novated Choice. All rights reserved.</span>
+      <span><a href="/privacy-policy">Privacy policy</a> &middot; <a href="/terms">Terms</a></span>
+    </div>
+  </div>
+</footer>
+
+<!-- ═══ Sticky mobile CTA ══════════════════════════════════════════ -->
+<div class="mob-cta" id="mobCta">
+  <a class="btn btn-primary" href="#quiz">Get my estimate</a>
+  <a class="btn btn-ghost" href="tel:1300050550" aria-label="Call 1300 050 550">
+    <svg viewBox="0 0 24 24"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.2a2 2 0 0 1 2.1-.5c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2Z"/></svg>
+  </a>
+</div>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ── Lead endpoint ──────────────────────────────────────────────
+     Set to the real destination before launch. Until then the quiz
+     still completes and the result still renders — the POST simply
+     fails quietly and the answers go to the console. Nothing about
+     the user's experience depends on it.
+     ────────────────────────────────────────────────────────────── */
+  var LEAD_ENDPOINT = "/api/novated-lead";
+
+  /* ── Numerical claims switch ────────────────────────────────────
+     The savings figure the quiz computes is an indicative model, not a
+     substantiated comparison. Under the ACCC's rules on comparative
+     advertising, a dollar amount shown to a prospect needs a retained
+     calculation behind it — vehicle price and variant, calculation date,
+     rates, fees, running-cost budgets, tax treatment and residual.
+
+     Until Novated Choice has signed that off, the result screen confirms
+     what the prospect told us and promises a personalised written quote
+     instead of naming a number. The figure still travels with the lead so
+     the sales team can see it.
+
+     Flip to true only once the calculation is approved and the
+     disclosures are agreed.
+     ────────────────────────────────────────────────────────────── */
+  var SHOW_DOLLAR_ESTIMATE = false;
+
+  var $  = function (s, c) { return (c || document).querySelector(s); };
+  var $$ = function (s, c) { return Array.prototype.slice.call((c || document).querySelectorAll(s)); };
+
+  /* ══ Header scroll state ═════════════════════════════════════ */
+  var header = $("#siteHeader");
+  var mobCta = $("#mobCta");
+  function onScroll() {
+    var y = window.scrollY || window.pageYOffset;
+    if (header) header.classList.toggle("scrolled", y > 8);
+    if (mobCta) mobCta.classList.toggle("show", y > 620);
+  }
+  window.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  var yr = $("#yr"); if (yr) yr.textContent = new Date().getFullYear();
+
+  /* ══ No orphans ══════════════════════════════════════════════
+     `text-wrap: pretty` is a hint — browsers apply it with a limited
+     lookback and it still leaves single words stranded. Binding the last
+     two words with a non-breaking space is deterministic and holds at
+     every width. Runs once, and is safe to run again.
+
+     The last word is often inside an inline tag ("...up to
+     <strong>$6,334</strong>"), so when the final text node is a single
+     word we bind the space in the node before it — a non-breaking space
+     still prevents the break across that boundary. */
+  (function noOrphans() {
+    var SEL = ".lede, .qz-hint, .qz-cover-lead, .qz-foot span, .qz-cover-meta li," +
+              ".step-card p, .elig-card p, .incl-item small, .faq-a p, .fd-body p," +
+              ".rev p, .sv-note, .faq-help p, .ft-brand p, .hero-points li span," +
+              ".qz-opt .oi small, .topbar .row span, .elig-card b, .incl-item b," +
+              ".step-card h3, .faq-q, .fd-quote, h1, h2";
+    var NBSP = "\u00A0";
+
+    function textNodes(el) {
+      var out = [], walk = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+      var n;
+      while ((n = walk.nextNode())) { if (/\S/.test(n.nodeValue)) out.push(n); }
+      return out;
+    }
+
+    $$(SEL).forEach(function (el) {
+      var nodes = textNodes(el);
+      if (!nodes.length) return;
+      var last = nodes[nodes.length - 1];
+      var words = last.nodeValue.trim().split(/\s+/);
+
+      if (words.length > 1) {
+        // Bind the final space inside this node.
+        last.nodeValue = last.nodeValue.replace(/\s+(\S+)\s*$/, NBSP + "$1");
+        return;
+      }
+      // Single trailing word (usually wrapped in <strong>/<b>): bind the
+      // space at the end of the preceding text node instead.
+      if (nodes.length > 1) {
+        var prev = nodes[nodes.length - 2];
+        if (/\s$/.test(prev.nodeValue)) prev.nodeValue = prev.nodeValue.replace(/\s+$/, NBSP);
+      }
+    });
+  })();
+
+  /* ══ CTA → quiz ══════════════════════════════════════════════
+     Every in-page CTA points at #quiz. Left as a bare anchor it does
+     nothing perceptible when the card is already in view, so it reads
+     as a dead button. Scroll it under the header, ring it, and put the
+     cursor on the first thing to click. */
+  function focusQuiz() {
+    var card = $("#quiz");
+    if (!card) return;
+    var headerH = 90;
+    var y = window.scrollY + card.getBoundingClientRect().top - headerH;
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: Math.max(0, y), behavior: reduce ? "auto" : "smooth" });
+    // Clicking a CTA is itself the "start" decision — don't make them
+    // press a second button to reach question one.
+    if (current === 0) show(1);
+    card.classList.remove("pulse");
+    void card.offsetWidth;                 // restart the transition
+    card.classList.add("pulse");
+    setTimeout(function () { card.classList.remove("pulse"); }, 1100);
+    var step = $('.qz-step:not([hidden])');
+    var first = step && step.querySelector(".qz-chip, .qz-opt, .qz-input, .btn");
+    if (first) setTimeout(function () { first.focus({ preventScroll: true }); }, reduce ? 0 : 520);
+  }
+  $$('a[href="#quiz"]').forEach(function (a) {
+    a.addEventListener("click", function (e) { e.preventDefault(); focusQuiz(); });
+  });
+
+  /* ══ Reveal on scroll ════════════════════════════════════════ */
+  var reveals = $$(".reveal");
+  if ("IntersectionObserver" in window) {
+    var ro = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (e.isIntersecting) { e.target.classList.add("in"); ro.unobserve(e.target); }
+      });
+    }, { rootMargin: "0px 0px -8% 0px", threshold: 0.08 });
+    reveals.forEach(function (el) { ro.observe(el); });
+  } else {
+    reveals.forEach(function (el) { el.classList.add("in"); });
+  }
+
+  /* ══ Savings bars ════════════════════════════════════════════ */
+  var bars = $$(".sv-fill");
+  if (bars.length && "IntersectionObserver" in window) {
+    var bo = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) {
+        if (!e.isIntersecting) return;
+        var el = e.target;
+        setTimeout(function () { el.style.width = el.getAttribute("data-w") + "%"; }, 120);
+        bo.unobserve(el);
+      });
+    }, { threshold: 0.3 });
+    bars.forEach(function (el) { bo.observe(el); });
+  } else {
+    bars.forEach(function (el) { el.style.width = el.getAttribute("data-w") + "%"; });
+  }
+
+  /* ══ How-it-works sticky step flow ═══════════════════════════ */
+  var stepCards = $$("#stepList .step-card");
+  var stepNow   = $("#stepNow");
+  var stepTitle = $("#stepTitle");
+  var trackBits = $$("#stepTrack i");
+
+  var stepPhotos = $$("#stepPhoto img");
+
+  function setStep(i) {
+    stepCards.forEach(function (c) { c.classList.toggle("active", +c.getAttribute("data-i") === i); });
+    stepPhotos.forEach(function (im) { im.classList.toggle("on", +im.getAttribute("data-i") === i); });
+    trackBits.forEach(function (b, n) { b.classList.toggle("on", n < i); });
+    if (stepNow)   stepNow.textContent = "0" + i;
+    if (stepTitle) {
+      var card = stepCards.filter(function (c) { return +c.getAttribute("data-i") === i; })[0];
+      if (card) stepTitle.textContent = card.getAttribute("data-title");
+    }
+  }
+  if (stepCards.length) {
+    var stepTicking = false;
+    var lastStep = 0;
+
+    var stepHeader = $("#siteHeader");
+    var stepBar = $(".steps-sticky");
+
+    function pickStep() {
+      stepTicking = false;
+      // Anchor on the centre of what is actually visible, not the centre of
+      // the viewport: the sticky header — and on mobile the sticky progress
+      // bar too — cover the top of the screen. Measuring them keeps the
+      // active card matched to what the reader is looking at instead of
+      // switching early.
+      var covered = stepHeader ? stepHeader.getBoundingClientRect().bottom : 0;
+      if (stepBar) {
+        var br = stepBar.getBoundingClientRect();
+        if (br.bottom > covered && br.top <= covered + 1) covered = br.bottom;
+      }
+      covered = Math.max(0, Math.min(covered, window.innerHeight * 0.5));
+      var anchor = covered + (window.innerHeight - covered) / 2;
+      var best = null, bestDist = Infinity;
+      for (var i = 0; i < stepCards.length; i++) {
+        var r = stepCards[i].getBoundingClientRect();
+        var dist = Math.abs(r.top + r.height / 2 - anchor);
+        if (dist < bestDist) { bestDist = dist; best = stepCards[i]; }
+      }
+      if (!best) return;
+      var n = +best.getAttribute("data-i");
+      if (n !== lastStep) { lastStep = n; setStep(n); }
+    }
+
+    function onStepScroll() {
+      if (stepTicking) return;
+      stepTicking = true;
+      window.requestAnimationFrame(pickStep);
+    }
+
+    window.addEventListener("scroll", onStepScroll, { passive: true });
+    window.addEventListener("resize", onStepScroll, { passive: true });
+    pickStep();
+  }
+
+  /* ══ FAQ accordion ═══════════════════════════════════════════ */
+  $$("#faqList .faq-item").forEach(function (item) {
+    var btn = $(".faq-q", item);
+    var ans = $(".faq-a", item);
+    if (!btn || !ans) return;
+    btn.addEventListener("click", function () {
+      var open = item.classList.contains("open");
+      $$("#faqList .faq-item.open").forEach(function (o) {
+        o.classList.remove("open");
+        $(".faq-a", o).style.maxHeight = null;
+        $(".faq-q", o).setAttribute("aria-expanded", "false");
+      });
+      if (!open) {
+        item.classList.add("open");
+        ans.style.maxHeight = ans.scrollHeight + "px";
+        btn.setAttribute("aria-expanded", "true");
+      }
+    });
+  });
+
+  /* ══════════════════════════════════════════════════════════════
+     QUIZ
+
+     Three core steps, then everything else is optional:
+       1  the car and what it's worth
+       2  how far along they are, and when
+       3  contact  — the lead is sent HERE, so someone who stops
+                     immediately after is still a lead
+       4  the offer to sharpen the quote
+       5  employment and salary (optional)
+       6  result
+
+     Steps 1, 2 and 5 carry two question groups each and advance on their
+     own once both are answered; the Continue button is there for anyone
+     who does not notice.
+     ══════════════════════════════════════════════════════════════ */
+  var CORE    = 3;               // steps counted in the progress label
+  var current = 0;
+  var answers = {};
+  var meta    = { price: 58000, rate: 0.32, ev: false, score: 0, refined: false };
+
+  var EV_CARS = ["Tesla Model 3", "Tesla Model Y", "BYD Sealion 7"];
+
+  var qzFill  = $("#qzFill");
+  var qzLabel = $("#qzLabel");
+  var qzTitle = $("#qzTitle");
+  var qzBody  = $(".qz-body");
+  var lockedHeight = 0;
+
+  var TITLES = {
+    0: "See what your dream car really costs",
+    1: "First, the fun part",
+    2: "Where you're up to",
+    3: "Where should we send it?",
+    4: "You're in — quote on its way",
+    5: "One last detail",
+    6: SHOW_DOLLAR_ESTIMATE ? "Here's what you could save" : "You're all set"
+  };
+
+  /* Which groups each step needs before it can advance on its own. */
+  var STEP_GROUPS = { 1: ["car", "budget"], 2: ["phase", "timing"], 5: ["employment", "salary"] };
+  // Step 5 is deliberately absent: completing it runs finishRefine(), which
+  // sends the enriched lead before showing the result.
+  var NEXT_STEP   = { 1: 2, 2: 3 };
+
+  function stepComplete(step) {
+    return (STEP_GROUPS[step] || []).every(function (k) { return !!answers[k]; });
+  }
+
+  /* Tallest step, measured by briefly showing each one. Every swap happens
+     inside this single synchronous task, so the browser never paints an
+     intermediate state. */
+  function measureTallest() {
+    if (!qzBody) return 0;
+    var steps = $$(".qz-step");
+    var restore = current;
+    var max = 0;
+    qzBody.style.minHeight = "";
+    steps.forEach(function (st) {
+      if (+st.getAttribute("data-step") === 0) return;   // cover stays compact
+      steps.forEach(function (o) { o.hidden = o !== st; });
+      max = Math.max(max, qzBody.offsetHeight);
+    });
+    steps.forEach(function (o) {
+      o.hidden = +o.getAttribute("data-step") !== restore;
+    });
+    return max;
+  }
+
+  function show(step) {
+    var from = qzBody ? qzBody.offsetHeight : 0;
+
+    $$(".qz-step").forEach(function (s) {
+      s.hidden = +s.getAttribute("data-step") !== step;
+    });
+    current = step;
+
+    if (qzBody) {
+      if (step === 0) {
+        qzBody.style.minHeight = "";
+      } else {
+        if (!lockedHeight) lockedHeight = measureTallest();
+        qzBody.style.minHeight = lockedHeight + "px";
+      }
+      // Only the cover -> questions change actually resizes the card, so
+      // that is the only one worth easing.
+      var to = qzBody.offsetHeight;
+      var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (!reduce && from && to !== from) {
+        qzBody.style.height = from + "px";
+        void qzBody.offsetHeight;                 // force reflow
+        qzBody.style.height = to + "px";
+        window.setTimeout(function () { qzBody.style.height = ""; }, 420);
+      }
+    }
+
+    var onCover = step === 0;
+    var progress = $("#qzProgress");
+    if (progress) progress.hidden = onCover;
+
+    if (qzTitle) qzTitle.textContent = TITLES[step] || "";
+    if (qzLabel) {
+      // Past the contact step the progress bar is full: the required part
+      // is done and anything further is the driver's choice.
+      if (step <= CORE) {
+        qzLabel.textContent = "Step " + step + " of " + CORE;
+        if (qzFill) qzFill.style.width = Math.round(((step - 1) / CORE) * 100) + "%";
+      } else {
+        qzLabel.textContent = step === 6 ? "Complete" : "Optional";
+        if (qzFill) qzFill.style.width = "100%";
+      }
+    }
+
+    var kicker = $("#qzKicker");
+    if (kicker) {
+      kicker.textContent = step >= 4
+        ? (SHOW_DOLLAR_ESTIMATE && step === 6 ? "Your indicative saving" : "Your personalised quote")
+        : "60-second savings estimate";
+    }
+
+    $$(".qz-err").forEach(function (e) { e.classList.remove("show"); });
+    keepCardInView();
+  }
+
+  /* Keep the whole card on screen — including its button.
+
+     Checking only the top was not enough: on a short laptop viewport the
+     card can start comfortably below the header and still run its CTA off
+     the bottom of the screen, with nothing to correct it. */
+  function keepCardInView() {
+    var card = $("#quiz");
+    if (!card) return;
+    var r = card.getBoundingClientRect();
+    var headerH = 90;
+    var avail = window.innerHeight - headerH;
+    var clipped = r.top < headerH || r.bottom > window.innerHeight;
+    if (!clipped) return;
+
+    var y;
+    if (r.height <= avail) {
+      // Fits — sit it in the middle of the space below the header.
+      y = window.scrollY + r.top - headerH - (avail - r.height) / 2;
+    } else {
+      // Taller than the screen — pin the top so the question reads first.
+      y = window.scrollY + r.top - headerH;
+    }
+    var reduce = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    window.scrollTo({ top: Math.max(0, y), behavior: reduce ? "auto" : "smooth" });
+  }
+
+  function err(id) { var e = $(id); if (e) e.classList.add("show"); }
+
+  // Wrapping changes which step is tallest, so re-measure on resize.
+  var reflowTimer;
+  window.addEventListener("resize", function () {
+    clearTimeout(reflowTimer);
+    reflowTimer = setTimeout(function () {
+      lockedHeight = 0;
+      if (current > 0) {
+        lockedHeight = measureTallest();
+        if (qzBody) qzBody.style.minHeight = lockedHeight + "px";
+      }
+    }, 180);
+  }, { passive: true });
+
+  var startBtn = $("#qzStart");
+  if (startBtn) startBtn.addEventListener("click", function () { show(1); });
+
+  /* Advance once every group on this step has an answer. */
+  function maybeAdvance(step) {
+    if (!stepComplete(step)) return;
+    if (step === 5) {
+      setTimeout(function () { if (current === 5) finishRefine(); }, 260);
+      return;
+    }
+    var to = NEXT_STEP[step];
+    if (to) setTimeout(function () { if (current === step) show(to); }, 260);
+  }
+
+  /* ── The car ───────────────────────────────────────────────── */
+  var carOther = $("#qzCarOther");
+  var carOtherWrap = $("#qzCarOtherWrap");
+  var carOtherToggle = $("#qzCarOtherToggle");
+
+  function clearCarChips() {
+    $$("#qzCars .qz-chip").forEach(function (c) { c.classList.remove("sel"); });
+  }
+
+  $$("#qzCars .qz-chip[data-car]").forEach(function (chip) {
+    chip.addEventListener("click", function () {
+      var wasSel = chip.classList.contains("sel");
+      clearCarChips();
+      if (carOtherWrap) carOtherWrap.hidden = true;
+      if (carOther) carOther.value = "";
+      if (wasSel) { answers.car = ""; return; }
+      chip.classList.add("sel");
+      answers.car = chip.getAttribute("data-car");
+      meta.ev = EV_CARS.indexOf(answers.car) !== -1;
+      maybeAdvance(1);
+    });
+  });
+
+  if (carOtherToggle) {
+    carOtherToggle.addEventListener("click", function () {
+      clearCarChips();
+      carOtherToggle.classList.add("sel");
+      if (carOtherWrap) carOtherWrap.hidden = false;
+      answers.car = (carOther && carOther.value.trim()) || "";
+      if (carOther) carOther.focus({ preventScroll: true });
+    });
+  }
+
+  if (carOther) {
+    carOther.addEventListener("input", function () {
+      answers.car = carOther.value.trim();
+      meta.ev = /tesla|byd|polestar|ioniq|ev\b|e-?tron|leaf|electric|kona electric|mg4|zeekr|xpeng/i.test(answers.car);
+    });
+  }
+
+  /* ── Single-select groups ──────────────────────────────────── */
+  function wireGroup(group, key, onPick, step) {
+    var wrap = $('[data-group="' + group + '"]');
+    if (!wrap) return;
+    $$(".qz-opt", wrap).forEach(function (opt) {
+      opt.addEventListener("click", function () {
+        $$(".qz-opt", wrap).forEach(function (o) { o.classList.remove("sel"); });
+        opt.classList.add("sel");
+        answers[key] = opt.getAttribute("data-val");
+        if (onPick) onPick(opt);
+        maybeAdvance(step);
+      });
+    });
+  }
+
+  wireGroup("budget", "budget", function (o) {
+    meta.price = +o.getAttribute("data-price") || meta.price;
+  }, 1);
+
+  wireGroup("phase", "phase", function (o) {
+    meta.score = (meta.score || 0);
+    meta.phaseScore = +o.getAttribute("data-score") || 0;
+  }, 2);
+
+  wireGroup("timing", "timing", function (o) {
+    meta.timingScore = +o.getAttribute("data-score") || 0;
+  }, 2);
+
+  wireGroup("employment", "employment", function (o) {
+    meta.eligible = o.getAttribute("data-eligible") === "1";
+  }, 5);
+
+  wireGroup("salary", "salary", function (o) {
+    meta.rate = parseFloat(o.getAttribute("data-rate")) || meta.rate;
+  }, 5);
+
+  function intentScore() {
+    return (meta.phaseScore || 0) + (meta.timingScore || 0);
+  }
+
+  /* ── Next / back ───────────────────────────────────────────── */
+  $$("[data-next]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      if (!stepComplete(current)) { err("#qzErr" + current); return; }
+      var to = NEXT_STEP[current];
+      if (to) show(to);
+    });
+  });
+
+  $$("[data-back]").forEach(function (btn) {
+    btn.addEventListener("click", function () {
+      // Back from the optional detail returns to the offer, not the form.
+      show(current === 5 ? 4 : Math.max(0, current - 1));
+    });
+  });
+
+  /* ══ Savings model ═══════════════════════════════════════════
+     Indicative only, and labelled as such on the page.
+
+       GST saving  — no GST on the purchase price, capped at the ATO
+                     car limit GST cap ($6,334).
+       Tax saving  — the packaged amount (finance to residual, plus
+                     interest, plus five years of running costs) comes
+                     out of pre-tax salary at the driver's marginal
+                     rate. An FBT-exempt EV packages in full; an ICE
+                     vehicle uses the employee contribution method, so
+                     only part of it is pre-tax.
+
+     Sanity check against the client's own published example —
+     $60k car, $100k salary, ICE: this model returns ~$23.2k against
+     their stated $23,942 saving versus a car loan.
+     ═══════════════════════════════════════════════════════════ */
+  var LCT_FUEL_EFFICIENT = 91387;   // 2025-26 LCT threshold for fuel-efficient vehicles
+
+  function calcSaving() {
+    var price    = meta.price;
+    var gst      = Math.min(price / 11, 6334);
+    var packaged = price * 0.95 + 30000;          // finance + interest + 5yr running costs
+    // The FBT exemption only applies to eligible EVs under the luxury car tax
+    // threshold for fuel-efficient vehicles. Above it, an EV packages like any
+    // other car, so we must not promise the exemption.
+    var fbtExempt = meta.ev && price < LCT_FUEL_EFFICIENT;
+    var preTax   = fbtExempt ? 1.0 : 0.55;        // FBT-exempt EV vs ECM on everything else
+    var tax      = packaged * meta.rate * preTax;
+    meta.fbtExempt = fbtExempt;
+    return Math.round((gst + tax) / 100) * 100;
+  }
+
+  function money(n) { return "$" + n.toLocaleString("en-AU"); }
+
+  function renderResult() {
+    var total = calcSaving();
+    var fig = $("#qzFig");
+    if (fig) {
+      if (SHOW_DOLLAR_ESTIMATE) {
+        fig.classList.remove("qz-result-words");
+        fig.innerHTML = money(total) +
+          '<small>estimated total saving over five years, against a car loan' +
+          (meta.fbtExempt ? ' &middot; includes the FBT exemption on eligible EVs' : '') +
+          '</small>';
+      } else {
+        fig.classList.add("qz-result-words");
+        fig.innerHTML = (meta.refined ? "Your quote is being built." : "You're a strong fit.") +
+          '<small>' + (meta.fbtExempt
+            ? 'Your car is an eligible EV, so the FBT exemption is on the table — usually the single biggest saving available.'
+            : 'We’ll put exact numbers against your car and send them through today.') +
+          '</small>';
+      }
+    }
+    var recap = $("#qzRecap");
+    if (recap) {
+      var rows = [
+        ["Your car", answers.car || "—"],
+        ["Price range", answers.budget || "—"],
+        ["Where you're up to", answers.phase || "—"],
+        ["Timeframe", answers.timing || "—"]
+      ];
+      if (meta.refined && answers.salary) rows.push(["Salary band", answers.salary]);
+      recap.innerHTML = rows.map(function (r) {
+        return '<div class="rr"><dt>' + r[0] + "</dt><dd>" + r[1] + "</dd></div>";
+      }).join("") + (SHOW_DOLLAR_ESTIMATE
+        ? '<div class="rr rr-hi"><dt>Roughly <b>' + money(Math.round(total / 260 / 5) * 5) +
+          ' a week</b> back in your pocket</dt></div>'
+        : '<div class="rr rr-hi"><dt>Your written quote lands in your inbox <b>today</b></dt></div>');
+    }
+    var eyebrow = $("#qzResultEyebrow");
+    if (eyebrow) eyebrow.textContent = SHOW_DOLLAR_ESTIMATE ? "Your indicative saving" : "What happens next";
+    var note = $("#qzResultNote");
+    if (note && SHOW_DOLLAR_ESTIMATE) {
+      note.textContent = "Estimate only — based on typical tax and running-cost assumptions, " +
+        "not personal financial advice. Your consultant will confirm exact figures against " +
+        "your salary and chosen vehicle.";
+    }
+  }
+
+  /* ── Lead delivery ─────────────────────────────────────────── */
+  function payload(stage) {
+    return {
+      stage: stage,                          // "lead" on capture, "enriched" after the optional detail
+      firstname: answers.firstname || "",
+      lastname:  answers.lastname || "",
+      email:     answers.email || "",
+      phone:     answers.phone || "",
+      car:       answers.car || "",
+      budget:    answers.budget || "",
+      phase:     answers.phase || "",
+      timing:    answers.timing || "",
+      employment: answers.employment || "",
+      salary:    answers.salary || "",
+      is_ev:     meta.ev,
+      eligible:  !!meta.eligible,
+      intent_score: intentScore(),           // 2 = cold, 8 = ready to transact
+      estimated_saving: calcSaving(),
+      source:    "novated-leasing-lp",
+      page:      location.pathname
+    };
+  }
+
+  function sendLead(stage) {
+    var body = payload(stage);
+    if (window.fetch) {
+      fetch(LEAD_ENDPOINT, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(body)
+      }).catch(function () {
+        // Lead capture must never block the flow.
+        console.warn("[novated] lead POST failed — payload:", body);
+      });
+    } else {
+      console.warn("[novated] no fetch — payload:", body);
+    }
+    if (window.dataLayer) {
+      window.dataLayer.push({ event: "novated_lead", stage: stage, intent_score: body.intent_score, is_ev: meta.ev });
+    }
+    if (stage === "lead") {
+      if (window.fbq)  { window.fbq("track", "Lead", { content_name: answers.car || "" }); }
+      if (window.gtag) { window.gtag("event", "generate_lead", { value: body.estimated_saving, currency: "AUD" }); }
+    }
+  }
+
+  /* ── Contact submit: the lead goes out here ────────────────── */
+  var emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  var submit  = $("#qzSubmit");
+
+  if (submit) {
+    submit.addEventListener("click", function () {
+      var first = (($("#qzFirst") || {}).value || "").trim();
+      var last  = (($("#qzLast")  || {}).value || "").trim();
+      var email = (($("#qzEmail") || {}).value || "").trim().toLowerCase();
+      var phone = (($("#qzPhone") || {}).value || "").trim();
+
+      if (!first || !emailRe.test(email) || phone.replace(/\D/g, "").length < 8) {
+        err("#qzErr3");
+        return;
+      }
+
+      answers.firstname = first;
+      answers.lastname  = last;
+      answers.email     = email;
+      answers.phone     = phone;
+
+      sendLead("lead");
+      show(4);
+    });
+  }
+
+  var refineBtn = $("#qzRefine");
+  if (refineBtn) refineBtn.addEventListener("click", function () { show(5); });
+
+  var skipBtn = $("#qzSkip");
+  if (skipBtn) skipBtn.addEventListener("click", function () { renderResult(); show(6); });
+
+  /* The optional detail is done — send the enriched lead once, then show
+     the result. Reached either by answering both groups or by the button. */
+  var refineSent = false;
+  function finishRefine() {
+    if (!stepComplete(5)) { err("#qzErr5"); return; }
+    meta.refined = true;
+    if (!refineSent) { refineSent = true; sendLead("enriched"); }
+    renderResult();
+    show(6);
+  }
+
+  var refineDone = $("#qzRefineDone");
+  if (refineDone) refineDone.addEventListener("click", finishRefine);
+
+  // First paint: render the cover without the scroll correction.
+  (function initial() {
+    var real = window.scrollTo;
+    window.scrollTo = function () {};
+    show(0);
+    window.scrollTo = real;
+  })();
+})();
+</script>
+
+<!-- ═══ FAQ structured data — for Google rich results ══════════════ -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    { "@type": "Question", "name": "Do I own the car on a novated lease?", "acceptedAnswer": { "@type": "Answer", "text": "During the lease the finance company owns the car, but you have full use of it with no upfront cost. At the end of the term you choose: buy it outright by paying the residual, upgrade to a new model, extend the lease, or walk away." } },
+    { "@type": "Question", "name": "Can I pick any car on a novated lease?", "acceptedAnswer": { "@type": "Answer", "text": "You can choose from a wide range of new or late-model used cars, including EVs and hybrids. The main exception is utes or vans with a payload over one tonne, which are classed as commercial vehicles and do not qualify." } },
+    { "@type": "Question", "name": "What if I change jobs during my novated lease?", "acceptedAnswer": { "@type": "Answer", "text": "The lease belongs to you, not your employer, so the car goes with you. You can transfer the lease to your new employer subject to their approval, pay out the remaining balance to own it, or keep making payments personally until you start somewhere new." } },
+    { "@type": "Question", "name": "Is there a minimum novated lease term?", "acceptedAnswer": { "@type": "Answer", "text": "Novated lease agreements typically run from one to five years (12 to 60 months). Most people choose three to five years, which balances flexibility against lower repayments." } },
+    { "@type": "Question", "name": "Does my employer need to already offer novated leasing?", "acceptedAnswer": { "@type": "Answer", "text": "No. There is no cost to the employer and no ongoing admin burden. Novated Choice approaches payroll on your behalf and sets the arrangement up, usually without needing a meeting." } },
+    { "@type": "Question", "name": "Why are EVs cheaper on a novated lease?", "acceptedAnswer": { "@type": "Answer", "text": "Eligible electric vehicles under the luxury car tax threshold for fuel-efficient vehicles are exempt from Fringe Benefits Tax, which means the entire lease payment can come out of pre-tax salary rather than part of it being post-tax." } }
+  ]
+}
+</script>
+
+</body>
+</html>
