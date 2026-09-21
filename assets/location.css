@@ -899,3 +899,20 @@ h1, h2, h3, .hero-h, .local-h, .services-h, .stats-h, .faq-h, .cta-title { text-
 }
 .band-cap em { color: var(--accent); font-style: italic; font-weight: 400; }
 @media (max-width: 620px) { .band { aspect-ratio: 4 / 3; } }
+
+/* A marque cell holds either a logo or its name as type, so the wall stays
+   even while only some brands have licensed files. Logos are greyscaled to
+   sit together as a set rather than as fourteen competing colour schemes,
+   and lift to full colour on hover. */
+.marque img {
+  max-width: 100%;
+  max-height: 30px;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  filter: grayscale(1);
+  opacity: 0.72;
+  transition: filter .2s var(--ease), opacity .2s var(--ease);
+}
+.marque:hover img { filter: grayscale(0); opacity: 1; }
+@media (prefers-reduced-motion: reduce) { .marque img { transition: none; } }
