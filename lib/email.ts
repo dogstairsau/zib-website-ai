@@ -13,6 +13,15 @@
  *        LEAD_NOTIFY_EMAIL     = where to send notifications
  */
 
+/** LEAD_NOTIFY_EMAIL may hold several comma-separated addresses. */
+function notifyRecipients(): string[] | undefined {
+  const list = (process.env.LEAD_NOTIFY_EMAIL || "")
+    .split(",")
+    .map((e) => e.trim())
+    .filter(Boolean);
+  return list.length ? list : undefined;
+}
+
 export type LeadEmailCheck = {
   title: string;
   status: "pass" | "warn" | "fail";
@@ -45,7 +54,7 @@ export type LeadEmail = {
 export async function sendLeadEmail(payload: LeadEmail): Promise<void> {
   const apiKey = process.env.RESEND_API_KEY;
   const from = process.env.LEAD_NOTIFY_FROM || "onboarding@resend.dev";
-  const to = process.env.LEAD_NOTIFY_EMAIL;
+  const to = notifyRecipients();
 
   if (!apiKey || !to) {
     console.log("[email:stub]", { url: payload.url, email: payload.email });
@@ -99,7 +108,7 @@ export type LabQuizEmail = {
 export async function sendLabQuizEmail(p: LabQuizEmail): Promise<void> {
   const apiKey = process.env.RESEND_API_KEY;
   const from = process.env.LEAD_NOTIFY_FROM || "onboarding@resend.dev";
-  const to = process.env.LEAD_NOTIFY_EMAIL;
+  const to = notifyRecipients();
   if (!apiKey || !to) {
     console.log("[email:lab-quiz stub]", { email: p.email, answers: p.answers });
     return;
@@ -332,7 +341,7 @@ export async function sendQualifierEmail(payload: {
 }): Promise<void> {
   const apiKey = process.env.RESEND_API_KEY;
   const from = process.env.LEAD_NOTIFY_FROM || "onboarding@resend.dev";
-  const to = process.env.LEAD_NOTIFY_EMAIL;
+  const to = notifyRecipients();
 
   if (!apiKey || !to) {
     console.log("[qualifier:stub]", {
@@ -474,7 +483,7 @@ export type MetaAdsPack = {
 export async function sendMetaAdsPack(pack: MetaAdsPack): Promise<void> {
   const apiKey = process.env.RESEND_API_KEY;
   const from = process.env.LEAD_NOTIFY_FROM || "onboarding@resend.dev";
-  const internalTo = process.env.LEAD_NOTIFY_EMAIL;
+  const internalTo = notifyRecipients();
 
   console.log("[meta-ads pack] sending", {
     hasApiKey: !!apiKey,
@@ -495,7 +504,7 @@ export async function sendMetaAdsPack(pack: MetaAdsPack): Promise<void> {
   const prospectSubject = `Your Meta ads pack — ${brandName}`;
   const internalSubject = `New Meta Ads Lab lead · ${brandName} · ${pack.email}`;
 
-  const sendTo = async (to: string, subject: string, label: string) => {
+  const sendTo = async (to: string | string[], subject: string, label: string) => {
     try {
       const res = await fetch("https://api.resend.com/emails", {
         method: "POST",
@@ -606,7 +615,7 @@ export type GoogleAdsPack = {
 export async function sendGoogleAdsPack(pack: GoogleAdsPack): Promise<void> {
   const apiKey = process.env.RESEND_API_KEY;
   const from = process.env.LEAD_NOTIFY_FROM || "onboarding@resend.dev";
-  const internalTo = process.env.LEAD_NOTIFY_EMAIL;
+  const internalTo = notifyRecipients();
 
   if (!apiKey) {
     console.log("[google-ads pack:stub] no RESEND_API_KEY", { url: pack.url, email: pack.email });
@@ -618,7 +627,7 @@ export async function sendGoogleAdsPack(pack: GoogleAdsPack): Promise<void> {
   const prospectSubject = `Your Google Ads pack — ${brandName}`;
   const internalSubject = `New Google Ads Lab lead · ${brandName} · ${pack.email}`;
 
-  const sendTo = async (to: string, subject: string, label: string) => {
+  const sendTo = async (to: string | string[], subject: string, label: string) => {
     try {
       const res = await fetch("https://api.resend.com/emails", {
         method: "POST",
