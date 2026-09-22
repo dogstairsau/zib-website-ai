@@ -746,34 +746,32 @@ h1, h2, h3, .hero-h, .local-h, .services-h, .stats-h, .faq-h, .cta-title { text-
    type rather than images until licensed logo files exist.
    ═══════════════════════════════════════════════════════════════════════ */
 
-/* ─── Franchise wall ────────────────────────────────────────────────── */
+/* ─── Franchise wall ──────────────────────────────────────────────────
+   No cell borders. A ruled grid needs every cell filled, and fourteen
+   marques never divide evenly into a responsive column count — the empty
+   slots in the last row read as missing tiles. Spacing alone carries it. */
 .marque-wall { padding: clamp(48px, 6vw, 84px) 0; border-bottom: 0.5px solid var(--rule); background: var(--paper); }
 .marque-lede { font-size: 13px; color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; }
 .marque-grid {
-  margin-top: clamp(22px, 3vw, 32px);
+  margin-top: clamp(24px, 3vw, 36px);
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(118px, 1fr));
-  gap: 1px;
-  background: var(--rule);
-  border: 1px solid var(--rule);
-  border-radius: 14px;
-  overflow: hidden;
+  grid-template-columns: repeat(auto-fit, minmax(104px, 1fr));
+  gap: clamp(20px, 2.6vw, 36px) clamp(16px, 2vw, 28px);
+  align-items: center;
 }
 .marque {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 74px;
-  padding: 14px 10px;
-  background: var(--bg);
+  min-height: 46px;
   font-family: var(--display);
   font-size: clamp(14px, 1.3vw, 17px);
   font-weight: 500;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.01em;
   color: var(--ink);
   text-align: center;
 }
-.marque-foot { margin-top: 18px; font-size: 13px; color: var(--muted); }
+.marque-foot { margin-top: clamp(22px, 2.6vw, 30px); font-size: 13px; color: var(--muted); }
 
 /* ─── OEM campaign cycle · the offer period as a timeline ───────────── */
 .cycle { padding: var(--section-y) 0; border-bottom: 0.5px solid var(--rule); }
@@ -901,18 +899,19 @@ h1, h2, h3, .hero-h, .local-h, .services-h, .stats-h, .faq-h, .cta-title { text-
 @media (max-width: 620px) { .band { aspect-ratio: 4 / 3; } }
 
 /* A marque cell holds either a logo or its name as type, so the wall stays
-   even while only some brands have licensed files. Logos are greyscaled to
-   sit together as a set rather than as fourteen competing colour schemes,
-   and lift to full colour on hover. */
+   even while only some brands have licensed files. Greyscaled to sit
+   together as a set rather than as fourteen competing colour schemes. */
 .marque img {
   max-width: 100%;
-  max-height: 30px;
+  max-height: 26px;
   width: auto;
   height: auto;
   object-fit: contain;
   filter: grayscale(1);
-  opacity: 0.72;
+  opacity: 0.74;
   transition: filter .2s var(--ease), opacity .2s var(--ease);
 }
+/* Square marks need more height than a wordmark to look the same size. */
+.marque.is-badge img { max-height: 40px; }
 .marque:hover img { filter: grayscale(0); opacity: 1; }
 @media (prefers-reduced-motion: reduce) { .marque img { transition: none; } }
