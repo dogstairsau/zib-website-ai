@@ -100,7 +100,11 @@ async function sendDirectToPartner(p: {
   // central LEAD_NOTIFY_EMAIL inbox (you). The partner is still named in the
   // subject and body so context is clear. To restore per-partner routing
   // later, swap `to` back to `p.partnerEmail`.
-  const to = process.env.LEAD_NOTIFY_EMAIL || p.partnerEmail;
+  const notify = (process.env.LEAD_NOTIFY_EMAIL || "")
+    .split(",")
+    .map((e) => e.trim())
+    .filter(Boolean);
+  const to = notify.length ? notify : p.partnerEmail;
 
   const subject = `New enquiry · ${p.displayName} · ${p.partnerName} · ${p.source}`;
   const html = `<!doctype html><html><body style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Helvetica,Arial,sans-serif;line-height:1.55;color:#0F0F0F;max-width:680px;margin:0 auto;padding:24px;">
