@@ -164,3 +164,69 @@ export async function auditTransparency(opts: {
     };
   }
 }
+
+/**
+ * Resolve a competitor by name rather than by domain.
+ *
+ * The Growth Audit asks for competitors as free text while the main audits
+ * run, so there is no URL to work from — just whatever the visitor typed.
+ * Reuses the same SearchSuggestions RPC and the same AU-first, highest-volume
+ * pick as the client lookup, so a competitor row and the client's own row are
+ * measured the same way and can honestly sit in one table.
+ *
+ * Never throws: an unresolvable name comes back as found:false with a search
+ * deep-link, because a competitor the visitor named and we could not match is
+ * still worth showing as "no live Google Ads found".
+ */
+export async function lookupCompetitor(
+  name: string,
+  region = "AU",
+): Promise<{
+  query: string;
+  found: boolean;
+  advertiser: Advertiser | null;
+  adCountLabel: string;
+  url: string;
+}> {
+  const query = (name || "").trim();
+  const fallback = {
+    query,
+    found: false,
+    advertiser: null,
+    adCountLabel: "",
+    url: `https://adstransparency.google.com/?region=${encodeURIComponent(region)}`,
+  };
+  if (query.length < 2 || query.length > 60) return fallback;
+  try {
+    // A visitor may type a domain, a trading name or a legal name. Try the
+    // raw string first, then a domain-stripped version of it.
+    const candidates = [query];
+    if (/\./.test(query)) {
+      const core = bareDomain(query)
+        .replace(/\.(com\.au|com|net\.au|net|org|au|co)$/i, "")
+        .replace(/[.-]/g, " ")
+        .trim();
+      if (core.length >= 3) candidates.push(core);
+    }
+    for (const q of candidates) {
+      const best = pickBest(await searchSuggestions(q));
+      if (!best) continue;
+      const label =
+        best.adCountMax <= 0
+          ? "unknown"
+          : best.adCountMin === best.adCountMax
+            ? `~${fmt(best.adCountMax)}`
+            : `~${fmt(best.adCountMin)}–${fmt(best.adCountMax)}`;
+      return {
+        query,
+        found: true,
+        advertiser: best,
+        adCountLabel: label,
+        url: advertiserUrl(best.advertiserId, best.region),
+      };
+    }
+    return fallback;
+  } catch {
+    return fallback;
+  }
+}

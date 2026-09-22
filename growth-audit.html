@@ -114,6 +114,22 @@
 .ga-cta p { margin-top: 10px; font-size: 15px; line-height: 1.6; color: var(--muted); max-width: 58ch; }
 .ga-actions { margin-top: 22px; display: flex; flex-wrap: wrap; gap: 12px; }
 
+/* ─── Competitor comparison ──────────────────────────────────────────
+   Bars are scaled to the largest advertiser in the set, so the client's
+   own row is read against the real ceiling rather than a fixed scale. */
+.ga-cmp { margin-top: 22px; display: grid; gap: 14px; }
+.ga-cmp-row { display: grid; grid-template-columns: minmax(110px, 22%) 1fr auto; gap: 14px; align-items: center; }
+.ga-cmp-name { font-size: 14.5px; font-weight: 500; overflow-wrap: anywhere; }
+.ga-cmp-row.is-you .ga-cmp-name { color: var(--accent); }
+.ga-cmp-bar { height: 12px; background: var(--dim); border-radius: 999px; overflow: hidden; }
+.ga-cmp-fill { height: 100%; background: var(--ink); border-radius: 999px; }
+.ga-cmp-row.is-you .ga-cmp-fill { background: var(--accent); }
+.ga-cmp-val { font-family: var(--mono); font-size: 13px; color: var(--muted); font-variant-numeric: tabular-nums; white-space: nowrap; }
+@media (max-width: 560px) {
+  .ga-cmp-row { grid-template-columns: 1fr auto; }
+  .ga-cmp-bar { grid-column: 1 / -1; order: 3; }
+}
+
 .ga-hide { display: none !important; }
 
 /* scrollIntoView parks the section top at viewport top, which the sticky
@@ -198,6 +214,24 @@
       <div class="ga-track" id="trk-meta"><div class="ga-track-h"><span class="ga-dot"></span>Meta Ads</div><div class="ga-track-status">Waiting…</div></div>
     </div>
     <div class="ga-elapsed" id="gaElapsed">0s elapsed</div>
+
+    <!-- Asked here, not before the run: the audits are already going, so
+         this costs no starts, and the comparison is appended if it lands. -->
+    <div class="ga-card ga-comp" id="gaCompPanel" style="margin-top:clamp(28px,3.4vw,44px)">
+      <h2>While we work — who are you up against?</h2>
+      <p class="lede">Name up to three competitors and we'll pull their live Google Ads volume straight from Google's Transparency Center, so you can see your footprint next to theirs. Optional — your report runs either way.</p>
+      <form id="gaCompForm" autocomplete="off">
+        <div class="ga-fields">
+          <div class="ga-field"><label for="gaComp1">Competitor 1</label><input id="gaComp1" type="text" placeholder="Name or website" /></div>
+          <div class="ga-field"><label for="gaComp2">Competitor 2</label><input id="gaComp2" type="text" placeholder="Name or website" /></div>
+          <div class="ga-field full"><label for="gaComp3">Competitor 3</label><input id="gaComp3" type="text" placeholder="Name or website" /></div>
+        </div>
+        <div class="ga-actions">
+          <button class="ga-btn" type="submit" id="gaCompBtn">Add to my report <span class="arr">→</span></button>
+        </div>
+      </form>
+      <div class="ga-note ga-hide" id="gaCompMsg" role="status"></div>
+    </div>
   </div>
 </section>
 
@@ -221,6 +255,11 @@
     <div class="ga-sec" id="gaSecGads">
       <div class="ga-sec-h">Google Ads</div>
       <div id="gaGadsBody"></div>
+    </div>
+
+    <div class="ga-sec ga-hide" id="gaSecComp">
+      <div class="ga-sec-h">You vs your competitors</div>
+      <div id="gaCompBody"></div>
     </div>
 
     <div class="ga-sec" id="gaSecMeta">

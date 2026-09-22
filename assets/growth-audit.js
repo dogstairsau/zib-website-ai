@@ -24,7 +24,7 @@
 
   const state = { url: '', domain: '', lead: null, started: 0,
                   seo: null, gads: null, meta: null,
-                  seoProse: '', errors: {} };
+                  seoProse: '', errors: {}, competitors: null };
 
   const show = (el) => el && el.classList.remove('ga-hide');
   const hide = (el) => el && el.classList.add('ga-hide');
@@ -268,10 +268,81 @@
       `Prepared for ${esc(state.lead.firstname || 'you')}<br>` +
       `${new Date().toLocaleDateString('en-AU', { day: 'numeric', month: 'long', year: 'numeric' })}<br>` +
       `Zib Digital`;
-    renderSeo(); renderGads(); renderMeta();
+    renderSeo(); renderGads(); renderMeta(); renderCompetitors();
     hide($('ga-run'));
     show($('ga-report'));
     $('ga-report').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  /* ── Competitors · asked during the run, never blocking ─────────── */
+  const compForm = $('gaCompForm');
+  if (compForm) {
+    compForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const names = ['gaComp1', 'gaComp2', 'gaComp3']
+        .map((id) => $(id).value.trim()).filter(Boolean);
+      const msg = $('gaCompMsg');
+      if (!names.length) {
+        msg.textContent = 'Add at least one name, or skip — your report is running either way.';
+        show(msg);
+        return;
+      }
+      $('gaCompBtn').disabled = true;
+      msg.textContent = 'Looking them up…';
+      show(msg);
+      try {
+        const res = await fetch('/api/competitor-ads', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ names, region: 'AU' }),
+        });
+        const data = await res.json();
+        state.competitors = Array.isArray(data.results) ? data.results : [];
+        msg.textContent = state.competitors.some((c) => c.found)
+          ? 'Added to your report.'
+          : "We couldn't match those in Google's Transparency Center — they may advertise under a different legal name.";
+        // The report may already be on screen if the audits finished first.
+        renderCompetitors();
+      } catch {
+        msg.textContent = "Couldn't reach the lookup. Your report is unaffected.";
+      } finally {
+        $('gaCompBtn').disabled = false;
+      }
+    });
+  }
+
+  function renderCompetitors() {
+    const sec = $('gaSecComp');
+    const body = $('gaCompBody');
+    if (!sec || !body || !state.competitors || !state.competitors.length) return;
+
+    // The client's own footprint comes from the Google Ads track. Without it
+    // there is nothing to compare against, so show the competitors alone
+    // rather than implying a comparison that isn't there.
+    const mine = state.gads && state.gads.transparency && state.gads.transparency.found
+      ? { name: state.domain, label: state.gads.transparency.adCountLabel || '—',
+          max: Number(state.gads.transparency.adCountMax || 0), you: true }
+      : null;
+
+    const rows = (mine ? [mine] : []).concat(
+      state.competitors.map((c) => ({
+        name: c.found ? (c.name || c.query) : c.query,
+        label: c.found ? (c.adCountLabel || 'unknown') : 'no live ads found',
+        max: Number(c.adCountMax || 0),
+        you: false,
+      })),
+    );
+    const ceiling = Math.max(1, ...rows.map((r) => r.max));
+    body.innerHTML = '<div class="ga-cmp">' + rows.map((r) => {
+      const pct = Math.max(r.max > 0 ? 2 : 0, Math.round((r.max / ceiling) * 100));
+      return `<div class="ga-cmp-row${r.you ? ' is-you' : ''}">
+        <div class="ga-cmp-name">${esc(r.name)}${r.you ? ' (you)' : ''}</div>
+        <div class="ga-cmp-bar"><div class="ga-cmp-fill" style="width:${pct}%"></div></div>
+        <div class="ga-cmp-val">${esc(r.label)}</div>
+      </div>`;
+    }).join('') + '</div>' +
+      `<p class="ga-note">Live ad counts from Google's Ads Transparency Center${mine ? '' : ' — we could not match your own domain to an advertiser, so only competitors are shown'}. Counts are Google's own published ranges, not estimates.</p>`;
+    show(sec);
   }
 
   $('gaPrint').addEventListener('click', () => window.print());

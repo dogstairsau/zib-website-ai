@@ -182,6 +182,9 @@ export default async function handler(req: Request): Promise<Response> {
           found: !!transparency.advertiser,
           advertiserName: transparency.advertiser?.name || null,
           adCountLabel: transparency.adCountLabel || null,
+          // Raw ceiling so the Growth Audit can scale its comparison bars
+          // against competitors on the same measure.
+          adCountMax: transparency.advertiser?.adCountMax ?? 0,
           region: transparency.advertiser?.region || null,
           verified: transparency.advertiser?.verified || false,
         });
