@@ -58,6 +58,16 @@
     $('gaFirst').focus();
   });
 
+  /* Handoff from the automotive page: /growth-audit?url=… arrives with the
+     URL already typed, so go straight to the gate rather than asking twice. */
+  const handoff = new URLSearchParams(location.search).get('url');
+  if (handoff && handoff.trim()) {
+    $('gaUrl').value = handoff.trim().replace(/^https?:\/\//i, '');
+    if ($('gaUrl').value.includes('.')) {
+      urlForm.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
+    }
+  }
+
   /* ── Step 2 · Gate ─────────────────────────────────────────────── */
   $('gaGateForm').addEventListener('submit', (e) => {
     e.preventDefault();
