@@ -131,30 +131,70 @@ copy alone is ~296 words.
 
 ---
 
-## 4. Where each finding lands on the client page
+## 4. Scope as agreed with Michael (22 Sep 2026)
 
-`/quest-coaches` is written for the owner of a coach company, not a marketer. No
-jargon: "structured data" becomes what Google can read, "domain rating" becomes how
-many sites link to yours, templates become "page recipes", ranking positions become
-page numbers. Keep it that way when editing.
+Michael's feedback on v3: the page over-promised on page volume, 30 live at launch is
+outside the web team's wheelhouse, and the new pages belong in the monthly SEO scope
+rather than the build. Areas We Service is phased out of go-live entirely.
 
-| Finding | Section on the page | What it drives |
+**Stage one (website build), two options:**
+
+| | At launch | Month 6 | Month 12 | Full 58-page map |
+|---|---|---|---|---|
+| Option A (recommended) | 11 | ~23 | ~38 | Year two |
+| Option B | 29 | ~41 | ~56 | End of year one |
+
+The 11 at launch are: Home, Bus & Coach Hire hub, Our Fleet hub, Why Quest Coaches,
+Get a quote, Reviews, Questions & answers, Contact, Booking terms, Credit card terms,
+Privacy policy.
+
+The 18 priority pages are: school cluster (6), corporate cluster (5), four vehicle
+pages, three trust pages. Option B pulls these into the build.
+
+Remaining 29 to reach 58: sporting clubs (4), winery (5), weddings/seniors/social (3),
+Areas We Service hub + 9 area pages (10), guides hub + 6 guides (7).
+
+**Arithmetic note.** Michael suggested 51 by month 6. At the monthly scope's honest rate
+of 2–3 new pages a month that does not hold under either option — it needs a launch set
+of ~36+, or more copywriting in the retainer. The page shows the real curve instead, and
+this is the lever to discuss.
+
+**Pricing (confirmed by Michael):** SEO $2,500 set-up one-off, $2,000 per month ongoing.
+Twelve months including set-up = $26,500. Website build cost still to be confirmed for
+both options. Minimum term is NOT stated on the page — Michael to confirm.
+
+**Monthly scope** is Zib's standard eight workstreams, taken from the Foamco deck and
+adapted to Quest: audits & reports, technical, on-page, copywriting, local search,
+links & off-page, AI answers (new in 2026), strategy & reporting. Line items are
+rewritten in plain English; Local SEO is Ferntree Gully / eastern suburbs / Melbourne
+rather than Sydney–Melbourne–Brisbane.
+
+## 4b. Where each finding lands on the client page
+
+`/quest-coaches` is written for the owner of a coach company, not a marketer. No jargon:
+"structured data" becomes what Google can read, "domain rating" becomes how many sites
+link to yours, ranking positions become page numbers. Keep it that way when editing.
+
+| Finding | Section | What it drives |
 |---|---|---|
-| 61 → 1 keywords | Masthead, The short version, What Google sees | The headline diagnosis |
+| 61 → 1 keywords | Masthead, What's wrong, What Google sees | The headline diagnosis |
 | Lost keyword table | What Google sees | Shown as page numbers, not positions |
-| Size-based demand | What Google sees, Bus pages | Four vehicle pages |
-| Regional demand | What Google sees, Your new website | Nine area pages, regional included |
-| tel: / viewport | Your phone number | Its own section — biggest single loss |
-| UA dead + portal gap | The short version, What happens when | Tracking setup, cross-domain |
-| No service pages | The short version, Your new website | The 58-page site map tree |
-| Crown title, COVID, footer | What Google sees, What happens when | First-fortnight cleanup |
-| No accreditation content | The other operators | Three trust pages, stage one |
-| Crown's school page depth | The other operators, Trip pages | Page recipe contents |
-| Ventura's hub structure | Your new website | Hub-and-child site map |
+| Size-based demand | What Google sees | Four vehicle pages (priority set) |
+| Regional demand | What Google sees, note under the chart | Nine area pages, phased last |
+| tel: / viewport | What's wrong | Its own column — biggest single loss |
+| UA dead + portal gap | What's wrong, monthly note | Tracking, cross-domain |
+| No service pages | What's wrong, Your new website | The 58-page top-down chart |
+| Crown title, COVID, footer | What's wrong, first-fortnight list | Pre-build quick wins |
+| No accreditation content | The other operators | Three trust pages (priority set) |
+| Ventura's hub structure | Your new website | Hub-and-child architecture |
 
-Page sections, in order: The short version · Your phone number · What Google sees ·
-The other operators · Your new website · How pages get built · What happens when ·
-What it costs · What we need.
+Page sections, in order: What's wrong · What Google sees · The other operators · Your new
+website · Stage one: the build · The monthly work · Cost & next steps.
+
+The site map is a **top-down chart** (`.chart` / `.c-cols` / `.box` / `.leaf`), five
+columns on desktop, collapsing to one column under 820px. Note: `.box.root` is dark and
+must stay more specific than any `section.soft .box` rule — an earlier version of that
+rule painted the Home box white-on-white and hid its label.
 
 ## 5. Still unverified — do not publish claims on these
 

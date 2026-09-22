@@ -199,6 +199,129 @@ section.soft .bars{background:var(--soft)}
 .bar .bt.crit{background:var(--critical)}
 .bar .bv{font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-size:14px;font-weight:500;text-align:right;color:var(--ink)}
 
+/* ---------- workstream grid (Zib standard monthly scope) ---------- */
+.streams{display:grid;grid-template-columns:repeat(auto-fit,minmax(248px,1fr));gap:14px}
+.stream{background:var(--paper);border:1px solid var(--rule);padding:16px 18px;display:flex;flex-direction:column;gap:9px}
+section.soft .stream{background:var(--soft)}
+.stream .num{font-family:var(--f-display);font-weight:700;font-size:26px;line-height:1;color:var(--orange);font-variant-numeric:tabular-nums}
+.stream h4{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;font-weight:500;color:var(--ink)}
+.stream ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
+.stream li{display:grid;grid-template-columns:8px 1fr;gap:9px;font-size:14px;line-height:1.45;color:var(--ink-2)}
+.stream li::before{content:"";width:5px;height:5px;background:var(--orange);margin-top:8px}
+.stream .flag{display:inline-block;background:var(--orange);color:#231F20;font-family:var(--f-mono);font-size:9.5px;
+  letter-spacing:.07em;text-transform:uppercase;padding:2px 6px;border-radius:2px;font-weight:500;align-self:flex-start}
+
+/* ---------- phase options ---------- */
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.opt{border:1px solid var(--rule);background:var(--paper);padding:18px 20px;display:flex;flex-direction:column;gap:12px}
+.opt.pick{border-color:var(--orange);border-width:2px}
+section.soft .opt{background:var(--soft)}
+.opt .hd{display:flex;flex-direction:column;gap:6px}
+.opt .big{font-family:var(--f-display);font-weight:700;font-size:34px;line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.opt ul{margin:0;padding-left:17px;display:flex;flex-direction:column;gap:5px;font-size:14.5px;color:var(--ink-2)}
+.opt .foot{font-size:13.5px;color:var(--muted);border-top:1px solid var(--rule-2);padding-top:11px;margin-top:auto}
+
+/* ---------- tables ---------- */
+.scroller{overflow-x:auto;border:1px solid var(--rule);background:var(--paper)}
+section.soft .scroller,section.band .scroller{background:var(--paper)}
+table{border-collapse:collapse;width:100%;min-width:600px;font-size:14.5px}
+caption{caption-side:bottom;text-align:left;padding:10px 14px;font-size:13px;color:var(--muted);font-family:var(--f-body)}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--rule-2);vertical-align:top}
+thead th{
+  font-family:var(--f-mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--muted);background:var(--soft);border-bottom:1px solid var(--rule);font-weight:500;white-space:nowrap
+}
+section.soft thead th{background:var(--band)}
+tbody tr:last-child td{border-bottom:0}
+td.num,th.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+tbody th{font-weight:600;font-family:var(--f-display);font-size:14.5px}
+tr.us{background:var(--orange-wash)}
+tr.us td,tr.us th{font-weight:600}
+
+/* ---------- pills ---------- */
+.pill{
+  display:inline-block;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;
+  padding:2px 7px;border-radius:2px;white-space:nowrap;font-weight:500
+}
+.pill.crit{background:var(--critical-wash);color:var(--critical)}
+.pill.med{background:var(--band);color:var(--ink-2)}
+.pill.ok{background:var(--good-wash);color:var(--good)}
+.pill.new{background:var(--orange-wash);color:var(--orange-deep)}
+
+/* ---------- top-down site map chart ---------- */
+.chart-shell{overflow-x:auto;border:1px solid var(--rule);background:var(--paper);padding:22px clamp(14px,2.2vw,26px)}
+section.soft .chart-shell{background:var(--soft)}
+.chart{min-width:1000px;display:flex;flex-direction:column;align-items:stretch}
+.c-root{display:flex;justify-content:center}
+.c-rail{height:1px;background:var(--rule);margin-top:16px}
+.c-cols{display:grid;grid-template-columns:1.9fr 1fr 1.1fr .95fr 1.05fr;gap:12px;align-items:start}
+.box{
+  border:1px solid var(--rule);background:var(--paper);padding:9px 12px;position:relative;
+  display:flex;flex-wrap:wrap;align-items:center;gap:7px;
+  font-family:var(--f-display);font-weight:500;font-size:14.5px;line-height:1.25;color:var(--ink)
+}
+.box.root{background:var(--ink);color:var(--paper);border-color:var(--ink);font-weight:700;font-size:17px;padding:11px 26px;justify-content:center}
+.box.hub{border-color:var(--ink);border-width:2px;font-weight:600;font-size:14.5px;justify-content:center;text-align:center;min-height:56px}
+.box.sub{background:var(--band);border-color:var(--rule);font-weight:600}
+.box.stub::before{content:"";position:absolute;left:50%;top:-16px;width:1px;height:16px;background:var(--rule)}
+.col{display:flex;flex-direction:column;gap:12px}
+.col-inner{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
+.cluster{display:flex;flex-direction:column;gap:0;position:relative}
+.cluster::before{content:"";position:absolute;left:50%;top:-12px;width:1px;height:12px;background:var(--rule)}
+.leaf{list-style:none;margin:8px 0 0;padding:0 0 0 12px;border-left:1px solid var(--rule);display:flex;flex-direction:column;gap:4px}
+.leaf li{position:relative;padding:3px 0 3px 12px;font-size:13.5px;line-height:1.35;color:var(--ink-2);display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.leaf li::before{content:"";position:absolute;left:0;top:14px;width:9px;height:1px;background:var(--rule)}
+.t{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;padding:2px 6px;border-radius:2px;white-space:nowrap;font-weight:500}
+.t.p1{background:var(--orange);color:#231F20}
+.t.pri{background:var(--good-wash);color:var(--good)}
+.t.later{background:var(--rule-2);color:var(--muted)}
+.t.fix{background:var(--critical-wash);color:var(--critical)}
+.t.note{background:transparent;color:var(--muted);padding:0;font-family:var(--f-body);font-size:11.5px;font-style:italic;text-transform:none;letter-spacing:0}
+.box.root .t.p1{background:var(--orange);color:#231F20}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:18px;font-size:13.5px;color:var(--muted);align-items:center}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+@media (max-width:820px){
+  .chart{min-width:0}
+  .c-cols{grid-template-columns:1fr;gap:18px}
+  .col-inner{grid-template-columns:1fr}
+  .c-rail{display:none}
+  .box.stub::before,.cluster::before{left:14px}
+  .box.hub{justify-content:flex-start;text-align:left}
+  .box.root{justify-content:flex-start}
+  .c-root{display:block}
+}
+
+/* ---------- bar chart ---------- */
+.bars{display:flex;flex-direction:column;gap:10px;border:1px solid var(--rule);background:var(--paper);padding:16px 18px}
+section.soft .bars{background:var(--soft)}
+.bar{display:grid;grid-template-columns:1fr 46px;gap:4px 12px;align-items:center}
+.bar .bl{font-size:13.5px;color:var(--muted);grid-column:1 / -1;font-family:var(--f-mono);letter-spacing:.02em}
+.bar .bt{height:14px;background:var(--orange);border-radius:1px;width:var(--w);min-width:3px;display:block}
+.bar .bt.crit{background:var(--critical)}
+.bar .bv{font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-size:14px;font-weight:500;text-align:right;color:var(--ink)}
+
+/* ---------- workstream grid (Zib standard monthly scope) ---------- */
+.streams{display:grid;grid-template-columns:repeat(auto-fit,minmax(248px,1fr));gap:14px}
+.stream{background:var(--paper);border:1px solid var(--rule);padding:16px 18px;display:flex;flex-direction:column;gap:9px}
+section.soft .stream{background:var(--soft)}
+.stream .num{font-family:var(--f-display);font-weight:700;font-size:26px;line-height:1;color:var(--orange);font-variant-numeric:tabular-nums}
+.stream h4{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;font-weight:500;color:var(--ink)}
+.stream ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
+.stream li{display:grid;grid-template-columns:8px 1fr;gap:9px;font-size:14px;line-height:1.45;color:var(--ink-2)}
+.stream li::before{content:"";width:5px;height:5px;background:var(--orange);margin-top:8px}
+.stream .flag{display:inline-block;background:var(--orange);color:#231F20;font-family:var(--f-mono);font-size:9.5px;
+  letter-spacing:.07em;text-transform:uppercase;padding:2px 6px;border-radius:2px;font-weight:500;align-self:flex-start}
+
+/* ---------- phase options ---------- */
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.opt{border:1px solid var(--rule);background:var(--paper);padding:18px 20px;display:flex;flex-direction:column;gap:12px}
+.opt.pick{border-color:var(--orange);border-width:2px}
+section.soft .opt{background:var(--soft)}
+.opt .hd{display:flex;flex-direction:column;gap:6px}
+.opt .big{font-family:var(--f-display);font-weight:700;font-size:34px;line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.opt ul{margin:0;padding-left:17px;display:flex;flex-direction:column;gap:5px;font-size:14.5px;color:var(--ink-2)}
+.opt .foot{font-size:13.5px;color:var(--muted);border-top:1px solid var(--rule-2);padding-top:11px;margin-top:auto}
+
 /* ---------- tables ---------- */
 .scroller{overflow-x:auto;border:1px solid var(--rule);background:var(--paper)}
 section.soft .scroller,section.band .scroller{background:var(--paper)}
@@ -248,6 +371,7 @@ tr.us td,tr.us th{font-weight:600}
 .tree .tag.b{background:var(--good-wash);color:var(--good)}
 .tree .tag.c{background:var(--critical-wash);color:var(--critical)}
 .tree .tag.keep{background:var(--rule-2);color:var(--muted)}
+.tree .tag.p1{background:var(--orange);color:#231F20;font-weight:500}
 @media (max-width:560px){
   .tree{font-size:14px}
   .tree ul{margin-left:6px;padding-left:10px}
@@ -328,7 +452,8 @@ footer a{color:var(--orange)}
     <a href="#google">What Google sees</a>
     <a href="#others">The other operators</a>
     <a href="#website">Your new website</a>
-    <a href="#plan">What happens when</a>
+    <a href="#phase1">Stage one: the build</a>
+    <a href="#monthly">The monthly work</a>
     <a href="#cost">Cost &amp; next steps</a>
   </div>
 </nav>
@@ -507,221 +632,340 @@ footer a{color:var(--orange)}
   <div class="wrap stack">
     <div class="sec-head">
       <p class="eyebrow">Your new website</p>
-      <h2>From eleven pages to fifty-eight.</h2>
-      <p class="lede">The whole website laid out. Three main sections carry it, answering the three
-      questions every caller asks: <em>do you do my kind of trip</em>, <em>have you got a bus my
-      size</em>, and <em>do you come out to me</em>.</p>
+      <h2>Eleven pages at go-live. Fifty-eight on the map.</h2>
+      <p class="lede">This is the whole website drawn out, top down. The <span class="t p1">At launch</span>
+      boxes are the eleven pages that get rebuilt and go live in stage one. <span class="t pri">Priority</span>
+      is what comes next. Everything else gets written a few pages a month through the monthly work, in the
+      order the searches justify.</p>
     </div>
 
-    <div class="tiles">
-      <div class="tile"><span class="n">11</span><span class="k">Pages today</span><span class="tnote">None selling a service.</span></div>
-      <div class="tile"><span class="n">30</span><span class="k">Live at launch</span><span class="tnote">Schools, corporate, buses, the basics.</span></div>
-      <div class="tile"><span class="n">51</span><span class="k">By month six</span><span class="tnote">Clubs, wineries, weddings, areas.</span></div>
-      <div class="tile"><span class="n">58</span><span class="k">By month twelve</span><span class="tnote">Plus six guides that earn links.</span></div>
-    </div>
+    <div class="chart-shell">
+      <div class="chart">
+        <div class="c-root">
+          <div class="box root">Home <span class="t p1">At launch</span></div>
+        </div>
+        <div class="c-rail"></div>
+        <div class="c-cols">
 
-    <div class="tree-shell">
-      <ul class="tree">
-        <li>
-          <div class="node"><span class="name">Home</span><span class="tag c">Rewrite</span></div>
-          <ul>
-            <li>
-              <div class="node"><span class="name">Bus &amp; Coach Hire Melbourne</span><span class="tag a">New</span></div>
-              <ul>
-                <li>
-                  <div class="node"><span class="name">School Bus Charter</span><span class="tag a">New</span></div>
-                  <ul>
-                    <li><div class="node"><span class="name">School excursions</span></div></li>
-                    <li><div class="node"><span class="name">School camps</span></div></li>
-                    <li><div class="node"><span class="name">Swimming shuttles</span></div></li>
-                    <li><div class="node"><span class="name">School sport &amp; carnivals</span></div></li>
-                    <li><div class="node"><span class="name">Daily school runs</span></div></li>
-                  </ul>
-                </li>
-                <li>
-                  <div class="node"><span class="name">Corporate Bus Hire</span><span class="tag a">New</span></div>
-                  <ul>
-                    <li><div class="node"><span class="name">Conferences &amp; delegate transfers</span></div></li>
-                    <li><div class="node"><span class="name">Staff &amp; site shuttles</span></div></li>
-                    <li><div class="node"><span class="name">Airport transfers</span></div></li>
-                    <li><div class="node"><span class="name">Christmas parties &amp; team days</span></div></li>
-                  </ul>
-                </li>
-                <li>
-                  <div class="node"><span class="name">Sporting Club Bus Hire</span><span class="tag a">New</span><span class="tag b">No competition</span></div>
-                  <ul>
-                    <li><div class="node"><span class="name">Away games &amp; fixtures</span></div></li>
-                    <li><div class="node"><span class="name">Finals &amp; carnival days</span></div></li>
-                    <li><div class="node"><span class="name">Junior club transport</span></div></li>
-                  </ul>
-                </li>
-                <li>
-                  <div class="node"><span class="name">Winery &amp; Brewery Transport</span><span class="tag a">New</span><span class="tag b">No competition</span></div>
-                  <ul>
-                    <li><div class="node"><span class="name">Yarra Valley wine tours</span></div></li>
-                    <li><div class="node"><span class="name">Mornington Peninsula wine tours</span></div></li>
-                    <li><div class="node"><span class="name">Macedon Ranges &amp; Bellarine</span></div></li>
-                    <li><div class="node"><span class="name">For wineries &amp; cellar doors</span><span class="tag b">Their guests, your buses</span></div></li>
-                  </ul>
-                </li>
-                <li><div class="node"><span class="name">Weddings &amp; guest transfers</span><span class="tag a">New</span></div></li>
-                <li><div class="node"><span class="name">Seniors &amp; community groups</span><span class="tag a">New</span></div></li>
-                <li><div class="node"><span class="name">Social clubs &amp; day tours</span><span class="tag a">New</span></div></li>
+          <div class="col">
+            <div class="box hub stub">Bus &amp; Coach Hire Melbourne <span class="t p1">At launch</span></div>
+            <div class="col-inner">
+              <div class="cluster">
+                <div class="box sub">School Bus Charter <span class="t pri">Priority &middot; 6</span></div>
+                <ul class="leaf">
+                  <li>School excursions</li>
+                  <li>School camps</li>
+                  <li>Swimming shuttles</li>
+                  <li>School sport &amp; carnivals</li>
+                  <li>Daily school runs</li>
+                </ul>
+              </div>
+              <div class="cluster">
+                <div class="box sub">Corporate Bus Hire <span class="t pri">Priority &middot; 5</span></div>
+                <ul class="leaf">
+                  <li>Conferences &amp; delegate transfers</li>
+                  <li>Staff &amp; site shuttles</li>
+                  <li>Airport transfers</li>
+                  <li>Christmas parties &amp; team days</li>
+                </ul>
+              </div>
+              <div class="cluster">
+                <div class="box sub">Sporting Club Bus Hire <span class="t later">Monthly &middot; 4</span> <span class="t note">No competition</span></div>
+                <ul class="leaf">
+                  <li>Away games &amp; fixtures</li>
+                  <li>Finals &amp; carnival days</li>
+                  <li>Junior club transport</li>
+                </ul>
+              </div>
+              <div class="cluster">
+                <div class="box sub">Winery &amp; Brewery Transport <span class="t later">Monthly &middot; 5</span> <span class="t note">No competition</span></div>
+                <ul class="leaf">
+                  <li>Yarra Valley wine tours</li>
+                  <li>Mornington Peninsula wine tours</li>
+                  <li>Macedon Ranges &amp; Bellarine</li>
+                  <li>For wineries &amp; cellar doors <span class="t note">Their guests, your buses</span></li>
+                </ul>
+              </div>
+            </div>
+            <ul class="leaf">
+              <li>Weddings &amp; guest transfers</li>
+              <li>Seniors &amp; community groups</li>
+              <li>Social clubs &amp; day tours</li>
+            </ul>
+          </div>
+
+          <div class="col">
+            <div class="box hub stub">Our Fleet <span class="t p1">At launch</span> <span class="t pri">+4 priority</span></div>
+            <div class="cluster">
+              <ul class="leaf">
+                <li>13-seat minibus hire</li>
+                <li>24-seat bus hire</li>
+                <li>27-seat mini coach hire</li>
+                <li>48 &amp; 57-seat coach hire</li>
               </ul>
-            </li>
-            <li>
-              <div class="node"><span class="name">Our Fleet</span><span class="tag keep">Keep &amp; rewrite</span></div>
-              <ul>
-                <li><div class="node"><span class="name">13-seat minibus hire</span><span class="tag a">New</span></div></li>
-                <li><div class="node"><span class="name">24-seat bus hire</span><span class="tag a">New</span></div></li>
-                <li><div class="node"><span class="name">27-seat mini coach hire</span><span class="tag a">New</span></div></li>
-                <li><div class="node"><span class="name">48 &amp; 57-seat coach hire</span><span class="tag a">New</span></div></li>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="box hub stub">Areas We Service <span class="t later">Later &middot; 9</span></div>
+            <div class="cluster">
+              <ul class="leaf">
+                <li>Eastern suburbs &amp; Knox</li>
+                <li>South east &amp; Dandenong</li>
+                <li>Pakenham &amp; Cardinia</li>
+                <li>Melbourne CBD &amp; inner</li>
+                <li>Bayside &amp; Mornington Peninsula</li>
+                <li>Yarra Valley &amp; Dandenong Ranges</li>
+                <li>Northern &amp; western suburbs</li>
+                <li>Gippsland &amp; Traralgon</li>
+                <li>Regional Victoria</li>
               </ul>
-            </li>
-            <li>
-              <div class="node"><span class="name">Areas We Service</span><span class="tag a">New</span></div>
-              <ul>
-                <li><div class="node"><span class="name">Eastern suburbs &amp; Knox</span></div></li>
-                <li><div class="node"><span class="name">South east &amp; Dandenong</span></div></li>
-                <li><div class="node"><span class="name">Pakenham &amp; Cardinia</span></div></li>
-                <li><div class="node"><span class="name">Melbourne CBD &amp; inner</span></div></li>
-                <li><div class="node"><span class="name">Bayside &amp; Mornington Peninsula</span></div></li>
-                <li><div class="node"><span class="name">Yarra Valley &amp; Dandenong Ranges</span></div></li>
-                <li><div class="node"><span class="name">Northern &amp; western suburbs</span></div></li>
-                <li><div class="node"><span class="name">Gippsland &amp; Traralgon</span></div></li>
-                <li><div class="node"><span class="name">Regional Victoria</span></div></li>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="box hub stub">Why Quest Coaches <span class="t p1">At launch</span> <span class="t pri">+3 priority</span></div>
+            <div class="cluster">
+              <ul class="leaf">
+                <li>Safety &amp; accreditation</li>
+                <li>Child safety &amp; driver checks</li>
+                <li>Our drivers</li>
               </ul>
-            </li>
-            <li>
-              <div class="node"><span class="name">Why Quest Coaches</span><span class="tag keep">Keep &amp; rewrite</span></div>
-              <ul>
-                <li><div class="node"><span class="name">Safety &amp; accreditation</span><span class="tag a">New</span></div></li>
-                <li><div class="node"><span class="name">Child safety &amp; driver checks</span><span class="tag a">New</span></div></li>
-                <li><div class="node"><span class="name">Our drivers</span><span class="tag a">New</span></div></li>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="box hub stub">Site pages <span class="t p1">7, all at launch</span></div>
+            <div class="cluster">
+              <ul class="leaf">
+                <li>Get a quote</li>
+                <li>Reviews</li>
+                <li>Questions &amp; answers</li>
+                <li>Contact</li>
+                <li>Booking terms <span class="t fix">Fix title</span></li>
+                <li>Credit card terms</li>
+                <li>Privacy policy</li>
+                <li>Guides <span class="t later">Month 7+</span></li>
               </ul>
-            </li>
-            <li><div class="node"><span class="name">Get a quote</span><span class="tag a">New</span><span class="tag b">Short form, on your site</span></div></li>
-            <li><div class="node"><span class="name">Reviews</span><span class="tag keep">From Testimonials</span></div></li>
-            <li><div class="node"><span class="name">Questions &amp; answers</span><span class="tag keep">Keep &amp; expand</span></div></li>
-            <li><div class="node"><span class="name">Guides</span><span class="tag a">Six, from month seven</span></div></li>
-            <li>
-              <div class="node"><span class="name">Contact</span><span class="tag keep">Keep &amp; rewrite</span></div>
-              <ul>
-                <li><div class="node"><span class="name">Booking terms</span><span class="tag c">Fix the Crown title</span></div></li>
-                <li><div class="node"><span class="name">Credit card terms</span><span class="tag keep">Keep</span></div></li>
-                <li><div class="node"><span class="name">Privacy policy</span><span class="tag a">New</span></div></li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-      </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
       <div class="legend">
-        <span><span class="tag a">New</span> Doesn't exist today</span>
-        <span><span class="tag keep">Keep</span> Same page, rewritten</span>
-        <span><span class="tag c">Fix</span> Something's wrong with it</span>
-        <span><span class="tag b">Note</span> Worth pointing out</span>
+        <span><span class="t p1">At launch</span> The 11 pages in stage one</span>
+        <span><span class="t pri">Priority</span> The next 18 pages</span>
+        <span><span class="t later">Later</span> Phased in once the core is earning</span>
+        <span>Untagged &mdash; written through the monthly work</span>
       </div>
     </div>
 
     <div class="cols">
-      <div class="callout">
-        <h4>How 36 new pages get written without cutting corners</h4>
-        <p>We design three layouts once &mdash; trip pages, area pages, bus pages &mdash; then fill each
-        one with its own words, photos, questions and reviews. The layout repeats. The words never do.
-        Google is very good now at spotting pages that are the same thing with the names swapped, and it
-        buries them, which is why this runs over twelve months instead of one week.</p>
-        <p>Same reason we're not building a page per suburb. Nine area pages go in, each with real detail,
-        and we add more only where we can see people searching.</p>
+      <div class="stack-sm">
+        <h3>How the page count actually grows</h3>
+        <p class="sub">The monthly work writes two to three new pages a month. That's the honest rate, and
+        it's what decides how fast the map fills in. The only real lever is how many pages go into the
+        build itself.</p>
+        <div class="scroller">
+          <table>
+            <caption>Based on two to three new pages a month from the monthly copywriting stream.</caption>
+            <thead><tr><th>Stage one size</th><th class="num">At launch</th><th class="num">Month 6</th><th class="num">Month 12</th><th>Full map of 58</th></tr></thead>
+            <tbody>
+              <tr><td>Option A</td><td class="num">11</td><td class="num">~23</td><td class="num">~38</td><td>Year two</td></tr>
+              <tr class="us"><td>Option B</td><td class="num">29</td><td class="num">~41</td><td class="num">~56</td><td>End of year one</td></tr>
+            </tbody>
+          </table>
+        </div>
       </div>
-      <div class="scroller">
-        <table>
-          <caption>Nothing gets deleted. Old addresses forward to the new ones so you keep what you've
-          already earned.</caption>
-          <thead><tr><th>Page you have now</th><th>What happens to it</th></tr></thead>
-          <tbody>
-            <tr><td>Home</td><td>Rewritten, about 800 words, aimed at bus and coach hire in Melbourne</td></tr>
-            <tr><td>Our Fleet</td><td>Becomes the front page for four new bus pages</td></tr>
-            <tr><td>About Us</td><td>Rewritten as Why Quest, three trust pages under it</td></tr>
-            <tr><td>FAQs</td><td>Kept and expanded, written so Google can show the answers</td></tr>
-            <tr><td>Testimonials</td><td>Becomes Reviews, so your star rating can show in Google</td></tr>
-            <tr><td>Contact Us</td><td>Rewritten with a form, a map and tappable numbers</td></tr>
-            <tr><td>Both itinerary forms</td><td>Folded into one Get a quote page</td></tr>
-            <tr><td>COVID-19 page</td><td>Retired, banner off every page</td></tr>
-            <tr><td>Terms pages</td><td>Kept, Crown Bus Charter title fixed</td></tr>
-            <tr><td>Your booking system</td><td>Stays as it is. We just connect it up properly</td></tr>
-          </tbody>
-        </table>
+      <div class="stack-sm">
+        <div class="callout">
+          <h4>How the pages get written</h4>
+          <p>Three layouts get designed once &mdash; trip pages, area pages, bus pages &mdash; then each
+          page is filled with its own words, photos, questions and reviews. The layout repeats, the words
+          never do. Google is good now at spotting pages that are the same thing with the names swapped,
+          and it buries them.</p>
+        </div>
+        <div class="note">
+          <strong>The nine area pages are deliberately last.</strong> They matter &mdash; your own lost
+          searches show demand in Pakenham, Shepparton and Traralgon &mdash; but they only work once the
+          service pages above them are earning. And we won't build a page per suburb: nine areas, each
+          with real local detail, and more only where the searches show up.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="phase1">
+  <div class="wrap stack">
+    <div class="sec-head">
+      <p class="eyebrow">Stage one: the build</p>
+      <h2>Rebuild the eleven, move it across, go live.</h2>
+      <p class="lede">Stage one is a website project with a start and a finish: your existing pages
+      rebuilt properly, everything moved to the new site without losing what you've earned, and the phone
+      and quote forms working. Two ways to size it.</p>
+    </div>
+
+    <div class="opts">
+      <div class="opt pick">
+        <div class="hd">
+          <span class="pill new">Option A &middot; recommended</span>
+          <span class="big">11 pages</span>
+          <p class="sub">Your existing site rebuilt and migrated. A clean, finished project.</p>
+        </div>
+        <ul>
+          <li>Home, fleet, Why Quest, questions, reviews, contact, quote, terms, privacy</li>
+          <li>New site that works properly on phones, on safe modern hosting, in your colours</li>
+          <li>Tap-to-call in the header and a short quote form that hands off to your booking system</li>
+          <li>Every old page address forwarded so nothing you've earned is lost</li>
+          <li>Call and enquiry tracking installed, Google given a map of the site</li>
+          <li>Photography of the four buses, inside and out</li>
+        </ul>
+        <p class="foot">The 18 priority pages then get written through the monthly work at two to three a
+        month, so schools and corporate go live across months two to five rather than on day one.</p>
+      </div>
+      <div class="opt">
+        <div class="hd">
+          <span class="pill med">Option B &middot; bigger build</span>
+          <span class="big">29 pages</span>
+          <p class="sub">Everything in Option A, plus the 18 priority pages written into the build.</p>
+        </div>
+        <ul>
+          <li>Everything in Option A</li>
+          <li>School pages (6) &mdash; excursions, camps, swimming, sport, daily runs</li>
+          <li>Corporate pages (5) &mdash; conferences, shuttles, airport, Christmas parties</li>
+          <li>Four bus pages, catching the size searches you were already turning up for</li>
+          <li>Three trust pages &mdash; accreditation, child safety, your drivers</li>
+        </ul>
+        <p class="foot">Costs more up front and takes longer to launch, but your two main markets are
+        live on day one and the full 58-page map lands inside year one instead of year two.</p>
+      </div>
+    </div>
+
+    <div class="cols">
+      <div class="prose">
+        <h3>Before any of that: the first fortnight</h3>
+        <p>Some of this is too cheap to wait for a new website. In the first two weeks, on your current
+        site: the phone number made tappable, the COVID banner taken off, the 2021 footer fixed, the page
+        titled &ldquo;Crown Bus Charter&rdquo; corrected, Google given a map of the site, working call and
+        enquiry tracking installed, and your Google Business listing claimed and filled out properly.</p>
+        <p>None of that needs the rebuild, and it starts earning while the build is happening.</p>
+      </div>
+      <div class="stack-sm">
+        <h3>What we need from you to start</h3>
+        <p class="sub">Photos of the four buses or a morning at the depot to take them. Your accreditation
+        number, driver check and child safety policies. A list of the schools, clubs, companies and
+        wineries you carry &mdash; only named with your permission. Where you really will and won't
+        travel. Logins for your domain, hosting and booking system. And someone who can approve copy
+        inside a week.</p>
+        <div class="note">
+          <strong>Your booking system stays exactly as it is.</strong> We're not replacing it. We just
+          connect it up so a quote started on the website can be traced back to the page and search that
+          produced it.
+        </div>
       </div>
     </div>
   </div>
 </section>
 
-<section id="plan">
+<section id="monthly" class="soft">
   <div class="wrap stack">
     <div class="sec-head">
-      <p class="eyebrow">What happens when</p>
-      <h2>Twelve months, cheapest wins first.</h2>
-      <p class="sub">The things that cost nothing and earn straight away go first. The big competitive
-      searches are a year-two conversation, and we'll say so the whole way through.</p>
+      <p class="eyebrow">The monthly work &middot; all 12 months</p>
+      <h2>Eight workstreams, running continuously.</h2>
+      <p class="lede">This is Zib's standard twelve-month Google scope, and it's where the new pages come
+      from. Every workstream below runs in parallel across the whole engagement, not just at launch.</p>
     </div>
 
-    <div>
-      <div class="phase">
-        <span class="when">First fortnight</span>
-        <div class="what">
-          <h4>Stop the obvious losses</h4>
-          <ul>
-            <li>Phone number made tappable on your current site</li>
-            <li>COVID banner off, 2021 footer fixed, Crown Bus Charter title corrected</li>
-            <li>Google given a map of your site, plus working call and enquiry tracking</li>
-            <li>Google Business listing claimed and filled out properly</li>
-          </ul>
-        </div>
+    <div class="streams">
+      <div class="stream">
+        <span class="num">01</span>
+        <h4>Audits &amp; reports</h4>
+        <ul>
+          <li>Link audit and clean-up of the junk pointing at you</li>
+          <li>Tracking where visitors drop off, and fixing it</li>
+          <li>Competitor and Google movement tracking</li>
+          <li>Monthly performance reporting</li>
+        </ul>
       </div>
-      <div class="phase">
-        <span class="when">Months 1&ndash;3</span>
-        <div class="what">
-          <h4>New site live, 30 pages</h4>
-          <ul>
-            <li>New site that works on phones, on safe modern hosting, in your colours</li>
-            <li>Home, Why Quest, fleet, reviews, questions and contact rewritten</li>
-            <li>School pages (6) and corporate pages (5) live &mdash; your two main markets</li>
-            <li>Four bus pages, three trust pages, and every old address forwarded</li>
-          </ul>
-        </div>
+      <div class="stream">
+        <span class="num">02</span>
+        <h4>Technical</h4>
+        <ul>
+          <li>The behind-the-scenes labels that tell Google what you do</li>
+          <li>Site map, crawl and indexing setup</li>
+          <li>Page speed and mobile performance</li>
+          <li>Redirect map, so no address is ever lost</li>
+        </ul>
       </div>
-      <div class="phase">
-        <span class="when">Months 4&ndash;6</span>
-        <div class="what">
-          <h4>The gaps nobody else has filled</h4>
-          <ul>
-            <li>Sporting club pages (4) and winery pages (5), including the one aimed at wineries themselves</li>
-            <li>Weddings, seniors and social club pages</li>
-            <li>Nine area pages, eastern suburbs and Pakenham first</li>
-            <li>Bus and transport directory listings, and a simple way to ask for a review after every charter</li>
-          </ul>
-        </div>
+      <div class="stream">
+        <span class="num">03</span>
+        <h4>On-page</h4>
+        <ul>
+          <li>Linking your pages to each other properly</li>
+          <li>The headlines and descriptions Google shows in search results</li>
+          <li>Header and footer tuning</li>
+          <li>Making sure every page leads to a call or a quote</li>
+        </ul>
       </div>
-      <div class="phase">
-        <span class="when">Months 7&ndash;12</span>
-        <div class="what">
-          <h4>Build reputation, chase the big searches</h4>
-          <ul>
-            <li>Six guides, one a month, written to get you linked to and quoted</li>
-            <li>Steady work getting other websites to link to yours, from three upwards</li>
-            <li>The big competitive searches, now there's something behind them</li>
-            <li>Report every month, a proper sit-down every three, next year's plan in month eleven</li>
-          </ul>
-        </div>
+      <div class="stream">
+        <span class="num">04</span>
+        <h4>Copywriting</h4>
+        <ul>
+          <li>Page rewrites, and the new service pages written two to three a month</li>
+          <li>One article a month, 600 words</li>
+          <li>A copywriting guide and a quarterly workshop for your team</li>
+          <li>PDF spec sheets and capability statements for school and corporate tenders</li>
+        </ul>
+      </div>
+      <div class="stream">
+        <span class="num">05</span>
+        <h4>Local search</h4>
+        <ul>
+          <li>Google Business listing set up and optimised</li>
+          <li>Posting and review management, after every charter</li>
+          <li>Ferntree Gully, eastern suburbs and Melbourne-wide coverage</li>
+          <li>Local directory listings</li>
+        </ul>
+      </div>
+      <div class="stream">
+        <span class="num">06</span>
+        <h4>Links &amp; off-page</h4>
+        <ul>
+          <li>Getting Australian sites to link to yours, from three upwards</li>
+          <li>Bus, coach and transport industry link building</li>
+          <li>Removing the junk links already pointing at you</li>
+          <li>Industry and association partnerships</li>
+        </ul>
+      </div>
+      <div class="stream">
+        <span class="num">07</span>
+        <h4>AI answers</h4>
+        <span class="flag">New in 2026</span>
+        <ul>
+          <li>Making sure AI tools understand what Quest is and where it operates</li>
+          <li>Question-and-answer content written so it can be quoted</li>
+          <li>Answer blocks shaped the way AI tools cite sources</li>
+          <li>Tracking whether you get named in AI answers and Google's AI results</li>
+        </ul>
+      </div>
+      <div class="stream">
+        <span class="num">08</span>
+        <h4>Strategy &amp; reporting</h4>
+        <ul>
+          <li>Monthly strategy call plus a quarterly business review</li>
+          <li>Search and enquiry strategy per market: schools, corporate, clubs, wineries</li>
+          <li>Monthly dashboard: rankings, traffic, enquiries</li>
+          <li>A dedicated account manager, not a ticket queue</li>
+        </ul>
       </div>
     </div>
 
     <div class="note">
-      <strong>What we won't do is promise you a traffic number today.</strong> You've had no working data
-      since 2023, and four visitors a month is too small a base to forecast from honestly. We count four
-      things from day one &mdash; phone taps, quote forms, portal quotes and emails, each traced back to
-      the page and search that produced it &mdash; then set targets at the end of month one against real
-      numbers. Anyone quoting you visitor figures for this site right now is guessing.
+      <strong>Final priorities confirmed in discovery.</strong> Where the emphasis sits can be re-weighted
+      month to month depending on what the focus markets need. What we won't do is promise you a traffic
+      number today &mdash; you've had no working data since 2023, and four visitors a month is too small a
+      base to forecast from honestly. We count phone taps, quote forms, portal quotes and emails from day
+      one, then set targets at the end of month one against real numbers.
     </div>
   </div>
 </section>
@@ -730,61 +974,49 @@ footer a{color:var(--orange)}
   <div class="wrap stack">
     <div class="sec-head">
       <p class="eyebrow">Cost &amp; next steps</p>
-      <h2>Two parts: the build, then the monthly work.</h2>
-      <p class="lede">The website is a one-off. The Google work is monthly and builds on itself &mdash; the
-      pages written in month four are still earning in month twelve.</p>
+      <h2>The Google work is priced. The build depends on which option.</h2>
     </div>
     <div class="cols">
       <div class="stack-sm">
-        <h3>The website build &mdash; one-off</h3>
+        <h3>The monthly Google work</h3>
         <div class="kv" style="border-color:var(--dark-rule);background:var(--dark-rule)">
-          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">New site, works on phones</span><span class="v">Included</span></div>
-          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Pages live at launch</span><span class="v">30</span></div>
-          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Tap-to-call &amp; quote forms</span><span class="v">Included</span></div>
-          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Old addresses forwarded</span><span class="v">Included</span></div>
-          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Call &amp; enquiry tracking</span><span class="v">Included</span></div>
-          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Your cost</span><span class="v" style="color:var(--orange)">To be confirmed</span></div>
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Set-up, one-off</span><span class="v" style="color:var(--orange)">$2,500</span></div>
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Ongoing, per month</span><span class="v" style="color:var(--orange)">$2,000</span></div>
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">What it covers</span><span class="v">All 8 workstreams</span></div>
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">New pages written</span><span class="v">2&ndash;3 a month</span></div>
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Twelve months, incl. set-up</span><span class="v">$26,500</span></div>
         </div>
       </div>
       <div class="stack-sm">
-        <h3>The Google work &mdash; monthly</h3>
+        <h3>The website build</h3>
         <div class="kv" style="border-color:var(--dark-rule);background:var(--dark-rule)">
-          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">New pages, months 4&ndash;6</span><span class="v">21</span></div>
-          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Guides, months 7&ndash;12</span><span class="v">6</span></div>
-          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Google Business &amp; directories</span><span class="v">Ongoing</span></div>
-          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Reporting &amp; one contact</span><span class="v">Included</span></div>
-          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Minimum term</span><span class="v">6 months</span></div>
-          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Your cost</span><span class="v" style="color:var(--orange)">To be confirmed</span></div>
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Option A &middot; 11 pages</span><span class="v" style="color:var(--orange)">To be confirmed</span></div>
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Option B &middot; 29 pages</span><span class="v" style="color:var(--orange)">To be confirmed</span></div>
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Migration &amp; forwarding</span><span class="v">Included either way</span></div>
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Tracking set-up</span><span class="v">Included either way</span></div>
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">First-fortnight fixes</span><span class="v">Included either way</span></div>
         </div>
+        <p class="sub">Google Ads isn't in either figure. Worth talking about once there are pages to send
+        traffic to.</p>
       </div>
     </div>
 
     <div class="cols">
       <div class="prose">
-        <h3>What we need from you to start</h3>
-        <p>Photos of your four buses inside and out, or a morning at the depot to take them. Your
-        accreditation number, driver check and child safety policies. A list of the schools, clubs,
-        companies and wineries you carry &mdash; we'd only name any of them with your permission. Where
-        you really will and won't travel. Logins for your domain, hosting and booking system. And someone
-        who can approve copy inside a week.</p>
-        <p>Not in this: Google Ads, changing your booking system, or bus signage. Ads are worth discussing
-        once there are pages to send traffic to.</p>
+        <h3>Three questions for you</h3>
+        <p>Why does your site turn up for <strong>&ldquo;quinces coaches&rdquo;</strong> &mdash; is that an
+        old business name, or a partner? Where did the <strong>&ldquo;Crown Bus Charter&rdquo;</strong>
+        page title come from? And how much more work could the fleet actually take, so we aim the first
+        pages at the markets you've got room for?</p>
       </div>
       <div class="stack-sm">
-        <h3>And three questions for you</h3>
-        <div class="kv" style="border-color:var(--dark-rule);background:var(--dark-rule)">
-          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Your name</span><span class="v">Why do you turn up for &ldquo;quinces coaches&rdquo;?</span></div>
-          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">That title</span><span class="v">Where did &ldquo;Crown Bus Charter&rdquo; come from?</span></div>
-          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Capacity</span><span class="v">How much more work could the fleet take?</span></div>
-        </div>
         <p class="sub">You've got a real business, a depot, a fleet and 37 years behind a website that
-        turns up for one search. There's no penalty to appeal and no disaster to recover from &mdash; 58
-        pages to build, in a market where two of your four competitors haven't bothered either.</p>
+        turns up for one search. There's no penalty to appeal and no disaster to recover from &mdash;
+        eleven pages to rebuild, and a market where two of your four competitors haven't bothered either.</p>
+        <div class="close-cta">
+          <a class="btn" href="tel:1300255287">Let's talk it through</a>
+        </div>
       </div>
-    </div>
-
-    <div class="close-cta">
-      <a class="btn" href="tel:1300255287">Let's talk it through</a>
     </div>
   </div>
 </section>
