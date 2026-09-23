@@ -77,8 +77,8 @@
   .hero .wrap{position:relative; display:grid; grid-template-columns:1.1fr .9fr; gap:56px; align-items:center}
   .hero .eyebrow{color:#ddd}
   .hero .eyebrow::before{background:#fff}
-  .hero h1{font-size:clamp(36px,5.6vw,64px)}
-  .hero h1 em{font-style:normal; font-weight:500}
+  .hero h1{font-size:clamp(30px,4vw,46px); font-weight:700; letter-spacing:-.02em}
+  .hero h1 em{font-style:normal}
   .hero-lede{font-size:19px; color:#e4e4e4; max-width:34em}
   .hero .btn--ghost{color:#fff; box-shadow:inset 0 0 0 2px #fff}
   .hero .btn--primary, .ba .btn--primary, .final .btn--primary{background:#fff; color:#000}
@@ -109,7 +109,7 @@
   .ba-pick button[aria-pressed=true]{border-color:#fff; color:#fff}
 
   /* Quote form */
-  .quote{background:var(--white); border:1px solid var(--line); border-top:4px solid var(--ink); padding:28px; position:sticky; top:96px}
+  .quote{background:var(--white); border:1px solid var(--line); padding:28px; position:sticky; top:96px}
   .quote h2{font-size:26px}
   .quote p.sub{color:var(--mute); font-size:15px}
   .field{margin-bottom:14px}
@@ -206,8 +206,9 @@
   .rating .ic{font-size:18px}
   .rating b{font-size:18px; font-weight:500}
   .rating-l{font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--mute)}
-  .hero-rating{display:flex; align-items:center; gap:10px; margin:0 0 18px; color:#ddd; font-size:15px}
+  .hero-rating{display:flex; align-items:center; flex-wrap:wrap; gap:8px 10px; margin:0 0 18px; color:#ddd; font-size:14px; letter-spacing:.04em}
   .hero-rating b{color:#fff; font-weight:500}
+  .hero-rating > .ic{font-size:20px; color:#fff}
   .reviews-head{display:flex; justify-content:space-between; align-items:end; gap:24px; flex-wrap:wrap}
   .reviews-score{display:flex; align-items:center; gap:10px}
   .reviews-score b{font-size:40px; font-weight:300; letter-spacing:-.02em}
@@ -237,7 +238,7 @@
     .pg-head{grid-template-columns:1fr; gap:0}
     .pg-grid{grid-template-columns:1fr 1fr}
     .rating{margin-left:12px; padding-left:12px}
-    .rating-l, .rating .stars{display:none}
+    .rating{display:none}
     .head-phone{font-size:17px; white-space:nowrap}
     .quote{position:static}
     .trust ul{grid-template-columns:1fr 1fr}
@@ -245,6 +246,10 @@
     .steps{grid-template-columns:1fr 1fr}
     section{padding:56px 0}
     .head-phone span{display:none}
+    .hero .hero-ctas{display:none}
+    .callbar{transform:translateY(100%); transition:transform .25s}
+    .callbar.is-on{transform:none}
+    .callbar:not(.is-on){box-shadow:none!important}
     .callbar{display:grid; grid-template-columns:1fr 1fr; position:fixed; left:0; right:0; bottom:0; z-index:30; box-shadow:0 -2px 12px rgba(0,0,0,.15)}
     .callbar a{min-height:58px; display:grid; place-items:center; text-decoration:none}
     .callbar a{letter-spacing:.14em; text-transform:uppercase; font-size:14px; font-weight:500}
@@ -276,16 +281,14 @@
 <section class="hero">
   <div class="wrap">
     <div>
-      <div class="eyebrow">Stormwater &amp; drainage plumbers · Melbourne's inner east</div>
+      <p class="hero-rating"><svg class="ic" aria-hidden="true"><use href="#i-google-logo"/></svg><span class="stars" aria-hidden="true"><svg class="ic"><use href="#i-star-fill"/></svg><svg class="ic"><use href="#i-star-fill"/></svg><svg class="ic"><use href="#i-star-fill"/></svg><svg class="ic"><use href="#i-star-fill"/></svg><svg class="ic"><use href="#i-star-fill"/></svg></span><b>5.0</b><span>24 Google reviews · every one five stars</span></p>
       <h1>Blocked, flooding or failing stormwater? <em>We find the cause and fix it properly.</em></h1>
       <p class="hero-lede">CCTV-diagnosed repairs, pipe replacement and new drainage excavation for Melbourne homes, carried out by licensed plumbers, not a drain-clearing call centre. You get a fixed written quote before we dig.</p>
       <ul class="ticks">
         <li><svg class="ic" aria-hidden="true"><use href="#i-check-circle-fill"/></svg><b>CCTV camera inspection</b> so you see the problem before paying to fix it</li>
         <li><svg class="ic" aria-hidden="true"><use href="#i-check-circle-fill"/></svg><b>We dig, repair and reinstate</b>: excavation, pipework and surface restoration by one crew</li>
-        <li><svg class="ic" aria-hidden="true"><use href="#i-check-circle-fill"/></svg><b>Licensed &amp; compliant</b>: VBA plumbing licence 116917, works certified to Victorian standards</li>
         <li><svg class="ic" aria-hidden="true"><use href="#i-check-circle-fill"/></svg><b>Local to Hawthorn, Camberwell, Kew, Balwyn &amp; surrounds</b></li>
       </ul>
-      <p class="hero-rating"><span class="stars" aria-hidden="true"><svg class="ic"><use href="#i-star-fill"/></svg><svg class="ic"><use href="#i-star-fill"/></svg><svg class="ic"><use href="#i-star-fill"/></svg><svg class="ic"><use href="#i-star-fill"/></svg><svg class="ic"><use href="#i-star-fill"/></svg></span><b>5.0 on Google</b> · 24 reviews, every one five stars</p>
       <div class="hero-ctas">
         <a class="btn btn--primary" href="tel:+61490105148"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg>Call 0490 105 148</a>
         <a class="btn btn--ghost" href="#quote">Get a fixed quote</a>
@@ -607,6 +610,9 @@
         img.src = b.dataset.b; img.alt = b.dataset.bl;
       });
     });
+    var bar = document.querySelector('.callbar'), hero = document.querySelector('.hero-lede');
+    function onScroll(){ bar.classList.toggle('is-on', hero.getBoundingClientRect().bottom < 0); }
+    window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
     var form = document.getElementById('quote-form');
     form.addEventListener('submit', function(e){
       e.preventDefault();
