@@ -31,12 +31,11 @@
     --white:#fafafa;
     --line:#dcdcdc;
     --rule:#9a9a9a;        /* the grey bar under SMP in the logo */
-    /* The one break from monochrome: excavator orange, lifted from SMP's
-       own site photos. Reserved for calls to action so the next step is
-       the loudest thing on screen. Black type on it (7:1 contrast). */
-    --accent:#F26A1F;
-    --accent-dk:#D9560F;
-    --on-accent:#000;
+    /* Strictly SMP's monochrome: CTAs are solid black on light sections
+       and flip to solid white on dark/photo sections. */
+    --accent:#000;
+    --accent-dk:#2a2a2a;
+    --on-accent:#fff;
     --dark:#1c1c1c;
     --wrap:1160px;
     --body:'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -77,15 +76,19 @@
   .hero::before{content:""; position:absolute; inset:0; background:linear-gradient(90deg,rgba(0,0,0,.88) 0%,rgba(0,0,0,.72) 45%,rgba(0,0,0,.35) 100%)}
   .hero .wrap{position:relative; display:grid; grid-template-columns:1.1fr .9fr; gap:56px; align-items:center}
   .hero .eyebrow{color:#ddd}
-  .hero .eyebrow::before{background:var(--accent)}
+  .hero .eyebrow::before{background:#fff}
   .hero h1{font-size:clamp(36px,5.6vw,64px)}
   .hero h1 em{font-style:normal; font-weight:500}
   .hero-lede{font-size:19px; color:#e4e4e4; max-width:34em}
   .hero .btn--ghost{color:#fff; box-shadow:inset 0 0 0 2px #fff}
+  .hero .btn--primary, .ba .btn--primary, .final .btn--primary{background:#fff; color:#000}
+  .hero .btn--primary:hover, .ba .btn--primary:hover, .final .btn--primary:hover{background:var(--line)}
+  .hero .quote .btn--primary{background:#000; color:#fff}
   .hero .quote{color:var(--ink)}
   .ticks{list-style:none; padding:0; margin:22px 0 28px; display:grid; gap:10px}
   .ticks li{padding-left:30px; position:relative}
-  .ticks li::before{content:""; position:absolute; left:0; top:5px; width:18px; height:18px; border-radius:50%; background:var(--accent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.5l2.5 2.5L12 5.5' fill='none' stroke='%23000' stroke-width='2.4'/%3E%3C/svg%3E") center/12px no-repeat}
+  .ticks .ic{position:absolute; left:0; top:4px; font-size:21px}
+  .ticks-old::before{content:""; position:absolute; left:0; top:5px; width:18px; height:18px; border-radius:50%; background:var(--accent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.5l2.5 2.5L12 5.5' fill='none' stroke='%23000' stroke-width='2.4'/%3E%3C/svg%3E") center/12px no-repeat}
   .hero-ctas{display:flex; flex-wrap:wrap; gap:12px}
   /* Before / after slider */
   .ba{background:var(--dark); color:#fff}
@@ -96,14 +99,14 @@
   .ba-frame img, .ba-ph{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
   .ba-ph{display:grid; place-items:end; text-align:right; padding:24px 20px 24px 55%; color:#aaa; font-size:15px; background:repeating-linear-gradient(135deg,#2a2a2a 0 18px,#262626 18px 36px)}
   .ba-before{clip-path:inset(0 calc(100% - var(--pos,50%)) 0 0)}
-  .ba-line{position:absolute; top:0; bottom:0; left:var(--pos,50%); width:3px; margin-left:-1.5px; background:var(--accent); pointer-events:none}
-  .ba-line::after{content:"\2194"; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:44px; height:44px; border-radius:50%; background:var(--accent); color:#000; display:grid; place-items:center; font-size:22px}
+  .ba-line{position:absolute; top:0; bottom:0; left:var(--pos,50%); width:3px; margin-left:-1.5px; background:#fff; pointer-events:none}
+  .ba-line::after{content:"\2194"; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:44px; height:44px; border-radius:50%; background:#fff; color:#000; display:grid; place-items:center; font-size:22px}
   .ba-tag{position:absolute; top:14px; font-size:11px; font-weight:500; letter-spacing:.24em; text-transform:uppercase; background:rgba(0,0,0,.7); padding:6px 10px}
   .ba-tag--b{left:14px} .ba-tag--a{right:14px}
   .ba-range{position:absolute; inset:0; width:100%; height:100%; opacity:0; cursor:ew-resize; margin:0}
   .ba-pick{display:flex; gap:8px; margin-top:14px; flex-wrap:wrap}
   .ba-pick button{font:inherit; font-size:13px; letter-spacing:.12em; text-transform:uppercase; background:none; color:#ccc; border:1px solid #555; padding:8px 12px; cursor:pointer}
-  .ba-pick button[aria-pressed=true]{border-color:var(--accent); color:#fff}
+  .ba-pick button[aria-pressed=true]{border-color:#fff; color:#fff}
 
   /* Quote form */
   .quote{background:var(--white); border:1px solid var(--line); border-top:4px solid var(--ink); padding:28px; position:sticky; top:96px}
@@ -187,6 +190,24 @@
   footer a{color:#fff}
   .concept{background:#fff7d6; color:#5a4a00; font-size:13px; padding:14px 18px; border-radius:6px; margin-top:20px}
 
+  /* Project gallery */
+  .pg{background:var(--dark); color:#fff}
+  .pg .eyebrow{color:#bbb}
+  .pg-head{display:grid; grid-template-columns:1fr 1fr; gap:48px; align-items:end}
+  .pg-head p{color:#bbb}
+  .pg-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:6px; margin-top:28px}
+  .pg-item{position:relative; margin:0; overflow:hidden; aspect-ratio:1}
+  .pg-item img{width:100%; height:100%; object-fit:cover; transition:transform .5s}
+  .pg-item:hover img{transform:scale(1.04)}
+  .pg-item figcaption{position:absolute; left:0; right:0; bottom:0; padding:32px 14px 12px; font-size:12px; font-weight:500; letter-spacing:.28em; text-transform:uppercase; background:linear-gradient(transparent,rgba(0,0,0,.75))}
+
+  /* Icons */
+  .ic{width:1em; height:1em; fill:currentColor; flex:none; vertical-align:-.14em}
+  .trust .ic{font-size:30px; display:block; margin-bottom:10px; color:#fff}
+  .sign .ic, .steps .ic, .path .ic{font-size:34px; display:block; margin-bottom:10px}
+  .head-phone .ic{font-size:18px; margin-right:6px}
+  .btn .ic{font-size:20px}
+
   /* Mobile call bar */
   .callbar{display:none}
 
@@ -195,6 +216,8 @@
     .hero{padding:56px 0 40px; background-position:60% top}
     .hero::before{background:linear-gradient(180deg,rgba(0,0,0,.8),rgba(0,0,0,.6) 60%,rgba(0,0,0,.85))}
     .ba-grid{grid-template-columns:1fr; gap:24px}
+    .pg-head{grid-template-columns:1fr; gap:0}
+    .pg-grid{grid-template-columns:1fr 1fr}
     .quote{position:static}
     .trust ul{grid-template-columns:1fr 1fr}
     .paths,.signs-grid,.proj-grid,.reviews-grid{grid-template-columns:1fr}
@@ -204,7 +227,8 @@
     .callbar{display:grid; grid-template-columns:1fr 1fr; position:fixed; left:0; right:0; bottom:0; z-index:30; box-shadow:0 -2px 12px rgba(0,0,0,.15)}
     .callbar a{min-height:58px; display:grid; place-items:center; text-decoration:none}
     .callbar a{letter-spacing:.14em; text-transform:uppercase; font-size:14px; font-weight:500}
-    .callbar .c1{background:var(--accent); color:#000}
+    .callbar a{display:flex!important; gap:8px; justify-content:center; align-items:center}
+    .callbar .c1{background:#000; color:#fff}
     .callbar .c2{background:var(--white); color:var(--ink)}
   }
   @media (max-width:520px){
@@ -214,11 +238,13 @@
 </style>
 </head>
 <body>
+<!-- Icons: Phosphor (phosphoricons.com, MIT), light weight to sit with Roboto 300 headings -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="i-arrow-fat-lines-down" viewBox="0 0 256 256"><path d="M229.54,133.7A6,6,0,0,0,224,130H182V104a6,6,0,0,0-6-6H80a6,6,0,0,0-6,6v26H32a6,6,0,0,0-4.24,10.24l96,96a6,6,0,0,0,8.48,0l96-96A6,6,0,0,0,229.54,133.7ZM128,223.51,46.49,142H80a6,6,0,0,0,6-6V110h84v26a6,6,0,0,0,6,6h33.51ZM74,40a6,6,0,0,1,6-6h96a6,6,0,0,1,0,12H80A6,6,0,0,1,74,40Zm0,32a6,6,0,0,1,6-6h96a6,6,0,0,1,0,12H80A6,6,0,0,1,74,72Z"/></symbol><symbol id="i-chat-circle-text" viewBox="0 0 256 256"><path d="M166,112a6,6,0,0,1-6,6H96a6,6,0,0,1,0-12h64A6,6,0,0,1,166,112Zm-6,26H96a6,6,0,0,0,0,12h64a6,6,0,0,0,0-12Zm70-10A102,102,0,0,1,79.31,217.65L44.44,229.27a14,14,0,0,1-17.71-17.71l11.62-34.87A102,102,0,1,1,230,128Zm-12,0A90,90,0,1,0,50.08,173.06a6,6,0,0,1,.5,4.91L38.12,215.35a2,2,0,0,0,2.53,2.53L78,205.42a6.2,6.2,0,0,1,1.9-.31,6.09,6.09,0,0,1,3,.81A90,90,0,0,0,218,128Z"/></symbol><symbol id="i-check-circle-fill" viewBox="0 0 256 256"><path d="M128,24A104,104,0,1,0,232,128,104.11,104.11,0,0,0,128,24Zm45.66,85.66-56,56a8,8,0,0,1-11.32,0l-24-24a8,8,0,0,1,11.32-11.32L112,148.69l50.34-50.35a8,8,0,0,1,11.32,11.32Z"/></symbol><symbol id="i-check-circle" viewBox="0 0 256 256"><path d="M172.24,99.76a6,6,0,0,1,0,8.48l-56,56a6,6,0,0,1-8.48,0l-24-24a6,6,0,0,1,8.48-8.48L112,151.51l51.76-51.75A6,6,0,0,1,172.24,99.76ZM230,128A102,102,0,1,1,128,26,102.12,102.12,0,0,1,230,128Zm-12,0a90,90,0,1,0-90,90A90.1,90.1,0,0,0,218,128Z"/></symbol><symbol id="i-cloud-rain" viewBox="0 0 256 256"><path d="M157,195.33l-32,48a6,6,0,1,1-10-6.66l32-48a6,6,0,0,1,10,6.66ZM230,92a74.09,74.09,0,0,1-74,74H131.21L101,211.33a6,6,0,1,1-10-6.66L116.79,166H76A50,50,0,1,1,86.2,67,74.08,74.08,0,0,1,230,92Zm-12,0A62.06,62.06,0,0,0,94,88.35a6,6,0,0,1-12-.7,75.84,75.84,0,0,1,1.07-9A38,38,0,1,0,76,154h80A62.07,62.07,0,0,0,218,92Z"/></symbol><symbol id="i-drop" viewBox="0 0 256 256"><path d="M172.53,49.06a252.86,252.86,0,0,0-41.09-38,6,6,0,0,0-6.88,0,252.86,252.86,0,0,0-41.09,38C56.34,80.26,42,113.09,42,144a86,86,0,0,0,172,0C214,113.09,199.66,80.26,172.53,49.06ZM128,218a74.09,74.09,0,0,1-74-74c0-59.62,59-108.93,74-120.51C143,35.07,202,84.38,202,144A74.09,74.09,0,0,1,128,218Zm53.92-65A55.58,55.58,0,0,1,137,197.92a7,7,0,0,1-1,.08,6,6,0,0,1-1-11.92c17.38-2.92,32.13-17.68,35.08-35.08a6,6,0,1,1,11.84,2Z"/></symbol><symbol id="i-file-text" viewBox="0 0 256 256"><path d="M212.24,83.76l-56-56A6,6,0,0,0,152,26H56A14,14,0,0,0,42,40V216a14,14,0,0,0,14,14H200a14,14,0,0,0,14-14V88A6,6,0,0,0,212.24,83.76ZM158,46.48,193.52,82H158ZM200,218H56a2,2,0,0,1-2-2V40a2,2,0,0,1,2-2h90V88a6,6,0,0,0,6,6h50V216A2,2,0,0,1,200,218Zm-34-82a6,6,0,0,1-6,6H96a6,6,0,0,1,0-12h64A6,6,0,0,1,166,136Zm0,32a6,6,0,0,1-6,6H96a6,6,0,0,1,0-12h64A6,6,0,0,1,166,168Z"/></symbol><symbol id="i-hammer" viewBox="0 0 256 256"><path d="M249.92,113.4,182.47,45.49a94.12,94.12,0,0,0-133,.06L35.68,59.78a6,6,0,0,0,8.63,8.35L58,54A82,82,0,0,1,78.55,39l49,49L30.09,185.4a14,14,0,0,0,0,19.81L50.78,225.9a14,14,0,0,0,19.8,0L168,128.46l33.42,33.42a14,14,0,0,0,19.8,0l28.68-28.69A14,14,0,0,0,249.92,113.4ZM62.1,217.41a2,2,0,0,1-2.83,0L38.58,196.72a2,2,0,0,1,0-2.83L108,124.46,131.51,148ZM163.76,115.73,140,139.49,116.48,116l23.76-23.76a6,6,0,0,0,0-8.49L90.54,34A82.07,82.07,0,0,1,174,54l45.62,45.93L188,131.49l-15.76-15.76A6,6,0,0,0,163.76,115.73Zm77.66,9-28.69,28.7a2,2,0,0,1-2.83,0L196.49,140l31.56-31.57,13.37,13.46A2,2,0,0,1,241.42,124.7Z"/></symbol><symbol id="i-magnifying-glass" viewBox="0 0 256 256"><path d="M228.24,219.76l-51.38-51.38a86.15,86.15,0,1,0-8.48,8.48l51.38,51.38a6,6,0,0,0,8.48-8.48ZM38,112a74,74,0,1,1,74,74A74.09,74.09,0,0,1,38,112Z"/></symbol><symbol id="i-path" viewBox="0 0 256 256"><path d="M200,170a30.05,30.05,0,0,0-29.4,24H72a34,34,0,0,1,0-68h96a38,38,0,0,0,0-76H72a6,6,0,0,0,0,12h96a26,26,0,0,1,0,52H72a46,46,0,0,0,0,92h98.6A30,30,0,1,0,200,170Zm0,48a18,18,0,1,1,18-18A18,18,0,0,1,200,218Z"/></symbol><symbol id="i-phone" viewBox="0 0 256 256"><path d="M221.59,160.3l-47.24-21.17a14,14,0,0,0-13.28,1.22,4.81,4.81,0,0,0-.56.42l-24.69,21a1.88,1.88,0,0,1-1.68.06c-15.87-7.66-32.31-24-40-39.65a1.91,1.91,0,0,1,0-1.68l21.07-25a6.13,6.13,0,0,0,.42-.58,14,14,0,0,0,1.12-13.27L95.73,34.49a14,14,0,0,0-14.56-8.38A54.24,54.24,0,0,0,34,80c0,78.3,63.7,142,142,142a54.25,54.25,0,0,0,53.89-47.17A14,14,0,0,0,221.59,160.3ZM176,210C104.32,210,46,151.68,46,80A42.23,42.23,0,0,1,82.67,38h.23a2,2,0,0,1,1.84,1.31l21.1,47.11a2,2,0,0,1,0,1.67L84.73,113.15a4.73,4.73,0,0,0-.43.57,14,14,0,0,0-.91,13.73c8.87,18.16,27.17,36.32,45.53,45.19a14,14,0,0,0,13.77-1c.19-.13.38-.27.56-.42l24.68-21a1.92,1.92,0,0,1,1.6-.1l47.25,21.17a2,2,0,0,1,1.21,2A42.24,42.24,0,0,1,176,210Z"/></symbol><symbol id="i-seal-check" viewBox="0 0 256 256"><path d="M224.42,104.2c-3.9-4.07-7.93-8.27-9.55-12.18-1.5-3.63-1.58-9-1.67-14.68-.14-9.38-.3-20-7.42-27.12S188,42.94,178.66,42.8c-5.68-.09-11-.17-14.68-1.67-3.91-1.62-8.11-5.65-12.18-9.55C145.16,25.22,137.64,18,128,18s-17.16,7.22-23.8,13.58c-4.07,3.9-8.27,7.93-12.18,9.55-3.63,1.5-9,1.58-14.68,1.67-9.38.14-20,.3-27.12,7.42S42.94,68,42.8,77.34c-.09,5.68-.17,11-1.67,14.68-1.62,3.91-5.65,8.11-9.55,12.18C25.22,110.84,18,118.36,18,128s7.22,17.16,13.58,23.8c3.9,4.07,7.93,8.27,9.55,12.18,1.5,3.63,1.58,9,1.67,14.68.14,9.38.3,20,7.42,27.12S68,213.06,77.34,213.2c5.68.09,11,.17,14.68,1.67,3.91,1.62,8.11,5.65,12.18,9.55C110.84,230.78,118.36,238,128,238s17.16-7.22,23.8-13.58c4.07-3.9,8.27-7.93,12.18-9.55,3.63-1.5,9-1.58,14.68-1.67,9.38-.14,20-.3,27.12-7.42s7.28-17.74,7.42-27.12c.09-5.68.17-11,1.67-14.68,1.62-3.91,5.65-8.11,9.55-12.18C230.78,145.16,238,137.64,238,128S230.78,110.84,224.42,104.2Zm-8.66,39.3c-4.67,4.86-9.5,9.9-12,15.9-2.38,5.74-2.48,12.52-2.58,19.08-.11,7.44-.23,15.14-3.9,18.82s-11.38,3.79-18.82,3.9c-6.56.1-13.34.2-19.08,2.58-6,2.48-11,7.31-15.91,12-5.25,5-10.68,10.24-15.49,10.24s-10.24-5.21-15.5-10.24c-4.86-4.67-9.9-9.5-15.9-12-5.74-2.38-12.52-2.48-19.08-2.58-7.44-.11-15.14-.23-18.82-3.9s-3.79-11.38-3.9-18.82c-.1-6.56-.2-13.34-2.58-19.08-2.48-6-7.31-11-12-15.91C35.21,138.24,30,132.81,30,128s5.21-10.24,10.24-15.5c4.67-4.86,9.5-9.9,12-15.9,2.38-5.74,2.48-12.52,2.58-19.08.11-7.44.23-15.14,3.9-18.82s11.38-3.79,18.82-3.9c6.56-.1,13.34-.2,19.08-2.58,6-2.48,11-7.31,15.91-12C117.76,35.21,123.19,30,128,30s10.24,5.21,15.5,10.24c4.86,4.67,9.9,9.5,15.9,12,5.74,2.38,12.52,2.48,19.08,2.58,7.44.11,15.14.23,18.82,3.9s3.79,11.38,3.9,18.82c.1,6.56.2,13.34,2.58,19.08,2.48,6,7.31,11,12,15.91,5,5.25,10.24,10.68,10.24,15.49S220.79,138.24,215.76,143.5ZM172.24,99.76a6,6,0,0,1,0,8.48l-56,56a6,6,0,0,1-8.48,0l-24-24a6,6,0,0,1,8.48-8.48L112,151.51l51.76-51.75A6,6,0,0,1,172.24,99.76Z"/></symbol><symbol id="i-shovel" viewBox="0 0 256 256"><path d="M244.24,59.76l-48-48a6,6,0,0,0-8.48,8.48L207.52,40l-73.86,73.86L97.9,78.1a14,14,0,0,0-19.8,0l-56,56A13.94,13.94,0,0,0,18,144v80a14,14,0,0,0,14,14h80a13.94,13.94,0,0,0,9.9-4.1l56-56a14,14,0,0,0,0-19.8l-35.76-35.76L216,48.48l19.76,19.76a6,6,0,1,0,8.48-8.48ZM169.41,166.58a2,2,0,0,1,0,2.84l-56,56A2,2,0,0,1,112,226H32a2,2,0,0,1-2-2V144a2,2,0,0,1,.58-1.42l56-56A2,2,0,0,1,88,86a2.07,2.07,0,0,1,1.42.58l35.75,35.76L83.76,163.76a6,6,0,1,0,8.48,8.48l41.42-41.41Z"/></symbol><symbol id="i-video-camera" viewBox="0 0 256 256"><path d="M250.83,74.71a6,6,0,0,0-6.16.3L206,100.79V72a14,14,0,0,0-14-14H32A14,14,0,0,0,18,72V184a14,14,0,0,0,14,14H192a14,14,0,0,0,14-14V155.21L244.67,181a6,6,0,0,0,9.33-5V80A6,6,0,0,0,250.83,74.71ZM194,184a2,2,0,0,1-2,2H32a2,2,0,0,1-2-2V72a2,2,0,0,1,2-2H192a2,2,0,0,1,2,2Zm48-19.21-36-24V115.21l36-24Z"/></symbol><symbol id="i-wall" viewBox="0 0 256 256"><path d="M224,50H32a6,6,0,0,0-6,6V200a6,6,0,0,0,6,6H224a6,6,0,0,0,6-6V56A6,6,0,0,0,224,50ZM86,146V110h84v36Zm-48,0V110H74v36Zm144-36h36v36H182Zm36-12H134V62h84ZM122,62V98H38V62ZM38,158h84v36H38Zm96,36V158h84v36Z"/></symbol><symbol id="i-wind" viewBox="0 0 256 256"><path d="M182,184a30,30,0,0,1-30,30c-12.9,0-25.36-8.38-29.63-19.92a6,6,0,0,1,11.26-4.16C136.13,196.69,144.2,202,152,202a18,18,0,0,0,0-36H40a6,6,0,0,1,0-12H152A30,30,0,0,1,182,184ZM150,72a30,30,0,0,0-30-30c-12.9,0-25.36,8.38-29.63,19.92a6,6,0,1,0,11.26,4.16C104.13,59.31,112.2,54,120,54a18,18,0,0,1,0,36H24a6,6,0,0,0,0,12h96A30,30,0,0,0,150,72Zm58,2c-12.9,0-25.36,8.38-29.63,19.92a6,6,0,1,0,11.26,4.16C192.13,91.31,200.2,86,208,86a18,18,0,0,1,0,36H32a6,6,0,0,0,0,12H208a30,30,0,0,0,0-60Z"/></symbol><symbol id="i-wrench" viewBox="0 0 256 256"><path d="M224.91,69.75a6,6,0,0,0-9.63-2.16l-41.07,37.9L154.7,101.3l-4.19-19.51,37.9-41.07a6,6,0,0,0-2.16-9.63,70,70,0,0,0-89.77,94.39l-61.39,53c-.11.09-.21.19-.32.3A30,30,0,0,0,77.2,221.23c.11-.11.21-.21.3-.32l53-61.39a70,70,0,0,0,94.39-89.77ZM160,154a58,58,0,0,1-28-7.22,6,6,0,0,0-7.45,1.33L68.57,212.88a18,18,0,0,1-25.45-25.45l64.76-55.94A6,6,0,0,0,109.2,124a58,58,0,0,1,64-84.53L139.58,75.93a6,6,0,0,0-1.45,5.33l5.65,26.35a6,6,0,0,0,4.61,4.61l26.35,5.65a6,6,0,0,0,5.33-1.45L216.49,82.8A58.06,58.06,0,0,1,160,154Z"/></symbol></svg>
 
 <header class="head">
   <div class="wrap">
     <span class="logo" role="img" aria-label="Scotland Marshall Plumbing"></span>
-    <a class="head-phone" href="tel:+61490105148">0490 105 148<span>Talk to a licensed plumber</span></a>
+    <a class="head-phone" href="tel:+61490105148"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg>0490 105 148<span>Talk to a licensed plumber</span></a>
   </div>
 </header>
 
@@ -232,13 +258,13 @@
       <h1>Blocked, flooding or failing stormwater? <em>We find the cause and fix it properly.</em></h1>
       <p class="hero-lede">CCTV-diagnosed repairs, pipe replacement and new drainage excavation for Melbourne homes, carried out by licensed plumbers, not a drain-clearing call centre. You get a fixed written quote before we dig.</p>
       <ul class="ticks">
-        <li><b>CCTV camera inspection</b> so you see the problem before paying to fix it</li>
-        <li><b>We dig, repair and reinstate</b>: excavation, pipework and surface restoration by one crew</li>
-        <li><b>Licensed &amp; compliant</b>: VBA plumbing licence 116917, works certified to Victorian standards</li>
-        <li><b>Local to Hawthorn, Camberwell, Kew, Balwyn &amp; surrounds</b></li>
+        <li><svg class="ic" aria-hidden="true"><use href="#i-check-circle-fill"/></svg><b>CCTV camera inspection</b> so you see the problem before paying to fix it</li>
+        <li><svg class="ic" aria-hidden="true"><use href="#i-check-circle-fill"/></svg><b>We dig, repair and reinstate</b>: excavation, pipework and surface restoration by one crew</li>
+        <li><svg class="ic" aria-hidden="true"><use href="#i-check-circle-fill"/></svg><b>Licensed &amp; compliant</b>: VBA plumbing licence 116917, works certified to Victorian standards</li>
+        <li><svg class="ic" aria-hidden="true"><use href="#i-check-circle-fill"/></svg><b>Local to Hawthorn, Camberwell, Kew, Balwyn &amp; surrounds</b></li>
       </ul>
       <div class="hero-ctas">
-        <a class="btn btn--primary" href="tel:+61490105148">Call 0490 105 148</a>
+        <a class="btn btn--primary" href="tel:+61490105148"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg>Call 0490 105 148</a>
         <a class="btn btn--ghost" href="#quote">Get a fixed quote</a>
       </div>
     </div>
@@ -311,10 +337,10 @@
 <div class="trust">
   <div class="wrap">
     <ul>
-      <li><b>Licensed plumbers</b>VBA licence 116917</li>
-      <li><b>Fixed written quotes</b>Before any digging starts</li>
-      <li><b>CCTV diagnosis</b>Footage you can see</li>
-      <li><b>Full reinstatement</b>We leave the site as we found it</li>
+      <li><svg class="ic" aria-hidden="true"><use href="#i-seal-check"/></svg><b>Licensed plumbers</b>VBA licence 116917</li>
+      <li><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><b>Fixed written quotes</b>Before any digging starts</li>
+      <li><svg class="ic" aria-hidden="true"><use href="#i-video-camera"/></svg><b>CCTV diagnosis</b>Footage you can see</li>
+      <li><svg class="ic" aria-hidden="true"><use href="#i-shovel"/></svg><b>Full reinstatement</b>We leave the site as we found it</li>
     </ul>
   </div>
 </div>
@@ -353,7 +379,7 @@
       <article class="path">
         <img src="/assets/smp/cctv-inspection.webp" alt="CCTV camera inspection of a stormwater drain" loading="lazy">
         <div class="path-body">
-          <h3>Stormwater repairs &amp; blocked drains</h3>
+          <svg class="ic" aria-hidden="true"><use href="#i-wrench"/></svg><h3>Stormwater repairs &amp; blocked drains</h3>
           <ul>
             <li>Blocked stormwater diagnosis and clearing</li>
             <li>CCTV drain inspection and reporting</li>
@@ -367,7 +393,7 @@
       <article class="path">
         <img src="/assets/smp/kooyong-excavation.webp" alt="SMP crew overseeing drainage excavation at Kooyong Road" loading="lazy">
         <div class="path-body">
-          <h3>Drainage excavation &amp; new drains</h3>
+          <svg class="ic" aria-hidden="true"><use href="#i-path"/></svg><h3>Drainage excavation &amp; new drains</h3>
           <ul>
             <li>Site excavation and trenching</li>
             <li>New stormwater and sewer lines</li>
@@ -387,12 +413,12 @@
     <div class="eyebrow">Signs your stormwater is failing</div>
     <h2>Don't wait for the next big storm</h2>
     <div class="signs-grid">
-      <div class="sign"><h3>Water pooling after rain</h3><p>Ponding against the house or in the yard usually means the drain can't carry the flow away.</p></div>
-      <div class="sign"><h3>Gutters or downpipes overflowing</h3><p>If the gutters are clear, the blockage is often underground.</p></div>
-      <div class="sign"><h3>Damp walls or subfloor</h3><p>Leaking stormwater pipes can undermine footings and cause rising damp.</p></div>
-      <div class="sign"><h3>Sinking paths or soft ground</h3><p>A broken pipe washes soil away beneath paving and lawns.</p></div>
-      <div class="sign"><h3>Gurgling or bad smells</h3><p>Partial blockages from roots or silt build up before they fail completely.</p></div>
-      <div class="sign"><h3>Renovating or extending</h3><p>New roof areas and footprints often need drains upsized or relocated.</p></div>
+      <div class="sign"><svg class="ic" aria-hidden="true"><use href="#i-drop"/></svg><h3>Water pooling after rain</h3><p>Ponding against the house or in the yard usually means the drain can't carry the flow away.</p></div>
+      <div class="sign"><svg class="ic" aria-hidden="true"><use href="#i-cloud-rain"/></svg><h3>Gutters or downpipes overflowing</h3><p>If the gutters are clear, the blockage is often underground.</p></div>
+      <div class="sign"><svg class="ic" aria-hidden="true"><use href="#i-wall"/></svg><h3>Damp walls or subfloor</h3><p>Leaking stormwater pipes can undermine footings and cause rising damp.</p></div>
+      <div class="sign"><svg class="ic" aria-hidden="true"><use href="#i-arrow-fat-lines-down"/></svg><h3>Sinking paths or soft ground</h3><p>A broken pipe washes soil away beneath paving and lawns.</p></div>
+      <div class="sign"><svg class="ic" aria-hidden="true"><use href="#i-wind"/></svg><h3>Gurgling or bad smells</h3><p>Partial blockages from roots or silt build up before they fail completely.</p></div>
+      <div class="sign"><svg class="ic" aria-hidden="true"><use href="#i-hammer"/></svg><h3>Renovating or extending</h3><p>New roof areas and footprints often need drains upsized or relocated.</p></div>
     </div>
     <a class="btn btn--primary" href="tel:+61490105148">Sound familiar? Call 0490 105 148</a>
   </div>
@@ -403,10 +429,10 @@
     <div class="eyebrow">How it works</div>
     <h2>From first call to a certified drain</h2>
     <ol class="steps">
-      <li><h3>Call or send the form</h3><p>Tell us what's happening. A plumber calls back to talk it through.</p></li>
-      <li><h3>Inspect &amp; diagnose</h3><p>We inspect on site, with CCTV where needed, and show you the cause.</p></li>
-      <li><h3>Fixed written quote</h3><p>One price covering excavation, pipework and reinstatement. No surprises.</p></li>
-      <li><h3>Fix, restore, certify</h3><p>We complete the works, restore the surface and provide compliance paperwork.</p></li>
+      <li><svg class="ic" aria-hidden="true"><use href="#i-chat-circle-text"/></svg><h3>Call or send the form</h3><p>Tell us what's happening. A plumber calls back to talk it through.</p></li>
+      <li><svg class="ic" aria-hidden="true"><use href="#i-magnifying-glass"/></svg><h3>Inspect &amp; diagnose</h3><p>We inspect on site, with CCTV where needed, and show you the cause.</p></li>
+      <li><svg class="ic" aria-hidden="true"><use href="#i-file-text"/></svg><h3>Fixed written quote</h3><p>One price covering excavation, pipework and reinstatement. No surprises.</p></li>
+      <li><svg class="ic" aria-hidden="true"><use href="#i-check-circle"/></svg><h3>Fix, restore, certify</h3><p>We complete the works, restore the surface and provide compliance paperwork.</p></li>
     </ol>
   </div>
 </section>
@@ -429,6 +455,29 @@
         <img src="/assets/smp/gutter-downpipe.webp" alt="SMP plumber replacing gutters and downpipes that feed the stormwater system" loading="lazy">
         <figcaption><b>Roof to drain</b>[Suburb and one-line job summary from SMP]</figcaption>
       </figure>
+    </div>
+  </div>
+</section>
+
+<!-- Projects We're Proud Of, carried over from SMP's drainage-excavation
+     page. Exterior and aerial shots only (no kitchens or bathrooms), each
+     tagged by suburb so a searcher in Hawthorn sees Hawthorn. -->
+<section class="pg">
+  <div class="wrap">
+    <div class="eyebrow">Projects we're proud of</div>
+    <div class="pg-head">
+      <h2>Below-ground work behind some of Melbourne's best homes</h2>
+      <p>Our drainage and excavation work sits under premium residential and commercial projects across Melbourne. Chances are we've worked on your street.</p>
+    </div>
+    <div class="pg-grid">
+      <figure class="pg-item"><img src="/assets/smp/proj-hawthorn.webp" alt="SMP project in Hawthorn, aerial view" loading="lazy"><figcaption>Hawthorn</figcaption></figure>
+      <figure class="pg-item"><img src="/assets/smp/proj-toorak.webp" alt="SMP project in Toorak, aerial view" loading="lazy"><figcaption>Toorak</figcaption></figure>
+      <figure class="pg-item"><img src="/assets/smp/proj-windsor.webp" alt="SMP project in Windsor, aerial view" loading="lazy"><figcaption>Windsor</figcaption></figure>
+      <figure class="pg-item"><img src="/assets/smp/proj-ashburton.webp" alt="SMP project in Ashburton, aerial view" loading="lazy"><figcaption>Ashburton</figcaption></figure>
+      <figure class="pg-item"><img src="/assets/smp/proj-middle-park.webp" alt="SMP project in Middle Park, aerial view" loading="lazy"><figcaption>Middle Park</figcaption></figure>
+      <figure class="pg-item"><img src="/assets/smp/proj-carnegie.webp" alt="SMP project in Carnegie, aerial view" loading="lazy"><figcaption>Carnegie</figcaption></figure>
+      <figure class="pg-item"><img src="/assets/smp/proj-cheltenham.webp" alt="SMP project in Cheltenham, aerial view" loading="lazy"><figcaption>Cheltenham</figcaption></figure>
+      <figure class="pg-item"><img src="/assets/smp/proj-alphington.webp" alt="SMP project in Alphington, aerial view" loading="lazy"><figcaption>Alphington</figcaption></figure>
     </div>
   </div>
 </section>
@@ -485,12 +534,12 @@
   <div class="wrap">
     <span class="logo logo--inv" role="img" aria-label="Scotland Marshall Plumbing" style="margin-bottom:18px"></span>
     <p>Scotland Marshall Plumbing · Suite 136, 738 Burke Road, Camberwell VIC 3124 · <a href="tel:+61490105148">0490 105 148</a> · <a href="mailto:info@smplumbing.com.au">info@smplumbing.com.au</a><br>VBA licence 116917 · ABN 24 650 837 773</p>
-    <div class="concept"><b>Concept mockup, not a live page.</b> Built by Zib Digital as a Google Ads landing page concept for Scotland Marshall Plumbing. The form does not submit. Photos are SMP's own, taken from their current site (the only drainage and on-site shots it has); higher-res drainage shots from the Drive would strengthen the projects section. The before/after slider has real "before" shots but placeholder "after" frames: SMP needs to supply matching finished shots. The orange CTA colour steps outside SMP's black-and-white palette and needs Robbie's approval. Reviews, project captions, service-area list and callback times are placeholders or assumptions that need SMP sign-off.</div>
+    <div class="concept"><b>Concept mockup, not a live page.</b> Built by Zib Digital as a Google Ads landing page concept for Scotland Marshall Plumbing. The form does not submit. Photos are SMP's own, taken from their current site (the only drainage and on-site shots it has); higher-res drainage shots from the Drive would strengthen the projects section. The before/after slider has real "before" shots but placeholder "after" frames: SMP needs to supply matching finished shots. Reviews, project captions, service-area list and callback times are placeholders or assumptions that need SMP sign-off.</div>
   </div>
 </footer>
 
 <nav class="callbar" aria-label="Quick contact">
-  <a class="c1" href="tel:+61490105148">Call now</a>
+  <a class="c1" href="tel:+61490105148"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg>Call now</a>
   <a class="c2" href="#quote">Get a quote</a>
 </nav>
 
