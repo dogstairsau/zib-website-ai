@@ -262,6 +262,18 @@
     section{padding:56px 0}
     .head-phone span{display:none}
     .hero .hero-ctas{display:none}
+    /* Form straight after the headline so step 1 is on the first screen;
+       the intro copy and ticks follow the form. */
+    .hero .wrap > div:first-child{display:contents}
+    .hero .hero-rating{order:1; margin-bottom:10px}
+    .hero h1{order:2; margin-bottom:18px}
+    .hero .quote{order:3; padding:22px 20px}
+    .hero .quote p.sub{display:none}
+    .hero .quote h2{font-size:22px; margin-bottom:14px}
+    .hero-lede{order:4; margin:8px 0 0}
+    .hero .ticks{order:5; margin:0}
+    .hero .wrap{gap:18px}
+    .hero{padding:28px 0 40px}
     .callbar{transform:translateY(100%); transition:transform .25s}
     .callbar.is-on{transform:none}
     .callbar:not(.is-on){box-shadow:none!important}
@@ -649,7 +661,7 @@
         img.src = b.dataset.b; img.alt = b.dataset.bl;
       });
     });
-    var bar = document.querySelector('.callbar'), hero = document.querySelector('.hero-lede');
+    var bar = document.querySelector('.callbar'), hero = document.getElementById('quote');
     function onScroll(){ bar.classList.toggle('is-on', hero.getBoundingClientRect().bottom < 0); }
     window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
     var form = document.getElementById('quote-form');
