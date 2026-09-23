@@ -122,6 +122,10 @@
   .chips input{width:auto; min-height:0; accent-color:#000}
   .chips label:has(input:checked){background:#000; color:#fff; border-color:#000}
   .row2{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+  .step-hi{font-weight:500; margin-bottom:14px}
+  .step-back{display:block; margin:10px auto 0; background:none; border:0; font:inherit; font-size:14px; color:var(--mute); text-decoration:underline; cursor:pointer}
+  .field textarea{min-height:64px}
+  .quote .field{margin-bottom:12px}
   .quote__fine{font-size:13px; color:var(--mute); margin:12px 0 0; text-align:center}
   .quote__call{display:block; text-align:center; font-weight:500; margin-top:4px}
   .quote__done{display:none; text-align:center; padding:24px 0}
@@ -305,55 +309,63 @@
       <h2>Get a fixed drainage quote</h2>
       <p class="sub">Tell us what's happening. A plumber (not a receptionist) calls back, usually the same business day.</p>
       <form id="quote-form" novalidate>
-        <fieldset class="field">
-          <legend>What do you need?</legend>
-          <div class="chips">
-            <label><input type="radio" name="need" value="blocked" required> Blocked / overflowing drain</label>
-            <label><input type="radio" name="need" value="damaged"> Cracked, collapsed or root-damaged pipe</label>
-            <label><input type="radio" name="need" value="cctv"> CCTV inspection</label>
-            <label><input type="radio" name="need" value="new"> New / relocated drainage (reno or build)</label>
-            <label><input type="radio" name="need" value="unsure"> Not sure</label>
-          </div>
-        </fieldset>
-        <div class="row2">
+        <!-- Step 1: three quick answers. Step 2 opens only once these are in. -->
+        <div class="step" data-step="1">
           <div class="field">
-            <label for="suburb">Suburb</label>
-            <input id="suburb" name="suburb" autocomplete="address-level2" required>
-          </div>
-          <div class="field">
-            <label for="age">Property age</label>
-            <select id="age" name="age">
-              <option value="">Select…</option>
-              <option>Pre-1950</option>
-              <option>1950–1990</option>
-              <option>1990 or newer</option>
-              <option>Don't know</option>
-            </select>
-          </div>
-        </div>
-        <div class="field">
-          <label for="urgency">How urgent?</label>
-          <select id="urgency" name="urgency">
-            <option>It's causing water damage now</option>
-            <option selected>Within the next few weeks</option>
-            <option>Planning ahead (reno / build)</option>
-          </select>
-        </div>
-        <div class="field">
-          <label for="notes">Anything else? <span style="font-weight:400;color:var(--mute)">(optional)</span></label>
-          <textarea id="notes" name="notes" placeholder="e.g. water pooling by the back door after rain"></textarea>
-        </div>
-        <div class="row2">
-          <div class="field">
-            <label for="name">Name</label>
+            <label for="name">Your name</label>
             <input id="name" name="name" autocomplete="name" required>
           </div>
+          <div class="field">
+            <label for="need">What do you need?</label>
+            <select id="need" name="need" required>
+              <option value="">Select…</option>
+              <option>Blocked / overflowing drain</option>
+              <option>Cracked, collapsed or root-damaged pipe</option>
+              <option>CCTV drain inspection</option>
+              <option>New / relocated drainage (reno or build)</option>
+              <option>Not sure</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="urgency">How urgent?</label>
+            <select id="urgency" name="urgency" required>
+              <option value="">Select…</option>
+              <option>Causing water damage now</option>
+              <option>Within the next few weeks</option>
+              <option>Planning ahead (reno / build)</option>
+            </select>
+          </div>
+          <button class="btn btn--primary btn--full" type="button" data-next>Next</button>
+        </div>
+        <div class="step" data-step="2" hidden>
+          <p class="step-hi">Thanks<span data-name></span>. Where should we call you?</p>
           <div class="field">
             <label for="phone">Mobile</label>
             <input id="phone" name="phone" type="tel" autocomplete="tel" required>
           </div>
+          <div class="row2">
+            <div class="field">
+              <label for="suburb">Suburb</label>
+              <input id="suburb" name="suburb" autocomplete="address-level2" required>
+            </div>
+            <div class="field">
+              <label for="age">Property age</label>
+              <select id="age" name="age">
+                <option value="">Optional</option>
+                <option>Pre-1950</option>
+                <option>1950–1990</option>
+                <option>1990 or newer</option>
+                <option>Don't know</option>
+              </select>
+            </div>
+          </div>
+          <div class="field">
+            <label for="notes">Anything else? <span style="font-weight:400;color:var(--mute)">(optional)</span></label>
+            <textarea id="notes" name="notes" rows="2" placeholder="e.g. water pooling by the back door after rain"></textarea>
+          </div>
+          <button class="btn btn--primary btn--full" type="submit">Request my quote</button>
+          <button class="step-back" type="button" data-back>Back</button>
         </div>
-        <button class="btn btn--primary btn--full" type="submit">Request my quote</button>
         <p class="quote__fine">No obligation. We'll never share your details.</p>
         <a class="quote__call" href="tel:+61490105148">Or call now: 0490 105 148</a>
       </form>
@@ -635,9 +647,19 @@
     function onScroll(){ bar.classList.toggle('is-on', hero.getBoundingClientRect().bottom < 0); }
     window.addEventListener('scroll', onScroll, {passive:true}); onScroll();
     var form = document.getElementById('quote-form');
+    var s1 = form.querySelector('[data-step="1"]'), s2 = form.querySelector('[data-step="2"]');
+    function valid(step){ var f = step.querySelectorAll('[required]'); for (var i=0;i<f.length;i++){ if(!f[i].checkValidity()){ f[i].reportValidity(); return false; } } return true; }
+    form.querySelector('[data-next]').addEventListener('click', function(){
+      if (!valid(s1)) return;
+      var n = form.name.value.trim().split(' ')[0];
+      s2.querySelector('[data-name]').textContent = n ? ', ' + n : '';
+      s1.hidden = true; s2.hidden = false; form.phone.focus();
+    });
+    form.querySelector('[data-back]').addEventListener('click', function(){ s2.hidden = true; s1.hidden = false; });
     form.addEventListener('submit', function(e){
       e.preventDefault();
-      if (!form.checkValidity()) { form.reportValidity(); return; }
+      if (s2.hidden) { form.querySelector('[data-next]').click(); return; }
+      if (!valid(s2)) return;
       document.getElementById('quote').classList.add('is-sent');
     });
   })();
