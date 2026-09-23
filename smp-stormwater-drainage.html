@@ -220,6 +220,11 @@
   .review blockquote{margin:0 0 18px; font-size:16px; color:var(--ink-2); flex:1}
   .review figcaption{font-size:13px; font-weight:500; letter-spacing:.1em; text-transform:uppercase}
 
+  /* Video */
+  .vid-grid{display:grid; grid-template-columns:.8fr 1.2fr; gap:48px; align-items:center}
+  .vid-grid p{color:var(--ink-2)}
+  .vid-player{width:100%; aspect-ratio:16/9; background:#000; display:block}
+
   /* Icons */
   .ic{width:1em; height:1em; fill:currentColor; flex:none; vertical-align:-.14em}
   .trust .ic{font-size:30px; display:block; margin-bottom:10px; color:#fff}
@@ -234,7 +239,7 @@
     .hero .wrap{grid-template-columns:1fr}
     .hero{padding:56px 0 40px; background-position:60% top}
     .hero::before{background:linear-gradient(180deg,rgba(0,0,0,.8),rgba(0,0,0,.6) 60%,rgba(0,0,0,.85))}
-    .ba-grid{grid-template-columns:1fr; gap:24px}
+    .ba-grid, .vid-grid{grid-template-columns:1fr; gap:24px}
     .pg-head{grid-template-columns:1fr; gap:0}
     .pg-grid{grid-template-columns:1fr 1fr}
     .rating{margin-left:12px; padding-left:12px}
@@ -431,6 +436,22 @@
         </div>
       </article>
     </div>
+  </div>
+</section>
+
+<!-- Video: SMP's Albert Park basement excavation, from their Instagram.
+     Narrated, so click-to-play with sound; nothing loads until played. -->
+<section class="vid">
+  <div class="wrap vid-grid">
+    <div>
+      <div class="eyebrow">On site</div>
+      <h2>Inside a basement dig in Albert Park</h2>
+      <p>Below-ground drainage and plumbing on a tight inner-city block, working alongside the builder from the first dig. The same planning goes into every drainage job, big or small.</p>
+      <a class="btn btn--primary" href="#quote">Talk to us about your job</a>
+    </div>
+    <video class="vid-player" controls playsinline preload="none" poster="/assets/smp/albert-park-poster.webp">
+      <source src="/assets/smp/albert-park-basement.mp4" type="video/mp4">
+    </video>
   </div>
 </section>
 
