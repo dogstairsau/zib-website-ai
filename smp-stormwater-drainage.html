@@ -31,8 +31,12 @@
     --white:#fafafa;
     --line:#dcdcdc;
     --rule:#9a9a9a;        /* the grey bar under SMP in the logo */
-    --accent:#000;         /* CTAs are solid black, like the brand */
-    --accent-dk:#1c1c1c;
+    /* The one break from monochrome: excavator orange, lifted from SMP's
+       own site photos. Reserved for calls to action so the next step is
+       the loudest thing on screen. Black type on it (7:1 contrast). */
+    --accent:#F26A1F;
+    --accent-dk:#D9560F;
+    --on-accent:#000;
     --dark:#1c1c1c;
     --wrap:1160px;
     --body:'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -53,7 +57,7 @@
   section{padding:72px 0}
 
   .btn{display:inline-flex; align-items:center; justify-content:center; gap:10px; min-height:52px; padding:0 26px; border-radius:0; font-weight:500; font-size:14px; letter-spacing:.14em; text-transform:uppercase; text-decoration:none; border:0; cursor:pointer; font-family:inherit}
-  .btn--primary{background:var(--accent); color:#fff}
+  .btn--primary{background:var(--accent); color:var(--on-accent)}
   .btn--primary:hover{background:var(--accent-dk)}
   .btn--ghost{background:transparent; color:var(--ink); box-shadow:inset 0 0 0 2px var(--ink)}
   .btn--full{width:100%}
@@ -67,15 +71,39 @@
   .head-phone span{display:block; font-size:11px; font-weight:400; color:var(--mute); letter-spacing:.2em; text-transform:uppercase}
 
   /* Hero */
-  .hero{padding:56px 0 64px; background:var(--white)}
-  .hero .wrap{display:grid; grid-template-columns:1.15fr .85fr; gap:48px; align-items:start}
-  .hero-lede{font-size:19px; color:var(--ink-2); max-width:34em}
+  /* Photo-led hero: SMP's crew and excavator full-bleed, darkened on the
+     left so the headline reads, with the quote form floating on the right. */
+  .hero{position:relative; padding:88px 0 96px; color:#fff; background:#111 url('/assets/smp/excavation-pipe.webp') 70% 40%/cover no-repeat}
+  .hero::before{content:""; position:absolute; inset:0; background:linear-gradient(90deg,rgba(0,0,0,.88) 0%,rgba(0,0,0,.72) 45%,rgba(0,0,0,.35) 100%)}
+  .hero .wrap{position:relative; display:grid; grid-template-columns:1.1fr .9fr; gap:56px; align-items:center}
+  .hero .eyebrow{color:#ddd}
+  .hero .eyebrow::before{background:var(--accent)}
+  .hero h1{font-size:clamp(36px,5.6vw,64px)}
+  .hero h1 em{font-style:normal; font-weight:500}
+  .hero-lede{font-size:19px; color:#e4e4e4; max-width:34em}
+  .hero .btn--ghost{color:#fff; box-shadow:inset 0 0 0 2px #fff}
+  .hero .quote{color:var(--ink)}
   .ticks{list-style:none; padding:0; margin:22px 0 28px; display:grid; gap:10px}
   .ticks li{padding-left:30px; position:relative}
-  .ticks li::before{content:""; position:absolute; left:0; top:5px; width:18px; height:18px; border-radius:50%; background:var(--accent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.5l2.5 2.5L12 5.5' fill='none' stroke='%23fff' stroke-width='2'/%3E%3C/svg%3E") center/12px no-repeat}
+  .ticks li::before{content:""; position:absolute; left:0; top:5px; width:18px; height:18px; border-radius:50%; background:var(--accent) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 8.5l2.5 2.5L12 5.5' fill='none' stroke='%23000' stroke-width='2.4'/%3E%3C/svg%3E") center/12px no-repeat}
   .hero-ctas{display:flex; flex-wrap:wrap; gap:12px}
-  .hero-photo{margin-top:32px; overflow:hidden; aspect-ratio:16/9; background:#ccc}
-  .hero-photo img{width:100%; height:100%; object-fit:cover}
+  /* Before / after slider */
+  .ba{background:var(--dark); color:#fff}
+  .ba .eyebrow{color:#bbb}
+  .ba-grid{display:grid; grid-template-columns:.8fr 1.2fr; gap:48px; align-items:center}
+  .ba-grid p{color:#ccc}
+  .ba-frame{position:relative; aspect-ratio:4/3; overflow:hidden; background:#333; user-select:none; touch-action:pan-y}
+  .ba-frame img, .ba-ph{position:absolute; inset:0; width:100%; height:100%; object-fit:cover}
+  .ba-ph{display:grid; place-items:end; text-align:right; padding:24px 20px 24px 55%; color:#aaa; font-size:15px; background:repeating-linear-gradient(135deg,#2a2a2a 0 18px,#262626 18px 36px)}
+  .ba-before{clip-path:inset(0 calc(100% - var(--pos,50%)) 0 0)}
+  .ba-line{position:absolute; top:0; bottom:0; left:var(--pos,50%); width:3px; margin-left:-1.5px; background:var(--accent); pointer-events:none}
+  .ba-line::after{content:"\2194"; position:absolute; top:50%; left:50%; transform:translate(-50%,-50%); width:44px; height:44px; border-radius:50%; background:var(--accent); color:#000; display:grid; place-items:center; font-size:22px}
+  .ba-tag{position:absolute; top:14px; font-size:11px; font-weight:500; letter-spacing:.24em; text-transform:uppercase; background:rgba(0,0,0,.7); padding:6px 10px}
+  .ba-tag--b{left:14px} .ba-tag--a{right:14px}
+  .ba-range{position:absolute; inset:0; width:100%; height:100%; opacity:0; cursor:ew-resize; margin:0}
+  .ba-pick{display:flex; gap:8px; margin-top:14px; flex-wrap:wrap}
+  .ba-pick button{font:inherit; font-size:13px; letter-spacing:.12em; text-transform:uppercase; background:none; color:#ccc; border:1px solid #555; padding:8px 12px; cursor:pointer}
+  .ba-pick button[aria-pressed=true]{border-color:var(--accent); color:#fff}
 
   /* Quote form */
   .quote{background:var(--white); border:1px solid var(--line); border-top:4px solid var(--ink); padding:28px; position:sticky; top:96px}
@@ -98,7 +126,7 @@
   .quote.is-sent .quote__done{display:block}
 
   /* Trust bar */
-  .trust{background:var(--dark); color:#fff; padding:26px 0}
+  .trust{background:#000; color:#fff; padding:26px 0}
   .trust ul{list-style:none; margin:0; padding:0; display:grid; grid-template-columns:repeat(4,1fr); gap:16px; font-size:15px}
   .trust b{display:block; font-size:12px; font-weight:500; letter-spacing:.24em; text-transform:uppercase; margin-bottom:4px}
   .trust li{color:#bbb; border-left:2px solid var(--rule); padding-left:14px}
@@ -152,8 +180,7 @@
   /* Final CTA */
   .final{background:linear-gradient(rgba(0,0,0,.72),rgba(0,0,0,.72)),url('/assets/smp/team-bw.webp') center 30%/cover #000; color:#fff; text-align:center; padding:104px 0}
   .final p{max-width:36em; margin:0 auto 24px; opacity:.9}
-  .final .btn--primary{background:#fff; color:#000}
-  .final .btn--ghost{color:#fff; box-shadow:inset 0 0 0 2px #fff}
+    .final .btn--ghost{color:#fff; box-shadow:inset 0 0 0 2px #fff}
   .final .hero-ctas{justify-content:center}
 
   footer{background:var(--dark); color:#aaa; font-size:14px; padding:32px 0 100px}
@@ -165,6 +192,9 @@
 
   @media (max-width:900px){
     .hero .wrap{grid-template-columns:1fr}
+    .hero{padding:56px 0 40px; background-position:60% top}
+    .hero::before{background:linear-gradient(180deg,rgba(0,0,0,.8),rgba(0,0,0,.6) 60%,rgba(0,0,0,.85))}
+    .ba-grid{grid-template-columns:1fr; gap:24px}
     .quote{position:static}
     .trust ul{grid-template-columns:1fr 1fr}
     .paths,.signs-grid,.proj-grid,.reviews-grid{grid-template-columns:1fr}
@@ -174,7 +204,7 @@
     .callbar{display:grid; grid-template-columns:1fr 1fr; position:fixed; left:0; right:0; bottom:0; z-index:30; box-shadow:0 -2px 12px rgba(0,0,0,.15)}
     .callbar a{min-height:58px; display:grid; place-items:center; text-decoration:none}
     .callbar a{letter-spacing:.14em; text-transform:uppercase; font-size:14px; font-weight:500}
-    .callbar .c1{background:#000; color:#fff}
+    .callbar .c1{background:var(--accent); color:#000}
     .callbar .c2{background:var(--white); color:var(--ink)}
   }
   @media (max-width:520px){
@@ -199,7 +229,7 @@
   <div class="wrap">
     <div>
       <div class="eyebrow">Stormwater &amp; drainage plumbers · Melbourne's inner east</div>
-      <h1>Blocked, flooding or failing stormwater? We find the cause and fix it properly.</h1>
+      <h1>Blocked, flooding or failing stormwater? <em>We find the cause and fix it properly.</em></h1>
       <p class="hero-lede">CCTV-diagnosed repairs, pipe replacement and new drainage excavation for Melbourne homes, carried out by licensed plumbers, not a drain-clearing call centre. You get a fixed written quote before we dig.</p>
       <ul class="ticks">
         <li><b>CCTV camera inspection</b> so you see the problem before paying to fix it</li>
@@ -210,9 +240,6 @@
       <div class="hero-ctas">
         <a class="btn btn--primary" href="tel:+61490105148">Call 0490 105 148</a>
         <a class="btn btn--ghost" href="#quote">Get a fixed quote</a>
-      </div>
-      <div class="hero-photo">
-        <img src="/assets/smp/excavation-pipe.webp" alt="SMP plumber carrying stormwater pipe past a mini excavator on a Melbourne residential site" loading="eager">
       </div>
     </div>
 
@@ -291,6 +318,31 @@
     </ul>
   </div>
 </div>
+
+<!-- Before / after: leads the proof. Robbie's own idea (raised for
+     roofing on the 17 Sep call); drainage pairs still to come from SMP. -->
+<section class="ba">
+  <div class="wrap ba-grid">
+    <div>
+      <div class="eyebrow">Before &amp; after</div>
+      <h2>We dig it up, fix it, and put it back</h2>
+      <p>Drag the slider to see real SMP drainage jobs, from open trench to finished yard. Every quote includes reinstatement, so the lawn, paving or driveway goes back the way it was.</p>
+      <div class="ba-pick" role="group" aria-label="Choose a job">
+        <button type="button" aria-pressed="true" data-b="/assets/smp/trench-setout.webp" data-bl="Drainage trench open during stormwater works">Stormwater upgrade</button>
+        <button type="button" aria-pressed="false" data-b="/assets/smp/kooyong-excavation.webp" data-bl="Excavation under way at Kooyong Road">Kooyong Rd excavation</button>
+      </div>
+      <a class="btn btn--primary" href="#quote" style="margin-top:24px">Get a fixed quote</a>
+    </div>
+    <div class="ba-frame" id="ba">
+      <div class="ba-ph">AFTER photo placeholder<br>Same angle, works finished and surface reinstated. Needs supplying by SMP.</div>
+      <img class="ba-before" id="ba-img" src="/assets/smp/trench-setout.webp" alt="Drainage trench open during stormwater works" loading="lazy">
+      <span class="ba-line"></span>
+      <span class="ba-tag ba-tag--b">Before</span>
+      <span class="ba-tag ba-tag--a">After</span>
+      <input class="ba-range" type="range" min="0" max="100" value="50" aria-label="Compare before and after">
+    </div>
+  </div>
+</section>
 
 <!-- Two paths = the two existing service pages, each tied to an ad group -->
 <section>
@@ -433,7 +485,7 @@
   <div class="wrap">
     <span class="logo logo--inv" role="img" aria-label="Scotland Marshall Plumbing" style="margin-bottom:18px"></span>
     <p>Scotland Marshall Plumbing · Suite 136, 738 Burke Road, Camberwell VIC 3124 · <a href="tel:+61490105148">0490 105 148</a> · <a href="mailto:info@smplumbing.com.au">info@smplumbing.com.au</a><br>VBA licence 116917 · ABN 24 650 837 773</p>
-    <div class="concept"><b>Concept mockup, not a live page.</b> Built by Zib Digital as a Google Ads landing page concept for Scotland Marshall Plumbing. The form does not submit. Photos are SMP's own, taken from their current site (the only drainage and on-site shots it has); higher-res drainage shots from the Drive would strengthen the projects section. Reviews, project captions, service-area list and callback times are placeholders or assumptions that need SMP sign-off.</div>
+    <div class="concept"><b>Concept mockup, not a live page.</b> Built by Zib Digital as a Google Ads landing page concept for Scotland Marshall Plumbing. The form does not submit. Photos are SMP's own, taken from their current site (the only drainage and on-site shots it has); higher-res drainage shots from the Drive would strengthen the projects section. The before/after slider has real "before" shots but placeholder "after" frames: SMP needs to supply matching finished shots. The orange CTA colour steps outside SMP's black-and-white palette and needs Robbie's approval. Reviews, project captions, service-area list and callback times are placeholders or assumptions that need SMP sign-off.</div>
   </div>
 </footer>
 
@@ -444,6 +496,14 @@
 
 <script>
   (function(){
+    var ba = document.getElementById('ba'), img = document.getElementById('ba-img');
+    ba.querySelector('.ba-range').addEventListener('input', function(){ ba.style.setProperty('--pos', this.value + '%'); });
+    document.querySelectorAll('.ba-pick button').forEach(function(b){
+      b.addEventListener('click', function(){
+        document.querySelectorAll('.ba-pick button').forEach(function(x){ x.setAttribute('aria-pressed', x === b); });
+        img.src = b.dataset.b; img.alt = b.dataset.bl;
+      });
+    });
     var form = document.getElementById('quote-form');
     form.addEventListener('submit', function(e){
       e.preventDefault();
