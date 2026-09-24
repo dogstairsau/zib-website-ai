@@ -150,9 +150,9 @@ strategy, not go-live.
 
 Growth curve on the page (single row, no options):
 
-| At launch | Month 6 | Month 12 | Full map of 58 |
+| At launch | End of first 3 months | Month 12, if it continues | Full map of 58 |
 |---|---|---|---|
-| 11 | ~23 | ~38 | Into year two |
+| 11 | ~19 | ~38 | Into year two |
 
 Order of writing: the 18 "Priority" pages first — school cluster (6), corporate cluster
 (5), four vehicle pages, three trust pages. Then sporting clubs (4), winery (5),
@@ -163,11 +163,27 @@ In the top-down chart, "Priority" now means *first in the content plan*, not inc
 the build. Do not reintroduce a build-size option — the only lever on pace is more
 copywriting in the retainer, and the page says so.
 
-**Pricing (confirmed by Michael):** website build $10,000 one-off. SEO $2,500 set-up
-one-off, $2,000 per month ongoing. Twelve months of SEO including set-up = $26,500.
-Year one all in = $36,500, shown on the page as one row.
+**Pricing (confirmed by Michael):**
 
-Minimum term is still NOT stated on the page — Michael to confirm.
+| Item | Amount |
+|---|---|
+| Website build, one-off | $10,000 |
+| SEO set-up, one-off | $2,500 |
+| SEO ongoing, per month | $2,000 |
+| Initial term | Set-up + 3 months |
+| Set-up + first 3 months | $8,500 |
+| To get started, all up | $18,500 |
+
+Term is **set-up + 3 months**, then month to month (confirmed 24 Sep). Do not reinstate
+the twelve-month framing anywhere — the monthly section eyebrow, its lede, the growth
+table and the cost rows all key off the three-month term.
+
+Because three months is short for search, the monthly section carries an explicit note on
+what that window can and can't show: foundations, Google Business Profile and real enquiry
+counting yes, plus quick movement from the phone and listing fixes; ranking judgements no
+— those are a six to twelve month conversation on a site with three referring domains and
+one ranking keyword. Keep that note if the page is edited; it is what stops a three-month
+term being judged on the wrong measure.
 
 **Monthly scope** is Zib's standard eight workstreams, taken from the Foamco deck and
 adapted to Quest: audits & reports, technical, on-page, copywriting, local search,
