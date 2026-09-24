@@ -286,6 +286,10 @@
     .steps,.row2{grid-template-columns:1fr}
     .hero-ctas .btn{width:100%}
   }
+  /* Big monitors: scale the whole page up in proportion (type, spacing,
+     images and layout width together). Laptops and phones are unchanged. */
+  @media (min-width:1600px){ body{zoom:1.12} }
+  @media (min-width:2200px){ body{zoom:1.25} }
 </style>
 </head>
 <body>
