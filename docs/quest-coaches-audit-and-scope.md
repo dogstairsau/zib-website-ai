@@ -137,36 +137,35 @@ Michael's feedback on v3: the page over-promised on page volume, 30 live at laun
 outside the web team's wheelhouse, and the new pages belong in the monthly SEO scope
 rather than the build. Areas We Service is phased out of go-live entirely.
 
-**Stage one (website build), two options:**
+**Stage one (website build) — single scope, no options.** Michael removed the 29-page
+build on 24 Sep: the new service pages are "a heap of content" and belong in the SEO
+strategy, not go-live.
 
-| | At launch | Month 6 | Month 12 | Full 58-page map |
-|---|---|---|---|---|
-| Option A (recommended) | 11 | ~23 | ~38 | Year two |
-| Option B | 29 | ~41 | ~56 | End of year one |
+- **Build = 11 pages, $10,000 one-off.** Home, Bus & Coach Hire hub, Our Fleet hub, Why
+  Quest Coaches, Get a quote, Reviews, Questions & answers, Contact, Booking terms,
+  Credit card terms, Privacy policy. Plus migration, redirects, conversion layer,
+  tracking, photography and the three page layouts.
+- **The other 47 pages are SEO content deliverables**, written 2–3 a month through the
+  monthly scope.
 
-The 11 at launch are: Home, Bus & Coach Hire hub, Our Fleet hub, Why Quest Coaches,
-Get a quote, Reviews, Questions & answers, Contact, Booking terms, Credit card terms,
-Privacy policy.
+Growth curve on the page (single row, no options):
 
-The 18 priority pages are: school cluster (6), corporate cluster (5), four vehicle
-pages, three trust pages. Option B pulls these into the build.
+| At launch | Month 6 | Month 12 | Full map of 58 |
+|---|---|---|---|
+| 11 | ~23 | ~38 | Into year two |
 
-Remaining 29 to reach 58: sporting clubs (4), winery (5), weddings/seniors/social (3),
-Areas We Service hub + 9 area pages (10), guides hub + 6 guides (7).
+Order of writing: the 18 "Priority" pages first — school cluster (6), corporate cluster
+(5), four vehicle pages, three trust pages. Then sporting clubs (4), winery (5),
+weddings/seniors/social (3), Areas We Service hub + 9 area pages (10), guides hub + 6
+guides (7).
 
-**Arithmetic note.** Michael suggested 51 by month 6. At the monthly scope's honest rate
-of 2–3 new pages a month that does not hold under either option — it needs a launch set
-of ~36+, or more copywriting in the retainer. The page shows the real curve instead, and
-this is the lever to discuss.
+In the top-down chart, "Priority" now means *first in the content plan*, not included in
+the build. Do not reintroduce a build-size option — the only lever on pace is more
+copywriting in the retainer, and the page says so.
 
 **Pricing (confirmed by Michael):** website build $10,000 one-off. SEO $2,500 set-up
 one-off, $2,000 per month ongoing. Twelve months of SEO including set-up = $26,500.
 Year one all in = $36,500, shown on the page as one row.
-
-The $10,000 is applied to **Option A** (11 pages). Option B reads "$10,000 plus the page
-writing — quoted separately", because 18 researched and written pages cannot be inside
-the same figure. If Michael meant $10,000 to cover Option B as well, that is a one-line
-change on both the option card and the cost table.
 
 Minimum term is still NOT stated on the page — Michael to confirm.
 

@@ -212,11 +212,10 @@ section.soft .stream{background:var(--soft)}
   letter-spacing:.07em;text-transform:uppercase;padding:2px 6px;border-radius:2px;font-weight:500;align-self:flex-start}
 
 /* ---------- phase options ---------- */
-.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
 .opt{border:1px solid var(--rule);background:var(--paper);padding:18px 20px;display:flex;flex-direction:column;gap:12px}
 .opt.pick{border-color:var(--orange);border-width:2px}
 section.soft .opt{background:var(--soft)}
-.opt .hd{display:flex;flex-direction:column;gap:6px}
+.opt .hd{display:flex;flex-direction:column;gap:6px;align-items:flex-start}
 .opt .big{font-family:var(--f-display);font-weight:700;font-size:34px;line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
 .opt ul{margin:0;padding-left:17px;display:flex;flex-direction:column;gap:5px;font-size:14.5px;color:var(--ink-2)}
 .opt .price{font-family:var(--f-display);font-weight:700;font-size:21px;letter-spacing:-.02em;color:var(--orange-deep)}
@@ -315,11 +314,10 @@ section.soft .stream{background:var(--soft)}
   letter-spacing:.07em;text-transform:uppercase;padding:2px 6px;border-radius:2px;font-weight:500;align-self:flex-start}
 
 /* ---------- phase options ---------- */
-.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
 .opt{border:1px solid var(--rule);background:var(--paper);padding:18px 20px;display:flex;flex-direction:column;gap:12px}
 .opt.pick{border-color:var(--orange);border-width:2px}
 section.soft .opt{background:var(--soft)}
-.opt .hd{display:flex;flex-direction:column;gap:6px}
+.opt .hd{display:flex;flex-direction:column;gap:6px;align-items:flex-start}
 .opt .big{font-family:var(--f-display);font-weight:700;font-size:34px;line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
 .opt ul{margin:0;padding-left:17px;display:flex;flex-direction:column;gap:5px;font-size:14.5px;color:var(--ink-2)}
 .opt .price{font-family:var(--f-display);font-weight:700;font-size:21px;letter-spacing:-.02em;color:var(--orange-deep)}
@@ -636,11 +634,11 @@ footer a{color:var(--orange)}
   <div class="wrap stack">
     <div class="sec-head">
       <p class="eyebrow">Your new website</p>
-      <h2>Eleven pages at go-live. Fifty-eight on the map.</h2>
+      <h2>Eleven pages at go-live. Forty-seven to write after.</h2>
       <p class="lede">This is the whole website drawn out, top down. The <span class="t p1">At launch</span>
-      boxes are the eleven pages that get rebuilt and go live in stage one. <span class="t pri">Priority</span>
-      is what comes next. Everything else gets written a few pages a month through the monthly work, in the
-      order the searches justify.</p>
+      boxes are the eleven pages that get rebuilt and go live in stage one. Everything else is content,
+      written a few pages a month through the monthly work &mdash; <span class="t pri">Priority</span>
+      marks the ones that get written first.</p>
     </div>
 
     <div class="chart-shell">
@@ -758,28 +756,30 @@ footer a{color:var(--orange)}
       </div>
       <div class="legend">
         <span><span class="t p1">At launch</span> The 11 pages in stage one</span>
-        <span><span class="t pri">Priority</span> The next 18 pages</span>
-        <span><span class="t later">Later</span> Phased in once the core is earning</span>
-        <span>Untagged &mdash; written through the monthly work</span>
+        <span><span class="t pri">Priority</span> First 18 the monthly work writes</span>
+        <span><span class="t later">Later</span> Once the core is earning</span>
+        <span>Untagged &mdash; later in the content plan</span>
       </div>
     </div>
 
     <div class="cols">
       <div class="stack-sm">
         <h3>How the page count actually grows</h3>
-        <p class="sub">The monthly work writes two to three new pages a month. That's the honest rate, and
-        it's what decides how fast the map fills in. The only real lever is how many pages go into the
-        build itself.</p>
+        <p class="sub">Eleven pages go live with the build. The other 47 are content, and the monthly
+        work writes two to three of them a month. That's the honest rate &mdash; each page needs its own
+        research, words, photos and questions, which is exactly why they're not in the launch.</p>
         <div class="scroller">
           <table>
             <caption>Based on two to three new pages a month from the monthly copywriting stream.</caption>
-            <thead><tr><th>Stage one size</th><th class="num">At launch</th><th class="num">Month 6</th><th class="num">Month 12</th><th>Full map of 58</th></tr></thead>
+            <thead><tr><th class="num">At launch</th><th class="num">Month 6</th><th class="num">Month 12</th><th>Full map of 58</th></tr></thead>
             <tbody>
-              <tr><td>Option A</td><td class="num">11</td><td class="num">~23</td><td class="num">~38</td><td>Year two</td></tr>
-              <tr class="us"><td>Option B</td><td class="num">29</td><td class="num">~41</td><td class="num">~56</td><td>End of year one</td></tr>
+              <tr class="us"><td class="num">11</td><td class="num">~23</td><td class="num">~38</td><td>Into year two</td></tr>
             </tbody>
           </table>
         </div>
+        <p class="sub">The order matters more than the pace. Schools and corporate get written first,
+        because that's where the demand and the repeat bookings are. If you ever want it faster, the lever
+        is more copywriting in the monthly work, not a bigger build.</p>
       </div>
       <div class="stack-sm">
         <div class="callout">
@@ -806,58 +806,36 @@ footer a{color:var(--orange)}
       <h2>Rebuild the eleven, move it across, go live. $10,000.</h2>
       <p class="lede">Stage one is a website project with a start and a finish: your existing pages
       rebuilt properly, everything moved across without losing what you've earned, and the phone and
-      quote forms working. Ten thousand, one-off. There's a bigger version if you want the school and
-      corporate pages live on day one.</p>
-    </div>
-
-    <div class="opts">
-      <div class="opt pick">
-        <div class="hd">
-          <span class="pill new">Option A &middot; recommended</span>
-          <span class="big">11 pages</span>
-          <span class="price">$10,000 one-off</span>
-          <p class="sub">Your existing site rebuilt and migrated. A clean, finished project.</p>
-        </div>
-        <ul>
-          <li>Home, fleet, Why Quest, questions, reviews, contact, quote, terms, privacy</li>
-          <li>New site that works properly on phones, on safe modern hosting, in your colours</li>
-          <li>Tap-to-call in the header and a short quote form that hands off to your booking system</li>
-          <li>Every old page address forwarded so nothing you've earned is lost</li>
-          <li>Call and enquiry tracking installed, Google given a map of the site</li>
-          <li>Photography of the four buses, inside and out</li>
-        </ul>
-        <p class="foot">The 18 priority pages then get written through the monthly work at two to three a
-        month, so schools and corporate go live across months two to five rather than on day one.</p>
-      </div>
-      <div class="opt">
-        <div class="hd">
-          <span class="pill med">Option B &middot; bigger build</span>
-          <span class="big">29 pages</span>
-          <span class="price quote">$10,000 plus the page writing &mdash; quoted separately</span>
-          <p class="sub">Everything in Option A, plus the 18 priority pages written into the build.</p>
-        </div>
-        <ul>
-          <li>Everything in Option A</li>
-          <li>School pages (6) &mdash; excursions, camps, swimming, sport, daily runs</li>
-          <li>Corporate pages (5) &mdash; conferences, shuttles, airport, Christmas parties</li>
-          <li>Four bus pages, catching the size searches you were already turning up for</li>
-          <li>Three trust pages &mdash; accreditation, child safety, your drivers</li>
-        </ul>
-        <p class="foot">Costs more up front and takes longer to launch, but your two main markets are
-        live on day one and the full 58-page map lands inside year one instead of year two.</p>
-      </div>
+      quote forms working. The new service pages aren't in it &mdash; that's a lot of writing, and it
+      belongs in the monthly work where it can be done properly, a few pages at a time.</p>
     </div>
 
     <div class="cols">
-      <div class="prose">
-        <h3>Before any of that: the first fortnight</h3>
-        <p>Some of this is too cheap to wait for a new website. In the first two weeks, on your current
-        site: the phone number made tappable, the COVID banner taken off, the 2021 footer fixed, the page
-        titled &ldquo;Crown Bus Charter&rdquo; corrected, Google given a map of the site, working call and
-        enquiry tracking installed, and your Google Business listing claimed and filled out properly.</p>
-        <p>None of that needs the rebuild, and it starts earning while the build is happening.</p>
+      <div class="opt pick">
+        <div class="hd">
+          <span class="pill new">What the $10,000 covers</span>
+          <span class="big">11 pages</span>
+          <span class="price">$10,000 one-off</span>
+        </div>
+        <ul>
+          <li>Home, fleet, Why Quest, questions, reviews, contact, quote, terms and privacy &mdash; all rebuilt</li>
+          <li>A site that works properly on phones, on safe modern hosting, in your colours</li>
+          <li>Tap-to-call in the header and a short quote form that hands off to your booking system</li>
+          <li>Every old page address forwarded, so nothing you've earned is lost</li>
+          <li>Call and enquiry tracking installed, and Google given a map of the site</li>
+          <li>Photography of the four buses, inside and out</li>
+          <li>The three page layouts the monthly work uses to add pages later</li>
+        </ul>
+        <p class="foot">A finished project, not an open-ended build. Everything after it is content, and
+        content is monthly work.</p>
       </div>
       <div class="stack-sm">
+        <h3>Before any of that: the first fortnight</h3>
+        <p class="sub">Some of this is too cheap to wait for a new website. In the first two weeks, on
+        your current site: the phone number made tappable, the COVID banner taken off, the 2021 footer
+        fixed, the page titled &ldquo;Crown Bus Charter&rdquo; corrected, Google given a map of the site,
+        working call and enquiry tracking installed, and your Google Business listing claimed and filled
+        out properly. None of it needs the rebuild, and it starts earning while the build happens.</p>
         <h3>What we need from you to start</h3>
         <p class="sub">Photos of the four buses or a morning at the depot to take them. Your accreditation
         number, driver check and child safety policies. A list of the schools, clubs, companies and
@@ -997,11 +975,11 @@ footer a{color:var(--orange)}
       <div class="stack-sm">
         <h3>The website build</h3>
         <div class="kv" style="border-color:var(--dark-rule);background:var(--dark-rule)">
-          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Option A &middot; 11 pages</span><span class="v" style="color:var(--orange)">$10,000</span></div>
-          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Option B &middot; 29 pages</span><span class="v">$10,000 + writing</span></div>
-          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Migration &amp; forwarding</span><span class="v">Included either way</span></div>
-          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Tracking set-up</span><span class="v">Included either way</span></div>
-          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">First-fortnight fixes</span><span class="v">Included either way</span></div>
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">The build &middot; 11 pages</span><span class="v" style="color:var(--orange)">$10,000</span></div>
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">New pages after launch</span><span class="v">In the monthly work</span></div>
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Migration &amp; forwarding</span><span class="v">Included</span></div>
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Tracking set-up</span><span class="v">Included</span></div>
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">First-fortnight fixes</span><span class="v">Included</span></div>
           <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Year one, all of it</span><span class="v">$36,500</span></div>
         </div>
         <p class="sub">Google Ads isn't in either figure. Worth talking about once there are pages to send
