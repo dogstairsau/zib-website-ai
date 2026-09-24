@@ -1,0 +1,904 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Quest Coaches Homepage Mockup</title>
+<meta name="description" content="Design mockup of the new Quest Coaches homepage and mega menu, prepared by Zib Digital.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="canonical" href="https://www.ziboutreach.com.au/quest-coaches-homepage">
+<meta property="og:title" content="Quest Coaches Homepage Mockup">
+<meta property="og:site_name" content="Zib Digital">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ==========================================================================
+   QUEST COACHES — homepage mockup (Zib Digital)
+   Quest's own palette and type: fleet orange + wordmark black, Rubik.
+   Everything under .mock-* is presentation chrome, not part of the site.
+   ========================================================================== */
+:root{
+  --orange:#F9A01B; --orange-hover:#E88F0A; --orange-deep:#9A6200; --orange-wash:#FDF0DA;
+  --ink:#231F20; --ink-2:#3A3431; --muted:#6E645C;
+  --rule:#E7DFD3; --soft:#FBF7F1; --band:#F4EDE2; --white:#FFFFFF;
+  --mock:#26303B; --mock-2:#3A4654; --mock-ink:#DCE3EA; --mock-note:#FFE9A8;
+  --f-display:'Rubik',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+  --f-body:'Barlow',system-ui,-apple-system,'Segoe UI',Roboto,Arial,sans-serif;
+  --f-mono:'IBM Plex Mono',ui-monospace,Menlo,Consolas,monospace;
+  --max:1200px; --gut:clamp(16px,4vw,40px);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--white);color:var(--ink);font-family:var(--f-body);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased}
+img{max-width:100%;display:block}
+a{color:inherit}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+:focus-visible{outline:3px solid var(--orange);outline-offset:2px;border-radius:3px}
+h1,h2,h3,h4{font-family:var(--f-display);line-height:1.1;letter-spacing:-.02em;text-wrap:balance}
+p{text-wrap:pretty}
+.wrap{max-width:var(--max);margin:0 auto;padding-left:var(--gut);padding-right:var(--gut)}
+.ico{width:20px;height:20px;flex:none}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+
+/* ---------- mockup chrome (not part of the site) ---------- */
+.mock-bar{background:var(--mock);color:var(--mock-ink);font-family:var(--f-mono);font-size:11.5px;letter-spacing:.03em}
+.mock-bar .wrap{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 18px;padding-block:9px}
+.mock-bar strong{color:#fff;font-weight:500;letter-spacing:.08em;text-transform:uppercase}
+.mock-toggle{display:inline-flex;align-items:center;gap:6px}
+.mock-toggle span{opacity:.75}
+.mock-toggle button{font-family:var(--f-mono);font-size:11px;letter-spacing:.04em;padding:4px 10px;border:1px solid var(--mock-2);border-radius:3px;color:var(--mock-ink)}
+.mock-toggle button[aria-pressed="true"]{background:var(--orange);border-color:var(--orange);color:var(--ink);font-weight:500}
+.mock-note{display:none;background:var(--mock-2);color:var(--mock-ink);font-family:var(--f-mono);font-size:11.5px;line-height:1.5}
+.mock-note .wrap{padding-block:8px}
+html.launch .mock-note{display:block}
+.mock-tag{
+  position:absolute;top:14px;left:max(var(--gut),calc((100% - var(--max))/2 + var(--gut)));z-index:5;
+  font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;
+  background:var(--mock);color:var(--mock-ink);padding:4px 9px;border-radius:3px;pointer-events:none
+}
+.mock-tag b{color:var(--orange);font-weight:500}
+.confirm{position:relative;text-decoration:underline dotted var(--orange-deep);text-underline-offset:3px}
+.confirm::after{
+  content:"Quest to confirm";font-family:var(--f-mono);font-size:9.5px;letter-spacing:.05em;text-transform:uppercase;
+  background:var(--mock-note);color:var(--mock);padding:1px 5px;border-radius:2px;margin-left:7px;vertical-align:2px;white-space:nowrap
+}
+html.launch [data-later]{display:none!important}
+
+/* ---------- header ---------- */
+.site-header{position:sticky;top:0;z-index:50;background:var(--white);box-shadow:0 1px 0 var(--rule)}
+.util{background:var(--ink);color:#EFE8E1;font-size:13.5px}
+.util .wrap{display:flex;align-items:center;justify-content:space-between;gap:10px 22px;min-height:38px;flex-wrap:wrap}
+.util-left{display:flex;gap:18px;flex-wrap:wrap}
+.util-left span{display:inline-flex;align-items:center;gap:7px}
+.util-left span::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--orange)}
+.util a{color:var(--orange);font-weight:600;text-decoration:none;font-family:var(--f-display);display:inline-flex;align-items:center;gap:7px}
+.util .hours{color:#B9AFA7}
+
+.mainbar{position:relative}
+.mainbar .wrap{display:flex;align-items:stretch;gap:14px;min-height:78px}
+.logo{display:flex;align-items:center;flex:none;padding-block:10px}
+.logo img{height:52px;width:auto}
+.burger{display:none;margin-left:auto;align-self:center;align-items:center;gap:8px;font-family:var(--f-display);font-weight:600;font-size:15px;padding:10px 12px;border:1.5px solid var(--ink);border-radius:4px}
+.burger .bars{display:inline-block;width:18px;height:2px;background:var(--ink);position:relative}
+.burger .bars::before,.burger .bars::after{content:"";position:absolute;left:0;width:18px;height:2px;background:var(--ink)}
+.burger .bars::before{top:-6px}.burger .bars::after{top:6px}
+
+.pnav{display:flex;align-items:stretch;flex:1;gap:10px}
+.pnav-list{list-style:none;display:flex;align-items:stretch;gap:2px;margin-left:auto}
+.pnav-item{display:flex;align-items:stretch}
+.pnav-btn,.pnav-link{
+  display:flex;align-items:center;gap:5px;padding:0 13px;font-family:var(--f-display);font-weight:500;font-size:15.5px;
+  color:var(--ink);text-decoration:none;border-bottom:3px solid transparent;margin-bottom:-1px;white-space:nowrap
+}
+.pnav-btn svg{width:15px;height:15px;transition:transform .15s}
+.pnav-btn[aria-expanded="true"]{border-bottom-color:var(--orange)}
+.pnav-btn[aria-expanded="true"] svg{transform:rotate(180deg)}
+.pnav-btn:hover,.pnav-link:hover{color:var(--orange-deep)}
+.pnav-cta{display:flex;align-items:center;gap:10px;flex:none}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:var(--f-display);font-weight:600;font-size:15.5px;
+  text-decoration:none;padding:12px 20px;border-radius:5px;border:2px solid transparent;white-space:nowrap;transition:background .15s,border-color .15s
+}
+.btn-orange{background:var(--orange);color:var(--ink);border-color:var(--orange)}
+.btn-orange:hover{background:var(--orange-hover);border-color:var(--orange-hover)}
+.btn-ink{background:var(--ink);color:var(--white);border-color:var(--ink)}
+.btn-ghost{background:transparent;color:var(--ink);border-color:var(--ink)}
+.btn-ghost-light{background:transparent;color:var(--white);border-color:rgba(255,255,255,.55)}
+.btn-ghost-light:hover{border-color:var(--white)}
+.tel-cta{font-family:var(--f-display);font-weight:700;font-size:17px;color:var(--ink);text-decoration:none;display:inline-flex;align-items:center;gap:7px;padding:0 6px}
+.tel-cta svg{color:var(--orange-deep)}
+
+/* ---------- mega panels ---------- */
+.mega{
+  position:absolute;left:0;right:0;top:100%;background:var(--white);
+  border-top:1px solid var(--rule);box-shadow:0 18px 40px -12px rgba(35,31,32,.28);z-index:60
+}
+.mega-in{max-width:var(--max);margin:0 auto;padding:26px var(--gut) 22px;display:grid;gap:26px}
+.mega-hire .mega-in{grid-template-columns:repeat(4,1fr) 1.15fr}
+.mega-fleet .mega-in{grid-template-columns:repeat(4,1fr) 1.05fr}
+.mega-areas .mega-in{grid-template-columns:repeat(3,1fr) 1.15fr}
+.mega-col{display:flex;flex-direction:column;gap:3px;min-width:0}
+.mega-col h3{font-size:12px;font-family:var(--f-mono);font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);margin-bottom:6px}
+.mega-head{display:flex;align-items:center;gap:10px;font-family:var(--f-display);font-weight:600;font-size:16px;color:var(--ink);text-decoration:none;padding:6px 0 8px;border-bottom:1px solid var(--rule);margin-bottom:6px}
+.mega-head .mi{width:34px;height:34px;border-radius:6px;background:var(--orange-wash);color:var(--orange-deep);display:grid;place-items:center;flex:none}
+.mega-head .mi svg{width:19px;height:19px}
+.mega-head:hover{color:var(--orange-deep)}
+.mega-link{display:block;padding:5px 0;font-size:15px;color:var(--ink-2);text-decoration:none;line-height:1.35}
+.mega-link:hover{color:var(--orange-deep);text-decoration:underline;text-underline-offset:3px}
+.mega-link.sub2{margin-top:8px;font-family:var(--f-display);font-weight:500;color:var(--ink)}
+.mega-feature{background:var(--ink);color:#EFE8E1;border-radius:8px;padding:20px;display:flex;flex-direction:column;gap:12px}
+.mega-feature h4{font-size:19px;color:var(--white)}
+.mega-feature p{font-size:14.5px;color:#CFC6BE}
+.mega-feature .tel{font-family:var(--f-display);font-weight:700;font-size:20px;color:var(--orange);text-decoration:none}
+.mega-feature .small{font-size:12.5px;color:#9E948C}
+.mega-foot{grid-column:1 / -1;display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;border-top:1px solid var(--rule);padding-top:14px;font-size:14px}
+.mega-foot a{color:var(--orange-deep);font-weight:600;text-decoration:none;font-family:var(--f-display)}
+.mega-foot span{color:var(--muted)}
+.veh{display:flex;flex-direction:column;gap:6px;text-decoration:none;color:var(--ink)}
+.veh img{border-radius:6px;border:1px solid var(--rule);aspect-ratio:2/1;object-fit:cover;background:var(--soft)}
+.veh .seats{font-family:var(--f-display);font-weight:700;font-size:20px;line-height:1}
+.veh .seats small{font-size:13px;font-weight:500;color:var(--muted);margin-left:4px}
+.veh .vname{font-weight:600;font-size:14.5px}
+.veh .vf{font-size:13px;color:var(--muted);line-height:1.4}
+.veh:hover .vname{color:var(--orange-deep)}
+.sizer{list-style:none;display:flex;flex-direction:column;gap:7px;font-size:14px}
+.sizer li{display:flex;justify-content:space-between;gap:10px;border-bottom:1px dashed #4A4340;padding-bottom:6px;color:#EFE8E1}
+.sizer b{font-family:var(--f-display);color:var(--orange)}
+.mega-small{position:absolute;top:100%;min-width:260px;background:var(--white);border:1px solid var(--rule);border-top:0;box-shadow:0 18px 40px -12px rgba(35,31,32,.28);padding:10px 0;z-index:60}
+.mega-small a{display:block;padding:9px 18px;text-decoration:none;font-size:15px;color:var(--ink-2)}
+.mega-small a:hover{background:var(--soft);color:var(--orange-deep)}
+.pnav-item.rel{position:relative}
+
+/* ---------- hero ---------- */
+.hero{position:relative;color:var(--white);background:var(--ink) url("assets/quest/hero-melbourne.webp") center 40%/cover no-repeat}
+.hero::before{content:"";position:absolute;inset:0;background:linear-gradient(95deg,rgba(35,31,32,.96) 0%,rgba(35,31,32,.86) 42%,rgba(35,31,32,.45) 100%)}
+.hero .wrap{position:relative;display:grid;grid-template-columns:1.25fr .9fr;gap:clamp(24px,4vw,56px);align-items:center;padding-block:clamp(56px,7vw,92px) clamp(48px,6vw,80px)}
+.eyebrow{font-family:var(--f-display);font-weight:500;font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--orange)}
+.hero h1{font-size:clamp(34px,5.2vw,60px);font-weight:700;letter-spacing:-.035em;margin:14px 0 18px;max-width:17ch}
+.hero .lede{font-size:clamp(17px,1.7vw,20px);color:#EAE3DC;max-width:46ch}
+.hero-ctas{display:flex;flex-wrap:wrap;gap:12px;margin-top:28px}
+.hero-ctas .btn{font-size:17px;padding:14px 24px}
+.trust-row{list-style:none;display:flex;flex-wrap:wrap;gap:10px 22px;margin-top:30px;font-size:14.5px;color:#D9D1C9}
+.trust-row li{display:inline-flex;align-items:center;gap:8px}
+.trust-row svg{width:17px;height:17px;color:var(--orange)}
+.qq{background:var(--white);color:var(--ink);border-radius:10px;padding:24px;box-shadow:0 24px 50px -18px rgba(0,0,0,.55);display:flex;flex-direction:column;gap:14px}
+.qq h2{font-size:23px}
+.qq .sub{font-size:14.5px;color:var(--muted);margin-top:-6px}
+.field{display:flex;flex-direction:column;gap:5px}
+.field label{font-family:var(--f-display);font-weight:500;font-size:14px}
+.field select,.field input{
+  font:inherit;font-size:16px;padding:11px 12px;border:1.5px solid var(--rule);border-radius:5px;background:var(--white);color:var(--ink);width:100%
+}
+.field select:focus,.field input:focus{outline:none;border-color:var(--orange);box-shadow:0 0 0 3px var(--orange-wash)}
+.qq .btn{width:100%;font-size:17px;padding:14px}
+.qq .or{font-size:13.5px;color:var(--muted);text-align:center}
+.qq .or a{color:var(--ink);font-weight:700;font-family:var(--f-display);text-decoration:none}
+
+/* ---------- sections ---------- */
+.sec{position:relative;padding-block:clamp(56px,7vw,88px)}
+.sec.soft{background:var(--soft)}
+.sec-head{display:flex;flex-direction:column;gap:12px;margin-bottom:clamp(26px,3.4vw,40px);max-width:760px}
+.sec-head h2{font-size:clamp(28px,3.6vw,42px);font-weight:700}
+.sec-head p{font-size:18px;color:var(--ink-2)}
+
+/* who we drive for */
+.markets{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.mkt{background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:22px 20px;display:flex;flex-direction:column;gap:12px;transition:border-color .15s,transform .15s}
+.mkt:hover{border-color:var(--orange);transform:translateY(-2px)}
+.mkt .mi{width:46px;height:46px;border-radius:10px;background:var(--orange);color:var(--ink);display:grid;place-items:center}
+.mkt .mi svg{width:24px;height:24px}
+.mkt h3{font-size:21px}
+.mkt p{font-size:15px;color:var(--ink-2)}
+.mkt ul{list-style:none;display:flex;flex-direction:column;gap:5px;border-top:1px solid var(--rule);padding-top:12px;margin-top:auto}
+.mkt li a{font-size:14.5px;color:var(--ink-2);text-decoration:none;display:flex;justify-content:space-between;gap:8px}
+.mkt li a::after{content:"→";color:var(--orange-deep)}
+.mkt li a:hover{color:var(--orange-deep)}
+.mkt .go{font-family:var(--f-display);font-weight:600;color:var(--orange-deep);text-decoration:none;font-size:15px}
+.also{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:22px}
+.also span{font-family:var(--f-display);font-weight:500;font-size:15px;color:var(--muted);margin-right:4px}
+.chip{display:inline-block;padding:8px 14px;border:1px solid var(--rule);border-radius:999px;background:var(--white);text-decoration:none;font-size:14.5px;font-weight:500}
+.chip:hover{border-color:var(--orange);color:var(--orange-deep)}
+
+/* fleet */
+.fleet{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+.bus{border:1px solid var(--rule);border-radius:10px;overflow:hidden;display:flex;flex-direction:column;background:var(--white)}
+.bus img{aspect-ratio:2/1;object-fit:cover;width:100%;background:var(--soft);border-bottom:1px solid var(--rule)}
+.bus-body{padding:18px 18px 20px;display:flex;flex-direction:column;gap:10px;flex:1}
+.bus .seats{font-family:var(--f-display);font-weight:800;font-size:40px;line-height:.9;letter-spacing:-.04em}
+.bus .seats small{font-size:15px;font-weight:500;letter-spacing:0;color:var(--muted);margin-left:6px}
+.bus h3{font-size:18px}
+.bus ul{list-style:none;display:flex;flex-direction:column;gap:5px;font-size:14.5px;color:var(--ink-2)}
+.bus li{display:flex;gap:8px}
+.bus li svg{width:16px;height:16px;color:var(--orange-deep);flex:none;margin-top:3px}
+.bus .go{margin-top:auto;padding-top:6px;font-family:var(--f-display);font-weight:600;color:var(--orange-deep);text-decoration:none;font-size:15px}
+.sizes{margin-top:22px;display:grid;grid-template-columns:repeat(5,1fr);border:1px solid var(--rule);border-radius:10px;overflow:hidden;background:var(--white)}
+.sizes div{padding:14px 16px;border-right:1px solid var(--rule);display:flex;flex-direction:column;gap:3px}
+.sizes div:last-child{border-right:0;background:var(--ink);color:var(--white)}
+.sizes b{font-family:var(--f-display);font-size:19px}
+.sizes span{font-size:13.5px;color:var(--muted)}
+.sizes div:last-child span{color:#CFC6BE}
+.fleet-note{margin-top:14px;font-size:14.5px;color:var(--muted)}
+
+/* reviews + trust */
+.rev-grid{display:grid;grid-template-columns:1.6fr 1fr;gap:clamp(20px,3vw,36px);align-items:start}
+.quotes{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.quote{background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:22px;display:flex;flex-direction:column;gap:14px}
+.quote.big{grid-column:1 / -1;background:var(--ink);color:var(--white);border-color:var(--ink)}
+.quote blockquote{font-family:var(--f-display);font-weight:500;font-size:18px;line-height:1.4;letter-spacing:-.01em}
+.quote.big blockquote{font-size:clamp(20px,2.2vw,25px)}
+.quote blockquote::before{content:"\201C";color:var(--orange);font-weight:800;margin-right:2px}
+.quote blockquote::after{content:"\201D";color:var(--orange);font-weight:800}
+.quote cite{font-style:normal;font-size:14px;color:var(--muted);display:flex;flex-direction:column}
+.quote cite b{color:var(--ink);font-family:var(--f-display);font-weight:600;font-size:15px}
+.quote.big cite{color:#B9AFA7}.quote.big cite b{color:var(--white)}
+.rev-more{margin-top:16px;display:inline-flex;font-family:var(--f-display);font-weight:600;color:var(--orange-deep);text-decoration:none}
+.checks{background:var(--white);border:1px solid var(--rule);border-radius:10px;padding:24px;display:flex;flex-direction:column;gap:14px}
+.checks h3{font-size:22px}
+.checks > p{font-size:15px;color:var(--ink-2)}
+.checks ul{list-style:none;display:flex;flex-direction:column;gap:11px}
+.checks li{display:grid;grid-template-columns:24px 1fr;gap:10px;font-size:15.5px;line-height:1.4}
+.checks li svg{width:22px;height:22px;color:var(--white);background:var(--ink);border-radius:50%;padding:4px}
+.checks .btn{margin-top:4px}
+
+/* closing band + footer */
+.cta-band{background:var(--orange);color:var(--ink)}
+.cta-band .wrap{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;padding-block:34px}
+.cta-band h2{font-size:clamp(24px,3vw,34px);font-weight:700}
+.cta-band p{font-size:16.5px;margin-top:4px}
+.cta-band .acts{display:flex;gap:10px;flex-wrap:wrap}
+footer.site{background:var(--ink);color:#CFC6BE;font-size:14.5px}
+footer.site .wrap{display:grid;grid-template-columns:1.3fr 1fr 1fr 1.2fr;gap:28px;padding-block:44px 26px}
+footer.site h4{font-family:var(--f-mono);font-weight:500;font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--orange);margin-bottom:12px}
+footer.site ul{list-style:none;display:flex;flex-direction:column;gap:7px}
+footer.site a{text-decoration:none;color:#CFC6BE}
+footer.site a:hover{color:var(--white)}
+footer.site .flogo{background:var(--white);display:inline-block;padding:8px 10px;border-radius:6px;margin-bottom:12px}
+footer.site .flogo img{height:40px;width:auto}
+footer.site .ftel{font-family:var(--f-display);font-weight:700;font-size:20px;color:var(--orange)}
+.legal{border-top:1px solid #3A3431}
+.legal .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px;padding-block:16px;font-size:13px;color:#9E948C;grid-template-columns:none}
+
+/* sticky mobile call bar */
+.callbar{display:none}
+
+/* ---------- responsive ---------- */
+@media (max-width:1180px){
+  .mega-hire .mega-in{grid-template-columns:repeat(4,1fr)}
+  .mega-hire .mega-feature{grid-column:1 / -1;flex-direction:row;flex-wrap:wrap;align-items:center;justify-content:space-between}
+  .pnav-btn,.pnav-link{padding:0 9px;font-size:15px}
+  .tel-cta{display:none}
+}
+@media (max-width:1000px){
+  .markets,.fleet{grid-template-columns:repeat(2,1fr)}
+  .sizes{grid-template-columns:repeat(3,1fr)}
+  .sizes div{border-bottom:1px solid var(--rule)}
+  .rev-grid{grid-template-columns:1fr}
+  .hero .wrap{grid-template-columns:1fr}
+  .qq{max-width:520px}
+  footer.site .wrap{grid-template-columns:1fr 1fr}
+}
+@media (max-width:960px){
+  .burger{display:inline-flex}
+  .pnav{
+    display:none;position:absolute;left:0;right:0;top:100%;background:var(--white);flex-direction:column;
+    border-top:1px solid var(--rule);box-shadow:0 18px 40px -12px rgba(35,31,32,.3);max-height:calc(100vh - 140px);overflow:auto;padding:8px var(--gut) 20px
+  }
+  .pnav.open{display:flex}
+  .pnav-list{flex-direction:column;margin-left:0}
+  .pnav-item{flex-direction:column;border-bottom:1px solid var(--rule)}
+  .pnav-btn,.pnav-link{justify-content:space-between;padding:15px 2px;font-size:17px;border-bottom:0}
+  .mega,.mega-small{position:static;box-shadow:none;border:0;min-width:0;padding:0}
+  .mega-in{padding:0 0 16px;gap:18px}
+  .mega-hire .mega-in,.mega-fleet .mega-in,.mega-areas .mega-in{grid-template-columns:1fr 1fr}
+  .mega-feature{grid-column:1 / -1}
+  .mega-small a{padding:9px 2px}
+  .pnav-cta{padding-top:16px;flex-wrap:wrap}
+  .pnav-cta .btn{flex:1}
+  .mock-tag{position:static;display:inline-block;margin:0 0 14px}
+  .callbar{
+    display:grid;grid-template-columns:1fr 1fr;position:fixed;left:0;right:0;bottom:0;z-index:70;
+    padding:8px 10px calc(8px + env(safe-area-inset-bottom,0px));gap:8px;background:var(--white);box-shadow:0 -6px 20px rgba(35,31,32,.15)
+  }
+  .callbar .btn{padding:13px 10px;font-size:16px}
+  body{padding-bottom:70px}
+}
+@media (max-width:640px){
+  .util .hours{display:none}
+  .util-left span:nth-child(2){display:none}
+  .logo img{height:42px}
+  .mainbar .wrap{min-height:66px}
+  .markets,.fleet{grid-template-columns:1fr}
+  .quotes{grid-template-columns:1fr}
+  .sizes{grid-template-columns:1fr 1fr}
+  .mega-hire .mega-in,.mega-fleet .mega-in,.mega-areas .mega-in{grid-template-columns:1fr}
+  footer.site .wrap{grid-template-columns:1fr}
+  .hero-ctas .btn{flex:1}
+}
+
+/* ---------- launch-state + mockup helpers ---------- */
+.launch-only{display:none}
+html.launch .launch-only{display:block}
+.mega-desc{font-size:14px;color:var(--muted);line-height:1.45;margin-top:-2px}
+.mock-toast{
+  position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:90;max-width:min(560px,calc(100% - 32px));
+  background:var(--mock);color:var(--mock-ink);font-family:var(--f-mono);font-size:12.5px;line-height:1.5;
+  padding:11px 16px;border-radius:6px;box-shadow:0 12px 30px rgba(0,0,0,.3)
+}
+.mock-toast b{color:var(--orange);font-weight:500}
+@media (max-width:960px){.mock-toast{bottom:84px}}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-phone" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2"/></symbol>
+    <symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></symbol>
+    <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12.5 4.5 4.5L19 7.5"/></symbol>
+    <symbol id="i-book" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v16H6.5A2.5 2.5 0 0 0 4 21.5z"/><path d="M4 5.5v16"/><path d="M9 7.5h7M9 11h5"/></symbol>
+    <symbol id="i-case" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M3 13h18"/></symbol>
+    <symbol id="i-trophy" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8 4h8v5a4 4 0 0 1-8 0z"/><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4"/><path d="M12 13v4M9 17h6M8 21h8"/></symbol>
+    <symbol id="i-wine" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3h8l-.4 6a3.6 3.6 0 0 1-7.2 0z"/><path d="M12 12.6V20M8.5 20h7"/></symbol>
+  </defs>
+</svg>
+
+<div class="mock-bar">
+  <div class="wrap">
+    <span><strong>Design mockup</strong> &middot; Zib Digital for Quest Coaches &middot; header, mega menu + four key sections &middot; hover or tap the menu</span>
+    <span class="mock-toggle" role="group" aria-label="Show the menu as">
+      <span>Menu:</span>
+      <button type="button" data-view="full" aria-pressed="true">Full site map</button>
+      <button type="button" data-view="launch" aria-pressed="false">At launch</button>
+    </span>
+  </div>
+</div>
+<div class="mock-note">
+  <div class="wrap">At launch the site is 11 pages. Service and bus items link to sections of the Bus &amp; Coach Hire and Our Fleet pages, and each becomes its own page as the monthly work writes it. Areas arrives later.</div>
+</div>
+
+<header class="site-header">
+  <div class="util">
+    <div class="wrap">
+      <div class="util-left">
+        <span>Family-owned since 1989</span>
+        <span>Fully accredited operator</span>
+      </div>
+      <div class="util-left">
+        <span class="hours">Mon&ndash;Fri 8am&ndash;5:30pm &middot; Sat 8am&ndash;12pm</span>
+        <a href="tel:1300255287"><svg class="ico"><use href="#i-phone"/></svg>1300 255 287</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="mainbar">
+    <div class="wrap">
+      <a class="logo" href="#top"><img src="assets/quest/logo.png" alt="Quest Coaches" width="248" height="99"></a>
+      <button class="burger" type="button" aria-expanded="false" aria-controls="primary-nav"><span class="bars"></span>Menu</button>
+
+      <nav class="pnav" id="primary-nav" aria-label="Main">
+        <ul class="pnav-list">
+
+          <li class="pnav-item">
+            <button class="pnav-btn" type="button" aria-expanded="false" aria-controls="mega-hire">Bus &amp; Coach Hire <svg><use href="#i-chev"/></svg></button>
+            <div class="mega mega-hire" id="mega-hire" hidden>
+              <div class="mega-in">
+                <div class="mega-col">
+                  <a class="mega-head" href="/school-bus-charter-melbourne" data-launch="/bus-coach-hire-melbourne#schools"><span class="mi"><svg><use href="#i-book"/></svg></span>Schools</a>
+                  <p class="mega-desc launch-only">Excursions, camps, swimming and sport days.</p>
+                  <a class="mega-link" data-later href="/school-excursion-bus-hire">Excursions</a>
+                  <a class="mega-link" data-later href="/school-camp-transport">School camps</a>
+                  <a class="mega-link" data-later href="/school-swimming-shuttles">Swimming shuttles</a>
+                  <a class="mega-link" data-later href="/school-sport-bus-hire">Sport &amp; carnivals</a>
+                  <a class="mega-link" data-later href="/daily-school-bus-runs">Daily school runs</a>
+                </div>
+                <div class="mega-col">
+                  <a class="mega-head" href="/corporate-bus-hire-melbourne" data-launch="/bus-coach-hire-melbourne#corporate"><span class="mi"><svg><use href="#i-case"/></svg></span>Corporate</a>
+                  <p class="mega-desc launch-only">Conferences, shuttles, airport runs and events.</p>
+                  <a class="mega-link" data-later href="/conference-bus-transfers">Conferences &amp; delegates</a>
+                  <a class="mega-link" data-later href="/staff-shuttle-bus-hire">Staff &amp; site shuttles</a>
+                  <a class="mega-link" data-later href="/airport-transfer-bus-hire-melbourne">Airport transfers</a>
+                  <a class="mega-link" data-later href="/christmas-party-bus-hire">Christmas parties &amp; team days</a>
+                </div>
+                <div class="mega-col">
+                  <a class="mega-head" href="/sporting-club-bus-hire" data-launch="/bus-coach-hire-melbourne#clubs"><span class="mi"><svg><use href="#i-trophy"/></svg></span>Clubs &amp; groups</a>
+                  <p class="mega-desc launch-only">Away games, finals, seniors and social clubs.</p>
+                  <a class="mega-link" data-later href="/away-game-bus-hire">Away games &amp; fixtures</a>
+                  <a class="mega-link" data-later href="/finals-carnival-bus-hire">Finals &amp; carnival days</a>
+                  <a class="mega-link" data-later href="/junior-club-bus-transport">Junior club transport</a>
+                  <a class="mega-link sub2" data-later href="/seniors-community-bus-hire">Seniors &amp; community groups</a>
+                  <a class="mega-link sub2" data-later href="/social-club-day-tour-bus-hire">Social clubs &amp; day tours</a>
+                </div>
+                <div class="mega-col">
+                  <a class="mega-head" href="/winery-tour-bus-hire" data-launch="/bus-coach-hire-melbourne#wineries"><span class="mi"><svg><use href="#i-wine"/></svg></span>Wine &amp; events</a>
+                  <p class="mega-desc launch-only">Wine days, weddings and venue guest transport.</p>
+                  <a class="mega-link" data-later href="/yarra-valley-wine-tour-bus-hire">Yarra Valley wine tours</a>
+                  <a class="mega-link" data-later href="/mornington-peninsula-wine-tour-bus">Mornington Peninsula</a>
+                  <a class="mega-link" data-later href="/macedon-bellarine-wine-tour-bus">Macedon Ranges &amp; Bellarine</a>
+                  <a class="mega-link" data-later href="/winery-guest-transport-partners">For wineries &amp; cellar doors</a>
+                  <a class="mega-link sub2" data-later href="/wedding-bus-hire-melbourne">Weddings &amp; guest transfers</a>
+                </div>
+                <div class="mega-feature">
+                  <h4>Not sure what you need?</h4>
+                  <p>Tell us the group size, the date and where you're headed. We'll match the bus.</p>
+                  <a class="tel" href="tel:1300255287">1300 255 287</a>
+                  <a class="btn btn-orange" href="#quote">Get a quote</a>
+                  <span class="small">Mon&ndash;Fri 8am&ndash;5:30pm &middot; Sat 8am&ndash;12pm</span>
+                </div>
+                <div class="mega-foot">
+                  <a href="/bus-coach-hire-melbourne">All bus &amp; coach hire &rarr;</a>
+                  <span>Family-owned since 1989 &middot; 13 to 57 seats &middot; Ferntree Gully depot</span>
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <li class="pnav-item">
+            <button class="pnav-btn" type="button" aria-expanded="false" aria-controls="mega-fleet">Our Fleet <svg><use href="#i-chev"/></svg></button>
+            <div class="mega mega-fleet" id="mega-fleet" hidden>
+              <div class="mega-in">
+                <a class="veh" href="/13-seat-minibus-hire" data-launch="/our-fleet#13-seat">
+                  <img src="assets/quest/fleet14.jpg" alt="Quest Coaches 13-seat minibus" width="360" height="180" loading="lazy">
+                  <span class="seats">13<small>seats</small></span>
+                  <span class="vname">Minibus</span>
+                  <span class="vf">Air-con, PA, optional luggage trailer</span>
+                </a>
+                <a class="veh" href="/24-seat-bus-hire" data-launch="/our-fleet#24-seat">
+                  <img src="assets/quest/fleet25.jpg" alt="Quest Coaches 24-seat bus" width="360" height="180" loading="lazy">
+                  <span class="seats">24<small>seats</small></span>
+                  <span class="vname">Bus</span>
+                  <span class="vf">Air-con, PA, optional luggage trailer</span>
+                </a>
+                <a class="veh" href="/27-seat-mini-coach-hire" data-launch="/our-fleet#27-seat">
+                  <img src="assets/quest/fleet27.jpg" alt="Quest Coaches 27-seat mini coach" width="360" height="180" loading="lazy">
+                  <span class="seats">27<small>seats</small></span>
+                  <span class="vname">Mini coach</span>
+                  <span class="vf">Air-con, PA, luggage bins</span>
+                </a>
+                <a class="veh" href="/57-seat-coach-hire" data-launch="/our-fleet#coach">
+                  <img src="assets/quest/fleet57.jpg" alt="Quest Coaches 57-seat coach" width="360" height="180" loading="lazy">
+                  <span class="seats">48&ndash;57<small>seats</small></span>
+                  <span class="vname">Coach</span>
+                  <span class="vf">4.5-star, TV/DVD, luggage racks</span>
+                </a>
+                <div class="mega-feature">
+                  <h4>Which size do I need?</h4>
+                  <ul class="sizer">
+                    <li>Up to 13 <b>Minibus</b></li>
+                    <li>14&ndash;24 <b>Bus</b></li>
+                    <li>25&ndash;27 <b>Mini coach</b></li>
+                    <li>28&ndash;57 <b>Coach</b></li>
+                    <li>58+ <b>Two buses</b></li>
+                  </ul>
+                </div>
+                <div class="mega-foot">
+                  <a href="/our-fleet">See the whole fleet &rarr;</a>
+                  <span>No onboard toilets on any bus &mdash; tell us about longer trips</span>
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <li class="pnav-item" data-later>
+            <button class="pnav-btn" type="button" aria-expanded="false" aria-controls="mega-areas">Areas <svg><use href="#i-chev"/></svg></button>
+            <div class="mega mega-areas" id="mega-areas" hidden>
+              <div class="mega-in">
+                <div class="mega-col">
+                  <h3>Melbourne east</h3>
+                  <a class="mega-link" href="/bus-hire-eastern-suburbs-melbourne">Eastern suburbs &amp; Knox</a>
+                  <a class="mega-link" href="/bus-hire-south-east-melbourne">South east &amp; Dandenong</a>
+                  <a class="mega-link" href="/bus-hire-pakenham">Pakenham &amp; Cardinia</a>
+                </div>
+                <div class="mega-col">
+                  <h3>Melbourne &amp; bays</h3>
+                  <a class="mega-link" href="/bus-hire-melbourne-cbd">Melbourne CBD &amp; inner</a>
+                  <a class="mega-link" href="/bus-hire-northern-western-melbourne">Northern &amp; western suburbs</a>
+                  <a class="mega-link" href="/bus-hire-mornington-peninsula">Bayside &amp; Mornington Peninsula</a>
+                </div>
+                <div class="mega-col">
+                  <h3>Regional</h3>
+                  <a class="mega-link" href="/bus-hire-yarra-valley">Yarra Valley &amp; Dandenong Ranges</a>
+                  <a class="mega-link" href="/bus-hire-traralgon-gippsland">Gippsland &amp; Traralgon</a>
+                  <a class="mega-link" href="/bus-hire-regional-victoria">Regional Victoria</a>
+                </div>
+                <div class="mega-feature">
+                  <h4>Based in Ferntree Gully</h4>
+                  <p>17 Thomas Street, Ferntree Gully. Don't see your area? We run Victoria-wide &mdash; ask us.</p>
+                  <a class="tel" href="tel:1300255287">1300 255 287</a>
+                </div>
+              </div>
+            </div>
+          </li>
+
+          <li class="pnav-item rel">
+            <button class="pnav-btn" type="button" aria-expanded="false" aria-controls="mega-why">Why Quest <svg><use href="#i-chev"/></svg></button>
+            <div class="mega-small" id="mega-why" hidden>
+              <a href="/about-us">Why Quest Coaches</a>
+              <a data-later href="/safety-accreditation">Safety &amp; accreditation</a>
+              <a data-later href="/child-safety">Child safety &amp; driver checks</a>
+              <a data-later href="/our-drivers">Our drivers</a>
+              <a href="/faqs">Questions &amp; answers</a>
+            </div>
+          </li>
+
+          <li class="pnav-item"><a class="pnav-link" href="/reviews">Reviews</a></li>
+          <li class="pnav-item"><a class="pnav-link" href="/contact-us">Contact</a></li>
+        </ul>
+        <div class="pnav-cta">
+          <a class="tel-cta" href="tel:1300255287"><svg class="ico"><use href="#i-phone"/></svg>1300 255 287</a>
+          <a class="btn btn-orange" href="#quote">Get a quote</a>
+        </div>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section class="hero" id="top">
+    <span class="mock-tag"><b>1</b> &middot; Hero &amp; quick quote</span>
+    <div class="wrap">
+      <div>
+        <p class="eyebrow">Bus &amp; coach charter &middot; Melbourne &amp; Victoria</p>
+        <h1>Bus and coach charter across Melbourne, since 1989.</h1>
+        <p class="lede">Minibuses to 57-seat coaches for schools, businesses, clubs and wineries. One call, a real
+        price, and a family business that's been doing this for 37 years.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-orange" href="tel:1300255287"><svg class="ico"><use href="#i-phone"/></svg>Call 1300 255 287</a>
+          <a class="btn btn-ghost-light" href="#quote">Get a quote</a>
+        </div>
+        <ul class="trust-row">
+          <li><svg><use href="#i-check"/></svg>Family-owned since 1989</li>
+          <li><svg><use href="#i-check"/></svg>Fully accredited operator</li>
+          <li><svg><use href="#i-check"/></svg>13 to 57 seats</li>
+          <li><svg><use href="#i-check"/></svg>Ferntree Gully depot</li>
+        </ul>
+      </div>
+
+      <form class="qq" id="quote" novalidate>
+        <h2>Get a price in three questions</h2>
+        <p class="sub">We'll match the bus and come back with a real price.</p>
+        <div class="field">
+          <label for="qq-size">How many people?</label>
+          <select id="qq-size" name="size">
+            <option>Choose a group size</option>
+            <option>Up to 13</option>
+            <option>14 to 24</option>
+            <option>25 to 27</option>
+            <option>28 to 57</option>
+            <option>58 or more</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="qq-date">When?</label>
+          <input id="qq-date" name="date" type="date">
+        </div>
+        <div class="field">
+          <label for="qq-from">Picking up from</label>
+          <input id="qq-from" name="from" type="text" placeholder="Suburb or school" autocomplete="off">
+        </div>
+        <button class="btn btn-orange" type="submit">Get my quote <svg class="ico"><use href="#i-arrow"/></svg></button>
+        <p class="or">Rather talk? <a href="tel:1300255287">1300 255 287</a> &middot; Mon&ndash;Fri 8&ndash;5:30, Sat 8&ndash;12</p>
+      </form>
+    </div>
+  </section>
+
+  <section class="sec" id="markets">
+    <div class="wrap">
+      <span class="mock-tag"><b>2</b> &middot; Who we drive for</span>
+      <div class="sec-head">
+        <p class="eyebrow" style="color:var(--orange-deep)">Who we drive for</p>
+        <h2>Schools, businesses, clubs and wineries all book differently.</h2>
+        <p>Tell us which one you are and we'll plan the trip the way you need it.</p>
+      </div>
+      <div class="markets">
+        <article class="mkt">
+          <span class="mi"><svg><use href="#i-book"/></svg></span>
+          <h3>Schools</h3>
+          <p>Excursions, camps, swimming programs and sport days, planned around the school timetable.</p>
+          <ul data-later>
+            <li><a href="/school-excursion-bus-hire">Excursions</a></li>
+            <li><a href="/school-camp-transport">School camps</a></li>
+            <li><a href="/school-swimming-shuttles">Swimming shuttles</a></li>
+            <li><a href="/school-sport-bus-hire">Sport &amp; carnivals</a></li>
+          </ul>
+          <a class="go" href="/school-bus-charter-melbourne" data-launch="/bus-coach-hire-melbourne#schools">School bus charter &rarr;</a>
+        </article>
+        <article class="mkt">
+          <span class="mi"><svg><use href="#i-case"/></svg></span>
+          <h3>Corporate</h3>
+          <p>Conference and delegate transfers, staff shuttles, airport runs and end-of-year events.</p>
+          <ul data-later>
+            <li><a href="/conference-bus-transfers">Conferences &amp; delegates</a></li>
+            <li><a href="/staff-shuttle-bus-hire">Staff &amp; site shuttles</a></li>
+            <li><a href="/airport-transfer-bus-hire-melbourne">Airport transfers</a></li>
+            <li><a href="/christmas-party-bus-hire">Christmas parties</a></li>
+          </ul>
+          <a class="go" href="/corporate-bus-hire-melbourne" data-launch="/bus-coach-hire-melbourne#corporate">Corporate bus hire &rarr;</a>
+        </article>
+        <article class="mkt">
+          <span class="mi"><svg><use href="#i-trophy"/></svg></span>
+          <h3>Sporting clubs</h3>
+          <p>Away games, finals and carnival days. One bus for the seniors or the whole club, all season.</p>
+          <ul data-later>
+            <li><a href="/away-game-bus-hire">Away games &amp; fixtures</a></li>
+            <li><a href="/finals-carnival-bus-hire">Finals &amp; carnivals</a></li>
+            <li><a href="/junior-club-bus-transport">Junior club transport</a></li>
+          </ul>
+          <a class="go" href="/sporting-club-bus-hire" data-launch="/bus-coach-hire-melbourne#clubs">Club bus hire &rarr;</a>
+        </article>
+        <article class="mkt">
+          <span class="mi"><svg><use href="#i-wine"/></svg></span>
+          <h3>Wineries &amp; events</h3>
+          <p>Yarra Valley and Peninsula wine days, weddings, and transport for wineries moving their own guests.</p>
+          <ul data-later>
+            <li><a href="/yarra-valley-wine-tour-bus-hire">Yarra Valley</a></li>
+            <li><a href="/mornington-peninsula-wine-tour-bus">Mornington Peninsula</a></li>
+            <li><a href="/winery-guest-transport-partners">For wineries &amp; cellar doors</a></li>
+            <li><a href="/wedding-bus-hire-melbourne">Weddings</a></li>
+          </ul>
+          <a class="go" href="/winery-tour-bus-hire" data-launch="/bus-coach-hire-melbourne#wineries">Wine &amp; event transport &rarr;</a>
+        </article>
+      </div>
+      <div class="also" data-later>
+        <span>Also:</span>
+        <a class="chip" href="/seniors-community-bus-hire">Seniors &amp; community groups</a>
+        <a class="chip" href="/social-club-day-tour-bus-hire">Social clubs &amp; day tours</a>
+        <a class="chip" href="/airport-transfer-bus-hire-melbourne">Airport transfers</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec soft" id="fleet">
+    <div class="wrap">
+      <span class="mock-tag"><b>3</b> &middot; Fleet by size</span>
+      <div class="sec-head">
+        <p class="eyebrow" style="color:var(--orange-deep)">Our fleet</p>
+        <h2>Pick your bus by group size.</h2>
+        <p>Four sizes, from a 13-seat minibus to a 57-seat coach. Count heads and use the guide below.</p>
+      </div>
+      <div class="fleet">
+        <article class="bus">
+          <img src="assets/quest/fleet14.jpg" alt="Quest Coaches 13-seat minibus, outside and inside" width="360" height="180" loading="lazy">
+          <div class="bus-body">
+            <span class="seats">13<small>seats</small></span>
+            <h3>Minibus</h3>
+            <ul>
+              <li><svg><use href="#i-check"/></svg>Air-conditioning</li>
+              <li><svg><use href="#i-check"/></svg>CD, USB and aux audio</li>
+              <li><svg><use href="#i-check"/></svg>PA system</li>
+              <li><svg><use href="#i-check"/></svg>Optional luggage trailer</li>
+            </ul>
+            <a class="go" href="/13-seat-minibus-hire" data-launch="/our-fleet#13-seat">13-seat minibus hire &rarr;</a>
+          </div>
+        </article>
+        <article class="bus">
+          <img src="assets/quest/fleet25.jpg" alt="Quest Coaches 24-seat bus, outside and inside" width="360" height="180" loading="lazy">
+          <div class="bus-body">
+            <span class="seats">24<small>seats</small></span>
+            <h3>Bus</h3>
+            <ul>
+              <li><svg><use href="#i-check"/></svg>Air-conditioning</li>
+              <li><svg><use href="#i-check"/></svg>CD and aux audio</li>
+              <li><svg><use href="#i-check"/></svg>PA system</li>
+              <li><svg><use href="#i-check"/></svg>Optional luggage trailer</li>
+            </ul>
+            <a class="go" href="/24-seat-bus-hire" data-launch="/our-fleet#24-seat">24-seat bus hire &rarr;</a>
+          </div>
+        </article>
+        <article class="bus">
+          <img src="assets/quest/fleet27.jpg" alt="Quest Coaches 27-seat mini coach, outside and inside" width="360" height="180" loading="lazy">
+          <div class="bus-body">
+            <span class="seats">27<small>seats</small></span>
+            <h3>Mini coach</h3>
+            <ul>
+              <li><svg><use href="#i-check"/></svg>Air-conditioning</li>
+              <li><svg><use href="#i-check"/></svg>CD and aux audio</li>
+              <li><svg><use href="#i-check"/></svg>PA system</li>
+              <li><svg><use href="#i-check"/></svg>Luggage bins, optional trailer</li>
+            </ul>
+            <a class="go" href="/27-seat-mini-coach-hire" data-launch="/our-fleet#27-seat">27-seat mini coach hire &rarr;</a>
+          </div>
+        </article>
+        <article class="bus">
+          <img src="assets/quest/fleet57.jpg" alt="Quest Coaches 57-seat coach, outside and inside" width="360" height="180" loading="lazy">
+          <div class="bus-body">
+            <span class="seats">48&ndash;57<small>seats</small></span>
+            <h3>Coach</h3>
+            <ul>
+              <li><svg><use href="#i-check"/></svg>4.5-star rated</li>
+              <li><svg><use href="#i-check"/></svg>Air-conditioning</li>
+              <li><svg><use href="#i-check"/></svg>TV, DVD and PA</li>
+              <li><svg><use href="#i-check"/></svg>Luggage racks and bins</li>
+            </ul>
+            <a class="go" href="/57-seat-coach-hire" data-launch="/our-fleet#coach">Coach hire &rarr;</a>
+          </div>
+        </article>
+      </div>
+      <div class="sizes" aria-label="Which bus for your group size">
+        <div><b>Up to 13</b><span>Minibus</span></div>
+        <div><b>14&ndash;24</b><span>24-seat bus</span></div>
+        <div><b>25&ndash;27</b><span>Mini coach</span></div>
+        <div><b>28&ndash;57</b><span>Coach</span></div>
+        <div><b>58+</b><span>We'll send two</span></div>
+      </div>
+      <p class="fleet-note">None of our buses have onboard toilets, so tell us about longer trips when you book.</p>
+    </div>
+  </section>
+
+  <section class="sec" id="reviews">
+    <div class="wrap">
+      <span class="mock-tag"><b>4</b> &middot; Reviews &amp; trust</span>
+      <div class="sec-head">
+        <p class="eyebrow" style="color:var(--orange-deep)">Reviews</p>
+        <h2>What people say after the trip.</h2>
+      </div>
+      <div class="rev-grid">
+        <div>
+          <div class="quotes">
+            <figure class="quote big">
+              <blockquote>You were all fantastic, thanks! We greatly appreciated that every bus arrived on time if not early</blockquote>
+              <cite><b>Kylie C</b>Bosch Event Manager</cite>
+            </figure>
+            <figure class="quote">
+              <blockquote>David was extremely understanding and caring of the children we had on the bus. Both of the drivers were flexible</blockquote>
+              <cite><b>Ruth M</b>Recreation and Youth Support</cite>
+            </figure>
+            <figure class="quote">
+              <blockquote>John provided a premium professional service. He arrived early, drove responsibly, and was flexible enough to ensure that everybody on the bus had a great time</blockquote>
+              <cite><b>D Paterson</b></cite>
+            </figure>
+          </div>
+          <a class="rev-more" href="/reviews">Read all eight reviews &rarr;</a>
+        </div>
+        <aside class="checks">
+          <h3>Before you book with us</h3>
+          <p>Schools and businesses need to check an operator before they book. Here's what to look for.</p>
+          <ul>
+            <li><svg><use href="#i-check"/></svg><span>Family-owned and operating since 1989</span></li>
+            <li><svg><use href="#i-check"/></svg><span>Fully accredited bus operator, <span class="confirm">accreditation no. XXXXX</span></span></li>
+            <li><svg><use href="#i-check"/></svg><span class="confirm">Drivers hold Working With Children checks</span></li>
+            <li><svg><use href="#i-check"/></svg><span class="confirm">Published child safety policy</span></li>
+            <li><svg><use href="#i-check"/></svg><span class="confirm">Seatbelts on every seat</span></li>
+          </ul>
+          <a class="btn btn-ink" href="/about-us">Why Quest Coaches</a>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="wrap">
+      <div>
+        <h2>Tell us about the trip.</h2>
+        <p>Group size, date and where you're headed. We'll do the rest.</p>
+      </div>
+      <div class="acts">
+        <a class="btn btn-ink" href="tel:1300255287"><svg class="ico"><use href="#i-phone"/></svg>1300 255 287</a>
+        <a class="btn btn-ghost" href="#quote">Get a quote</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div>
+      <span class="flogo"><img src="assets/quest/logo.png" alt="Quest Coaches" width="248" height="99"></span>
+      <p>Family-owned bus and coach charter across Melbourne and Victoria, since 1989.</p>
+    </div>
+    <div>
+      <h4>Bus &amp; coach hire</h4>
+      <ul>
+        <li><a href="/school-bus-charter-melbourne" data-launch="/bus-coach-hire-melbourne#schools">Schools</a></li>
+        <li><a href="/corporate-bus-hire-melbourne" data-launch="/bus-coach-hire-melbourne#corporate">Corporate</a></li>
+        <li><a href="/sporting-club-bus-hire" data-launch="/bus-coach-hire-melbourne#clubs">Sporting clubs</a></li>
+        <li><a href="/winery-tour-bus-hire" data-launch="/bus-coach-hire-melbourne#wineries">Wineries &amp; events</a></li>
+        <li><a href="/our-fleet">Our fleet</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Quest Coaches</h4>
+      <ul>
+        <li><a href="/about-us">Why Quest</a></li>
+        <li><a href="/reviews">Reviews</a></li>
+        <li><a href="/faqs">Questions &amp; answers</a></li>
+        <li><a href="/contact-us">Contact</a></li>
+      </ul>
+    </div>
+    <div>
+      <h4>Talk to us</h4>
+      <ul>
+        <li><a class="ftel" href="tel:1300255287">1300 255 287</a></li>
+        <li><a href="mailto:charter@questcoaches.com.au">charter@questcoaches.com.au</a></li>
+        <li>17 Thomas Street, Ferntree Gully VIC 3156</li>
+        <li>Mon&ndash;Fri 8am&ndash;5:30pm &middot; Sat 8am&ndash;12pm</li>
+      </ul>
+    </div>
+  </div>
+  <div class="legal">
+    <div class="wrap">
+      <span>&copy; 2026 Quest Coaches &middot; Pharoahs Services Pty Ltd &middot; ABN 85 109 647 476</span>
+      <span><a href="/terms-and-conditions">Booking terms</a> &middot; <a href="/credit-card-terms-and-conditions">Credit card terms</a> &middot; <a href="/privacy-policy">Privacy</a></span>
+    </div>
+  </div>
+</footer>
+
+<div class="callbar">
+  <a class="btn btn-ink" href="tel:1300255287"><svg class="ico"><use href="#i-phone"/></svg>Call us</a>
+  <a class="btn btn-orange" href="#quote">Get a quote</a>
+</div>
+
+<div class="mock-toast" role="status" aria-live="polite" hidden></div>
+
+<script>
+(function(){
+  var root=document.documentElement;
+  var btns=[].slice.call(document.querySelectorAll('.pnav-btn'));
+  var nav=document.getElementById('primary-nav');
+  var burger=document.querySelector('.burger');
+  var desktop=function(){return window.matchMedia('(min-width:961px) and (hover:hover)').matches;};
+  function panelOf(b){return document.getElementById(b.getAttribute('aria-controls'));}
+  function setOpen(b,open){b.setAttribute('aria-expanded',String(open));panelOf(b).hidden=!open;}
+  function closeAll(except){btns.forEach(function(b){if(b!==except)setOpen(b,false);});}
+
+  btns.forEach(function(b){
+    var li=b.closest('.pnav-item'),t;
+    b.addEventListener('click',function(e){
+      e.stopPropagation();
+      var open=b.getAttribute('aria-expanded')==='true';
+      closeAll(b);setOpen(b,!open);
+    });
+    li.addEventListener('mouseenter',function(){
+      if(!desktop())return;clearTimeout(t);
+      t=setTimeout(function(){closeAll(b);setOpen(b,true);},90);
+    });
+    li.addEventListener('mouseleave',function(){
+      if(!desktop())return;clearTimeout(t);
+      t=setTimeout(function(){setOpen(b,false);},180);
+    });
+  });
+
+  document.addEventListener('keydown',function(e){
+    if(e.key!=='Escape')return;
+    var open=btns.filter(function(b){return b.getAttribute('aria-expanded')==='true';})[0];
+    closeAll();if(open)open.focus();
+  });
+  document.addEventListener('click',function(e){if(!e.target.closest('.pnav'))closeAll();});
+
+  burger.addEventListener('click',function(e){
+    e.stopPropagation();
+    var open=burger.getAttribute('aria-expanded')==='true';
+    burger.setAttribute('aria-expanded',String(!open));
+    nav.classList.toggle('open',!open);
+    if(open)closeAll();
+  });
+
+  /* mockup: full site map vs the 11 pages at launch */
+  var views=[].slice.call(document.querySelectorAll('[data-view]'));
+  views.forEach(function(v){
+    v.addEventListener('click',function(){
+      root.classList.toggle('launch',v.dataset.view==='launch');
+      views.forEach(function(x){x.setAttribute('aria-pressed',String(x===v));});
+      closeAll();
+    });
+  });
+
+  /* mockup: links say where they'd go instead of 404ing */
+  var toast=document.querySelector('.mock-toast'),tt;
+  function say(html){toast.innerHTML=html;toast.hidden=false;clearTimeout(tt);tt=setTimeout(function(){toast.hidden=true;},3600);}
+  document.addEventListener('click',function(e){
+    var a=e.target.closest('a[href^="/"]');
+    if(!a)return;
+    e.preventDefault();
+    var launch=root.classList.contains('launch');
+    var href=(launch&&a.dataset.launch)?a.dataset.launch:a.getAttribute('href');
+    say('Mockup &middot; on the live site this opens <b>'+href+'</b>');
+  });
+  document.getElementById('quote').addEventListener('submit',function(e){
+    e.preventDefault();
+    say('Mockup &middot; on the live site this sends the three answers to Quest, then hands off to the <b>booking system</b> for the full itinerary.');
+  });
+})();
+</script>
+</body>
+</html>

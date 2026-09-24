@@ -23,7 +23,7 @@ const EXCLUDE = new Set([
   // /audit, /roi-calculator and /ai-growth-simulator are public tools linked from
   // the nav and llms.txt; they are deliberately indexable (AI answers can't
   // substitute for an interactive tool, so they are the click the citation earns).
-  "boothalicious-seo-audit", "project-better-seo-audit", "quest-coaches",
+  "boothalicious-seo-audit", "project-better-seo-audit", "quest-coaches", "quest-coaches-homepage",
 ]);
 
 async function walk(dir) {
