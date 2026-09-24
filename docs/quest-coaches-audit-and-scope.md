@@ -159,9 +159,16 @@ of 2–3 new pages a month that does not hold under either option — it needs a
 of ~36+, or more copywriting in the retainer. The page shows the real curve instead, and
 this is the lever to discuss.
 
-**Pricing (confirmed by Michael):** SEO $2,500 set-up one-off, $2,000 per month ongoing.
-Twelve months including set-up = $26,500. Website build cost still to be confirmed for
-both options. Minimum term is NOT stated on the page — Michael to confirm.
+**Pricing (confirmed by Michael):** website build $10,000 one-off. SEO $2,500 set-up
+one-off, $2,000 per month ongoing. Twelve months of SEO including set-up = $26,500.
+Year one all in = $36,500, shown on the page as one row.
+
+The $10,000 is applied to **Option A** (11 pages). Option B reads "$10,000 plus the page
+writing — quoted separately", because 18 researched and written pages cannot be inside
+the same figure. If Michael meant $10,000 to cover Option B as well, that is a one-line
+change on both the option card and the cost table.
+
+Minimum term is still NOT stated on the page — Michael to confirm.
 
 **Monthly scope** is Zib's standard eight workstreams, taken from the Foamco deck and
 adapted to Quest: audits & reports, technical, on-page, copywriting, local search,
