@@ -1,0 +1,1026 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Quest Coaches Website Plan</title>
+<meta name="description" content="A plain-English plan for the Quest Coaches website: what is wrong, the 58 pages we would build, and what happens when.">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zib Digital">
+<meta property="og:locale" content="en_AU">
+<meta property="og:title" content="Quest Coaches Website Plan">
+<meta property="og:description" content="A year ago 61 Google searches found Quest Coaches. Today one does. Here is the plan to fix it.">
+<meta property="og:url" content="https://www.ziboutreach.com.au/quest-coaches">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Quest Coaches Website Plan">
+<link rel="canonical" href="https://www.ziboutreach.com.au/quest-coaches">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ==========================================================================
+   QUEST COACHES × ZIB DIGITAL — scope of work
+   Palette drawn from the Quest wordmark: fleet orange on near-black, over
+   warm paper. Rubik (their own brand face) for display, Barlow for reading,
+   IBM Plex Mono for data labels and specs.
+   ========================================================================== */
+:root{
+  --paper:#FFFFFF;
+  --soft:#FBF7F1;
+  --band:#F4EDE2;
+  --ink:#231F20;          /* Quest wordmark black */
+  --ink-2:#3A3431;
+  --muted:#6E645C;        /* warm grey, biased to the orange */
+  --rule:#E7DFD3;
+  --rule-2:#F1EAE0;
+  --orange:#F9A01B;       /* Quest fleet orange */
+  --orange-deep:#9A6200;  /* legible orange for small text and links */
+  --orange-wash:#FDF0DA;
+  --critical:#A3231C;
+  --critical-wash:#F9E9E7;
+  --good:#2F6B45;
+  --good-wash:#E8F1EB;
+  --on-dark:#FFFFFF;
+  --dark-bg:#231F20;
+  --dark-soft:#332D2B;
+  --dark-rule:#4A4340;
+  --dark-muted:#B9AFA7;
+
+  --f-display:'Rubik',system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --f-body:'Barlow',system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+  --f-mono:'IBM Plex Mono',ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+
+  --max:1140px;
+  --gut:clamp(18px,4.5vw,56px);
+  --nav-h:52px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#1A1716;
+    --soft:#211D1C;
+    --band:#2A2523;
+    --ink:#F7F3EE;
+    --ink-2:#E4DCD4;
+    --muted:#AEA49B;
+    --rule:#3A3431;
+    --rule-2:#2E2927;
+    --orange:#FFB23F;
+    --orange-deep:#FFC16B;
+    --orange-wash:#3A2C14;
+    --critical:#FF9C92;
+    --critical-wash:#3A211E;
+    --good:#8FD3AA;
+    --good-wash:#1D2E24;
+    --dark-bg:#100E0D;
+    --dark-soft:#1D1A18;
+    --dark-rule:#3A3431;
+    --dark-muted:#AEA49B;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#1A1716;
+  --soft:#211D1C;
+  --band:#2A2523;
+  --ink:#F7F3EE;
+  --ink-2:#E4DCD4;
+  --muted:#AEA49B;
+  --rule:#3A3431;
+  --rule-2:#2E2927;
+  --orange:#FFB23F;
+  --orange-deep:#FFC16B;
+  --orange-wash:#3A2C14;
+  --critical:#FF9C92;
+  --critical-wash:#3A211E;
+  --good:#8FD3AA;
+  --good-wash:#1D2E24;
+  --dark-bg:#100E0D;
+  --dark-soft:#1D1A18;
+  --dark-rule:#3A3431;
+  --dark-muted:#AEA49B;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--f-body);
+  font-size:17px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* ---------- type ---------- */
+h1,h2,h3,h4{font-family:var(--f-display);line-height:1.12;text-wrap:balance;letter-spacing:-.02em}
+h1{font-weight:700;letter-spacing:-.035em}
+h2{font-size:clamp(25px,3.4vw,36px);font-weight:600}
+h3{font-size:clamp(19px,2.1vw,22px);font-weight:600;letter-spacing:-.015em}
+h4{font-size:16.5px;font-weight:600;font-family:var(--f-display)}
+p{max-width:68ch;text-wrap:pretty}
+strong{font-weight:600;color:var(--ink)}
+a{color:var(--orange-deep);text-underline-offset:2px}
+:focus-visible{outline:2px solid var(--orange);outline-offset:2px;border-radius:2px}
+
+.eyebrow{
+  font-family:var(--f-mono);font-size:11.5px;font-weight:500;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--muted);
+}
+.lede{font-size:clamp(17.5px,1.9vw,20px);line-height:1.55;color:var(--ink-2);max-width:64ch}
+.sub{color:var(--muted);font-size:15px;max-width:72ch}
+
+/* ---------- layout ---------- */
+.wrap{max-width:var(--max);margin:0 auto;padding-left:var(--gut);padding-right:var(--gut)}
+section{padding-block:clamp(40px,5vw,66px);border-top:1px solid var(--rule);background:var(--paper)}
+section.soft{background:var(--soft)}
+section.dark{background:var(--dark-bg);color:var(--on-dark);border-top-color:var(--dark-rule)}
+section.dark h2,section.dark h3,section.dark h4{color:var(--on-dark)}
+section.dark .eyebrow,section.dark .sub{color:var(--dark-muted)}
+section.dark .lede{color:#EFE8E1}
+.sec-head{margin-bottom:clamp(20px,2.6vw,32px);display:flex;flex-direction:column;gap:10px}
+.stack{display:flex;flex-direction:column;gap:clamp(20px,2.4vw,30px)}
+.stack-sm{display:flex;flex-direction:column;gap:12px}
+.prose{display:flex;flex-direction:column;gap:14px}
+
+/* ---------- masthead ---------- */
+.masthead{background:var(--dark-bg);color:var(--on-dark);padding-block:clamp(34px,5vw,60px) clamp(28px,4vw,44px);border:0}
+.mh-top{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:clamp(26px,4vw,44px)}
+.qmark{
+  font-family:var(--f-display);font-weight:700;font-size:15px;letter-spacing:.02em;
+  color:var(--dark-bg);background:var(--orange);padding:5px 11px;border-radius:3px;white-space:nowrap
+}
+.mh-top .x{color:var(--dark-muted);font-size:14px}
+.mh-top .zib{font-family:var(--f-display);font-weight:600;font-size:15px;color:var(--on-dark)}
+.masthead h1{font-size:clamp(30px,5.6vw,58px);color:var(--on-dark);max-width:22ch}
+.masthead h1 em{font-style:normal;color:var(--orange)}
+.masthead .lede{margin-top:22px;color:#EFE8E1}
+.meta-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));
+  gap:1px;background:var(--dark-rule);border:1px solid var(--dark-rule);
+  margin-top:clamp(30px,4.4vw,48px)
+}
+.meta-grid div{background:var(--dark-bg);padding:14px 16px;display:flex;flex-direction:column;gap:5px}
+.meta-grid dt{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--orange)}
+.meta-grid dd{font-size:14.5px;line-height:1.4;color:var(--on-dark);font-weight:500;font-family:var(--f-body);overflow-wrap:anywhere}
+
+/* ---------- sticky nav ---------- */
+.nav{
+  position:sticky;top:env(safe-area-inset-top,0px);z-index:60;
+  background:var(--paper);border-bottom:1px solid var(--rule)
+}
+.nav-inner{
+  max-width:var(--max);margin:0 auto;padding:0 var(--gut);height:var(--nav-h);
+  display:flex;align-items:center;gap:2px;overflow-x:auto;scrollbar-width:none
+}
+.nav-inner::-webkit-scrollbar{display:none}
+.nav a{
+  flex:0 0 auto;font-family:var(--f-mono);font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;padding:7px 10px;border-radius:2px;white-space:nowrap
+}
+.nav a:hover{color:var(--ink);background:var(--rule-2)}
+section{scroll-margin-top:calc(var(--nav-h) + 16px)}
+
+/* ---------- stat tiles ---------- */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.tile{background:var(--paper);padding:16px 18px;display:flex;flex-direction:column;gap:6px}
+section.soft .tile{background:var(--soft)}
+.tile .n{font-family:var(--f-display);font-weight:700;font-size:clamp(26px,3.4vw,34px);letter-spacing:-.03em;line-height:1;font-variant-numeric:tabular-nums}
+.tile .n.bad{color:var(--critical)}
+.tile .k{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.tile .tnote{font-size:13.5px;color:var(--muted);line-height:1.45}
+
+/* ---------- bar chart ---------- */
+.bars{display:flex;flex-direction:column;gap:10px;border:1px solid var(--rule);background:var(--paper);padding:16px 18px}
+section.soft .bars{background:var(--soft)}
+.bar{display:grid;grid-template-columns:1fr 46px;gap:4px 12px;align-items:center}
+.bar .bl{font-size:13.5px;color:var(--muted);grid-column:1 / -1;font-family:var(--f-mono);letter-spacing:.02em}
+.bar .bt{height:14px;background:var(--orange);border-radius:1px;width:var(--w);min-width:3px;display:block}
+.bar .bt.crit{background:var(--critical)}
+.bar .bv{font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-size:14px;font-weight:500;text-align:right;color:var(--ink)}
+
+/* ---------- workstream grid (Zib standard monthly scope) ---------- */
+.streams{display:grid;grid-template-columns:repeat(auto-fit,minmax(248px,1fr));gap:14px}
+.stream{background:var(--paper);border:1px solid var(--rule);padding:16px 18px;display:flex;flex-direction:column;gap:9px}
+section.soft .stream{background:var(--soft)}
+.stream .num{font-family:var(--f-display);font-weight:700;font-size:26px;line-height:1;color:var(--orange);font-variant-numeric:tabular-nums}
+.stream h4{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;font-weight:500;color:var(--ink)}
+.stream ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
+.stream li{display:grid;grid-template-columns:8px 1fr;gap:9px;font-size:14px;line-height:1.45;color:var(--ink-2)}
+.stream li::before{content:"";width:5px;height:5px;background:var(--orange);margin-top:8px}
+.stream .flag{display:inline-block;background:var(--orange);color:#231F20;font-family:var(--f-mono);font-size:9.5px;
+  letter-spacing:.07em;text-transform:uppercase;padding:2px 6px;border-radius:2px;font-weight:500;align-self:flex-start}
+
+/* ---------- phase options ---------- */
+.opt{border:1px solid var(--rule);background:var(--paper);padding:18px 20px;display:flex;flex-direction:column;gap:12px}
+.opt.pick{border-color:var(--orange);border-width:2px}
+section.soft .opt{background:var(--soft)}
+.opt .hd{display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.opt .big{font-family:var(--f-display);font-weight:700;font-size:34px;line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.opt ul{margin:0;padding-left:17px;display:flex;flex-direction:column;gap:5px;font-size:14.5px;color:var(--ink-2)}
+.opt .price{font-family:var(--f-display);font-weight:700;font-size:21px;letter-spacing:-.02em;color:var(--orange-deep)}
+.opt .price.quote{font-size:15px;font-weight:600;color:var(--muted)}
+.opt .foot{font-size:13.5px;color:var(--muted);border-top:1px solid var(--rule-2);padding-top:11px;margin-top:auto}
+
+/* ---------- tables ---------- */
+.scroller{overflow-x:auto;border:1px solid var(--rule);background:var(--paper)}
+section.soft .scroller,section.band .scroller{background:var(--paper)}
+table{border-collapse:collapse;width:100%;min-width:600px;font-size:14.5px}
+caption{caption-side:bottom;text-align:left;padding:10px 14px;font-size:13px;color:var(--muted);font-family:var(--f-body)}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--rule-2);vertical-align:top}
+thead th{
+  font-family:var(--f-mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--muted);background:var(--soft);border-bottom:1px solid var(--rule);font-weight:500;white-space:nowrap
+}
+section.soft thead th{background:var(--band)}
+tbody tr:last-child td{border-bottom:0}
+td.num,th.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+tbody th{font-weight:600;font-family:var(--f-display);font-size:14.5px}
+tr.us{background:var(--orange-wash)}
+tr.us td,tr.us th{font-weight:600}
+
+/* ---------- pills ---------- */
+.pill{
+  display:inline-block;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;
+  padding:2px 7px;border-radius:2px;white-space:nowrap;font-weight:500
+}
+.pill.crit{background:var(--critical-wash);color:var(--critical)}
+.pill.med{background:var(--band);color:var(--ink-2)}
+.pill.ok{background:var(--good-wash);color:var(--good)}
+.pill.new{background:var(--orange-wash);color:var(--orange-deep)}
+
+/* ---------- top-down site map chart ---------- */
+.chart-shell{overflow-x:auto;border:1px solid var(--rule);background:var(--paper);padding:22px clamp(14px,2.2vw,26px)}
+section.soft .chart-shell{background:var(--soft)}
+.chart{min-width:1000px;display:flex;flex-direction:column;align-items:stretch}
+.c-root{display:flex;justify-content:center}
+.c-rail{height:1px;background:var(--rule);margin-top:16px}
+.c-cols{display:grid;grid-template-columns:1.9fr 1fr 1.1fr .95fr 1.05fr;gap:12px;align-items:start}
+.box{
+  border:1px solid var(--rule);background:var(--paper);padding:9px 12px;position:relative;
+  display:flex;flex-wrap:wrap;align-items:center;gap:7px;
+  font-family:var(--f-display);font-weight:500;font-size:14.5px;line-height:1.25;color:var(--ink)
+}
+.box.root{background:var(--ink);color:var(--paper);border-color:var(--ink);font-weight:700;font-size:17px;padding:11px 26px;justify-content:center}
+.box.hub{border-color:var(--ink);border-width:2px;font-weight:600;font-size:14.5px;justify-content:center;text-align:center;min-height:56px}
+.box.sub{background:var(--band);border-color:var(--rule);font-weight:600}
+.box.stub::before{content:"";position:absolute;left:50%;top:-16px;width:1px;height:16px;background:var(--rule)}
+.col{display:flex;flex-direction:column;gap:12px}
+.col-inner{display:grid;grid-template-columns:1fr 1fr;gap:12px;align-items:start}
+.cluster{display:flex;flex-direction:column;gap:0;position:relative}
+.cluster::before{content:"";position:absolute;left:50%;top:-12px;width:1px;height:12px;background:var(--rule)}
+.leaf{list-style:none;margin:8px 0 0;padding:0 0 0 12px;border-left:1px solid var(--rule);display:flex;flex-direction:column;gap:4px}
+.leaf li{position:relative;padding:3px 0 3px 12px;font-size:13.5px;line-height:1.35;color:var(--ink-2);display:flex;flex-wrap:wrap;align-items:center;gap:6px}
+.leaf li::before{content:"";position:absolute;left:0;top:14px;width:9px;height:1px;background:var(--rule)}
+.t{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;padding:2px 6px;border-radius:2px;white-space:nowrap;font-weight:500}
+.t.p1{background:var(--orange);color:#231F20}
+.t.pri{background:var(--good-wash);color:var(--good)}
+.t.later{background:var(--rule-2);color:var(--muted)}
+.t.fix{background:var(--critical-wash);color:var(--critical)}
+.t.note{background:transparent;color:var(--muted);padding:0;font-family:var(--f-body);font-size:11.5px;font-style:italic;text-transform:none;letter-spacing:0}
+.box.root .t.p1{background:var(--orange);color:#231F20}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:18px;font-size:13.5px;color:var(--muted);align-items:center}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+@media (max-width:820px){
+  .chart{min-width:0}
+  .c-cols{grid-template-columns:1fr;gap:18px}
+  .col-inner{grid-template-columns:1fr}
+  .c-rail{display:none}
+  .box.stub::before,.cluster::before{left:14px}
+  .box.hub{justify-content:flex-start;text-align:left}
+  .box.root{justify-content:flex-start}
+  .c-root{display:block}
+}
+
+/* ---------- bar chart ---------- */
+.bars{display:flex;flex-direction:column;gap:10px;border:1px solid var(--rule);background:var(--paper);padding:16px 18px}
+section.soft .bars{background:var(--soft)}
+.bar{display:grid;grid-template-columns:1fr 46px;gap:4px 12px;align-items:center}
+.bar .bl{font-size:13.5px;color:var(--muted);grid-column:1 / -1;font-family:var(--f-mono);letter-spacing:.02em}
+.bar .bt{height:14px;background:var(--orange);border-radius:1px;width:var(--w);min-width:3px;display:block}
+.bar .bt.crit{background:var(--critical)}
+.bar .bv{font-family:var(--f-mono);font-variant-numeric:tabular-nums;font-size:14px;font-weight:500;text-align:right;color:var(--ink)}
+
+/* ---------- workstream grid (Zib standard monthly scope) ---------- */
+.streams{display:grid;grid-template-columns:repeat(auto-fit,minmax(248px,1fr));gap:14px}
+.stream{background:var(--paper);border:1px solid var(--rule);padding:16px 18px;display:flex;flex-direction:column;gap:9px}
+section.soft .stream{background:var(--soft)}
+.stream .num{font-family:var(--f-display);font-weight:700;font-size:26px;line-height:1;color:var(--orange);font-variant-numeric:tabular-nums}
+.stream h4{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;font-weight:500;color:var(--ink)}
+.stream ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
+.stream li{display:grid;grid-template-columns:8px 1fr;gap:9px;font-size:14px;line-height:1.45;color:var(--ink-2)}
+.stream li::before{content:"";width:5px;height:5px;background:var(--orange);margin-top:8px}
+.stream .flag{display:inline-block;background:var(--orange);color:#231F20;font-family:var(--f-mono);font-size:9.5px;
+  letter-spacing:.07em;text-transform:uppercase;padding:2px 6px;border-radius:2px;font-weight:500;align-self:flex-start}
+
+/* ---------- phase options ---------- */
+.opt{border:1px solid var(--rule);background:var(--paper);padding:18px 20px;display:flex;flex-direction:column;gap:12px}
+.opt.pick{border-color:var(--orange);border-width:2px}
+section.soft .opt{background:var(--soft)}
+.opt .hd{display:flex;flex-direction:column;gap:6px;align-items:flex-start}
+.opt .big{font-family:var(--f-display);font-weight:700;font-size:34px;line-height:1;letter-spacing:-.03em;font-variant-numeric:tabular-nums}
+.opt ul{margin:0;padding-left:17px;display:flex;flex-direction:column;gap:5px;font-size:14.5px;color:var(--ink-2)}
+.opt .price{font-family:var(--f-display);font-weight:700;font-size:21px;letter-spacing:-.02em;color:var(--orange-deep)}
+.opt .price.quote{font-size:15px;font-weight:600;color:var(--muted)}
+.opt .foot{font-size:13.5px;color:var(--muted);border-top:1px solid var(--rule-2);padding-top:11px;margin-top:auto}
+
+/* ---------- tables ---------- */
+.scroller{overflow-x:auto;border:1px solid var(--rule);background:var(--paper)}
+section.soft .scroller,section.band .scroller{background:var(--paper)}
+table{border-collapse:collapse;width:100%;min-width:600px;font-size:14.5px}
+caption{caption-side:bottom;text-align:left;padding:10px 14px;font-size:13px;color:var(--muted);font-family:var(--f-body)}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--rule-2);vertical-align:top}
+thead th{
+  font-family:var(--f-mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--muted);background:var(--soft);border-bottom:1px solid var(--rule);font-weight:500;white-space:nowrap
+}
+section.soft thead th{background:var(--band)}
+tbody tr:last-child td{border-bottom:0}
+td.num,th.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+tbody th{font-weight:600;font-family:var(--f-display);font-size:14.5px}
+tr.us{background:var(--orange-wash)}
+tr.us td,tr.us th{font-weight:600}
+
+/* ---------- pills ---------- */
+.pill{
+  display:inline-block;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;
+  padding:2px 7px;border-radius:2px;white-space:nowrap;font-weight:500
+}
+.pill.crit{background:var(--critical-wash);color:var(--critical)}
+.pill.med{background:var(--band);color:var(--ink-2)}
+.pill.ok{background:var(--good-wash);color:var(--good)}
+.pill.new{background:var(--orange-wash);color:var(--orange-deep)}
+
+/* ---------- site map tree ---------- */
+.tree-shell{overflow-x:auto;border:1px solid var(--rule);background:var(--paper);padding:20px clamp(14px,2.4vw,26px)}
+.tree,.tree ul{list-style:none;margin:0;padding:0}
+.tree{min-width:0;font-size:15px}
+.tree ul{margin-left:14px;padding-left:16px;border-left:1px solid var(--rule)}
+.tree li{position:relative;padding:3px 0 3px 16px}
+.tree li::before{
+  content:"";position:absolute;left:0;top:17px;width:12px;height:1px;background:var(--rule)
+}
+.tree > li{padding-left:0}
+.tree > li::before{display:none}
+.tree .node{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+.tree .name{font-family:var(--f-display);font-weight:500;color:var(--ink)}
+.tree > li > .node .name{font-weight:700;font-size:17px}
+.tree .tag{
+  font-family:var(--f-mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;
+  padding:1px 6px;border-radius:2px;background:var(--band);color:var(--ink-2);white-space:nowrap
+}
+.tree .tag.a{background:var(--orange-wash);color:var(--orange-deep)}
+.tree .tag.b{background:var(--good-wash);color:var(--good)}
+.tree .tag.c{background:var(--critical-wash);color:var(--critical)}
+.tree .tag.keep{background:var(--rule-2);color:var(--muted)}
+.tree .tag.p1{background:var(--orange);color:#231F20;font-weight:500}
+@media (max-width:560px){
+  .tree{font-size:14px}
+  .tree ul{margin-left:6px;padding-left:10px}
+  .tree li{padding-left:10px}
+  .tree li::before{width:7px}
+  .tree > li > .node .name{font-size:16px}
+  .tree-shell{padding-left:12px;padding-right:12px}
+}
+.legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:16px;font-size:13.5px;color:var(--muted);align-items:center}
+.legend span{display:inline-flex;align-items:center;gap:7px}
+
+/* ---------- phases ---------- */
+.phase{display:grid;grid-template-columns:118px 1fr;gap:18px;padding-block:18px;border-top:1px solid var(--rule)}
+.phase:first-of-type{border-top:0;padding-top:0}
+.phase .when{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--orange-deep);padding-top:3px}
+.phase .what{display:flex;flex-direction:column;gap:9px}
+.phase ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:5px;font-size:15px;color:var(--ink-2)}
+@media (max-width:620px){.phase{grid-template-columns:1fr;gap:8px}}
+
+/* ---------- callout ---------- */
+.callout{
+  border:1px solid var(--rule);border-left:3px solid var(--orange);background:var(--orange-wash);
+  padding:16px 18px;display:flex;flex-direction:column;gap:8px
+}
+.callout h4{font-size:16px}
+.callout p{font-size:15px;color:var(--ink-2);max-width:none}
+.note{
+  border:1px dashed var(--rule);background:var(--soft);padding:14px 16px;
+  font-size:14px;color:var(--muted);display:flex;flex-direction:column;gap:6px
+}
+.note strong{color:var(--ink)}
+
+/* ---------- two-col ---------- */
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:clamp(18px,2.6vw,32px)}
+.kv{display:flex;flex-direction:column;gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.kv > div{background:var(--paper);padding:12px 15px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:14.5px}
+section.soft .kv > div{background:var(--soft)}
+.kv .k{color:var(--muted);font-family:var(--f-mono);font-size:12px;letter-spacing:.05em;text-transform:uppercase}
+.kv .v{font-weight:600;font-family:var(--f-display);text-align:right;overflow-wrap:anywhere}
+
+/* ---------- close ---------- */
+.close-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:8px}
+.btn{
+  display:inline-block;font-family:var(--f-display);font-weight:600;font-size:15px;text-decoration:none;
+  padding:11px 20px;border-radius:3px;background:var(--orange);color:#231F20;border:1px solid var(--orange)
+}
+.btn.ghost{background:transparent;color:var(--on-dark);border-color:var(--dark-rule)}
+footer{background:var(--dark-bg);color:var(--dark-muted);padding-block:26px;font-size:13.5px}
+footer .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+footer a{color:var(--orange)}
+</style>
+</head><body>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="mh-top">
+      <span class="qmark">QUEST COACHES</span>
+      <span class="x">&times;</span>
+      <span class="zib">Zib Digital</span>
+    </div>
+    <p class="eyebrow">New website &amp; Google plan &middot; September 2026</p>
+    <h1>A year ago, 61 Google searches found you. <em>Today, one does.</em></h1>
+    <p class="lede">You've been running coaches since 1989. Your website is eleven pages about your
+    buses, with no page that talks to a school, a company, a footy club or a winery. Here's what's
+    wrong, the 58 pages we'd build, and what it costs.</p>
+    <dl class="meta-grid">
+      <div><dt>For</dt><dd>Quest Coaches, Ferntree Gully</dd></div>
+      <div><dt>Your website</dt><dd>questcoaches.com.au</dd></div>
+      <div><dt>Read time</dt><dd>Three minutes</dd></div>
+    </dl>
+  </div>
+</header>
+
+<nav class="nav" aria-label="Sections">
+  <div class="nav-inner">
+    <a href="#short">What's wrong</a>
+    <a href="#google">What Google sees</a>
+    <a href="#others">The other operators</a>
+    <a href="#website">Your new website</a>
+    <a href="#phase1">Stage one: the build</a>
+    <a href="#monthly">The monthly work</a>
+    <a href="#cost">Cost &amp; next steps</a>
+  </div>
+</nav>
+
+<section id="short">
+  <div class="wrap stack">
+    <div class="sec-head">
+      <p class="eyebrow">What's wrong</p>
+      <h2>Your website isn't broken. It was never built to win work.</h2>
+      <p class="lede">Every page loads, nothing is missing, and Google hasn't punished you. What you have
+      is a brochure from about ten years ago that says you own buses. It doesn't answer what a school, a
+      business or a club asks before booking, so you've simply been out-built.</p>
+    </div>
+
+    <div class="tiles">
+      <div class="tile"><span class="n bad">1</span><span class="k">Searches you show up for</span><span class="tnote">It was 61 a year ago.</span></div>
+      <div class="tile"><span class="n bad">4</span><span class="k">Visitors a month from Google</span><span class="tnote">Was about 25 in early 2025.</span></div>
+      <div class="tile"><span class="n bad">0</span><span class="k">Pages about what you do</span><span class="tnote">No school, corporate, club or winery page.</span></div>
+      <div class="tile"><span class="n bad">3</span><span class="k">Websites linking to yours</span><span class="tnote">Two are junk directories.</span></div>
+      <div class="tile"><span class="n bad">No</span><span class="k">Works properly on a phone</span><span class="tnote">And the number can't be tapped.</span></div>
+      <div class="tile"><span class="n bad">2023</span><span class="k">Last year you had any data</span><span class="tnote">Your visitor tracking stopped.</span></div>
+    </div>
+
+    <div class="cols">
+      <div class="prose">
+        <h3>Someone on their phone can't call you</h3>
+        <p>Normally a phone turns a number on a website into a button you tap to call. Your site
+        specifically tells it not to, and there's no tap-to-call link to make up for it. So the 1300 number
+        sits there as plain text &mdash; to ring you, someone has to memorise it, leave your site and dial
+        manually. Your site was also never updated for phones, so it loads shrunken and that number is half
+        the size it should be.</p>
+        <p>Crown and Ventura both have two tappable numbers on every page. This is the cheapest fix on the
+        list and the one costing you the most.</p>
+      </div>
+      <div class="prose">
+        <h3>And you can't see where your work comes from</h3>
+        <p>Your visitor tracking stopped collecting anything in 2023, and quotes happen over on your
+        separate booking system. So nobody can tell you which suburb, service or search brought last
+        month's bookings in. That gets fixed in the first fortnight, because everything after it is
+        measured against it.</p>
+        <p>Two smaller things worth knowing: one of your pages is titled <strong>&ldquo;Crown Bus
+        Charter&rdquo;</strong>, a competitor's name, which is why you turn up when people search for
+        Crown. And there's still a COVID notice on every page with a footer that says 2021.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="google" class="soft">
+  <div class="wrap stack">
+    <div class="sec-head">
+      <p class="eyebrow">What Google sees</p>
+      <h2>Sixty-one searches, down to one.</h2>
+      <p class="sub">From Ahrefs, an industry tool, for the Australian market. These are estimates, and at
+      four visitors a month they'll bounce around &mdash; but the direction is not in doubt.</p>
+    </div>
+
+    <div class="cols">
+      <div class="stack-sm">
+        <h3>Searches you turn up for</h3>
+        <div class="bars">
+          <div class="bar"><span class="bl">August 2025 &middot; your best</span><span class="bt" style="--w:100%"></span><span class="bv">~70</span></div>
+          <div class="bar"><span class="bl">September 2025</span><span class="bt" style="--w:87%"></span><span class="bv">61</span></div>
+          <div class="bar"><span class="bl">January 2026</span><span class="bt" style="--w:29%"></span><span class="bv">~20</span></div>
+          <div class="bar"><span class="bl">Today</span><span class="bt crit" style="--w:1.5%"></span><span class="bv">1</span></div>
+        </div>
+        <p class="sub">Your most important page has about 296 words on it. Crown's main school page has
+        2,276. When Google had to choose, you had nothing to hold your place with.</p>
+      </div>
+      <div class="callout">
+        <h4>The one search you still win proves the point</h4>
+        <p>The last one standing is <strong>&ldquo;coach charter&rdquo;</strong> &mdash; 150 searches a
+        month, and you've gone from 58th to <strong>9th</strong> on it. That's by accident: it's a phrase
+        that happens to appear on your homepage. One accidental mention moved you up 49 places.</p>
+        <p>That's what a page built on purpose is meant to do, across thirty searches instead of one.</p>
+      </div>
+    </div>
+
+    <div class="stack-sm">
+      <h3>The work you used to be found for, and lost</h3>
+      <div class="scroller">
+        <table>
+          <caption>Every one of these is somebody looking to book a bus. You don't have a page written for
+          a single one of them.</caption>
+          <thead>
+            <tr><th>What people type into Google</th><th class="num">Searches a month</th><th>Where you used to rank</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>bus charter</td><td class="num">300</td><td>Page 3 or worse</td></tr>
+            <tr><td>coach hire</td><td class="num">250</td><td>Page 3 or worse</td></tr>
+            <tr><td>bus charter melbourne</td><td class="num">200</td><td>Page 4</td></tr>
+            <tr><td>charter bus melbourne</td><td class="num">200</td><td>Page 3</td></tr>
+            <tr><td>chartered bus</td><td class="num">200</td><td>Page 3</td></tr>
+            <tr><td>corporate bus hire melbourne</td><td class="num">150</td><td>Page 2</td></tr>
+            <tr><td>charter bus hire melbourne</td><td class="num">150</td><td>Page 3</td></tr>
+            <tr><td>mini bus charter melbourne</td><td class="num">150</td><td>Page 4</td></tr>
+            <tr><td>melbourne bus hire</td><td class="num">150</td><td>Page 5</td></tr>
+            <tr class="us"><td>coach charter <span class="pill ok">Still winning</span></td><td class="num">150</td><td>Page 1, 9th</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="sub">Page 2 on <em>corporate bus hire melbourne</em> is the one that should annoy you.
+      That's a company with a purchase order that books you again and again, and you nearly had it without
+      even having a corporate page. You were also turning up faintly for <strong>25-seater, 30-seater and
+      coaster bus hire</strong>, and for bus hire in <strong>Pakenham, Shepparton, Traralgon and
+      Echuca</strong> &mdash; all demand with no page of yours to find.</p>
+    </div>
+  </div>
+</section>
+
+<section id="others">
+  <div class="wrap stack">
+    <div class="sec-head">
+      <p class="eyebrow">The other operators</p>
+      <h2>Two have done the work. Two haven't.</h2>
+      <p class="sub">We went through all four of the sites you sent us, page by page, on 18 September.</p>
+    </div>
+
+    <div class="scroller">
+      <table>
+        <caption>Words counted on each operator's main bus hire page. Yours is your homepage, because it's
+        the only page you have that tries to do the job.</caption>
+        <thead>
+          <tr><th>Operator</th><th class="num">Pages</th><th class="num">Words on main page</th><th>Works on a phone</th><th>Where they stand</th></tr>
+        </thead>
+        <tbody>
+          <tr><th>Ventura Charter</th><td class="num">45</td><td class="num">869</td><td>Yes</td><td>Best organised site &mdash; worth copying the shape</td></tr>
+          <tr><th>Crown Coaches</th><td class="num">35</td><td class="num">1,789&ndash;2,276</td><td>Yes</td><td>Best written pages, especially schools</td></tr>
+          <tr><th>Nuline Charter</th><td class="num">15</td><td class="num">127</td><td>Yes</td><td>Thin. Barely says anything</td></tr>
+          <tr><th>McKenzie's</th><td class="num">9</td><td class="num">487</td><td>Yes</td><td>Yarra Valley angle, one bus hire page</td></tr>
+          <tr class="us"><th>Quest Coaches</th><td class="num">11</td><td class="num">296</td><td>No</td><td>Nothing built to compete with</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="cols">
+      <div class="prose">
+        <h3>Four gaps nobody has filled</h3>
+        <p><strong>Footy and sporting clubs.</strong> Not one of the four has a page for club transport,
+        and every club in Melbourne needs buses for away games all winter.</p>
+        <p><strong>Wineries, from the winery's side.</strong> The wine tour searches are fought over by
+        tour companies selling tickets. Nobody offers transport <em>to the wineries and cellar doors</em>
+        for their own guests. That page has no competition at all.</p>
+        <p><strong>Where you go.</strong> All four say &ldquo;Melbourne&rdquo; and stop, while your own
+        lost searches show people looking in Pakenham, Shepparton and Traralgon.</p>
+        <p><strong>Bus size.</strong> Crown buries seat numbers in a table. Nobody has a page for
+        &ldquo;25 seater bus hire&rdquo; the way people search it.</p>
+      </div>
+      <div class="stack-sm">
+        <h3>And this is costing you school work</h3>
+        <p class="sub">Victorian education rules mean a school booking a private coach has to satisfy
+        itself the operator is properly accredited. Your site gives them nothing to check &mdash; your
+        about page says &ldquo;fully accredited&rdquo; and stops there. A business manager comparing three
+        quotes finds all of this on Crown's site and none of it on yours.</p>
+        <div class="scroller">
+          <table>
+            <thead><tr><th>Can a school check&hellip;</th><th>You</th><th>Crown</th></tr></thead>
+            <tbody>
+              <tr><td>Your accreditation number</td><td><span class="pill crit">No</span></td><td><span class="pill ok">Yes</span></td></tr>
+              <tr><td>A child safety policy</td><td><span class="pill crit">No</span></td><td><span class="pill ok">Yes</span></td></tr>
+              <tr><td>Working With Children checks</td><td><span class="pill crit">No</span></td><td><span class="pill ok">Yes</span></td></tr>
+              <tr><td>Whether buses have seatbelts</td><td><span class="pill crit">No</span></td><td><span class="pill ok">Yes</span></td></tr>
+              <tr><td>Other schools you carry</td><td><span class="pill crit">No</span></td><td><span class="pill ok">150+</span></td></tr>
+              <tr><td>Your reviews</td><td><span class="pill med">8, hidden</span></td><td><span class="pill ok">Yes</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="sub">Three short pages fix this, and they're in the first stage. We won't write a word of
+        it until you've confirmed the facts.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="website" class="soft">
+  <div class="wrap stack">
+    <div class="sec-head">
+      <p class="eyebrow">Your new website</p>
+      <h2>Eleven pages at go-live. Forty-seven to write after.</h2>
+      <p class="lede">This is the whole website drawn out, top down. The <span class="t p1">At launch</span>
+      boxes are the eleven pages that get rebuilt and go live in stage one. Everything else is content,
+      written a few pages a month through the monthly work &mdash; <span class="t pri">Priority</span>
+      marks the ones that get written first.</p>
+    </div>
+
+    <div class="chart-shell">
+      <div class="chart">
+        <div class="c-root">
+          <div class="box root">Home <span class="t p1">At launch</span></div>
+        </div>
+        <div class="c-rail"></div>
+        <div class="c-cols">
+
+          <div class="col">
+            <div class="box hub stub">Bus &amp; Coach Hire Melbourne <span class="t p1">At launch</span></div>
+            <div class="col-inner">
+              <div class="cluster">
+                <div class="box sub">School Bus Charter <span class="t pri">Priority &middot; 6</span></div>
+                <ul class="leaf">
+                  <li>School excursions</li>
+                  <li>School camps</li>
+                  <li>Swimming shuttles</li>
+                  <li>School sport &amp; carnivals</li>
+                  <li>Daily school runs</li>
+                </ul>
+              </div>
+              <div class="cluster">
+                <div class="box sub">Corporate Bus Hire <span class="t pri">Priority &middot; 5</span></div>
+                <ul class="leaf">
+                  <li>Conferences &amp; delegate transfers</li>
+                  <li>Staff &amp; site shuttles</li>
+                  <li>Airport transfers</li>
+                  <li>Christmas parties &amp; team days</li>
+                </ul>
+              </div>
+              <div class="cluster">
+                <div class="box sub">Sporting Club Bus Hire <span class="t later">Monthly &middot; 4</span> <span class="t note">No competition</span></div>
+                <ul class="leaf">
+                  <li>Away games &amp; fixtures</li>
+                  <li>Finals &amp; carnival days</li>
+                  <li>Junior club transport</li>
+                </ul>
+              </div>
+              <div class="cluster">
+                <div class="box sub">Winery &amp; Brewery Transport <span class="t later">Monthly &middot; 5</span> <span class="t note">No competition</span></div>
+                <ul class="leaf">
+                  <li>Yarra Valley wine tours</li>
+                  <li>Mornington Peninsula wine tours</li>
+                  <li>Macedon Ranges &amp; Bellarine</li>
+                  <li>For wineries &amp; cellar doors <span class="t note">Their guests, your buses</span></li>
+                </ul>
+              </div>
+            </div>
+            <ul class="leaf">
+              <li>Weddings &amp; guest transfers</li>
+              <li>Seniors &amp; community groups</li>
+              <li>Social clubs &amp; day tours</li>
+            </ul>
+          </div>
+
+          <div class="col">
+            <div class="box hub stub">Our Fleet <span class="t p1">At launch</span> <span class="t pri">+4 priority</span></div>
+            <div class="cluster">
+              <ul class="leaf">
+                <li>13-seat minibus hire</li>
+                <li>24-seat bus hire</li>
+                <li>27-seat mini coach hire</li>
+                <li>48 &amp; 57-seat coach hire</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="box hub stub">Areas We Service <span class="t later">Later &middot; 9</span></div>
+            <div class="cluster">
+              <ul class="leaf">
+                <li>Eastern suburbs &amp; Knox</li>
+                <li>South east &amp; Dandenong</li>
+                <li>Pakenham &amp; Cardinia</li>
+                <li>Melbourne CBD &amp; inner</li>
+                <li>Bayside &amp; Mornington Peninsula</li>
+                <li>Yarra Valley &amp; Dandenong Ranges</li>
+                <li>Northern &amp; western suburbs</li>
+                <li>Gippsland &amp; Traralgon</li>
+                <li>Regional Victoria</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="box hub stub">Why Quest Coaches <span class="t p1">At launch</span> <span class="t pri">+3 priority</span></div>
+            <div class="cluster">
+              <ul class="leaf">
+                <li>Safety &amp; accreditation</li>
+                <li>Child safety &amp; driver checks</li>
+                <li>Our drivers</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="box hub stub">Site pages <span class="t p1">7, all at launch</span></div>
+            <div class="cluster">
+              <ul class="leaf">
+                <li>Get a quote</li>
+                <li>Reviews</li>
+                <li>Questions &amp; answers</li>
+                <li>Contact</li>
+                <li>Booking terms <span class="t fix">Fix title</span></li>
+                <li>Credit card terms</li>
+                <li>Privacy policy</li>
+                <li>Guides <span class="t later">Month 7+</span></li>
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      </div>
+      <div class="legend">
+        <span><span class="t p1">At launch</span> The 11 pages in stage one</span>
+        <span><span class="t pri">Priority</span> First 18 the monthly work writes</span>
+        <span><span class="t later">Later</span> Once the core is earning</span>
+        <span>Untagged &mdash; later in the content plan</span>
+      </div>
+    </div>
+
+    <div class="cols">
+      <div class="stack-sm">
+        <h3>How the page count actually grows</h3>
+        <p class="sub">Eleven pages go live with the build. The other 47 are content, and the monthly
+        work writes two to three of them a month. That's the honest rate &mdash; each page needs its own
+        research, words, photos and questions, which is exactly why they're not in the launch.</p>
+        <div class="scroller">
+          <table>
+            <caption>Based on two to three new pages a month once the new site is live.</caption>
+            <thead><tr><th class="num">At launch</th><th class="num">End of the first 3 months</th><th class="num">Month 12, if it continues</th><th>Full map of 58</th></tr></thead>
+            <tbody>
+              <tr class="us"><td class="num">11</td><td class="num">~19</td><td class="num">~38</td><td>Into year two</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="sub">The order matters more than the pace. Schools and corporate get written first,
+        because that's where the demand and the repeat bookings are. If you ever want it faster, the lever
+        is more copywriting in the monthly work, not a bigger build.</p>
+      </div>
+      <div class="stack-sm">
+        <div class="callout">
+          <h4>See it as a homepage</h4>
+          <p>The header, mega menu and four key sections, mocked up in your colours with your own photos
+          and reviews. A switch at the top shows the menu at launch and at the full site map.</p>
+          <p><a href="https://www.ziboutreach.com.au/quest-coaches-homepage" style="font-family:var(--f-display);font-weight:600">Open the homepage mockup &rarr;</a></p>
+        </div>
+        <div class="callout">
+          <h4>How the pages get written</h4>
+          <p>Three layouts get designed once &mdash; trip pages, area pages, bus pages &mdash; then each
+          page is filled with its own words, photos, questions and reviews. The layout repeats, the words
+          never do. Google is good now at spotting pages that are the same thing with the names swapped,
+          and it buries them.</p>
+        </div>
+        <div class="note">
+          <strong>The nine area pages are deliberately last.</strong> They matter &mdash; your own lost
+          searches show demand in Pakenham, Shepparton and Traralgon &mdash; but they only work once the
+          service pages above them are earning. And we won't build a page per suburb: nine areas, each
+          with real local detail, and more only where the searches show up.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section id="phase1">
+  <div class="wrap stack">
+    <div class="sec-head">
+      <p class="eyebrow">Stage one: the build</p>
+      <h2>Rebuild the eleven, move it across, go live. $10,000.</h2>
+      <p class="lede">Stage one is a website project with a start and a finish: your existing pages
+      rebuilt properly, everything moved across without losing what you've earned, and the phone and
+      quote forms working. The new service pages aren't in it &mdash; that's a lot of writing, and it
+      belongs in the monthly work where it can be done properly, a few pages at a time.</p>
+    </div>
+
+    <div class="cols">
+      <div class="opt pick">
+        <div class="hd">
+          <span class="pill new">What the $10,000 covers</span>
+          <span class="big">11 pages</span>
+          <span class="price">$10,000 one-off</span>
+        </div>
+        <ul>
+          <li>Home, fleet, Why Quest, questions, reviews, contact, quote, terms and privacy &mdash; all rebuilt</li>
+          <li>A site that works properly on phones, on safe modern hosting, in your colours</li>
+          <li>Tap-to-call in the header and a short quote form that hands off to your booking system</li>
+          <li>Every old page address forwarded, so nothing you've earned is lost</li>
+          <li>Call and enquiry tracking installed, and Google given a map of the site</li>
+          <li>Photography of the four buses, inside and out</li>
+          <li>The three page layouts the monthly work uses to add pages later</li>
+        </ul>
+        <p class="foot">A finished project, not an open-ended build. Everything after it is content, and
+        content is monthly work.</p>
+      </div>
+      <div class="stack-sm">
+        <h3>Before any of that: the first fortnight</h3>
+        <p class="sub">Some of this is too cheap to wait for a new website. In the first two weeks, on
+        your current site: the phone number made tappable, the COVID banner taken off, the 2021 footer
+        fixed, the page titled &ldquo;Crown Bus Charter&rdquo; corrected, Google given a map of the site,
+        working call and enquiry tracking installed, and your Google Business listing claimed and filled
+        out properly. None of it needs the rebuild, and it starts earning while the build happens.</p>
+        <h3>What we need from you to start</h3>
+        <p class="sub">Photos of the four buses or a morning at the depot to take them. Your accreditation
+        number, driver check and child safety policies. A list of the schools, clubs, companies and
+        wineries you carry &mdash; only named with your permission. Where you really will and won't
+        travel. Logins for your domain, hosting and booking system. And someone who can approve copy
+        inside a week.</p>
+        <div class="note">
+          <strong>Your booking system stays exactly as it is.</strong> We're not replacing it. We just
+          connect it up so a quote started on the website can be traced back to the page and search that
+          produced it.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="monthly" class="soft">
+  <div class="wrap stack">
+    <div class="sec-head">
+      <p class="eyebrow">The monthly work &middot; set-up + 3 months</p>
+      <h2>Eight workstreams, running continuously.</h2>
+      <p class="lede">This is Zib's standard Google scope: a set-up month, then three months, then
+      month to month. It starts on day one, runs alongside the build, and it's where every page after
+      the first eleven comes from. All eight workstreams run in parallel, not one after the other.</p>
+    </div>
+
+    <div class="streams">
+      <div class="stream">
+        <span class="num">01</span>
+        <h4>Audits &amp; reports</h4>
+        <ul>
+          <li>Link audit and clean-up of the junk pointing at you</li>
+          <li>Tracking where visitors drop off, and fixing it</li>
+          <li>Competitor and Google movement tracking</li>
+          <li>Monthly performance reporting</li>
+        </ul>
+      </div>
+      <div class="stream">
+        <span class="num">02</span>
+        <h4>Technical</h4>
+        <ul>
+          <li>The behind-the-scenes labels that tell Google what you do</li>
+          <li>Site map, crawl and indexing setup</li>
+          <li>Page speed and mobile performance</li>
+          <li>Redirect map, so no address is ever lost</li>
+        </ul>
+      </div>
+      <div class="stream">
+        <span class="num">03</span>
+        <h4>On-page</h4>
+        <ul>
+          <li>Linking your pages to each other properly</li>
+          <li>The headlines and descriptions Google shows in search results</li>
+          <li>Header and footer tuning</li>
+          <li>Making sure every page leads to a call or a quote</li>
+        </ul>
+      </div>
+      <div class="stream">
+        <span class="num">04</span>
+        <h4>Copywriting</h4>
+        <ul>
+          <li>Page rewrites, and the new service pages written two to three a month</li>
+          <li>One article a month, 600 words</li>
+          <li>A copywriting guide and a quarterly workshop for your team</li>
+          <li>PDF spec sheets and capability statements for school and corporate tenders</li>
+        </ul>
+      </div>
+      <div class="stream">
+        <span class="num">05</span>
+        <h4>Local search</h4>
+        <ul>
+          <li>Google Business listing set up and optimised</li>
+          <li>Posting and review management, after every charter</li>
+          <li>Ferntree Gully, eastern suburbs and Melbourne-wide coverage</li>
+          <li>Local directory listings</li>
+        </ul>
+      </div>
+      <div class="stream">
+        <span class="num">06</span>
+        <h4>Links &amp; off-page</h4>
+        <ul>
+          <li>Getting Australian sites to link to yours, from three upwards</li>
+          <li>Bus, coach and transport industry link building</li>
+          <li>Removing the junk links already pointing at you</li>
+          <li>Industry and association partnerships</li>
+        </ul>
+      </div>
+      <div class="stream">
+        <span class="num">07</span>
+        <h4>AI answers</h4>
+        <span class="flag">New in 2026</span>
+        <ul>
+          <li>Making sure AI tools understand what Quest is and where it operates</li>
+          <li>Question-and-answer content written so it can be quoted</li>
+          <li>Answer blocks shaped the way AI tools cite sources</li>
+          <li>Tracking whether you get named in AI answers and Google's AI results</li>
+        </ul>
+      </div>
+      <div class="stream">
+        <span class="num">08</span>
+        <h4>Strategy &amp; reporting</h4>
+        <ul>
+          <li>Monthly strategy call plus a quarterly business review</li>
+          <li>Search and enquiry strategy per market: schools, corporate, clubs, wineries</li>
+          <li>Monthly dashboard: rankings, traffic, enquiries</li>
+          <li>A dedicated account manager, not a ticket queue</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="note">
+      <strong>What three months will and won't show you.</strong> Enough time to fix the foundations,
+      get the Google Business listing working and start counting real enquiries &mdash; and you should
+      see movement from the phone and listing fixes inside weeks. Not enough time to judge rankings.
+      On a site with three links and one search term, search results are a six to twelve month
+      conversation, and anyone telling you otherwise is selling. We won't promise a traffic number
+      today either: you've had no working data since 2023. We count phone taps, quote forms, portal
+      quotes and emails from day one, then set targets against real numbers at the end of month one.
+    </div>
+  </div>
+</section>
+
+<section id="cost" class="dark">
+  <div class="wrap stack">
+    <div class="sec-head">
+      <p class="eyebrow">Cost &amp; next steps</p>
+      <h2>$18,500 to get started. $2,000 a month after that.</h2>
+    </div>
+    <div class="cols">
+      <div class="stack-sm">
+        <h3>The monthly Google work</h3>
+        <div class="kv" style="border-color:var(--dark-rule);background:var(--dark-rule)">
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Set-up, one-off</span><span class="v" style="color:var(--orange)">$2,500</span></div>
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Then per month</span><span class="v" style="color:var(--orange)">$2,000</span></div>
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Initial term</span><span class="v">Set-up + 3 months</span></div>
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">After that</span><span class="v">Month to month</span></div>
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Set-up + first 3 months</span><span class="v">$8,500</span></div>
+        </div>
+      </div>
+      <div class="stack-sm">
+        <h3>The website build</h3>
+        <div class="kv" style="border-color:var(--dark-rule);background:var(--dark-rule)">
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">The build &middot; 11 pages</span><span class="v" style="color:var(--orange)">$10,000</span></div>
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">New pages after launch</span><span class="v">In the monthly work</span></div>
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Migration &amp; forwarding</span><span class="v">Included</span></div>
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">Tracking set-up</span><span class="v">Included</span></div>
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">First-fortnight fixes</span><span class="v">Included</span></div>
+          <div style="background:var(--dark-soft);color:var(--on-dark)"><span class="k" style="color:var(--dark-muted)">To get started, all up</span><span class="v" style="color:var(--orange)">$18,500</span></div>
+        </div>
+        <p class="sub">Google Ads isn't in either figure. Worth talking about once there are pages to send
+        traffic to.</p>
+      </div>
+    </div>
+
+    <div class="cols">
+      <div class="prose">
+        <h3>Three questions for you</h3>
+        <p>Why does your site turn up for <strong>&ldquo;quinces coaches&rdquo;</strong> &mdash; is that an
+        old business name, or a partner? Where did the <strong>&ldquo;Crown Bus Charter&rdquo;</strong>
+        page title come from? And how much more work could the fleet actually take, so we aim the first
+        pages at the markets you've got room for?</p>
+      </div>
+      <div class="stack-sm">
+        <p class="sub">You've got a real business, a depot, a fleet and 37 years behind a website that
+        turns up for one search. There's no penalty to appeal and no disaster to recover from &mdash;
+        eleven pages to rebuild, and a market where two of your four competitors haven't bothered either.</p>
+        <div class="close-cta">
+          <a class="btn" href="tel:1300255287">Let's talk it through</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Quest Coaches &amp; Zib Digital &middot; Website and Google plan &middot; September 2026</span>
+    <span>Prepared by <a href="https://www.zibdigital.com.au">Zib Digital</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
