@@ -7,3 +7,5 @@ node_modules/
 .idea
 .vscode
 dist/
+# /brag skill renders (videos + composition HTML) — never commit or deploy
+brag-output*/
