@@ -1,8 +1,8 @@
 <!doctype html>
 <html lang="en-AU">
 <head>
-<title>AI Marketing Consultant · Build Your Own AI Agent | Zib Digital</title>
-<meta name="description" content="Work with an AI marketing consultant to build your own AI marketing agent: content, lead-qual, reporting and competitor watch. You own it, we check in monthly. An AI marketing expert on tap." />
+<title>AI Partner · An AI Marketing Squad for Your Team | Zib Digital</title>
+<meta name="description" content="Multiply your in-house marketing team with a squad of AI specialists for SEO, Google Ads, Meta, content and reporting. Built into your tools, trained on your brand, coached monthly by senior Zib specialists." />
 <!-- @include _partials/head.html -->
 <link rel="stylesheet" href="/assets/ai-sections.css">
 <link rel="stylesheet" href="/assets/contact-form.css">
@@ -10,9 +10,9 @@
 {
   "@context": "https://schema.org",
   "@type": "Service",
-  "serviceType": "AI marketing consulting",
+  "serviceType": "AI marketing squad for in-house teams",
   "name": "AI Partner",
-  "description": "Do-it-with-me AI marketing. Zib Digital designs and builds a marketing agent inside your business, trains it on your data, and meets monthly to refine the playbook and teach your team to own it.",
+  "description": "Do it with your team, not instead of them. Zib Digital sets up a customised squad of AI marketing specialists inside the tools your team already uses, trains it on your brand, holds every material change for your sign-off, and coaches your team every month.",
   "provider": { "@id": "https://zibdigital.com.au/#org" },
   "areaServed": { "@type": "Country", "name": "Australia" }
 }
@@ -83,7 +83,7 @@
 .hero-meta span { display: inline-flex; align-items: center; gap: 8px; }
 .hero-meta .dot { width: 5px; height: 5px; background: var(--accent); border-radius: 50%; }
 
-/* ─── AGENT CHAT MOCK ─── */
+/* ─── SQUAD CHAT MOCK ─── */
 .agent-chat {
   background: #fff;
   border: 0.5px solid var(--rule);
@@ -132,6 +132,11 @@
   border-radius: 16px;
   font-size: 13.5px;
   line-height: 1.55;
+}
+.chat-msg .who {
+  display: block; margin-bottom: 4px;
+  font-family: var(--mono); font-size: 9.5px; letter-spacing: 0.12em; text-transform: uppercase;
+  color: var(--accent);
 }
 .chat-msg.agent {
   background: var(--dim);
@@ -211,6 +216,151 @@
 @media (max-width: 1024px) { .logo-row { grid-template-columns: repeat(4, 1fr); } }
 @media (max-width: 560px) { .logo-row { grid-template-columns: repeat(3, 1fr); gap: 20px 16px; } }
 
+/* ─── SHARED CARD GRID (who it's for, what it fixes) ─── */
+.card-grid {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  border-top: 0.5px solid var(--rule);
+  border-left: 0.5px solid var(--rule);
+}
+.card-grid > div {
+  border-right: 0.5px solid var(--rule);
+  border-bottom: 0.5px solid var(--rule);
+  padding: clamp(24px, 2.6vw, 36px);
+}
+.card-grid .lbl { color: var(--accent); margin-bottom: 18px; }
+.card-grid h3 {
+  font-family: var(--display); font-weight: 500;
+  font-size: 21px; line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 10px;
+}
+.card-grid p { color: var(--muted); font-size: 15px; line-height: 1.55; }
+@media (max-width: 1024px) { .card-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .card-grid { grid-template-columns: 1fr; } }
+
+/* ─── PROOF ─── */
+.proof { background: var(--paper); border-top: 0.5px solid var(--rule); border-bottom: 0.5px solid var(--rule); }
+.proof-note {
+  margin-top: 20px;
+  font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--muted);
+}
+.proof-note a { color: var(--ink); border-bottom: 0.5px solid var(--rule-2); margin-left: 14px; }
+.proof-stats {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: clamp(20px, 3vw, 40px);
+  padding-bottom: clamp(40px, 5vw, 64px);
+  margin-bottom: clamp(40px, 5vw, 64px);
+  border-bottom: 0.5px solid var(--rule);
+}
+.proof-stat .v {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(40px, 4.4vw, 64px); line-height: 1; letter-spacing: -0.035em;
+  margin-bottom: 10px;
+}
+.proof-stat .v .suf { color: var(--accent); }
+.proof-stat .l { color: var(--muted); font-size: 15px; line-height: 1.45; }
+@media (max-width: 880px) { .proof-stats { grid-template-columns: repeat(2, 1fr); } }
+
+.result-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(16px, 2vw, 24px); }
+.result-card {
+  display: flex; flex-direction: column;
+  background: var(--bg); border: 0.5px solid var(--rule-2); border-radius: 14px;
+  padding: clamp(22px, 2.4vw, 30px);
+  transition: transform 240ms var(--ease), border-color 240ms var(--ease);
+}
+.result-card:hover { transform: translateY(-2px); border-color: var(--ink); }
+.result-card .tag { color: var(--muted); margin-bottom: 18px; }
+.result-card .big {
+  font-family: var(--display); font-weight: 500;
+  font-size: clamp(36px, 3.4vw, 48px); line-height: 1; letter-spacing: -0.03em;
+  color: var(--accent); margin-bottom: 12px;
+}
+.result-card p { color: var(--muted); font-size: 15px; line-height: 1.5; flex: 1; margin-bottom: 20px; }
+.result-card .who { font-size: 14px; font-weight: 500; color: var(--ink); }
+.result-card .who .arr { transition: transform 200ms var(--ease); display: inline-block; }
+.result-card:hover .who .arr { transform: translateX(4px); }
+@media (max-width: 1024px) { .result-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .result-grid { grid-template-columns: 1fr; } }
+
+/* ─── SQUAD ROSTER ─── */
+.library-grid > .agent-card .tag .pop { color: var(--accent); }
+.roster-foot {
+  margin-top: 32px; max-width: 760px;
+  color: var(--muted); font-size: 16px; line-height: 1.55;
+}
+.roster-foot strong { color: var(--ink); font-weight: 500; }
+
+/* ─── FLOW: input → squad → sign-off → output ─── */
+.flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: clamp(16px, 2vw, 24px); }
+.flow-step {
+  position: relative;
+  background: var(--bg); border: 0.5px solid var(--rule-2); border-radius: 14px;
+  padding: clamp(22px, 2.4vw, 30px);
+}
+.flow-step:not(:last-child)::after {
+  content: "→";
+  position: absolute; right: calc(-1 * clamp(16px, 2vw, 24px)); top: 50%;
+  width: clamp(16px, 2vw, 24px); text-align: center;
+  transform: translateY(-50%);
+  font-family: var(--mono); color: var(--accent);
+}
+.flow-step.signoff { background: var(--ink); color: #fff; border-color: var(--ink); }
+.flow-step .lbl { color: var(--accent); margin-bottom: 14px; }
+.flow-step h3 { font-family: var(--display); font-weight: 500; font-size: 22px; letter-spacing: -0.02em; margin-bottom: 8px; }
+.flow-step p { color: var(--muted); font-size: 15px; line-height: 1.55; }
+.flow-step.signoff p { color: rgba(255,255,255,0.7); }
+@media (max-width: 880px) {
+  .flow { grid-template-columns: 1fr; }
+  .flow-step:not(:last-child)::after { content: "↓"; right: auto; left: 50%; top: auto; bottom: calc(-1 * clamp(16px, 2vw, 24px)); transform: translateX(-50%); }
+}
+
+/* ─── TOOLS STRIP ─── */
+.tools {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px;
+  padding: clamp(28px, 3vw, 40px) 0 0;
+  margin-top: clamp(40px, 5vw, 64px);
+  border-top: 0.5px solid var(--rule);
+}
+.tools .lbl { color: var(--muted); margin-right: 8px; }
+.tools .chip {
+  border: 0.5px solid var(--rule-2); border-radius: 99px;
+  padding: 8px 16px; font-size: 14px; color: var(--ink); background: var(--bg);
+}
+.tools .note { flex-basis: 100%; margin-top: 10px; color: var(--muted); font-size: 14px; }
+
+/* ─── COACHING + CONTROLS ─── */
+.own-pillar ul { list-style: none; }
+.own-pillar li {
+  display: flex; gap: 12px;
+  padding: 10px 0; border-bottom: 0.5px solid var(--rule);
+  color: var(--muted); font-size: 16px; line-height: 1.5;
+}
+.own-pillar li:last-child { border-bottom: 0; }
+.own-pillar li::before { content: "·"; color: var(--accent); font-weight: 700; }
+.controls {
+  display: grid; grid-template-columns: repeat(4, 1fr);
+  gap: clamp(16px, 2vw, 24px);
+  margin-top: clamp(48px, 6vw, 72px);
+  padding-top: clamp(32px, 4vw, 48px);
+  border-top: 0.5px solid var(--rule-2);
+}
+.controls .lbl { grid-column: 1 / -1; color: var(--accent); }
+.controls div:not(.lbl) { display: flex; gap: 12px; font-size: 16px; line-height: 1.45; color: var(--ink); }
+.controls div:not(.lbl)::before {
+  content: "✓"; flex-shrink: 0;
+  width: 22px; height: 22px; border-radius: 50%;
+  display: grid; place-items: center;
+  background: var(--accent); color: #fff; font-size: 12px;
+}
+@media (max-width: 1024px) { .controls { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 560px) { .controls { grid-template-columns: 1fr; } }
+
+/* ─── ONBOARDING (4-up how-grid) ─── */
+.how-grid.four { grid-template-columns: repeat(4, 1fr); }
+@media (max-width: 1024px) { .how-grid.four { grid-template-columns: repeat(2, 1fr); } .how-grid.four::before { display: none; } }
+@media (max-width: 560px) { .how-grid.four { grid-template-columns: 1fr; } }
+.how-step .when { color: var(--muted); margin-bottom: 10px; }
+
 </style>
 </head>
 <body>
@@ -222,50 +372,57 @@
   <div class="container">
     <div class="hero-grid">
       <div>
-        <div class="mono eyebrow reveal">AI marketing consultant<span class="dot"></span>Do it with me</div>
+        <div class="mono eyebrow reveal">AI Partner<span class="dot"></span>Do it with your team</div>
         <h1 class="hero-h reveal">
-          Build one agent. <em>Then build ten.</em>
+          Your marketing team, <em>multiplied.</em>
         </h1>
         <p class="hero-sub reveal">
-          <strong>We build a marketing agent inside your business.</strong> Connected to your tools, trained on your data, and owned by you. A senior AI marketing consultant meets you monthly to refine the playbook, so you build the capability with an AI marketing expert on tap.
+          <strong>A customised squad of AI marketing specialists, built into the tools your team already uses.</strong> Trained on your brand, backed by senior Zib specialists who coach your team every month, and nothing goes live without your sign-off.
         </p>
         <div class="hero-ctas reveal">
-          <a class="btn btn-primary" href="#enquire">Enquire now <span class="arr">→</span></a>
-          <a class="btn btn-outline" href="#how">How it works</a>
+          <a class="btn btn-primary" href="#enquire">Scope your marketing squad <span class="arr">→</span></a>
+          <a class="btn btn-outline" href="#proof">See the proof</a>
         </div>
         <div class="hero-meta reveal">
-          <span><span class="dot"></span>4 weeks to launch</span>
-          <span><span class="dot"></span>Senior strategist on tap</span>
-          <span><span class="dot"></span>Your stack, your data</span>
+          <span><span class="dot"></span>12 specialists</span>
+          <span><span class="dot"></span>Your team signs off</span>
+          <span><span class="dot"></span>Coached every month</span>
         </div>
       </div>
 
       <div class="agent-chat reveal" aria-hidden="true">
         <div class="agent-chat-bar">
-          <div class="avatar">CA</div>
+          <div class="avatar">SQ</div>
           <div>
-            <div class="name">Content Agent</div>
-            <div class="state"><span class="pulse"></span>Live · your workspace</div>
+            <div class="name">Your marketing squad</div>
+            <div class="state"><span class="pulse"></span>5 specialists · in your tools</div>
           </div>
-          <div class="ver">v2.4</div>
+          <div class="ver">Mon</div>
         </div>
         <div class="agent-chat-body">
           <div class="chat-msg agent">
-            Morning — this week's draft is ready. 7 sources analysed, 1,420 words in your brand voice, schema and meta already written.
-            <span class="ts">10:42</span>
-          </div>
-          <div class="chat-msg user">
-            Great — push it to staging and line up next week's topics.
-            <span class="ts">10:42</span>
+            <span class="who">Reporting &amp; Insight</span>
+            Weekly brief is ready. Leads up 14%, Google Ads CPA down $6.40. Two actions need your OK.
+            <span class="ts">08:02</span>
           </div>
           <div class="chat-msg agent">
-            Pushed to staging, awaiting your review. That's 42 drafts and 18 published this month. I've queued 5 new topics — want to run through them at Thursday's check-in?
-            <span class="ts">10:42</span>
+            <span class="who">Google Ads</span>
+            23 search terms wasted $1,180 last month. Negatives drafted and held for sign-off.
+            <span class="ts">08:03</span>
+          </div>
+          <div class="chat-msg user">
+            Approved. What's ready from content?
+            <span class="ts">08:15</span>
+          </div>
+          <div class="chat-msg agent">
+            <span class="who">Content + SEO</span>
+            Three drafts in your brand voice are in the CMS for review, with schema and internal links added.
+            <span class="ts">08:15</span>
           </div>
           <div class="chat-typing"><span></span><span></span><span></span></div>
         </div>
         <div class="agent-chat-input">
-          <div class="field">Message your agent…</div>
+          <div class="field">Message your squad…</div>
           <div class="send">Send</div>
         </div>
       </div>
@@ -276,7 +433,7 @@
 <!-- LOGOS -->
 <section class="logos">
   <div class="container">
-    <div class="mono logos-eyebrow reveal"><strong>Trusted by 300+ operators</strong> · since 2009</div>
+    <div class="mono logos-eyebrow reveal"><strong>Trusted by 800+ Australian businesses</strong> · since 2009</div>
     <div class="logo-row reveal-stagger">
       <div class="logo-cell"><img src="/assets/logo-puma.jpg" alt="Puma" /></div>
       <div class="logo-cell"><img src="/assets/logo-harcourts.jpg" alt="Harcourts" /></div>
@@ -298,199 +455,400 @@
   </div>
 </section>
 
+<!-- WHO IT'S FOR -->
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="mono section-eyebrow">Who it's for</div>
+      <h2 class="section-h">Do it with your team, <em>not instead of them.</em></h2>
+      <p class="section-sub">AI Partner gives an internal marketing team more capacity and more consistent output. <strong>Your squad takes the repeatable work. Your people keep the strategy, the judgement, the brand and the final say.</strong></p>
+    </div>
+    <div class="card-grid reveal-stagger">
+      <div>
+        <div class="mono lbl">01</div>
+        <h3>Internal marketing teams</h3>
+        <p>More output from the team you already have, without adding headcount.</p>
+      </div>
+      <div>
+        <div class="mono lbl">02</div>
+        <h3>Marketing managers and CMOs</h3>
+        <p>Less time chasing production and reports, more time on the decisions only you can make.</p>
+      </div>
+      <div>
+        <div class="mono lbl">03</div>
+        <h3>Owners running their own marketing</h3>
+        <p>A squad doing the legwork and a senior specialist to check your thinking.</p>
+      </div>
+      <div>
+        <div class="mono lbl">04</div>
+        <h3>Multi-location and franchise groups</h3>
+        <p>One set of brand rules, applied the same way across every location and channel.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROOF -->
+<section class="section proof" id="proof">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="mono section-eyebrow">The proof</div>
+      <h2 class="section-h">Proven in our own agency <em>before it reaches yours.</em></h2>
+      <p class="section-sub">Zib has run digital marketing for Australian businesses since 2009. The system behind your squad, powered by SquadHQ, runs across our own production work, and <strong>the senior specialists who use it every day are the people who set up your squad and coach your team.</strong></p>
+      <div class="proof-note">Results delivered by Zib's senior team for Zib clients <a href="/case-studies">See all case studies →</a></div>
+    </div>
+    <div class="proof-stats reveal-stagger">
+      <div class="proof-stat"><div class="v">800<span class="suf">+</span></div><div class="l">Australian businesses served</div></div>
+      <div class="proof-stat"><div class="v">17<span class="suf"> yrs</span></div><div class="l">Of campaigns, since 2009</div></div>
+      <div class="proof-stat"><div class="v">4.8<span class="suf">★</span></div><div class="l">Google rating from 90+ reviews</div></div>
+      <div class="proof-stat"><div class="v">33<span class="suf">+</span></div><div class="l">Published case studies</div></div>
+    </div>
+    <div class="result-grid reveal-stagger">
+      <a class="result-card" href="/casestudy/roof-restoration">
+        <div class="mono tag">Paid ads · Brisbane</div>
+        <div class="big">$5.3M</div>
+        <p>Forecast revenue, up from $2.8M, driven by paid advertising.</p>
+        <div class="who">Roof restoration business <span class="arr">→</span></div>
+      </a>
+      <a class="result-card" href="/casestudy/outback-fencing">
+        <div class="mono tag">SEO · Ecommerce</div>
+        <div class="big">309%</div>
+        <p>Growth in ecommerce transactions from organic search.</p>
+        <div class="who">Outback Fencing <span class="arr">→</span></div>
+      </a>
+      <a class="result-card" href="/casestudy/4x4-automotive">
+        <div class="mono tag">Google Ads · Perth</div>
+        <div class="big">$9.96</div>
+        <p>Cost per lead across 1,368 leads on a modest budget, around 136 a month.</p>
+        <div class="who">4x4 accessories specialist <span class="arr">→</span></div>
+      </a>
+      <a class="result-card" href="/casestudy/car-subscription">
+        <div class="mono tag">SEO + Google Ads · Melbourne</div>
+        <div class="big">110</div>
+        <p>Leads a month, up from 53, across a six-year partnership.</p>
+        <div class="who">Car subscription service <span class="arr">→</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- WHAT IT FIXES -->
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="mono section-eyebrow">What it fixes</div>
+      <h2 class="section-h">Your team is busy. <em>Not always on the right things.</em></h2>
+      <p class="section-sub">Most in-house teams we meet aren't short on talent. <strong>They're short on hours, and the hours go to production instead of thinking.</strong></p>
+    </div>
+    <div class="card-grid reveal-stagger">
+      <div>
+        <div class="mono lbl">Problem 01</div>
+        <h3>Too much production, not enough strategy</h3>
+        <p>Briefs, drafts, variations and reports eat the hours your team should spend on the plan.</p>
+      </div>
+      <div>
+        <div class="mono lbl">Problem 02</div>
+        <h3>Channels that don't talk to each other</h3>
+        <p>Google, Meta, SEO and analytics each tell part of the story, in a different place.</p>
+      </div>
+      <div>
+        <div class="mono lbl">Problem 03</div>
+        <h3>Inconsistent output</h3>
+        <p>Quality depends on who's in that week and how busy they are.</p>
+      </div>
+      <div>
+        <div class="mono lbl">Problem 04</div>
+        <h3>Reporting that takes days</h3>
+        <p>By the time the numbers are pulled together, there's little time left to act on them.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- YOUR SQUAD -->
+<section class="section" style="padding-top: 0;">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="mono section-eyebrow">Your squad</div>
+      <h2 class="section-h">One squad. <em>A specialist for every part of your marketing.</em></h2>
+      <p class="section-sub">Twelve specialists that share your brand rules, tools and history, and stop for your sign-off. <strong>Most teams start with Strategy, Content, Google Ads, SEO and Reporting, then add from there.</strong></p>
+    </div>
+    <div class="library-grid">
+      <article class="agent-card">
+        <div class="icon">01</div>
+        <h3>Strategy &amp; Research</h3>
+        <p>Market, competitor and audience research, campaign plans and channel recommendations, ready to brief from.</p>
+        <div class="tag"><span class="dash">·</span>Plan &amp; create · <span class="pop">Most popular</span></div>
+      </article>
+      <article class="agent-card">
+        <div class="icon">02</div>
+        <h3>Content</h3>
+        <p>Blog posts, landing pages, emails and social copy, drafted in your brand voice and ready to sign off.</p>
+        <div class="tag"><span class="dash">·</span>Plan &amp; create · <span class="pop">Most popular</span></div>
+      </article>
+      <article class="agent-card">
+        <div class="icon">03</div>
+        <h3>Ad Creative</h3>
+        <p>Fresh ad creative and copy variations to test across Meta, TikTok and LinkedIn.</p>
+        <div class="tag"><span class="dash">·</span>Plan &amp; create</div>
+      </article>
+      <article class="agent-card">
+        <div class="icon">04</div>
+        <h3>Competitor Watch</h3>
+        <p>Competitors' rankings, ads, pricing and positioning, checked every week. What changed, and what it means.</p>
+        <div class="tag"><span class="dash">·</span>Plan &amp; create</div>
+      </article>
+      <article class="agent-card">
+        <div class="icon">05</div>
+        <h3>Google Ads</h3>
+        <p>Bids, search terms, negative keywords, wasted-spend checks and ad copy. Reported in CPA and ROAS, not impressions.</p>
+        <div class="tag"><span class="dash">·</span>Publish &amp; promote · <span class="pop">Most popular</span></div>
+      </article>
+      <article class="agent-card">
+        <div class="icon">06</div>
+        <h3>SEO</h3>
+        <p>Keyword and topic research, on-page fixes, technical issues, internal links and schema.</p>
+        <div class="tag"><span class="dash">·</span>Publish &amp; promote · <span class="pop">Most popular</span></div>
+      </article>
+      <article class="agent-card">
+        <div class="icon">07</div>
+        <h3>Meta Ads</h3>
+        <p>Campaign builds, audiences, creative rotation and budget pacing across Facebook and Instagram.</p>
+        <div class="tag"><span class="dash">·</span>Publish &amp; promote</div>
+      </article>
+      <article class="agent-card">
+        <div class="icon">08</div>
+        <h3>Lead Follow-up</h3>
+        <p>Scores every lead, drafts the first reply in your tone and gets it to the right person. Works with HubSpot, Pipedrive and more.</p>
+        <div class="tag"><span class="dash">·</span>Publish &amp; promote</div>
+      </article>
+      <article class="agent-card">
+        <div class="icon">09</div>
+        <h3>Reporting &amp; Insight</h3>
+        <p>Your numbers from every channel, in one plain-English weekly brief with prioritised actions.</p>
+        <div class="tag"><span class="dash">·</span>Measure &amp; improve · <span class="pop">Most popular</span></div>
+      </article>
+      <article class="agent-card">
+        <div class="icon">10</div>
+        <h3>Performance Watch</h3>
+        <p>Watches Google Ads, Meta, GA4 and Search Console daily, and flags anomalies and opportunities for review.</p>
+        <div class="tag"><span class="dash">·</span>Measure &amp; improve</div>
+      </article>
+      <article class="agent-card">
+        <div class="icon">11</div>
+        <h3>Content Refresh</h3>
+        <p>Finds pages losing rankings or traffic and drafts the updates.</p>
+        <div class="tag"><span class="dash">·</span>Measure &amp; improve</div>
+      </article>
+      <article class="agent-card">
+        <div class="icon">+</div>
+        <h3>Custom Specialists</h3>
+        <p>Built around the marketing work unique to your business. If it's repeatable, we'll scope it.</p>
+        <div class="tag"><span class="dash">·</span>Bespoke</div>
+      </article>
+    </div>
+    <p class="roster-foot reveal">Every specialist works from the same approved brand rules and permissions, <strong>with a senior Zib specialist behind them, and waits for your OK before anything goes live.</strong></p>
+  </div>
+</section>
+
 <!-- HOW IT WORKS -->
 <section class="section how" id="how">
   <div class="container">
     <div class="section-head reveal">
       <div class="mono section-eyebrow">How it works</div>
-      <h2 class="section-h">Three steps. <em>Then it's yours.</em></h2>
-      <p class="section-sub">No black boxes. No 12-month lock-ins. <strong>You see exactly how the agent is built, where it lives, and what it does</strong>because in three months we want you running it without us.</p>
+      <h2 class="section-h">From your numbers <em>to a weekly brief you can act on.</em></h2>
+      <p class="section-sub">Your squad does the research, drafting and watching. <strong>Your team, or a senior Zib specialist where agreed, signs off anything that matters.</strong></p>
     </div>
-    <div class="how-grid reveal-stagger">
-      <div class="how-step">
-        <div class="how-num">01</div>
-        <h3>Scope <em>the right first agent</em></h3>
-        <p>30-minute commercial conversation. We map your stack, your data, and the one job most worth automating first. You walk away with a one-page brief, go or no-go.</p>
+    <div class="flow reveal-stagger">
+      <div class="flow-step">
+        <div class="mono lbl">01 · Input</div>
+        <h3>What you know</h3>
+        <p>Your campaign goals, brand rules, past results and the numbers from each channel.</p>
       </div>
-      <div class="how-step">
-        <div class="how-num">02</div>
-        <h3>Build <em>for your business</em></h3>
-        <p>Four weeks. We build the agent for your business on Zib's system and flow architecture, connect it to your tools, train it on your data, and deploy it to your own private server. Your team shadows the build, by week four they understand it.</p>
+      <div class="flow-step">
+        <div class="mono lbl">02 · Your squad</div>
+        <h3>The legwork</h3>
+        <p>Your squad researches, drafts, optimises, keeps watch and pulls the reporting together.</p>
       </div>
-      <div class="how-step">
-        <div class="how-num">03</div>
-        <h3>Hand it over <em>and stay on tap</em></h3>
-        <p>Monthly senior-strategist check-ins. We refine the playbook, add capability, and tell you when it's time to build the next agent. You own everything, code, data, workflow.</p>
+      <div class="flow-step signoff">
+        <div class="mono lbl">03 · You sign off</div>
+        <h3>The judgement</h3>
+        <p>Your team or a senior specialist reviews strategy, creative and any material change.</p>
+      </div>
+      <div class="flow-step">
+        <div class="mono lbl">04 · Output</div>
+        <h3>What ships</h3>
+        <p>Approved campaigns and content, plus a prioritised weekly performance brief.</p>
       </div>
     </div>
-  </div>
-</section>
-
-<!-- AGENT LIBRARY -->
-<section class="section">
-  <div class="container">
-    <div class="section-head reveal">
-      <div class="mono section-eyebrow">The agent library</div>
-      <h2 class="section-h">Five agents. <em>Pick where to start.</em></h2>
-      <p class="section-sub">Each agent is a discrete, ownable unit of marketing labour. Most clients start with one and grow from there. <strong>We'll tell you which one to build first based on where the leverage is.</strong></p>
-    </div>
-    <div class="library-grid">
-      <article class="agent-card">
-        <div class="icon">01</div>
-        <h3>SEO agent</h3>
-        <p>Researches keywords, writes ranking content in your brand voice, optimises on-page, ships schema and internal links. Plugged into your CMS, watched by a senior strategist.</p>
-        <div class="tag"><span class="dash">, </span>Most popular first agent</div>
-      </article>
-      <article class="agent-card">
-        <div class="icon">02</div>
-        <h3>Google Ads agent</h3>
-        <p>Manages bids, query-level optimisation, ad copy variants and negative keyword work across Search and Performance Max. Reports in CPA and ROAS, not impressions.</p>
-        <div class="tag"><span class="dash">, </span>Performance-led</div>
-      </article>
-      <article class="agent-card">
-        <div class="icon">03</div>
-        <h3>Social Ads agent</h3>
-        <p>Generates creative variants nightly across Meta, TikTok and LinkedIn. Tests audiences, paces budgets to CAC, surfaces the winning hook week after week.</p>
-        <div class="tag"><span class="dash">, </span>Creative + media</div>
-      </article>
-      <article class="agent-card">
-        <div class="icon">04</div>
-        <h3>Lead-qualification agent</h3>
-        <p>Scores every inbound lead, drafts the first reply in your tone, routes to the right person. Lives in HubSpot, Pipedrive or a Sheet.</p>
-        <div class="tag"><span class="dash">, </span>Highest ROI for B2B</div>
-      </article>
-      <article class="agent-card">
-        <div class="icon">05</div>
-        <h3>Reporting agent</h3>
-        <p>Pulls GA4, GSC, Ads, Shopify each week. Writes one paragraph per channel in plain English. Flags what changed and what to do.</p>
-        <div class="tag"><span class="dash">, </span>Replaces dashboard fatigue</div>
-      </article>
-      <article class="agent-card">
-        <div class="icon">06</div>
-        <h3>Review &amp; reputation agent</h3>
-        <p>Monitors Google, Trustpilot, ProductReview. Drafts on-brand responses for your approval. Surfaces patterns worth acting on.</p>
-        <div class="tag"><span class="dash">, </span>Local + multi-location</div>
-      </article>
-      <article class="agent-card">
-        <div class="icon">07</div>
-        <h3>Competitor-watch agent</h3>
-        <p>Tracks rivals' rankings, ad creative, pricing and positioning. Weekly diff in your inbox, what changed, what it means.</p>
-        <div class="tag"><span class="dash">, </span>Strategic intel layer</div>
-      </article>
-      <article class="agent-card">
-        <div class="icon">08</div>
-        <h3>Content agent</h3>
-        <p>Long-form posts, landing pages, email and social copy in your brand voice. Brief in, draft out, straight to your CMS for review.</p>
-        <div class="tag"><span class="dash">, </span>Pairs with SEO agent</div>
-      </article>
-      <article class="agent-card">
-        <div class="icon">+</div>
-        <h3>Custom agent</h3>
-        <p>If your business has a job worth automating that's not on this list, we'll scope it. Most are smaller than people think.</p>
-        <div class="tag"><span class="dash">, </span>Bespoke build</div>
-      </article>
+    <div class="tools reveal">
+      <span class="mono lbl">Works with</span>
+      <span class="chip">Google Ads</span>
+      <span class="chip">Meta Ads</span>
+      <span class="chip">Google Analytics 4</span>
+      <span class="chip">Search Console</span>
+      <span class="chip">Your CMS</span>
+      <span class="chip">Your CRM</span>
+      <span class="chip">Reporting tools</span>
+      <span class="note">Built into the tools your team already uses. We confirm exactly how during discovery.</span>
     </div>
   </div>
 </section>
 
 <!-- PRODUCT CLOSE-UPS -->
-<section class="section" style="padding-top: 0;">
+<section class="section" style="padding-top: 0; border-top: 0;">
   <div class="container">
-    <div class="closeup">
+    <div class="closeup" style="border-top: 0;">
       <div class="reveal">
-        <div class="mono closeup-mono">Inside the agent</div>
-        <h3>Drafts arrive ready for review. <em>Not for rewrites.</em></h3>
-        <p>Every output goes through a brand-voice pass, an SEO pass, and an editorial pass before it touches your inbox. By month three, your team is approving, not rewriting.</p>
-        <p>Built on your style guide, your tone of voice, your past content. Not a generic GPT prompt.</p>
+        <div class="mono closeup-mono">Inside the squad</div>
+        <h3>Drafts land ready to approve. <em>Not to rewrite.</em></h3>
+        <p>Your brand rules, tone of voice and approved examples are loaded into the squad. Every draft gets a brand-voice pass and an SEO pass before it reaches your team.</p>
+        <p>As the squad learns your brand, your team spends its time approving, not rewriting.</p>
       </div>
       <div class="visual reveal" aria-hidden="true">
-        <div class="vlabel">Content agent · this week</div>
+        <div class="vlabel">Content specialist · this week</div>
         <div class="row"><span>Drafts written</span><span class="v">12</span></div>
         <div class="row"><span>Brand voice score</span><span class="v">94 / 100</span></div>
         <div class="row"><span>Avg. words / piece</span><span class="v">1,380</span></div>
         <div class="row"><span>Approved without edits</span><span class="v">9</span></div>
-        <div class="row"><span>Sent to editor</span><span class="v">3</span></div>
+        <div class="row"><span>Sent back with notes</span><span class="v">3</span></div>
       </div>
     </div>
     <div class="closeup flip">
       <div class="reveal">
         <div class="mono closeup-mono">Weekly brief</div>
-        <h3>One paragraph per channel. <em>No more dashboards.</em></h3>
-        <p>Monday morning, your reporting agent has read GA4, GSC, Google Ads, Meta and Shopify. It writes the brief in plain English, what moved, what didn't, what to do this week.</p>
+        <h3>One plain-English brief. <em>Prioritised actions.</em></h3>
+        <p>Monday morning, your Reporting &amp; Insight specialist has read GA4, Search Console, Google Ads, Meta and your CRM. It writes what moved, what didn't and what to do this week.</p>
         <p>Same format every week. Skim it in 90 seconds. Forward it to your board.</p>
       </div>
       <div class="visual paper reveal" aria-hidden="true">
-        <div class="vlabel">Weekly brief · Mon 27 Apr</div>
+        <div class="vlabel">Weekly brief · Mon</div>
         <div class="row"><span>Organic sessions</span><span class="v">+12.4%</span></div>
         <div class="row"><span>Google Ads CPA</span><span class="v">-$8.20</span></div>
         <div class="row"><span>Meta ROAS</span><span class="v">3.8×</span></div>
-        <div class="row"><span>Shopify CVR</span><span class="v">2.7%</span></div>
-        <div class="row"><span>Action this week</span><span class="v">Pause 3 ads · scale 1</span></div>
+        <div class="row"><span>Leads to CRM</span><span class="v">+14%</span></div>
+        <div class="row"><span>Needs your OK</span><span class="v">Pause 3 ads · scale 1</span></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- WHY YOU OWN IT -->
+<!-- COACHING + CONTROLS -->
 <section class="section own">
   <div class="container">
     <div class="section-head reveal">
-      <div class="mono section-eyebrow">Why you own it</div>
-      <h2 class="section-h">Your agent. <em>Your data.</em> Your workflow.</h2>
-      <p class="section-sub">If AI agents become the unit of marketing labour, and we think they will, the businesses that <strong>own their agents</strong> compound an advantage every quarter. Renting the capability forever doesn't build the moat.</p>
+      <div class="mono section-eyebrow">Coaching and control</div>
+      <h2 class="section-h">We coach your team. <em>We don't replace it.</em></h2>
+      <p class="section-sub">Your squad adds capacity. Your people stay in charge. <strong>And you're never left to work it out on your own.</strong></p>
     </div>
     <div class="own-grid reveal-stagger">
       <div class="own-pillar">
-        <div class="mono lbl">01 · Portable</div>
-        <h4>Lives in your stack</h4>
-        <p>Built in your tools, your environment, your accounts. If we ever part ways, the agent stays. No data migration. No black box.</p>
+        <div class="mono lbl">01 · Your squad</div>
+        <h4>Does the legwork, every day</h4>
+        <ul>
+          <li>Researches, drafts, bids and reports</li>
+          <li>Keeps watch across every channel</li>
+          <li>Flags what changed and what to do next</li>
+        </ul>
       </div>
       <div class="own-pillar">
-        <div class="mono lbl">02 · Auditable</div>
-        <h4>Every step visible</h4>
-        <p>You see what the agent does, why it does it, and what it costs to run. Transparent prompts, transparent logs, transparent bills.</p>
+        <div class="mono lbl">02 · Your team</div>
+        <h4>Stays in charge</h4>
+        <ul>
+          <li>Learns the system as it's built</li>
+          <li>Signs off on what goes out</li>
+          <li>Owns the brand and the customer</li>
+        </ul>
       </div>
       <div class="own-pillar">
-        <div class="mono lbl">03 · Engineered</div>
-        <h4>Zib-built, not off-the-shelf</h4>
-        <p>Our agents run on Zib's own framework, built over years of commercial work, not a generic prompt-wrapper. You get the depth of our R&amp;D inside your stack, refined every month as the space moves.</p>
+        <div class="mono lbl">03 · Senior Zib specialists</div>
+        <h4>Set it up and keep it sharp</h4>
+        <ul>
+          <li>Set it up properly from day one</li>
+          <li>Coach your team every month</li>
+          <li>On hand when you need them</li>
+        </ul>
+      </div>
+    </div>
+    <div class="controls reveal-stagger">
+      <div class="mono lbl">You stay in control</div>
+      <div>Your team owns strategy, brand and final approval</div>
+      <div>Brand rules, tone and examples loaded into the squad</div>
+      <div>Material changes held for human sign-off</div>
+      <div>Senior specialists available for review and coaching</div>
+    </div>
+  </div>
+</section>
+
+<!-- ONBOARDING -->
+<section class="section">
+  <div class="container">
+    <div class="section-head reveal">
+      <div class="mono section-eyebrow">Getting started</div>
+      <h2 class="section-h">Set up properly. <em>Then better every month.</em></h2>
+      <p class="section-sub">No black boxes. <strong>Your team learns the system while it's being built</strong>, so they know how it works from day one.</p>
+    </div>
+    <div class="how-grid four reveal-stagger" style="--paper: var(--bg);">
+      <div class="how-step">
+        <div class="how-num">01</div>
+        <div class="mono when">Discover</div>
+        <h3>Scope it <em>together</em></h3>
+        <p>A conversation about your team, your tools and your goals, so we start with the work that matters most.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-num">02</div>
+        <div class="mono when">Set up</div>
+        <h3>Build it <em>with your team</em></h3>
+        <p>We set the squad up in your tools and train it on your brand, while your team learns the system alongside us.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-num">03</div>
+        <div class="mono when">Settle in</div>
+        <h3>Approving, <em>not rewriting</em></h3>
+        <p>As the squad learns your brand, drafts land ready to sign off and your team knows the system inside out.</p>
+      </div>
+      <div class="how-step">
+        <div class="how-num">04</div>
+        <div class="mono when">Every month</div>
+        <h3>Coached <em>and improved</em></h3>
+        <p>A senior specialist reviews results with you, sharpens the playbook and plans which specialist to add next.</p>
       </div>
     </div>
   </div>
 </section>
 
 <!-- IS THIS FOR YOU -->
-<section class="section">
+<section class="section" style="padding-top: 0;">
   <div class="container">
     <div class="section-head reveal">
       <div class="mono section-eyebrow">Before you book</div>
       <h2 class="section-h">Honest about <em>who this works for.</em></h2>
-      <p class="section-sub">AI Partner is high-trust, mid-touch. Not every business is ready for it, and that's fine. <strong>Read both columns honestly before booking.</strong></p>
+      <p class="section-sub">AI Partner works best when there's a team, or an owner, ready to stay in the driver's seat. <strong>Read both columns honestly before booking.</strong></p>
     </div>
     <div class="fit-grid reveal-stagger">
       <div class="fit-card yes">
         <h3><span class="mark">✓</span>This is for you</h3>
         <ul>
-          <li>You run a real business with real data, real tools, and a workflow worth automating.</li>
-          <li>You want to own the capability in three years, not keep renting it.</li>
-          <li>You can spare 30 minutes a month with a senior operator.</li>
-          <li>You report in commercial outcomes, leads, sales, ROAS, CAC.</li>
-          <li>You believe AI is a ten-year shift, not a six-month trend.</li>
+          <li>Your marketing team is stretched on production and short on thinking time.</li>
+          <li>You want more output without adding headcount.</li>
+          <li>You want to keep strategy, brand and final approval in-house.</li>
+          <li>You can give the squad access to your ad accounts, analytics and CMS.</li>
+          <li>You report in commercial outcomes: leads, sales, ROAS, CAC.</li>
         </ul>
       </div>
       <div class="fit-card no">
         <h3><span class="mark">×</span>This isn't for you</h3>
         <ul>
           <li>You want it run for you, never thinking about it. See Managed AI instead.</li>
-          <li>You're pre-product-market-fit, with no data to point an agent at.</li>
-          <li>You want results next week. Agents take four weeks to build, longer to compound.</li>
-          <li>You can't share access to your stack. Agents live inside your tools.</li>
-          <li>You're shopping on price. The cheapest agent is the one you don't use.</li>
+          <li>You want software to log into and figure out alone. This is a squad plus coaching.</li>
+          <li>You want results next week. The squad gets sharper every month it runs.</li>
+          <li>You can't share access to your tools. The squad works inside them.</li>
+          <li>You're pre-launch, with no channels or data to work from yet.</li>
         </ul>
       </div>
     </div>
     <div class="fit-foot reveal">
-      Not sure? <a href="#enquire">Book a 15-min fit call</a> · we'll tell you straight up · or <a href="/ai-services#managed">read about Managed AI</a>.
+      Not sure? <a href="#enquire">Book a 15-min fit call</a> · we'll tell you straight up · or <a href="/managed-ai">read about Managed AI</a>.
     </div>
   </div>
 </section>
@@ -501,7 +859,7 @@
     <div class="section-head reveal">
       <div class="mono section-eyebrow">Compare the two paths</div>
       <h2 class="section-h">Managed AI <em>vs</em> AI Partner</h2>
-      <p class="section-sub">Same playbook, two delivery models. <strong>Pick the one that matches how involved you want to be.</strong></p>
+      <p class="section-sub">Same system, same senior people, two delivery models. <strong>Pick the one that matches how involved your team wants to be.</strong></p>
     </div>
     <div class="reveal" style="overflow-x: auto;">
       <table class="compare-table">
@@ -509,80 +867,23 @@
           <tr>
             <th>What you get</th>
             <th><span class="col-tag">Do it for me</span>Managed AI</th>
-            <th><span class="col-tag">Do it with me · this page</span>AI Partner</th>
+            <th><span class="col-tag">Do it with your team · this page</span>AI Partner</th>
           </tr>
         </thead>
         <tbody>
-          <tr><td>Who runs the agents</td><td>Zib senior strategist team</td><td>You own them, we coach</td></tr>
-          <tr><td>Where the agents live</td><td>In our environment</td><td>On <strong>your</strong> private server · Zib architecture</td></tr>
-          <tr><td>Time required from you</td><td>4–6 hrs / week</td><td>30 min / month</td></tr>
-          <tr><td>Ongoing cost</td><td>Retainer, scales with scope</td><td>Setup fee + flat monthly</td></tr>
-          <tr><td>What happens if we part ways</td><td>Agents stay with Zib</td><td><span class="check">You keep everything</span></td></tr>
-          <tr><td>Best for</td><td>Operators who want it run for them</td><td>Operators who want to own the capability</td></tr>
-          <tr><td>Time to first commercial signal</td><td>~4 weeks</td><td>~4 weeks to launch · compounds from there</td></tr>
+          <tr><td>Who does the work</td><td>Zib senior strategist team</td><td>Your squad, with your team in charge</td></tr>
+          <tr><td>Who signs off</td><td>Zib senior strategists</td><td><span class="check">Your team</span>, or a senior specialist where agreed</td></tr>
+          <tr><td>Where it runs</td><td>In our environment, against your accounts</td><td>Built into the tools your team already uses</td></tr>
+          <tr><td>Coaching</td><td>Not needed, we run it</td><td>Monthly with a senior Zib specialist</td></tr>
+          <tr><td>Ongoing cost</td><td>Retainer, scales with scope</td><td>Setup + monthly, scoped to your squad</td></tr>
+          <tr><td>Best for</td><td>Operators who want it run for them</td><td>Teams who want more output and to keep control</td></tr>
           <tr><td>Cancellation</td><td>No lock-in · weekly reporting</td><td>Monthly · no lock-in</td></tr>
         </tbody>
       </table>
     </div>
     <p class="reveal" style="text-align:center; margin-top: 32px; font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; color: var(--muted); text-transform: uppercase;">
-      <a href="/ai-services#managed" style="color: var(--ink); border-bottom: 0.5px solid var(--rule-2);">Read about Managed AI →</a>
+      <a href="/managed-ai" style="color: var(--ink); border-bottom: 0.5px solid var(--rule-2);">Read about Managed AI →</a>
     </p>
-  </div>
-</section>
-
-<!-- PRICING -->
-<section class="pricing" id="pricing">
-  <div class="container">
-    <div class="section-head reveal">
-      <div class="mono section-eyebrow">Plans</div>
-      <h2 class="section-h">Three ways in. <em>Scoped to your business.</em></h2>
-      <p class="section-sub">One-off setup to build the agent, then a flat monthly for support and capability. <strong>Enquire now and we'll scope it on your fit call.</strong></p>
-    </div>
-    <div class="tier-grid reveal-stagger">
-      <div class="tier">
-        <h3>Starter</h3>
-        <p class="desc">One agent, scoped and built. Ideal for testing the model with the highest-leverage job.</p>
-        <div class="setup">Setup + flat monthly · scoped on your call</div>
-        <ul>
-          <li>1 agent, fully built</li>
-          <li>Runs on your own private server</li>
-          <li>Monthly 30-min commercial conversation</li>
-          <li>Email support during business hours</li>
-          <li>Quarterly capability review</li>
-        </ul>
-        <a class="tier-cta" href="#enquire">Enquire now <span>→</span></a>
-      </div>
-      <div class="tier featured">
-        <span class="badge">Most picked</span>
-        <h3>Operator</h3>
-        <p class="desc">Two agents working in tandem. Most clients end up here within six months.</p>
-        <div class="setup">Setup + flat monthly · scoped on your call</div>
-        <ul>
-          <li>2 agents, fully built</li>
-          <li>Senior strategist on Slack</li>
-          <li>Monthly 30-min commercial conversation</li>
-          <li>Quarterly half-day workshop</li>
-          <li>Priority response · same-day</li>
-          <li>Add more agents anytime · flat per-agent rate</li>
-        </ul>
-        <a class="tier-cta" href="#enquire">Enquire now <span>→</span></a>
-      </div>
-      <div class="tier">
-        <h3>Scale</h3>
-        <p class="desc">The full agent library, embedded in your team. For operators going all-in on the AI stack.</p>
-        <div class="setup">Bespoke scope · scoped on your call</div>
-        <ul>
-          <li>Full agent library (5+)</li>
-          <li>Weekly senior strategist sync</li>
-          <li>Dedicated AI engineer</li>
-          <li>Custom agents on request</li>
-          <li>Quarterly executive briefing</li>
-          <li>SLA-backed support</li>
-        </ul>
-        <a class="tier-cta" href="#enquire">Enquire now <span>→</span></a>
-      </div>
-    </div>
-    <p class="footnote">No lock-in beyond initial 3 months · Cancel anytime</p>
   </div>
 </section>
 
@@ -595,32 +896,52 @@
     </div>
     <div class="faq-list">
       <details class="faq-item reveal">
-        <summary>Who actually owns the agent and the data? <span class="plus" aria-hidden="true"></span></summary>
-        <p>You do. The agent is built for your business on Zib's system and flow architecture, and runs on your own private server, connected to your CMS, CRM and data. You'll need your own ChatGPT account for the agent to run against, so model usage stays yours. Your data and logs live in your environment, and if we part ways the agent keeps running.</p>
+        <summary>Does this replace our marketing team? <span class="plus" aria-hidden="true"></span></summary>
+        <p>No, it multiplies them. Your squad takes the legwork, your people make the calls, and a senior Zib specialist coaches them along the way.</p>
       </details>
       <details class="faq-item reveal">
-        <summary>How long does it take to build the first agent? <span class="plus" aria-hidden="true"></span></summary>
-        <p>Four weeks from kickoff to live. Our agents are built on Zib's own framework, we're not architecting from scratch each time, we're configuring proven infrastructure to your stack and your data.</p>
+        <summary>Can it work alongside our agency? <span class="plus" aria-hidden="true"></span></summary>
+        <p>Yes. We map who does what during discovery, so the squad supports your team and your agency rather than duplicating work.</p>
       </details>
       <details class="faq-item reveal">
-        <summary>What tools and stacks do you build into? <span class="plus" aria-hidden="true"></span></summary>
-        <p>We're tech-agnostic. CMS: WordPress, Webflow, Shopify, Sanity, Contentful, Ghost. CRM: HubSpot, Pipedrive, Salesforce, Zoho. Models: Anthropic Claude, OpenAI, Google Gemini. Orchestration: n8n, Zapier, Make, custom Node. If your stack isn't here, ask, we've probably built into it.</p>
+        <summary>Which platforms does it work with? <span class="plus" aria-hidden="true"></span></summary>
+        <p>Commonly Google Ads, Meta, Google Analytics 4, Search Console, your CRM (HubSpot, Pipedrive, Salesforce, Zoho) and your website platform (WordPress, Webflow, Shopify and others). The exact connections are confirmed during discovery. If your stack isn't listed, ask.</p>
       </details>
       <details class="faq-item reveal">
-        <summary>What if I outgrow the partnership? <span class="plus" aria-hidden="true"></span></summary>
-        <p>That's the goal. By month nine to twelve, most clients are running their agents day-to-day with us as a sounding board. We're happy to step back to a quarterly check-in or hand over fully, the agent is yours either way.</p>
+        <summary>How is our brand voice maintained? <span class="plus" aria-hidden="true"></span></summary>
+        <p>Your brand rules, tone of voice and approved examples are built into the squad's knowledge, and every draft is reviewed before anything is published.</p>
       </details>
       <details class="faq-item reveal">
-        <summary>Is my data safe? <span class="plus" aria-hidden="true"></span></summary>
-        <p>Agents live in your environment, behind your auth. We sign NDAs as standard, scope data access tightly, and use enterprise-tier model providers with no-training data agreements. We can also build into self-hosted models if you're regulated.</p>
+        <summary>Who approves campaigns and content? <span class="plus" aria-hidden="true"></span></summary>
+        <p>You do: your team, or a senior Zib specialist where agreed. Nothing goes out without your OK.</p>
       </details>
       <details class="faq-item reveal">
-        <summary>Can I add or remove agents over time? <span class="plus" aria-hidden="true"></span></summary>
-        <p>Yes. Most clients start with one agent, add a second within four months, and a third by month nine. Operator and Scale tiers include agents at a flat per-agent rate. Decommissioning an agent is simple, we hand you a wind-down doc and remove the integration.</p>
+        <summary>How long before the first specialists are live? <span class="plus" aria-hidden="true"></span></summary>
+        <p>Timing is agreed during discovery and depends on the scope and the systems involved. Starting with the core five (Strategy, Content, Google Ads, SEO and Reporting) is the quickest path.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary>How much of my team's time does it take? <span class="plus" aria-hidden="true"></span></summary>
+        <p>Regular reviews, plus signing off what your squad drafts. Your team learns the system while it's being set up, so it knows how it works from day one.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary>Who are the senior specialists? <span class="plus" aria-hidden="true"></span></summary>
+        <p>Senior paid media, SEO and content people from Zib's own team, the same people running campaigns for Zib clients every day. <a href="/meet-the-team" style="color: var(--accent); border-bottom: 0.5px solid var(--accent);">Meet the team →</a></p>
+      </details>
+      <details class="faq-item reveal">
+        <summary>Who owns our data, workflows and outputs? <span class="plus" aria-hidden="true"></span></summary>
+        <p>Your data stays yours. Ownership of workflows and outputs is set out clearly in your agreement before anything is built.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary>Is our data safe? <span class="plus" aria-hidden="true"></span></summary>
+        <p>Your squad works inside your tools, with access scoped to what each specialist needs. We sign NDAs as standard and use enterprise-tier model providers with no-training data agreements.</p>
+      </details>
+      <details class="faq-item reveal">
+        <summary>What does it cost? <span class="plus" aria-hidden="true"></span></summary>
+        <p>A one-off setup, then a monthly fee, both scoped to the specialists you start with and the tools involved. We map it on your scoping call, and most teams find the comparison with a new hire is the persuasive part.</p>
       </details>
       <details class="faq-item reveal">
         <summary>What's the difference between this and Managed AI? <span class="plus" aria-hidden="true"></span></summary>
-        <p>Managed AI = we run agents in our environment, you focus on the business. AI Partner = we build agents in your environment, you own them. Managed is faster to launch and lower-touch. Partner is slower upfront but builds an asset on your balance sheet. <a href="/ai-services#managed" style="color: var(--accent); border-bottom: 0.5px solid var(--accent);">More on Managed AI →</a></p>
+        <p>Managed AI = we run it for you, and you focus on the business. AI Partner = your squad works alongside your team, your people sign off, and we coach them every month. <a href="/managed-ai" style="color: var(--accent); border-bottom: 0.5px solid var(--accent);">More on Managed AI →</a></p>
       </details>
     </div>
   </div>
@@ -629,9 +950,9 @@
 <!-- FINAL CTA -->
 <section class="final-cta" id="enquire">
   <div class="container">
-    <div class="mono section-eyebrow reveal">Ready when you are</div>
-    <h2 class="reveal">Book a scoping call. <em>We'll tell you which agent to build first.</em></h2>
-    <p class="reveal">Thirty minutes with a senior strategist. We read your business, flag the one place an agent moves the needle first, and tell you honestly whether AI Partner is the right fit. No deck. No pitch.</p>
+    <div class="mono section-eyebrow reveal">Scope your marketing squad</div>
+    <h2 class="reveal">Let's multiply <em>your marketing team.</em></h2>
+    <p class="reveal">Tell us where your team is losing time and which tools you already use. A senior specialist will map the highest-value place to start, and tell you honestly whether AI Partner is the right fit. No deck. No pitch.</p>
     <div class="hs-form-wrap reveal" style="text-align: left;" data-hsform="f9587f58-9e5e-46b7-8da6-3068c57be774"></div>
     <p class="reveal" style="margin-top: 32px; margin-bottom: 0; font-family: var(--mono); font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase;">
       Prefer to look around first? <a href="/audit" style="color: var(--ink); border-bottom: 0.5px solid var(--rule-2);">Run the free 30-second audit →</a>
