@@ -386,9 +386,12 @@
 }
 .tools .lbl { color: var(--muted); margin-right: 8px; }
 .tools .chip {
+  display: inline-flex; align-items: center; gap: 10px;
   border: 0.5px solid var(--rule-2); border-radius: 99px;
-  padding: 8px 16px; font-size: 14px; color: var(--ink); background: var(--bg);
+  padding: 8px 18px 8px 12px; font-size: 14px; color: var(--ink); background: var(--bg);
 }
+.tools .chip img { width: 20px; height: 20px; flex-shrink: 0; }
+.tools .chip.more { padding-left: 18px; color: var(--muted); border-style: dashed; }
 .tools .note { flex-basis: 100%; margin-top: 10px; color: var(--muted); font-size: 14px; }
 
 /* ─── COACHING + CONTROLS ─── */
@@ -806,13 +809,16 @@
     </div>
     <div class="tools reveal">
       <span class="mono lbl">Works with</span>
-      <span class="chip">Google Ads</span>
-      <span class="chip">Meta Ads</span>
-      <span class="chip">Google Analytics 4</span>
-      <span class="chip">Search Console</span>
-      <span class="chip">Your CMS</span>
-      <span class="chip">Your CRM</span>
-      <span class="chip">Reporting tools</span>
+      <span class="chip"><img src="/assets/tools/google-ads.svg" alt="" width="20" height="20" loading="lazy" />Google Ads</span>
+      <span class="chip"><img src="/assets/tools/meta.svg" alt="" width="20" height="20" loading="lazy" />Meta Ads</span>
+      <span class="chip"><img src="/assets/tools/google-analytics.svg" alt="" width="20" height="20" loading="lazy" />Google Analytics 4</span>
+      <span class="chip"><img src="/assets/tools/search-console.svg" alt="" width="20" height="20" loading="lazy" />Search Console</span>
+      <span class="chip"><img src="/assets/tools/wordpress.svg" alt="" width="20" height="20" loading="lazy" />WordPress</span>
+      <span class="chip"><img src="/assets/tools/shopify.svg" alt="" width="20" height="20" loading="lazy" />Shopify</span>
+      <span class="chip"><img src="/assets/tools/webflow.svg" alt="" width="20" height="20" loading="lazy" />Webflow</span>
+      <span class="chip"><img src="/assets/tools/hubspot.svg" alt="" width="20" height="20" loading="lazy" />HubSpot</span>
+      <span class="chip"><img src="/assets/tools/salesforce.svg" alt="" width="20" height="20" loading="lazy" />Salesforce</span>
+      <span class="chip more">+ your other tools</span>
       <span class="note">Built into the tools your team already uses. We confirm exactly how during discovery.</span>
     </div>
   </div>
