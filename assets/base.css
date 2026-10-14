@@ -311,7 +311,17 @@ h1, h2, h3, .hero-h, .fork-h, .path-title, .moat-h, .cta-title { text-wrap: bala
     overflow: hidden;
     transition: max-height 320ms var(--ease);
   }
-  .nav.is-open { max-height: 80vh; overflow-y: auto; }
+  /* Open drawer runs to the bottom of the screen and scrolls on its own.
+     --nav-top is the drawer's top edge, set by the toggle script; the page
+     behind is locked (html.nav-locked below), and overscroll-behavior stops
+     a swipe that hits the end of the list from carrying on into the page. */
+  .nav.is-open {
+    max-height: calc(100vh - var(--nav-top, 68px));
+    max-height: calc(100dvh - var(--nav-top, 68px));
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    -webkit-overflow-scrolling: touch;
+  }
   .nav a {
     display: block;
     padding: 14px clamp(20px, 5vw, 28px);
@@ -320,6 +330,11 @@ h1, h2, h3, .hero-h, .fork-h, .path-title, .moat-h, .cta-title { text-wrap: bala
     opacity: 1;
   }
   .nav a:last-child { border-bottom: 0; }
+  /* Pages that ship their own desktop .nav rules (index, audit, seo-agency,
+     …) load them after this file, and those leak into the drawer: a 32px gap
+     between every row and centred 14px top-level links. Out-rank them. */
+  .site-header .nav { align-items: stretch; gap: 0; }
+  .site-header .nav > a { font-size: 16px; opacity: 1; }
 
   /* Mobile: nav dropdown becomes an inline collapsible group */
   .nav-group { width: 100%; border-bottom: 0.5px solid var(--rule); }
@@ -375,6 +390,18 @@ h1, h2, h3, .hero-h, .fork-h, .path-title, .moat-h, .cta-title { text-wrap: bala
    section under the header. */
 .header-spacer { height: 68px; }
 @media (max-width: 880px) { .header-spacer { height: 0; } }
+
+/* Page scroll lock while the mobile drawer is open. iOS Safari doesn't
+   reliably honour overflow:hidden on <body> for touch scrolling, so the body
+   is pinned in place instead; the toggle script sets `top` to the current
+   scroll offset and restores it on close. */
+html.nav-locked body {
+  position: fixed;
+  left: 0;
+  right: 0;
+  width: 100%;
+  overflow: hidden;
+}
 
 /* ─── Mega menu · mobile (stacks inside the drawer) ───────────── */
 @media (max-width: 880px) {
@@ -601,6 +628,8 @@ footer .foot-links {
 .float-cta svg { flex-shrink: 0; }
 @media (max-width: 600px) { .float-cta { padding: 13px 18px; font-size: 14px; gap: 8px; } }
 @media print { .float-cta { display: none; } }
+/* The open mobile drawer runs to the bottom of the screen; don't sit on it. */
+html.nav-locked .float-cta { display: none; }
 
 /* Skip link — visually hidden until keyboard-focused. */
 .skip-link {

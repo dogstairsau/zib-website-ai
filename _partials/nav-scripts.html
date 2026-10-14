@@ -13,7 +13,11 @@
   // Header scroll shadow
   const header = document.getElementById('header');
   if (header) {
-    const onScroll = () => header.classList.toggle('scrolled', window.scrollY > 8);
+    const onScroll = () => {
+      // While the drawer has the page locked, scrollY reads 0; keep the state.
+      if (document.documentElement.classList.contains('nav-locked')) return;
+      header.classList.toggle('scrolled', window.scrollY > 8);
+    };
     document.addEventListener('scroll', onScroll, { passive: true });
     onScroll();
   }
@@ -22,15 +26,47 @@
   const navToggle = document.getElementById('navToggle');
   const navList = document.getElementById('navList');
   if (navToggle && navList) {
+    // Lock the page behind the open drawer so a swipe scrolls the menu, not
+    // the page. The body is pinned at its current offset (see html.nav-locked
+    // in base.css) and put back on close.
+    const root = document.documentElement;
+    let lockedY = null;
+    const lockPage = () => {
+      if (lockedY !== null) return;
+      lockedY = window.scrollY;
+      navList.style.setProperty('--nav-top', `${Math.max(0, navList.getBoundingClientRect().top)}px`);
+      document.body.style.top = `-${lockedY}px`;
+      root.classList.add('nav-locked');
+    };
+    const unlockPage = () => {
+      if (lockedY === null) return;
+      const y = lockedY;
+      lockedY = null;
+      root.classList.remove('nav-locked');
+      document.body.style.top = '';
+      // html has scroll-behavior:smooth; jump straight back instead of gliding.
+      const prev = root.style.scrollBehavior;
+      root.style.scrollBehavior = 'auto';
+      window.scrollTo(0, y);
+      root.style.scrollBehavior = prev;
+    };
     const closeNav = () => {
       navToggle.setAttribute('aria-expanded', 'false');
       navList.classList.remove('is-open');
+      unlockPage();
     };
     navToggle.addEventListener('click', (e) => {
       e.stopPropagation();
       const open = navToggle.getAttribute('aria-expanded') === 'true';
-      navToggle.setAttribute('aria-expanded', String(!open));
-      navList.classList.toggle('is-open', !open);
+      if (open) { closeNav(); return; }
+      navToggle.setAttribute('aria-expanded', 'true');
+      navList.classList.add('is-open');
+      lockPage();
+    });
+    // Rotating or resizing past the drawer breakpoint leaves no drawer to
+    // close, so close it here rather than leave the page locked.
+    window.matchMedia('(max-width: 880px)').addEventListener?.('change', (e) => {
+      if (!e.matches) closeNav();
     });
     navList.addEventListener('click', (e) => {
       if (e.target.tagName === 'A') closeNav();
