@@ -1,0 +1,825 @@
+<!doctype html>
+<html lang="en-AU">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Fitzroy Pub Website Plan</title>
+<meta name="description" content="A plain-English plan for Sand Hill Road's Fitzroy pub: a coming-soon page, Google before the doors open, a five-page website and the SEO behind it.">
+<meta name="robots" content="noindex, nofollow">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Zib Digital">
+<meta property="og:locale" content="en_AU">
+<meta property="og:title" content="Fitzroy Pub Website Plan">
+<meta property="og:description" content="Coming soon first, Google from December, the full site in January. The plan for Sand Hill Road's Fitzroy pub.">
+<meta property="og:url" content="https://www.ziboutreach.com.au/fitzroy-pub">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Fitzroy Pub Website Plan">
+<link rel="canonical" href="https://www.ziboutreach.com.au/fitzroy-pub">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/assets/fonts.css">
+<style>
+/* ==========================================================================
+   FITZROY PUB × ZIB DIGITAL — scope of work
+   Zib house style (tokens mirror assets/base.css): black on white with the
+   Zib orange, Neue Haas Grotesk Display (self-hosted, /assets/fonts.css) for
+   everything, JetBrains Mono for labels. Orange is darkened to --accent-deep
+   wherever it sits on white as small text, so it passes contrast.
+   ========================================================================== */
+:root{
+  --paper:#FFFFFF;
+  --soft:#FAFAF8;
+  --band:#F5F2EB;
+  --ink:#0F0F0F;
+  --ink-2:#1A1A1A;
+  --muted:#6B6B6B;
+  --rule:#E8E5DD;
+  --rule-2:#F1EEE7;
+  --accent:#FF6200;        /* Zib orange */
+  --accent-deep:#B84700;   /* legible orange for small text and links on white */
+  --accent-wash:#FFE8D9;
+  --critical:#C62E2E;
+  --critical-wash:#FBE9E9;
+  --good:#0B7A50;
+  --good-wash:#E3F5EC;
+  --on-dark:#FFFFFF;
+  --on-dark-2:#E6E6E6;
+  --on-accent:#0F0F0F;
+  --dark-bg:#0F0F0F;
+  --dark-soft:#1A1A1A;
+  --dark-rule:#2E2E2E;
+  --dark-muted:#9C9C9C;
+  --dark-accent:#FF6200;
+
+  --f-display:"neue-haas-grotesk-display","Helvetica Neue",Helvetica,Roboto,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-body:"neue-haas-grotesk-display","Helvetica Neue",Helvetica,Roboto,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+
+  --max:1140px;
+  --gut:clamp(16px,4.5vw,56px);
+  --nav-h:52px;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --paper:#111111;
+    --soft:#171717;
+    --band:#1F1F1F;
+    --ink:#F5F5F2;
+    --ink-2:#E2E2DE;
+    --muted:#A3A3A0;
+    --rule:#2E2E2C;
+    --rule-2:#232322;
+    --accent:#FF7A2A;
+    --accent-deep:#FF9A5C;
+    --accent-wash:#3A2213;
+    --critical:#FF8F8F;
+    --critical-wash:#3A1E1E;
+    --good:#5FD3A0;
+    --good-wash:#15291F;
+    --dark-bg:#000000;
+    --dark-soft:#141414;
+    --dark-rule:#2A2A2A;
+    --dark-muted:#9C9C9C;
+    --dark-accent:#FF7A2A;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#111111;
+  --soft:#171717;
+  --band:#1F1F1F;
+  --ink:#F5F5F2;
+  --ink-2:#E2E2DE;
+  --muted:#A3A3A0;
+  --rule:#2E2E2C;
+  --rule-2:#232322;
+  --accent:#FF7A2A;
+  --accent-deep:#FF9A5C;
+  --accent-wash:#3A2213;
+  --critical:#FF8F8F;
+  --critical-wash:#3A1E1E;
+  --good:#5FD3A0;
+  --good-wash:#15291F;
+  --dark-bg:#000000;
+  --dark-soft:#141414;
+  --dark-rule:#2A2A2A;
+  --dark-muted:#9C9C9C;
+  --dark-accent:#FF7A2A;
+}
+
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:var(--f-body);
+  font-size:17px;
+  line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+
+/* ---------- type ---------- */
+h1,h2,h3,h4{font-family:var(--f-display);font-weight:500;line-height:1.08;text-wrap:balance;letter-spacing:-.015em}
+h1{letter-spacing:-.03em}
+h2{font-size:clamp(27px,3.6vw,40px);letter-spacing:-.025em}
+h3{font-size:clamp(19px,2.1vw,22px)}
+h4{font-size:16.5px}
+p{max-width:68ch;text-wrap:pretty}
+strong{font-weight:500;color:var(--ink)}
+a{color:var(--accent-deep);text-underline-offset:2px}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:2px}
+
+.eyebrow{
+  font-family:var(--f-mono);font-size:11.5px;font-weight:500;letter-spacing:.11em;
+  text-transform:uppercase;color:var(--muted);
+}
+.lede{font-size:clamp(17.5px,1.9vw,20px);line-height:1.55;color:var(--ink-2);max-width:64ch}
+.sub{color:var(--muted);font-size:15px;max-width:72ch}
+
+/* ---------- layout ---------- */
+.wrap{max-width:var(--max);margin:0 auto;padding-left:var(--gut);padding-right:var(--gut)}
+section{padding-block:clamp(40px,5vw,66px);border-top:1px solid var(--rule);background:var(--paper)}
+section.soft{background:var(--soft)}
+section.dark{background:var(--dark-bg);color:var(--on-dark);border-top-color:var(--dark-rule)}
+section.dark h2,section.dark h3,section.dark h4{color:var(--on-dark)}
+section.dark .eyebrow,section.dark .sub{color:var(--dark-muted)}
+section.dark p{color:var(--on-dark-2)}
+section.dark strong{color:var(--on-dark)}
+.sec-head{margin-bottom:clamp(20px,2.6vw,32px);display:flex;flex-direction:column;gap:10px}
+.stack{display:flex;flex-direction:column;gap:clamp(20px,2.4vw,30px)}
+.stack-sm{display:flex;flex-direction:column;gap:12px}
+.prose{display:flex;flex-direction:column;gap:14px}
+
+/* ---------- masthead ---------- */
+.masthead{background:var(--dark-bg);color:var(--on-dark);padding-block:clamp(34px,5vw,60px) clamp(28px,4vw,44px);border:0}
+.mh-top{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:clamp(26px,4vw,44px)}
+.zlogo{height:24px;width:auto;display:block;filter:invert(1)}
+.mh-top .x{color:var(--dark-muted);font-size:14px}
+.mh-top .client{font-family:var(--f-mono);font-weight:500;font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--on-dark)}
+.masthead .eyebrow{color:var(--dark-muted)}
+.masthead h1{font-size:clamp(32px,5.8vw,60px);color:var(--on-dark);max-width:20ch;margin-top:10px}
+.masthead h1 em{font-style:italic;font-weight:400;color:var(--dark-accent)}
+.masthead .lede{margin-top:22px;color:var(--on-dark-2)}
+.meta-grid{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));
+  gap:1px;background:var(--dark-rule);border:1px solid var(--dark-rule);
+  margin-top:clamp(30px,4.4vw,48px)
+}
+.meta-grid div{background:var(--dark-bg);padding:14px 16px;display:flex;flex-direction:column;gap:5px}
+.meta-grid dt{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--dark-accent)}
+.meta-grid dd{font-size:14.5px;line-height:1.4;color:var(--on-dark);font-weight:500;overflow-wrap:anywhere}
+
+/* ---------- sticky nav ---------- */
+.nav{
+  position:sticky;top:env(safe-area-inset-top,0px);z-index:60;
+  background:var(--paper);border-bottom:1px solid var(--rule)
+}
+.nav-inner{
+  max-width:var(--max);margin:0 auto;padding:0 var(--gut);height:var(--nav-h);
+  display:flex;align-items:center;gap:2px;overflow-x:auto;scrollbar-width:none
+}
+.nav-inner::-webkit-scrollbar{display:none}
+.nav a{
+  flex:0 0 auto;font-family:var(--f-mono);font-size:11.5px;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--muted);text-decoration:none;padding:7px 10px;border-radius:2px;white-space:nowrap
+}
+.nav a:hover{color:var(--ink);background:var(--rule-2)}
+section{scroll-margin-top:calc(var(--nav-h) + 16px)}
+
+/* ---------- stat tiles ---------- */
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(158px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule)}
+.tile{background:var(--paper);padding:16px 18px;display:flex;flex-direction:column;gap:6px}
+section.soft .tile{background:var(--soft)}
+.tile .n{font-family:var(--f-display);font-weight:500;font-size:clamp(26px,3.4vw,34px);letter-spacing:-.02em;line-height:1;font-variant-numeric:tabular-nums}
+.tile .n.bad{color:var(--critical)}
+.tile .n.go{color:var(--accent-deep)}
+.tile .k{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.tile .tnote{font-size:13.5px;color:var(--muted);line-height:1.45}
+
+/* ---------- month timeline ---------- */
+.gantt-shell{overflow-x:auto;border:1px solid var(--rule);background:var(--paper);padding:18px clamp(14px,2.2vw,22px)}
+section.soft .gantt-shell{background:var(--paper)}
+.gantt{min-width:660px;display:grid;grid-template-columns:190px repeat(7,1fr);row-gap:9px;align-items:center}
+.gantt .mh{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted);
+  border-left:1px solid var(--rule-2);padding:0 0 6px 8px}
+.gantt .rl{grid-column:1;font-size:13.5px;line-height:1.3;color:var(--ink-2);padding-right:12px}
+.gantt .rl b{font-weight:500;color:var(--ink)}
+.gantt .gb{height:20px;border-radius:2px;background:var(--accent);position:relative}
+.gantt .gb.soft{background:var(--accent-wash);border:1px dashed var(--accent-deep)}
+.gantt .gb.green{background:var(--good)}
+.gantt .gb.ink{background:var(--ink)}
+.gantt .gb span{position:absolute;left:8px;top:50%;transform:translateY(-50%);font-family:var(--f-mono);font-size:10px;
+  letter-spacing:.05em;text-transform:uppercase;color:var(--on-accent);white-space:nowrap}
+.gantt .gb.green span,.gantt .gb.ink span{color:var(--paper)}
+.gantt .gb.soft span{color:var(--accent-deep)}
+.gantt .pin{justify-self:start;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.05em;text-transform:uppercase;
+  background:var(--critical);color:var(--paper);padding:3px 7px;border-radius:2px;white-space:nowrap}
+@media (max-width:560px){.gantt{grid-template-columns:132px repeat(7,1fr);min-width:600px}}
+
+/* ---------- workstream grid ---------- */
+.streams{display:grid;grid-template-columns:repeat(auto-fit,minmax(248px,1fr));gap:14px}
+.stream{background:var(--paper);border:1px solid var(--rule);padding:16px 18px;display:flex;flex-direction:column;gap:9px}
+section.soft .stream{background:var(--soft)}
+.stream .num{font-family:var(--f-display);font-weight:500;font-size:26px;line-height:1;color:var(--accent-deep);font-variant-numeric:tabular-nums}
+.stream h4{font-family:var(--f-mono);font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;font-weight:500;color:var(--ink)}
+.stream ul{margin:0;padding:0;list-style:none;display:flex;flex-direction:column;gap:6px}
+.stream li{display:grid;grid-template-columns:8px 1fr;gap:9px;font-size:14px;line-height:1.45;color:var(--ink-2)}
+.stream li::before{content:"";width:5px;height:5px;background:var(--accent);margin-top:8px}
+
+/* ---------- tables ---------- */
+.scroller{overflow-x:auto;border:1px solid var(--rule);background:var(--paper)}
+table{border-collapse:collapse;width:100%;min-width:600px;font-size:14.5px}
+table.wide{min-width:860px}
+caption{caption-side:bottom;text-align:left;padding:10px 14px;font-size:13px;color:var(--muted);font-family:var(--f-body)}
+th,td{text-align:left;padding:10px 14px;border-bottom:1px solid var(--rule-2);vertical-align:top}
+thead th{
+  font-family:var(--f-mono);font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--muted);background:var(--soft);border-bottom:1px solid var(--rule);font-weight:500;white-space:nowrap
+}
+section.soft thead th{background:var(--band)}
+tbody tr:last-child td,tbody tr:last-child th{border-bottom:0}
+tbody th{font-weight:500;font-family:var(--f-display);font-size:15px}
+td .eg{color:var(--muted)}
+tr.us{background:var(--accent-wash)}
+tr.us td,tr.us th{font-weight:500}
+
+/* ---------- pills ---------- */
+.pill{
+  display:inline-block;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.06em;text-transform:uppercase;
+  padding:2px 7px;border-radius:2px;white-space:nowrap;font-weight:500
+}
+.pill.crit{background:var(--critical-wash);color:var(--critical)}
+.pill.med{background:var(--band);color:var(--ink-2)}
+.pill.ok{background:var(--good-wash);color:var(--good)}
+.pill.new{background:var(--accent-wash);color:var(--accent-deep)}
+
+/* ---------- site map tree ---------- */
+.tree-shell{border:1px solid var(--rule);background:var(--paper);padding:20px clamp(14px,2.4vw,26px)}
+.tree,.tree ul{list-style:none;margin:0;padding:0}
+.tree{font-size:15px}
+.tree ul{margin-left:14px;padding-left:16px;border-left:1px solid var(--rule)}
+.tree li{position:relative;padding:5px 0 5px 16px}
+.tree li::before{content:"";position:absolute;left:0;top:19px;width:12px;height:1px;background:var(--rule)}
+.tree > li{padding-left:0}
+.tree > li::before{display:none}
+.tree .node{display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+.tree .name{font-family:var(--f-display);font-weight:500;color:var(--ink)}
+.tree > li > .node .name{font-size:18px}
+.tree .what{display:block;font-size:14px;line-height:1.45;color:var(--muted);margin-top:2px;max-width:70ch}
+.t{font-family:var(--f-mono);font-size:9.5px;letter-spacing:.06em;text-transform:uppercase;padding:2px 6px;border-radius:2px;white-space:nowrap;font-weight:500}
+.t.p1{background:var(--accent);color:var(--on-accent)}
+.t.link{background:var(--good-wash);color:var(--good)}
+.t.later{background:var(--rule-2);color:var(--muted)}
+@media (max-width:560px){
+  .tree{font-size:14px}
+  .tree ul{margin-left:4px;padding-left:10px}
+  .tree li{padding-left:10px}
+  .tree li::before{width:7px}
+  .tree > li > .node .name{font-size:17px}
+  .tree-shell{padding-left:12px;padding-right:12px}
+}
+
+/* ---------- phases ---------- */
+.phase{display:grid;grid-template-columns:140px 1fr;gap:18px;padding-block:18px;border-top:1px solid var(--rule)}
+.phase:first-of-type{border-top:0;padding-top:0}
+.phase .when{font-family:var(--f-mono);font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--accent-deep);padding-top:3px}
+.phase .what{display:flex;flex-direction:column;gap:9px}
+.phase ul{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:5px;font-size:15px;color:var(--ink-2)}
+@media (max-width:620px){.phase{grid-template-columns:1fr;gap:8px}}
+
+/* ---------- callout ---------- */
+.callout{
+  border:1px solid var(--rule);border-left:3px solid var(--accent);background:var(--accent-wash);
+  padding:16px 18px;display:flex;flex-direction:column;gap:8px
+}
+.callout h4{font-size:17px}
+.callout p{font-size:15px;color:var(--ink-2);max-width:none}
+.note{
+  border:1px dashed var(--rule);background:var(--soft);padding:14px 16px;
+  font-size:14.5px;color:var(--muted);display:flex;flex-direction:column;gap:6px
+}
+section.soft .note{background:var(--paper)}
+.note strong{color:var(--ink)}
+
+/* ---------- two-col ---------- */
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:clamp(18px,2.6vw,32px)}
+.kv{display:flex;flex-direction:column;gap:1px;background:var(--dark-rule);border:1px solid var(--dark-rule)}
+.kv > div{background:var(--dark-soft);padding:12px 15px;display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;font-size:14.5px}
+.kv .k{color:var(--dark-muted);font-family:var(--f-mono);font-size:12px;letter-spacing:.05em;text-transform:uppercase}
+.kv .v{font-weight:500;color:var(--on-dark);text-align:right;overflow-wrap:anywhere}
+.kv .v.hi{color:var(--dark-accent)}
+.kv > div.total{background:var(--dark-bg)}
+.kv > div.total .v{font-family:var(--f-display);font-size:21px;color:var(--dark-accent)}
+ol.steps{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:7px;font-size:15.5px;color:var(--on-dark-2)}
+
+/* ---------- close ---------- */
+.close-cta{display:flex;flex-wrap:wrap;gap:12px;margin-top:8px}
+.btn{
+  display:inline-block;font-family:var(--f-body);font-weight:500;font-size:16px;text-decoration:none;
+  padding:12px 22px;border-radius:999px;background:var(--dark-accent);color:var(--on-accent);border:1px solid var(--dark-accent)
+}
+footer{background:var(--dark-bg);color:var(--dark-muted);padding-block:26px;font-size:13.5px;border-top:1px solid var(--dark-rule)}
+footer .wrap{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap}
+footer a{color:var(--dark-accent)}
+</style>
+</head><body>
+
+<header class="masthead">
+  <div class="wrap">
+    <div class="mh-top">
+      <img class="zlogo" src="/assets/zib-logo.png" alt="Zib Digital" width="114" height="24">
+      <span class="x">&times;</span>
+      <span class="client">Sand Hill Road</span>
+    </div>
+    <p class="eyebrow">The Fitzroy pub &middot; Website, Google &amp; SEO plan &middot; October 2026</p>
+    <h1>170-odd years on Brunswick Street. <em>Day one on Google.</em></h1>
+    <p class="lede">The pub opens at the end of February or early March, and people will be looking for it
+    well before then. Here's how we get a coming-soon page up the week your branding lands, have Google
+    showing the pub from December, and launch a simple site Adele can run without a developer, with the SEO
+    behind it. <strong style="color:var(--on-dark)">$8,500 + GST.</strong></p>
+    <dl class="meta-grid">
+      <div><dt>For</dt><dd>Matt &amp; Adele, Sand Hill Road</dd></div>
+      <div><dt>The pub</dt><dd>125&ndash;129 Brunswick St, Fitzroy</dd></div>
+      <div><dt>Doors open</dt><dd>Late Feb or early Mar 2027</dd></div>
+      <div><dt>Read time</dt><dd>Five minutes</dd></div>
+    </dl>
+  </div>
+</header>
+
+<nav class="nav" aria-label="Sections">
+  <div class="nav-inner">
+    <a href="#short">The short version</a>
+    <a href="#google">Google first</a>
+    <a href="#plan">The plan</a>
+    <a href="#website">The website</a>
+    <a href="#pubs">The pubs nearby</a>
+    <a href="#seo">The SEO</a>
+    <a href="#cost">Cost &amp; next steps</a>
+  </div>
+</nav>
+
+<section id="short">
+  <div class="wrap stack">
+    <div class="sec-head">
+      <p class="eyebrow">The short version</p>
+      <h2>The website is the easy part. Getting found is the work.</h2>
+      <p class="lede">Matt's right: a pub website is a handful of pages. Menu, bookings, what's on,
+      functions, a bit about the place. We'll keep it that small. What a new pub doesn't have is anything
+      for Google to go on: no listing, no reviews, no website, no links. The pubs you'll be up against have
+      had years of all four.</p>
+    </div>
+
+    <div class="tiles">
+      <div class="tile"><span class="n bad">0</span><span class="k">Google listing for the pub</span><span class="tnote">It can show 90 days before opening.</span></div>
+      <div class="tile"><span class="n bad">0</span><span class="k">Reviews</span><span class="tnote">The pubs nearby have years of them.</span></div>
+      <div class="tile"><span class="n bad">Closed</span><span class="k">What Broadsheet shows at the address</span><span class="tnote">Still listed as Hotel Fitzroy.</span></div>
+      <div class="tile"><span class="n go">~4</span><span class="k">Months until doors open</span><span class="tnote">Enough time, if we start now.</span></div>
+      <div class="tile"><span class="n go">5</span><span class="k">Pages at launch</span><span class="tnote">Plus a function pack to download.</span></div>
+      <div class="tile"><span class="n go">1 wk</span><span class="k">Branding to coming soon</span><span class="tnote">Less, if the PR plan needs it.</span></div>
+    </div>
+
+    <div class="cols">
+      <div class="prose">
+        <h3>For a pub, Google Maps does more work than the website</h3>
+        <p>Most people picking a pub are on their phone, and most never type in a website address. They
+        search <strong>&ldquo;pub near me&rdquo;</strong> or <strong>&ldquo;pubs Fitzroy&rdquo;</strong>
+        and choose from the map: photos, stars, open now, a book button. So the Google listing gets set
+        up first. The website's job is to back it up with a menu Google can read, a booking button on
+        every page and a What's On that's actually current.</p>
+      </div>
+      <div class="prose">
+        <h3>Your address comes with a past</h3>
+        <p>The building has been a pub since the mid-1800s and has had plenty of names: the Brunswick Hotel,
+        the Old Colonial Inn, then 127 Brunswick and Hotel Fitzroy, with Ichi Ni Nana, Village People
+        and the Upside rooftop inside. Broadsheet still lists it as Hotel Fitzroy, permanently closed.</p>
+        <p>That's a mess to clean up, and it's also a head start. People who remember the OC still
+        search for it, and Fitzroy's history sites already write about the building.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="google" class="soft">
+  <div class="wrap stack">
+    <div class="sec-head">
+      <p class="eyebrow">Google first</p>
+      <h2>Google can show the pub from December, three months before you open.</h2>
+      <p class="lede">Google lets a new business enter its opening date in advance. Once the listing is
+      verified, it appears on Google <strong>90 days before that date</strong>, and you can post fit-out
+      photos and opening news to it. For a 1 March opening, that's 1 December, which is why the SEO
+      starts then. After opening, Google tags you &ldquo;Recently opened&rdquo; for another 90 days.</p>
+    </div>
+
+    <div class="gantt-shell" role="img" aria-label="Timeline from November 2026 to May 2027: the coming-soon page goes live in November, the Google listing shows from December, the SEO strategy runs in December, the full site goes live in January with monthly SEO starting, the doors open around 1 March, and Google shows Recently opened from March to May.">
+      <div class="gantt">
+        <span></span>
+        <span class="mh">Nov</span><span class="mh">Dec</span><span class="mh">Jan</span><span class="mh">Feb</span>
+        <span class="mh">Mar</span><span class="mh">Apr</span><span class="mh">May</span>
+
+        <span class="rl"><b>Coming-soon page</b></span>
+        <span class="gb" style="grid-column:2 / 4"><span>Live a week after branding</span></span>
+
+        <span class="rl"><b>Google listing</b> shows before opening</span>
+        <span class="gb soft" style="grid-column:3 / 6"><span>90 days, &ldquo;opening&rdquo; posts</span></span>
+
+        <span class="rl"><b>SEO strategy</b></span>
+        <span class="gb ink" style="grid-column:3 / 4"><span>Kick-off</span></span>
+
+        <span class="rl"><b>Full website</b></span>
+        <span class="gb soft" style="grid-column:3 / 4"><span>Built</span></span>
+        <span class="gb" style="grid-column:4 / 9"><span>Live from January</span></span>
+
+        <span class="rl"><b>Monthly SEO</b></span>
+        <span class="gb green" style="grid-column:4 / 9"><span>From January</span></span>
+
+        <span class="rl"><b>Doors open</b></span>
+        <span class="pin" style="grid-column:6 / 7">~1 March</span>
+
+        <span class="rl"><b>&ldquo;Recently opened&rdquo;</b> on Google</span>
+        <span class="gb green" style="grid-column:6 / 9"><span>90 days</span></span>
+      </div>
+    </div>
+
+    <div class="cols">
+      <div class="prose">
+        <h3>What we set up</h3>
+        <p>The listing as a pub at the right address, with your opening month and a link to the
+        coming-soon page. Google picks how to verify a business, and these days it's usually a short video
+        of the venue, the signage and proof you run it, so we time that with the signs going up. Then the
+        first fit-out photos and an opening post. On opening day it switches over to hours, menu, the
+        booking link and the details people filter by.</p>
+      </div>
+      <div class="callout">
+        <h4>Clearing out the old listings</h4>
+        <p>We'll find every listing at 125&ndash;129 Brunswick Street (Hotel Fitzroy, Ichi Ni Nana,
+        Upside, Village People) and make sure each one shows as closed and none gets merged into yours.
+        We won't try to keep their reviews. They're about an izakaya and a rooftop bar, not your pub.</p>
+        <p>And if the old owners will hand over the old venues' web addresses, we'll point them at your
+        site so whatever they earned isn't wasted.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="plan">
+  <div class="wrap stack">
+    <div class="sec-head">
+      <p class="eyebrow">The plan</p>
+      <h2>Coming soon first. The full site built behind it.</h2>
+      <p class="lede">Each stage is ready to go the moment you are. Whichever way the PR conversation
+      lands, with something out in early December or holding until January, the coming-soon page can be
+      built and waiting, then go live on the day you pick.</p>
+    </div>
+
+    <div>
+      <div class="phase">
+        <span class="when">Branding + 1 week</span>
+        <div class="what">
+          <h3>The coming-soon page goes live</h3>
+          <ul>
+            <li>The hand sketch, your colours, &ldquo;coming soon&rdquo;. One page, done properly.</li>
+            <li>A sign-up for the opening list: the first people you tell when bookings open.</li>
+            <li>The address, Instagram and an email for early function enquiries.</li>
+            <li>Built on the pub's real web address, so everything it earns carries straight over to the full site.</li>
+            <li>Visitor tracking and Google Search Console on from day one.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="phase">
+        <span class="when">Nov &ndash; Dec</span>
+        <div class="what">
+          <h3>The Google listing</h3>
+          <ul>
+            <li>Set up with your opening date, verified, and the old listings at the address cleaned up.</li>
+            <li>Showing on Google from about 1 December, with fit-out photos and opening posts.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="phase">
+        <span class="when">December</span>
+        <div class="what">
+          <h3>The SEO strategy kicks off</h3>
+          <ul>
+            <li>Research what people search for when they're picking a pub in Fitzroy, and how often.</li>
+            <li>Decide which page answers which search, before a word of copy is written.</li>
+            <li>A discovery session with Adele, then we write the copy for the full site.</li>
+            <li>Line up the new pub on Broadsheet, Time Out, Concrete Playground and the rest, in place of the old venue.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="phase">
+        <span class="when">January</span>
+        <div class="what">
+          <h3>The full site goes live and the monthly SEO starts</h3>
+          <ul>
+            <li>You review design and copy together on a live link. Nothing goes up without your sign-off.</li>
+            <li>The coming-soon page flips to the full site, at the same address.</li>
+            <li>Adele gets trained on the editor, and the monthly SEO begins.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="phase">
+        <span class="when">Late Feb / early Mar</span>
+        <div class="what">
+          <h3>Doors open</h3>
+          <ul>
+            <li>The listing switches to open, with hours, menu and the booking button.</li>
+            <li>Ninety days of &ldquo;Recently opened&rdquo; on Google.</li>
+            <li>Asking for reviews becomes part of the routine from the first week.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="website" class="soft">
+  <div class="wrap stack">
+    <div class="sec-head">
+      <p class="eyebrow">The website</p>
+      <h2>Five pages and a function pack. Built once, ready to copy.</h2>
+      <p class="lede">Matt asked whether the Waterside could just be the template. Copy the shape, not the
+      site. Its pages (book, menu, events, what's on, about) are exactly the right shape for a pub, and
+      that's what Fitzroy gets. But copying the build means copying the WordPress set-up Adele finds
+      finicky, and a site made for two venues in one. So we build Fitzroy clean, as a template. That
+      becomes the one Sand Hill Road copies for the next pub.</p>
+    </div>
+
+    <div class="tree-shell">
+      <ul class="tree">
+        <li>
+          <div class="node"><span class="name">Home</span> <span class="t p1">At launch</span></div>
+          <span class="what">How the place feels, photos, hours, address, and a book button on every page.</span>
+          <ul>
+            <li><div class="node"><span class="name">Menu</span> <span class="t p1">At launch</span></div>
+              <span class="what">Bistro and drinks, written as text, not a PDF. Google can read it and it loads on a phone.</span></li>
+            <li><div class="node"><span class="name">What's On</span> <span class="t p1">At launch</span></div>
+              <span class="what">Trivia, the pool comp, the footy, the specials. Adele updates it in a few minutes.</span></li>
+            <li><div class="node"><span class="name">Functions</span> <span class="t p1">At launch</span></div>
+              <span class="what">The spaces, the packages, a function pack to download and an enquiry form.</span></li>
+            <li><div class="node"><span class="name">Our Story</span> <span class="t p1">At launch</span></div>
+              <span class="what">The building since the mid-1800s, the Old Colonial years, and the reopening.</span></li>
+            <li><div class="node"><span class="name">Book</span> <span class="t link">Your booking system</span></div>
+              <span class="what">Linked from every page. If it's SevenRooms like the Waterside, your team learns nothing new.</span></li>
+            <li><div class="node"><span class="name">Contact, find us, privacy</span> <span class="t p1">At launch</span></div>
+              <span class="what">In the footer of every page, plus a privacy page for the sign-up list.</span></li>
+            <li><div class="node"><span class="name">Later, when there's a reason</span> <span class="t later">Monthly SEO</span></div>
+              <span class="what">A page per function space, Christmas parties, gift vouchers, careers, guides.</span></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+
+    <div class="cols">
+      <div class="prose">
+        <h3>Not WordPress</h3>
+        <p>Adele, you said WordPress does the job but it's finicky and very manual. This won't be. You
+        update What's On, menus, photos and hours from a simple editor: no developer, no plugins to keep
+        patched. Photos and video both work, and it's fast on a phone.</p>
+        <p>It plugs into the system we use for Zib's marketing, so the SEO work runs straight through it. A
+        training session for you and anyone else who'll use it is part of the price.</p>
+      </div>
+      <div class="prose">
+        <h3>Who writes it</h3>
+        <p>We do. After a discovery session about the pub, Michael and Tom write the copy for both
+        search and the brand. You review design and words together on a live link, and nothing goes live
+        without your sign-off.</p>
+        <div class="note">
+          <strong>The photos will do more than the words.</strong> For a pub, the questions are whether
+          the food looks good and the place looks fun. Photography isn't in this price. Plan a shoot for the
+          fortnight before opening, once the bars are finished and the food's on plates. Until then, fit-out
+          photos do a lot of work on the Google listing.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="pubs">
+  <div class="wrap stack">
+    <div class="sec-head">
+      <p class="eyebrow">The pubs nearby</p>
+      <h2>Good pubs. Websites that leave the door open.</h2>
+      <p class="sub">We went through the three Matt named (Builders Arms, the Standard and the Workers
+      Club) plus the Provincial and the Marquis of Lorne, page by page, on 26 October. These are pubs
+      with years of reviews and regulars. Their websites are where a new pub can catch up.</p>
+    </div>
+
+    <div class="scroller">
+      <table class="wide">
+        <caption>&ldquo;Menu Google can read&rdquo; means a food menu with prices written on the page,
+        rather than a PDF or a link to another app. &ldquo;Fitzroy in the title&rdquo; is the homepage's
+        title: the blue line Google shows in search results.</caption>
+        <thead>
+          <tr><th>Pub</th><th>Menu Google can read</th><th>What's On</th><th>Functions</th><th>Fitzroy in the title</th><th>Booking</th></tr>
+        </thead>
+        <tbody>
+          <tr><th>Builders Arms</th><td><span class="pill ok">Yes</span> drinks are PDF</td><td><span class="pill ok">Current</span> dated October events</td><td>Page and enquiry form, no pack</td><td><span class="pill crit">No</span></td><td>SevenRooms</td></tr>
+          <tr><th>The Standard</th><td><span class="pill ok">Yes</span></td><td><span class="pill crit">Stale</span> gigs stop at January 2024</td><td>No functions page</td><td><span class="pill crit">No</span></td><td>OpenTable</td></tr>
+          <tr><th>The Workers Club</th><td><span class="pill crit">No</span> PDF only</td><td>Gigs from a ticketing feed</td><td>Page, no pack or form</td><td><span class="pill ok">Yes</span></td><td>TableAgent</td></tr>
+          <tr><th>The Provincial</th><td><span class="pill crit">No</span> links to an ordering app</td><td><span class="pill med">Current</span> no year on dates</td><td>Page and PDF pack</td><td><span class="pill ok">Yes</span></td><td>SevenRooms</td></tr>
+          <tr><th>Marquis of Lorne</th><td><span class="pill crit">No</span> PDF only</td><td><span class="pill crit">None</span></td><td>PDF pack and enquiry form</td><td><span class="pill crit">No</span></td><td>OpenTable</td></tr>
+          <tr class="us"><th>Your pub at launch</th><td><span class="pill ok">Yes</span></td><td><span class="pill ok">Current</span> dated</td><td>Page, pack and form</td><td><span class="pill ok">Yes</span></td><td>Your system</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="cols">
+      <div class="prose">
+        <h3>Three gaps worth taking</h3>
+        <p><strong>Menus.</strong> Three of the five don't have a food menu with prices that Google can
+        read on their own site. Google can only match a search for &ldquo;parma Fitzroy&rdquo; to a menu
+        it can read.</p>
+        <p><strong>What's On.</strong> Only Builders Arms has current, dated events. The Standard's gig
+        guide stops in January 2024, and the Marquis has none. A What's On that's kept current feeds
+        the Google listing every week.</p>
+        <p><strong>Saying where they are.</strong> Three of the five don't put Fitzroy in their homepage
+        title, and none of the five tells Google, in the code behind the page, that it's a pub with a
+        menu, opening hours and events. Yours will do both from day one.</p>
+      </div>
+      <div class="stack-sm">
+        <div class="callout">
+          <h4>What none of this beats</h4>
+          <p>These pubs have years of reviews and regulars behind them. A good website doesn't outrank
+          that in a month, and we won't pretend it does. What it does is make sure that when someone finds you,
+          on the map or in a list of new openings, there's nothing to put them off and an obvious way to
+          book.</p>
+        </div>
+        <div class="note">
+          <strong>Who uses what.</strong> Two of the five book through SevenRooms, two through OpenTable,
+          one through TableAgent. They're built on Squarespace (two), Weebly, WordPress and Webflow.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="seo" class="soft">
+  <div class="wrap stack">
+    <div class="sec-head">
+      <p class="eyebrow">The SEO &middot; strategy in December, monthly from January</p>
+      <h2>What people search when they're picking a pub.</h2>
+      <p class="sub">These are the kinds of searches we'd go after. They're examples, not promises. The
+      December research puts a real number on each one and tells us which are worth chasing first.</p>
+    </div>
+
+    <div class="scroller">
+      <table>
+        <caption>Example searches only. Monthly volumes and difficulty come from the December research,
+        and we'll set targets against them then.</caption>
+        <thead>
+          <tr><th>When someone wants&hellip;</th><th>They search things like</th><th>What wins it</th></tr>
+        </thead>
+        <tbody>
+          <tr><th>A pub, right now</th><td><span class="eg">pub near me &middot; pubs open now &middot; pub fitzroy</span></td><td>The Google listing, its photos and its reviews</td></tr>
+          <tr><th>A Fitzroy local</th><td><span class="eg">fitzroy pubs &middot; best pubs fitzroy &middot; brunswick street pubs</span></td><td>The homepage, plus Broadsheet, Time Out and other listings</td></tr>
+          <tr><th>Food &amp; drinks</th><td><span class="eg">pub food fitzroy &middot; bistro fitzroy &middot; parma fitzroy &middot; cocktail bar fitzroy</span></td><td>A menu page written in text, not a PDF</td></tr>
+          <tr><th>Pool &amp; sport</th><td><span class="eg">pub with pool table fitzroy &middot; where to watch the footy</span></td><td>What's On, kept current, and the listing</td></tr>
+          <tr><th>A function</th><td><span class="eg">function venue fitzroy &middot; birthday venue fitzroy &middot; christmas party venue</span></td><td>The Functions page and the function pack</td></tr>
+          <tr class="us"><th>The old place</th><td><span class="eg">old colonial inn fitzroy &middot; hotel fitzroy brunswick street</span></td><td>Our Story, and the old listings cleaned up</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="stack-sm">
+      <h3>The monthly work, from January</h3>
+      <p class="sub">Once the site is live, this runs every month. It's built around what fills a pub:
+      the listing, reviews, a current What's On, and being in the places people check before going out.</p>
+    </div>
+    <div class="streams">
+      <div class="stream">
+        <span class="num">01</span>
+        <h4>The Google listing</h4>
+        <ul>
+          <li>Weekly posts from What's On</li>
+          <li>Fresh photos, public holiday hours, menu and booking links kept right</li>
+          <li>Questions on the listing answered</li>
+        </ul>
+      </div>
+      <div class="stream">
+        <span class="num">02</span>
+        <h4>Reviews</h4>
+        <ul>
+          <li>A simple way to ask: table cards, and a follow-up after bookings</li>
+          <li>Every review answered, good and bad</li>
+          <li>The ones that mention food, pool and functions worked into the site</li>
+        </ul>
+      </div>
+      <div class="stream">
+        <span class="num">03</span>
+        <h4>Content</h4>
+        <ul>
+          <li>What's On kept current, with event dates and times Google can read</li>
+          <li>One new page a month when there's a reason: Christmas functions, footy season</li>
+          <li>Menu and function pages kept up to date</li>
+        </ul>
+      </div>
+      <div class="stream">
+        <span class="num">04</span>
+        <h4>Listings &amp; links</h4>
+        <ul>
+          <li>The new pub on Broadsheet, Time Out, Concrete Playground, Good Food, TripAdvisor, Apple Maps and Bing</li>
+          <li>The old venue's entries at your address closed or updated</li>
+          <li>Links from opening coverage, working with your PR team</li>
+        </ul>
+      </div>
+      <div class="stream">
+        <span class="num">05</span>
+        <h4>AI answers</h4>
+        <ul>
+          <li>Ask ChatGPT or Google for the best pubs in Fitzroy and they answer from listings, reviews and guides</li>
+          <li>The same facts about the pub, everywhere they look</li>
+          <li>Checking whether the pub gets named</li>
+        </ul>
+      </div>
+      <div class="stream">
+        <span class="num">06</span>
+        <h4>Reporting</h4>
+        <ul>
+          <li>Calls, directions, booking clicks, function enquiries and sign-ups, every month</li>
+          <li>Where you rank for the searches that matter</li>
+          <li>A monthly call to plan the next month</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="note">
+      <strong>What to expect.</strong> The Google listing and the map do the early work. Calls,
+      direction requests and booking clicks should start in opening week. Getting the website itself
+      ranked for &ldquo;pubs Fitzroy&rdquo; against pubs with decades of reviews and links takes longer:
+      think six to twelve months. We'll report on the things that turn into people through the door, not
+      just rankings.
+    </div>
+  </div>
+</section>
+
+<section id="cost" class="dark">
+  <div class="wrap stack">
+    <div class="sec-head">
+      <p class="eyebrow">Cost &amp; next steps</p>
+      <h2>$8,500 + GST, from coming soon to launch.</h2>
+      <p class="lede" style="color:var(--on-dark-2)">Matt, you said six to ten thousand, start small and add as you
+      go. This is that: everything you need to open, nothing you don't, and a site built to grow.</p>
+    </div>
+    <div class="cols">
+      <div class="stack-sm">
+        <h3>What the $8,500 covers</h3>
+        <div class="kv">
+          <div><span class="k">Coming-soon page &amp; opening list</span><span class="v">Included</span></div>
+          <div><span class="k">Google listing &amp; old-listing clean-up</span><span class="v">Included</span></div>
+          <div><span class="k">SEO strategy, December</span><span class="v">Included</span></div>
+          <div><span class="k">Five-page site &amp; function pack</span><span class="v">Included</span></div>
+          <div><span class="k">Copy for every launch page</span><span class="v">Included</span></div>
+          <div><span class="k">Call, booking &amp; enquiry tracking</span><span class="v">Included</span></div>
+          <div><span class="k">Editor training</span><span class="v">Included</span></div>
+          <div class="total"><span class="k">All up, one-off</span><span class="v">$8,500 + GST</span></div>
+        </div>
+      </div>
+      <div class="stack-sm">
+        <h3>After launch</h3>
+        <div class="kv">
+          <div><span class="k">Monthly SEO</span><span class="v hi">From January</span></div>
+          <div><span class="k">Priced</span><span class="v">From the December strategy</span></div>
+        </div>
+        <p class="sub">Not in the price: photography and video, the branding itself, booking system fees,
+        and ads on Google or Meta.</p>
+        <h3 style="margin-top:10px">Four questions for you</h3>
+        <p>Does the pub keep any of the <strong>Old Colonial</strong> name, or start fresh? It changes how
+        hard we lean on the history. Is <strong>upstairs</strong> part of opening, or later? Will you use
+        <strong>SevenRooms</strong> like the Waterside? And is the <strong>web address</strong> registered
+        yet? If not, it's worth doing the day the name is final.</p>
+      </div>
+    </div>
+
+    <div class="cols">
+      <div class="stack-sm">
+        <h3>Next steps</h3>
+        <ol class="steps">
+          <li>Say yes to the scope.</li>
+          <li>Send the branding when the first pass lands. A draft is enough to start.</li>
+          <li>Let us know which way the PR plan goes: early December or January.</li>
+          <li>Coming-soon page live within a week of the branding.</li>
+        </ol>
+      </div>
+      <div class="stack-sm">
+        <p>A pub that's been on Brunswick Street for 170-odd years shouldn't open to an empty Google page.
+        Start now and by opening night it won't: there'll be a listing with photos, a list of people
+        waiting to book, and a website that's ready for them.</p>
+        <div class="close-cta">
+          <a class="btn" href="mailto:michael.glasser@zibdigital.com.au?subject=Fitzroy%20pub%20website">Email Michael to go ahead</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span>Sand Hill Road &amp; Zib Digital &middot; Fitzroy pub website and Google plan &middot; October 2026</span>
+    <span>Prepared by <a href="https://www.zibdigital.com.au">Zib Digital</a></span>
+  </div>
+</footer>
+
+</body>
+</html>
