@@ -340,6 +340,55 @@
 @media(max-width:850px){.upgrade .offer-layout{grid-template-columns:1fr;gap:32px}.upgrade .offer-intro h2{max-width:620px}.upgrade .offer-description{max-width:620px}}
 @media(max-width:650px){.upgrade .upgrade-explained .steps{grid-template-columns:1fr}.upgrade .upgrade-explained .scope{padding:18px}.upgrade .offer-intro h2{font-size:34px}}
 @media(prefers-reduced-motion:reduce){.upgrade .case-photo img{transition:none}.upgrade .case-photo:hover img{transform:none}}
+
+/* Carry the hero's orange, circles and browser-card language through the offer. */
+.upgrade .upgrade-explained{background:#f6f3ed}
+.upgrade .offer-layout{gap:0;background:#fff;border:1px solid #e2ddd5;border-radius:22px;overflow:hidden;grid-template-columns:1fr 1fr;align-items:stretch}
+.upgrade .offer-intro{position:relative;overflow:hidden;background:#ff6200;padding:40px;isolation:isolate;display:flex;flex-direction:column}
+.upgrade .offer-intro::after{content:'';position:absolute;z-index:-1;pointer-events:none;width:280px;height:280px;border:1px solid #ffffff45;border-radius:50%;right:-145px;bottom:-170px;box-shadow:0 0 0 35px #ffffff12,0 0 0 70px #ffffff0a}
+.upgrade .offer-intro h2{font-size:clamp(32px,3.2vw,44px);line-height:1.07;max-width:430px}
+.upgrade .offer-intro h2 span{display:block;color:#fff;margin-top:12px}
+.upgrade .offer-description{font-size:16px;line-height:1.65;color:#251409;margin-top:25px}
+.upgrade .offer-eligibility{color:#361d0d;margin-top:auto;padding-top:28px}
+.upgrade .offer-inclusions{padding:26px 36px 30px}
+.upgrade .offer-card-label{display:flex;justify-content:space-between;gap:12px;padding-bottom:20px;margin-bottom:26px;border-bottom:1px solid #e7e2da;font:9px var(--mono);letter-spacing:.07em;color:#6c6c6c}
+.upgrade .offer-card-label>span:first-child{color:#c7c2ba;letter-spacing:3px}
+.upgrade .offer-inclusions>h3{font-size:24px}
+.upgrade .offer-checklist li{padding-block:15px}
+.upgrade .offer-checklist li:last-child{border-bottom:0;padding-bottom:0}
+.upgrade .offer-checklist li::before{top:15px}
+.upgrade .upgrade-explained .scope{background:transparent;border-left:2px solid #ff6200;border-radius:0;padding:0 0 0 18px;margin-top:22px;color:#666}
+.upgrade .upgrade-explained .process-divider{margin-top:42px}
+.upgrade .upgrade-explained .steps{background:#151515;color:#fff;border:0;border-radius:18px;overflow:hidden;gap:0;margin-top:22px;list-style:none}
+.upgrade .upgrade-explained .step{padding:26px 28px;position:relative}
+.upgrade .upgrade-explained .step+.step{border-left:1px solid #ffffff20;padding:26px 28px}
+.upgrade .upgrade-explained .step .number{color:#ff9757;font:12px var(--mono);margin-bottom:18px}
+.upgrade .upgrade-explained .step h3{color:#fff;font-size:22px}
+.upgrade .upgrade-explained .step p{color:#bfbfbc;font-size:14px;line-height:1.6}
+.upgrade .form-section{background:#f6f3ed;padding-top:0}
+.upgrade .application-panel{background:#151515;border:1px solid #2a2a2a;border-radius:24px;padding:40px;gap:48px;align-items:start}
+.upgrade .application-intro{color:#fff;position:relative;overflow:hidden;isolation:isolate;align-self:stretch;padding:15px 0 65px}
+.upgrade .application-intro::after{content:'';position:absolute;z-index:-1;pointer-events:none;width:260px;height:260px;border:1px solid #ff62003d;border-radius:50%;left:-125px;bottom:-150px;box-shadow:0 0 0 35px #ff62000c,0 0 0 70px #ff620008}
+.upgrade .application-intro>.eyebrow{color:#ff9757;margin-bottom:26px}
+.upgrade .application-intro h2{font-size:clamp(34px,3.8vw,52px);line-height:1.07;letter-spacing:-.04em}
+.upgrade .application-intro h2 span{color:#ff8540}
+.upgrade .form-section .application-intro .intro-copy{color:#c8c8c3;font-size:16px;line-height:1.65;max-width:400px}
+.upgrade .application-intro .form-note{border-top:1px solid #ffffff26;font-size:14px;line-height:1.65;color:#bfbfba;margin-top:30px;padding-top:24px;max-width:400px}
+.upgrade .application-intro .form-note b{font-size:17px;color:#fff;margin-bottom:10px}
+.upgrade .application-intro .eligibility{color:#bfbfba;max-width:380px}
+.upgrade .application-panel .form-card{border:0;border-radius:16px;padding:30px;box-shadow:0 12px 35px #0002}
+.upgrade .application-card-head{border-bottom:1px solid #e5dfd5;padding-bottom:20px;margin-bottom:20px}
+.upgrade .application-card-head .eyebrow{display:block;color:#a63f00;margin:0 0 12px;font-size:10px}
+.upgrade .application-card-head h3{font-size:25px;line-height:1.15;margin-bottom:10px}
+.upgrade .application-card-head p{font-size:13px;line-height:1.5;color:#666}
+.upgrade .application-panel input,.upgrade .application-panel textarea{background:#faf9f6;border-color:#d9d5cc;border-radius:8px}
+.upgrade .application-panel .fields{gap:18px}
+.upgrade .application-panel label{font-size:13px}
+.upgrade .application-panel .form-card .apply{background:#ff6200;border-color:#ff6200;color:#111}
+.upgrade .application-panel .form-card .apply:hover{background:#ff7b29}
+@media(max-width:1000px){.upgrade .offer-intro{padding:30px}.upgrade .offer-inclusions{padding:24px}.upgrade .application-panel{padding:28px;gap:30px}}
+@media(max-width:850px){.upgrade .offer-layout{grid-template-columns:1fr}.upgrade .offer-intro h2{max-width:600px}.upgrade .offer-eligibility{margin-top:0;padding-top:20px}.upgrade .application-panel{grid-template-columns:1fr}.upgrade .application-intro{padding-bottom:22px}.upgrade .application-intro h2 br:last-child{display:none}.upgrade .application-intro .intro-copy,.upgrade .application-intro .form-note,.upgrade .application-intro .eligibility{max-width:600px}}
+@media(max-width:650px){.upgrade .offer-intro{padding:28px 24px}.upgrade .offer-intro h2{font-size:34px}.upgrade .offer-card-label{font-size:8px}.upgrade .upgrade-explained .step,.upgrade .upgrade-explained .step+.step{padding:22px;border-left:0}.upgrade .upgrade-explained .step+.step{border-top:1px solid #ffffff20}.upgrade .upgrade-explained .step .number{margin:3px 0 0}.upgrade .application-panel{padding:22px 16px;border-radius:20px;gap:24px}.upgrade .application-intro{padding:6px 8px 20px}.upgrade .application-panel .form-card{padding:22px 18px}.upgrade .application-card-head h3{font-size:23px}}
 </style>
 </head>
 <body class="upgrade">
@@ -381,13 +430,13 @@
 
 <section class="simple-process upgrade-explained" id="how-it-works"><div class="wrap">
 <div class="offer-layout"><div class="offer-intro"><div class="eyebrow">What you get</div><h2>A new landing page.<br><span>Built for your business. Free.</span></h2><p class="offer-description">We’ll design and build one dedicated page that gives visitors a clear reason to enquire. It will match your brand, support your campaign and make the next step easy.</p><p class="offer-eligibility">Available to selected Zib marketing clients, subject to approval.</p></div>
-<div class="offer-inclusions"><h3>Your page includes</h3><ul class="offer-checklist"><li><strong>Clear, persuasive copy</strong><span>Explain your offer and why customers should choose you.</span></li><li><strong>Design that fits your brand</strong><span>A focused layout that works on mobile and desktop.</span></li><li><strong>An easy way to enquire</strong><span>Prominent calls to action and a simple enquiry form.</span></li><li><strong>A page aligned with your campaign</strong><span>Connect the message in your marketing to the page visitors land on.</span></li></ul></div></div>
+<div class="offer-inclusions"><div class="offer-card-label"><span aria-hidden="true">● ● ●</span><span>YOUR WEBSITE / THE UPGRADE</span></div><h3>Your page includes</h3><ul class="offer-checklist"><li><strong>Clear, persuasive copy</strong><span>Explain your offer and why customers should choose you.</span></li><li><strong>Design that fits your brand</strong><span>A focused layout that works on mobile and desktop.</span></li><li><strong>An easy way to enquire</strong><span>Prominent calls to action and a simple enquiry form.</span></li><li><strong>A page aligned with your campaign</strong><span>Connect the message in your marketing to the page visitors land on.</span></li></ul></div></div>
 <p class="scope"><strong>The scope:</strong> One dedicated landing page. A full website redesign is outside this offer. We’ll agree the inclusions and clarify any hosting, maintenance, third-party or additional costs before work begins.</p><!-- Delivery team must confirm inclusions before publication. -->
 <div class="process-divider"><h3>From application to upgrade.</h3><p>Three clear steps. Scope agreed before we build.</p></div>
 <ol class="steps"><li class="step"><div class="number" aria-hidden="true">01</div><h3>Apply for your upgrade.</h3><p>Tell us about your business and what you want to improve.</p></li><li class="step"><div class="number" aria-hidden="true">02</div><h3>Agree the plan.</h3><p>We check eligibility, discuss your goals and agree what’s included.</p></li><li class="step"><div class="number" aria-hidden="true">03</div><h3>Review your new page.</h3><p>We create your page. You approve it, then we prepare it for launch.</p></li></ol><a class="apply" href="#apply" data-cta="steps">Apply for My Free Website Upgrade <span aria-hidden="true">↗</span></a><p class="eligibility">For selected Zib marketing clients, subject to approval.</p></div></section>
 
 
-<section class="form-section" id="apply"><div class="wrap two"><div><div class="eyebrow">Apply for your upgrade</div><h2>Give your website<br>the upgrade<br>it deserves.</h2><p class="intro-copy">Apply today to find out whether your business qualifies for a free website upgrade with Zib Digital.</p><div class="form-note"><b>What happens next?</b>Our team reviews your application, confirms eligibility and discusses the scope and delivery timing with you before the build begins.</div><p class="eligibility">Available for a limited time to selected clients engaged with Zib Digital’s marketing services. Subject to approval.</p></div><div class="form-card"><form id="upgrade-form" data-preview="true"><p style="background:#fff1e6;padding:14px;font-size:13px;margin-bottom:24px;border-radius:5px"><strong>Draft preview:</strong> you can test these fields. Applications are not sent from this preview.</p><div class="fields">
+<section class="form-section" id="apply"><div class="wrap"><div class="application-panel two"><div class="application-intro"><div class="eyebrow">Apply for your upgrade</div><h2>Your next chapter.<br><span>A FREE<br>website upgrade.</span></h2><p class="intro-copy">Apply today to find out whether your business qualifies for a free website upgrade with Zib Digital.</p><div class="form-note"><b>What happens next?</b>Our team reviews your application, confirms eligibility and discusses the scope and delivery timing with you before the build begins.</div><p class="eligibility">Available for a limited time to selected clients engaged with Zib Digital’s marketing services. Subject to approval.</p></div><div class="form-card"><div class="application-card-head"><span class="eyebrow">LET’S GET STARTED</span><h3>Tell us about your business.</h3><p>We’ll review your application and confirm eligibility.</p></div><form id="upgrade-form" data-preview="true"><p style="background:#fff1e6;padding:14px;font-size:13px;margin-bottom:24px;border-radius:5px"><strong>Draft preview:</strong> you can test these fields. Applications are not sent from this preview.</p><div class="fields">
 <div class="field full"><label for="name">Name</label><input id="name" name="name" autocomplete="name" required maxlength="100"></div>
 <div class="field full"><label for="company">Business name</label><input id="company" name="company" autocomplete="organization" required maxlength="160"></div>
 <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required maxlength="254"></div>
@@ -397,7 +446,7 @@
 <div class="hp" aria-hidden="true"><label for="fax">Leave this field empty</label><input id="fax" name="fax" tabindex="-1" autocomplete="off"></div>
 <button class="apply" id="submit-application" type="submit">Apply for My Free Website Upgrade <span aria-hidden="true">↗</span></button>
 <p class="privacy">By submitting, you agree to be contacted about your application. Read our <a href="/privacy-policy" target="_blank" rel="noopener">privacy policy</a>.</p><p id="form-status" role="status" aria-live="polite" tabindex="-1"></p><noscript><p>Please enable JavaScript to submit this form, or <a href="/contact">contact our team</a>.</p></noscript>
-</form></div></div><div class="wrap compact-faq"><h3>A few quick answers.</h3><div class="faq-grid"><details><summary>Is this a full website redesign?</summary><p>No. The free upgrade includes one dedicated landing page aligned with your marketing goals. Your team will agree the scope with you before building.</p></details>
+</form></div></div></div><div class="wrap compact-faq"><h3>A few quick answers.</h3><div class="faq-grid"><details><summary>Is this a full website redesign?</summary><p>No. The free upgrade includes one dedicated landing page aligned with your marketing goals. Your team will agree the scope with you before building.</p></details>
 <details><summary>Who can apply?</summary><p>The offer is available for a limited time to selected clients engaged with Zib Digital’s marketing services. Submit your details and our team will confirm your eligibility.</p></details>
 <details><summary>What does “free” cover?</summary><p>The dedicated landing-page build described above is free for approved clients. We’ll confirm the agreed inclusions and any requirements relating to your existing website or services before work begins.</p></details>
 <details><summary>What happens after I apply?</summary><p>Our team will review your application, confirm your eligibility and discuss your goals. We’ll then agree the scope and delivery timing before building. You’ll review the page before it is prepared for launch.</p></details><details><summary>Are there ongoing costs?</summary><p>The offer covers the agreed landing-page build for approved clients. Hosting, maintenance, third-party services and any additional work need to be confirmed with our team before the build. Your existing marketing services are separate from this offer.</p></details>
