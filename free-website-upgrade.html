@@ -453,6 +453,11 @@
 @media(max-width:520px){.upgrade-page{padding-bottom:66px}.upgrade{padding-bottom:0}}
 .upgrade .proof-top .reference-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.upgrade .reference-case .case-photo{position:relative}.upgrade .reference-badge{position:absolute;bottom:16px;left:16px;right:16px;width:fit-content;padding:8px 12px;border-radius:99px;background:#fff;color:#111;font-size:11px}.upgrade .proof-top .reference-focus{font-size:22px;line-height:1.2;color:#111;font-weight:500;letter-spacing:-.03em}.upgrade .proof-top .reference-case h3{min-height:2.25em}@media(max-width:850px){.upgrade .proof-top .reference-grid{grid-template-columns:1fr}.upgrade .proof-top .reference-case h3{min-height:0}}
 #website-audit .audit-growth-note{font-size:14px;margin-top:18px;color:#111}#website-audit .audit-preview-notice{margin-top:16px;font-size:12px;background:transparent;padding:0;border:0;color:#666}
+/* A collapsed mobile drawer must not paint padding below the header. */
+@media(max-width:880px){
+.upgrade-page .site-header .nav:not(.is-open){padding-block:0;border-top-width:0;box-shadow:none;visibility:hidden;pointer-events:none}
+.upgrade-page .site-header .nav.is-open{visibility:visible;pointer-events:auto}
+}
 </style>
 <link rel="stylesheet" href="/assets/upgrade-commercial-audit.css">
 </head>
