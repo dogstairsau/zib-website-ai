@@ -433,12 +433,31 @@
 .upgrade .application-next-steps li::before{content:counter(next);position:absolute;left:0;top:0;color:#ff6200;font:14px var(--mono)}
 .upgrade .application-next-steps li:last-child{padding-bottom:0}
 .upgrade .limited-highlight{display:inline-block;background:#ff6200;color:#111;padding:3px 7px;border-radius:3px;font-weight:500;margin-right:3px}
+
+.upgrade .site-audit{background:var(--paper);scroll-margin-top:90px}
+.upgrade .site-audit .audit-hero-intro{max-width:760px}
+.upgrade .site-audit h2{font-size:clamp(36px,4.5vw,60px)}
+.upgrade .site-audit h2 em{color:var(--accent);font-style:normal}
+.upgrade .site-audit .audit-hero-sub{margin-top:24px}
+.upgrade .site-audit input{font:inherit;border:0;border-radius:0;background:none;padding:0;color:inherit;outline:0;width:auto;min-width:0}
+.upgrade .site-audit label.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.upgrade .audit-preview-notice{font-size:13px;line-height:1.6;background:var(--accent-tint);padding:16px 20px;border-radius:8px;margin-bottom:24px}
+.upgrade .audit-preview-notice a{text-decoration:underline}
+.upgrade .campaign-audit-next{margin-top:30px}
+.upgrade .campaign-audit-next p{font-size:14px;color:var(--muted)}
+.upgrade .campaign-shared-audit .audit-live{display:none}
+.upgrade-page .site-header{background:#fff}
+.upgrade #apply,.upgrade #how-it-works,.upgrade #offer-terms{scroll-margin-top:90px}
+.upgrade-page .float-cta{display:none}
+@media(min-width:881px){.upgrade .hero{min-height:calc(100svh - 132px)}}
+@media(max-width:520px){.upgrade-page{padding-bottom:66px}.upgrade{padding-bottom:0}}
 </style>
+<link rel="stylesheet" href="/assets/audit-widget.css">
 </head>
-<body class="upgrade">
+<body class="upgrade-page">
 <a class="skip" href="#main">Skip to content</a>
-<div class="campaign-masthead"><header class="wrap top"><a href="/" aria-label="Zib Digital home"><img class="logo" src="/assets/zib-logo.png" alt="Zib Digital" width="106" height="35"></a><a href="#apply" data-cta="header">Apply for your free upgrade ↗</a></header></div>
-<main id="main">
+<!-- @include _partials/nav.html -->
+<main id="main" class="upgrade">
 <section class="hero"><div class="wrap hero-grid"><div>
 <div class="eyebrow">Limited-time offer</div>
 
@@ -447,27 +466,13 @@
 <div class="hero-actions"><a class="apply" href="#website-audit" data-cta="hero-audit">Test My Website <span aria-hidden="true">↗</span></a><a class="hero-secondary" href="#apply" data-cta="hero">Apply for My Free Upgrade <span aria-hidden="true">↗</span></a></div><p class="eligibility">One landing page at no additional build cost, for selected Zib marketing clients with written approval. Zib owns and hosts the page for use during the applicable marketing engagement. Marketing fees and ad spend remain separate. <a href="#offer-terms">Offer terms apply</a>.</p>
 </div><div class="stage" aria-label="Illustration of the audit to upgrade journey"><div class="browser"><div class="browserbar"><i class="dot"></i><i class="dot"></i><i class="dot"></i><span class="address">yourbusiness.com.au</span></div><div class="screen"><div class="screen-brand">Your website. Its next chapter.</div><h2>Test it.<br>Understand it.<br>Upgrade it.</h2><nav class="journey-preview" aria-label="Explore your website upgrade"><a href="#website-audit" data-cta="graphic-audit"><span>01</span><b>Explore your website</b><i aria-hidden="true">↗</i></a><a href="#how-it-works" data-cta="graphic-opportunities"><span>02</span><b>See the opportunities</b><i aria-hidden="true">↗</i></a><a href="#apply" data-cta="graphic-apply"><span>03</span><b>Apply for your upgrade</b><i aria-hidden="true">↗</i></a></nav><div class="screen-bottom"><span>Technical checks</span><span>AI insights</span><span>A clearer message</span></div></div></div><div class="float-note"><b>YOUR NEXT STEP STARTS HERE</b>A clearer picture.<br>A better starting point.</div></div></div></section>
 <nav class="strip" aria-label="Your website upgrade journey"><div class="wrap"><a href="#website-audit" data-cta="strip-audit">Test your website</a><a href="#how-it-works" data-cta="strip-inclusions">Explore the opportunities</a><a href="#apply" data-cta="strip-apply">Apply for your free upgrade</a></div></nav>
-<section class="campaign-audit" id="website-audit" aria-labelledby="ca-title"><div class="wrap">
-<div class="ca-heading"><div><div class="eyebrow">Start here / Your free website audit</div><h2 id="ca-title">Let’s test yours.<br><span>See the possibilities.</span></h2></div><p>Enter your website below. Explore what’s working, uncover opportunities and see how your homepage message could read. Then apply for your free landing-page upgrade.</p></div>
-<div class="ca-panel"><div class="ca-topline"><span>FREE WEBSITE AUDIT</span></div>
-<form id="campaign-audit-form" data-live="false"><div class="ca-fields">
-<div><label for="campaign-audit-url">Website URL</label><input id="campaign-audit-url" name="url" autocomplete="url" inputmode="url" placeholder="yourbusiness.com.au" maxlength="300" required></div>
-<div><label for="campaign-audit-email">Work email</label><input id="campaign-audit-email" name="email" type="email" autocomplete="email" placeholder="you@business.com.au" maxlength="254" required></div>
-<div><label for="campaign-audit-phone">Phone</label><input id="campaign-audit-phone" name="phone" type="tel" autocomplete="tel" placeholder="Your phone number" pattern="[+0-9() .\-]{6,30}" maxlength="30" required></div>
-</div><div class="hp" aria-hidden="true"><label for="campaign-audit-fax">Leave empty</label><input id="campaign-audit-fax" tabindex="-1" autocomplete="off"></div>
-<div class="ca-form-bottom"><button class="apply" id="campaign-audit-submit" type="submit">Run my free website audit ↗</button><p>Up to 10 pages analysed.<br>No audit required to apply for the upgrade.</p></div>
-<p class="privacy"><strong>Draft preview:</strong> the audit connection is awaiting approval. You can check the form, but no audit runs and no details are sent. Once enabled, it will use Zib’s existing HubSpot and Resend reporting systems and analyse public website content using AI. <a href="/privacy-policy" target="_blank" rel="noopener">Privacy policy</a>.</p>
-<p id="campaign-audit-status" role="status" aria-live="polite"></p>
-<noscript><p>Please enable JavaScript to run the audit. You can also <a href="/audit">visit our audit page</a>.</p></noscript></form>
-<div id="campaign-audit-results" hidden aria-busy="false">
-<div class="ca-result-label">YOUR WEBSITE / <span id="ca-domain"></span></div>
-<ol id="campaign-audit-progress"><li><span>01</span>Reading your website</li><li><span>02</span>Discovering pages</li><li><span>03</span>Crawling your website</li><li><span>04</span>Checking your pages</li><li><span>05</span>Writing your recommendations</li></ol>
-<p id="ca-advisory" hidden></p>
-<div id="ca-technical" hidden><h3>Your website at a glance.</h3><div class="ca-stats"><div><strong id="ca-score"></strong><span>Overall score</span></div><div><strong id="ca-passed"></strong><span>Checks passed</span></div><div><strong id="ca-issues"></strong><span>Issues flagged</span></div><div><strong id="ca-pages"></strong><span>Pages crawled</span></div></div><p class="ca-small">Automated checks of available HTML. Select a category to explore the findings.</p><div id="ca-categories"></div></div>
-<div id="ca-insights" hidden><div class="eyebrow">AI website review</div><h3>Where to focus next.</h3><div id="ca-insights-body"></div></div>
-<div id="ca-hero" hidden><div class="eyebrow">A clearer first impression</div><h3>Your message, reimagined.</h3><div class="ca-comparison"><article><div class="ca-small">CURRENT HOMEPAGE COPY</div><h4 id="ca-now-h"></h4><p id="ca-now-s"></p><span id="ca-now-c"></span></article><article><div class="ca-small">AI-SUGGESTED REWRITE</div><h4 id="ca-new-h"></h4><p id="ca-new-s"></p><span id="ca-new-c"></span></article></div><p id="ca-rationale"></p></div>
-<div id="ca-next" hidden><div><h3>Seen where your website could improve?<br>Let’s take the next step.</h3><p>Apply for a free landing page built around your business and marketing goals.</p><p class="eligibility">For selected Zib marketing clients, subject to written approval. Includes one Zib-owned and hosted landing page for use during the applicable marketing engagement. Marketing fees and ad spend remain separate. Audit results do not determine eligibility or guarantee results. <a href="#offer-terms">View offer terms</a>.</p></div><div class="audit-handover"><button type="button" class="apply" id="ca-add-findings">Add audit findings to my application ↗</button><p id="ca-handover-status" role="status" aria-live="polite">Your findings can be added to the editable notes in your application.</p></div><a class="apply" id="campaign-audit-apply" href="#apply" data-cta="audit-results">Apply for My Free Website Upgrade ↗</a></div>
-</div></div><p class="ca-small ca-under">Prefer to speak with our team? <a href="#apply" data-cta="audit-skip">Apply directly for your free website upgrade ↗</a></p>
+<section class="site-audit" id="website-audit" aria-labelledby="shared-audit-title"><div class="wrap">
+<div class="audit-hero-intro"><div class="eyebrow mono">Your free website audit</div><h2 id="shared-audit-title">Drop your URL.<br><em>See where to improve.</em></h2><p class="audit-hero-sub">Explore your website with Zib’s SEO audit. Then apply for a dedicated landing page aligned with your marketing goals.</p></div>
+<div class="campaign-shared-audit" data-audit-preview="true">
+<p class="audit-preview-notice"><strong>Draft preview:</strong> you can check the form, but no audit runs and no details are sent. Live audits through Zib’s HubSpot and Resend systems are awaiting approval. <a href="/privacy-policy">Privacy policy</a>.</p>
+<!-- @include _partials/audit-embed.html -->
+</div>
+<div id="cta" class="campaign-audit-next"><p>No audit required to apply for the upgrade.</p><a class="apply" href="#apply" data-cta="shared-audit-apply">Apply for My Free Website Upgrade <span aria-hidden="true">↗</span></a></div>
 </div></section>
 <section class="proof work-section proof-top" id="our-work"><div class="wrap"><div class="work-heading"><div><div class="eyebrow">Published client results</div><h2>Real businesses.<br><span>Real outcomes.</span></h2></div><p>Four published Zib case studies across different industries. These results come from broader marketing engagements, not the free landing-page offer.</p></div><div class="work-grid"><article class="work-card real-case"><a class="case-photo" href="/casestudy/port-melbourne-containers" target="_blank" rel="noopener" aria-label="View Port Melbourne Containers case study"><img src="https://www.thedcn.com.au/hubfs/Port%20Melbourne%20Containers.png" alt="Aerial view of the Port Melbourne Containers shipping container yard" width="640" height="440" loading="lazy" decoding="async"></a><div class="work-body"><div class="work-tag">Website design + SEO</div><div class="case-result">430%<span>increase in leads</span></div><h3>Port Melbourne Containers</h3><p>A website overhaul supported by SEO and a broader digital strategy.</p><a class="case-link" href="/casestudy/port-melbourne-containers" target="_blank" rel="noopener">View case study ↗</a><small>Reported by Zib for the broader engagement, not this offer. Individual results vary.</small></div></article><article class="work-card real-case"><a class="case-photo" href="/casestudy/assured-roofing" target="_blank" rel="noopener" aria-label="View Assured Roofing case study"><img src="https://a.storyblok.com/f/293698429181950/35faa36c84/banner.webp/m/1920x1080/filters%3Aquality%2872%29" alt="Roofing project featured by Assured Roofing" width="640" height="440" loading="lazy" decoding="async"></a><div class="work-body"><div class="work-tag">SEO + Google Ads</div><div class="case-result">410%<span>organic traffic growth</span></div><h3>Assured Roofing</h3><p>A Melbourne roofing business building its search visibility and enquiry pipeline.</p><a class="case-link" href="/casestudy/assured-roofing" target="_blank" rel="noopener">View published case study ↗</a><small>Source: Zib’s published case study. Broader campaign result, not a forecast for this offer.</small></div></article><article class="work-card real-case"><a class="case-photo" href="/casestudy/the-fruit-box-group" target="_blank" rel="noopener" aria-label="View The Fruit Box Group case study"><img src="https://thefruitboxgroup.com.au/wp-content/uploads/2024/01/cats-fruit.jpg" alt="Fresh fruit supplied by The Fruit Box Group" width="640" height="440" loading="lazy" decoding="async"></a><div class="work-body"><div class="work-tag">SEO + Google Ads</div><div class="case-result">300%<span>increase in leads</span></div><h3>The Fruit Box Group</h3><p>A national office supplies business supported by a broader digital marketing strategy.</p><a class="case-link" href="/casestudy/the-fruit-box-group" target="_blank" rel="noopener">View published case study ↗</a><small>Source: Zib’s published case study. Broader campaign result, not a forecast for this offer.</small></div></article><article class="work-card real-case"><a class="case-photo" href="/casestudy/amazing-graze" target="_blank" rel="noopener" aria-label="View Amazing Graze Flowers case study"><img src="https://www.amazinggrazeflowers.com.au/cdn/shop/files/WhatsApp_Image_2026-06-09_at_12.43.26_PM.jpg?v=1780989374&amp;width=800" alt="Floral arrangements from Amazing Graze Flowers" width="640" height="440" loading="lazy" decoding="async"></a><div class="work-body"><div class="work-tag">SEO + Social media</div><div class="case-result">600%<span>growth in online sales revenue</span></div><h3>Amazing Graze Flowers</h3><p>Organic and paid marketing supporting a Melbourne florist’s online growth.</p><a class="case-link" href="/casestudy/amazing-graze" target="_blank" rel="noopener">View published case study ↗</a><small>Source: Zib’s published case study. Broader campaign result, not a forecast for this offer.</small></div></article></div></div></section>
 
@@ -487,7 +492,7 @@
 <div class="field"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required maxlength="254"></div>
 <div class="field"><label for="phone">Phone</label><input id="phone" name="phone" type="tel" autocomplete="tel" required pattern="[+0-9() .\-]{6,30}" maxlength="30"></div>
 <div class="field full"><label for="website">Website URL</label><input id="website" name="website" inputmode="url" autocomplete="url" placeholder="yourbusiness.com.au" required maxlength="300"></div>
-<div class="field full"><label for="message">What would you like to improve? <span class="optional">Optional</span></label><textarea aria-describedby="message-help" id="message" name="message" maxlength="2000" rows="5"></textarea><p id="message-help" class="field-help">You can add findings from your audit above, then edit or remove them here before submitting.</p></div></div>
+<div class="field full"><label for="message">What would you like to improve? <span class="optional">Optional</span></label><textarea aria-describedby="message-help" id="message" name="message" maxlength="2000" rows="5"></textarea><p id="message-help" class="field-help">Tell us about your goals or any website issues you would like us to review.</p></div></div>
 <div class="hp" aria-hidden="true"><label for="fax">Leave this field empty</label><input id="fax" name="fax" tabindex="-1" autocomplete="off"></div>
 <button class="apply" id="submit-application" type="submit">Apply for My Free Website Upgrade <span aria-hidden="true">↗</span></button>
 <p class="privacy">Submitting this form is an application, not acceptance of the offer. Eligibility must be confirmed in writing, and the offer is accepted through an agreed proposal. By submitting, you agree to be contacted about your application. Read the <a href="#offer-terms">offer terms and FAQs</a> and our <a href="/privacy-policy" target="_blank" rel="noopener">privacy policy</a>.</p><p id="form-status" role="status" aria-live="polite" tabindex="-1"></p><noscript><p>Please enable JavaScript to submit this form, or <a href="/contact">contact our team</a>.</p></noscript>
@@ -502,9 +507,19 @@
 <details><summary>Does the landing page guarantee results?</summary><p>The page is designed to support your marketing objectives. Zib does not guarantee a particular number of enquiries, conversion rate, search ranking, revenue or sales outcome.</p></details>
 <details><summary>How do these terms relate to my existing agreement?</summary><p>These terms supplement your marketing services agreement and apply specifically to the complimentary landing page offer. Any inconsistency relating to this offer should be expressly resolved in the signed proposal. Nothing in these terms excludes, restricts or modifies any right, guarantee or remedy that cannot lawfully be excluded, restricted or modified.</p></details></div></div></section>
 </main>
-<footer class="wrap mini-foot"><span>© 2026 Zib Digital Pty Ltd</span><span>Level 7/34 Eastern Rd, South Melbourne VIC 3205</span><a href="/privacy-policy">Privacy policy ↗</a></footer>
-<a class="mobile-apply" href="#apply" data-cta="mobile-sticky"><span>FREE website upgrade</span><strong>Apply now ↗</strong></a>
-<script src="/assets/conversion.js" defer></script>
+<!-- @include _partials/footer.html -->
+<div class="upgrade"><a class="mobile-apply" href="#apply" data-cta="mobile-sticky"><span>FREE website upgrade</span><strong>Apply now ↗</strong></a></div>
+<!-- @include _partials/scripts.html -->
 <script src="/assets/website-upgrade.js" defer></script>
-<script src="/assets/upgrade-audit.js" defer></script>
+<script>
+// Capture preview submissions before the shared widget handler can send data.
+document.querySelector('[data-audit-preview="true"]').addEventListener('submit', function(event) {
+  event.preventDefault();
+  event.stopImmediatePropagation();
+  const status = document.getElementById('auditStatus');
+  status.textContent = 'Preview only. Live audits are awaiting approval; nothing has been sent.';
+  status.style.display = 'block';
+}, true);
+</script>
+<script src="/assets/audit-widget.js" defer></script>
 </body></html>
