@@ -39,7 +39,7 @@ export async function handleUpgrade(req: Request, gate: Gate): Promise<Response>
     ["What they want to improve",message || "Not supplied"],["Application ID",submissionId],...attribution];
   const html = "<h2>Free Website Upgrade application</h2><p>Submitted from https://zibdigital.com.au/free-website-upgrade</p>" +
     "<table>" + rows.map(([k,v])=>"<tr><th style='text-align:left;vertical-align:top;padding:8px'>"+esc(k)+"</th><td style='padding:8px;white-space:pre-wrap'>"+esc(v)+"</td></tr>").join("")+"</table>";
-  const recipients = (process.env.LEAD_NOTIFY_EMAIL || "").split(",").map(s=>s.trim()).filter(Boolean);
+  const recipients = (process.env.WEBSITE_UPGRADE_NOTIFY_EMAIL || process.env.LEAD_NOTIFY_EMAIL || "").split(",").map(s=>s.trim()).filter(Boolean);
   const token = process.env.HUBSPOT_PRIVATE_APP_TOKEN;
   const apiKey = process.env.RESEND_API_KEY;
   if (!token && (!apiKey || !recipients.length)) return json({ error: "Applications are temporarily unavailable. Please contact Zib directly." },503);
