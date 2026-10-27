@@ -472,13 +472,14 @@ html{overflow-y:auto}.upgrade-page{overflow-y:visible}
 .upgrade .reference-case .case-photo.page-scroll{aspect-ratio:4/5;overflow-y:auto;overflow-x:hidden;scrollbar-width:thin;scrollbar-color:#999 #eee;background:white;position:relative;touch-action:pan-y}
 .upgrade .case-photo.page-scroll img{width:100%;height:auto;max-width:100%;object-fit:initial;transform:none;transition:none;display:block}
 .upgrade .case-photo.page-scroll:focus-visible{outline:3px solid var(--orange);outline-offset:-3px}
+@media(max-width:520px){.upgrade .hero-actions .apply{min-width:0;width:100%;max-width:100%}}
 </style>
 <link rel="stylesheet" href="/assets/upgrade-commercial-audit.css">
 </head>
 <body class="upgrade-page">
 <a class="skip" href="#main">Skip to content</a>
 <!-- @include _partials/nav.html -->
-<script>document.querySelectorAll(".site-header .nav-end a.cta").forEach(a=>{a.href="#apply";a.textContent="Apply for free upgrade";});</script>
+<script>document.querySelectorAll(".site-header .nav-end a.cta").forEach(a=>{a.href="#apply";a.textContent="Apply now";});</script>
 <main id="main" class="upgrade">
 <section class="hero"><div class="wrap hero-grid"><div>
 <div class="hero-offer-label">FREE landing page</div>
