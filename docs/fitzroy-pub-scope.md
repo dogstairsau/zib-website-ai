@@ -11,7 +11,13 @@ still has to tell us. Update this file when new information lands, then update t
 **Working name:** "the Fitzroy pub". Branding is with an outside agency, first pass expected
 early November 2026
 **Opening:** "the very back of February or the start of March" 2027 (Matt, 22 Oct call)
-**Price agreed internally:** $8,500 + GST, one-off
+**Pricing (Michael, 27 Oct), all + GST:**
+- Website: $8,500 one-off (coming-soon page, GBP set-up and old-listing clean-up, five-page
+  site and function pack, launch copy, tracking, editor training). Paid 50% to start ($4,250),
+  35% when the coming-soon page goes live ($2,975), 15% before the full site goes live ($1,275)
+- SEO: $2,500 set-up (December strategy), then $2,000 a month from January. No minimum term
+  stated; Quest used set-up + 3 months, then month to month
+- Hosting: Vercel or AWS, $50 a month
 **Page styling:** Zib house brand (tokens from `assets/base.css`, Neue Haas via
 `assets/fonts.css`), not the pub's, since its branding isn't done yet
 
@@ -138,13 +144,10 @@ Planner numbers and assigns each search to a page.
 ## 6. Open items before the page goes to the client
 
 1. **Confirm the venue** is 125–129 Brunswick St (section 2).
-2. **Monthly SEO price.** The page says "priced from the December strategy". Put a number
-   in if we want one on the page.
-3. **Hosting / platform costs** for the non-WordPress build aren't mentioned. Decide whether
-   hosting is bundled or billed separately.
-4. **Payment terms** aren't on the page (Quest's weren't either). Add if needed.
-5. **Function pack.** The page says we deliver it (we write it and lay it out in their
-   branding). Check that's the intent rather than the branding agency designing it.
+
+Resolved 27 Oct: SEO and hosting prices, and payment terms (see pricing at the top); the
+function pack is ours to write and lay out in their branding. The $2,500 SEO set-up is read as
+the December strategy, so "SEO strategy" moved out of the $8,500 list on the page.
 
 ## 7. Questions for the client (also on the page)
 
