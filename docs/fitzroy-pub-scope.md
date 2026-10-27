@@ -36,14 +36,14 @@ What the client said, and where it shows up on the page.
 | Waterside pages that make it a pub site: bookings, menu, a few photos, a short intro, events, about | Matt | Five-page site map |
 | Reference pubs: Builders Arms, the Standard, the Workers; ABC venues' sites are simple | Matt | Competitor notes (section 4) |
 | WordPress "works and does the job" but is "very finicky" and "very manual"; wants it templatable so someone else can manage it | Adele | #website "Not WordPress" |
-| Will we write the copy, or is it collaborative? | Adele | #website "Who writes it" |
+| Will we write the copy, or is it collaborative? Zib writes it; SHR reviews and signs off | Adele | #website "Who writes it" |
 | Does the new platform handle photo and video? | Adele | #website "Not WordPress" |
 | PR and directors are deciding: coming soon in the first week of December, or hold until January | Matt | #plan lede: page built and held for either |
 | Wants a coming-soon page: a hand sketch, a nice colour, "coming soon" | Matt | #plan stage 1 |
 | Budget "between six and 10K"; start small, add later | Matt | #cost lede |
 | Phase 1 landing page / waitlist, then flip to full site; start GBP and SEO early | Michael | #plan, #google |
 | ~Five pages plus a downloadable function / events pack | Michael | Site map, cost table |
-| Michael to offer a non-WordPress back end, with training, that plugs into Zib's marketing AI and can be cloned for future SHR pubs | Michael | #website |
+| Michael to offer a non-WordPress back end, with training, that plugs into Zib's marketing AI and can be cloned for future SHR pubs. The editor is **Sanity** (Michael, 27 Oct) | Michael | #website |
 
 **Scope decisions from Michael after the call (26 Oct):** landing page as soon as branding
 is in, full site built in the background and launched when SHR is ready, GBP work started
