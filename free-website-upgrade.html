@@ -398,6 +398,27 @@
 .upgrade .upgrade-explained .step h3{color:#151515}
 .upgrade .upgrade-explained .step p{color:#555}
 @media(max-width:650px){.upgrade .upgrade-explained .step,.upgrade .upgrade-explained .step+.step{padding:22px 0;border-left:0}.upgrade .upgrade-explained .step+.step{border-top:1px solid #d9d3c9}}
+
+/* Equal-height hero buttons with labels centred independently of the arrows. */
+.upgrade .hero-actions{gap:12px}
+.upgrade .hero-actions .apply,.upgrade .hero-actions .hero-secondary{position:relative;display:flex;align-items:center;justify-content:center;box-sizing:border-box;min-height:56px;padding:16px 38px;border-radius:999px;text-align:center;font-size:14px;line-height:1.35;text-decoration:none;margin:0}
+.upgrade .hero-actions .apply{min-width:205px}
+.upgrade .hero-actions .hero-secondary{border:1px solid #111;background:transparent;color:#111;min-width:240px}
+.upgrade .hero-actions a>span{position:absolute;right:18px}
+.upgrade .hero-actions .hero-secondary:hover{background:#ffffff30}
+.upgrade .hero-actions .hero-secondary:focus-visible{outline:3px solid #111;outline-offset:4px}
+.upgrade .application-panel label{text-align:left}
+@media(max-width:520px){
+.upgrade .hero-actions{flex-direction:column;align-items:stretch;gap:12px}
+.upgrade .hero-actions .apply,.upgrade .hero-actions .hero-secondary{width:100%;min-width:0;min-height:56px}
+.upgrade .application-panel .fields{grid-template-columns:1fr}
+.upgrade .application-panel .field{min-width:0}
+.upgrade .application-panel input,.upgrade .application-panel textarea{font-size:16px}
+.upgrade .application-panel .form-card .apply{white-space:normal;justify-content:center}
+.upgrade .offer-card-label{flex-wrap:wrap}
+.upgrade .offer-intro h2{font-size:clamp(28px,8vw,34px)}
+.upgrade .application-intro h2{font-size:clamp(30px,8.5vw,40px)}
+}
 </style>
 </head>
 <body class="upgrade">
