@@ -452,8 +452,9 @@
 @media(min-width:881px){.upgrade .hero{min-height:calc(100svh - 132px)}}
 @media(max-width:520px){.upgrade-page{padding-bottom:66px}.upgrade{padding-bottom:0}}
 .upgrade .proof-top .reference-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.upgrade .reference-case .case-photo{position:relative}.upgrade .reference-badge{position:absolute;bottom:16px;left:16px;right:16px;width:fit-content;padding:8px 12px;border-radius:99px;background:#fff;color:#111;font-size:11px}.upgrade .proof-top .reference-focus{font-size:22px;line-height:1.2;color:#111;font-weight:500;letter-spacing:-.03em}.upgrade .proof-top .reference-case h3{min-height:2.25em}@media(max-width:850px){.upgrade .proof-top .reference-grid{grid-template-columns:1fr}.upgrade .proof-top .reference-case h3{min-height:0}}
+#website-audit .audit-growth-note{font-size:14px;margin-top:18px;color:#111}#website-audit .audit-preview-notice{margin-top:16px;font-size:12px;background:transparent;padding:0;border:0;color:#666}
 </style>
-<link rel="stylesheet" href="/assets/audit-widget.css">
+<link rel="stylesheet" href="/assets/upgrade-commercial-audit.css">
 </head>
 <body class="upgrade-page">
 <a class="skip" href="#main">Skip to content</a>
@@ -468,10 +469,161 @@
 </div><div class="stage" aria-label="Illustration of the audit to upgrade journey"><div class="browser"><div class="browserbar"><i class="dot"></i><i class="dot"></i><i class="dot"></i><span class="address">yourbusiness.com.au</span></div><div class="screen"><div class="screen-brand">Your website. Its next chapter.</div><h2>Test it.<br>Understand it.<br>Upgrade it.</h2><nav class="journey-preview" aria-label="Explore your website upgrade"><a href="#website-audit" data-cta="graphic-audit"><span>01</span><b>Explore your website</b><i aria-hidden="true">↗</i></a><a href="#how-it-works" data-cta="graphic-opportunities"><span>02</span><b>See the opportunities</b><i aria-hidden="true">↗</i></a><a href="#apply" data-cta="graphic-apply"><span>03</span><b>Apply for your upgrade</b><i aria-hidden="true">↗</i></a></nav><div class="screen-bottom"><span>Technical checks</span><span>AI insights</span><span>A clearer message</span></div></div></div><div class="float-note"><b>YOUR NEXT STEP STARTS HERE</b>A clearer picture.<br>A better starting point.</div></div></div></section>
 <nav class="strip" aria-label="Your website upgrade journey"><div class="wrap"><a href="#website-audit" data-cta="strip-audit">Test your website</a><a href="#how-it-works" data-cta="strip-inclusions">Explore the opportunities</a><a href="#apply" data-cta="strip-apply">Apply for your free upgrade</a></div></nav>
 <section class="site-audit" id="website-audit" aria-labelledby="shared-audit-title"><div class="wrap">
-<div class="audit-hero-intro"><div class="eyebrow mono">Your free website audit</div><h2 id="shared-audit-title">Drop your URL.<br><em>See where to improve.</em></h2><p class="audit-hero-sub">Explore your website with Zib’s SEO audit. Then apply for a dedicated landing page aligned with your marketing goals.</p></div>
+<div class="audit-hero-intro"><div class="eyebrow mono">Your free website audit</div><h2 id="shared-audit-title">Drop your URL.<br><em>See where to improve.</em></h2><p class="audit-hero-sub">Explore your website with Zib’s commercial audit. Then apply for a dedicated landing page aligned with your marketing goals.</p></div>
 <div class="campaign-shared-audit" data-audit-preview="true">
-<p class="audit-preview-notice"><strong>Draft preview:</strong> you can check the form, but no audit runs and no details are sent. Live audits through Zib’s HubSpot and Resend systems are awaiting approval. <a href="/privacy-policy">Privacy policy</a>.</p>
-<!-- @include _partials/audit-embed.html -->
+<div>
+  <form class="audit-form" id="auditForm" autocomplete="off">
+    <label for="auditUrl" class="sr-only">Website URL</label>
+    <span class="url-prefix">
+      <input type="text" id="auditUrl" name="url" placeholder="yourwebsite.com.au" required inputmode="url" spellcheck="false" autocapitalize="off" autocorrect="off" />
+    </span>
+    <span class="audit-divider" aria-hidden="true"></span>
+    <label for="auditEmail" class="sr-only">Work email</label>
+    <input type="email" id="auditEmail" name="email" placeholder="work email" required inputmode="email" spellcheck="false" autocomplete="email" />
+    <span class="audit-divider" aria-hidden="true"></span>
+    <label for="auditPhone" class="sr-only">Phone number</label>
+    <input type="tel" id="auditPhone" name="phone" placeholder="phone" required inputmode="tel" autocomplete="tel" />
+    <button type="submit" id="auditBtn">Run audit <span class="arr">→</span></button>
+  </form>
+  <div class="audit-meta mono">
+    <div><span class="check">✓</span> 10-page technical crawl</div>
+    <div><span class="check">✓</span> AEO + GEO readiness</div>
+    <div><span class="check">✓</span> Senior strategist read</div>
+    <div><span class="check">✓</span> Sample creative · generated live</div>
+  </div>
+
+  <div class="audit-status mono" id="auditStatus" role="status" aria-live="polite"></div>
+
+  <div class="audit-stages" id="auditStages" aria-live="polite">
+    <div class="hdr">
+      <span class="ttl">Running audit</span>
+      <span class="elapsed" id="stageElapsed">0s</span>
+    </div>
+    <ul class="stage-list" id="stageList">
+      <li class="stage-item" data-stage="fetch"><span class="ring"></span><svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 7"/></svg><span class="label">Reading the homepage</span><span class="detail"></span></li>
+      <li class="stage-item" data-stage="discover"><span class="ring"></span><svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 7"/></svg><span class="label">Discovering pages · robots.txt + sitemap</span><span class="detail"></span></li>
+      <li class="stage-item" data-stage="crawl"><span class="ring"></span><svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 7"/></svg><span class="label">Crawling up to 10 pages</span><span class="detail"></span></li>
+      <li class="stage-item" data-stage="score"><span class="ring"></span><svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 7"/></svg><span class="label">Scoring 7 categories · 25 checks</span><span class="detail"></span></li>
+      <li class="stage-item" data-stage="think"><span class="ring"></span><svg class="tick" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="5 12 10 17 19 7"/></svg><span class="label">Senior strategist read</span><span class="detail"></span></li>
+    </ul>
+  </div>
+
+  <div class="audit-result" id="auditResult" aria-live="polite">
+    <div class="result-head">
+      <div class="url"><small class="mono">Audited</small><span id="resUrl"></span></div>
+      <div class="strategy mono">Senior strategist read</div>
+    </div>
+
+    <div class="seo-wall" id="resSeoWall" aria-live="polite">
+      <div class="wall-hero">
+        <div>
+          <div class="wall-eyebrow">Full SEO + AEO coverage</div>
+          <div class="wall-title">Technical audit. <em>Real crawl data.</em></div>
+          <div class="wall-sub">Deterministic checks run across technical, content, and AI-search readiness for <span class="domain" id="wallDomain"></span>. No AI guessing on the numbers.</div>
+          <div class="wall-stats">
+            <div class="wall-stat is-score" id="statScoreBox"><div class="lbl">Overall score</div><div class="v" id="statScore">, </div></div>
+            <div class="wall-stat is-passed"><div class="lbl">Passed</div><div class="v" id="statPassed">, </div></div>
+            <div class="wall-stat is-issues"><div class="lbl">Issues</div><div class="v" id="statIssues">, </div></div>
+            <div class="wall-stat"><div class="lbl">Pages crawled</div><div class="v" id="statPages">, </div></div>
+          </div>
+        </div>
+        <div class="wall-radar" id="resRadar" aria-label="Performance distribution across categories"></div>
+      </div>
+      <div class="cat-grid" id="catGrid"></div>
+      <div class="wall-footnote">
+        <span class="methodology"><span class="pulse" aria-hidden="true"></span> Live 10-page crawl · deterministic HTML checks</span>
+        <span>Zib hybrid audit · v1</span>
+      </div>
+    </div>
+
+    <div class="advisory" id="resAdvisory" hidden role="status" aria-live="polite">
+      <div class="advisory-label mono">Heads up</div>
+      <div class="advisory-body" id="resAdvisoryBody"></div>
+    </div>
+
+    <div class="strategist" id="resStrategist"></div>
+
+    <div class="hero-rewrite" id="resHeroRewrite" hidden aria-live="polite">
+      <div class="rewrite-head">
+        <div class="lbl mono">Phase 2 · We rewrote your hero</div>
+        <h3>Same homepage. <em>Sharper message.</em></h3>
+        <p>This is the copy we'd put above the fold tomorrow. Side by side, no edits, taken straight from what's on your site today.</p>
+      </div>
+      <div class="rewrite-grid">
+        <div class="rewrite-col is-current">
+          <div class="col-head mono"><span class="dot" aria-hidden="true"></span>Now · on your site</div>
+          <div class="rewrite-headline" id="heroNowH"></div>
+          <div class="rewrite-subhead" id="heroNowS"></div>
+          <div class="rewrite-cta" id="heroNowC"></div>
+        </div>
+        <div class="rewrite-arrow" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="20" y2="12"/><polyline points="13 5 20 12 13 19"/></svg>
+        </div>
+        <div class="rewrite-col is-rewrite">
+          <div class="col-head mono"><span class="dot" aria-hidden="true"></span>Rewritten · by Zib</div>
+          <div class="rewrite-headline" id="heroNewH"></div>
+          <div class="rewrite-subhead" id="heroNewS"></div>
+          <div class="rewrite-cta" id="heroNewC"></div>
+        </div>
+      </div>
+      <div class="rewrite-rationale" id="heroRationale"></div>
+    </div>
+
+    <div class="blog-offer" id="blogOffer" hidden>
+      <div>
+        <div class="lbl mono">Bonus · sample article</div>
+        <p>Want a sample blog post written for your brand? Editorial draft, SEO-aware, ~650 words.</p>
+      </div>
+      <button type="button" class="btn btn-primary" id="blogBtn">
+        Want your blog? Press here <span class="arr">→</span>
+      </button>
+    </div>
+
+    <div class="blog-result" id="blogResult" hidden>
+      <div class="blog-head">
+        <div class="lbl mono">Sample article · generated for you</div>
+        <div class="kw mono" id="blogKeyword"></div>
+      </div>
+      <h3 class="blog-title" id="blogTitle"></h3>
+      <p class="blog-desc" id="blogDesc"></p>
+      <div class="blog-body" id="blogBody"></div>
+      <div class="blog-status mono" id="blogStatus"></div>
+    </div>
+
+    <div class="sample-ad" id="resSampleAd">
+      <div class="sample-ad-img is-loading" id="resAdImg"></div>
+      <div class="sample-ad-meta">
+        <div class="lbl">Phase 2 · sample creative generated for you</div>
+        <h4 id="resAdHeading">Here's the kind of social ad we'd run for your brand.</h4>
+        <p>One-shot creative generated by our hybrid agent off the back of your homepage. In a real engagement, this is the first of a hundred. Variants tested daily, scaled by what converts.</p>
+        <div class="credit">Generated · Zib hybrid agent</div>
+      </div>
+    </div>
+
+    <div class="audit-punchline" id="resPunchline">
+      <p>This was done in 30 seconds. <em>Imagine what we can do in 12 months.</em></p>
+    </div>
+
+    <!-- Branched on the qualification tier collected before the run.
+         Someone who has just read a report about their own site is at the
+         highest intent they will ever be — a qualified lead gets a calendar
+         right here rather than an anchor link to a section further down the
+         page. A nurture-tier lead gets the same report and no call, because
+         booking one wastes their time and the Growth team's. -->
+    <div class="audit-after" id="resAfter" hidden>
+      <div class="after-branch" id="afterQualified" hidden>
+        <p>Want a senior strategist to walk you through how to fix these?</p>
+        <div class="after-cal" id="afterCal" aria-live="polite"></div>
+      </div>
+      <div class="after-branch" id="afterNurture" hidden>
+        <p>Your full report is on its way to your inbox.</p>
+        <span class="after-note">We'll send the fixes worth doing first — no call, no follow-up sequence. Reply to that email any time you want a hand with it.</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<p class="audit-growth-note"><strong>Someone from our Growth team will call to walk you through the results.</strong></p><p class="audit-preview-notice"><strong>Preview:</strong> live audit submissions are awaiting approval. No details are sent. <a href="/privacy-policy">Privacy policy</a>.</p>
 </div>
 <div id="cta" class="campaign-audit-next"><p>No audit required to apply for the upgrade.</p><a class="apply" href="#apply" data-cta="shared-audit-apply">Apply for My Free Website Upgrade <span aria-hidden="true">↗</span></a></div>
 </div></section>
@@ -522,5 +674,5 @@ document.querySelector('[data-audit-preview="true"]').addEventListener('submit',
   status.style.display = 'block';
 }, true);
 </script>
-<script src="/assets/audit-widget.js" defer></script>
+
 </body></html>
