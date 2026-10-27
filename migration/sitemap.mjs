@@ -24,6 +24,7 @@ const EXCLUDE = new Set([
   // the nav and llms.txt; they are deliberately indexable (AI answers can't
   // substitute for an interactive tool, so they are the click the citation earns).
   "boothalicious-seo-audit", "project-better-seo-audit", "quest-coaches", "quest-coaches-homepage",
+  "fitzroy-pub",
 ]);
 
 async function walk(dir) {
