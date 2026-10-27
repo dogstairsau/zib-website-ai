@@ -21,6 +21,7 @@
       status.className = 'error'; status.textContent = 'Please enter a valid website address, such as yourbusiness.com.au.';
       document.getElementById('website').focus(); return;
     }
+    if (form.dataset.preview === 'true') { status.className = ''; status.textContent = 'Your fields are valid. This is a draft preview, so no application has been sent.'; status.focus(); return; }
     sending = true; button.disabled = true; status.className = ''; status.textContent = 'Sending your application…';
     try {
       const response = await fetch('/api/website-upgrade', {
