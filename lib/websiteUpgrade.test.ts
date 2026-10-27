@@ -19,11 +19,11 @@ test("upgrade submissions", async t=>{
   process.env.RESEND_API_KEY="mock";process.env.LEAD_NOTIFY_EMAIL="inbox@example.com";
   await t.test("fails visibly on email service rejection",async()=>{globalThis.fetch=async()=>new Response("",{status:500});assert.equal((await handleUpgrade(req(),gate)).status,502);});
   await t.test("confirms accepted email and escapes visitor content",async()=>{
-   globalThis.fetch=async(url,init)=>{assert.equal(url,"https://api.resend.com/emails");const data=JSON.parse(init.body);assert.ok(data.html.includes("&lt;script&gt;"));assert.equal(data.reply_to,"test@example.com");assert.ok(init.headers["Idempotency-Key"]);return Response.json({id:"email-accepted"});};
+   globalThis.fetch=async(url,init)=>{assert.equal(url,"https://api.resend.com/emails");const data=JSON.parse(String(init?.body));assert.ok(data.html.includes("&lt;script&gt;"));assert.equal(data.reply_to,"test@example.com");assert.ok(new Headers(init?.headers).get("Idempotency-Key"));return Response.json({id:"email-accepted"});};
    assert.deepEqual(await (await handleUpgrade(req({...payload,message:"<script>"}),gate)).json(),{ok:true});
   });
   await t.test("CRM note provides delivery fallback without overwriting existing contact",async()=>{
-   process.env.HUBSPOT_PRIVATE_APP_TOKEN="mock";const visited=[];
+   process.env.HUBSPOT_PRIVATE_APP_TOKEN="mock";const visited: [string,string][]=[];
    globalThis.fetch=async(url,init)=>{visited.push([String(url),init?.method||"GET"]);if(String(url).includes("resend.com"))return new Response("",{status:500});if(String(url).includes("contacts/"))return Response.json({id:"existing-contact"});return Response.json({id:"saved-note"});};
    assert.deepEqual(await (await handleUpgrade(req(),gate)).json(),{ok:true});assert.equal(visited.filter(([u,m])=>u.includes("/contacts")&&m==="POST").length,0);
   });
