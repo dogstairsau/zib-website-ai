@@ -99,6 +99,48 @@
 @media(max-width:600px){.upgrade .work-grid{grid-template-columns:1fr}.upgrade .featured-copy{padding:28px}.upgrade .work-visual{height:310px;padding-inline:30px}.upgrade .mini-content>strong{font-size:34px}.upgrade .next-work{min-height:420px;padding:30px}.upgrade .container-art{min-height:430px}.upgrade .shipping{font-size:27px}.upgrade .concept-intro{margin-top:42px}.upgrade .stage::before{width:280px;height:280px}.upgrade .work-heading h2{font-size:48px}}
 @media(prefers-reduced-motion:reduce){.upgrade .mini-site,.upgrade .feature{transition:none}.upgrade .work-card:hover .mini-site{transform:rotate(-3deg) translateY(12px)}.upgrade .feature:hover{transform:none}}
 
+
+.upgrade .campaign-audit{background:#eeeae3;scroll-margin-top:20px}
+.upgrade .ca-heading{display:grid;grid-template-columns:1.5fr 1fr;gap:55px;align-items:end;margin-bottom:36px}
+.upgrade .ca-heading h2{font-size:clamp(34px,4.2vw,56px)}.upgrade .ca-heading h2 span{color:#a73f00}
+.upgrade .ca-heading>p{font-size:17px;color:#555;line-height:1.6}
+.upgrade .ca-panel{background:#fff;border:1px solid #d4cdc2;border-radius:22px;padding:clamp(22px,3.6vw,44px);box-shadow:0 20px 50px #1d130908}
+.upgrade .ca-topline{display:flex;justify-content:space-between;gap:20px;font:11px var(--mono);letter-spacing:.05em;padding-bottom:25px;margin-bottom:25px;border-bottom:1px solid #ddd}
+.upgrade .ca-fields{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:18px}.upgrade .ca-fields>div{min-width:0}
+.upgrade .ca-fields input{background:#faf9f6;border-radius:8px;padding:16px 14px}
+.upgrade .ca-form-bottom{display:flex;gap:26px;align-items:center;margin-top:23px}.upgrade .ca-form-bottom .apply{margin:0;background:#ff6200;color:#111;border-color:#ff6200;cursor:pointer}
+.upgrade .ca-form-bottom .apply:disabled{opacity:.6;cursor:wait}.upgrade .ca-form-bottom p{font-size:13px;color:#555}
+.upgrade #campaign-audit-status{margin-top:20px;font-size:15px}.upgrade #campaign-audit-status:empty{display:none}
+.upgrade [hidden]{display:none!important}
+.upgrade .ca-result-label{font:12px var(--mono);margin:32px 0 24px;padding-top:28px;border-top:1px solid #ddd;overflow-wrap:anywhere}
+.upgrade #campaign-audit-progress{list-style:none;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin-bottom:32px}
+.upgrade #campaign-audit-progress li{border-top:3px solid #ddd;padding-top:12px;font-size:12px;color:#666}.upgrade #campaign-audit-progress li>span{display:block;font:11px var(--mono);margin-bottom:8px}
+.upgrade #campaign-audit-progress .active{border-color:#ff6200;color:#111}.upgrade #campaign-audit-progress .complete{border-color:#407252}
+.upgrade #ca-advisory{padding:18px;background:#fff2d9;margin:20px 0;font-size:14px}
+.upgrade .ca-stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:24px 0}
+.upgrade .ca-stats>div{padding:24px 18px;border-radius:12px;background:#f4f2ed;display:flex;flex-direction:column;gap:10px}
+.upgrade .ca-stats>div:first-child{background:#111;color:#fff}.upgrade .ca-stats strong{font-size:clamp(30px,4vw,52px);font-weight:500;line-height:1;letter-spacing:-.05em}.upgrade .ca-stats span{font-size:12px}
+.upgrade .ca-small{font-size:12px;color:#666;line-height:1.6}
+.upgrade #ca-categories{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:22px;align-items:start}
+.upgrade .ca-category{border:1px solid #ddd;border-radius:10px;padding:0 18px 16px}
+.upgrade .ca-category summary{font-size:16px;padding:20px 24px 18px 0;display:flex;justify-content:space-between;gap:12px}
+.upgrade .ca-category summary b{font-weight:500}.upgrade .ca-category summary span{margin:0;font-size:14px;color:#a63f00}
+.upgrade .ca-category summary::after{top:14px}.upgrade .ca-category ul{list-style:none;padding-top:15px}
+.upgrade .ca-category li{padding:12px 0;border-top:1px solid #eee;font-size:13px;overflow-wrap:anywhere}
+.upgrade .ca-category li strong{display:block;font-size:12px;margin-bottom:5px;font-weight:500}
+.upgrade .ca-category li span{color:#555}.upgrade .ca-bar{height:4px;background:#eee;border-radius:5px;overflow:hidden}.upgrade .ca-bar i{display:block;height:100%;background:#ff6200}
+.upgrade #ca-insights,.upgrade #ca-hero{border-top:1px solid #ddd;margin-top:32px;padding-top:32px}
+.upgrade #ca-insights-body{white-space:pre-wrap;font-size:16px;line-height:1.75;overflow-wrap:anywhere;color:#444}
+.upgrade .ca-comparison{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:24px}
+.upgrade .ca-comparison article{background:#f3f1eb;padding:26px;border-radius:12px;min-width:0;overflow-wrap:anywhere}.upgrade .ca-comparison article:last-child{background:#ffe4d1}
+.upgrade .ca-comparison h4{font-size:28px;letter-spacing:-.03em;line-height:1.1;margin:20px 0 15px;font-weight:500}
+.upgrade .ca-comparison p{font-size:15px;color:#444}.upgrade .ca-comparison article>span{display:inline-block;margin-top:22px;background:#111;color:white;padding:12px 18px;border-radius:30px;font-size:12px}
+.upgrade #ca-rationale{font-size:14px;color:#555;margin-top:18px}
+.upgrade #ca-next{display:flex;align-items:center;gap:28px;justify-content:space-between;background:#f6f1e8;padding:28px;margin-top:32px;border-radius:12px}
+.upgrade #ca-next p{max-width:470px;font-size:14px;color:#555}.upgrade #ca-next .apply{flex-shrink:0;margin:0}.upgrade .ca-under{margin-top:22px}.upgrade .ca-under a{text-decoration:underline;text-underline-offset:3px}
+@media(max-width:850px){.upgrade .ca-heading{grid-template-columns:1fr;gap:24px}.upgrade .ca-fields{grid-template-columns:1fr}.upgrade #ca-next{display:block}.upgrade #ca-next .apply{margin-top:20px}}
+@media(max-width:520px){.upgrade .ca-topline{font-size:9px}.upgrade .ca-form-bottom{display:block}.upgrade .ca-form-bottom p{margin-top:15px}.upgrade .ca-stats,.upgrade #ca-categories,.upgrade .ca-comparison{grid-template-columns:1fr 1fr}.upgrade #ca-categories,.upgrade .ca-comparison{grid-template-columns:1fr}.upgrade #campaign-audit-progress{grid-template-columns:1fr}.upgrade #campaign-audit-progress li{display:none}.upgrade #campaign-audit-progress li.active{display:block}.upgrade .ca-comparison article{padding:20px}.upgrade #ca-next{padding:20px}}
+
 </style>
 </head>
 <body class="upgrade">
@@ -111,10 +153,32 @@
 <h1><span>FREE</span>Website<br>Upgrade.</h1>
 <p class="lead">A dedicated landing page, built free for eligible Zib marketing clients. Give visitors a clearer reason to choose you and an easier way to enquire.</p>
 <a class="apply" href="#apply" data-cta="hero">Apply for Your Free Website Upgrade <span aria-hidden="true">↗</span></a>
-<p class="eligibility">For selected clients engaged with Zib Digital’s marketing services. Limited-time offer, subject to approval. Includes one dedicated landing page.</p>
+<a class="ca-hero-link" href="#website-audit" data-cta="hero-audit" style="display:block;margin-top:20px;font-size:14px;text-decoration:underline;text-underline-offset:4px">Want to see what could improve? Run your free audit ↓</a><p class="eligibility">For selected clients engaged with Zib Digital’s marketing services. Limited-time offer, subject to approval. Includes one dedicated landing page.</p>
 </div><div class="stage" aria-label="Illustration of a dedicated landing page"><div class="browser"><div class="browserbar"><i class="dot"></i><i class="dot"></i><i class="dot"></i><span class="address">yourbusiness.com.au</span></div><div class="screen"><div class="screen-brand">Your business. Your next chapter.</div><h2>A clearer offer.<br>A stronger<br>first impression.</h2><p>A page built around what your customers need and why they should choose you.</p><span class="sample-button">Let’s talk about your project ↗</span><div class="screen-bottom"><span>✓ Clear messaging</span><span>✓ Mobile friendly</span><span>✓ Simple enquiries</span></div></div></div><div class="float-note"><b>BUILT FOR THE NEXT STEP</b>From interested visitor<br>to genuine enquiry.</div></div></div></section>
 <div class="strip"><div class="wrap"><span>Tailored to your business</span><span>Copy, design and enquiry form</span><span>Scope agreed before we build</span></div></div>
 <aside class="proof-ribbon wrap"><div class="proof-number">430%<span>increase in leads</span></div><p><strong>Port Melbourne Containers</strong><br>Reported in Zib’s published website design + SEO case study.</p><a href="#our-work">See the work behind the result ↗</a><small>Broader campaign result, not a forecast for this offer.</small></aside>
+<section class="campaign-audit" id="website-audit" aria-labelledby="ca-title"><div class="wrap">
+<div class="ca-heading"><div><div class="eyebrow">Your website. A clearer picture.</div><h2 id="ca-title">See what’s working.<br><span>Find what could work harder.</span></h2></div><p>Run a free website audit before you apply. Explore technical checks, AI recommendations and a suggested rewrite of your homepage message.</p></div>
+<div class="ca-panel"><div class="ca-topline"><span>FREE WEBSITE AUDIT</span><span>Powered by Zib Digital ↗</span></div>
+<form id="campaign-audit-form" data-live="false"><div class="ca-fields">
+<div><label for="campaign-audit-url">Website URL</label><input id="campaign-audit-url" name="url" autocomplete="url" inputmode="url" placeholder="yourbusiness.com.au" maxlength="300" required></div>
+<div><label for="campaign-audit-email">Work email</label><input id="campaign-audit-email" name="email" type="email" autocomplete="email" placeholder="you@business.com.au" maxlength="254" required></div>
+<div><label for="campaign-audit-phone">Phone</label><input id="campaign-audit-phone" name="phone" type="tel" autocomplete="tel" placeholder="Your phone number" pattern="[+0-9() .\-]{6,30}" maxlength="30" required></div>
+</div><div class="hp" aria-hidden="true"><label for="campaign-audit-fax">Leave empty</label><input id="campaign-audit-fax" tabindex="-1" autocomplete="off"></div>
+<div class="ca-form-bottom"><button class="apply" id="campaign-audit-submit" type="submit">Run my free website audit ↗</button><p>Up to 10 pages analysed.<br>No audit required to apply for the upgrade.</p></div>
+<p class="privacy"><strong>Draft preview:</strong> the audit connection is awaiting approval. You can check the form, but no audit runs and no details are sent. Once enabled, it will use Zib’s existing HubSpot and Resend reporting systems and analyse public website content using AI. <a href="/privacy-policy" target="_blank" rel="noopener">Privacy policy</a>.</p>
+<p id="campaign-audit-status" role="status" aria-live="polite"></p>
+<noscript><p>Please enable JavaScript to run the audit. You can also <a href="/audit">visit our audit page</a>.</p></noscript></form>
+<div id="campaign-audit-results" hidden aria-busy="false">
+<div class="ca-result-label">YOUR WEBSITE / <span id="ca-domain"></span></div>
+<ol id="campaign-audit-progress"><li><span>01</span>Reading your website</li><li><span>02</span>Discovering pages</li><li><span>03</span>Crawling your website</li><li><span>04</span>Checking your pages</li><li><span>05</span>Writing your recommendations</li></ol>
+<p id="ca-advisory" hidden></p>
+<div id="ca-technical" hidden><h3>Your website at a glance.</h3><div class="ca-stats"><div><strong id="ca-score"></strong><span>Overall score</span></div><div><strong id="ca-passed"></strong><span>Checks passed</span></div><div><strong id="ca-issues"></strong><span>Issues flagged</span></div><div><strong id="ca-pages"></strong><span>Pages crawled</span></div></div><p class="ca-small">Automated checks of available HTML. Select a category to explore the findings.</p><div id="ca-categories"></div></div>
+<div id="ca-insights" hidden><div class="eyebrow">AI website review</div><h3>Where to focus next.</h3><div id="ca-insights-body"></div></div>
+<div id="ca-hero" hidden><div class="eyebrow">A clearer first impression</div><h3>Your message, reimagined.</h3><div class="ca-comparison"><article><div class="ca-small">CURRENT HOMEPAGE COPY</div><h4 id="ca-now-h"></h4><p id="ca-now-s"></p><span id="ca-now-c"></span></article><article><div class="ca-small">AI-SUGGESTED REWRITE</div><h4 id="ca-new-h"></h4><p id="ca-new-s"></p><span id="ca-new-c"></span></article></div><p id="ca-rationale"></p></div>
+<div id="ca-next" hidden><div><h3>Now give those ideas a home.</h3><p>Apply for a free landing page built around your business. The audit is a starting point, not a guarantee of results or eligibility.</p></div><a class="apply" id="campaign-audit-apply" href="#apply" data-cta="audit-results">Apply for my free upgrade ↗</a></div>
+</div></div><p class="ca-small ca-under">Prefer to speak with our team? <a href="#apply" data-cta="audit-skip">Apply directly for your free website upgrade ↗</a></p>
+</div></section>
 <section><div class="wrap two"><div><div class="eyebrow">01 / Why upgrade?</div><h2>More clicks should mean more opportunities.</h2></div><div class="copy"><p>You’re investing in getting people to your website. But if your page isn’t giving them a compelling reason to act, potential customers could be leaving without making contact.</p><p>A dedicated landing page helps bring your message, offer and call to action together, making it easier for visitors to take the next step.</p></div></div></section>
 <section class="page-tour"><div class="wrap two"><div><div class="eyebrow">What changes on the page?</div><h2>Every part gives visitors a reason to act.</h2><p class="intro-copy">Explore the thinking behind your upgrade. We tailor the message and layout to your business, rather than dropping your logo into a generic page.</p><p class="tour-label">Select a feature to see why it matters ↓</p></div><div class="tour-list">
 <details open><summary><span>01</span> An offer people understand</summary><p>Your headline, offer and key benefit work together, so visitors can quickly see what’s in it for them.</p></details>
@@ -160,4 +224,5 @@
 <a class="mobile-apply" href="#apply" data-cta="mobile-sticky"><span>FREE website upgrade</span><strong>Apply now ↗</strong></a>
 <script src="/assets/conversion.js" defer></script>
 <script src="/assets/website-upgrade.js" defer></script>
+<script src="/assets/upgrade-audit.js" defer></script>
 </body></html>
