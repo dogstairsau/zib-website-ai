@@ -5,6 +5,9 @@
   "buildCommand": "node build.mjs && node migration/sitemap.mjs && cp sitemap.xml dist/sitemap.xml",
   "outputDirectory": "dist",
   "functions": {
+    "api/website-upgrade.ts": {
+      "maxDuration": 60
+    },
     "api/audit.ts": {
       "maxDuration": 60
     },
