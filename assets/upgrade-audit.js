@@ -48,6 +48,7 @@ function checks(data) {
 form.addEventListener('submit',async event => {
   event.preventDefault();
   if (!form.reportValidity()) return;
+  if (form.dataset.live !== 'true') { status.textContent='Your details pass the form checks. Live audits are awaiting approval; nothing has been sent.'; return; }
   let url;
   try {
     const raw=$('campaign-audit-url').value.trim();
