@@ -7,3 +7,6 @@ node_modules/
 .idea
 .vscode
 dist/
+
+# /brag ad renders
+brag-output*/

@@ -477,60 +477,6 @@ async function generateImage(site, brief) {
 }
 
 // ──────────────────────────────────────────────────────────────────
-// Twilio SMS — sends "audit received" confirmation
-// ──────────────────────────────────────────────────────────────────
-function normalisePhoneAU(raw) {
-  if (!raw) return null;
-  let p = raw.replace(/[^\d+]/g, "");
-  if (p.startsWith("+")) return p;                    // already E.164
-  if (p.startsWith("00")) return "+" + p.slice(2);    // international
-  if (p.startsWith("0") && p.length === 10) return "+61" + p.slice(1); // AU mobile/landline
-  if (p.startsWith("61")) return "+" + p;             // missing leading +
-  if (p.length >= 8) return "+61" + p;                // assume AU if no country code
-  return null;
-}
-
-const SMS_BODY = "Your Zib audit has been received. Expect a call from one of our senior strategists shortly. — Zib Digital";
-
-async function sendAuditSms(rawPhone) {
-  const sid   = process.env.TWILIO_ACCOUNT_SID;
-  const token = process.env.TWILIO_AUTH_TOKEN;
-  const from  = process.env.TWILIO_FROM_NUMBER;
-
-  if (!sid || !token || !from) {
-    console.log(`[twilio:stub] would SMS ${rawPhone}`);
-    return;
-  }
-
-  const to = normalisePhoneAU(rawPhone);
-  if (!to) {
-    console.warn(`[twilio] invalid phone: ${rawPhone}`);
-    return;
-  }
-
-  const auth = Buffer.from(`${sid}:${token}`).toString("base64");
-  const body = new URLSearchParams({ To: to, From: from, Body: SMS_BODY });
-
-  const res = await fetch(`https://api.twilio.com/2010-04-01/Accounts/${sid}/Messages.json`, {
-    method: "POST",
-    headers: {
-      Authorization: `Basic ${auth}`,
-      "Content-Type": "application/x-www-form-urlencoded",
-    },
-    body,
-    signal: AbortSignal.timeout(10_000),
-  });
-
-  if (!res.ok) {
-    const err = await res.text().catch(() => "");
-    console.warn(`[twilio] ${res.status}: ${err.slice(0, 200)}`);
-    return;
-  }
-  const data = await res.json();
-  console.log(`[twilio] sent ${data.sid} → ${to}`);
-}
-
-// ──────────────────────────────────────────────────────────────────
 // Lead capture (stub)
 // ──────────────────────────────────────────────────────────────────
 async function captureLead(lead) {
@@ -597,9 +543,6 @@ async function handleAudit(req, res) {
   const send = (event, data) => {
     res.write(`event: ${event}\ndata: ${JSON.stringify(data)}\n\n`);
   };
-
-  // Fire-and-forget SMS confirmation the moment the form is submitted
-  if (phone) sendAuditSms(phone).catch((e) => console.warn("[sms]", e.message));
 
   try {
     send("status", { phase: "fetch", message: "Reading the site…" });
@@ -789,6 +732,5 @@ server.listen(PORT, () => {
   console.log(`  Anthropic key   →  ${process.env.ANTHROPIC_API_KEY ? "loaded" : "MISSING (set ANTHROPIC_API_KEY)"}`);
   console.log(`  Image gen       →  ${process.env.OPENAI_API_KEY ? `OpenAI ${process.env.OPENAI_IMAGE_MODEL || "gpt-image-1-mini"}` : "DISABLED"}`);
   console.log(`  PSI key         →  scrapped (Lighthouse disabled for now)`);
-  console.log(`  Twilio SMS      →  ${process.env.TWILIO_ACCOUNT_SID && process.env.TWILIO_AUTH_TOKEN && process.env.TWILIO_FROM_NUMBER ? "loaded" : "unset (SMS disabled)"}`);
   console.log(`  Slack webhook   →  ${process.env.SLACK_WEBHOOK_URL ? "loaded" : "unset"}\n`);
 });

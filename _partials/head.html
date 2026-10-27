@@ -6,6 +6,33 @@
 <script>document.documentElement.classList.add('js');</script>
 <meta name="google-site-verification" content="pYxeBtzqyS2BXOBl_hjXvC9h8CBxjO-y6iJlEwOPMJg" />
 
+<!-- Consent default-deny. Must stay ahead of any analytics/ads tag so
+     nothing is measured before the visitor decides. The banner that
+     grants consent lives in _partials/consent.html. -->
+<script>
+(() => {
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  window.gtag = window.gtag || gtag;
+  let saved = null;
+  try {
+    const raw = localStorage.getItem('zib_consent_v1');
+    const val = raw ? JSON.parse(raw) : null;
+    if (val && val.v === 1) saved = val;
+  } catch {}
+  const state = (ok) => (ok ? 'granted' : 'denied');
+  gtag('consent', 'default', {
+    ad_storage:              state(saved && saved.marketing),
+    ad_user_data:            state(saved && saved.marketing),
+    ad_personalization:      state(saved && saved.marketing),
+    personalization_storage: state(saved && saved.marketing),
+    analytics_storage:       state(saved && saved.analytics),
+    functionality_storage:   'granted',
+    security_storage:        'granted'
+  });
+})();
+</script>
+
 <!-- ───────────────────────────────────────────────────────────────────────
      Marketing & analytics migrated from zibdigital.com.au.
      GTM is the hub: Meta Pixel (1417344755743451), Hotjar, and the old GA4
@@ -28,14 +55,17 @@ j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
 })(window,document,'script','dataLayer','GTM-TB6Q2RM');</script>
 <!-- End Google Tag Manager -->
 
+<!-- HubSpot and CallRail sit outside GTM, so Consent Mode can't hold them back.
+     They ship inert (type="text/plain") and _partials/consent.html swaps them
+     in once the visitor accepts marketing cookies. -->
 <!-- HubSpot tracking pixel · portal 14539048 (same portal as the old site, so
      contact timelines + form attribution stay continuous after migration) -->
-<script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/14539048.js"></script>
+<script type="text/plain" data-consent="marketing" id="hs-script-loader" async defer src="//js.hs-scripts.com/14539048.js"></script>
 
 <!-- CallRail dynamic number swap · company 501276477.
      async so a slow CallRail CDN can never block first paint; swap.js runs
      its number swap once the DOM is ready regardless of load order. -->
-<script type="text/javascript" async src="//cdn.callrail.com/companies/501276477/247ea0051ceca8a20027/12/swap.js"></script>
+<script type="text/plain" data-consent="marketing" async src="//cdn.callrail.com/companies/501276477/247ea0051ceca8a20027/12/swap.js"></script>
 <link rel="icon" type="image/svg+xml" href="/assets/favicon.svg" />
 <link rel="alternate icon" href="/assets/zib-logo.png" />
 <link rel="apple-touch-icon" href="/assets/zib-logo.png" />
