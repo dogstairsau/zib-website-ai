@@ -41,7 +41,7 @@ What the client said, and where it shows up on the page.
 | Does the new platform handle photo and video? | Adele | #website "Not WordPress" |
 | PR and directors are deciding: coming soon in the first week of December, or hold until January | Matt | #plan lede: page built and held for either |
 | Wants a coming-soon page: a hand sketch, a nice colour, "coming soon" | Matt | #plan stage 1 |
-| Budget "between six and 10K"; start small, add later | Matt | #cost lede |
+| Budget "between six and 10K"; start small, add later | Matt | Not quoted on the page (Michael, 27 Oct); #cost lede keeps "start small, add as you go" |
 | Phase 1 landing page / waitlist, then flip to full site; start GBP and SEO early | Michael | #plan, #google |
 | ~Five pages plus a downloadable function / events pack | Michael | Site map, cost table |
 | Michael to offer a non-WordPress back end, with training, that plugs into Zib's marketing AI and can be cloned for future SHR pubs. The editor is **Sanity** (Michael, 27 Oct) | Michael | #website |
