@@ -15,8 +15,8 @@ early November 2026
 - Website: $8,500 one-off (coming-soon page, GBP set-up and old-listing clean-up, five-page
   site and function pack, launch copy, tracking, editor training). Paid 50% to start ($4,250),
   35% when the coming-soon page goes live ($2,975), 15% before the full site goes live ($1,275)
-- SEO: $2,500 set-up (December strategy), then $2,000 a month from January. No minimum term
-  stated; Quest used set-up + 3 months, then month to month
+- SEO: $2,500 set-up (December strategy), then $2,000 a month from January. Term: set-up
+  + 3 months, then month to month (same as Quest)
 - Hosting: Vercel or AWS, $50 a month
 **Page styling:** Zib house brand (tokens from `assets/base.css`, Neue Haas via
 `assets/fonts.css`), not the pub's, since its branding isn't done yet
