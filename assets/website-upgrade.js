@@ -3,6 +3,7 @@
   const button = document.getElementById('submit-application');
   const status = document.getElementById('form-status');
   const startedAt = Date.now();
+  const submissionId = crypto.randomUUID();
   let sending = false;
   document.querySelectorAll('[data-cta]').forEach(link => link.addEventListener('click', () => {
     window.dataLayer = window.dataLayer || [];
@@ -21,12 +22,11 @@
       status.className = 'error'; status.textContent = 'Please enter a valid website address, such as yourbusiness.com.au.';
       document.getElementById('website').focus(); return;
     }
-    if (form.dataset.preview === 'true') { status.className = ''; status.textContent = 'Your fields are valid. This is a draft preview, so no application has been sent.'; status.focus(); return; }
     sending = true; button.disabled = true; status.className = ''; status.textContent = 'Sending your application…';
     try {
       const response = await fetch('/api/website-upgrade', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ ...data, startedAt, attribution: window.zibClickIds?.() || {}, referrer: document.referrer })
+        body: JSON.stringify({ ...data, startedAt, submissionId, attribution: window.zibClickIds?.() || {} })
       });
       const result = await response.json().catch(() => ({}));
       if (!response.ok || result.ok !== true) throw new Error(result.error || 'We couldn’t send your application. Please try again.');
