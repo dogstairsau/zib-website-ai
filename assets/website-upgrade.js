@@ -5,6 +5,38 @@
   const startedAt = Date.now();
   const submissionId = crypto.randomUUID();
   let sending = false;
+  // Direct Google Ads tracking for this application only. Do not mirror this
+  // destination in GTM; when migrating, remove this block in the same release.
+  const adsDestination = 'AW-762912823/zcg6CODO2a0dELfA5OsC';
+  let marketingConsent = false;
+  let adsConfigured = false;
+  let applicationAccepted = false;
+  let adsSent = false;
+  try {
+    const prefs = JSON.parse(localStorage.getItem('zib_consent_v1') || 'null');
+    marketingConsent = prefs?.v === 1 && prefs.marketing === true;
+  } catch {}
+  const syncAds = () => {
+    if (!marketingConsent || typeof window.gtag !== 'function') return;
+    try {
+      if (!adsConfigured) {
+        window.gtag('config', 'AW-762912823', { send_page_view: false });
+        adsConfigured = true;
+      }
+      if (applicationAccepted && !adsSent) {
+        window.gtag('event', 'conversion', {
+          send_to: adsDestination,
+          transaction_id: submissionId,
+        });
+        adsSent = true;
+      }
+    } catch { /* Tracking must never turn an accepted enquiry into an error. */ }
+  };
+  document.addEventListener('zib:consent', event => {
+    marketingConsent = event.detail?.v === 1 && event.detail.marketing === true;
+    syncAds();
+  });
+  syncAds();
   document.querySelectorAll('[data-cta]').forEach(link => link.addEventListener('click', () => {
     window.dataLayer = window.dataLayer || [];
     window.dataLayer.push({ event: 'website_upgrade_cta_click', placement: link.dataset.cta, campaign: 'free_website_upgrade' });
@@ -34,7 +66,9 @@
       status.textContent = 'Thanks for your interest. Our team will be in touch to discuss your website and confirm your eligibility.';
       form.querySelectorAll('input, textarea').forEach(input => { input.disabled = true; });
       button.textContent = 'Application received ✓';
-      window.zibLead?.({ tool: 'Free Website Upgrade' });
+      applicationAccepted = true;
+      syncAds();
+      try { window.zibLead?.({ tool: 'Free Website Upgrade' }); } catch {}
       status.focus();
     } catch (error) {
       status.className = 'error'; status.textContent = error.message;
