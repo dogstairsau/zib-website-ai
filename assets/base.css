@@ -516,6 +516,25 @@ footer .foot-links {
   letter-spacing: 0.12em;
   text-transform: uppercase;
 }
+/* Legal row: separated with middots, colour inherited so dark-theme
+   footer overrides keep working. */
+.foot-legal { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
+.foot-legal > * + *::before { content: "·"; margin-right: 10px; opacity: 0.6; }
+.foot-legal a,
+.foot-legal button {
+  font: inherit;
+  letter-spacing: inherit;
+  text-transform: inherit;
+  color: inherit;
+  background: none;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  transition: color 200ms var(--ease);
+}
+.foot-legal a:hover,
+.foot-legal button:hover { color: var(--accent); }
+
 .foot-clock {
   font-family: var(--mono);
   font-size: 11px;
@@ -601,6 +620,11 @@ footer .foot-links {
 .float-cta svg { flex-shrink: 0; }
 @media (max-width: 600px) { .float-cta { padding: 13px 18px; font-size: 14px; gap: 8px; } }
 @media print { .float-cta { display: none; } }
+/* Room under the footer's bottom row so the floating CTA sits below it at the
+   end of the page instead of covering it. footer + class beats the per-page
+   inline .foot-bar rules. */
+footer .foot-bar { padding-bottom: calc(clamp(14px, 3vw, 28px) + 44px); }
+@media print { footer .foot-bar { padding-bottom: 0; } }
 
 /* Skip link — visually hidden until keyboard-focused. */
 .skip-link {

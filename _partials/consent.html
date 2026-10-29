@@ -1,0 +1,478 @@
+<!-- ─── Cookie consent · banner + preferences ──────────────────────
+     Included from _partials/footer.html, so every page that renders
+     the shared footer gets it. The matching default-deny shim lives in
+     _partials/head.html and must stay ahead of any analytics tag.
+
+     Gate a tag on consent by shipping it inert and tagging it:
+       <script type="text/plain" data-consent="analytics"> …gtag… </script>
+     It is activated the moment that category is granted, and not before.
+     ──────────────────────────────────────────────────────────────── -->
+<style>
+.cc-banner {
+  position: fixed;
+  z-index: 200;
+  left: clamp(12px, 3vw, 28px);
+  right: clamp(12px, 3vw, 28px);
+  bottom: clamp(12px, 3vw, 28px);
+  max-width: 560px;
+  background: #fff;
+  border: 1px solid var(--rule-2);
+  border-radius: 16px;
+  padding: clamp(20px, 2.6vw, 26px);
+  box-shadow: 0 18px 50px rgba(0,0,0,0.14), 0 2px 8px rgba(0,0,0,0.06);
+  transform: translateY(16px);
+  opacity: 0;
+  transition: opacity 320ms var(--ease), transform 320ms var(--ease);
+}
+.cc-banner[hidden] { display: none; }
+.cc-banner.in { transform: translateY(0); opacity: 1; }
+
+.cc-title {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(17px, 1.6vw, 19px);
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.cc-eyebrow { color: var(--accent); display: block; margin-bottom: 12px; }
+.cc-copy {
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--muted);
+  margin-bottom: 18px;
+}
+.cc-copy a {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.cc-copy a:hover { color: var(--accent); }
+
+.cc-actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+
+.cc-btn {
+  font-family: var(--display);
+  font-size: 14px;
+  font-weight: 500;
+  padding: 11px 20px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  transition: background 200ms var(--ease), color 200ms var(--ease),
+              border-color 200ms var(--ease), transform 200ms var(--ease);
+  white-space: nowrap;
+}
+.cc-btn:hover { transform: translateY(-1px); }
+.cc-btn-primary { background: var(--ink); color: #fff; }
+.cc-btn-primary:hover { background: var(--accent); }
+.cc-btn-outline { border-color: var(--rule-2); color: var(--ink); background: #fff; }
+.cc-btn-outline:hover { border-color: var(--ink); }
+.cc-btn-quiet {
+  background: none;
+  color: var(--muted);
+  padding: 11px 4px;
+  margin-left: auto;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.cc-btn-quiet:hover { color: var(--accent); transform: none; }
+
+@media (max-width: 520px) {
+  .cc-actions { flex-direction: column; align-items: stretch; }
+  .cc-btn { width: 100%; text-align: center; }
+  .cc-btn-quiet { margin-left: 0; }
+}
+
+/* ─── Preferences dialog ──────────────────────────────────────── */
+.cc-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 210;
+  display: grid;
+  place-items: center;
+  padding: clamp(12px, 3vw, 32px);
+}
+.cc-modal[hidden] { display: none; }
+.cc-scrim {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.42);
+  backdrop-filter: blur(2px);
+  -webkit-backdrop-filter: blur(2px);
+  opacity: 0;
+  transition: opacity 260ms var(--ease);
+}
+.cc-modal.in .cc-scrim { opacity: 1; }
+
+.cc-panel {
+  position: relative;
+  width: min(100%, 560px);
+  max-height: min(86vh, 720px);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  background: #fff;
+  border-radius: 18px;
+  padding: clamp(24px, 3.2vw, 34px);
+  box-shadow: 0 24px 70px rgba(0,0,0,0.22);
+  transform: translateY(12px) scale(0.985);
+  opacity: 0;
+  transition: opacity 260ms var(--ease), transform 260ms var(--ease);
+}
+.cc-modal.in .cc-panel { transform: translateY(0) scale(1); opacity: 1; }
+
+.cc-panel h2 {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(22px, 2.4vw, 27px);
+  letter-spacing: -0.028em;
+  line-height: 1.12;
+  color: var(--ink);
+  margin-bottom: 10px;
+}
+.cc-panel > p {
+  font-size: 15px;
+  line-height: 1.55;
+  color: var(--muted);
+  margin-bottom: 24px;
+}
+
+.cc-close {
+  position: absolute;
+  top: 16px; right: 16px;
+  width: 34px; height: 34px;
+  display: grid; place-items: center;
+  border-radius: 50%;
+  color: var(--muted);
+  font-size: 17px;
+  line-height: 1;
+  transition: background 200ms var(--ease), color 200ms var(--ease);
+}
+.cc-close:hover { background: var(--paper); color: var(--ink); }
+
+.cc-group {
+  border-top: 0.5px solid var(--rule);
+  padding: 20px 0;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 6px 18px;
+  align-items: start;
+}
+.cc-group h3 {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: -0.012em;
+  color: var(--ink);
+}
+.cc-group p {
+  grid-column: 1;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+.cc-locked {
+  grid-row: 1 / span 2;
+  grid-column: 2;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+  border: 1px solid var(--rule);
+  border-radius: 999px;
+  padding: 6px 12px;
+  white-space: nowrap;
+}
+
+/* Switch */
+.cc-switch {
+  grid-row: 1 / span 2;
+  grid-column: 2;
+  position: relative;
+  width: 46px;
+  height: 27px;
+  flex: none;
+  cursor: pointer;
+}
+.cc-switch input {
+  position: absolute;
+  opacity: 0;
+  width: 100%; height: 100%;
+  margin: 0;
+  cursor: pointer;
+}
+.cc-track {
+  position: absolute;
+  inset: 0;
+  background: var(--rule-2);
+  border-radius: 999px;
+  transition: background 220ms var(--ease);
+  pointer-events: none;
+}
+.cc-thumb {
+  position: absolute;
+  top: 3px; left: 3px;
+  width: 21px; height: 21px;
+  background: #fff;
+  border-radius: 50%;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.24);
+  transition: transform 220ms var(--ease-spring);
+  pointer-events: none;
+}
+.cc-switch input:checked ~ .cc-track { background: var(--accent); }
+.cc-switch input:checked ~ .cc-thumb { transform: translateX(19px); }
+.cc-switch input:focus-visible ~ .cc-track { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+.cc-panel-actions {
+  border-top: 0.5px solid var(--rule);
+  padding-top: 22px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+@media (max-width: 480px) {
+  .cc-panel-actions { flex-direction: column; }
+  .cc-panel-actions .cc-btn { width: 100%; text-align: center; }
+}
+
+.cc-foot {
+  margin-top: 18px;
+  font-family: var(--mono);
+  font-size: 10.5px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted-2);
+}
+.cc-foot a { color: var(--muted-2); text-decoration: underline; text-underline-offset: 3px; }
+.cc-foot a:hover { color: var(--accent); }
+
+@media (prefers-reduced-motion: reduce) {
+  .cc-banner, .cc-panel, .cc-scrim, .cc-thumb, .cc-track { transition: none; }
+  .cc-banner { transform: none; }
+}
+</style>
+
+<!-- Banner -->
+<div class="cc-banner" id="ccBanner" role="dialog" aria-modal="false"
+     aria-labelledby="ccBannerTitle" aria-describedby="ccBannerCopy" hidden>
+  <span class="mono cc-eyebrow">Cookies</span>
+  <div class="cc-title" id="ccBannerTitle">A quick, honest one.</div>
+  <p class="cc-copy" id="ccBannerCopy">
+    Essential cookies keep the site running. Analytics and marketing cookies stay off until you say otherwise —
+    they help us see what’s read and what works. Details in our <a href="/privacy-policy#cookies">Privacy Policy</a>.
+  </p>
+  <div class="cc-actions">
+    <button type="button" class="cc-btn cc-btn-primary" id="ccAcceptAll">Accept all</button>
+    <button type="button" class="cc-btn cc-btn-outline" id="ccRejectAll">Reject non-essential</button>
+    <button type="button" class="cc-btn cc-btn-quiet" id="ccManage">Manage</button>
+  </div>
+</div>
+
+<!-- Preferences -->
+<div class="cc-modal" id="ccModal" hidden>
+  <div class="cc-scrim" data-cc-dismiss></div>
+  <div class="cc-panel" role="dialog" aria-modal="true" aria-labelledby="ccModalTitle">
+    <button type="button" class="cc-close" data-cc-dismiss aria-label="Close cookie settings">✕</button>
+    <h2 id="ccModalTitle">Cookie settings</h2>
+    <p>Choose what we’re allowed to measure. You can change this any time from the footer.</p>
+
+    <div class="cc-group">
+      <h3>Essential</h3>
+      <p>Page delivery, security, and remembering this choice. Always on — the site doesn’t work without them.</p>
+      <span class="cc-locked">Always on</span>
+    </div>
+
+    <div class="cc-group">
+      <h3>Analytics</h3>
+      <p>Which pages get read, how people arrive, where they drop off. Used to improve the site, never sold.</p>
+      <label class="cc-switch">
+        <input type="checkbox" id="ccAnalytics" />
+        <span class="cc-track"></span>
+        <span class="cc-thumb"></span>
+        <span class="sr-only">Allow analytics cookies</span>
+      </label>
+    </div>
+
+    <div class="cc-group">
+      <h3>Marketing</h3>
+      <p>Measuring our advertising and showing you relevant ads on other platforms.</p>
+      <label class="cc-switch">
+        <input type="checkbox" id="ccMarketing" />
+        <span class="cc-track"></span>
+        <span class="cc-thumb"></span>
+        <span class="sr-only">Allow marketing cookies</span>
+      </label>
+    </div>
+
+    <div class="cc-panel-actions">
+      <button type="button" class="cc-btn cc-btn-primary" id="ccSave">Save preferences</button>
+      <button type="button" class="cc-btn cc-btn-outline" id="ccAcceptAll2">Accept all</button>
+      <button type="button" class="cc-btn cc-btn-outline" id="ccRejectAll2">Reject non-essential</button>
+    </div>
+
+    <div class="cc-foot">
+      <a href="/privacy-policy#cookies">Privacy Policy</a> · <a href="/client-terms">Terms</a>
+    </div>
+  </div>
+</div>
+
+<script>
+(() => {
+  const KEY = 'zib_consent_v1';
+  const VERSION = 1;
+  const CATEGORIES = ['analytics', 'marketing'];
+
+  const banner   = document.getElementById('ccBanner');
+  const modal    = document.getElementById('ccModal');
+  if (!banner || !modal) return;
+
+  const panel    = modal.querySelector('.cc-panel');
+  const inputs   = { analytics: document.getElementById('ccAnalytics'),
+                     marketing: document.getElementById('ccMarketing') };
+  const reduce   = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let lastFocus = null;
+
+  // ─── Storage ────────────────────────────────────────────────
+  const read = () => {
+    try {
+      const raw = localStorage.getItem(KEY);
+      if (!raw) return null;
+      const val = JSON.parse(raw);
+      // A version bump invalidates old consent — we must ask again.
+      if (!val || val.v !== VERSION) return null;
+      return val;
+    } catch { return null; }
+  };
+
+  const write = (prefs) => {
+    const val = { v: VERSION, ts: new Date().toISOString() };
+    CATEGORIES.forEach(c => { val[c] = !!prefs[c]; });
+    try { localStorage.setItem(KEY, JSON.stringify(val)); } catch {}
+    return val;
+  };
+
+  // ─── Applying consent ───────────────────────────────────────
+  // Google Consent Mode v2 — the default-deny shim lives in the <head>,
+  // this only ever loosens it once the visitor has said yes.
+  const pushToGoogle = (prefs) => {
+    if (typeof window.gtag !== 'function') return;
+    window.gtag('consent', 'update', {
+      analytics_storage:        prefs.analytics ? 'granted' : 'denied',
+      ad_storage:               prefs.marketing ? 'granted' : 'denied',
+      ad_user_data:             prefs.marketing ? 'granted' : 'denied',
+      ad_personalization:       prefs.marketing ? 'granted' : 'denied',
+      personalization_storage:  prefs.marketing ? 'granted' : 'denied'
+    });
+  };
+
+  // Activate any tag shipped inert as <script type="text/plain" data-consent="...">
+  const activateTags = (prefs) => {
+    document.querySelectorAll('script[type="text/plain"][data-consent]').forEach(node => {
+      const cat = node.dataset.consent;
+      if (!prefs[cat]) return;
+      const live = document.createElement('script');
+      for (const { name, value } of node.attributes) {
+        if (name === 'type' || name === 'data-consent') continue;
+        live.setAttribute(name, value);
+      }
+      live.text = node.text;
+      node.parentNode.replaceChild(live, node);
+    });
+  };
+
+  const apply = (prefs, { persist = true } = {}) => {
+    const stored = persist ? write(prefs) : prefs;
+    pushToGoogle(stored);
+    activateTags(stored);
+    document.dispatchEvent(new CustomEvent('zib:consent', { detail: stored }));
+    return stored;
+  };
+
+  // ─── Banner ─────────────────────────────────────────────────
+  const showBanner = () => {
+    banner.hidden = false;
+    if (reduce) { banner.classList.add('in'); return; }
+    requestAnimationFrame(() => requestAnimationFrame(() => banner.classList.add('in')));
+  };
+
+  const hideBanner = () => {
+    banner.classList.remove('in');
+    if (reduce) { banner.hidden = true; return; }
+    setTimeout(() => { banner.hidden = true; }, 320);
+  };
+
+  // ─── Modal ──────────────────────────────────────────────────
+  const FOCUSABLE = 'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])';
+
+  const openModal = () => {
+    lastFocus = document.activeElement;
+    const current = read() || { analytics: false, marketing: false };
+    CATEGORIES.forEach(c => { inputs[c].checked = !!current[c]; });
+    modal.hidden = false;
+    if (reduce) modal.classList.add('in');
+    else requestAnimationFrame(() => requestAnimationFrame(() => modal.classList.add('in')));
+    document.body.style.overflow = 'hidden';
+    (panel.querySelector(FOCUSABLE) || panel).focus({ preventScroll: true });
+    document.addEventListener('keydown', onKeydown);
+  };
+
+  const closeModal = () => {
+    modal.classList.remove('in');
+    document.body.style.overflow = '';
+    document.removeEventListener('keydown', onKeydown);
+    const finish = () => { modal.hidden = true; };
+    if (reduce) finish(); else setTimeout(finish, 260);
+    if (lastFocus && document.contains(lastFocus)) lastFocus.focus({ preventScroll: true });
+  };
+
+  function onKeydown(e) {
+    if (e.key === 'Escape') { closeModal(); return; }
+    if (e.key !== 'Tab') return;
+    const items = [...panel.querySelectorAll(FOCUSABLE)].filter(el => el.offsetParent !== null);
+    if (!items.length) return;
+    const first = items[0], last = items[items.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  }
+
+  // ─── Decisions ──────────────────────────────────────────────
+  const decide = (prefs) => { apply(prefs); hideBanner(); if (!modal.hidden) closeModal(); };
+  const ALL  = { analytics: true,  marketing: true  };
+  const NONE = { analytics: false, marketing: false };
+
+  document.getElementById('ccAcceptAll').addEventListener('click', () => decide(ALL));
+  document.getElementById('ccRejectAll').addEventListener('click', () => decide(NONE));
+  document.getElementById('ccManage').addEventListener('click', openModal);
+  document.getElementById('ccAcceptAll2').addEventListener('click', () => decide(ALL));
+  document.getElementById('ccRejectAll2').addEventListener('click', () => decide(NONE));
+  document.getElementById('ccSave').addEventListener('click', () => {
+    decide({ analytics: inputs.analytics.checked, marketing: inputs.marketing.checked });
+  });
+
+  modal.querySelectorAll('[data-cc-dismiss]').forEach(el => el.addEventListener('click', closeModal));
+
+  // Any element anywhere can reopen settings: <button data-cookie-settings>
+  document.addEventListener('click', (e) => {
+    const trigger = e.target.closest('[data-cookie-settings]');
+    if (!trigger) return;
+    e.preventDefault();
+    openModal();
+  });
+
+  // ─── Public API ─────────────────────────────────────────────
+  window.zibConsent = {
+    get:      () => read() || { ...NONE, v: VERSION, ts: null },
+    granted:  (cat) => !!(read() || {})[cat],
+    set:      (prefs) => decide({ ...NONE, ...prefs }),
+    open:     openModal,
+    decided:  () => read() !== null
+  };
+
+  // ─── Boot ───────────────────────────────────────────────────
+  const saved = read();
+  if (saved) apply(saved, { persist: false });
+  else showBanner();
+})();
+</script>

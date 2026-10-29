@@ -392,6 +392,7 @@ export default async function handler(req: Request): Promise<Response> {
               email,
               firstname: body.firstname?.trim() || "",
               company: body.company?.trim() || "",
+              phone: body.phone?.trim() || "",
               website: url,
               source,
               // Scored here, not taken from the browser — this is a public

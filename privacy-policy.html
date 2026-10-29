@@ -6,31 +6,7 @@
 <meta name="robots" content="noindex, follow" />
 <meta name="zib:source-tag" content="Privacy Policy" />
 <!-- @include _partials/head.html -->
-<style>
-.legal { padding-top: clamp(120px, 14vw, 180px); padding-bottom: clamp(72px, 9vw, 120px); }
-.legal .container { max-width: 820px; }
-.legal-eyebrow { color: var(--accent); margin-bottom: 18px; }
-.legal h1 {
-  font-family: var(--display); font-weight: 500;
-  font-size: clamp(40px, 6vw, 76px); line-height: 1.0; letter-spacing: -0.04em;
-  margin-bottom: 20px;
-}
-.legal .updated { font-family: var(--mono); font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: clamp(40px, 5vw, 64px); }
-.legal h2 {
-  font-family: var(--display); font-weight: 500;
-  font-size: clamp(24px, 2.6vw, 34px); letter-spacing: -0.02em;
-  margin: clamp(40px, 5vw, 64px) 0 16px;
-}
-.legal p, .legal li { color: var(--ink-3); font-size: 16.5px; line-height: 1.65; }
-.legal p { margin-bottom: 16px; max-width: 70ch; }
-.legal ul { margin: 0 0 16px; padding-left: 22px; display: grid; gap: 8px; max-width: 70ch; }
-.legal a { color: var(--accent); }
-.legal .contact-card {
-  margin-top: clamp(32px, 4vw, 48px); padding: clamp(24px, 3vw, 32px);
-  border: 0.5px solid var(--rule); border-radius: 18px; background: var(--paper);
-}
-.legal .contact-card p { margin: 0; }
-</style>
+<!-- @include _partials/legal-style.html -->
 </head>
 <body>
 
@@ -39,107 +15,330 @@
 <!-- @include _partials/nav.html -->
 
 <main id="main">
-<section class="legal">
+
+<!-- HEAD -->
+<section class="legal-head">
   <div class="container">
     <div class="mono legal-eyebrow reveal">Legal</div>
-    <h1 class="reveal">Privacy Policy</h1>
-    <div class="updated reveal">Last updated · 12 September 2022</div>
-
-    <p class="reveal">We take the protection of your personal information very seriously. This Privacy Policy is intended to provide you with a general explanation of how we may collect, store, use and disclose your personal information.</p>
-
-    <h2 class="reveal">Overview</h2>
-    <p class="reveal">Zib Digital Pty Ltd understands the importance people place on their personal information being collected. Personal information collected by us is treated with the appropriate degree of privacy and confidentiality.</p>
-    <p class="reveal">You will be referred to throughout this Privacy Policy as ("you" or "your"). Zib Digital Pty Ltd ABN 58 160 520 507 will be referred to throughout as Zib Digital or ("us", "we" or "our").</p>
-    <p class="reveal">This Privacy Policy is intended to provide you with a general explanation of how we may collect, store, use and disclose your personal information. This Privacy Policy takes into account the requirements of the Privacy Act 1988 (Cth) and the Australian Privacy Principles. This Privacy Policy should be read in conjunction with any other terms and conditions that appear in or are linked to the Zib Digital's website.</p>
-
-    <h2 class="reveal">Personal information</h2>
-    <p class="reveal">The types of personal information we may collect about you include:</p>
-    <ul class="reveal">
-      <li>Your name and address;</li>
-      <li>Your age and date of birth;</li>
-      <li>Your contact details including telephone numbers, mailing address, street address and email address;</li>
-      <li>Your gender;</li>
-      <li>Your occupation or employment details;</li>
-      <li>Where applicable, your credit card or payment details (either directly or through our third-party payment processor);</li>
-      <li>Your sensitive information as set out below;</li>
-      <li>Details of products and services we have provided to you and/or that you have enquired about, and our response to you;</li>
-      <li>Your browser session and geo-location data, device and network information, statistics on page views and sessions, acquisition sources, search queries and/or browsing behaviour;</li>
-      <li>Information about your access and use of our Services, including through the use of Internet cookies, your communications with our online Services, the type of browser you are using, the type of operating system you are using and the domain name of your Internet service provider;</li>
-      <li>Additional personal information that you provide to us, directly or indirectly, through your use of our Services, associated applications, associated social media platforms and/or accounts from which you permit us to collect information; and</li>
-      <li>Any other personal information requested by us and/or provided by you or a third party.</li>
-    </ul>
-    <p class="reveal">We may collect these types of personal information directly from you or from third parties.</p>
-
-    <h2 class="reveal">Collection and use of personal information</h2>
-    <p class="reveal">We may collect, hold, use and disclose personal information for the following purposes:</p>
-    <ul class="reveal">
-      <li>to enable you to access and use our Services and the associated applications;</li>
-      <li>to contact and communicate with you;</li>
-      <li>for internal record keeping, administrative purposes, invoicing and billing purposes (where applicable);</li>
-      <li>for analytics and business development, including to operate and improve our Services and associated applications;</li>
-      <li>for direct marketing or for sending you details about offers or competitions we may be running;</li>
-      <li>to comply with our legal obligations and resolve any disputes that we may have; and</li>
-      <li>if you have applied for employment with us, to consider your employment application.</li>
-    </ul>
-
-    <h2 class="reveal">Storage and security</h2>
-    <p class="reveal">We are committed to ensuring that the personal information we collect is secure. In order to prevent unauthorised access or disclosure, we have put in place suitable physical, electronic and managerial procedures, to safeguard and secure personal information and protect it from misuse, interference, loss and unauthorised access, modification and disclosure.</p>
-    <p class="reveal">We cannot guarantee the security of any information that is transmitted to or by us over the Internet. The transmission and exchange of information is carried out at your own risk. Although we take measures to safeguard against unauthorised disclosures of information, we cannot assure you that the personal information we collect will not be disclosed in a manner that is inconsistent with this Privacy Policy.</p>
-
-    <h2 class="reveal">Internet users</h2>
-    <p class="reveal">If you access our website or social media sites, we may collect additional personal information about you including but not limited to your name, intellectual property address and domain name. Our website uses cookies. The main purpose of cookies is to identify users and to prepare customised web pages tailored to them. Cookies do not identify you personally, but they may link back to a database record about you. We use cookies to monitor usage of our website and to create a record of when you visit our website and what pages you view so that we may serve you more effectively. Our website may contain links to other websites. We are not responsible for the privacy practices of linked websites and linked websites which are not subject to our Privacy Policy.</p>
-
-    <h2 class="reveal">Disclosure of personal information to third parties</h2>
-    <p class="reveal">We may disclose personal information to:</p>
-    <ul class="reveal">
-      <li>third party service providers for the purpose of enabling them to provide their services, including (without limitation) IT service providers, data storage, web-hosting and server providers, maintenance or problem-solving providers, professional advisors and payment systems operators;</li>
-      <li>our employees, contractors and/or related entities;</li>
-      <li>our existing or potential agents or business partners;</li>
-      <li>anyone to whom our business or assets (or any part of them) are, or may (in good faith) be, transferred;</li>
-      <li>credit reporting agencies, courts, tribunals and regulatory authorities, in the event you fail to pay for goods or services we have provided to you;</li>
-      <li>courts, tribunals, regulatory authorities and law enforcement officers, as required by law, in connection with any actual or prospective legal proceedings, or in order to establish, exercise or defend our legal rights; and</li>
-      <li>third parties to collect and process data, such as Google Analytics or other relevant businesses.</li>
-    </ul>
-    <p class="reveal">Where the disclosure of your personal information is solely subject to Australian privacy laws, you acknowledge that some third parties may not be regulated by the Privacy Act and the Australian Privacy Principles in the Privacy Act and if any such third party engages in any act or practice that contravenes the Australian Privacy Principles, it would not be accountable under the Privacy Act and you will not be able to seek redress under the Privacy Act.</p>
-
-    <h2 class="reveal">How we treat personal information that is also sensitive information</h2>
-    <p class="reveal">Sensitive information is a sub-set of personal information that is given a higher level of protection under the Australian Privacy Principles. Sensitive information means information relating to your racial or ethnic origin, political opinions, religion, trade union or other professional associations or memberships, philosophical beliefs, sexual orientation, sexual practices or sex life, criminal records, health information or biometric information.</p>
-    <p class="reveal">Provided you consent, your sensitive information may only be used and disclosed for purposes relating to the primary purpose for which the sensitive information was collected.</p>
-    <p class="reveal">Sensitive information may also be used or disclosed if required or authorised by law.</p>
-
-    <h2 class="reveal">Our commitment to you</h2>
-    <p class="reveal">Your personal information will:</p>
-    <ul class="reveal">
-      <li>be processed lawfully, fairly and in a transparent manner by us;</li>
-      <li>only be collected for the specific purposes we have identified in the 'collection and use of personal information' clause above and personal information will not be further processed in a manner that is incompatible with the purposes we have identified;</li>
-      <li>be collected in a way that is adequate, relevant and limited to what is necessary in relation to the purpose for which the personal information is processed;</li>
-      <li>be kept up to date, where it is possible and within our control to do so (please let us know if you would like us to correct any of your personal information);</li>
-      <li>be kept in a form which permits us to identify you, but only for so long as necessary for the purposes for which the personal information was collected; and</li>
-      <li>be processed securely and in a way that protects against unauthorised or unlawful processing and against accidental loss, destruction or damage.</li>
-    </ul>
-
-    <h2 class="reveal">Your rights and controlling your personal information</h2>
-    <p class="reveal"><strong>Your choice:</strong> Please read this Privacy Policy carefully. If you provide personal information to us, you understand we will collect, hold, use and disclose your personal information in accordance with this Privacy Policy. You do not have to provide personal information to us, however, if you do not, it may affect your use of our Services.</p>
-    <p class="reveal"><strong>Information from third parties:</strong> If we receive personal information about you from a third party, we will protect it as set out in this Privacy Policy. If you are a third party providing personal information about somebody else, you represent and warrant that you have such person's consent to provide the personal information to us.</p>
-    <p class="reveal"><strong>Restrict and unsubscribe:</strong> To object to processing for direct marketing/unsubscribe from our email database or opt-out of communications (including marketing communications), please contact us using the details below or opt-out using the opt-out facilities provided in the communication.</p>
-    <p class="reveal"><strong>Correction:</strong> If you believe that any information we hold about you is inaccurate, out of date, incomplete, irrelevant or misleading, please contact us using the details below. We will take reasonable steps to promptly correct any information found to be inaccurate, incomplete, misleading or out of date.</p>
-    <p class="reveal"><strong>Complaints:</strong> If you wish to make a complaint, please contact us using the details below and provide us with full details of the complaint. We will promptly investigate your complaint and respond to you, in writing, setting out the outcome of our investigation and the steps we will take in response to your complaint. You also have the right to contact the relevant authority in the country in which you are based.</p>
-
-    <h2 class="reveal">Links to other websites</h2>
-    <p class="reveal">Our Services may contain links to other websites. We do not have any control over those websites and we are not responsible for the protection and privacy of any personal information which you provide whilst visiting those websites. Those websites are not governed by this Privacy Policy.</p>
-
-    <h2 class="reveal">Amendments</h2>
-    <p class="reveal">We may, at any time and at our discretion, vary this Privacy Policy. We will notify you if we amend this Privacy Policy, by contacting you through the contact details you have provided to us. Any amended Privacy Policy is effective once we notify you of the change.</p>
-
-    <div class="contact-card reveal">
-      <p>For any questions or notices, please contact our Privacy Officer at:</p>
-      <p style="margin-top:14px;"><strong>Zib Digital Pty Ltd</strong><br>
-      Level 2, 132 Gwynne St, Cremorne VIC 3121<br>
-      Email: <a href="mailto:enquiries@zibdigital.com.au">enquiries@zibdigital.com.au</a><br>
-      Phone: <a href="tel:+61386859290">03 8685 9290</a></p>
+    <h1 class="legal-h reveal">Privacy <em>policy.</em></h1>
+    <p class="legal-sub reveal">
+      <strong>We take the protection of your personal information very seriously.</strong>
+      This Privacy Policy is intended to provide you with a general explanation of how we may collect, store, use and disclose your personal information.
+    </p>
+    <div class="mono legal-stamp reveal">
+      <span>Entity <b>Zib Digital Pty Ltd</b></span>
+      <span>ABN <b>58 160 520 507</b></span>
+      <span>Last updated <b>22 August 2026</b></span>
     </div>
   </div>
 </section>
+
+<!-- BODY -->
+<section class="legal-wrap">
+  <div class="container">
+    <div class="legal-grid">
+
+      <!-- CONTENTS -->
+      <nav class="legal-toc reveal" aria-label="On this page">
+        <h2>On this page</h2>
+        <ol>
+          <li><a href="#overview">Overview</a></li>
+          <li><a href="#personal-information">Personal information</a></li>
+          <li><a href="#collection-and-use">Collection and use</a></li>
+          <li><a href="#storage-and-security">Storage and security</a></li>
+          <li><a href="#internet-users">Internet users</a></li>
+          <li><a href="#cookies">Cookies and your choices</a></li>
+          <li><a href="#disclosure">Disclosure to third parties</a></li>
+          <li><a href="#sensitive-information">Sensitive information</a></li>
+          <li><a href="#our-commitment">Our commitment to you</a></li>
+          <li><a href="#your-rights">Your rights and controls</a></li>
+          <li><a href="#links">Links to other websites</a></li>
+          <li><a href="#amendments">Amendments</a></li>
+          <li><a href="#contact">Contact our Privacy Officer</a></li>
+        </ol>
+      </nav>
+
+      <!-- PROSE -->
+      <div class="legal-body reveal">
+
+        <section id="overview">
+          <h2>Overview</h2>
+          <p>
+            Zib Digital Pty Ltd understands the importance people place on their personal information being collected. Personal information collected by us is treated with the appropriate degree of privacy and confidentiality.
+          </p>
+          <p>
+            You will be referred to throughout this Privacy Policy as (“you” or “your”). Zib Digital Pty Ltd ABN 58 160 520 507 will be referred to throughout as Zib Digital or (“us”, “we” or “our”).
+          </p>
+          <p>
+            This Privacy Policy is intended to provide you with a general explanation of how we may collect, store, use and disclose your personal information. This Privacy Policy takes into account the requirements of the <em>Privacy Act 1988</em> (Cth) and the Australian Privacy Principles. This Privacy Policy should be read in conjunction with any other terms and conditions that appear in or are linked to Zib Digital’s website.
+          </p>
+        </section>
+
+        <section id="personal-information">
+          <h2>Personal information</h2>
+          <p><strong>Personal information:</strong> The types of personal information we may collect about you include:</p>
+          <ul>
+            <li>Your name and address;</li>
+            <li>Your age and date of birth;</li>
+            <li>Your contact details including telephone numbers, mailing address, street address and email address;</li>
+            <li>Your gender;</li>
+            <li>Your occupation or employment details;</li>
+            <li>Where applicable, your credit card or payment details (either directly or through our third-party payment processor);</li>
+            <li>Your sensitive information as set out below;</li>
+            <li>Details of products and services we have provided to you and/or that you have enquired about, and our response to you;</li>
+            <li>Your browser session and geo-location data, device and network information, statistics on page views and sessions, acquisition sources, search queries and/or browsing behaviour;</li>
+            <li>Information about your access and use of our Services, including through the use of Internet cookies, your communications with our online Services, the type of browser you are using, the type of operating system you are using and the domain name of your Internet service provider;</li>
+            <li>Additional personal information that you provide to us, directly or indirectly, through your use of our Services, associated applications, associated social media platforms and/or accounts from which you permit us to collect information; and</li>
+            <li>Any other personal information requested by us and/or provided by you or a third party.</li>
+          </ul>
+          <p>We may collect these types of personal information directly from you or from third parties.</p>
+        </section>
+
+        <section id="collection-and-use">
+          <h2>Collection and use of personal information</h2>
+          <p>We may collect, hold, use and disclose personal information for the following purposes:</p>
+          <ul>
+            <li>to enable you to access and use our Services and the associated applications;</li>
+            <li>to contact and communicate with you;</li>
+            <li>for internal record keeping, administrative purposes, invoicing and billing purposes (where applicable);</li>
+            <li>for analytics and business development, including to operate and improve our Services and associated applications;</li>
+            <li>for direct marketing or for sending you details about offers or competitions we may be running;</li>
+            <li>to comply with our legal obligations and resolve any disputes that we may have; and</li>
+            <li>if you have applied for employment with us; to consider your employment application.</li>
+          </ul>
+        </section>
+
+        <section id="storage-and-security">
+          <h2>Storage and security</h2>
+          <p>
+            We are committed to ensuring that the personal information we collect is secure. In order to prevent unauthorised access or disclosure, we have put in place suitable physical, electronic and managerial procedures, to safeguard and secure personal information and protect it from misuse, interference, loss and unauthorised access, modification and disclosure.
+          </p>
+          <p>
+            We cannot guarantee the security of any information that is transmitted to or by us over the Internet. The transmission and exchange of information is carried out at your own risk. Although we take measures to safeguard against unauthorised disclosures of information, we cannot assure you that the personal information we collect will not be disclosed in a manner that is inconsistent with this Privacy Policy.
+          </p>
+        </section>
+
+        <section id="internet-users">
+          <h2>Internet users</h2>
+          <p>
+            If you access our website or social media sites, we may collect additional personal information about you including but not limited to your name, IP address and domain name. Our website uses cookies. The main purpose of cookies is to identify users and to prepare customised web pages tailored to them. Cookies do not identify you personally, but they may link back to a database record about you. We use cookies to monitor usage of our website and to create a record of when you visit our website and what pages you view so that we may serve you more effectively. Our website may contain links to other websites. We are not responsible for the privacy practices of linked websites and linked websites which are not subject to our Privacy Policy.
+          </p>
+        </section>
+
+        <section id="cookies">
+          <h2>Cookies and your choices</h2>
+          <p>
+            We group the cookies and similar technologies used on this website into three categories. You control the last two, at any time.
+          </p>
+
+          <div class="legal-table-wrap">
+            <table class="legal-table">
+              <thead>
+                <tr>
+                  <th scope="col">Category</th>
+                  <th scope="col">What it does</th>
+                  <th scope="col">Your control</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Essential</td>
+                  <td>Makes the site work — page delivery, security, and remembering your cookie choice itself. No tracking.</td>
+                  <td>Always on</td>
+                </tr>
+                <tr>
+                  <td>Analytics</td>
+                  <td>Tells us which pages are read, how people arrive, and where they drop off, so we can improve the site.</td>
+                  <td>Off until you accept</td>
+                </tr>
+                <tr>
+                  <td>Marketing</td>
+                  <td>Lets us measure advertising and show you relevant ads on other platforms.</td>
+                  <td>Off until you accept</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            Analytics and marketing cookies stay switched off unless you accept them. You can change your mind whenever you like —
+            <button type="button" class="linklike" data-cookie-settings>open your cookie settings</button>
+            — or clear cookies in your browser settings. Blocking essential cookies may stop parts of the site working.
+          </p>
+
+          <div class="legal-note">
+            <span class="mono">In plain English</span>
+            We do not sell your personal information. If you decline analytics and marketing cookies, you get the whole site anyway — we just stop counting you.
+          </div>
+        </section>
+
+        <section id="disclosure">
+          <h2>Disclosure of personal information to third parties</h2>
+          <p>We may disclose personal information to:</p>
+          <ul>
+            <li>third party service providers for the purpose of enabling them to provide their services, including (without limitation) IT service providers, data storage, web-hosting and server providers, maintenance or problem-solving providers, professional advisors and payment systems operators;</li>
+            <li>our employees, contractors and/or related entities;</li>
+            <li>our existing or potential agents or business partners;</li>
+            <li>anyone to whom our business or assets (or any part of them) are, or may (in good faith) be, transferred;</li>
+            <li>credit reporting agencies, courts, tribunals and regulatory authorities, in the event you fail to pay for goods or services we have provided to you;</li>
+            <li>courts, tribunals, regulatory authorities and law enforcement officers, as required by law, in connection with any actual or prospective legal proceedings, or in order to establish, exercise or defend our legal rights; and</li>
+            <li>third parties who collect and process data on our behalf, including the providers listed below.</li>
+          </ul>
+
+          <h3>Providers we currently use</h3>
+          <p>
+            When you submit a website audit request on this site, the details you enter and the public content of the website address you provide are processed by the following providers so we can generate and deliver your audit:
+          </p>
+
+          <div class="legal-table-wrap">
+            <table class="legal-table">
+              <thead>
+                <tr>
+                  <th scope="col">Provider</th>
+                  <th scope="col">Purpose</th>
+                  <th scope="col">Location</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Vercel</td>
+                  <td>Website hosting and server logs</td>
+                  <td>United States</td>
+                </tr>
+                <tr>
+                  <td>Anthropic</td>
+                  <td>AI analysis of the public website you submit for audit</td>
+                  <td>United States</td>
+                </tr>
+                <tr>
+                  <td>OpenAI</td>
+                  <td>Generating the sample creative shown with your audit</td>
+                  <td>United States</td>
+                </tr>
+                <tr>
+                  <td>Google</td>
+                  <td>PageSpeed Insights scoring and web font delivery</td>
+                  <td>United States</td>
+                </tr>
+                <tr>
+                  <td>HubSpot</td>
+                  <td>Customer relationship management and follow-up, including the phone number you provide so a strategist can call you</td>
+                  <td>United States</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>
+            Some of these providers store or process personal information overseas, which means your personal information may be disclosed outside Australia.
+          </p>
+          <p>
+            Where the disclosure of your personal information is solely subject to Australian privacy laws, you acknowledge that some third parties may not be regulated by the Privacy Act and the Australian Privacy Principles in the Privacy Act and if any such third party engages in any act or practice that contravenes the Australian Privacy Principles, it would not be accountable under the Privacy Act and you will not be able to seek redress under the Privacy Act.
+          </p>
+        </section>
+
+        <section id="sensitive-information">
+          <h2>How we treat personal information that is also sensitive information</h2>
+          <p>
+            Sensitive information is a sub-set of personal information that is given a higher level of protection under the Australian Privacy Principles. Sensitive information means information relating to your racial or ethnic origin, political opinions, religion, trade union or other professional associations or memberships, philosophical beliefs, sexual orientation, sexual practices or sex life, criminal records, health information or biometric information.
+          </p>
+          <p>
+            Provided you consent, your sensitive information may only be used and disclosed for purposes relating to the primary purpose for which the sensitive information was collected.
+          </p>
+          <p>Sensitive information may also be used or disclosed if required or authorised by law.</p>
+        </section>
+
+        <section id="our-commitment">
+          <h2>Our commitment to you</h2>
+          <p>Your personal information will:</p>
+          <ul>
+            <li>be processed lawfully, fairly and in a transparent manner by us;</li>
+            <li>only be collected for the specific purposes we have identified in the ‘collection and use of personal information’ clause above and personal information will not be further processed in a manner that is incompatible with the purposes we have identified;</li>
+            <li>be collected in a way that is adequate, relevant and limited to what is necessary in relation to the purpose for which the personal information is processed;</li>
+            <li>be kept up to date, where it is possible and within our control to do so (please let us know if you would like us to correct any of your personal information);</li>
+            <li>be kept in a form which permits us to identify you, but only for so long as necessary for the purposes for which the personal information was collected; and</li>
+            <li>be processed securely and in a way that protects against unauthorised or unlawful processing and against accidental loss, destruction or damage.</li>
+          </ul>
+        </section>
+
+        <section id="your-rights">
+          <h2>Your rights and controlling your personal information</h2>
+          <p>
+            <strong>Your choice:</strong> Please read this Privacy Policy carefully. If you provide personal information to us, you understand we will collect, hold, use and disclose your personal information in accordance with this Privacy Policy. You do not have to provide personal information to us, however, if you do not, it may affect your use of our Services.
+          </p>
+          <p>
+            <strong>Information from third parties:</strong> If we receive personal information about you from a third party, we will protect it as set out in this Privacy Policy. If you are a third party providing personal information about somebody else, you represent and warrant that you have such person’s consent to provide the personal information to us.
+          </p>
+          <p>
+            <strong>Restrict and unsubscribe:</strong> To object to processing for direct marketing/unsubscribe from our email database or opt-out of communications (including marketing communications), please contact us using the details below or opt-out using the opt-out facilities provided in the communication.
+          </p>
+          <p>
+            <strong>Correction:</strong> If you believe that any information we hold about you is inaccurate, out of date, incomplete, irrelevant or misleading, please contact us using the details below. We will take reasonable steps to promptly correct any information found to be inaccurate, incomplete, misleading or out of date.
+          </p>
+          <p>
+            <strong>Complaints:</strong> If you wish to make a complaint, please contact us using the details below and provide us with full details of the complaint. We will promptly investigate your complaint and respond to you, in writing, setting out the outcome of our investigation and the steps we will take in response to your complaint. You also have the right to contact the relevant authority in the country in which you are based.
+          </p>
+        </section>
+
+        <section id="links">
+          <h2>Links to other websites</h2>
+          <p>
+            Our Services may contain links to other websites. We do not have any control over those websites and we are not responsible for the protection and privacy of any personal information which you provide whilst visiting those websites. Those websites are not governed by this Privacy Policy.
+          </p>
+        </section>
+
+        <section id="amendments">
+          <h2>Amendments</h2>
+          <p>
+            We may, at any time and at our discretion, vary this Privacy Policy. We will notify you if we amend this Privacy Policy, by contacting you through the contact details you have provided to us. Any amended Privacy Policy is effective once we notify you of the change.
+          </p>
+        </section>
+
+        <section id="contact">
+          <h2>Contact our Privacy Officer</h2>
+          <p>For any questions or notices, please contact our Privacy Officer at:</p>
+
+          <div class="legal-contact">
+            <span class="mono">Privacy Officer</span>
+            <div class="who">Zib Digital Pty Ltd</div>
+            <dl>
+              <dt>ABN</dt>
+              <dd>58 160 520 507</dd>
+              <dt>Address</dt>
+              <dd>Level 2, 132 Gwynne St, Cremorne VIC 3121</dd>
+              <dt>Email</dt>
+              <dd><a href="mailto:enquiries@zibdigital.com.au">enquiries@zibdigital.com.au</a></dd>
+              <dt>Phone</dt>
+              <dd><a href="tel:+61386859290">03 8685 9290</a></dd>
+            </dl>
+          </div>
+
+          <p>
+            If you are not satisfied with our response, you can contact the Office of the Australian Information Commissioner at
+            <a href="https://www.oaic.gov.au" target="_blank" rel="noopener">oaic.gov.au</a>.
+          </p>
+        </section>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="legal-cta">
+  <div class="container">
+    <div class="mono eyebrow reveal">Still here?</div>
+    <h2 class="reveal">Black and white. <em>No grey areas.</em></h2>
+    <p class="reveal">
+      Same principle we apply to reporting, we apply to your data. If something here isn’t clear, ask us and we’ll tell you straight.
+    </p>
+    <div class="row reveal">
+      <a class="btn btn-primary" href="/audit.html">Run the free audit <span class="arr">→</span></a>
+      <a class="btn btn-outline" href="mailto:enquiries@zibdigital.com.au?subject=Privacy%20enquiry">Email the Privacy Officer</a>
+    </div>
+  </div>
+</section>
+
 </main>
 
 <!-- @include _partials/footer.html -->

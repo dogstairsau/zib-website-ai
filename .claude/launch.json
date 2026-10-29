@@ -14,6 +14,18 @@
       "runtimeArgs": ["vercel", "dev"],
       "port": 3000,
       "autoPort": true
+    },
+    {
+      "name": "novatedchoice",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "5173", "--directory", "/Users/michaelglasser/Desktop/novatedchoice-redesign"],
+      "port": 5173
+    },
+    {
+      "name": "squad-hq-lander",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": ["--prefix", "/Users/michaelglasser/Desktop/squad-hq-lander", "run", "dev", "--", "-p", "3107"],
+      "port": 3107
     }
   ]
 }
