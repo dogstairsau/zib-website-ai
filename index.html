@@ -1026,6 +1026,61 @@ h1.hero-h em {
   .service-desc { display: none; }
 }
 
+.ways { margin-top: clamp(56px, 7vw, 88px); }
+
+.ways-h {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(24px, 2.6vw, 34px);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+}
+
+.ways-grid {
+  margin-top: clamp(24px, 3vw, 36px);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: clamp(16px, 2vw, 24px);
+}
+
+@media (max-width: 880px) { .ways-grid { grid-template-columns: 1fr; } }
+
+.way {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: clamp(24px, 2.6vw, 36px);
+  border: 0.5px solid var(--rule-2);
+  background: var(--bg);
+  color: inherit;
+  text-decoration: none;
+  transition: border-color 320ms var(--ease);
+}
+
+.way:hover { border-color: var(--accent); }
+
+.way-label { color: var(--accent); }
+
+.way-name {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(22px, 2.2vw, 28px);
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.way-desc { color: var(--muted); font-size: clamp(14px, 1.3vw, 16px); line-height: 1.55; flex: 1; }
+
+.way-link { font-weight: 500; color: var(--ink); transition: color 320ms var(--ease); }
+
+.way:hover .way-link { color: var(--accent); }
+
+.ways-foot { margin-top: 24px; color: var(--muted); font-size: clamp(14px, 1.3vw, 16px); }
+
+.ways-foot a { color: var(--ink); font-weight: 500; text-decoration: underline; text-underline-offset: 3px; }
+
 /* ─── AUDIT ──────────────────────────────────────────────────────── */
 .audit-head {
   display: grid;
@@ -2222,7 +2277,7 @@ a.eyebrow:hover span { text-decoration: underline; text-underline-offset: 3px; }
   <div class="container">
     <div class="services-head reveal">
       <div class="eyebrow mono"><span>What we do</span></div>
-      <h2 class="services-title">We work across every channel that matters, and <em>only</em> the ones that move your number.</h2>
+      <h2 class="services-title">Digital marketing services across Australia. <em>Only the ones that move your number.</em></h2>
     </div>
 
     <div class="service-list reveal">
@@ -2256,6 +2311,31 @@ a.eyebrow:hover span { text-decoration: underline; text-underline-offset: 3px; }
         <span class="service-desc">The commercial conversation first. Channels second. We pick the internet marketing that actually moves your business.</span>
         <span class="service-arrow">→</span>
       </a>
+    </div>
+
+    <div class="ways reveal">
+      <h3 class="ways-h">Three ways to work with us.</h3>
+      <div class="ways-grid">
+        <a class="way" href="/digital-marketing-agency">
+          <span class="way-label mono">Agency</span>
+          <span class="way-name">We run it for you.</span>
+          <span class="way-desc">Senior strategists plan and run your SEO, Google Ads, social and web as one commercial system, for businesses across Australia.</span>
+          <span class="way-link">Digital marketing agency Australia →</span>
+        </a>
+        <a class="way" href="/managed-ai">
+          <span class="way-label mono">Managed AI</span>
+          <span class="way-name">Our agents run it for you.</span>
+          <span class="way-desc">We build and run the marketing agents across search, social and ecommerce. Senior strategy and weekly commercial reporting on top.</span>
+          <span class="way-link">Managed AI →</span>
+        </a>
+        <a class="way" href="/ai-partner">
+          <span class="way-label mono">AI Partner</span>
+          <span class="way-name">Your team, multiplied.</span>
+          <span class="way-desc">A squad of AI marketing specialists inside your team's tools, coached every month by senior Zib specialists. Nothing goes live without your sign-off.</span>
+          <span class="way-link">AI Partner →</span>
+        </a>
+      </div>
+      <p class="ways-foot">Not sure which fits? <a href="/ai-services">Compare Managed AI and AI&nbsp;Partner&nbsp;→</a></p>
     </div>
   </div>
 </section>

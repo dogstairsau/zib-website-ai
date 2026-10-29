@@ -2,7 +2,7 @@
 <html lang="en-AU">
 <head>
 <title>Digital Marketing Agency Melbourne · Zib Digital</title>
-<meta name="description" content="Melbourne's most accountable digital marketing agency. Commercial outcomes, senior strategy, no monthly retainers padded with juniors. SEO, Google Ads, social, web, since 2009." />
+<meta name="description" content="Digital marketing agency in Melbourne since 2009. SEO, Google Ads, Meta, LinkedIn and content run as one system by senior strategists, reported in revenue." />
 <!-- @include _partials/head.html -->
 <style>
 h1, h2, h3, .hero-h, .local-h, .services-h, .stats-h, .faq-h, .cta-title { text-wrap: balance; }
@@ -34,6 +34,17 @@ h1, h2, h3, .hero-h, .local-h, .services-h, .stats-h, .faq-h, .cta-title { text-
 }
 
 .hero-h em { color: var(--accent); font-style: italic; font-weight: 400; }
+
+.hero-tagline {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(24px, 2.8vw, 40px);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  margin-top: clamp(20px, 2.4vw, 32px);
+}
+
+.hero-tagline em { color: var(--accent); font-style: italic; font-weight: 400; }
 
 .mel-hero-row {
   margin-top: clamp(36px, 5vw, 64px);
@@ -242,6 +253,52 @@ h1, h2, h3, .hero-h, .local-h, .services-h, .stats-h, .faq-h, .cta-title { text-
 .service-desc { font-size: 15.5px; line-height: 1.55; color: var(--muted); }
 .service-arrow { font-family: var(--display); color: var(--muted-2); transition: color 280ms var(--ease), transform 280ms var(--ease); justify-self: end; }
 .service-row:hover .service-arrow { color: var(--accent); transform: translateX(4px); }
+
+/* ─── CHANNELS ────────────────────────────────────────────── */
+.mel-channels {
+  padding-top: clamp(80px, 10vw, 144px);
+  padding-bottom: clamp(80px, 10vw, 144px);
+  border-bottom: 0.5px solid var(--rule);
+}
+
+.channels-eyebrow { color: var(--accent); margin-bottom: 18px; }
+.channels-eyebrow::before { content: ""; display: inline-block; width: 22px; height: 0.5px; background: currentColor; margin-right: 10px; vertical-align: middle; }
+
+.channels-lead {
+  font-family: var(--display);
+  font-size: clamp(20px, 2vw, 26px);
+  line-height: 1.4;
+  letter-spacing: -0.015em;
+  max-width: 52ch;
+}
+
+.channel-grid {
+  margin-top: clamp(48px, 6vw, 72px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(40px, 5vw, 64px) clamp(40px, 6vw, 96px);
+}
+
+@media (max-width: 880px) { .channel-grid { grid-template-columns: 1fr; } }
+
+.channel { padding-top: 24px; border-top: 0.5px solid var(--rule); }
+
+.channel-h {
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(24px, 2.6vw, 34px);
+  line-height: 1.1;
+  letter-spacing: -0.025em;
+  margin-bottom: 14px;
+}
+
+.channel p { color: var(--muted); font-size: clamp(16px, 1.4vw, 18px); line-height: 1.55; max-width: 52ch; }
+
+.channel-links { margin-top: 18px; display: flex; flex-wrap: wrap; gap: 8px 24px; }
+.channel-links a { color: var(--accent); font-weight: 500; text-decoration: none; }
+.channel-links a:hover { text-decoration: underline; }
+
+.channels-close { margin-top: clamp(48px, 6vw, 72px); color: var(--muted); font-size: clamp(16px, 1.4vw, 18px); line-height: 1.55; max-width: 64ch; }
 
 /* ─── LOCAL ADVANTAGE ─────────────────────────────────────── */
 .mel-local {
@@ -455,10 +512,11 @@ h1, h2, h3, .hero-h, .local-h, .services-h, .stats-h, .faq-h, .cta-title { text-
 <!-- HERO -->
 <section class="mel-hero">
   <div class="container">
-    <div class="mono eyebrow reveal">Digital marketing · Melbourne</div>
+    <div class="mono eyebrow reveal">Since 2009 · South Melbourne</div>
     <h1 class="hero-h reveal">
-      Melbourne digital, built around your <em class="word-cycle" data-words="growth, revenue, bottom line, business">growth</em>.
+      Digital marketing agency <em>Melbourne</em>
     </h1>
+    <p class="hero-tagline reveal">Melbourne digital, built around your <em class="word-cycle" data-words="growth, revenue, bottom line, business">growth</em>.</p>
 
     <div class="mel-hero-row">
       <p class="hero-sub reveal">
@@ -544,6 +602,51 @@ h1, h2, h3, .hero-h, .local-h, .services-h, .stats-h, .faq-h, .cta-title { text-
         <span class="service-arrow">→</span>
       </a>
     </div>
+  </div>
+</section>
+
+<!-- CHANNELS -->
+<section class="mel-channels">
+  <div class="container">
+    <div class="reveal">
+      <div class="mono channels-eyebrow">Channel by channel</div>
+      <p class="channels-lead">A good digital marketing agency can tell you what each channel is for before it spends a dollar of yours. Here's how we use each one for Melbourne businesses, and when it earns a place in your budget.</p>
+    </div>
+
+    <div class="channel-grid reveal-stagger">
+      <div class="channel">
+        <h2 class="channel-h">SEO in Melbourne</h2>
+        <p>Most Melbourne buyers start with a search. We fix the technical foundations, write the pages people are actually looking for, and build authority over months. We start with suburb and service searches because they bring enquiries sooner, then move up to the broader Melbourne terms once the site has earned them.</p>
+        <div class="channel-links"><a href="/seo-melbourne">SEO Melbourne →</a></div>
+      </div>
+      <div class="channel">
+        <h2 class="channel-h">Google Ads management</h2>
+        <p>Google Ads buys the top spot while SEO earns it. As a Premier Google Partner, we build campaigns around your cost per acquisition. Agents check bids and search terms every day, and a senior strategist reviews the account every week. Ads also show you quickly which keywords are worth the year it takes to rank for them.</p>
+        <div class="channel-links"><a href="/google-ads-management-agency-melbourne">Google Ads Melbourne →</a></div>
+      </div>
+      <div class="channel">
+        <h2 class="channel-h">Facebook and Instagram advertising</h2>
+        <p>Meta is where you create demand instead of waiting for it. As a Meta Business Partner, we test new creative in hours, not weeks, put more budget behind the ads that sell and switch off the ones that don't. We report in cost per customer and revenue, not reach.</p>
+        <div class="channel-links"><a href="/facebook-marketing-melbourne">Facebook marketing →</a><a href="/instagram-marketing-melbourne">Instagram marketing →</a></div>
+      </div>
+      <div class="channel">
+        <h2 class="channel-h">LinkedIn marketing</h2>
+        <p>If you sell to other businesses, LinkedIn lets you reach people by job title, industry and company size. Clicks usually cost more there, so we use it where the deal is big enough to justify them. Paid campaigns and your company page work together, and results are reported in leads and pipeline.</p>
+        <div class="channel-links"><a href="/linkedin-marketing-agency-melbourne">LinkedIn marketing Melbourne →</a></div>
+      </div>
+      <div class="channel">
+        <h2 class="channel-h">Content marketing</h2>
+        <p>Content is what your SEO, email and social run on. We plan it from real search demand and the questions your buyers ask. Agents speed up the drafting, and a human editor makes sure every piece sounds like you. Each piece has one job: rank, convert or help close a sale.</p>
+        <div class="channel-links"><a href="/content-marketing-agency-melbourne">Content marketing Melbourne →</a></div>
+      </div>
+      <div class="channel">
+        <h2 class="channel-h">Email marketing</h2>
+        <p>Your email list is the one audience you own. We build the automated flows most businesses never get to, like welcome, abandoned cart and win-back sequences, and plan campaigns around your commercial year. We work in Klaviyo, Mailchimp, HubSpot and most other platforms you already pay for, and report in revenue per email.</p>
+        <div class="channel-links"><a href="/email-marketing-melbourne">Email marketing Melbourne →</a></div>
+      </div>
+    </div>
+
+    <p class="channels-close reveal">Most Melbourne businesses don't need every channel. They need the right two or three, run properly. As a full-service digital agency in Melbourne, we'll tell you which ones. You deal with one digital marketing company, one plan and one weekly report, instead of briefing five suppliers and hoping they compare notes.</p>
   </div>
 </section>
 
