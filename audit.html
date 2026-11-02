@@ -2679,7 +2679,7 @@ footer {
       Thirty minutes with a senior strategist. No deck, no pitch. A commercial conversation about the opportunities the audit flagged and what it'd take to move them.
     </p>
     <div class="cta-buttons reveal">
-      <a href="https://meetings.hubspot.com/mglasser" target="_blank" rel="noopener" class="btn btn-light magnet">
+      <a href="/contact" class="btn btn-light magnet">
         Book a commercial conversation <span class="arr">→</span>
       </a>
       <a href="#proof" class="btn btn-outline-light">See the case studies</a>
@@ -3160,15 +3160,24 @@ footer {
      the highest intent they will ever be, and an anchor link spends it. A
      qualified lead now gets a calendar in place; a nurture lead gets the
      report and is left alone. */
-  const MEETINGS_SRC = 'https://meetings.hubspot.com/mglasser';
+  // No booking calendar is set, so qualified leads get a button to /contact.
+  // Put a meetings.hubspot.com link here to bring the inline calendar back.
+  const MEETINGS_SRC = '';
   let meetingsLoaded = false;
 
   const loadMeetingsEmbed = (container, email) => {
+    if (!MEETINGS_SRC) {
+      container.style.minHeight = '0';
+      container.innerHTML =
+        `<div><a class="btn btn-light" href="/contact">Get in touch <span class="arr">→</span></a></div>` +
+        `<span class="cal-fallback">Prefer email? <a href="mailto:matt.arnot@zibdigital.com.au">Send us the report instead</a>.</span>`;
+      return;
+    }
     // Prefill what we know so booking is a time-pick, not a re-typed form.
     const src = MEETINGS_SRC + '?embed=true' + (email ? '&email=' + encodeURIComponent(email) : '');
     container.innerHTML =
       `<div class="meetings-iframe-container" data-src="${src}"></div>` +
-      `<span class="cal-fallback">Prefer email? <a href="mailto:michael.glasser@zibdigital.com.au">Send us the report instead</a>.</span>`;
+      `<span class="cal-fallback">Prefer email? <a href="mailto:matt.arnot@zibdigital.com.au">Send us the report instead</a>.</span>`;
     if (meetingsLoaded) return;
     meetingsLoaded = true;
     // Loaded only when a qualified lead actually reaches this point, so the
