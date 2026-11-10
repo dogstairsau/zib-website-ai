@@ -351,7 +351,7 @@ ${isSeo ? "<!-- @include _partials/aeo-geo.html -->\n" : ""}
     <p class="cta-sub reveal">Thirty minutes with a senior strategist on your ${city} ${hub.label}. We read your business, flag where we'd move first, and give you the unvarnished version.</p>
     <div class="cta-buttons reveal">
       <a class="btn btn-primary" href="/audit">Run the free audit <span class="arr">→</span></a>
-      <a class="btn btn-outline" href="mailto:matt.arnot@zibdigital.com.au?subject=${encodeURIComponent(hub.label + " " + city + " - discovery call")}">Book a discovery call</a>
+      <a class="btn btn-outline" href="#contact">Send an enquiry</a>
     </div>
   </div>
 </section>
