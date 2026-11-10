@@ -1094,7 +1094,7 @@ body.has-book-bar .float-cta { display: none; }
         </strong>
         <span class="bb-sub">Thirty minutes with a strategist who's already read your pack. No deck, no pitch.</span>
       </div>
-      <button type="button" class="book-bar-cta" id="bookBarCta">Book a time <span class="arr">&rarr;</span></button>
+      <button type="button" class="book-bar-cta" id="bookBarCta">Get in touch <span class="arr">&rarr;</span></button>
       <button type="button" class="book-bar-x" id="bookBarClose" aria-label="Dismiss">&times;</button>
     </div>
   </div>
@@ -1104,7 +1104,7 @@ body.has-book-bar .float-cta { display: none; }
     <div class="book-modal-panel">
       <button type="button" class="book-modal-x" id="bookModalClose" aria-label="Close">&times;</button>
       <h3 id="bookModalTitle">Want Zib to implement this entire strategy?</h3>
-      <p>Pick a time below. A senior strategist will have your pack open in front of them, so it starts at how to run it — not at who you are.</p>
+      <p>A senior strategist will have your pack open in front of them, so it starts at how to run it — not at who you are.</p>
       <div class="book-modal-cal" id="bookModalCal" aria-live="polite"></div>
     </div>
   </div>
@@ -1466,17 +1466,26 @@ body.has-book-bar .float-cta { display: none; }
   // End of run: surface any cards whose image never arrived (brand-gradient
   // fallback) so no concept is lost, and retire the wait deck.
   /* ─── Post-pack branch · calendar or nurture ────────────────────── */
-  const MEETINGS_SRC = 'https://meetings.hubspot.com/mglasser';
+  // No booking calendar is set, so qualified leads get a button to /contact.
+  // Put a meetings.hubspot.com link here to bring the inline calendar back.
+  const MEETINGS_SRC = '';
   let meetingsLoaded = false;
 
   const loadMeetingsEmbed = (container, email, firstname) => {
+    if (!MEETINGS_SRC) {
+      container.style.minHeight = '0';
+      container.innerHTML =
+        `<div><a class="btn btn-primary" href="/contact">Get in touch <span class="arr">→</span></a></div>` +
+        `<span class="cal-fallback">Prefer email? <a href="mailto:matt.arnot@zibdigital.com.au">Reply to the pack instead</a>.</span>`;
+      return;
+    }
     // Prefill what we know so booking is a time-pick, not a re-typed form.
     const src = MEETINGS_SRC + '?embed=true'
       + (email ? '&email=' + encodeURIComponent(email) : '')
       + (firstname ? '&firstName=' + encodeURIComponent(firstname) : '');
     container.innerHTML =
       `<div class="meetings-iframe-container" data-src="${src}"></div>` +
-      `<span class="cal-fallback">Prefer email? <a href="mailto:michael.glasser@zibdigital.com.au">Reply to the pack instead</a>.</span>`;
+      `<span class="cal-fallback">Prefer email? <a href="mailto:matt.arnot@zibdigital.com.au">Reply to the pack instead</a>.</span>`;
     if (meetingsLoaded) return;
     meetingsLoaded = true;
     // Loaded only when a qualified lead reaches this point — never on a page

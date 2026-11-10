@@ -30,6 +30,7 @@
   "redirects": [
     { "source": "/industries/automotive", "destination": "/industries/dealerships", "permanent": true },
     { "source": "/brad-reece", "destination": "/partners", "permanent": true },
+    { "source": "/author/michael-glasser", "destination": "/meet-the-team", "permanent": true },
     { "source": "/brad-breece-thank-you", "destination": "/partners", "permanent": true },
     { "source": "/case-study", "destination": "/case-studies", "permanent": true },
     { "source": "/casestudy", "destination": "/case-studies", "permanent": true },
